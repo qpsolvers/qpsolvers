@@ -12,6 +12,8 @@ the function solves the quadratic program:
 <img
 src="http://cvxopt.org/userguide/_images/math/305efdce8b67069139cfdce108379dd0f9c13e14.png">
 
+Check out the ``examples/`` folder.
+
 ## Solvers
 
 The list of supported solvers currently includes:

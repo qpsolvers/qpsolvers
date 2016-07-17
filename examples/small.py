@@ -27,9 +27,14 @@ from oqp import solve_qp_cvxpy
 from oqp import solve_qp_gurobi
 from oqp import solve_qp_qpoases
 from oqp import solve_qp_quadprog
+from os.path import basename
 
 
 if __name__ == "__main__":
+    if get_ipython() is None:
+        print "Usage: ipython -i %s\n" % basename(__file__)
+        exit()
+
     M = array([
         [1., 2., 0.],
         [-8., 3., 2.],
