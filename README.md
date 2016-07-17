@@ -28,3 +28,10 @@ Numerical solvers are those for which the input can be provided directly in
 matrix-vector form. On the contrary, symbolic solvers require calls to various
 constructors, so that building their input usually takes more time than solving
 the QP itself.
+
+## Name of the module
+
+"Ô" is a vocative particle in French (as in: "Ô temps ! suspends ton vol", a
+common interjection for real-time programmers) that is still commonly heard and
+sighted in cities of the South like Toulouse. Also, OQP is an acronym for
+"occupé", busy.
