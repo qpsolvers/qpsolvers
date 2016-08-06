@@ -18,7 +18,6 @@
 # You should have received a copy of the GNU General Public License along with
 # oqp. If not, see <http://www.gnu.org/licenses/>.
 
-
 from numpy import empty
 from gurobipy import Model, QuadExpr, GRB, quicksum, setParam
 
@@ -26,7 +25,7 @@ from gurobipy import Model, QuadExpr, GRB, quicksum, setParam
 setParam('OutputFlag', 0)
 
 
-def solve_qp_gurobi(P, q, G=None, h=None, A=None, b=None, initvals=None):
+def gurobi_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     """
     Solve a Quadratic Program defined as:
 

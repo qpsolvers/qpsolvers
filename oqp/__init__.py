@@ -18,56 +18,48 @@
 # You should have received a copy of the GNU General Public License along with
 # oqp. If not, see <http://www.gnu.org/licenses/>.
 
-
 """
 Solvers with matrix-vector input
 """
 
-
 try:  # CVXOPT
-    from backend_cvxopt import solve_qp_cvxopt
+    from backend_cvxopt import cvxopt_solve_qp
 except ImportError:
-    def solve_qp_cvxopt(*args, **kwargs):
+    def cvxopt_solve_qp(*args, **kwargs):
         raise ImportError("CVXOPT not found")
 
-
 try:  # quadprog
-    from backend_quadprog import solve_qp_quadprog
+    from backend_quadprog import quadprog_solve_qp
 except ImportError:
-    def solve_qp_quadprog(*args, **kwargs):
+    def quadprog_solve_qp(*args, **kwargs):
         raise ImportError("quadprog not found")
 
-
 try:  # qpOASES
-    from backend_qpoases import solve_qp_qpoases
+    from backend_qpoases import qpoases_solve_qp
 except ImportError:
-    def solve_qp_qpoases(*args, **kwargs):
+    def qpoases_solve_qp(*args, **kwargs):
         raise ImportError("qpOASES not found")
-
 
 """
 Solvers with symbolic input (NB: problem creation takes time)
 """
 
-
 try:  # CVXPY
-    from backend_cvxpy import solve_qp_cvxpy
+    from backend_cvxpy import cvxpy_solve_qp
 except ImportError:
-    def solve_qp_cvxpy(*args, **kwargs):
+    def cvxpy_solve_qp(*args, **kwargs):
         raise ImportError("CVXPY not found")
 
-
 try:  # Gurobi
-    from backend_gurobi import solve_qp_gurobi
+    from backend_gurobi import gurobi_solve_qp
 except ImportError:
-    def solve_qp_gurobi(*args, **kwargs):
+    def gurobi_solve_qp(*args, **kwargs):
         raise ImportError("Gurobi not found")
 
-
 __all__ = [
-    'solve_qp_cvxopt',
-    'solve_qp_cvxpy',
-    'solve_qp_gurobi',
-    'solve_qp_quadprog',
-    'solve_qp_qpoases',
+    'cvxopt_solve_qp',
+    'cvxpy_solve_qp',
+    'gurobi_solve_qp',
+    'quadprog_solve_qp',
+    'qpoases_solve_qp',
 ]

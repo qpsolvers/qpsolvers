@@ -18,15 +18,14 @@
 # You should have received a copy of the GNU General Public License along with
 # oqp. If not, see <http://www.gnu.org/licenses/>.
 
-
 from IPython import get_ipython
 from numpy import array, dot
 from numpy.linalg import norm
-from oqp import solve_qp_cvxopt
-from oqp import solve_qp_cvxpy
-from oqp import solve_qp_gurobi
-from oqp import solve_qp_qpoases
-from oqp import solve_qp_quadprog
+from oqp import cvxopt_solve_qp
+from oqp import cvxpy_solve_qp
+from oqp import gurobi_solve_qp
+from oqp import qpoases_solve_qp
+from oqp import quadprog_solve_qp
 from os.path import basename
 
 
@@ -47,11 +46,11 @@ if __name__ == "__main__":
         [-1., 2., -1.]])
     h = array([3., 2., -2.]).reshape((3,))
 
-    u0 = solve_qp_cvxopt(P, q, G, h)
-    u1 = solve_qp_gurobi(P, q, G, h)
-    u2 = solve_qp_qpoases(P, q, G, h)
-    u3 = solve_qp_cvxpy(P, q, G, h)
-    u4 = solve_qp_quadprog(P, q, G, h)
+    u0 = cvxopt_solve_qp(P, q, G, h)
+    u1 = gurobi_solve_qp(P, q, G, h)
+    u2 = qpoases_solve_qp(P, q, G, h)
+    u3 = cvxpy_solve_qp(P, q, G, h)
+    u4 = quadprog_solve_qp(P, q, G, h)
 
     assert norm(u0 - u1) < 1e-4
     assert norm(u1 - u2) < 1e-4
@@ -61,15 +60,15 @@ if __name__ == "__main__":
 
     print "\nSYMBOLIC",
     print "\n========\n"
-    for c in ["u1 = solve_qp_gurobi(P, q, G, h)",
-              "u3 = solve_qp_cvxpy(P, q, G, h)"]:
+    for c in ["u1 = gurobi_solve_qp(P, q, G, h)",
+              "u3 = cvxpy_solve_qp(P, q, G, h)"]:
         print c
         get_ipython().magic(u'timeit %s' % c)
 
     print "\nNUMERIC (COLD START)",
     print "\n====================\n"
-    for c in ["u0 = solve_qp_cvxopt(P, q, G, h)",
-              "u2 = solve_qp_qpoases(P, q, G, h)",
-              "u4 = solve_qp_quadprog(P, q, G, h)"]:
+    for c in ["u0 = cvxopt_solve_qp(P, q, G, h)",
+              "u2 = qpoases_solve_qp(P, q, G, h)",
+              "u4 = quadprog_solve_qp(P, q, G, h)"]:
         print c
         get_ipython().magic(u'timeit %s' % c)

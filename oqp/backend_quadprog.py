@@ -18,11 +18,10 @@
 # You should have received a copy of the GNU General Public License along with
 # oqp. If not, see <http://www.gnu.org/licenses/>.
 
-
 from quadprog import solve_qp
 
 
-def solve_qp_quadprog(P, q, G=None, h=None, A=None, b=None, initvals=None):
+def quadprog_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     """
     Solve a Quadratic Program defined as:
 

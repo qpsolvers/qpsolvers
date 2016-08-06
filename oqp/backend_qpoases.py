@@ -18,7 +18,6 @@
 # You should have received a copy of the GNU General Public License along with
 # oqp. If not, see <http://www.gnu.org/licenses/>.
 
-
 from numpy import array, hstack, ones, vstack, zeros
 from qpoases import PyOptions as Options
 from qpoases import PyPrintLevel as PrintLevel
@@ -33,7 +32,7 @@ options = Options()
 options.printLevel = PrintLevel.NONE
 
 
-def solve_qp_qpoases(P, q, G=None, h=None, A=None, b=None, warm_start=None):
+def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, warm_start=None):
     """
     Solve a Quadratic Program defined as:
 

@@ -18,12 +18,11 @@
 # You should have received a copy of the GNU General Public License along with
 # oqp. If not, see <http://www.gnu.org/licenses/>.
 
-
 from cvxpy import Variable, Minimize, Problem, quad_form
 from numpy import array
 
 
-def solve_qp_cvxpy(P, q, G=None, h=None, A=None, b=None, initvals=None,
+def cvxpy_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
                    solver=None):
     """
     Solve a Quadratic Program defined as:

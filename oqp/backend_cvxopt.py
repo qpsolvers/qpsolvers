@@ -18,7 +18,6 @@
 # You should have received a copy of the GNU General Public License along with
 # oqp. If not, see <http://www.gnu.org/licenses/>.
 
-
 from numpy import array
 from cvxopt import matrix
 from cvxopt.solvers import options, qp
@@ -28,7 +27,7 @@ from warnings import warn
 options['show_progress'] = False  # disable cvxopt output
 
 
-def solve_qp_cvxopt(P, q, G=None, h=None, A=None, b=None, initvals=None):
+def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     """
     Solve a Quadratic Program defined as:
 
