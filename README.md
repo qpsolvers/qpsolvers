@@ -1,16 +1,15 @@
-# Ô QP
+# QP Solvers
 
 Wrapper around Quadratic Programming (QP) solvers in Python with a unified API.
 
 ## Usage
 
-A ``solve_qp_X(P, q[, G, h[, A, b[, initvals]])`` function is provided for each
-available solver ``X``. The format is the same as
+A function ``SOLVER_solve_qp(P, q[, G, h[, A, b]])`` is provided for each
+available solver ``SOLVER``. The format is the same as
 [cvxopt.solvers.qp](http://cvxopt.org/userguide/coneprog.html#quadratic-programming),
 the function solves the quadratic program:
 
-<img
-src="http://cvxopt.org/userguide/_images/math/305efdce8b67069139cfdce108379dd0f9c13e14.png">
+<img src=".qp.png">
 
 Vector inequalities are taken coordinate by coordinate. Check out the
 ``examples/`` folder for more usage information.
@@ -38,17 +37,15 @@ the QP itself.
 First, note that performances of QP solvers largely depend on the problem
 solved. For example, active-set solvers (e.g. qpOASES and quadprog) are usually
 faster on smaller problems, while interior-point methods (e.g. MOSEK) scale
-better.
+better. On the [small.py](examples/small.py) distributed in the examples folder,
+the performance of all solvers (as mesured by IPython's ``%timeit`` on my
+machine) is:
 
-On the [small.py](examples/small.py) distributed in the examples folder, the
-performance of all solvers (as mesured by IPython's ``%timeit`` on my machine)
-is:
-
-| Solver   | Computation time (µs) |
-| -------- | --------------------- |
-| qpOASES  | 31.5                  |
-| quadprog | 34.1                  |
-| CVXOPT   | 559                   |
-| Gurobi   | 865                   |
-| CVXPY    | 2.810                 |
-| MOSEK    | 7.240                 |
+| Solver   | Time (µs) |
+| -------- | ----------|
+| qpOASES  | 31.5      |
+| quadprog | 34.1      |
+| CVXOPT   | 559       |
+| Gurobi   | 865       |
+| CVXPY    | 2.810     |
+| MOSEK    | 7.240     |
