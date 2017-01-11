@@ -1,22 +1,22 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2015-2016 Stephane Caron <stephane.caron@normalesup.org>
+# Copyright (C) 2016-2017 Stephane Caron <stephane.caron@normalesup.org>
 #
-# This file is part of oqp.
+# This file is part of qpsolvers.
 #
-# oqp is free software: you can redistribute it and/or modify it under
+# qpsolvers is free software: you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# oqp is distributed in the hope that it will be useful, but WITHOUT
+# qpsolvers is distributed in the hope that it will be useful, but WITHOUT
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
 #
 # You should have received a copy of the GNU General Public License along with
-# oqp. If not, see <http://www.gnu.org/licenses/>.
+# qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
 from numpy import array
 from cvxopt import matrix
@@ -27,7 +27,8 @@ from warnings import warn
 options['show_progress'] = False  # disable cvxopt output
 
 
-def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
+def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None, solver=None,
+                    initvals=None):
     """
     Solve a Quadratic Program defined as:
 
@@ -51,8 +52,20 @@ def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
         args.extend([matrix(G), matrix(h)])
         if A is not None:
             args.extend([matrix(A), matrix(b)])
-    sol = qp(*args, initvals=initvals)
+    sol = qp(*args, solver=solver, initvals=initvals)
     if not ('optimal' in sol['status']):
         warn("QP optimum not found: %s" % sol['status'])
         return None
     return array(sol['x']).reshape((n,))
+
+
+try:
+    import cvxopt.msk
+    import mosek
+    cvxopt.solvers.options['mosek'] = {mosek.iparam.log: 0}
+
+    def mosek_solve_qp(P, q, G, h, A=None, b=None, initvals=None):
+        return cvxopt_solve_qp(P, q, G, h, A, b, 'mosek', initvals)
+except ImportError:
+    def mosek_solve_qp(*args, **kwargs):
+        raise ImportError("MOSEK not found")

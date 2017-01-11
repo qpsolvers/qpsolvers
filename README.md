@@ -25,16 +25,30 @@ The list of supported solvers currently includes:
     - [quadprog](https://pypi.python.org/pypi/quadprog/)
 - Symbolic solvers:
     - [CVXPY](http://www.cvxpy.org/en/latest/)
-    - [Gurobi](http://www.gurobi.com/)
+    - [Gurobi](https://www.gurobi.com/)
+    - [MOSEK](https://mosek.com/) as wrapped by CVXOPT
 
 Numerical solvers are those for which the input can be provided directly in
-matrix-vector form. On the contrary, symbolic solvers require calls to various
+matrix-vector form. On the contrary, symbolic solvers call various
 constructors, so that building their input usually takes more time than solving
 the QP itself.
 
-## Name of the module
+## Performances
 
-"Ô" is a vocative particle in French (as in: "Ô temps ! suspends ton vol", a
-common interjection for real-time programmers) that is still commonly heard and
-sighted in cities of the South like Toulouse. Also, OQP is an acronym for
-"occupé", busy.
+First, note that performances of QP solvers largely depend on the problem
+solved. For example, active-set solvers (e.g. qpOASES and quadprog) are usually
+faster on smaller problems, while interior-point methods (e.g. MOSEK) scale
+better.
+
+On the [small.py](examples/small.py) distributed in the examples folder, the
+performance of all solvers (as mesured by IPython's ``%timeit`` on my machine)
+is:
+
+| Solver   | Computation time (µs) |
+| -------- | --------------------- |
+| qpOASES  | 31.5                  |
+| quadprog | 34.1                  |
+| CVXOPT   | 559                   |
+| Gurobi   | 865                   |
+| CVXPY    | 2.810                 |
+| MOSEK    | 7.240                 |

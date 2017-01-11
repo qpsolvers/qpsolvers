@@ -1,31 +1,32 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2015-2016 Stephane Caron <stephane.caron@normalesup.org>
+# Copyright (C) 2016-2017 Stephane Caron <stephane.caron@normalesup.org>
 #
-# This file is part of oqp.
+# This file is part of qpsolvers.
 #
-# oqp is free software: you can redistribute it and/or modify it under
+# qpsolvers is free software: you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
 # Foundation, either version 3 of the License, or (at your option) any later
 # version.
 #
-# oqp is distributed in the hope that it will be useful, but WITHOUT
+# qpsolvers is distributed in the hope that it will be useful, but WITHOUT
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
 #
 # You should have received a copy of the GNU General Public License along with
-# oqp. If not, see <http://www.gnu.org/licenses/>.
+# qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
 from IPython import get_ipython
 from numpy import array, dot
 from numpy.linalg import norm
-from oqp import cvxopt_solve_qp
-from oqp import cvxpy_solve_qp
-from oqp import gurobi_solve_qp
-from oqp import qpoases_solve_qp
-from oqp import quadprog_solve_qp
+from qpsolvers import cvxopt_solve_qp
+from qpsolvers import cvxpy_solve_qp
+from qpsolvers import gurobi_solve_qp
+from qpsolvers import mosek_solve_qp
+from qpsolvers import qpoases_solve_qp
+from qpsolvers import quadprog_solve_qp
 from os.path import basename
 
 
@@ -51,6 +52,7 @@ if __name__ == "__main__":
     u2 = qpoases_solve_qp(P, q, G, h)
     u3 = cvxpy_solve_qp(P, q, G, h)
     u4 = quadprog_solve_qp(P, q, G, h)
+    u5 = mosek_solve_qp(P, q, G, h)
 
     assert norm(u0 - u1) < 1e-4
     assert norm(u1 - u2) < 1e-4
@@ -61,7 +63,8 @@ if __name__ == "__main__":
     print "\nSYMBOLIC",
     print "\n========\n"
     for c in ["u1 = gurobi_solve_qp(P, q, G, h)",
-              "u3 = cvxpy_solve_qp(P, q, G, h)"]:
+              "u3 = cvxpy_solve_qp(P, q, G, h)",
+              "u5 = mosek_solve_qp(P, q, G, h)"]:
         print c
         get_ipython().magic(u'timeit %s' % c)
 

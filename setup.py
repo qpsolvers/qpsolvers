@@ -3,10 +3,10 @@
 from distutils.core import setup
 
 setup(
-    name='oqp',
+    name='qpsolvers',
     version='0.1.0',
     description="Wrapper around QP solvers in Python",
-    url="https://github.com/stephane-caron/oqp",
+    url="https://github.com/stephane-caron/qpsolvers",
     author="Stéphane Caron",
     author_email="stephane.caron@normalesup.org",
     license="GPL",
@@ -17,5 +17,5 @@ setup(
         'Topic :: Scientific/Engineering :: Mathematics',
         'License :: OSI Approved :: GNU General Public License (GPL)',
         'Programming Language :: Python :: 2.7'],
-    packages=['oqp']
+    packages=['qpsolvers']
 )
