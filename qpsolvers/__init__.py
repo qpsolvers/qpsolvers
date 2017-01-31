@@ -65,3 +65,57 @@ __all__ = [
     'qpoases_solve_qp',
     'quadprog_solve_qp',
 ]
+
+
+def solve_qp(P, q, G=None, h=None, A=None, b=None, solver='quadprog',
+             initvals=None):
+    """
+    Solve a Quadratic Program defined as:
+
+        minimize
+            (1/2) * x.T * P * x + q.T * x
+
+        subject to
+            G * x <= h
+            A * x == b
+
+    using one of the available QP solvers.
+
+    Parameters
+    ----------
+    P : array
+        Quadratic cost matrix.
+    q : array
+        Quadratic cost vector.
+    G : array
+        Linear inequality matrix.
+    h : array
+        Linear inequality vector.
+    A : array
+        Linear equality matrix.
+    b : array
+        Linear equality vector.
+    solver : str
+        Name of the solver to use, to choose in ['cvxopt', 'cvxpy', 'gurobi',
+        'mosek', 'qpoases', 'quadprog'].
+    initvals : array
+        Vector of initial `x` values used to warm-start the solver.
+
+    Returns
+    -------
+    x : array or None
+        Optimal solution if found, None otherwise.
+    """
+    if solver == 'cvxopt':
+        return cvxopt_solve_qp(P, q, G, h, A, b, initvals=initvals)
+    elif solver == 'cvxpy':
+        return cvxpy_solve_qp(P, q, G, h, A, b, initvals=initvals)
+    elif solver == 'gurobi':
+        return gurobi_solve_qp(P, q, G, h, A, b, initvals=initvals)
+    elif solver == 'mosek':
+        return mosek_solve_qp(P, q, G, h, A, b, initvals=initvals)
+    elif solver == 'qpoases':
+        return qpoases_solve_qp(P, q, G, h, A, b, initvals=initvals)
+    elif solver == 'quadprog':
+        return quadprog_solve_qp(P, q, G, h, A, b, initvals=initvals)
+    raise Exception("solver '%s' not recognized" % solver)

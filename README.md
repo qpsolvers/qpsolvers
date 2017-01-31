@@ -4,15 +4,15 @@ Wrapper around Quadratic Programming (QP) solvers in Python with a unified API.
 
 ## Usage
 
-A function ``SOLVER_solve_qp(P, q[, G, h[, A, b]])`` is provided for each
-available solver ``SOLVER``. The format is the same as
+The function ``solve_qp(P, q, G, h, ...)`` is called with the ``solver='...'``
+keyword argument to select the backend solver. Matrix names are the same as in
 [cvxopt.solvers.qp](http://cvxopt.org/userguide/coneprog.html#quadratic-programming),
 the function solves the quadratic program:
 
 <img src=".qp.png">
 
 Vector inequalities are taken coordinate by coordinate. Check out the
-``examples/`` folder for more usage information.
+``examples/`` folder to see practical calls.
 
 ## Solvers
 
@@ -43,9 +43,9 @@ machine) is:
 
 | Solver   | Time (µs) |
 | -------- | ----------|
-| qpOASES  | 31.5      |
+| qpoases  | 31.5      |
 | quadprog | 34.1      |
-| CVXOPT   | 559       |
-| Gurobi   | 865       |
-| CVXPY    | 2.810     |
-| MOSEK    | 7.240     |
+| cvxopt   | 559       |
+| gurobi   | 865       |
+| cvxpy    | 2.810     |
+| mosek    | 7.240     |
