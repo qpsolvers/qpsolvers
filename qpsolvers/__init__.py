@@ -23,20 +23,19 @@ Solvers with matrix-vector input
 """
 
 try:  # CVXOPT
-    from backend_cvxopt import cvxopt_solve_qp
-    from backend_cvxopt import mosek_solve_qp
+    from cvxopt_ import cvxopt_solve_qp
 except ImportError:
     def cvxopt_solve_qp(*args, **kwargs):
         raise ImportError("CVXOPT not found")
 
 try:  # quadprog
-    from backend_quadprog import quadprog_solve_qp
+    from quadprog_ import quadprog_solve_qp
 except ImportError:
     def quadprog_solve_qp(*args, **kwargs):
         raise ImportError("quadprog not found")
 
 try:  # qpOASES
-    from backend_qpoases import qpoases_solve_qp
+    from qpoases_ import qpoases_solve_qp
 except ImportError:
     def qpoases_solve_qp(*args, **kwargs):
         raise ImportError("qpOASES not found")
@@ -46,16 +45,22 @@ Solvers with symbolic input (NB: problem creation takes time)
 """
 
 try:  # CVXPY
-    from backend_cvxpy import cvxpy_solve_qp
+    from cvxpy_ import cvxpy_solve_qp
 except ImportError:
     def cvxpy_solve_qp(*args, **kwargs):
         raise ImportError("CVXPY not found")
 
 try:  # Gurobi
-    from backend_gurobi import gurobi_solve_qp
+    from gurobi_ import gurobi_solve_qp
 except ImportError:
     def gurobi_solve_qp(*args, **kwargs):
         raise ImportError("Gurobi not found")
+
+try:  # Mosek
+    from mosek_ import mosek_solve_qp
+except ImportError:
+    def mosek_solve_qp(*args, **kwargs):
+        raise ImportError("mosek not found")
 
 __all__ = [
     'cvxopt_solve_qp',
@@ -95,10 +100,10 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, solver='quadprog',
         Linear equality matrix.
     b : array
         Linear equality vector.
-    solver : str
+    solver : string, optional
         Name of the solver to use, to choose in ['cvxopt', 'cvxpy', 'gurobi',
         'mosek', 'qpoases', 'quadprog'].
-    initvals : array
+    initvals : array, optional
         Vector of initial `x` values used to warm-start the solver.
 
     Returns

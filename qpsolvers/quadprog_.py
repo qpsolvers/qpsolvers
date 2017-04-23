@@ -33,6 +33,28 @@ def quadprog_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
             A * x == b
 
     using quadprog <https://pypi.python.org/pypi/quadprog/>.
+
+    Parameters
+    ----------
+    P : array, shape=(n, n)
+        Primal quadratic cost matrix.
+    q : array, shape=(n,)
+        Primal quadratic cost vector.
+    G : array, shape=(m, n)
+        Linear inequality constraint matrix.
+    h : array, shape=(m,)
+        Linear inequality constraint vector.
+    A : array, shape=(meq, n), optional
+        Linear equality constraint matrix.
+    b : array, shape=(meq,), optional
+        Linear equality constraint vector.
+    initvals : array, shape=(n,), optional
+        Warm-start guess vector.
+
+    Returns
+    -------
+    x : array, shape=(n,)
+        Solution to the QP, if found, otherwise ``None``.
     """
     P = .5 * (P + P.T)  # quadprog assumes that P is symmetric
     return solve_qp(P, -q, -G.T, -h)[0]

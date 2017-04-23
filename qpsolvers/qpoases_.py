@@ -45,20 +45,41 @@ def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
 
     using qpOASES <https://projects.coin-or.org/qpOASES>.
 
-        .. NOTE::
+    Parameters
+    ----------
+    P : array, shape=(n, n)
+        Primal quadratic cost matrix.
+    q : array, shape=(n,)
+        Primal quadratic cost vector.
+    G : array, shape=(m, n)
+        Linear inequality constraint matrix.
+    h : array, shape=(m,)
+        Linear inequality constraint vector.
+    A : array, shape=(meq, n), optional
+        Linear equality constraint matrix.
+    b : array, shape=(meq,), optional
+        Linear equality constraint vector.
+    initvals : array, shape=(n,), optional
+        Warm-start guess vector.
 
-            This function relies on some updates from the standard distribution
-            of qpOASES (details below). A fully compatible repository is
-            published at <https://github.com/stephane-caron/qpOASES>.
+    Returns
+    -------
+    x : array, shape=(n,)
+        Solution to the QP, if found, otherwise ``None``.
 
-        .. NOTE::
+    Note
+    ----
+    This function relies on some updates from the standard distribution of
+    qpOASES (details below). A fully compatible repository is published at
+    <https://github.com/stephane-caron/qpOASES>.
 
-            This function allows empty bounds (lb, ub, lbA or ubA). This was
-            provisioned by the C++ API but not by the Python API of qpOASES (as
-            of version 3.2.0). Be sure to update the Cython file (qpoases.pyx)
-            to convert ``None`` to the null pointer, as done e.g. in
-            https://github.com/stephane-caron/qpOASES/commit/207996802f33da2375dd2db5cf58a977ac2bb0d2
-
+    Note
+    ----
+    This function allows empty bounds (lb, ub, lbA or ubA). This was provisioned
+    by the C++ API but not by the Python API of qpOASES (as of version 3.2.0).
+    Be sure to update the Cython file (qpoases.pyx) to convert ``None`` to the
+    null pointer, as done e.g. in
+    <https://github.com/stephane-caron/qpOASES/commit/207996802f33da2375dd2db5cf58a977ac2bb0d2>
     """
     if initvals is not None:
         raise NotImplementedError("initvals is ignored by this qpOASES wrapper")

@@ -24,49 +24,54 @@ from numpy.linalg import norm
 from qpsolvers import solve_qp
 from os.path import basename
 
+num_solvers = {}
+solutions = {}
+sym_solvers = {}
+
+solvers = [
+    ('cvxopt', num_solvers), ('gurobi', sym_solvers),
+    ('qpoases', num_solvers), ('cvxpy', sym_solvers),
+    ('quadprog', num_solvers), ('mosek', sym_solvers)]
+
+
+# QP matrices
+M = array([
+    [1., 2., 0.],
+    [-8., 3., 2.],
+    [0., 1., 1.]])
+P = dot(M.T, M)
+q = dot(array([3., 2., 3.]), M).reshape((3,))
+G = array([
+    [1., 2., 1.],
+    [2., 0., 1.],
+    [-1., 2., -1.]])
+h = array([3., 2., -2.]).reshape((3,))
+
 
 if __name__ == "__main__":
     if get_ipython() is None:
         print "Usage: ipython -i %s\n" % basename(__file__)
         exit()
 
-    M = array([
-        [1., 2., 0.],
-        [-8., 3., 2.],
-        [0., 1., 1.]])
-    P = dot(M.T, M)
-    q = dot(array([3., 2., 3.]), M).reshape((3,))
-    G = array([
-        [1., 2., 1.],
-        [2., 0., 1.],
-        [-1., 2., -1.]])
-    h = array([3., 2., -2.]).reshape((3,))
+    for (solver, out_dict) in solvers:
+        try:
+            solutions[solver] = solve_qp(P, q, G, h, solver=solver)
+            out_dict[solver] = "u = solve_qp(P, q, G, h, solver='%s')" % solver
+        except:
+            pass
 
-    u0 = solve_qp(P, q, G, h, solver='cvxopt')
-    u1 = solve_qp(P, q, G, h, solver='gurobi')
-    u2 = solve_qp(P, q, G, h, solver='qpoases')
-    u3 = solve_qp(P, q, G, h, solver='cvxpy')
-    u4 = solve_qp(P, q, G, h, solver='quadprog')
-    u5 = solve_qp(P, q, G, h, solver='mosek')
-
-    assert norm(u0 - u1) < 1e-4
-    assert norm(u1 - u2) < 1e-4
-    assert norm(u2 - u3) < 1e-4
-    assert norm(u3 - u4) < 1e-4
-    assert norm(u4 - u0) < 1e-4
+    sol0 = solutions.values()[0]
+    for sol in solutions.values():
+        assert norm(sol - sol0) < 1e-4
 
     print "\nSYMBOLIC",
-    print "\n========\n"
-    for c in ["u1 = solve_qp(P, q, G, h, solver='gurobi')",
-              "u3 = solve_qp(P, q, G, h, solver='cvxpy')",
-              "u5 = solve_qp(P, q, G, h, solver='mosek')"]:
-        print c
-        get_ipython().magic(u'timeit %s' % c)
+    print "\n========"
+    for solver, instr in sym_solvers.iteritems():
+        print "\n%s:" % solver
+        get_ipython().magic(u'timeit %s' % instr)
 
     print "\nNUMERIC (COLD START)",
-    print "\n====================\n"
-    for c in ["u0 = solve_qp(P, q, G, h, solver='cvxopt')",
-              "u2 = solve_qp(P, q, G, h, solver='qpoases')",
-              "u4 = solve_qp(P, q, G, h, solver='quadprog')"]:
-        print c
-        get_ipython().magic(u'timeit %s' % c)
+    print "\n===================="
+    for solver, instr in num_solvers.iteritems():
+        print "\n%s:" % solver
+        get_ipython().magic(u'timeit %s' % instr)

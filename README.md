@@ -4,7 +4,7 @@ Wrapper around Quadratic Programming (QP) solvers in Python with a unified API.
 
 ## Usage
 
-The function ``solve_qp(P, q, G, h, ...)`` is called with the ``solver='...'``
+The function ``solve_qp(P, q, G, h)`` is called with the ``solver='xyz'``
 keyword argument to select the backend solver. Matrix names are the same as in
 [cvxopt.solvers.qp](http://cvxopt.org/userguide/coneprog.html#quadratic-programming),
 the function solves the quadratic program:

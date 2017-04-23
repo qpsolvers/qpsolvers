@@ -35,6 +35,28 @@ def cvxpy_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
             A * x == b
 
     using CVXPY <http://www.cvxpy.org/>.
+
+    Parameters
+    ----------
+    P : array, shape=(n, n)
+        Primal quadratic cost matrix.
+    q : array, shape=(n,)
+        Primal quadratic cost vector.
+    G : array, shape=(m, n)
+        Linear inequality constraint matrix.
+    h : array, shape=(m,)
+        Linear inequality constraint vector.
+    A : array, shape=(meq, n), optional
+        Linear equality constraint matrix.
+    b : array, shape=(meq,), optional
+        Linear equality constraint vector.
+    initvals : array, shape=(n,), optional
+        Warm-start guess vector.
+
+    Returns
+    -------
+    x : array, shape=(n,)
+        Solution to the QP, if found, otherwise ``None``.
     """
     n = P.shape[0]
     x = Variable(n)

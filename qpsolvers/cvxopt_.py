@@ -23,7 +23,6 @@ from cvxopt import matrix
 from cvxopt.solvers import options, qp
 from warnings import warn
 
-
 options['show_progress'] = False  # disable cvxopt output
 
 
@@ -40,6 +39,30 @@ def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None, solver=None,
             A * x == b
 
     using CVXOPT <http://cvxopt.org/>.
+
+    Parameters
+    ----------
+    P : array, shape=(n, n)
+        Primal quadratic cost matrix.
+    q : array, shape=(n,)
+        Primal quadratic cost vector.
+    G : array, shape=(m, n)
+        Linear inequality constraint matrix.
+    h : array, shape=(m,)
+        Linear inequality constraint vector.
+    A : array, shape=(meq, n), optional
+        Linear equality constraint matrix.
+    b : array, shape=(meq,), optional
+        Linear equality constraint vector.
+    solver : string, optional
+        Set to 'mosek' to run MOSEK rather than CVXOPT.
+    initvals : array, shape=(n,), optional
+        Warm-start guess vector.
+
+    Returns
+    -------
+    x : array, shape=(n,)
+        Solution to the QP, if found, otherwise ``None``.
     """
     n = P.shape[1]
     # CVXOPT 1.1.7 only considers the lower entries of P
@@ -57,15 +80,3 @@ def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None, solver=None,
         warn("QP optimum not found: %s" % sol['status'])
         return None
     return array(sol['x']).reshape((n,))
-
-
-try:
-    import cvxopt.msk
-    import mosek
-    cvxopt.solvers.options['mosek'] = {mosek.iparam.log: 0}
-
-    def mosek_solve_qp(P, q, G, h, A=None, b=None, initvals=None):
-        return cvxopt_solve_qp(P, q, G, h, A, b, 'mosek', initvals)
-except ImportError:
-    def mosek_solve_qp(*args, **kwargs):
-        raise ImportError("MOSEK not found")
