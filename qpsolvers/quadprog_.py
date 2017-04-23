@@ -18,6 +18,7 @@
 # You should have received a copy of the GNU General Public License along with
 # qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
+from numpy import hstack, vstack
 from quadprog import solve_qp
 
 

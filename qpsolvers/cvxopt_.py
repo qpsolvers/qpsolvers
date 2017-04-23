@@ -21,7 +21,6 @@
 from numpy import array
 from cvxopt import matrix
 from cvxopt.solvers import options, qp
-from warnings import warn
 
 options['show_progress'] = False  # disable cvxopt output
 
@@ -64,19 +63,15 @@ def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None, solver=None,
     x : array, shape=(n,)
         Solution to the QP, if found, otherwise ``None``.
     """
-    n = P.shape[1]
-    # CVXOPT 1.1.7 only considers the lower entries of P
-    # so we need to project on the symmetric part beforehand,
-    # otherwise a wrong cost function will be used
+    # CVXOPT only considers the lower entries of P so we need to project on the
+    # symmetric part beforehand, otherwise a wrong cost function will be used
     P = .5 * (P + P.T)
-    # now we can proceed
     args = [matrix(P), matrix(q)]
     if G is not None:
         args.extend([matrix(G), matrix(h)])
         if A is not None:
             args.extend([matrix(A), matrix(b)])
     sol = qp(*args, solver=solver, initvals=initvals)
-    if not ('optimal' in sol['status']):
-        warn("QP optimum not found: %s" % sol['status'])
+    if 'optimal' not in sol['status']:
         return None
-    return array(sol['x']).reshape((n,))
+    return array(sol['x']).reshape((P.shape[1],))

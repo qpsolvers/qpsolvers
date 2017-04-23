@@ -18,11 +18,18 @@
 # You should have received a copy of the GNU General Public License along with
 # qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
+import sys
+
 from IPython import get_ipython
 from numpy import array, dot
 from numpy.linalg import norm
-from qpsolvers import solve_qp
-from os.path import basename
+from os.path import basename, dirname, realpath
+
+try:
+    from qpsolvers import solve_qp
+except ImportError:  # run locally if not installed
+    sys.path.append(dirname(realpath(__file__)) + '/..')
+    from qpsolvers import solve_qp
 
 num_solvers = {}
 solutions = {}
@@ -50,28 +57,28 @@ h = array([3., 2., -2.]).reshape((3,))
 
 if __name__ == "__main__":
     if get_ipython() is None:
-        print "Usage: ipython -i %s\n" % basename(__file__)
+        print "Usage: ipython -i %s" % basename(__file__)
         exit()
 
     for (solver, out_dict) in solvers:
         try:
             solutions[solver] = solve_qp(P, q, G, h, solver=solver)
             out_dict[solver] = "u = solve_qp(P, q, G, h, solver='%s')" % solver
-        except:
-            pass
+        except Exception as e:
+            print "Warning:", e
 
     sol0 = solutions.values()[0]
     for sol in solutions.values():
         assert norm(sol - sol0) < 1e-4
 
     print "\nSYMBOLIC",
-    print "\n========"
+    print "\n--------"
     for solver, instr in sym_solvers.iteritems():
-        print "\n%s:" % solver
+        print "%s:" % solver,
         get_ipython().magic(u'timeit %s' % instr)
 
     print "\nNUMERIC (COLD START)",
-    print "\n===================="
+    print "\n--------------------"
     for solver, instr in num_solvers.iteritems():
-        print "\n%s:" % solver
+        print "%s:" % solver,
         get_ipython().magic(u'timeit %s' % instr)
