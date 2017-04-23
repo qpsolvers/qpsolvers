@@ -34,7 +34,7 @@ except ImportError:  # run locally if not installed
 
 nb_iter = 10
 solvers = ['cvxopt', 'gurobi', 'qpoases', 'cvxpy', 'quadprog', 'mosek']
-sizes = [10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000]
+sizes = [10, 20, 50, 100, 200, 500, 1000, 2000]
 
 
 def solve_random_qp(n, solver):
@@ -71,6 +71,7 @@ if __name__ == "__main__":
         try:
             perfs[solver] = []
             for size in sizes:
+                print "Running %s on problem size %d..." % (solver, size)
                 cum_time = timeit(
                     stmt="solve_random_qp(%d, '%s')" % (size, solver),
                     setup="from __main__ import solve_random_qp",

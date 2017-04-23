@@ -4,10 +4,9 @@ Wrapper around Quadratic Programming (QP) solvers in Python with a unified API.
 
 ## Usage
 
-The function ``solve_qp(P, q, G, h)`` is called with the ``solver='xyz'``
-keyword argument to select the backend solver. Matrix names are the same as in
-[cvxopt.solvers.qp](http://cvxopt.org/userguide/coneprog.html#quadratic-programming),
-the function solves the quadratic program:
+The function ``solve_qp(P, q, G, h, A, b)`` is called with the ``solver``
+keyword argument to select the backend solver. The quadratic program solved is,
+in standard form:
 
 <img src=".qp.png">
 
@@ -34,12 +33,9 @@ the QP itself.
 
 ## Performances
 
-First, note that performances of QP solvers largely depend on the problem
-solved. For example, active-set solvers (e.g. qpOASES and quadprog) are usually
-faster on smaller problems, while interior-point methods (e.g. MOSEK) scale
-better. On the [small.py](examples/small.py) distributed in the examples folder,
-the performance of all solvers (as mesured by IPython's ``%timeit`` on my
-machine) is:
+On the [small.py](examples/small.py) distributed in the examples folder, the
+performance of all solvers (as mesured by IPython's ``%timeit`` on my machine)
+is:
 
 | Solver   | Time (µs) |
 | -------- | ----------|
@@ -49,3 +45,14 @@ machine) is:
 | gurobi   | 865       |
 | cvxpy    | 2.810     |
 | mosek    | 7.240     |
+
+Here are the results on a benchmark of random problems generated with the
+[randomized.py](examples/randomized.py) example (each data point corresponds to
+an average over 10 runs):
+
+<img src="https://scaron.info/images/qp-benchmark.png">
+
+Note that performances of QP solvers largely depend on the problem solved. In
+this benchmark, I only considered dense problems, hence the clear advantage of
+active-set solvers (quadprog or qpOASES) over symbolic solvers (CVXPY or
+Gurobi).
