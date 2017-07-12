@@ -27,14 +27,22 @@ from scipy.linalg import toeplitz
 from timeit import timeit
 
 try:
-    from qpsolvers import solve_qp
+    from qpsolvers import available_solvers, solve_qp
 except ImportError:  # run locally if not installed
     sys.path.append(dirname(realpath(__file__)) + '/..')
-    from qpsolvers import solve_qp
+    from qpsolvers import available_solvers, solve_qp
+
+colors = {
+    'cvxopt': 'r',
+    'cvxpy': 'c',
+    'gurobi': 'b',
+    'mosek': 'g',
+    'osqp': 'k',
+    'qpoases': 'y',
+    'quadprog': 'm'}
 
 nb_iter = 10
-solvers = ['cvxopt', 'gurobi', 'qpoases', 'cvxpy', 'quadprog', 'mosek']
-sizes = [10, 20, 50, 100, 200, 500, 1000, 2000]
+sizes = [10, 20, 50, 100, 200, 500, 1000]
 
 
 def solve_random_qp(n, solver):
@@ -47,9 +55,6 @@ def solve_random_qp(n, solver):
 
 def plot_results(perfs):
     from pylab import clf, grid, ion, legend, plot, xscale, yscale
-    colors = {
-        'cvxopt': 'r', 'gurobi': 'b', 'cvxpy': 'c', 'quadprog': 'm',
-        'mosek': 'g', 'qpoases': 'y'}
     ion()
     clf()
     for solver in perfs:
@@ -67,7 +72,7 @@ if __name__ == "__main__":
         print "Usage: ipython -i %s" % basename(__file__)
         exit()
     perfs = {}
-    for solver in solvers:
+    for solver in available_solvers:
         try:
             perfs[solver] = []
             for size in sizes:

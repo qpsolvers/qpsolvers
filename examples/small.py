@@ -26,19 +26,12 @@ from numpy.linalg import norm
 from os.path import basename, dirname, realpath
 
 try:
+    from qpsolvers import available_solvers, matrix_solvers, symbolic_solvers
     from qpsolvers import solve_qp
 except ImportError:  # run locally if not installed
     sys.path.append(dirname(realpath(__file__)) + '/..')
+    from qpsolvers import available_solvers, matrix_solvers, symbolic_solvers
     from qpsolvers import solve_qp
-
-num_solvers = {}
-solutions = {}
-sym_solvers = {}
-
-solvers = [
-    ('cvxopt', num_solvers), ('gurobi', sym_solvers),
-    ('qpoases', num_solvers), ('cvxpy', sym_solvers),
-    ('quadprog', num_solvers), ('mosek', sym_solvers)]
 
 
 # QP matrices
@@ -60,25 +53,26 @@ if __name__ == "__main__":
         print "Usage: ipython -i %s" % basename(__file__)
         exit()
 
-    for (solver, out_dict) in solvers:
-        try:
-            solutions[solver] = solve_qp(P, q, G, h, solver=solver)
-            out_dict[solver] = "u = solve_qp(P, q, G, h, solver='%s')" % solver
-        except Exception as e:
-            print "Warning:", e
+    mat_instr = {
+        solver: "u = solve_qp(P, q, G, h, solver='%s')" % solver
+        for solver in matrix_solvers}
+    sym_instr = {
+        solver: "u = solve_qp(P, q, G, h, solver='%s')" % solver
+        for solver in symbolic_solvers}
 
-    sol0 = solutions.values()[0]
-    for sol in solutions.values():
+    sol0 = solve_qp(P, q, G, h, solver=available_solvers[0])
+    for solver in available_solvers:
+        sol = solve_qp(P, q, G, h, solver=solver)
         assert norm(sol - sol0) < 1e-4
+
+    print "\nMATRIX",
+    print "\n------"
+    for solver, instr in mat_instr.iteritems():
+        print "%s: " % solver,
+        get_ipython().magic(u'timeit %s' % instr)
 
     print "\nSYMBOLIC",
     print "\n--------"
-    for solver, instr in sym_solvers.iteritems():
-        print "%s:" % solver,
-        get_ipython().magic(u'timeit %s' % instr)
-
-    print "\nNUMERIC (COLD START)",
-    print "\n--------------------"
-    for solver, instr in num_solvers.iteritems():
-        print "%s:" % solver,
+    for solver, instr in sym_instr.iteritems():
+        print "%s: " % solver,
         get_ipython().magic(u'timeit %s' % instr)
