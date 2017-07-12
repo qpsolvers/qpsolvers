@@ -18,57 +18,99 @@
 # You should have received a copy of the GNU General Public License along with
 # qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Solvers with matrix-vector input
-"""
+available_solvers = []
+matrix_solvers = []
+symbolic_solvers = []
 
-try:  # CVXOPT
+
+# CVXOPT
+# ======
+
+try:
     from cvxopt_ import cvxopt_solve_qp
+    available_solvers.append('cvxopt')
+    matrix_solvers.append('cvxopt')
 except ImportError:
     def cvxopt_solve_qp(*args, **kwargs):
         raise ImportError("CVXOPT not found")
 
-try:  # quadprog
-    from quadprog_ import quadprog_solve_qp
-except ImportError:
-    def quadprog_solve_qp(*args, **kwargs):
-        raise ImportError("quadprog not found")
+# CVXPY
+# =====
 
-try:  # qpOASES
-    from qpoases_ import qpoases_solve_qp
-except ImportError:
-    def qpoases_solve_qp(*args, **kwargs):
-        raise ImportError("qpOASES not found")
-
-"""
-Solvers with symbolic input (NB: problem creation takes time)
-"""
-
-try:  # CVXPY
+try:
     from cvxpy_ import cvxpy_solve_qp
+    available_solvers.append('cvxpy')
+    symbolic_solvers.append('cvxpy')
 except ImportError:
     def cvxpy_solve_qp(*args, **kwargs):
         raise ImportError("CVXPY not found")
 
-try:  # Gurobi
+# Gurobi
+# ======
+
+try:
     from gurobi_ import gurobi_solve_qp
+    available_solvers.append('gurobi')
+    symbolic_solvers.append('gurobi')
 except ImportError:
     def gurobi_solve_qp(*args, **kwargs):
         raise ImportError("Gurobi not found")
 
-try:  # Mosek
+# Mosek
+# =====
+
+try:
     from mosek_ import mosek_solve_qp
+    available_solvers.append('mosek')
+    symbolic_solvers.append('mosek')
 except ImportError:
     def mosek_solve_qp(*args, **kwargs):
         raise ImportError("mosek not found")
 
+# OSQP
+# ====
+
+try:
+    from osqp_ import osqp_solve_qp
+    available_solvers.append('osqp')
+    matrix_solvers.append('osqp')
+except ImportError:
+    def osqp_solve_qp(*args, **kwargs):
+        raise ImportError("osqp not found")
+
+# qpOASES
+# =======
+
+try:
+    from qpoases_ import qpoases_solve_qp
+    available_solvers.append('qpoases')
+    matrix_solvers.append('qpoases')
+except ImportError:
+    def qpoases_solve_qp(*args, **kwargs):
+        raise ImportError("qpOASES not found")
+
+# quadprog
+# ========
+
+try:
+    from quadprog_ import quadprog_solve_qp
+    available_solvers.append('quadprog')
+    matrix_solvers.append('quadprog')
+except ImportError:
+    def quadprog_solve_qp(*args, **kwargs):
+        raise ImportError("quadprog not found")
+
+
 __all__ = [
+    'available_solvers',
     'cvxopt_solve_qp',
     'cvxpy_solve_qp',
     'gurobi_solve_qp',
+    'matrix_solvers',
     'mosek_solve_qp',
     'qpoases_solve_qp',
     'quadprog_solve_qp',
+    'symbolic_solvers',
 ]
 
 
@@ -119,6 +161,8 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, solver='quadprog',
         return gurobi_solve_qp(P, q, G, h, A, b, initvals=initvals)
     elif solver == 'mosek':
         return mosek_solve_qp(P, q, G, h, A, b, initvals=initvals)
+    elif solver == 'osqp':
+        return osqp_solve_qp(P, q, G, h, A, b, initvals=initvals)
     elif solver == 'qpoases':
         return qpoases_solve_qp(P, q, G, h, A, b, initvals=initvals)
     elif solver == 'quadprog':
