@@ -18,11 +18,22 @@
 # You should have received a copy of the GNU General Public License along with
 # qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-from numpy import array
-from cvxopt import matrix
+from cvxopt import matrix, spmatrix
 from cvxopt.solvers import options, qp
+from numpy import array, ndarray
+
 
 options['show_progress'] = False  # disable cvxopt output
+
+
+def cvxopt_matrix(M):
+    if type(M) is ndarray:
+        return matrix(M)
+    elif type(M) is spmatrix or type(M) is matrix:
+        return M
+    coo = M.tocoo()
+    return spmatrix(
+        coo.data.tolist(), coo.row.tolist(), coo.col.tolist(), size=M.shape)
 
 
 def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None, solver=None,
@@ -41,17 +52,17 @@ def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None, solver=None,
 
     Parameters
     ----------
-    P : array, shape=(n, n)
+    P : numpy.array, cvxopt.matrix or cvxopt.spmatrix
         Primal quadratic cost matrix.
-    q : array, shape=(n,)
+    q : numpy.array, cvxopt.matrix or cvxopt.spmatrix
         Primal quadratic cost vector.
-    G : array, shape=(m, n)
+    G : numpy.array, cvxopt.matrix or cvxopt.spmatrix
         Linear inequality constraint matrix.
-    h : array, shape=(m,)
+    h : numpy.array, cvxopt.matrix or cvxopt.spmatrix
         Linear inequality constraint vector.
-    A : array, shape=(meq, n), optional
+    A : numpy.array, cvxopt.matrix or cvxopt.spmatrix
         Linear equality constraint matrix.
-    b : array, shape=(meq,), optional
+    b : numpy.array, cvxopt.matrix or cvxopt.spmatrix
         Linear equality constraint vector.
     solver : string, optional
         Set to 'mosek' to run MOSEK rather than CVXOPT.
@@ -66,12 +77,12 @@ def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None, solver=None,
     # CVXOPT only considers the lower entries of P so we need to project on the
     # symmetric part beforehand, otherwise a wrong cost function will be used
     P = .5 * (P + P.T)
-    args = [matrix(P), matrix(q)]
+    args = [cvxopt_matrix(P), cvxopt_matrix(q)]
     if G is not None:
-        args.extend([matrix(G), matrix(h)])
+        args.extend([cvxopt_matrix(G), cvxopt_matrix(h)])
         if A is not None:
-            args.extend([matrix(A), matrix(b)])
+            args.extend([cvxopt_matrix(A), cvxopt_matrix(b)])
     sol = qp(*args, solver=solver, initvals=initvals)
     if 'optimal' not in sol['status']:
         return None
-    return array(sol['x']).reshape((P.shape[1],))
+    return array(sol['x']).reshape((q.shape[0],))

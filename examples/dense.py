@@ -24,13 +24,14 @@ from IPython import get_ipython
 from numpy import array, dot
 from numpy.linalg import norm
 from os.path import basename, dirname, realpath
+from scipy.sparse import csc_matrix
 
 try:
-    from qpsolvers import available_solvers, matrix_solvers, symbolic_solvers
+    from qpsolvers import dense_solvers, sparse_solvers
     from qpsolvers import solve_qp
 except ImportError:  # run locally if not installed
     sys.path.append(dirname(realpath(__file__)) + '/..')
-    from qpsolvers import available_solvers, matrix_solvers, symbolic_solvers
+    from qpsolvers import dense_solvers, sparse_solvers
     from qpsolvers import solve_qp
 
 
@@ -46,6 +47,8 @@ G = array([
     [2., 0., 1.],
     [-1., 2., -1.]])
 h = array([3., 2., -2.]).reshape((3,))
+P_csc = csc_matrix(P)
+G_csc = csc_matrix(G)
 
 
 if __name__ == "__main__":
@@ -53,27 +56,31 @@ if __name__ == "__main__":
         print "Usage: ipython -i %s" % basename(__file__)
         exit()
 
-    mat_instr = {
+    dense_instr = {
         solver: "u = solve_qp(P, q, G, h, solver='%s')" % solver
-        for solver in matrix_solvers}
-    sym_instr = {
-        solver: "u = solve_qp(P, q, G, h, solver='%s')" % solver
-        for solver in symbolic_solvers}
+        for solver in dense_solvers}
+    sparse_instr = {
+        solver: "u = solve_qp(P_csc, q, G_csc, h, solver='%s')" % solver
+        for solver in sparse_solvers}
 
-    sol0 = solve_qp(P, q, G, h, solver=available_solvers[0])
-    for solver in available_solvers:
+    sol0 = solve_qp(P, q, G, h, solver=dense_solvers[0])
+    for solver in dense_solvers:
         sol = solve_qp(P, q, G, h, solver=solver)
         delta = norm(sol - sol0)
         assert delta < 1e-4, "%s's solution offset by %.1e" % (solver, delta)
+    for solver in sparse_solvers:
+        sol = solve_qp(P_csc, q, G_csc, h, solver=solver)
+        delta = norm(sol - sol0)
+        assert delta < 1e-4, "%s's solution offset by %.1e" % (solver, delta)
 
-    print "\nMATRIX",
-    print "\n------"
-    for solver, instr in mat_instr.iteritems():
+    print "\nDense solvers",
+    print "\n-------------"
+    for solver, instr in dense_instr.iteritems():
         print "%s: " % solver,
         get_ipython().magic(u'timeit %s' % instr)
 
-    print "\nSYMBOLIC",
-    print "\n--------"
-    for solver, instr in sym_instr.iteritems():
+    print "\nSparse solvers",
+    print "\n--------------"
+    for solver, instr in sparse_instr.iteritems():
         print "%s: " % solver,
         get_ipython().magic(u'timeit %s' % instr)

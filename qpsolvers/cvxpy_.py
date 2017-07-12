@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License along with
 # qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-from cvxpy import Variable, Minimize, Problem, quad_form
+from cvxpy import Constant, Minimize, Problem, Variable, quad_form
 from numpy import array
 from warnings import warn
 
@@ -61,8 +61,9 @@ def cvxpy_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
     """
     if initvals is not None:
         warn("warm-start values ignored by CVXPY wrapper")
-    n = P.shape[0]
+    n = q.shape[0]
     x = Variable(n)
+    P = Constant(P)  # see http://www.cvxpy.org/en/latest/faq/
     objective = Minimize(0.5 * quad_form(x, P) + q * x)
     constraints = []
     if G is not None:

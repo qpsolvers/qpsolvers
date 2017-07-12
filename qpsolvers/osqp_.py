@@ -18,9 +18,9 @@
 # You should have received a copy of the GNU General Public License along with
 # qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-from numpy import hstack, inf, ones, vstack
+from numpy import hstack, inf, ones
 from osqp import OSQP
-from scipy.sparse import csc_matrix
+from scipy.sparse import vstack
 from warnings import warn
 
 
@@ -39,19 +39,19 @@ def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
 
     Parameters
     ----------
-    P : array, shape=(n, n)
+    P : scipy.sparse.csc_matrix
         Primal quadratic cost matrix.
-    q : array, shape=(n,)
+    q : numpy.array
         Primal quadratic cost vector.
-    G : array, shape=(m, n)
+    G : scipy.sparse.csc_matrix
         Linear inequality constraint matrix.
-    h : array, shape=(m,)
+    h : numpy.array
         Linear inequality constraint vector.
-    A : array, shape=(meq, n), optional
+    A : scipy.sparse.csc_matrix, optional
         Linear equality constraint matrix.
-    b : array, shape=(meq,), optional
+    b : numpy.array, optional
         Linear equality constraint vector.
-    initvals : array, shape=(n,), optional
+    initvals : numpy.array, optional
         Warm-start guess vector.
 
     Returns
@@ -61,8 +61,6 @@ def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     """
     n = q.shape[0]
     l = -inf * ones(n)
-    qp_P = csc_matrix(P)
-    qp_q = q
     if A is not None:
         qp_A = vstack([G, A])
         qp_l = hstack([l, b])
@@ -71,9 +69,8 @@ def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
         qp_A = G
         qp_l = l
         qp_u = h
-    qp_A = csc_matrix(qp_A)
     osqp = OSQP()
-    osqp.setup(P=qp_P, q=qp_q, A=qp_A, l=qp_l, u=qp_u, verbose=False)
+    osqp.setup(P=P, q=q, A=qp_A, l=qp_l, u=qp_u, verbose=False)
     if initvals is not None:
         osqp.warm_start(x=initvals)
     res = osqp.solve()

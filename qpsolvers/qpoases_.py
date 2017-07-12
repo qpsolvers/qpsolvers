@@ -32,7 +32,8 @@ options = Options()
 options.printLevel = PrintLevel.NONE
 
 
-def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
+def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
+                     max_wsr=100):
     """
     Solve a Quadratic Program defined as:
 
@@ -61,6 +62,8 @@ def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
         Linear equality constraint vector.
     initvals : array, shape=(n,), optional
         Warm-start guess vector.
+    max_wsr : integer, optional
+        Maximum number of Working-Set Recalculations given to qpOASES.
 
     Returns
     -------
@@ -85,7 +88,6 @@ def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
         warn("warm-start values ignored by qpOASES wrapper")
     n = P.shape[0]
     lb, ub = None, None
-    nb_wsr = array([100])  # number of working set recalculations
     has_cons = G is not None or A is not None
     if G is not None and A is None:
         C = G
@@ -102,13 +104,13 @@ def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     if has_cons:
         qp = QProblem(n, C.shape[0])
         qp.setOptions(options)
-        return_value = qp.init(P, q, C, lb, ub, lb_C, ub_C, nb_wsr)
+        return_value = qp.init(P, q, C, lb, ub, lb_C, ub_C, array([max_wsr]))
         if return_value == ReturnValue.MAX_NWSR_REACHED:
-            warn("qpOASES reached the maximum number of WSR (%d)" % nb_wsr[0])
+            warn("qpOASES reached the maximum number of WSR (%d)" % max_wsr)
     else:
         qp = QProblemB(n)
         qp.setOptions(options)
-        qp.init(P, q, lb, ub, nb_wsr)
+        qp.init(P, q, lb, ub, max_wsr)
     x_opt = zeros(n)
     ret = qp.getPrimalSolution(x_opt)
     if ret != 0:  # 0 == SUCCESSFUL_RETURN code of qpOASES

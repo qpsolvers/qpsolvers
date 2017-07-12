@@ -26,6 +26,17 @@ from warnings import warn
 setParam('OutputFlag', 0)
 
 
+def get_nonzero_rows(M):
+    nonzero_rows = {}
+    rows, cols = M.nonzero()
+    for ij in zip(rows, cols):
+        i, j = ij
+        if i not in nonzero_rows:
+            nonzero_rows[i] = []
+        nonzero_rows[i].append(j)
+    return nonzero_rows
+
+
 def gurobi_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     """
     Solve a Quadratic Program defined as:
@@ -78,23 +89,26 @@ def gurobi_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     # minimize
     #     1/2 x.T * P * x + q * x
     obj = QuadExpr()
+    rows, cols = P.nonzero()
+    for i, j in zip(rows, cols):
+        obj += 0.5 * x[i] * P[i, j] * x[j]
     for i in xrange(n):
-        for j in xrange(n):
-            obj += 0.5 * x[i] * P[i, j] * x[j]
         obj += q[i] * x[i]
     model.setObjective(obj, GRB.MINIMIZE)
 
     # subject to
     #     G * x <= h
     if G is not None:
-        for i in xrange(n):
-            model.addConstr(quicksum(G[i, j] * x[j] for j in xrange(n)) <= h[i])
+        G_nonzero_rows = get_nonzero_rows(G)
+        for i, row in G_nonzero_rows.iteritems():
+            model.addConstr(quicksum(G[i, j] * x[j] for j in row) <= h[i])
 
     # subject to
     #     A * x == b
     if A is not None:
-        for i in xrange(n):
-            model.addConstr(quicksum(A[i, j] * x[j] for j in xrange(n)) == b[i])
+        A_nonzero_rows = get_nonzero_rows(A)
+        for i, row in A_nonzero_rows.iteritems():
+            model.addConstr(quicksum(A[i, j] * x[j] for j in row) == b[i])
 
     model.optimize()
 
