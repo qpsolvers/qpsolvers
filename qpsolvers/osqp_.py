@@ -20,7 +20,7 @@
 
 from numpy import hstack, inf, ones, vstack
 from osqp import OSQP
-from scipy import sparse
+from scipy.sparse import csc_matrix
 from warnings import warn
 
 
@@ -61,7 +61,7 @@ def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     """
     n = q.shape[0]
     l = -inf * ones(n)
-    qp_P = sparse.csc_matrix(P)
+    qp_P = csc_matrix(P)
     qp_q = q
     if A is not None:
         qp_A = vstack([G, A])
@@ -71,7 +71,7 @@ def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
         qp_A = G
         qp_l = l
         qp_u = h
-    qp_A = sparse.csc_matrix(qp_A)
+    qp_A = csc_matrix(qp_A)
     osqp = OSQP()
     osqp.setup(P=qp_P, q=qp_q, A=qp_A, l=qp_l, u=qp_u, verbose=False)
     if initvals is not None:
