@@ -33,7 +33,7 @@ options.printLevel = PrintLevel.NONE
 
 
 def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
-                     max_wsr=100):
+                     max_wsr=1000):
     """
     Solve a Quadratic Program defined as:
 
