@@ -34,25 +34,26 @@ is:
 
 | Solver   | Type   | Time (ms) |
 | -------- | ------ | --------- |
+| quadprog | Dense  | 0.02      |
 | qpoases  | Dense  | 0.03      |
-| quadprog | Dense  | 0.03      |
-| cvxopt   | Dense  | 0.55      |
-| osqp     | Sparse | 0.36      |
-| gurobi   | Sparse | 0.86      |
-| cvxpy    | Sparse | 2.81      |
-| mosek    | Sparse | 7.24      |
+| osqp     | Sparse | 0.04      |
+| cvxopt   | Dense  | 0.43      |
+| gurobi   | Sparse | 0.84      |
+| cvxpy    | Sparse | 2.61      |
+| mosek    | Sparse | 7.17      |
 
 Meanwhile, on the [sparse.py](examples/sparse.py) example, these performances
 become:
 
-| Solver   | Type   | Time (s) |
-| -------- | ------ | -------- |
-| qpoases  | Dense  | 15.7     |
-| quadprog | Dense  | 3.8      |
-| cvxopt   | Dense  | 1.5      |
-| gurobi   | Sparse | 0.5      |
-| cvxpy    | Sparse | 0.6      |
-| mosek    | Sparse | 0.01     |
+| Solver   | Type   | Time (ms) |
+| -------- | ------ | --------- |
+| osqp     | Sparse |    1      |
+| mosek    | Sparse |   17      |
+| cvxopt   | Dense  |   35      |
+| gurobi   | Sparse |  221      |
+| quadprog | Dense  |  421      |
+| cvxpy    | Sparse |  638      |
+| qpoases  | Dense  | 2210      |
 
 Finally, here are the results on a benchmark of random problems generated with
 the [randomized.py](examples/randomized.py) example (each data point
