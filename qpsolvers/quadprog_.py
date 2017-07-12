@@ -20,6 +20,7 @@
 
 from numpy import hstack, vstack
 from quadprog import solve_qp
+from warnings import warn
 
 
 def quadprog_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
@@ -57,6 +58,8 @@ def quadprog_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     x : array, shape=(n,)
         Solution to the QP, if found, otherwise ``None``.
     """
+    if initvals is not None:
+        warn("[qpsolvers] warm-start values ignored by quadprog solver")
     qp_G = .5 * (P + P.T)   # quadprog assumes that P is symmetric
     qp_a = -q
     if A is not None:
