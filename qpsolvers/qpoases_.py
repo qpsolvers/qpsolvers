@@ -54,20 +54,20 @@ def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
         Quadratic-cost vector.
     G : numpy.array
         Linear inequality constraint matrix.
-    h : array, shape=(m,)
+    h : numpy.array
         Linear inequality constraint vector.
-    A : array, shape=(meq, n), optional
+    A : numpy.array, optional
         Linear equality constraint matrix.
-    b : array, shape=(meq,), optional
+    b : numpy.array, optional
         Linear equality constraint vector.
-    initvals : array, shape=(n,), optional
+    initvals : numpy.array, optional
         Warm-start guess vector.
     max_wsr : integer, optional
         Maximum number of Working-Set Recalculations given to qpOASES.
 
     Returns
     -------
-    x : array, shape=(n,)
+    x : numpy.array
         Solution to the QP, if found, otherwise ``None``.
 
     Note

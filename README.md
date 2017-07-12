@@ -18,16 +18,13 @@ The list of supported solvers currently includes:
 
 - Dense solvers:
     - [CVXOPT](http://cvxopt.org/)
-    - [MOSEK](https://mosek.com/)\*
     - [qpOASES](https://projects.coin-or.org/qpOASES)
     - [quadprog](https://pypi.python.org/pypi/quadprog/)
 - Sparse solvers:
     - [CVXPY](http://www.cvxpy.org/)
     - [Gurobi](https://www.gurobi.com/)
+    - [MOSEK](https://mosek.com/)
     - [OSQP](https://github.com/oxfordcontrol/osqp)
-
-\* MOSEK is called via CVXOPT and therefore treated as a dense solver, although
-it performs best as a sparse one.
 
 ## Performances
 

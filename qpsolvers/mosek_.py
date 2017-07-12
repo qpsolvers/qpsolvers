@@ -41,24 +41,24 @@ def mosek_solve_qp(P, q, G, h, A=None, b=None, initvals=None):
 
     Parameters
     ----------
-    P : array, shape=(n, n)
-        Primal quadratic cost matrix.
-    q : array, shape=(n,)
-        Primal quadratic cost vector.
-    G : array, shape=(m, n)
+    P : numpy.array, cvxopt.matrix or cvxopt.spmatrix
+        Symmetric quadratic-cost matrix.
+    q : numpy.array, cvxopt.matrix or cvxopt.spmatrix
+        Quadratic-cost vector.
+    G : numpy.array, cvxopt.matrix or cvxopt.spmatrix
         Linear inequality constraint matrix.
-    h : array, shape=(m,)
+    h : numpy.array, cvxopt.matrix or cvxopt.spmatrix
         Linear inequality constraint vector.
-    A : array, shape=(meq, n), optional
+    A : numpy.array, cvxopt.matrix or cvxopt.spmatrix
         Linear equality constraint matrix.
-    b : array, shape=(meq,), optional
+    b : numpy.array, cvxopt.matrix or cvxopt.spmatrix
         Linear equality constraint vector.
-    initvals : array, shape=(n,), optional
+    initvals : numpy.array, optional
         Warm-start guess vector.
 
     Returns
     -------
-    x : array, shape=(n,)
+    x : numpy.array
         Solution to the QP, if found, otherwise ``None``.
     """
     return cvxopt_solve_qp(P, q, G, h, A, b, 'mosek', initvals)

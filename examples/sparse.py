@@ -37,12 +37,12 @@ except ImportError:  # run locally if not installed
 
 
 # QP matrices
-n = 1000
-P = scipy.sparse.lil_matrix(scipy.sparse.eye(n))
+n = 500
+M = scipy.sparse.lil_matrix(scipy.sparse.eye(n))
 for i in xrange(1, n - 1):
-    P[i, i + 1] = -1
-    P[i, i - 1] = 1
-P = csc_matrix(P)
+    M[i, i + 1] = -1
+    M[i, i - 1] = 1
+P = csc_matrix(M.dot(M.transpose()))
 q = -numpy.ones((n,))
 G = csc_matrix(-scipy.sparse.eye(n))
 h = -2 * numpy.ones((n,))

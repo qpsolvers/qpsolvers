@@ -42,7 +42,7 @@ def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     P : scipy.sparse.csc_matrix
         Symmetric quadratic-cost matrix.
     q : numpy.array
-        Primal quadratic cost vector.
+        Quadratic cost vector.
     G : scipy.sparse.csc_matrix
         Linear inequality constraint matrix.
     h : numpy.array
