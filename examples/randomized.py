@@ -42,7 +42,7 @@ colors = {
     'quadprog': 'm'}
 
 nb_iter = 10
-sizes = [10, 20, 50, 100, 200, 500, 1000]
+sizes = [10, 20, 50, 100, 200, 500, 1000, 2000]
 
 
 def solve_random_qp(n, solver):
