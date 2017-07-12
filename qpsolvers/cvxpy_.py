@@ -20,6 +20,7 @@
 
 from cvxpy import Variable, Minimize, Problem, quad_form
 from numpy import array
+from warnings import warn
 
 
 def cvxpy_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
@@ -51,13 +52,15 @@ def cvxpy_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
     b : array, shape=(meq,), optional
         Linear equality constraint vector.
     initvals : array, shape=(n,), optional
-        Warm-start guess vector.
+        Warm-start guess vector (not used).
 
     Returns
     -------
     x : array, shape=(n,)
         Solution to the QP, if found, otherwise ``None``.
     """
+    if initvals is not None:
+        warn("[qpsolvers] warm-start values ignored by CVXPY wrapper")
     n = P.shape[0]
     x = Variable(n)
     objective = Minimize(0.5 * quad_form(x, P) + q * x)

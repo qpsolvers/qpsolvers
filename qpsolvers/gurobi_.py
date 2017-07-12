@@ -20,6 +20,7 @@
 
 from numpy import empty
 from gurobipy import Model, QuadExpr, GRB, quicksum, setParam
+from warnings import warn
 
 
 setParam('OutputFlag', 0)
@@ -53,13 +54,15 @@ def gurobi_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     b : array, shape=(meq,), optional
         Linear equality constraint vector.
     initvals : array, shape=(n,), optional
-        Warm-start guess vector.
+        Warm-start guess vector (not used).
 
     Returns
     -------
     x : array, shape=(n,)
         Solution to the QP, if found, otherwise ``None``.
     """
+    if initvals is not None:
+        warn("[qpsolvers] warm-start values ignored by Gurobi wrapper")
     n = P.shape[1]
     model = Model()
     x = {
