@@ -40,7 +40,7 @@ def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     Parameters
     ----------
     P : scipy.sparse.csc_matrix
-        Primal quadratic cost matrix.
+        Symmetric quadratic-cost matrix.
     q : numpy.array
         Primal quadratic cost vector.
     G : scipy.sparse.csc_matrix
@@ -58,6 +58,12 @@ def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     -------
     x : array, shape=(n,)
         Solution to the QP, if found, otherwise ``None``.
+
+    Note
+    ----
+    OSQP requires `P` to be symmetric, and won't check for errors otherwise.
+    Check out for this point if you e.g. `get nan values
+    <https://github.com/oxfordcontrol/osqp/issues/10>`_ in your solutions.
     """
     n = q.shape[0]
     l = -inf * ones(n)

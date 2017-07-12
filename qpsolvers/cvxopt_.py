@@ -53,30 +53,32 @@ def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None, solver=None,
     Parameters
     ----------
     P : numpy.array, cvxopt.matrix or cvxopt.spmatrix
-        Primal quadratic cost matrix.
+        Symmetric quadratic-cost matrix.
     q : numpy.array, cvxopt.matrix or cvxopt.spmatrix
-        Primal quadratic cost vector.
+        Quadratic-cost vector.
     G : numpy.array, cvxopt.matrix or cvxopt.spmatrix
-        Linear inequality constraint matrix.
+        Linear inequality matrix.
     h : numpy.array, cvxopt.matrix or cvxopt.spmatrix
-        Linear inequality constraint vector.
+        Linear inequality vector.
     A : numpy.array, cvxopt.matrix or cvxopt.spmatrix
         Linear equality constraint matrix.
     b : numpy.array, cvxopt.matrix or cvxopt.spmatrix
         Linear equality constraint vector.
     solver : string, optional
         Set to 'mosek' to run MOSEK rather than CVXOPT.
-    initvals : array, shape=(n,), optional
+    initvals : numpy.array, optional
         Warm-start guess vector.
 
     Returns
     -------
     x : array, shape=(n,)
         Solution to the QP, if found, otherwise ``None``.
+
+    Note
+    ----
+    CVXOPT only considers the lower entries of `P`, therefore it will use a
+    wrong cost function if a non-symmetric matrix is provided.
     """
-    # CVXOPT only considers the lower entries of P so we need to project on the
-    # symmetric part beforehand, otherwise a wrong cost function will be used
-    P = .5 * (P + P.T)
     args = [cvxopt_matrix(P), cvxopt_matrix(q)]
     if G is not None:
         args.extend([cvxopt_matrix(G), cvxopt_matrix(h)])

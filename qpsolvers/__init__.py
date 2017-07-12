@@ -116,7 +116,7 @@ __all__ = [
 
 
 def solve_qp(P, q, G=None, h=None, A=None, b=None, solver='quadprog',
-             initvals=None):
+             initvals=None, sym_proj=False):
     """
     Solve a Quadratic Program defined as:
 
@@ -132,9 +132,9 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, solver='quadprog',
     Parameters
     ----------
     P : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
-        Quadratic cost matrix.
+        Symmetric quadratic-cost matrix.
     q : numpy.array
-        Quadratic cost vector.
+        Quadratic-cost vector.
     G : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
         Linear inequality matrix.
     h : numpy.array
@@ -148,12 +148,23 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, solver='quadprog',
         'mosek', 'osqp', 'qpoases', 'quadprog'].
     initvals : array, optional
         Vector of initial `x` values used to warm-start the solver.
+    sym_proj : bool, optional
+        Set to `True` when the `P` matrix provided is not symmetric.
 
     Returns
     -------
     x : array or None
         Optimal solution if found, None otherwise.
+
+    Note
+    ----
+    Many solvers (including CVXOPT, OSQP and quadprog) assume that `P` is a
+    symmetric matrix, and may return erroneous results when that is not the
+    case. You can set ``sym_proj=True`` to project `P` on its symmetric part, at
+    the cost of some computation time.
     """
+    if sym_proj:
+        P = .5 * (P + P.transpose())
     if solver == 'cvxopt':
         return cvxopt_solve_qp(P, q, G, h, A, b, initvals=initvals)
     elif solver == 'cvxpy':

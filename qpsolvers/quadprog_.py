@@ -38,29 +38,34 @@ def quadprog_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
 
     Parameters
     ----------
-    P : array, shape=(n, n)
-        Primal quadratic cost matrix.
-    q : array, shape=(n,)
-        Primal quadratic cost vector.
-    G : array, shape=(m, n)
+    P : numpy.array
+        Symmetric quadratic-cost matrix.
+    q : numpy.array
+        Quadratic-cost vector.
+    G : numpy.array
         Linear inequality constraint matrix.
-    h : array, shape=(m,)
+    h : numpy.array
         Linear inequality constraint vector.
-    A : array, shape=(meq, n), optional
+    A : numpy.array, optional
         Linear equality constraint matrix.
-    b : array, shape=(meq,), optional
+    b : numpy.array, optional
         Linear equality constraint vector.
-    initvals : array, shape=(n,), optional
+    initvals : numpy.array, optional
         Warm-start guess vector (not used).
 
     Returns
     -------
-    x : array, shape=(n,)
+    x : numpy.array
         Solution to the QP, if found, otherwise ``None``.
+
+    Note
+    ----
+    The quadprog solver only considers the lower entries of `P`, therefore it
+    will use a wrong cost function if a non-symmetric matrix is provided.
     """
     if initvals is not None:
         warn("warm-start values ignored by quadprog wrapper")
-    qp_G = .5 * (P + P.T)   # quadprog assumes that P is symmetric
+    qp_G = P
     qp_a = -q
     if A is not None:
         qp_C = -vstack([A, G]).T

@@ -48,11 +48,11 @@ def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
 
     Parameters
     ----------
-    P : array, shape=(n, n)
-        Primal quadratic cost matrix.
-    q : array, shape=(n,)
-        Primal quadratic cost vector.
-    G : array, shape=(m, n)
+    P : numpy.array
+        Symmetric quadratic-cost matrix.
+    q : numpy.array
+        Quadratic-cost vector.
+    G : numpy.array
         Linear inequality constraint matrix.
     h : array, shape=(m,)
         Linear inequality constraint vector.
@@ -81,8 +81,7 @@ def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
     This function allows empty bounds (lb, ub, lbA or ubA). This was provisioned
     by the C++ API but not by the Python API of qpOASES (as of version 3.2.0).
     Be sure to update the Cython file (qpoases.pyx) to convert ``None`` to the
-    null pointer, as done e.g. in
-    <https://github.com/stephane-caron/qpOASES/commit/207996802f33da2375dd2db5cf58a977ac2bb0d2>
+    null pointer.
     """
     if initvals is not None:
         warn("warm-start values ignored by qpOASES wrapper")
