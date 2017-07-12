@@ -5,31 +5,31 @@ Wrapper around Quadratic Programming (QP) solvers in Python with a unified API.
 ## Usage
 
 The function ``solve_qp(P, q, G, h, A, b)`` is called with the ``solver``
-keyword argument to select the backend solver. The quadratic program solved is,
-in standard form:
+keyword argument to select the backend solver. The quadratic program it solves
+is, in standard form:
 
 <img src=".qp.png">
 
-Vector inequalities are taken coordinate by coordinate. Check out the
-``examples/`` folder to see practical calls.
+Vector inequalities are taken coordinate by coordinate.
 
 ## Solvers
 
 The list of supported solvers currently includes:
 
-- Numerical solvers:
+- Matrix-input solvers:
     - [CVXOPT](http://cvxopt.org/)
+    - [OSQP](https://github.com/oxfordcontrol/osqp)
     - [qpOASES](https://projects.coin-or.org/qpOASES)
     - [quadprog](https://pypi.python.org/pypi/quadprog/)
-- Symbolic solvers:
-    - [CVXPY](http://www.cvxpy.org/en/latest/)
+- Symbolic-input solvers:
+    - [CVXPY](http://www.cvxpy.org/)
     - [Gurobi](https://www.gurobi.com/)
-    - [MOSEK](https://mosek.com/) as wrapped by CVXOPT
+    - [MOSEK](https://mosek.com/)
 
-Numerical solvers are those for which the input can be provided directly in
-matrix-vector form. On the contrary, symbolic solvers call various
-constructors, so that building their input usually takes more time than solving
-the QP itself.
+Symbolic solvers call various constructors, so that, on dense problems,
+building their input usually takes more time than solving the QP itself.
+Because all matrices in the ``solve_qp`` function are assumed dense, these
+solvers will always appear slower than matrix-input ones.
 
 ## Performances
 
@@ -41,10 +41,11 @@ is:
 | -------- | ----------|
 | qpoases  | 31.5      |
 | quadprog | 34.1      |
+| osqp     | 368       |
 | cvxopt   | 559       |
 | gurobi   | 865       |
-| cvxpy    | 2.810     |
-| mosek    | 7.240     |
+| cvxpy    | 2810      |
+| mosek    | 7240      |
 
 Here are the results on a benchmark of random problems generated with the
 [randomized.py](examples/randomized.py) example (each data point corresponds to
