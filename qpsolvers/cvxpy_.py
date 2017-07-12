@@ -60,7 +60,7 @@ def cvxpy_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
         Solution to the QP, if found, otherwise ``None``.
     """
     if initvals is not None:
-        warn("[qpsolvers] warm-start values ignored by CVXPY wrapper")
+        warn("warm-start values ignored by CVXPY wrapper")
     n = P.shape[0]
     x = Variable(n)
     objective = Minimize(0.5 * quad_form(x, P) + q * x)

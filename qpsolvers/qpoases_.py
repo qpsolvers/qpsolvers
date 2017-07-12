@@ -82,7 +82,7 @@ def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     <https://github.com/stephane-caron/qpOASES/commit/207996802f33da2375dd2db5cf58a977ac2bb0d2>
     """
     if initvals is not None:
-        warn("[qpsolvers] warm-start values ignored by qpOASES wrapper")
+        warn("warm-start values ignored by qpOASES wrapper")
     n = P.shape[0]
     lb, ub = None, None
     nb_wsr = array([100])  # number of working set recalculations
@@ -110,5 +110,7 @@ def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
         qp.setOptions(options)
         qp.init(P, q, lb, ub, nb_wsr)
     x_opt = zeros(n)
-    qp.getPrimalSolution(x_opt)
+    ret = qp.getPrimalSolution(x_opt)
+    if ret != 0:  # 0 == SUCCESSFUL_RETURN code of qpOASES
+        warn("qpOASES failed with return code %d" % ret)
     return x_opt

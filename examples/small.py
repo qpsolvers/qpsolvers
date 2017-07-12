@@ -63,7 +63,8 @@ if __name__ == "__main__":
     sol0 = solve_qp(P, q, G, h, solver=available_solvers[0])
     for solver in available_solvers:
         sol = solve_qp(P, q, G, h, solver=solver)
-        assert norm(sol - sol0) < 1e-4
+        delta = norm(sol - sol0)
+        assert delta < 1e-4, "%s's solution offset by %.1e" % (solver, delta)
 
     print "\nMATRIX",
     print "\n------"

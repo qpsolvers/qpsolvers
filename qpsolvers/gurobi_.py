@@ -62,7 +62,7 @@ def gurobi_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
         Solution to the QP, if found, otherwise ``None``.
     """
     if initvals is not None:
-        warn("[qpsolvers] warm-start values ignored by Gurobi wrapper")
+        warn("warm-start values ignored by Gurobi wrapper")
     n = P.shape[1]
     model = Model()
     x = {
