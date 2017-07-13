@@ -65,8 +65,7 @@ def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     Check out for this point if you e.g. `get nan values
     <https://github.com/oxfordcontrol/osqp/issues/10>`_ in your solutions.
     """
-    n = q.shape[0]
-    l = -inf * ones(n)
+    l = -inf * ones(len(h))
     if A is not None:
         qp_A = vstack([G, A])
         qp_l = hstack([l, b])
