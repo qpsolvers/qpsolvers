@@ -1,6 +1,7 @@
-# QP Solvers
+# QP Solvers for Python
 
-Wrapper around Quadratic Programming (QP) solvers in Python with a unified API.
+Wrapper around Quadratic Programming (QP) solvers in Python, with a unified
+interface.
 
 ## Usage
 
