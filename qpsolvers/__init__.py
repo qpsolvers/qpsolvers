@@ -156,8 +156,8 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, solver='quadprog',
     x : array or None
         Optimal solution if found, None otherwise.
 
-    Note
-    ----
+    Notes
+    -----
     Many solvers (including CVXOPT, OSQP and quadprog) assume that `P` is a
     symmetric matrix, and may return erroneous results when that is not the
     case. You can set ``sym_proj=True`` to project `P` on its symmetric part, at
@@ -180,3 +180,76 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, solver='quadprog',
     elif solver == 'quadprog':
         return quadprog_solve_qp(P, q, G, h, A, b, initvals=initvals)
     raise Exception("solver '%s' not recognized" % solver)
+
+
+def solve_safer_qp(P, q, G, h, sw, reg=1e-8, solver='mosek', initvals=None,
+                   sym_proj=False):
+    """
+    Solve the Quadratic Program defined as:
+
+        minimize
+            (1/2) * x.T * P * x + q.T * x + (1/2) reg |s|^2 - sw 1^T s
+
+        subject to
+            G * x <= h
+
+    Slack variables `s` are increased by an additional term in the cost
+    function, so that the solution of this "safer" QP is further inside the
+    constraint region.
+
+    Parameters
+    ----------
+    P : numpy.array
+        Symmetric quadratic-cost matrix.
+    q : numpy.array
+        Quadratic-cost vector.
+    G : numpy.array
+        Linear inequality matrix.
+    h : numpy.array
+        Linear inequality vector.
+    sw : scalar
+        Weight of the linear cost on slack variables. Higher values bring the
+        solution further inside the constraint region but override the
+        minimization of the original objective.
+    reg : scalar
+        Regularization term :math:`(1/2) \\epsilon` in the cost function. Set
+        this parameter as small as possible (e.g. 1e-8), and increase it in case
+        of numerical instability.
+    solver : string, optional
+        Name of the QP solver to use (default is MOSEK).
+    initvals : array, optional
+        Vector of initial `x` values used to warm-start the solver.
+    sym_proj : bool, optional
+        Set to `True` when the `P` matrix provided is not symmetric.
+
+    Returns
+    -------
+    x : array, shape=(n,)
+        Optimal solution to the relaxed QP, if found.
+
+    Raises
+    ------
+    ValueError
+        If the QP is not feasible.
+
+    Notes
+    -----
+    This method can be found in the Inverse Kinematics resolution of Nozawa et
+    al. (Humanoids 2016). It also appears in earlier works such as the
+    "optimally safe" tension distribution algorithm of Borgstrom et al. (IEEE
+    Transactions on Robotics, 2009).
+    """
+    assert solver in dense_solvers, "only available for dense solvers, for now"
+    from numpy import eye, hstack, ones, vstack, zeros
+    n, m = P.shape[0], G.shape[0]
+    E, Z = eye(m), zeros((m, n))
+    P2 = vstack([hstack([P, Z.T]), hstack([Z, reg * eye(m)])])
+    q2 = hstack([q, -sw * ones(m)])
+    G2 = hstack([Z, E])
+    h2 = zeros(m)
+    A2 = hstack([G, -E])
+    b2 = h
+    x = solve_qp(
+        P2, q2, G2, h2, A2, b2, solver=solver, initvals=initvals,
+        sym_proj=sym_proj)
+    return x[:n]
