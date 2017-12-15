@@ -24,7 +24,6 @@ from qpoases import PyPrintLevel as PrintLevel
 from qpoases import PyQProblem as QProblem
 from qpoases import PyQProblemB as QProblemB
 from qpoases import PyReturnValue as ReturnValue
-from warnings import warn
 
 
 __infty = 1e10
@@ -84,7 +83,7 @@ def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
     null pointer.
     """
     if initvals is not None:
-        warn("warm-start values ignored by qpOASES wrapper")
+        print("qpOASES: note that warm-start values ignored by wrapper")
     n = P.shape[0]
     lb, ub = None, None
     has_cons = G is not None or A is not None
@@ -105,7 +104,7 @@ def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
         qp.setOptions(options)
         return_value = qp.init(P, q, C, lb, ub, lb_C, ub_C, array([max_wsr]))
         if return_value == ReturnValue.MAX_NWSR_REACHED:
-            warn("qpOASES reached the maximum number of WSR (%d)" % max_wsr)
+            print("qpOASES reached the maximum number of WSR (%d)" % max_wsr)
     else:
         qp = QProblemB(n)
         qp.setOptions(options)
@@ -113,5 +112,5 @@ def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
     x_opt = zeros(n)
     ret = qp.getPrimalSolution(x_opt)
     if ret != 0:  # 0 == SUCCESSFUL_RETURN code of qpOASES
-        warn("qpOASES failed with return code %d" % ret)
+        print("qpOASES failed with return code %d" % ret)
     return x_opt

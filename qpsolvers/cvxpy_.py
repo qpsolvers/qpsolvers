@@ -20,7 +20,6 @@
 
 from cvxpy import Constant, Minimize, Problem, Variable, quad_form
 from numpy import array
-from warnings import warn
 
 
 def cvxpy_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
@@ -60,7 +59,7 @@ def cvxpy_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
         Solution to the QP, if found, otherwise ``None``.
     """
     if initvals is not None:
-        warn("warm-start values ignored by CVXPY wrapper")
+        print("CVXPY: note that warm-start values are ignored by wrapper")
     n = q.shape[0]
     x = Variable(n)
     P = Constant(P)  # see http://www.cvxpy.org/en/latest/faq/

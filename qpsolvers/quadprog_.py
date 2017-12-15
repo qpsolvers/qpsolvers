@@ -20,7 +20,6 @@
 
 from numpy import hstack, vstack
 from quadprog import solve_qp
-from warnings import warn
 
 
 def quadprog_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
@@ -64,7 +63,7 @@ def quadprog_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     will use a wrong cost function if a non-symmetric matrix is provided.
     """
     if initvals is not None:
-        warn("warm-start values ignored by quadprog wrapper")
+        print("quadprog: note that warm-start values ignored by wrapper")
     qp_G = P
     qp_a = -q
     if A is not None:

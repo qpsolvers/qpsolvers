@@ -21,7 +21,6 @@
 from numpy import hstack, inf, ones
 from osqp import OSQP
 from scipy.sparse import vstack
-from warnings import warn
 
 
 def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
@@ -80,5 +79,5 @@ def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
         osqp.warm_start(x=initvals)
     res = osqp.solve()
     if res.info.status_val != osqp.constant('OSQP_SOLVED'):
-        warn("OSQP exited with status '%s'" % res.info.status)
+        print("OSQP exited with status '%s'" % res.info.status)
     return res.x
