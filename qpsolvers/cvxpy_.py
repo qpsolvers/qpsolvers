@@ -34,7 +34,8 @@ def cvxpy_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
             G * x <= h
             A * x == b
 
-    using CVXPY <http://www.cvxpy.org/>.
+    calling a given solver using the CVXPY <http://www.cvxpy.org/> modelling
+    language.
 
     Parameters
     ----------
@@ -52,6 +53,8 @@ def cvxpy_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
         Linear equality constraint vector.
     initvals : array, shape=(n,), optional
         Warm-start guess vector (not used).
+    solver : string, optional
+        Solver name in ``cvxpy.installed_solvers()``.
 
     Returns
     -------
@@ -73,3 +76,44 @@ def cvxpy_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
     prob.solve(solver=solver)
     x_opt = array(x.value).reshape((n,))
     return x_opt
+
+
+def ecos_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
+    """
+    Solve a Quadratic Program defined as:
+
+        minimize
+            (1/2) * x.T * P * x + q.T * x
+
+        subject to
+            G * x <= h
+            A * x == b
+
+    using ECOS <https://www.embotech.com/ECOS> called via CVXPY
+    <http://www.cvxpy.org/>.
+
+    Parameters
+    ----------
+    P : array, shape=(n, n)
+        Primal quadratic cost matrix.
+    q : array, shape=(n,)
+        Primal quadratic cost vector.
+    G : array, shape=(m, n)
+        Linear inequality constraint matrix.
+    h : array, shape=(m,)
+        Linear inequality constraint vector.
+    A : array, shape=(meq, n), optional
+        Linear equality constraint matrix.
+    b : array, shape=(meq,), optional
+        Linear equality constraint vector.
+    initvals : array, shape=(n,), optional
+        Warm-start guess vector (not used).
+    solver : string, optional
+        Solver name in ``cvxpy.installed_solvers()``.
+
+    Returns
+    -------
+    x : array, shape=(n,)
+        Solution to the QP, if found, otherwise ``None``.
+    """
+    return cvxpy_solve_qp(P, q, G, h, A, b, initvals, solver="ECOS")

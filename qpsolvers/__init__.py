@@ -39,12 +39,16 @@ except ImportError:
 # =====
 
 try:
-    from cvxpy_ import cvxpy_solve_qp
+    from cvxpy_ import cvxpy_solve_qp, ecos_solve_qp
     available_solvers.append('cvxpy')
+    available_solvers.append('ecos')
     sparse_solvers.append('cvxpy')
+    sparse_solvers.append('ecos')
 except ImportError:
     def cvxpy_solve_qp(*args, **kwargs):
         raise ImportError("CVXPY not found")
+    def ecos_solve_qp(*args, **kwargs):
+        raise ImportError("ECOS not found")
 
 # Gurobi
 # ======
@@ -169,6 +173,8 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, solver='quadprog',
         return cvxopt_solve_qp(P, q, G, h, A, b, initvals=initvals)
     elif solver == 'cvxpy':
         return cvxpy_solve_qp(P, q, G, h, A, b, initvals=initvals)
+    elif solver == 'ecos':
+        return ecos_solve_qp(P, q, G, h, A, b, initvals=initvals)
     elif solver == 'gurobi':
         return gurobi_solve_qp(P, q, G, h, A, b, initvals=initvals)
     elif solver == 'mosek':

@@ -22,7 +22,7 @@ The list of supported solvers currently includes:
     - [qpOASES](https://projects.coin-or.org/qpOASES)
     - [quadprog](https://pypi.python.org/pypi/quadprog/)
 - Sparse solvers:
-    - [CVXPY](http://www.cvxpy.org/)
+    - [ECOS](https://www.embotech.com/ECOS) as wrapped by [CVXPY](http://www.cvxpy.org/)
     - [Gurobi](https://www.gurobi.com/)
     - [MOSEK](https://mosek.com/)
     - [OSQP](https://github.com/oxfordcontrol/osqp)
@@ -40,7 +40,7 @@ is:
 | osqp     | Sparse | 0.04      |
 | cvxopt   | Dense  | 0.43      |
 | gurobi   | Sparse | 0.84      |
-| cvxpy    | Sparse | 2.61      |
+| ecos     | Sparse | 2.61      |
 | mosek    | Sparse | 7.17      |
 
 Meanwhile, on the [sparse.py](examples/sparse.py) example, these performances
@@ -53,7 +53,7 @@ become:
 | cvxopt   | Dense  |   35      |
 | gurobi   | Sparse |  221      |
 | quadprog | Dense  |  421      |
-| cvxpy    | Sparse |  638      |
+| ecos     | Sparse |  638      |
 | qpoases  | Dense  | 2210      |
 
 Finally, here are the results on a benchmark of random problems generated with
