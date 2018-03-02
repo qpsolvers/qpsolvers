@@ -62,6 +62,10 @@ corresponds to an average over 10 runs):
 
 <img src="https://scaron.info/images/qp-benchmark.png">
 
-Note that performances of QP solvers largely depend on the problem solved. This
-benchmark only considers dense problems, hence the clear advantage of dense
-solvers over sparse ones.
+Note that performances of QP solvers largely depend on the problem solved. For
+instance, MOSEK performs an [automatic conversion to Second-Order Cone
+Programming
+(SOCP)](https://docs.mosek.com/8.1/pythonapi/prob-def-quadratic.html) which the
+documentation advises bypassing for better performance. Similarly, ECOS
+reformulates from QP to SOCP and [works best on small
+problems](https://web.stanford.edu/%7Eboyd/papers/ecos.html).
