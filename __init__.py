@@ -1,1 +1,1 @@
-from qpsolvers import *
+from .qpsolvers import *
