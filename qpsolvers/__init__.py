@@ -28,7 +28,7 @@ sparse_solvers = []
 # ======
 
 try:
-    from cvxopt_ import cvxopt_solve_qp
+    from .cvxopt_ import cvxopt_solve_qp
     available_solvers.append('cvxopt')
     dense_solvers.append('cvxopt')
 except ImportError:
@@ -39,7 +39,7 @@ except ImportError:
 # =====
 
 try:
-    from cvxpy_ import cvxpy_solve_qp, ecos_solve_qp
+    from .cvxpy_ import cvxpy_solve_qp, ecos_solve_qp
     available_solvers.append('cvxpy')
     available_solvers.append('ecos')
     sparse_solvers.append('cvxpy')
@@ -54,7 +54,7 @@ except ImportError:
 # ======
 
 try:
-    from gurobi_ import gurobi_solve_qp
+    from .gurobi_ import gurobi_solve_qp
     available_solvers.append('gurobi')
     sparse_solvers.append('gurobi')
 except ImportError:
@@ -65,7 +65,7 @@ except ImportError:
 # =====
 
 try:
-    from mosek_ import mosek_solve_qp
+    from .mosek_ import mosek_solve_qp
     available_solvers.append('mosek')
     sparse_solvers.append('mosek')
 except ImportError:
@@ -76,7 +76,7 @@ except ImportError:
 # ====
 
 try:
-    from osqp_ import osqp_solve_qp
+    from .osqp_ import osqp_solve_qp
     available_solvers.append('osqp')
     sparse_solvers.append('osqp')
 except ImportError:
@@ -87,7 +87,7 @@ except ImportError:
 # =======
 
 try:
-    from qpoases_ import qpoases_solve_qp
+    from .qpoases_ import qpoases_solve_qp
     available_solvers.append('qpoases')
     dense_solvers.append('qpoases')
 except ImportError:
@@ -98,7 +98,7 @@ except ImportError:
 # ========
 
 try:
-    from quadprog_ import quadprog_solve_qp
+    from .quadprog_ import quadprog_solve_qp
     available_solvers.append('quadprog')
     dense_solvers.append('quadprog')
 except ImportError:
