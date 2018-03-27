@@ -3,6 +3,14 @@
 Wrapper around Quadratic Programming (QP) solvers in Python, with a unified
 interface.
 
+## Installation
+
+The simplest way to install this module is:
+```
+pip install --user git+https://github.com/stephane-caron/qpsolvers
+```
+Remove the ``--user`` parameter for a system-wide installation.
+
 ## Usage
 
 The function ``solve_qp(P, q, G, h, A, b)`` is called with the ``solver``
