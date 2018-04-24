@@ -66,7 +66,7 @@ def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     """
     l = -inf * ones(len(h))
     if A is not None:
-        qp_A = vstack([G, A])
+        qp_A = vstack([G, A]).tocsc()
         qp_l = hstack([l, b])
         qp_u = hstack([h, b])
     else:  # no equality constraint
