@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2016-2017 Stephane Caron <stephane.caron@normalesup.org>
+# Copyright (C) 2016-2018 Stephane Caron <stephane.caron@normalesup.org>
 #
 # This file is part of qpsolvers.
 #
-# qpsolvers is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Lesser General Public License as published by the Free
+# qpsolvers is free software: you can redistribute it and/or modify it under
+# the terms of the GNU Lesser General Public License as published by the Free
 # Software Foundation, either version 3 of the License, or (at your option) any
 # later version.
 #
@@ -15,8 +15,8 @@
 # A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
 # details.
 #
-# You should have received a copy of the GNU Lesser General Public License along
-# with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
+# You should have received a copy of the GNU Lesser General Public License
+# along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
 from numpy import hstack, vstack
 from quadprog import solve_qp

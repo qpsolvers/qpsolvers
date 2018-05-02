@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2016-2017 Stephane Caron <stephane.caron@normalesup.org>
+# Copyright (C) 2016-2018 Stephane Caron <stephane.caron@normalesup.org>
 #
 # This file is part of qpsolvers.
 #
-# qpsolvers is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Lesser General Public License as published by the Free
+# qpsolvers is free software: you can redistribute it and/or modify it under
+# the terms of the GNU Lesser General Public License as published by the Free
 # Software Foundation, either version 3 of the License, or (at your option) any
 # later version.
 #
@@ -15,8 +15,8 @@
 # A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
 # details.
 #
-# You should have received a copy of the GNU Lesser General Public License along
-# with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
+# You should have received a copy of the GNU Lesser General Public License
+# along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
 from numpy import array, hstack, ones, vstack, zeros
 from qpoases import PyOptions as Options
@@ -77,10 +77,10 @@ def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
 
     Note
     ----
-    This function allows empty bounds (lb, ub, lbA or ubA). This was provisioned
-    by the C++ API but not by the Python API of qpOASES (as of version 3.2.0).
-    Be sure to update the Cython file (qpoases.pyx) to convert ``None`` to the
-    null pointer.
+    This function allows empty bounds (lb, ub, lbA or ubA). This was
+    provisioned by the C++ API but not by the Python API of qpOASES (as of
+    version 3.2.0). Be sure to update the Cython file (qpoases.pyx) to convert
+    ``None`` to the null pointer.
     """
     if initvals is not None:
         print("qpOASES: note that warm-start values ignored by wrapper")

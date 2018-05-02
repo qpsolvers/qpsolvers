@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2016-2017 Stephane Caron <stephane.caron@normalesup.org>
+# Copyright (C) 2016-2018 Stephane Caron <stephane.caron@normalesup.org>
 #
 # This file is part of qpsolvers.
 #
-# qpsolvers is free software: you can redistribute it and/or modify it under the
-# terms of the GNU Lesser General Public License as published by the Free
+# qpsolvers is free software: you can redistribute it and/or modify it under
+# the terms of the GNU Lesser General Public License as published by the Free
 # Software Foundation, either version 3 of the License, or (at your option) any
 # later version.
 #
@@ -15,8 +15,8 @@
 # A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
 # details.
 #
-# You should have received a copy of the GNU Lesser General Public License along
-# with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
+# You should have received a copy of the GNU Lesser General Public License
+# along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
 
 available_solvers = []
@@ -47,6 +47,7 @@ try:
 except ImportError:
     def cvxpy_solve_qp(*args, **kwargs):
         raise ImportError("CVXPY not found")
+
     def ecos_solve_qp(*args, **kwargs):
         raise ImportError("ECOS not found")
 
@@ -164,8 +165,8 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, solver='quadprog',
     -----
     Many solvers (including CVXOPT, OSQP and quadprog) assume that `P` is a
     symmetric matrix, and may return erroneous results when that is not the
-    case. You can set ``sym_proj=True`` to project `P` on its symmetric part, at
-    the cost of some computation time.
+    case. You can set ``sym_proj=True`` to project `P` on its symmetric part,
+    at the cost of some computation time.
     """
     if sym_proj:
         P = .5 * (P + P.transpose())
@@ -219,8 +220,8 @@ def solve_safer_qp(P, q, G, h, sw, reg=1e-8, solver='mosek', initvals=None,
         minimization of the original objective.
     reg : scalar
         Regularization term :math:`(1/2) \\epsilon` in the cost function. Set
-        this parameter as small as possible (e.g. 1e-8), and increase it in case
-        of numerical instability.
+        this parameter as small as possible (e.g. 1e-8), and increase it in
+        case of numerical instability.
     solver : string, optional
         Name of the QP solver to use (default is MOSEK).
     initvals : array, optional
