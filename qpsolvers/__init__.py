@@ -107,19 +107,6 @@ except ImportError:
         raise ImportError("quadprog not found")
 
 
-__all__ = [
-    'available_solvers',
-    'cvxopt_solve_qp',
-    'cvxpy_solve_qp',
-    'gurobi_solve_qp',
-    'dense_solvers',
-    'mosek_solve_qp',
-    'qpoases_solve_qp',
-    'quadprog_solve_qp',
-    'sparse_solvers',
-]
-
-
 def solve_qp(P, q, G=None, h=None, A=None, b=None, solver='quadprog',
              initvals=None, sym_proj=False):
     """
@@ -260,3 +247,18 @@ def solve_safer_qp(P, q, G, h, sw, reg=1e-8, solver='mosek', initvals=None,
         P2, q2, G2, h2, A2, b2, solver=solver, initvals=initvals,
         sym_proj=sym_proj)
     return x[:n]
+
+
+__all__ = [
+    'available_solvers',
+    'cvxopt_solve_qp',
+    'cvxpy_solve_qp',
+    'dense_solvers',
+    'gurobi_solve_qp',
+    'mosek_solve_qp',
+    'qpoases_solve_qp',
+    'quadprog_solve_qp',
+    'solve_qp',
+    'solve_safer_qp',
+    'sparse_solvers',
+]
