@@ -1,4 +1,7 @@
 *.pyc
 *.pyo
 .ropeproject
+MANIFEST
+build/
+dist/
 gurobi.log

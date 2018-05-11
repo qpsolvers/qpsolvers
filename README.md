@@ -7,9 +7,9 @@ interface.
 
 The simplest way to install this module is:
 ```
-pip install --user git+https://github.com/stephane-caron/qpsolvers
+pip install qpsolvers
 ```
-Remove the ``--user`` parameter for a system-wide installation.
+You can add the ``--user`` parameter for a user-only installation.
 
 ## Usage
 
