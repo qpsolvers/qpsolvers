@@ -21,7 +21,7 @@
 from distutils.core import setup
 
 classifiers = """\
-Development Status :: 4 - Beta
+Development Status :: 5 - Production/Stable
 License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)
 Intended Audience :: Developers
 Intended Audience :: Science/Research
@@ -42,6 +42,9 @@ program it solves is, in standard form:
 
 where vector inequalities are taken coordinate by coordinate.
 
+Solvers
+-------
+
 The list of supported solvers currently includes:
 
 - Dense solvers:
@@ -54,11 +57,31 @@ The list of supported solvers currently includes:
     - `Gurobi <https://www.gurobi.com/>`_
     - `MOSEK <https://mosek.com/>`_
     - `OSQP <https://github.com/oxfordcontrol/osqp>`_
+
+Example
+-------
+
+To solve a quadratic program, simply build the matrices that define it and call
+the ``solve_qp`` function:
+
+.. code:: python
+
+    from numpy import array, dot
+    from qpsolvers import solve_qp
+
+    M = array([[1., 2., 0.], [-8., 3., 2.], [0., 1., 1.]])
+    P = dot(M.T, M)  # quick way to build a symmetric matrix
+    q = dot(array([3., 2., 3.]), M).reshape((3,))
+    G = array([[1., 2., 1.], [2., 0., 1.], [-1., 2., -1.]])
+    h = array([3., 2., -2.]).reshape((3,))
+
+    print "QP solution:", solve_qp(P, q, G, h)
+
 """ % i
 
 setup(
     name='qpsolvers',
-    version='1.0.43',
+    version='1.0.2',
     description="Wrapper for Quadratic Programming solvers with a unified API",
     long_description=long_description,
     url="https://github.com/stephane-caron/qpsolvers",
