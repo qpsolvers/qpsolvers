@@ -35,11 +35,28 @@ The list of supported solvers currently includes:
     - [MOSEK](https://mosek.com/)
     - [OSQP](https://github.com/oxfordcontrol/osqp)
 
+## Example
+
+To solve a quadratic program, simply build the matrices that define it and call
+the ``solve_qp`` function:
+
+```python
+from numpy import array, dot
+from qpsolvers import solve_qp
+
+M = array([[1., 2., 0.], [-8., 3., 2.], [0., 1., 1.]])
+P = dot(M.T, M)  # quick way to build a symmetric matrix
+q = dot(array([3., 2., 3.]), M).reshape((3,))
+G = array([[1., 2., 1.], [2., 0., 1.], [-1., 2., -1.]])
+h = array([3., 2., -2.]).reshape((3,))
+
+print "QP solution:", solve_qp(P, q, G, h)
+```
+
 ## Performances
 
-On the [dense.py](examples/dense.py) distributed in the examples folder, the
-performance of all solvers (as measured by IPython's ``%timeit`` on my machine)
-is:
+On the dense example above, the performance of all solvers (as measured by
+IPython's ``%timeit`` on my machine) is:
 
 | Solver   | Type   | Time (ms) |
 | -------- | ------ | --------- |
