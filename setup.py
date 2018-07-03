@@ -82,7 +82,7 @@ the ``solve_qp`` function:
 setup(
     name='qpsolvers',
     version='1.0.2',
-    description="Wrapper for Quadratic Programming solvers with a unified API",
+    description="Quadratic Programming solvers in Python with a unified API",
     long_description=long_description,
     url="https://github.com/stephane-caron/qpsolvers",
     author="Stéphane Caron",
