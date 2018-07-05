@@ -77,6 +77,7 @@ the ``solve_qp`` function:
 
     print "QP solution:", solve_qp(P, q, G, h)
 
+This example outputs the solution ``[-0.49025721 -1.57755261 -0.66484801]``.
 """ % i
 
 setup(

@@ -53,6 +53,8 @@ h = array([3., 2., -2.]).reshape((3,))
 print "QP solution:", solve_qp(P, q, G, h)
 ```
 
+This example outputs the solution ``[-0.49025721 -1.57755261 -0.66484801]``.
+
 ## Performances
 
 On the dense example above, the performance of all solvers (as measured by
