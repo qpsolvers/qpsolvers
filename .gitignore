@@ -5,3 +5,4 @@ MANIFEST
 build/
 dist/
 gurobi.log
+qpsolvers.egg-info

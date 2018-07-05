@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-from distutils.core import setup
+from setuptools import setup
 
 classifiers = """\
 Development Status :: 5 - Production/Stable
@@ -81,8 +81,8 @@ the ``solve_qp`` function:
 
 setup(
     name='qpsolvers',
-    version='1.0.2',
-    description="Quadratic Programming solvers in Python with a unified API",
+    version='1.0.4',
+    description="Quadratic Programming solvers for Python with a unified API",
     long_description=long_description,
     url="https://github.com/stephane-caron/qpsolvers",
     author="Stéphane Caron",
@@ -91,5 +91,6 @@ setup(
     keywords="qp, quadratic programming, solver",
     platforms="any",
     classifiers=classifiers.split('\n'),
-    packages=['qpsolvers']
+    packages=['qpsolvers'],
+    install_requires=['quadprog']
 )
