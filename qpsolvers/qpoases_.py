@@ -73,7 +73,9 @@ def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
     ----
     This function relies on some updates from the standard distribution of
     qpOASES (details below). A fully compatible repository is published at
-    <https://github.com/stephane-caron/qpOASES>.
+    <https://github.com/stephane-caron/qpOASES>. (Quick install instructions:
+    run ``make`` from the cloned repository, then go to interfaces/python and
+    run ``sudo python setup.py install``.)
 
     Note
     ----
