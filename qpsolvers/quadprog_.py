@@ -69,7 +69,7 @@ def quadprog_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     if A is not None:
         qp_C = -vstack([A, G]).T
         qp_b = -hstack([b, h])
-        meq = A.shape[0]
+        meq = A.shape[0] if A.ndim > 1 else 1
     else:  # no equality constraint
         qp_C = -G.T
         qp_b = -h
