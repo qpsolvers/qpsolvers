@@ -10,7 +10,6 @@ fastcache==1.0.2
 future==0.17.1
 ipython==5.8.0
 ipython-genutils==0.2.0
-Mosek==8.1.72
 multiprocess==0.70.6.1
 numpy==1.15.4
 osqp==0.5.0
