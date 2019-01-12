@@ -18,6 +18,10 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
+"""
+Test all available QP solvers on a dense quadratic program.
+"""
+
 import sys
 
 from IPython import get_ipython
@@ -62,6 +66,8 @@ if __name__ == "__main__":
     sparse_instr = {
         solver: "u = solve_qp(P_csc, q, G_csc, h, solver='%s')" % solver
         for solver in sparse_solvers}
+
+    print "\nTesting all QP solvers on a dense quadratic program..."""
 
     sol0 = solve_qp(P, q, G, h, solver=dense_solvers[0])
     for solver in dense_solvers:
