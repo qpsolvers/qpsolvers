@@ -18,6 +18,10 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
+"""
+Test all available QP solvers on random quadratic programs.
+"""
+
 import sys
 
 from IPython import get_ipython
@@ -72,6 +76,7 @@ if __name__ == "__main__":
         print "Usage: ipython -i %s" % basename(__file__)
         exit()
     perfs = {}
+    print "\nTesting all QP solvers on a random quadratic programs...\n"""
     for solver in available_solvers:
         try:
             perfs[solver] = []

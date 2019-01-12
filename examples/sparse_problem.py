@@ -18,6 +18,10 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
+"""
+Test all available QP solvers on a sparse quadratic program.
+"""
+
 import numpy
 import scipy.sparse
 import sys
@@ -90,6 +94,7 @@ if __name__ == "__main__":
     if get_ipython() is None:
         print "Usage: ipython -i %s" % basename(__file__)
         exit()
+    print "\nTesting all QP solvers on a sparse quadratic program..."""
     check_same_solutions()
     time_dense_solvers()
     time_sparse_solvers()
