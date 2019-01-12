@@ -20,6 +20,7 @@ source qpsolvers_env/bin/activate
 cd qpsolvers_env
 git clone https://github.com/stephane-caron/qpsolvers
 cd qpsolvers
+pip install Cython numpy scipy  # for python2
 pip install -r requirements.txt
 ```
 
