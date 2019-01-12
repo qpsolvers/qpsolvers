@@ -13,20 +13,6 @@ You can add the ``--user`` parameter for a user-only installation. See also the
 [wiki page](https://github.com/stephane-caron/qpsolvers/wiki/Installation) for
 advanced installation instructions.
 
-
-NOTE: If you want to clone and use, you can do it using virtualenv. (Developer friendly)
-
-```
-virtualenv -p /usr/bin/python2.7 qpsolvers_env
-source qpsolvers_env/bin/activate
-cd qpsolvers_env
-git clone https://github.com/stephane-caron/qpsolvers
-cd qpsolvers
-pip install -r requirements.txt
-```
-
-Run `deactivate` to exit virtualenv.
-
 ## Usage
 
 The function ``solve_qp(P, q, G, h, A, b)`` is called with the ``solver``
