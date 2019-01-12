@@ -9,22 +9,9 @@ The simplest way to install this module is:
 ```
 pip install qpsolvers
 ```
-You can add the ``--user`` parameter for a user-only installation.
-
-
-NOTE: If you want to clone and use, you can do it using virtualenv. (Developer friendly)
-
-```
-virtualenv -p /usr/bin/python2.7 qpsolvers_env
-source qpsolvers_env/bin/activate
-cd qpsolvers_env
-git clone https://github.com/stephane-caron/qpsolvers
-cd qpsolvers
-pip install Cython numpy scipy  # for python2
-pip install -r requirements.txt
-```
-
-Run `deactivate` to exit virtualenv.
+You can add the ``--user`` parameter for a user-only installation. See also the
+[wiki page](https://github.com/stephane-caron/qpsolvers/wiki/Installation) for
+advanced installation instructions.
 
 ## Usage
 
