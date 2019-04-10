@@ -99,8 +99,8 @@ def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
         ub_C = h
     elif G is not None and A is not None:
         C = vstack([G, A, A])
-        lb_C = hstack([-__infty * ones(h.shape[0]), b])
-        ub_C = hstack([h, b])
+        lb_C = hstack([-__infty * ones(h.shape[0]), b, b])
+        ub_C = hstack([h, b, b])
     if has_cons:
         qp = QProblem(n, C.shape[0])
         qp.setOptions(options)
