@@ -22,7 +22,6 @@ All notable changes to this project will be documented in this file.
 
 - CVXOPT version is not 1.1.8 due to [this issue](https://github.com/urinieto/msaf-gpl/issues/2)
 - Examples now in a [separate folder](examples)
-- MOSEK has been removed as it is not freely available
 
 ## [1.0.4] - 2018/07/05
 
