@@ -74,15 +74,17 @@ the ``solve_qp`` function:
     q = dot(array([3., 2., 3.]), M).reshape((3,))
     G = array([[1., 2., 1.], [2., 0., 1.], [-1., 2., -1.]])
     h = array([3., 2., -2.]).reshape((3,))
+    A = array([1., 1., 1.])
+    b = array([1.])
 
-    print "QP solution:", solve_qp(P, q, G, h)
+    print "QP solution:", solve_qp(P, q, G, h, A, b)
 
-This example outputs the solution ``[-0.49025721 -1.57755261 -0.66484801]``.
+This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``.
 """ % i
 
 setup(
     name='qpsolvers',
-    version='1.0.4',
+    version='1.0.5',
     description="Quadratic Programming solvers for Python with a unified API",
     long_description=long_description,
     url="https://github.com/stephane-caron/qpsolvers",
