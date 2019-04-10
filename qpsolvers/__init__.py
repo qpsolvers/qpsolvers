@@ -136,8 +136,7 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, solver='quadprog',
     b : numpy.array
         Linear equality vector.
     solver : string, optional
-        Name of the QP solver, to choose in ['cvxopt', 'cvxpy', 'ecos',
-        'gurobi', 'mosek', 'osqp', 'qpoases', 'quadprog'].
+        Name of the QP solver, to choose in ``qpsolvers.available_solvers``.
     initvals : array, optional
         Vector of initial `x` values used to warm-start the solver.
     sym_proj : bool, optional

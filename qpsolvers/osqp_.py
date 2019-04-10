@@ -18,9 +18,16 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-from numpy import hstack, inf, ones
+from numpy import hstack, inf, ndarray, ones
 from osqp import OSQP
-from scipy.sparse import vstack
+from scipy.sparse import csc_matrix, vstack
+from warnings import warn
+
+
+def conversion_warning(M):
+    return "Converted %s to scipy.sparse.csc.csc_matrix\n" \
+        "For best performance, build %s as a csc_matrix " \
+        "rather than as a numpy.ndarray\n" % (M, M)
 
 
 def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
@@ -65,11 +72,19 @@ def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     <https://github.com/oxfordcontrol/osqp/issues/10>`_ in your solutions.
     """
     l = -inf * ones(len(h))
+    if type(P) is ndarray:
+        warn(conversion_warning("P"))
+        P = csc_matrix(P)
     if A is not None:
+        if A.ndim == 1:
+            A = A.reshape((1, A.shape[0]))
         qp_A = vstack([G, A]).tocsc()
         qp_l = hstack([l, b])
         qp_u = hstack([h, b])
     else:  # no equality constraint
+        if type(G) is ndarray:
+            warn(conversion_warning("G"))
+            G = csc_matrix(G)
         qp_A = G
         qp_l = l
         qp_u = h
