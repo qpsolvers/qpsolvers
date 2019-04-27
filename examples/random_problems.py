@@ -22,6 +22,8 @@
 Test all available QP solvers on random quadratic programs.
 """
 
+from __future__ import print_function
+
 import sys
 
 from IPython import get_ipython
@@ -73,22 +75,22 @@ def plot_results(perfs):
 
 if __name__ == "__main__":
     if get_ipython() is None:
-        print "Usage: ipython -i %s" % basename(__file__)
+        print("Usage: ipython -i %s" % basename(__file__))
         exit()
     perfs = {}
-    print "\nTesting all QP solvers on a random quadratic programs...\n"""
+    print("\nTesting all QP solvers on a random quadratic programs...\n")
     for solver in available_solvers:
         try:
             perfs[solver] = []
             for size in sizes:
-                print "Running %s on problem size %d..." % (solver, size)
+                print("Running %s on problem size %d..." % (solver, size))
                 cum_time = timeit(
                     stmt="solve_random_qp(%d, '%s')" % (size, solver),
                     setup="from __main__ import solve_random_qp",
                     number=nb_iter)
                 perfs[solver].append(cum_time / nb_iter)
         except Exception as e:
-            print "Warning:", e
+            print("Warning: %s" % str(e))
             if solver in perfs:
                 del perfs[solver]
     plot_results(perfs)

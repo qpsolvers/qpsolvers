@@ -16,6 +16,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import print_function
+
 from numpy import array, dot
 from qpsolvers import solve_qp
 from time import time
@@ -31,15 +33,15 @@ solver = "quadprog"  # see qpsolvers.available_solvers
 x_sol = solve_qp(P, q, G, h, solver=solver)
 t_end = time()
 
-print ""
-print "    min. 1/2 x^T P x + q^T x"
-print "    s.t. G * x <= h"
-print ""
-print "P =", P
-print "q =", q
-print "G =", G
-print "h =", h
-print ""
-print "Solution: x =", x_sol
-print "Solve time:", 1000. * (t_end - t_start), "[ms]"
-print "Solver:", solver
+print("")
+print("    min. 1/2 x^T P x + q^T x")
+print("    s.t. G * x <= h")
+print("")
+print("P =", P)
+print("q =", q)
+print("G =", G)
+print("h =", h)
+print("")
+print("Solution: x =", x_sol)
+print("Solve time:", 1000. * (t_end - t_start), "[ms]")
+print("Solver:", solver)

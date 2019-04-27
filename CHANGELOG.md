@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Fixed
+
+- Python 3 compatibility
+
 ## [1.0.5] - 2019/04/10
 
 ### Added

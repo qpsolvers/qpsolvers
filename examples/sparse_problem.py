@@ -22,6 +22,8 @@
 Test all available QP solvers on a sparse quadratic program.
 """
 
+from __future__ import print_function
+
 import numpy
 import scipy.sparse
 import sys
@@ -43,7 +45,7 @@ except ImportError:  # run locally if not installed
 # QP matrices
 n = 500
 M = scipy.sparse.lil_matrix(scipy.sparse.eye(n))
-for i in xrange(1, n - 1):
+for i in range(1, n - 1):
     M[i, i + 1] = -1
     M[i, i - 1] = 1
 P = csc_matrix(M.dot(M.transpose()))
@@ -72,10 +74,9 @@ def time_dense_solvers():
     instructions = {
         solver: "u = solve_qp(P_array, q, G_array, h, solver='%s')" % solver
         for solver in dense_solvers}
-    print "\nDense solvers",
-    print "\n-------------"
+    print("\nDense solvers\n-------------")
     for solver, instr in instructions.iteritems():
-        print "%s: " % solver,
+        print("%s: " % solver, end='')
         get_ipython().magic(u'timeit %s' % instr)
 
 
@@ -83,18 +84,17 @@ def time_sparse_solvers():
     instructions = {
         solver: "u = solve_qp(P, q, G, h, solver='%s')" % solver
         for solver in sparse_solvers}
-    print "\nSparse solvers",
-    print "\n--------------"
+    print("\nSparse solvers\n--------------")
     for solver, instr in instructions.iteritems():
-        print "%s: " % solver,
+        print("%s: " % solver, end='')
         get_ipython().magic(u'timeit %s' % instr)
 
 
 if __name__ == "__main__":
     if get_ipython() is None:
-        print "Usage: ipython -i %s" % basename(__file__)
+        print("Usage: ipython -i %s" % basename(__file__))
         exit()
-    print "\nTesting all QP solvers on a sparse quadratic program..."""
+    print("\nTesting all QP solvers on a sparse quadratic program...")
     check_same_solutions()
     time_dense_solvers()
     time_sparse_solvers()

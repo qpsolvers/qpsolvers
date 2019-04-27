@@ -22,6 +22,8 @@
 Test all available QP solvers on a dense quadratic program.
 """
 
+from __future__ import print_function
+
 import sys
 
 from IPython import get_ipython
@@ -57,7 +59,7 @@ G_csc = csc_matrix(G)
 
 if __name__ == "__main__":
     if get_ipython() is None:
-        print "Usage: ipython -i %s" % basename(__file__)
+        print("Usage: ipython -i %s" % basename(__file__))
         exit()
 
     dense_instr = {
@@ -67,7 +69,7 @@ if __name__ == "__main__":
         solver: "u = solve_qp(P_csc, q, G_csc, h, solver='%s')" % solver
         for solver in sparse_solvers}
 
-    print "\nTesting all QP solvers on a dense quadratic program..."""
+    print("\nTesting all QP solvers on a dense quadratic program...")
 
     sol0 = solve_qp(P, q, G, h, solver=dense_solvers[0])
     for solver in dense_solvers:
@@ -79,14 +81,12 @@ if __name__ == "__main__":
         delta = norm(sol - sol0)
         assert delta < 1e-4, "%s's solution offset by %.1e" % (solver, delta)
 
-    print "\nDense solvers",
-    print "\n-------------"
+    print("\nDense solvers\n-------------")
     for solver, instr in dense_instr.iteritems():
-        print "%s: " % solver,
+        print("%s: " % solver, end='')
         get_ipython().magic(u'timeit %s' % instr)
 
-    print "\nSparse solvers",
-    print "\n--------------"
+    print("\nSparse solvers\n--------------")
     for solver, instr in sparse_instr.iteritems():
-        print "%s: " % solver,
+        print("%s: " % solver, end='')
         get_ipython().magic(u'timeit %s' % instr)

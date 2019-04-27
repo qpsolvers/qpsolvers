@@ -18,6 +18,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import print_function
+
 from numpy import empty
 from gurobipy import Model, QuadExpr, GRB, GurobiError, quicksum, setParam
 
@@ -84,7 +86,7 @@ def gurobi_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
             name='x_%d' % i,
             lb=-GRB.INFINITY,
             ub=+GRB.INFINITY)
-        for i in xrange(n)
+        for i in range(n)
     }
     model.update()   # integrate new variables
 
@@ -94,7 +96,7 @@ def gurobi_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     rows, cols = P.nonzero()
     for i, j in zip(rows, cols):
         obj += 0.5 * x[i] * P[i, j] * x[j]
-    for i in xrange(n):
+    for i in range(n):
         obj += q[i] * x[i]
     model.setObjective(obj, GRB.MINIMIZE)
 
@@ -115,6 +117,6 @@ def gurobi_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     model.optimize()
 
     a = empty(n)
-    for i in xrange(n):
+    for i in range(n):
         a[i] = model.getVarByName('x_%d' % i).x
     return a
