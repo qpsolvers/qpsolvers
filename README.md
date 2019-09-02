@@ -54,7 +54,8 @@ h = array([3., 2., -2.]).reshape((3,))
 A = array([1., 1., 1.])
 b = array([1.])
 
-print "QP solution:", solve_qp(P, q, G, h, A, b)
+x = solve_qp(P, q, G, h, A, b)
+print("QP solution: x = {}".format(x))
 ```
 
 This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``.
