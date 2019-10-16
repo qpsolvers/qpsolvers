@@ -32,7 +32,7 @@ The list of supported solvers currently includes:
     - [qpOASES](https://projects.coin-or.org/qpOASES)
     - [quadprog](https://pypi.python.org/pypi/quadprog/)
 - Sparse solvers:
-    - [ECOS](https://www.embotech.com/ECOS) as wrapped by [CVXPY](http://www.cvxpy.org/)
+    - [ECOS](https://web.stanford.edu/~boyd/papers/ecos.html) as wrapped by [CVXPY](http://www.cvxpy.org/)
     - [Gurobi](https://www.gurobi.com/)
     - [MOSEK](https://mosek.com/)
     - [OSQP](https://github.com/oxfordcontrol/osqp)
