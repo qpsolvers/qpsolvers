@@ -22,7 +22,7 @@
 Test all available QP solvers on random quadratic programs.
 """
 
-from __future__ import print_function
+
 
 import sys
 
@@ -66,7 +66,7 @@ def plot_results(perfs):
     for solver in perfs:
         plot(sizes, perfs[solver], lw=2, color=colors[solver])
     grid(True)
-    legend(perfs.keys(), loc='lower right')
+    legend(list(perfs.keys()), loc='lower right')
     xscale('log')
     yscale('log')
     for solver in perfs:

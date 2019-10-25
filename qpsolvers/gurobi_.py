@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import print_function
+
 
 from numpy import empty
 from gurobipy import Model, QuadExpr, GRB, GurobiError, quicksum, setParam
@@ -104,14 +104,14 @@ def gurobi_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     #     G * x <= h
     if G is not None:
         G_nonzero_rows = get_nonzero_rows(G)
-        for i, row in G_nonzero_rows.iteritems():
+        for i, row in G_nonzero_rows.items():
             model.addConstr(quicksum(G[i, j] * x[j] for j in row) <= h[i])
 
     # subject to
     #     A * x == b
     if A is not None:
         A_nonzero_rows = get_nonzero_rows(A)
-        for i, row in A_nonzero_rows.iteritems():
+        for i, row in A_nonzero_rows.items():
             model.addConstr(quicksum(A[i, j] * x[j] for j in row) == b[i])
 
     model.optimize()

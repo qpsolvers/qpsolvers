@@ -21,7 +21,7 @@
 import cvxopt.msk
 import mosek
 
-from cvxopt_ import cvxopt_solve_qp
+from .cvxopt_ import cvxopt_solve_qp
 
 cvxopt.solvers.options['mosek'] = {mosek.iparam.log: 0}
 
