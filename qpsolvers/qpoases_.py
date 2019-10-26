@@ -19,7 +19,6 @@
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
 
-
 from numpy import array, hstack, ones, vstack, zeros
 from qpoases import PyOptions as Options
 from qpoases import PyPrintLevel as PrintLevel
@@ -96,9 +95,9 @@ def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
         lb_C = None  # NB:
         ub_C = h
     elif G is None and A is not None:
-        C = vstack([A, A])
-        lb_C = h
-        ub_C = h
+        C = A
+        lb_C = b
+        ub_C = b
     elif G is not None and A is not None:
         C = vstack([G, A, A])
         lb_C = hstack([-__infty * ones(h.shape[0]), b, b])
