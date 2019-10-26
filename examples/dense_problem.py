@@ -22,7 +22,7 @@
 Test all available QP solvers on a dense quadratic program.
 """
 
-from __future__ import print_function
+
 
 import sys
 
@@ -82,11 +82,11 @@ if __name__ == "__main__":
         assert delta < 1e-4, "%s's solution offset by %.1e" % (solver, delta)
 
     print("\nDense solvers\n-------------")
-    for solver, instr in dense_instr.iteritems():
+    for solver, instr in dense_instr.items():
         print("%s: " % solver, end='')
-        get_ipython().magic(u'timeit %s' % instr)
+        get_ipython().magic('timeit %s' % instr)
 
     print("\nSparse solvers\n--------------")
-    for solver, instr in sparse_instr.iteritems():
+    for solver, instr in sparse_instr.items():
         print("%s: " % solver, end='')
-        get_ipython().magic(u'timeit %s' % instr)
+        get_ipython().magic('timeit %s' % instr)
