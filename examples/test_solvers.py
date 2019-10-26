@@ -19,7 +19,7 @@
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
 """
-Test all available QP solvers on a dense quadratic program.
+Test all solvers on all combinations of inequality/equality API calls.
 """
 
 from __future__ import print_function  # Python 2 compatibility

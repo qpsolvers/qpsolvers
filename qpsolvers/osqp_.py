@@ -71,25 +71,30 @@ def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     Check out for this point if you e.g. `get nan values
     <https://github.com/oxfordcontrol/osqp/issues/10>`_ in your solutions.
     """
-    l = -inf * ones(len(h))
     if type(P) is ndarray:
         warn(conversion_warning("P"))
         P = csc_matrix(P)
-    if A is not None:
-        if A.ndim == 1:
-            A = A.reshape((1, A.shape[0]))
-        qp_A = vstack([G, A]).tocsc()
-        qp_l = hstack([l, b])
-        qp_u = hstack([h, b])
-    else:  # no equality constraint
+    osqp = OSQP()
+    if A is None and G is None:
+        osqp.setup(P=P, q=q, verbose=False)
+    elif A is not None:
+        if G is None:
+            if type(A) is ndarray:
+                warn(conversion_warning("A"))
+                A = csc_matrix(A)
+            osqp.setup(P=P, q=q, A=A, l=b, u=b, verbose=False)
+        else:  # G is not None
+            l = -inf * ones(len(h))
+            qp_A = vstack([G, A]).tocsc()
+            qp_l = hstack([l, b])
+            qp_u = hstack([h, b])
+            osqp.setup(P=P, q=q, A=qp_A, l=qp_l, u=qp_u, verbose=False)
+    else:  # A is None
         if type(G) is ndarray:
             warn(conversion_warning("G"))
             G = csc_matrix(G)
-        qp_A = G
-        qp_l = l
-        qp_u = h
-    osqp = OSQP()
-    osqp.setup(P=P, q=q, A=qp_A, l=qp_l, u=qp_u, verbose=False)
+        l = -inf * ones(len(h))
+        osqp.setup(P=P, q=q, A=G, l=l, u=h, verbose=False)
     if initvals is not None:
         osqp.warm_start(x=initvals)
     res = osqp.solve()
