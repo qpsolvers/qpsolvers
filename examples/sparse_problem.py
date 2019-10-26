@@ -22,7 +22,7 @@
 Test all available QP solvers on a sparse quadratic program.
 """
 
-
+from __future__ import print_function  # Python 2 compatibility
 
 import numpy
 import scipy.sparse

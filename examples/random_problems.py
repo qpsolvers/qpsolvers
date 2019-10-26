@@ -22,7 +22,7 @@
 Test all available QP solvers on random quadratic programs.
 """
 
-
+from __future__ import print_function  # Python 2 compatibility
 
 import sys
 
