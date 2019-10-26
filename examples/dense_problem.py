@@ -41,7 +41,6 @@ except ImportError:  # run locally if not installed
     from qpsolvers import solve_qp
 
 
-# QP matrices
 M = array([
     [1., 2., 0.],
     [-8., 3., 2.],

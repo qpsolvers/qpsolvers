@@ -42,7 +42,6 @@ except ImportError:  # run locally if not installed
     from qpsolvers import solve_qp
 
 
-# QP matrices
 n = 500
 M = scipy.sparse.lil_matrix(scipy.sparse.eye(n))
 for i in range(1, n - 1):

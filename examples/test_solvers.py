@@ -40,7 +40,6 @@ except ImportError:  # run locally if not installed
     from qpsolvers import solve_qp
 
 
-# QP matrices
 M = array([
     [1., 2., 0.],
     [-8., 3., 2.],
@@ -52,10 +51,12 @@ G = array([
     [2., 0., 1.],
     [-1., 2., -1.]])
 h = array([3., 2., -2.]).reshape((3,))
+h0 = array([h[0]])
 A = array([
-    [2., 0., 1.],
-    [1., 0.5, 0.5]])
-b = array([1., 1.])
+    [1., 0., 0.],
+    [0., 0.4, 0.5]])
+b = array([-0.5, -1.2])
+b0 = array([b[0]])
 
 
 if __name__ == "__main__":
@@ -67,14 +68,20 @@ if __name__ == "__main__":
         {'P': P, 'q': q},
         {'P': P, 'q': q, 'G': G, 'h': h},
         {'P': P, 'q': q, 'A': A, 'b': b},
-        {'P': P, 'q': q, 'A': A[0], 'b': b[0]},
+        {'P': P, 'q': q, 'G': G[0], 'h': h0},
+        {'P': P, 'q': q, 'A': A[0], 'b': b0},
         {'P': P, 'q': q, 'G': G, 'h': h, 'A': A, 'b': b},
+        {'P': P, 'q': q, 'G': G[0], 'h': h0, 'A': A, 'b': b},
+        {'P': P, 'q': q, 'G': G, 'h': h, 'A': A[0], 'b': b0},
+        {'P': P, 'q': q, 'G': G[0], 'h': h0, 'A': A[0], 'b': b0},
     ]
 
-    for (i, kwargs) in enumerate(cases):
-        sol0 = solve_qp(solver=available_solvers[0], **kwargs)
+    for (i, case) in enumerate(cases):
+        print("\nTest %1d\n======\n" % i)
+        expected_sol = solve_qp(solver=available_solvers[0], **case)
         for solver in available_solvers:
-            sol = solve_qp(solver=solver, **kwargs)
-            delta = norm(sol - sol0)
+            sol = solve_qp(solver=solver, **case)
+            delta = norm(sol - expected_sol)
+            print("%9s's solution: %s" % (solver, sol.round(decimals=5)))
             assert delta < 1e-4, \
                 "%s's solution offset by %.1e on test #%d" % (solver, delta, i)
