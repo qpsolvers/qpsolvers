@@ -2,11 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## [1.0.6] - 2019/10/26
+
+Thanks to Brian Delhaisse and Soeren Wolfers who contributed fixes to this
+release!
 
 ### Fixed
 
-- Python 3 compatibility
+- quadprog: handle case where G and h are None
+- quadprog: handle cas where A.ndim == 1
+- Make examples compatible with both Python 2 and Python 3
 
 ## [1.0.5] - 2019/04/10
 
