@@ -41,6 +41,7 @@ except ImportError:  # run locally if not installed
 colors = {
     'cvxopt': 'r',
     'cvxpy': 'c',
+    'ecos': 'c',
     'gurobi': 'b',
     'mosek': 'g',
     'osqp': 'k',
