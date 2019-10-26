@@ -24,19 +24,13 @@ Test all available QP solvers on random quadratic programs.
 
 from __future__ import print_function  # Python 2 compatibility
 
-import sys
-
 from IPython import get_ipython
 from numpy import dot, ones, random
-from os.path import basename, dirname, realpath
+from os.path import basename
 from scipy.linalg import toeplitz
 from timeit import timeit
 
-try:
-    from qpsolvers import available_solvers, solve_qp
-except ImportError:  # run locally if not installed
-    sys.path.append(dirname(realpath(__file__)) + '/..')
-    from qpsolvers import available_solvers, solve_qp
+from qpsolvers import available_solvers, solve_qp
 
 colors = {
     'cvxopt': 'r',

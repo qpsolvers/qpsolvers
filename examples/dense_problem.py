@@ -24,21 +24,14 @@ Test all available QP solvers on a dense quadratic program.
 
 from __future__ import print_function  # Python 2 compatibility
 
-import sys
-
 from IPython import get_ipython
 from numpy import array, dot
 from numpy.linalg import norm
-from os.path import basename, dirname, realpath
+from os.path import basename
 from scipy.sparse import csc_matrix
 
-try:
-    from qpsolvers import dense_solvers, sparse_solvers
-    from qpsolvers import solve_qp
-except ImportError:  # run locally if not installed
-    sys.path.append(dirname(realpath(__file__)) + '/..')
-    from qpsolvers import dense_solvers, sparse_solvers
-    from qpsolvers import solve_qp
+from qpsolvers import dense_solvers, sparse_solvers
+from qpsolvers import solve_qp
 
 
 M = array([

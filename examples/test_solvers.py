@@ -24,20 +24,13 @@ Test all solvers on all combinations of inequality/equality API calls.
 
 from __future__ import print_function  # Python 2 compatibility
 
-import sys
-
 from IPython import get_ipython
 from numpy import array, dot
 from numpy.linalg import norm
-from os.path import basename, dirname, realpath
+from os.path import basename
 
-try:
-    from qpsolvers import available_solvers
-    from qpsolvers import solve_qp
-except ImportError:  # run locally if not installed
-    sys.path.append(dirname(realpath(__file__)) + '/..')
-    from qpsolvers import available_solvers
-    from qpsolvers import solve_qp
+from qpsolvers import available_solvers
+from qpsolvers import solve_qp
 
 
 M = array([
