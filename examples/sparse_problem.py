@@ -22,7 +22,7 @@
 Test all available QP solvers on a sparse quadratic program.
 """
 
-from __future__ import print_function
+from __future__ import print_function  # Python 2 compatibility
 
 import numpy
 import scipy.sparse
@@ -75,9 +75,9 @@ def time_dense_solvers():
         solver: "u = solve_qp(P_array, q, G_array, h, solver='%s')" % solver
         for solver in dense_solvers}
     print("\nDense solvers\n-------------")
-    for solver, instr in instructions.iteritems():
+    for solver, instr in instructions.items():
         print("%s: " % solver, end='')
-        get_ipython().magic(u'timeit %s' % instr)
+        get_ipython().magic('timeit %s' % instr)
 
 
 def time_sparse_solvers():
@@ -85,9 +85,9 @@ def time_sparse_solvers():
         solver: "u = solve_qp(P, q, G, h, solver='%s')" % solver
         for solver in sparse_solvers}
     print("\nSparse solvers\n--------------")
-    for solver, instr in instructions.iteritems():
+    for solver, instr in instructions.items():
         print("%s: " % solver, end='')
-        get_ipython().magic(u'timeit %s' % instr)
+        get_ipython().magic('timeit %s' % instr)
 
 
 if __name__ == "__main__":

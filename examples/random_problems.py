@@ -22,7 +22,7 @@
 Test all available QP solvers on random quadratic programs.
 """
 
-from __future__ import print_function
+from __future__ import print_function  # Python 2 compatibility
 
 import sys
 
@@ -41,6 +41,7 @@ except ImportError:  # run locally if not installed
 colors = {
     'cvxopt': 'r',
     'cvxpy': 'c',
+    'ecos': 'c',
     'gurobi': 'b',
     'mosek': 'g',
     'osqp': 'k',
@@ -66,7 +67,7 @@ def plot_results(perfs):
     for solver in perfs:
         plot(sizes, perfs[solver], lw=2, color=colors[solver])
     grid(True)
-    legend(perfs.keys(), loc='lower right')
+    legend(list(perfs.keys()), loc='lower right')
     xscale('log')
     yscale('log')
     for solver in perfs:

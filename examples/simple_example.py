@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import print_function
+from __future__ import print_function  # Python 2 compatibility
 
 from numpy import array, dot
 from qpsolvers import solve_qp
