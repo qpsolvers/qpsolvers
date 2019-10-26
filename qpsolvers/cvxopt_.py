@@ -80,13 +80,16 @@ def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None, solver=None,
     wrong cost function if a non-symmetric matrix is provided.
     """
     args = [cvxopt_matrix(P), cvxopt_matrix(q)]
+    kwargs = {'G': None, 'h': None, 'A': None, 'b': None}
     if G is not None:
-        args.extend([cvxopt_matrix(G), cvxopt_matrix(h)])
-        if A is not None:
-            if type(A) is ndarray and A.ndim == 1:
-                A = A.reshape((1, A.shape[0]))
-            args.extend([cvxopt_matrix(A), cvxopt_matrix(b)])
-    sol = qp(*args, solver=solver, initvals=initvals)
+        kwargs['G'] = cvxopt_matrix(G)
+        kwargs['h'] = cvxopt_matrix(h)
+    if A is not None:
+        if type(A) is ndarray and A.ndim == 1:
+            A = A.reshape((1, A.shape[0]))
+        kwargs['A'] = cvxopt_matrix(A)
+        kwargs['b'] = cvxopt_matrix(b)
+    sol = qp(*args, solver=solver, initvals=initvals, **kwargs)
     if 'optimal' not in sol['status']:
         return None
     return array(sol['x']).reshape((q.shape[0],))

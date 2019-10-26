@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Fixed
+
+- cvxopt: handle case where G and h are None but not A and b
+
 ## [1.0.6] - 2019/10/26
 
 Thanks to Brian Delhaisse and Soeren Wolfers who contributed fixes to this
