@@ -24,7 +24,6 @@ Test all solvers on all combinations of inequality/equality API calls.
 
 from __future__ import print_function  # Python 2 compatibility
 
-from IPython import get_ipython
 from numpy import array, dot
 from numpy.linalg import norm
 from os.path import basename
@@ -53,10 +52,6 @@ b0 = array([b[0]])
 
 
 if __name__ == "__main__":
-    if get_ipython() is None:
-        print("Usage: ipython -i %s" % basename(__file__))
-        exit()
-
     cases = [
         {'P': P, 'q': q},
         {'P': P, 'q': q, 'G': G, 'h': h},
