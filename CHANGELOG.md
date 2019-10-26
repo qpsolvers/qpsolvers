@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 
 - cvxopt: handle case where G and h are None but not A and b
 - osqp: handle case where G and h are None
+- osqp: handle case where both G and A are one-line matrices
 - qpoases: handle case where G and h are None but not A and b
 
 ## [1.0.6] - 2019/10/26

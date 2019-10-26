@@ -78,10 +78,10 @@ def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     if A is None and G is None:
         osqp.setup(P=P, q=q, verbose=False)
     elif A is not None:
+        if type(A) is ndarray:
+            warn(conversion_warning("A"))
+            A = csc_matrix(A)
         if G is None:
-            if type(A) is ndarray:
-                warn(conversion_warning("A"))
-                A = csc_matrix(A)
             osqp.setup(P=P, q=q, A=A, l=b, u=b, verbose=False)
         else:  # G is not None
             l = -inf * ones(len(h))
