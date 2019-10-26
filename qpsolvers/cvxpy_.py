@@ -18,8 +18,6 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-
-
 from cvxpy import Constant, Minimize, Problem, Variable, quad_form
 from numpy import array
 

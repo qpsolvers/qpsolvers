@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Changed
+
+- Always reshape A or G vectors into one-line matrices
+
 ### Fixed
 
 - cvxopt: handle case where G and h are None but not A and b

@@ -18,8 +18,6 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-
-
 from numpy import hstack, vstack
 from quadprog import solve_qp
 
@@ -69,8 +67,6 @@ def quadprog_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     qp_G = P
     qp_a = -q
     if A is not None:
-        if A.ndim == 1:
-            A = A.reshape((1, A.shape[0]))
         if G is None:
             qp_C = -A.T
             qp_b = -b

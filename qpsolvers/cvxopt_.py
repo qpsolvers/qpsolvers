@@ -85,8 +85,6 @@ def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None, solver=None,
         kwargs['G'] = cvxopt_matrix(G)
         kwargs['h'] = cvxopt_matrix(h)
     if A is not None:
-        if type(A) is ndarray and A.ndim == 1:
-            A = A.reshape((1, A.shape[0]))
         kwargs['A'] = cvxopt_matrix(A)
         kwargs['b'] = cvxopt_matrix(b)
     sol = qp(*args, solver=solver, initvals=initvals, **kwargs)
