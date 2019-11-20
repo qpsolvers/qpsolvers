@@ -157,7 +157,7 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, solver='quadprog',
     at the cost of some computation time.
     """
     if sym_proj:
-        P = .5 * (P + P.transpose())
+        P = .5 * (P + P.transpose()) + np.eye(P.shape[0]).__mul__(1e-3)
     if type(A) is ndarray and A.ndim == 1:
         A = A.reshape((1, A.shape[0]))
     if type(G) is ndarray and G.ndim == 1:
