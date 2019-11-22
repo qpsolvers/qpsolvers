@@ -126,7 +126,8 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, solver='quadprog',
     Parameters
     ----------
     P : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
-        Symmetric quadratic-cost matrix.
+        Symmetric quadratic-cost matrix (most solvers require it to be definite
+        as well).
     q : numpy.array
         Quadratic-cost vector.
     G : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
@@ -151,10 +152,10 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, solver='quadprog',
 
     Notes
     -----
-    Many solvers (including CVXOPT, OSQP and quadprog) assume that `P` is a
-    symmetric matrix, and may return erroneous results when that is not the
-    case. You can set ``sym_proj=True`` to project `P` on its symmetric part,
-    at the cost of some computation time.
+    In quadratic programming, the matrix `P` should be symmetric. Many solvers
+    (including CVXOPT, OSQP and quadprog) leverage this property and may return
+    erroneous results when it is not the case. You can set ``sym_proj=True`` to
+    project `P` on its symmetric part, at the cost of some computation time.
     """
     if sym_proj:
         P = .5 * (P + P.transpose())
