@@ -70,8 +70,10 @@ On a [dense problem](examples/dense_problem.py), the performance of all solvers
 | quadprog | Dense  | 0.02      |
 | qpoases  | Dense  | 0.03      |
 | osqp     | Sparse | 0.04      |
-| cvxopt   | Dense  | 0.43      |
+| ecos     | Sparse | 0.34      |
+| cvxopt   | Dense  | 0.46      |
 | gurobi   | Sparse | 0.84      |
+| cvxpy    | Sparse | 3.40      |
 | mosek    | Sparse | 7.17      |
 
 On a [sparse problem](examples/sparse_problem.py), these performances become:
@@ -80,10 +82,12 @@ On a [sparse problem](examples/sparse_problem.py), these performances become:
 | -------- | ------ | --------- |
 | osqp     | Sparse |    1      |
 | mosek    | Sparse |   17      |
-| cvxopt   | Dense  |   35      |
+| ecos     | Sparse |   21      |
+| cvxopt   | Dense  |  186      |
 | gurobi   | Sparse |  221      |
-| quadprog | Dense  |  421      |
-| qpoases  | Dense  | 2210      |
+| quadprog | Dense  |  550      |
+| cvxpy    | Sparse |  654      |
+| qpoases  | Dense  | 2250      |
 
 Finally, here are the results on a benchmark of [random
 problems](examples/random_problems.py) (each data point corresponds to an
