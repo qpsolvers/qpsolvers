@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2016-2018 Stephane Caron <stephane.caron@normalesup.org>
+# Copyright (C) 2016-2020 Stephane Caron <stephane.caron@normalesup.org>
 #
 # This file is part of qpsolvers.
 #
@@ -18,12 +18,13 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-from cvxpy import Constant, Minimize, Problem, Variable, quad_form
-from numpy import array
+from ecos import solve
+from numpy import hstack, sqrt, vstack, zeros
+from numpy.linalg import cholesky
+from scipy.sparse import csr_matrix
 
 
-def cvxpy_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
-                   solver=None):
+def ecos_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     """
     Solve a Quadratic Program defined as:
 
@@ -34,8 +35,8 @@ def cvxpy_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
             G * x <= h
             A * x == b
 
-    calling a given solver using the CVXPY <http://www.cvxpy.org/> modelling
-    language.
+    using ECOS <https://www.embotech.com/ECOS> called via CVXPY
+    <http://www.cvxpy.org/>.
 
     Parameters
     ----------
@@ -60,19 +61,44 @@ def cvxpy_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
     -------
     x : array, shape=(n,)
         Solution to the QP, if found, otherwise ``None``.
+
+    Note
+    ----
+    This function is adapted from ``ecosqp.m`` in the `ecos-matlab
+    <https://github.com/embotech/ecos-matlab/>`_ repository.
     """
-    if initvals is not None:
-        print("CVXPY: note that warm-start values are ignored by wrapper")
-    n = q.shape[0]
-    x = Variable(n)
-    P = Constant(P)  # see http://www.cvxpy.org/en/latest/faq/
-    objective = Minimize(0.5 * quad_form(x, P) + q * x)
-    constraints = []
-    if G is not None:
-        constraints.append(G * x <= h)
+    n = P.shape[1]  # dimension of QP variable
+    c_socp = hstack([zeros(n), 1])  # new SOCP variable stacked as [x, t]
+    L = cholesky(P)
+
+    scale = 1. / sqrt(2)
+    G_quad = vstack([
+        scale * hstack([q, -1.]),
+        hstack([-L.T, zeros((L.shape[0], 1))]),
+        scale * hstack([-q, +1.])])
+    h_quad = hstack([
+        scale,
+        zeros(L.shape[0]),
+        scale])
+
+    dims = {'q': [L.shape[0] + 2]}
+    if G is None:
+        G_socp = G_quad
+        h_socp = h_quad
+        dims['l'] = 0
+    else:
+        G_socp = vstack([
+            hstack([G, zeros((G.shape[0], 1))]),
+            G_quad])
+        h_socp = hstack([h, h_quad])
+        dims['l'] = G.shape[0]
+
+    G_socp = csr_matrix(G_socp)
     if A is not None:
-        constraints.append(A * x == b)
-    prob = Problem(objective, constraints)
-    prob.solve(solver=solver)
-    x_opt = array(x.value).reshape((n,))
-    return x_opt
+        A_socp = hstack([A, zeros((A.shape[0], 1))])
+        A_socp = csr_matrix(A_socp)
+        solution = solve(
+            c_socp, G_socp, h_socp, dims, A_socp, b, verbose=False)
+    else:
+        solution = solve(c_socp, G_socp, h_socp, dims, verbose=False)
+    return solution['x'][:-1]
