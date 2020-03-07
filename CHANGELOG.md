@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1] - 2020/03/07
+
+### Added
+
+- ECOS solver interface (no need to go through CVXPY any more)
+- Update ECOS performance in benchmark (much better than before!)
+
+### Fixed
+
+- Fix link to ECOS in setup.py
+- Remove ned for IPython in solver test
+- Update notes on P matrix
+
 ## [1.0.7] - 2019/10/26
 
 ### Changed

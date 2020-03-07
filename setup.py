@@ -53,7 +53,6 @@ The list of supported solvers currently includes:
     - `quadprog <https://pypi.python.org/pypi/quadprog>`_
 - Sparse solvers:
     - `ECOS <https://web.stanford.edu/~boyd/papers/ecos.html>`_
-      as wrapped by `CVXPY <http://www.cvxpy.org/>`_
     - `Gurobi <https://www.gurobi.com/>`_
     - `MOSEK <https://mosek.com/>`_
     - `OSQP <https://github.com/oxfordcontrol/osqp>`_
@@ -84,7 +83,7 @@ This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``.
 
 setup(
     name='qpsolvers',
-    version='1.0.7',
+    version='1.1',
     description="Quadratic Programming solvers for Python with a unified API",
     long_description=long_description,
     url="https://github.com/stephane-caron/qpsolvers",
