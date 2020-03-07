@@ -40,22 +40,20 @@ def ecos_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
 
     Parameters
     ----------
-    P : array, shape=(n, n)
+    P : numpy.array
         Primal quadratic cost matrix.
-    q : array, shape=(n,)
+    q : numpy.array
         Primal quadratic cost vector.
-    G : array, shape=(m, n)
+    G : numpy.array
         Linear inequality constraint matrix.
-    h : array, shape=(m,)
+    h : numpy.array
         Linear inequality constraint vector.
-    A : array, shape=(meq, n), optional
+    A : numpy.array, optional
         Linear equality constraint matrix.
-    b : array, shape=(meq,), optional
+    b : numpy.array, optional
         Linear equality constraint vector.
-    initvals : array, shape=(n,), optional
+    initvals : numpy.array, optional
         Warm-start guess vector (not used).
-    solver : string, optional
-        Solver name in ``cvxpy.installed_solvers()``.
 
     Returns
     -------
