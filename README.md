@@ -62,8 +62,8 @@ This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``.
 
 ## Performances
 
-On a [dense\_problem.py](examples/dense_problem.py), the performance of all
-solvers (as measured by IPython's ``%timeit`` on my machine) is:
+On a [dense problem](examples/dense_problem.py), the performance of all solvers
+(as measured by IPython's ``%timeit`` on my machine) is:
 
 | Solver   | Type   | Time (ms) |
 | -------- | ------ | --------- |
@@ -74,8 +74,7 @@ solvers (as measured by IPython's ``%timeit`` on my machine) is:
 | gurobi   | Sparse | 0.84      |
 | mosek    | Sparse | 7.17      |
 
-Meanwhile, on a [sparse\_problem.py](examples/sparse_problem.py) example, these
-performances become:
+On a [sparse problem](examples/sparse_problem.py), these performances become:
 
 | Solver   | Type   | Time (ms) |
 | -------- | ------ | --------- |
@@ -86,9 +85,9 @@ performances become:
 | quadprog | Dense  |  421      |
 | qpoases  | Dense  | 2210      |
 
-Finally, here are the results on a benchmark of random problems generated with
-the [randomized.py](examples/randomized.py) example (each data point
-corresponds to an average over 10 runs):
+Finally, here are the results on a benchmark of [random
+problems](examples/random_problems.py) (each data point corresponds to an
+average over 10 runs):
 
 <img src="https://scaron.info/images/qp-benchmark.png">
 
