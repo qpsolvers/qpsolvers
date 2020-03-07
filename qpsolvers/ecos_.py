@@ -35,8 +35,7 @@ def ecos_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
             G * x <= h
             A * x == b
 
-    using ECOS <https://www.embotech.com/ECOS> called via CVXPY
-    <http://www.cvxpy.org/>.
+    using ECOS <https://www.embotech.com/ECOS>.
 
     Parameters
     ----------
