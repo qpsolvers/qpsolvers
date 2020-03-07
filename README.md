@@ -62,8 +62,8 @@ This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``.
 
 ## Performances
 
-On the dense example above, the performance of all solvers (as measured by
-IPython's ``%timeit`` on my machine) is:
+On a [dense\_problem.py](examples/dense_problem.py), the performance of all
+solvers (as measured by IPython's ``%timeit`` on my machine) is:
 
 | Solver   | Type   | Time (ms) |
 | -------- | ------ | --------- |
@@ -74,8 +74,8 @@ IPython's ``%timeit`` on my machine) is:
 | gurobi   | Sparse | 0.84      |
 | mosek    | Sparse | 7.17      |
 
-Meanwhile, on the [sparse.py](examples/sparse.py) example, these performances
-become:
+Meanwhile, on a [sparse\_problem.py](examples/sparse_problem.py) example, these
+performances become:
 
 | Solver   | Type   | Time (ms) |
 | -------- | ------ | --------- |
