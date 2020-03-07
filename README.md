@@ -32,7 +32,7 @@ The list of supported solvers currently includes:
     - [qpOASES](https://projects.coin-or.org/qpOASES)
     - [quadprog](https://pypi.python.org/pypi/quadprog/)
 - Sparse solvers:
-    - [ECOS](https://web.stanford.edu/~boyd/papers/ecos.html) as wrapped by [CVXPY](http://www.cvxpy.org/)
+    - [ECOS](https://web.stanford.edu/~boyd/papers/ecos.html)
     - [Gurobi](https://www.gurobi.com/)
     - [MOSEK](https://mosek.com/)
     - [OSQP](https://github.com/oxfordcontrol/osqp)
@@ -62,8 +62,8 @@ This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``.
 
 ## Performances
 
-On the dense example above, the performance of all solvers (as measured by
-IPython's ``%timeit`` on my machine) is:
+On a [dense problem](examples/dense_problem.py), the performance of all solvers
+(as measured by IPython's ``%timeit`` on my machine) is:
 
 | Solver   | Type   | Time (ms) |
 | -------- | ------ | --------- |
@@ -72,11 +72,9 @@ IPython's ``%timeit`` on my machine) is:
 | osqp     | Sparse | 0.04      |
 | cvxopt   | Dense  | 0.43      |
 | gurobi   | Sparse | 0.84      |
-| ecos     | Sparse | 2.61      |
 | mosek    | Sparse | 7.17      |
 
-Meanwhile, on the [sparse.py](examples/sparse.py) example, these performances
-become:
+On a [sparse problem](examples/sparse_problem.py), these performances become:
 
 | Solver   | Type   | Time (ms) |
 | -------- | ------ | --------- |
@@ -85,12 +83,11 @@ become:
 | cvxopt   | Dense  |   35      |
 | gurobi   | Sparse |  221      |
 | quadprog | Dense  |  421      |
-| ecos     | Sparse |  638      |
 | qpoases  | Dense  | 2210      |
 
-Finally, here are the results on a benchmark of random problems generated with
-the [randomized.py](examples/randomized.py) example (each data point
-corresponds to an average over 10 runs):
+Finally, here are the results on a benchmark of [random
+problems](examples/random_problems.py) (each data point corresponds to an
+average over 10 runs):
 
 <img src="https://scaron.info/images/qp-benchmark.png">
 
@@ -99,5 +96,5 @@ instance, MOSEK performs an [automatic conversion to Second-Order Cone
 Programming
 (SOCP)](https://docs.mosek.com/8.1/pythonapi/prob-def-quadratic.html) which the
 documentation advises bypassing for better performance. Similarly, ECOS
-reformulates from QP to SOCP and [works best on small
+reformulates [from QP to SOCP](qpsolvers/ecos_.py) and [works best on small
 problems](https://web.stanford.edu/%7Eboyd/papers/ecos.html).

@@ -64,14 +64,15 @@ if __name__ == "__main__":
     print("\nTesting all QP solvers on a dense quadratic program...")
 
     sol0 = solve_qp(P, q, G, h, solver=dense_solvers[0])
+    abstol = 2e-4  # tolerance on absolute solution error
     for solver in dense_solvers:
         sol = solve_qp(P, q, G, h, solver=solver)
         delta = norm(sol - sol0)
-        assert delta < 1e-4, "%s's solution offset by %.1e" % (solver, delta)
+        assert delta < abstol, "%s's solution offset by %.1e" % (solver, delta)
     for solver in sparse_solvers:
         sol = solve_qp(P_csc, q, G_csc, h, solver=solver)
         delta = norm(sol - sol0)
-        assert delta < 1e-4, "%s's solution offset by %.1e" % (solver, delta)
+        assert delta < abstol, "%s's solution offset by %.1e" % (solver, delta)
 
     print("\nDense solvers\n-------------")
     for solver, instr in dense_instr.items():

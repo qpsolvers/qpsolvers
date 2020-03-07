@@ -41,15 +41,21 @@ except ImportError:
 # =====
 
 try:
-    from .cvxpy_ import cvxpy_solve_qp, ecos_solve_qp
+    from .cvxpy_ import cvxpy_solve_qp
     available_solvers.append('cvxpy')
-    available_solvers.append('ecos')
     sparse_solvers.append('cvxpy')
-    sparse_solvers.append('ecos')
 except ImportError:
     def cvxpy_solve_qp(*args, **kwargs):
         raise ImportError("CVXPY not found")
 
+# ECOS
+# ====
+
+try:
+    from .ecos_ import ecos_solve_qp
+    available_solvers.append('ecos')
+    dense_solvers.append('ecos')  # considered dense as it calls cholesky(P)
+except ImportError:
     def ecos_solve_qp(*args, **kwargs):
         raise ImportError("ECOS not found")
 
