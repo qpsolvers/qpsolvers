@@ -94,11 +94,11 @@ def ecos_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
         dims['l'] = G.shape[0]
 
     G_socp = csr_matrix(G_socp)
+    kwargs = {'verbose': False}
     if A is not None:
         A_socp = hstack([A, zeros((A.shape[0], 1))])
         A_socp = csr_matrix(A_socp)
-        solution = solve(
-            c_socp, G_socp, h_socp, dims, A_socp, b, verbose=False)
+        solution = solve(c_socp, G_socp, h_socp, dims, A_socp, b, **kwargs)
     else:
-        solution = solve(c_socp, G_socp, h_socp, dims, verbose=False)
+        solution = solve(c_socp, G_socp, h_socp, dims, **kwargs)
     return solution['x'][:-1]

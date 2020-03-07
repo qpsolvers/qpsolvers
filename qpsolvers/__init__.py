@@ -54,7 +54,7 @@ except ImportError:
 try:
     from .ecos_ import ecos_solve_qp
     available_solvers.append('ecos')
-    dense_solvers.append('ecos')
+    sparse_solvers.append('ecos')
 except ImportError:
     def ecos_solve_qp(*args, **kwargs):
         raise ImportError("ECOS not found")
