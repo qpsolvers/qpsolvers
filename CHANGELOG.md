@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Fixed
+
+- Handle quadprog exception to avoid confusion on cost matrix notation
+
 ## [1.1] - 2020/03/07
 
 ### Added
