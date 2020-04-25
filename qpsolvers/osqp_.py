@@ -74,30 +74,30 @@ def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     if type(P) is ndarray:
         warn(conversion_warning("P"))
         P = csc_matrix(P)
-    osqp = OSQP()
+    solver = OSQP()
     if A is None and G is None:
-        osqp.setup(P=P, q=q, verbose=False)
+        solver.setup(P=P, q=q, verbose=False)
     elif A is not None:
         if type(A) is ndarray:
             warn(conversion_warning("A"))
             A = csc_matrix(A)
         if G is None:
-            osqp.setup(P=P, q=q, A=A, l=b, u=b, verbose=False)
+            solver.setup(P=P, q=q, A=A, l=b, u=b, verbose=False)
         else:  # G is not None
             l = -inf * ones(len(h))
             qp_A = vstack([G, A]).tocsc()
             qp_l = hstack([l, b])
             qp_u = hstack([h, b])
-            osqp.setup(P=P, q=q, A=qp_A, l=qp_l, u=qp_u, verbose=False)
+            solver.setup(P=P, q=q, A=qp_A, l=qp_l, u=qp_u, verbose=False)
     else:  # A is None
         if type(G) is ndarray:
             warn(conversion_warning("G"))
             G = csc_matrix(G)
         l = -inf * ones(len(h))
-        osqp.setup(P=P, q=q, A=G, l=l, u=h, verbose=False)
+        solver.setup(P=P, q=q, A=G, l=l, u=h, verbose=False)
     if initvals is not None:
-        osqp.warm_start(x=initvals)
-    res = osqp.solve()
-    if res.info.status_val != osqp.constant('OSQP_SOLVED'):
+        solver.warm_start(x=initvals)
+    res = solver.solve()
+    if res.info.status_val != solver.constant('OSQP_SOLVED'):
         print("OSQP exited with status '%s'" % res.info.status)
     return res.x
