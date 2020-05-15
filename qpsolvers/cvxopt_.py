@@ -36,6 +36,10 @@ def cvxopt_matrix(M):
         coo.data.tolist(), coo.row.tolist(), coo.col.tolist(), size=M.shape)
 
 
+def cvxopt_set_verbosity(verbose):
+    options['show_progress'] = verbose
+
+
 def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None, solver=None,
                     initvals=None):
     """

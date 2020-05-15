@@ -22,6 +22,12 @@ from numpy import hstack, vstack
 from quadprog import solve_qp
 
 
+def quadprog_set_verbosity(verbose):
+    if verbose:
+        print("qpsolvers: `verbose` argument is not available for CVXPY yet")
+
+
+
 def quadprog_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     """
     Solve a Quadratic Program defined as:

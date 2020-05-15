@@ -30,8 +30,8 @@ sparse_solvers = []
 # ======
 
 try:
+    from .cvxopt_ import cvxopt_set_verbosity
     from .cvxopt_ import cvxopt_solve_qp
-    from .cvxopt_ import options as cvxopt_options
     available_solvers.append('cvxopt')
     dense_solvers.append('cvxopt')
 except ImportError:
@@ -42,6 +42,7 @@ except ImportError:
 # =====
 
 try:
+    from .cvxpy_ import cvxpy_set_verbosity
     from .cvxpy_ import cvxpy_solve_qp
     available_solvers.append('cvxpy')
     sparse_solvers.append('cvxpy')
@@ -53,6 +54,7 @@ except ImportError:
 # ====
 
 try:
+    from .ecos_ import ecos_set_verbosity
     from .ecos_ import ecos_solve_qp
     available_solvers.append('ecos')
     dense_solvers.append('ecos')  # considered dense as it calls cholesky(P)
@@ -64,6 +66,7 @@ except ImportError:
 # ======
 
 try:
+    from .gurobi_ import gurobi_set_verbosity
     from .gurobi_ import gurobi_solve_qp
     available_solvers.append('gurobi')
     sparse_solvers.append('gurobi')
@@ -75,6 +78,7 @@ except ImportError:
 # =====
 
 try:
+    from .mosek_ import mosek_set_verbosity
     from .mosek_ import mosek_solve_qp
     available_solvers.append('mosek')
     sparse_solvers.append('mosek')
@@ -86,6 +90,7 @@ except ImportError:
 # ====
 
 try:
+    from .osqp_ import osqp_set_verbosity
     from .osqp_ import osqp_solve_qp
     available_solvers.append('osqp')
     sparse_solvers.append('osqp')
@@ -97,6 +102,7 @@ except ImportError:
 # =======
 
 try:
+    from .qpoases_ import qpoases_set_verbosity
     from .qpoases_ import qpoases_solve_qp
     available_solvers.append('qpoases')
     dense_solvers.append('qpoases')
@@ -108,6 +114,7 @@ except ImportError:
 # ========
 
 try:
+    from .quadprog_ import quadprog_set_verbosity
     from .quadprog_ import quadprog_solve_qp
     available_solvers.append('quadprog')
     dense_solvers.append('quadprog')
@@ -173,21 +180,28 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, solver='quadprog',
     if type(G) is ndarray and G.ndim == 1:
         G = G.reshape((1, G.shape[0]))
     if solver == 'cvxopt':
-        cvxopt_options['show_progress'] = verbose
+        cvxopt_set_verbosity(verbose)
         return cvxopt_solve_qp(P, q, G, h, A, b, initvals=initvals)
     elif solver == 'cvxpy':
+        cvxpy_set_verbosity(verbose)
         return cvxpy_solve_qp(P, q, G, h, A, b, initvals=initvals)
     elif solver == 'ecos':
+        ecos_set_verbosity(verbose)
         return ecos_solve_qp(P, q, G, h, A, b, initvals=initvals)
     elif solver == 'gurobi':
+        gurobi_set_verbosity(verbose)
         return gurobi_solve_qp(P, q, G, h, A, b, initvals=initvals)
     elif solver == 'mosek':
+        mosek_set_verbosity(verbose)
         return mosek_solve_qp(P, q, G, h, A, b, initvals=initvals)
     elif solver == 'osqp':
+        osqp_set_verbosity(verbose)
         return osqp_solve_qp(P, q, G, h, A, b, initvals=initvals)
     elif solver == 'qpoases':
+        qpoases_set_verbosity(verbose)
         return qpoases_solve_qp(P, q, G, h, A, b, initvals=initvals)
     elif solver == 'quadprog':
+        quadprog_set_verbosity(verbose)
         return quadprog_solve_qp(P, q, G, h, A, b, initvals=initvals)
     raise Exception("solver '%s' not recognized" % solver)
 

@@ -26,6 +26,10 @@ from .cvxopt_ import cvxopt_solve_qp
 cvxopt.solvers.options['mosek'] = {mosek.iparam.log: 0}
 
 
+def mosek_set_verbosity(verbose):
+    cvxopt.solvers.options['mosek'] = {mosek.iparam.log: 1 if verbose else 0}
+
+
 def mosek_solve_qp(P, q, G, h, A=None, b=None, initvals=None):
     """
     Solve a Quadratic Program defined as:

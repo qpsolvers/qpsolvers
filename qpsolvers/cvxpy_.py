@@ -22,6 +22,11 @@ from cvxpy import Constant, Minimize, Problem, Variable, quad_form
 from numpy import array
 
 
+def cvxpy_set_verbosity(verbose):
+    if verbose:
+        print("qpsolvers: `verbose` argument is not available for CVXPY yet")
+
+
 def cvxpy_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
                    solver=None):
     """

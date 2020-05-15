@@ -7,6 +7,8 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - cvxopt: verbose keyword argument
+- mosek: verbose keyword argument
+- qpoases: verbose keyword argument
 
 ## [1.1.2] - 2020/05/15
 

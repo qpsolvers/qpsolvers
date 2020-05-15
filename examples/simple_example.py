@@ -36,7 +36,7 @@ h = array([3., 2., -2.]).reshape((3,))
 
 t_start = time()
 solver = "quadprog"  # see qpsolvers.available_solvers
-x_sol = solve_qp(P, q, G, h, solver=solver)
+x_sol = solve_qp(P, q, G, h, solver=solver, verbose=True)
 t_end = time()
 
 print("")
