@@ -2,10 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## [1.1.1] - 2020/05/15
 
 ### Fixed
 
+- Avoid variable name clash in OSQP
 - Handle quadprog exception to avoid confusion on cost matrix notation
 
 ## [1.1] - 2020/03/07
