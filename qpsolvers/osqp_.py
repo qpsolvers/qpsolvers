@@ -18,6 +18,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
+import osqp
+
 from numpy import hstack, inf, ndarray, ones
 from osqp import OSQP
 from scipy.sparse import csc_matrix, vstack
@@ -98,6 +100,10 @@ def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     if initvals is not None:
         solver.warm_start(x=initvals)
     res = solver.solve()
-    if res.info.status_val != solver.constant('OSQP_SOLVED'):
+    if hasattr(solver, 'constant'):
+        success_status = solver.constant('OSQP_SOLVED')
+    else:  # more recent versions of OSQP
+        success_status = osqp.constant('OSQP_SOLVED')
+    if res.info.status_val != success_status:
         print("OSQP exited with status '%s'" % res.info.status)
     return res.x
