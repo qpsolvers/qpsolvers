@@ -31,6 +31,7 @@ sparse_solvers = []
 
 try:
     from .cvxopt_ import cvxopt_solve_qp
+    from .cvxopt_ import options as cvxopt_options
     available_solvers.append('cvxopt')
     dense_solvers.append('cvxopt')
 except ImportError:
@@ -116,7 +117,7 @@ except ImportError:
 
 
 def solve_qp(P, q, G=None, h=None, A=None, b=None, solver='quadprog',
-             initvals=None, sym_proj=False):
+             initvals=None, sym_proj=False, verbose=False):
     """
     Solve a Quadratic Program defined as:
 
@@ -150,6 +151,8 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, solver='quadprog',
         Vector of initial `x` values used to warm-start the solver.
     sym_proj : bool, optional
         Set to `True` when the `P` matrix provided is not symmetric.
+    verbose : bool, optional
+        Set to `True` to print out extra information.
 
     Returns
     -------
@@ -170,6 +173,7 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, solver='quadprog',
     if type(G) is ndarray and G.ndim == 1:
         G = G.reshape((1, G.shape[0]))
     if solver == 'cvxopt':
+        cvxopt_options['show_progress'] = verbose
         return cvxopt_solve_qp(P, q, G, h, A, b, initvals=initvals)
     elif solver == 'cvxpy':
         return cvxpy_solve_qp(P, q, G, h, A, b, initvals=initvals)

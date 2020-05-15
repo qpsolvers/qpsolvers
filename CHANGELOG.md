@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Added
+
+- cvxopt: verbose keyword argument
+
 ## [1.1.2] - 2020/05/15
 
 ### Fixed
