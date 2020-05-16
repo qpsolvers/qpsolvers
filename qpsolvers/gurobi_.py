@@ -40,8 +40,7 @@ def get_nonzero_rows(M):
 
 
 def gurobi_set_verbosity(verbose):
-    if verbose:
-        print("qpsolvers: `verbose` argument is not available for CVXPY yet")
+    setParam('OutputFlag', 1 if verbose else 0)
 
 
 def gurobi_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):

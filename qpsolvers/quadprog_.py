@@ -24,7 +24,7 @@ from quadprog import solve_qp
 
 def quadprog_set_verbosity(verbose):
     if verbose:
-        print("qpsolvers: `verbose` argument is not available for CVXPY yet")
+        print("qpsolvers: `verbose` argument not available for quadprog yet")
 
 
 
