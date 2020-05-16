@@ -22,9 +22,12 @@ from cvxpy import Constant, Minimize, Problem, Variable, quad_form
 from numpy import array
 
 
+__verbose__ = False
+
+
 def cvxpy_set_verbosity(verbose):
-    if verbose:
-        print("qpsolvers: `verbose` argument is not available for CVXPY yet")
+    global __verbose__
+    __verbose__ = verbose
 
 
 def cvxpy_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
@@ -66,6 +69,7 @@ def cvxpy_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
     x : array, shape=(n,)
         Solution to the QP, if found, otherwise ``None``.
     """
+    global __verbose__
     if initvals is not None:
         print("CVXPY: note that warm-start values are ignored by wrapper")
     n = q.shape[0]
@@ -78,6 +82,6 @@ def cvxpy_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
     if A is not None:
         constraints.append(A * x == b)
     prob = Problem(objective, constraints)
-    prob.solve(solver=solver)
+    prob.solve(solver=solver, verbose=__verbose__)
     x_opt = array(x.value).reshape((n,))
     return x_opt

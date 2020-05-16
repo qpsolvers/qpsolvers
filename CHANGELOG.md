@@ -6,8 +6,10 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- cvxpy: verbose keyword argument
 - ecos: verbose keyword argument
 - gurobi: verbose keyword argument
+- osqp: verbose keyword argument
 
 ### Fixed
 
