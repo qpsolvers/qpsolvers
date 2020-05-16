@@ -24,12 +24,12 @@ from numpy.linalg import cholesky
 from scipy.sparse import csc_matrix
 
 
-ecos_verbose = False
+__verbose__ = False
 
 
 def ecos_set_verbosity(verbose):
-    global ecos_verbose
-    ecos_verbose = verbose
+    global __verbose__
+    __verbose__ = verbose
 
 
 def ecos_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
@@ -72,6 +72,7 @@ def ecos_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     This function is adapted from ``ecosqp.m`` in the `ecos-matlab
     <https://github.com/embotech/ecos-matlab/>`_ repository.
     """
+    global __verbose__
     n = P.shape[1]  # dimension of QP variable
     c_socp = hstack([zeros(n), 1])  # new SOCP variable stacked as [x, t]
     L = cholesky(P)
@@ -99,7 +100,7 @@ def ecos_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
         dims['l'] = G.shape[0]
 
     G_socp = csc_matrix(G_socp)
-    kwargs = {'verbose': ecos_verbose}
+    kwargs = {'verbose': __verbose__}
     if A is not None:
         A_socp = hstack([A, zeros((A.shape[0], 1))])
         A_socp = csc_matrix(A_socp)

@@ -26,6 +26,9 @@ from scipy.sparse import csc_matrix, vstack
 from warnings import warn
 
 
+__verbose__ = False
+
+
 def conversion_warning(M):
     return "Converted %s to scipy.sparse.csc.csc_matrix\n" \
         "For best performance, build %s as a csc_matrix " \
@@ -33,8 +36,8 @@ def conversion_warning(M):
 
 
 def osqp_set_verbosity(verbose):
-    if verbose:
-        print("qpsolvers: `verbose` argument is not available for CVXPY yet")
+    global __verbose__
+    __verbose__ = verbose
 
 
 def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
@@ -78,30 +81,31 @@ def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
     Check out for this point if you e.g. `get nan values
     <https://github.com/oxfordcontrol/osqp/issues/10>`_ in your solutions.
     """
+    global __verbose__
     if type(P) is ndarray:
         warn(conversion_warning("P"))
         P = csc_matrix(P)
     solver = OSQP()
     if A is None and G is None:
-        solver.setup(P=P, q=q, verbose=False)
+        solver.setup(P=P, q=q, verbose=__verbose__)
     elif A is not None:
         if type(A) is ndarray:
             warn(conversion_warning("A"))
             A = csc_matrix(A)
         if G is None:
-            solver.setup(P=P, q=q, A=A, l=b, u=b, verbose=False)
+            solver.setup(P=P, q=q, A=A, l=b, u=b, verbose=__verbose__)
         else:  # G is not None
             l = -inf * ones(len(h))
             qp_A = vstack([G, A]).tocsc()
             qp_l = hstack([l, b])
             qp_u = hstack([h, b])
-            solver.setup(P=P, q=q, A=qp_A, l=qp_l, u=qp_u, verbose=False)
+            solver.setup(P=P, q=q, A=qp_A, l=qp_l, u=qp_u, verbose=__verbose__)
     else:  # A is None
         if type(G) is ndarray:
             warn(conversion_warning("G"))
             G = csc_matrix(G)
         l = -inf * ones(len(h))
-        solver.setup(P=P, q=q, A=G, l=l, u=h, verbose=False)
+        solver.setup(P=P, q=q, A=G, l=l, u=h, verbose=__verbose__)
     if initvals is not None:
         solver.warm_start(x=initvals)
     res = solver.solve()
