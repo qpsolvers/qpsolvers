@@ -161,8 +161,42 @@ except ImportError:
         raise ImportError("quadprog not found")
 
 
-def solve_qp(P, q, G=None, h=None, A=None, b=None, lb=None, ub=None, solver='quadprog',
-             initvals=None, sym_proj=False, verbose=False):
+def check_problem(P, q, G, h, A, b, lb, ub):
+    """
+    Check that problem matrices and vectors are correctly defined.
+
+    Parameters
+    ----------
+    P : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
+        Symmetric quadratic-cost matrix (most solvers require it to be definite
+        as well).
+    q : numpy.array
+        Quadratic-cost vector.
+    G : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
+        Linear inequality matrix.
+    h : numpy.array
+        Linear inequality vector.
+    A : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
+        Linear equality matrix.
+    b : numpy.array
+        Linear equality vector.
+    lb: numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
+        Lower bound constraint vector.
+    ub: numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
+        Upper bound constraint vector.
+    """
+    if G is None and h is not None:
+        raise ValueError("incomplete inequality constraint (missing h)")
+    elif G is not None and h is None:
+        raise ValueError("incomplete inequality constraint (missing G)")
+    if A is None and b is not None:
+        raise ValueError("incomplete equality constraint (missing b)")
+    elif A is not None and b is None:
+        raise ValueError("incomplete equality constraint (missing A)")
+
+
+def solve_qp(P, q, G=None, h=None, A=None, b=None, lb=None, ub=None,
+             solver='quadprog', initvals=None, sym_proj=False, verbose=False):
     """
     Solve a Quadratic Program defined as:
 
@@ -222,23 +256,20 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, lb=None, ub=None, solver='qua
         A = A.reshape((1, A.shape[0]))
     if type(G) is ndarray and G.ndim == 1:
         G = G.reshape((1, G.shape[0]))
+    check_problem(P, q, G, h, A, b, lb, ub)
     if lb is not None:
         if G is None:
             G = -eye(len(q))
-        else:
-            G = concatenate((G, -eye(len(q))), 0)
-        if h is None:
             h = -lb
-        else:
+        else:  # G is not None and h is not None
+            G = concatenate((G, -eye(len(q))), 0)
             h = concatenate((h, -lb))
     if ub is not None:
         if G is None:
             G = eye(len(q))
-        else:
-            G = concatenate((G, eye(len(q))), 0)
-        if h is None:
             h = ub
-        else:
+        else:  # G is not None and h is not None
+            G = concatenate((G, eye(len(q))), 0)
             h = concatenate((h, ub))
     if solver == 'cvxopt':
         cvxopt_set_verbosity(verbose)
