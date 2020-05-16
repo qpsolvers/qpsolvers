@@ -18,13 +18,11 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-from numpy import ndarray
-
+from numpy import concatenate, eye, ndarray
 
 available_solvers = []
 dense_solvers = []
 sparse_solvers = []
-
 
 # CVXOPT
 # ======
@@ -32,11 +30,14 @@ sparse_solvers = []
 try:
     from .cvxopt_ import cvxopt_set_verbosity
     from .cvxopt_ import cvxopt_solve_qp
+
     available_solvers.append('cvxopt')
     dense_solvers.append('cvxopt')
 except ImportError:
     def cvxopt_set_verbosity(*args, **kwargs):
         pass
+
+
     def cvxopt_solve_qp(*args, **kwargs):
         raise ImportError("CVXOPT not found")
 
@@ -46,11 +47,14 @@ except ImportError:
 try:
     from .cvxpy_ import cvxpy_set_verbosity
     from .cvxpy_ import cvxpy_solve_qp
+
     available_solvers.append('cvxpy')
     sparse_solvers.append('cvxpy')
 except ImportError:
     def cvxpy_set_verbosity(*args, **kwargs):
         pass
+
+
     def cvxpy_solve_qp(*args, **kwargs):
         raise ImportError("CVXPY not found")
 
@@ -60,11 +64,14 @@ except ImportError:
 try:
     from .ecos_ import ecos_set_verbosity
     from .ecos_ import ecos_solve_qp
+
     available_solvers.append('ecos')
     dense_solvers.append('ecos')  # considered dense as it calls cholesky(P)
 except ImportError:
     def ecos_set_verbosity(*args, **kwargs):
         pass
+
+
     def ecos_solve_qp(*args, **kwargs):
         raise ImportError("ECOS not found")
 
@@ -74,11 +81,14 @@ except ImportError:
 try:
     from .gurobi_ import gurobi_set_verbosity
     from .gurobi_ import gurobi_solve_qp
+
     available_solvers.append('gurobi')
     sparse_solvers.append('gurobi')
 except ImportError:
     def gurobi_set_verbosity(*args, **kwargs):
         pass
+
+
     def gurobi_solve_qp(*args, **kwargs):
         raise ImportError("Gurobi not found")
 
@@ -88,11 +98,14 @@ except ImportError:
 try:
     from .mosek_ import mosek_set_verbosity
     from .mosek_ import mosek_solve_qp
+
     available_solvers.append('mosek')
     sparse_solvers.append('mosek')
 except ImportError:
     def mosek_set_verbosity(*args, **kwargs):
         pass
+
+
     def mosek_solve_qp(*args, **kwargs):
         raise ImportError("mosek not found")
 
@@ -102,11 +115,14 @@ except ImportError:
 try:
     from .osqp_ import osqp_set_verbosity
     from .osqp_ import osqp_solve_qp
+
     available_solvers.append('osqp')
     sparse_solvers.append('osqp')
 except ImportError:
     def osqp_set_verbosity(*args, **kwargs):
         pass
+
+
     def osqp_solve_qp(*args, **kwargs):
         raise ImportError("osqp not found")
 
@@ -116,11 +132,14 @@ except ImportError:
 try:
     from .qpoases_ import qpoases_set_verbosity
     from .qpoases_ import qpoases_solve_qp
+
     available_solvers.append('qpoases')
     dense_solvers.append('qpoases')
 except ImportError:
     def qpoases_set_verbosity(*args, **kwargs):
         pass
+
+
     def qpoases_solve_qp(*args, **kwargs):
         raise ImportError("qpOASES not found")
 
@@ -130,17 +149,54 @@ except ImportError:
 try:
     from .quadprog_ import quadprog_set_verbosity
     from .quadprog_ import quadprog_solve_qp
+
     available_solvers.append('quadprog')
     dense_solvers.append('quadprog')
 except ImportError:
     def quadprog_set_verbosity(*args, **kwargs):
         pass
+
+
     def quadprog_solve_qp(*args, **kwargs):
         raise ImportError("quadprog not found")
 
 
-def solve_qp(P, q, G=None, h=None, A=None, b=None, solver='quadprog',
-             initvals=None, sym_proj=False, verbose=False):
+def check_problem(P, q, G, h, A, b, lb, ub):
+    """
+    Check that problem matrices and vectors are correctly defined.
+
+    Parameters
+    ----------
+    P : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
+        Symmetric quadratic-cost matrix (most solvers require it to be definite
+        as well).
+    q : numpy.array
+        Quadratic-cost vector.
+    G : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
+        Linear inequality matrix.
+    h : numpy.array
+        Linear inequality vector.
+    A : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
+        Linear equality matrix.
+    b : numpy.array
+        Linear equality vector.
+    lb: numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
+        Lower bound constraint vector.
+    ub: numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
+        Upper bound constraint vector.
+    """
+    if G is None and h is not None:
+        raise ValueError("incomplete inequality constraint (missing h)")
+    elif G is not None and h is None:
+        raise ValueError("incomplete inequality constraint (missing G)")
+    if A is None and b is not None:
+        raise ValueError("incomplete equality constraint (missing b)")
+    elif A is not None and b is None:
+        raise ValueError("incomplete equality constraint (missing A)")
+
+
+def solve_qp(P, q, G=None, h=None, A=None, b=None, lb=None, ub=None,
+             solver='quadprog', initvals=None, sym_proj=False, verbose=False):
     """
     Solve a Quadratic Program defined as:
 
@@ -148,6 +204,7 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, solver='quadprog',
             (1/2) * x.T * P * x + q.T * x
 
         subject to
+            lb <= x <= ub
             G * x <= h
             A * x == b
 
@@ -168,6 +225,10 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, solver='quadprog',
         Linear equality matrix.
     b : numpy.array
         Linear equality vector.
+    lb: numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
+        Lower bound constraint vector.
+    ub: numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
+        Upper bound constraint vector.
     solver : string, optional
         Name of the QP solver, to choose in ``qpsolvers.available_solvers``.
     initvals : array, optional
@@ -195,6 +256,21 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, solver='quadprog',
         A = A.reshape((1, A.shape[0]))
     if type(G) is ndarray and G.ndim == 1:
         G = G.reshape((1, G.shape[0]))
+    check_problem(P, q, G, h, A, b, lb, ub)
+    if lb is not None:
+        if G is None:
+            G = -eye(len(q))
+            h = -lb
+        else:  # G is not None and h is not None
+            G = concatenate((G, -eye(len(q))), 0)
+            h = concatenate((h, -lb))
+    if ub is not None:
+        if G is None:
+            G = eye(len(q))
+            h = ub
+        else:  # G is not None and h is not None
+            G = concatenate((G, eye(len(q))), 0)
+            h = concatenate((h, ub))
     if solver == 'cvxopt':
         cvxopt_set_verbosity(verbose)
         return cvxopt_solve_qp(P, q, G, h, A, b, initvals=initvals)

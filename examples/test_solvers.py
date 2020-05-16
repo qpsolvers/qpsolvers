@@ -26,7 +26,6 @@ from __future__ import print_function  # Python 2 compatibility
 
 from numpy import array, dot
 from numpy.linalg import norm
-from os.path import basename
 
 from qpsolvers import available_solvers
 from qpsolvers import solve_qp
@@ -49,6 +48,8 @@ A = array([
     [0., 0.4, 0.5]])
 b = array([-0.5, -1.2])
 b0 = array([b[0]])
+lb = array([-1., -1., -1.])
+ub = array([+1., +1., +1.])
 
 
 if __name__ == "__main__":
@@ -62,6 +63,8 @@ if __name__ == "__main__":
         {'P': P, 'q': q, 'G': G[0], 'h': h0, 'A': A, 'b': b},
         {'P': P, 'q': q, 'G': G, 'h': h, 'A': A[0], 'b': b0},
         {'P': P, 'q': q, 'G': G[0], 'h': h0, 'A': A[0], 'b': b0},
+        {'P': P, 'q': q, 'G': G[0], 'h': h0, 'A': A[0], 'b': b0, 'lb': lb,
+         'ub': ub},
     ]
 
     for (i, case) in enumerate(cases):
@@ -70,6 +73,8 @@ if __name__ == "__main__":
         for solver in available_solvers:
             sol = solve_qp(solver=solver, **case)
             delta = norm(sol - expected_sol)
-            print("%9s's solution: %s" % (solver, sol.round(decimals=5)))
-            assert delta < 1e-4, \
+            print("%9s's solution: %s\toffset: %.1e" % (
+                solver, sol.round(decimals=5), delta))
+            critical_offset = 2e-3
+            assert delta < critical_offset, \
                 "%s's solution offset by %.1e on test #%d" % (solver, delta, i)
