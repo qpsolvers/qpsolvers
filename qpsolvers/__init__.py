@@ -35,6 +35,8 @@ try:
     available_solvers.append('cvxopt')
     dense_solvers.append('cvxopt')
 except ImportError:
+    def cvxopt_set_verbosity(*args, **kwargs):
+        pass
     def cvxopt_solve_qp(*args, **kwargs):
         raise ImportError("CVXOPT not found")
 
@@ -47,6 +49,8 @@ try:
     available_solvers.append('cvxpy')
     sparse_solvers.append('cvxpy')
 except ImportError:
+    def cvxpy_set_verbosity(*args, **kwargs):
+        pass
     def cvxpy_solve_qp(*args, **kwargs):
         raise ImportError("CVXPY not found")
 
@@ -59,6 +63,8 @@ try:
     available_solvers.append('ecos')
     dense_solvers.append('ecos')  # considered dense as it calls cholesky(P)
 except ImportError:
+    def ecos_set_verbosity(*args, **kwargs):
+        pass
     def ecos_solve_qp(*args, **kwargs):
         raise ImportError("ECOS not found")
 
@@ -71,6 +77,8 @@ try:
     available_solvers.append('gurobi')
     sparse_solvers.append('gurobi')
 except ImportError:
+    def gurobi_set_verbosity(*args, **kwargs):
+        pass
     def gurobi_solve_qp(*args, **kwargs):
         raise ImportError("Gurobi not found")
 
@@ -83,6 +91,8 @@ try:
     available_solvers.append('mosek')
     sparse_solvers.append('mosek')
 except ImportError:
+    def mosek_set_verbosity(*args, **kwargs):
+        pass
     def mosek_solve_qp(*args, **kwargs):
         raise ImportError("mosek not found")
 
@@ -95,6 +105,8 @@ try:
     available_solvers.append('osqp')
     sparse_solvers.append('osqp')
 except ImportError:
+    def osqp_set_verbosity(*args, **kwargs):
+        pass
     def osqp_solve_qp(*args, **kwargs):
         raise ImportError("osqp not found")
 
@@ -107,6 +119,8 @@ try:
     available_solvers.append('qpoases')
     dense_solvers.append('qpoases')
 except ImportError:
+    def qpoases_set_verbosity(*args, **kwargs):
+        pass
     def qpoases_solve_qp(*args, **kwargs):
         raise ImportError("qpOASES not found")
 
@@ -119,6 +133,8 @@ try:
     available_solvers.append('quadprog')
     dense_solvers.append('quadprog')
 except ImportError:
+    def quadprog_set_verbosity(*args, **kwargs):
+        pass
     def quadprog_solve_qp(*args, **kwargs):
         raise ImportError("quadprog not found")
 

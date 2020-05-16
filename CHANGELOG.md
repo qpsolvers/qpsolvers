@@ -9,6 +9,10 @@ All notable changes to this project will be documented in this file.
 - ecos: verbose keyword argument
 - gurobi: verbose keyword argument
 
+### Fixed
+
+- Ignore verbosity argument when solver is not available
+
 ## [1.2] - 2020/05/16
 
 ### Added
