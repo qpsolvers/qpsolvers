@@ -75,5 +75,5 @@ if __name__ == "__main__":
             sol = solve_qp(solver=solver, **case)
             delta = norm(sol - expected_sol)
             print("%9s's solution: %s" % (solver, sol.round(decimals=5)))
-            assert delta < 1e-4, \
+            assert delta < 2e-4, \
                 "%s's solution offset by %.1e on test #%d" % (solver, delta, i)
