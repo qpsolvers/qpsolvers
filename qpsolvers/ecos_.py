@@ -24,9 +24,12 @@ from numpy.linalg import cholesky
 from scipy.sparse import csc_matrix
 
 
+ecos_verbose = False
+
+
 def ecos_set_verbosity(verbose):
-    if verbose:
-        print("qpsolvers: `verbose` argument is not available for CVXPY yet")
+    global ecos_verbose
+    ecos_verbose = verbose
 
 
 def ecos_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
@@ -96,7 +99,7 @@ def ecos_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
         dims['l'] = G.shape[0]
 
     G_socp = csc_matrix(G_socp)
-    kwargs = {'verbose': False}
+    kwargs = {'verbose': ecos_verbose}
     if A is not None:
         A_socp = hstack([A, zeros((A.shape[0], 1))])
         A_socp = csc_matrix(A_socp)
