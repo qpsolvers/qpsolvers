@@ -224,13 +224,25 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, lb=None, ub=None, solver='qua
         G = G.reshape((1, G.shape[0]))
     # add upper and lower constraints into h
     # vector and extend G with identity
-    from numpy import eye, concatenate
-    if ub is not None:
-        G = concatenate((G, eye(len(q))), 0)
-        h = concatenate((h, ub))
+    from numpy import eye, vstack, hstack
     if lb is not None:
-        G = concatenate((G, -eye(len(q))), 0)
-        h = concatenate((h, -lb))
+        if G is None:
+            G = -eye(len(q))
+        else:
+            G = vstack((G, -eye(len(q))))
+        if h is None:
+            h = -lb
+        else:
+            h = hstack((h, -lb))
+    if ub is not None:
+        if G is None:
+            G = eye(len(q))
+        else:
+            G = vstack((G, eye(len(q))))
+        if h is None:
+            h = ub
+        else:
+            h = hstack((h, ub))
     if solver == 'cvxopt':
         cvxopt_set_verbosity(verbose)
         return cvxopt_solve_qp(P, q, G, h, A, b, initvals=initvals)
