@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-from numpy import ndarray
+from numpy import concatenate, eye, ndarray
 
 available_solvers = []
 dense_solvers = []
@@ -222,9 +222,6 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, lb=None, ub=None, solver='qua
         A = A.reshape((1, A.shape[0]))
     if type(G) is ndarray and G.ndim == 1:
         G = G.reshape((1, G.shape[0]))
-    # add upper and lower constraints into h
-    # vector and extend G with identity
-    from numpy import eye, concatenate
     if ub is not None:
         G = concatenate((G, eye(len(q))), 0)
         h = concatenate((h, ub))
