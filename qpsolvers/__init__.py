@@ -222,12 +222,24 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, lb=None, ub=None, solver='qua
         A = A.reshape((1, A.shape[0]))
     if type(G) is ndarray and G.ndim == 1:
         G = G.reshape((1, G.shape[0]))
-    if ub is not None:
-        G = concatenate((G, eye(len(q))), 0)
-        h = concatenate((h, ub))
     if lb is not None:
-        G = concatenate((G, -eye(len(q))), 0)
-        h = concatenate((h, -lb))
+        if G is None:
+            G = -eye(len(q))
+        else:
+            G = concatenate((G, -eye(len(q))), 0)
+        if h is None:
+            h = -lb
+        else:
+            h = concatenate((h, -lb))
+    if ub is not None:
+        if G is None:
+            G = eye(len(q))
+        else:
+            G = concatenate((G, eye(len(q))), 0)
+        if h is None:
+            h = ub
+        else:
+            h = concatenate((h, ub))
     if solver == 'cvxopt':
         cvxopt_set_verbosity(verbose)
         return cvxopt_solve_qp(P, q, G, h, A, b, initvals=initvals)
