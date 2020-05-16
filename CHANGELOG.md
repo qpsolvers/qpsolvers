@@ -2,15 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## [1.3] - 2020/05/16
 
 ### Added
 
-- Check that equality/inequality matrices/vectors are provided consistently
 - Lower and upper bound keyword arguments ``lb`` and ``ub``
 
 ### Fixed
 
+- Check that equality/inequality matrices/vectors are provided consistently
 - Relaxed offset check in [test\_solvers.py](examples/test_solvers.py)
 
 ## [1.2.1] - 2020/05/16
