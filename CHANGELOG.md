@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.1] - 2020/06/13
+
+### Fixed
+
+- Equation of quadratic program on [PyPI page](https://pypi.org/project/qpsolvers/)
+
 ## [1.3] - 2020/05/16
 
 ### Added
