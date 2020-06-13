@@ -19,7 +19,7 @@ The function ``solve_qp(P, q, G, h, A, b, lb, ub)`` is called with the ``solver`
 keyword argument to select the backend solver. The quadratic program it solves
 is, in standard form:
 
-![equation](https://latex.codecogs.com/gif.latex?%5Cbegin%7Bequation%7D%20%5Cbegin%7Baligned%7D%20%7B%5Ccolor%7BBlack%7D%20%5Cunderset%7Bx%7D%7B%5Ctextrm%7Bminimize%7D%7D%20%5Cquad%7D%20%26%20%7B%5Ccolor%7BBlack%7D%20%5Cfrac%7B1%7D%7B2%7D%20x%5ET%20P%20x%20&plus;%20q%5ET%20x%7D%20%5C%5C%20%7B%5Ccolor%7BBlack%7D%20%5Ctextrm%7Bsubject%20to%7D%20%5Cquad%7D%20%26%20%7B%5Ccolor%7BBlack%7D%20Gx%20%5Cleq%20h%7D%20%5C%5C%20%26%20%7B%5Ccolor%7BBlack%7D%20Ax%20%3D%20b%7D%20%5C%5C%20%26%20%7B%5Ccolor%7BBlack%7D%20%5Cmathit%7Blb%7D%20%5Cleq%20x%20%5Cleq%20%5Cmathit%7Bub%7D%7D%20%5Cend%7Baligned%7D%20%5Cend%7Bequation%7D)
+![Equation of Quadratic Program](.qp.gif)
 
 Vector inequalities are taken coordinate by coordinate.
 
