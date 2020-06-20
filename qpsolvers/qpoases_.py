@@ -47,7 +47,7 @@ def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
             G * x <= h
             A * x == b
 
-    using qpOASES <https://projects.coin-or.org/qpOASES>.
+    using `qpOASES <https://projects.coin-or.org/qpOASES>`_.
 
     Parameters
     ----------

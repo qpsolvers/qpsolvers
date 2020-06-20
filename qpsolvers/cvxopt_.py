@@ -52,7 +52,7 @@ def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None, solver=None,
             G * x <= h
             A * x == b
 
-    using CVXOPT <http://cvxopt.org/>.
+    using `CVXOPT <http://cvxopt.org/>`_.
 
     Parameters
     ----------
