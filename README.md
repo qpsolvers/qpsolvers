@@ -19,7 +19,7 @@ The function ``solve_qp(P, q, G, h, A, b, lb, ub)`` is called with the ``solver`
 keyword argument to select the backend solver. The quadratic program it solves
 is, in standard form:
 
-![Equation of Quadratic Program](.qp.gif)
+![Equation of Quadratic Program](doc/src/images/qp.gif)
 
 Vector inequalities are taken coordinate by coordinate.
 

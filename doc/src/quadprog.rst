@@ -2,4 +2,4 @@
 quadprog
 ********
 
-.. autofunction:: qpsolvers.quadprog_.quadprog_solve_qp
+.. autofunction:: qpsolvers.quadprog_solve_qp

@@ -2,4 +2,4 @@
 Mosek
 *****
 
-.. autofunction:: qpsolvers.mosek_.mosek_solve_qp
+.. autofunction:: qpsolvers.mosek_solve_qp

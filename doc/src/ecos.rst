@@ -2,4 +2,4 @@
 ECOS
 ****
 
-.. autofunction:: qpsolvers.ecos_.ecos_solve_qp
+.. autofunction:: qpsolvers.ecos_solve_qp

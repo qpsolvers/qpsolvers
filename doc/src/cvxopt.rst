@@ -2,4 +2,4 @@
 CVXOPT
 ******
 
-.. autofunction:: qpsolvers.cvxopt_.cvxopt_solve_qp
+.. autofunction:: qpsolvers.cvxopt_solve_qp

@@ -2,4 +2,4 @@
 Gurobi
 ******
 
-.. autofunction:: qpsolvers.gurobi_.gurobi_solve_qp
+.. autofunction:: qpsolvers.gurobi_solve_qp

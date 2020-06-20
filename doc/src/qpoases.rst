@@ -2,4 +2,4 @@
 qpOASES
 *******
 
-.. autofunction:: qpsolvers.qpoases_.qpoases_solve_qp
+.. autofunction:: qpsolvers.qpoases_solve_qp
