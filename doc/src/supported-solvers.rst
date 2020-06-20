@@ -17,7 +17,7 @@ Gurobi
 
 .. autofunction:: qpsolvers.gurobi_solve_qp
 
-Mosek
+MOSEK
 =====
 
 .. autofunction:: qpsolvers.mosek_solve_qp
