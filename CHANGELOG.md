@@ -6,11 +6,13 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- Solver settings can now by passed to ``solve_qp`` as keyword arguments
 - Started an [API documentation](https://scaron.info/doc/qpsolvers/)
 
 ### Changed
 
 - Made ``verbose`` an explicit keyword argument of all internal functions
+- OSQP settings now match precision of other solvers (thanks to @Neotriple)
 
 ## [1.3.1] - 2020/06/13
 
