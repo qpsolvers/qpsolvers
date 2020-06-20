@@ -65,11 +65,11 @@ def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
     verbose : bool, optional
         Set to `True` to print out extra information.
     eps_abs : scalar, optional
-        Absolute tolerance of the solver. Lower values yield more precise
-        solutions at the cost of computation time.
+        Absolute convergence tolerance of the solver. Lower values yield more
+        precise solutions at the cost of computation time.
     eps_rel : scalar, optional
-        Relative tolerance of the solver. Lower values yield more precise
-        solutions at the cost of computation time.
+        Relative convergence tolerance of the solver. Lower values yield more
+        precise solutions at the cost of computation time.
     polish : bool, optional
         Perform `polishing <https://osqp.org/docs/solver/#polishing>`_, an
         additional step where the solver tries to improve the accuracy of the

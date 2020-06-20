@@ -204,6 +204,12 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, lb=None, ub=None,
     x : array or None
         Optimal solution if found, None otherwise.
 
+    Note
+    ----
+    Extra keyword arguments given to this function are forwarded to the
+    underlying solvers. For example, OSQP has a setting `eps_abs` which we can
+    provide by ``solve_qp(P, q, G, h, solver='osqp', eps_abs=1e-4)``.
+
     Notes
     -----
     In quadratic programming, the matrix `P` should be symmetric. Many solvers
@@ -233,7 +239,8 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, lb=None, ub=None,
             G = concatenate((G, eye(len(q))), 0)
             h = concatenate((h, ub))
     args = P, q, G, h, A, b
-    kwargs = {'initvals': initvals, 'verbose': verbose}
+    kwargs['initvals'] = initvals
+    kwargs['verbose'] = verbose
     if solver == 'cvxopt':
         return cvxopt_solve_qp(*args, **kwargs)
     elif solver == 'cvxpy':
