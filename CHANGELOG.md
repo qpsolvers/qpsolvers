@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- [API documentation](https://scaron.info/doc/qpsolvers/)
+- Started an [API documentation](https://scaron.info/doc/qpsolvers/)
 
 ### Changed
 
