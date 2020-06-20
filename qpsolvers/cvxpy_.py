@@ -27,14 +27,17 @@ def cvxpy_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
     """
     Solve a Quadratic Program defined as:
 
-        minimize
-            (1/2) * x.T * P * x + q.T * x
+    .. math::
 
-        subject to
-            G * x <= h
-            A * x == b
+        \\begin{split}\\begin{array}{ll}
+        \\mbox{minimize} &
+            \\frac{1}{2} x^T P x + q^T x \\\\
+        \\mbox{subject to}
+            & G x \\leq h                \\\\
+            & A x = h
+        \\end{array}\\end{split}
 
-    calling a given solver using the CVXPY <http://www.cvxpy.org/> modelling
+    calling a given solver using the `CVXPY <http://www.cvxpy.org/>`_ modelling
     language.
 
     Parameters

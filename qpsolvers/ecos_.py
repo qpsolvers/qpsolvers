@@ -29,14 +29,17 @@ def ecos_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
     """
     Solve a Quadratic Program defined as:
 
-        minimize
-            (1/2) * x.T * P * x + q.T * x
+    .. math::
 
-        subject to
-            G * x <= h
-            A * x == b
+        \\begin{split}\\begin{array}{ll}
+        \\mbox{minimize} &
+            \\frac{1}{2} x^T P x + q^T x \\\\
+        \\mbox{subject to}
+            & G x \\leq h                \\\\
+            & A x = h
+        \\end{array}\\end{split}
 
-    using ECOS <https://www.embotech.com/ECOS>.
+    using `ECOS <https://github.com/embotech/ecos>`_.
 
     Parameters
     ----------
@@ -62,8 +65,8 @@ def ecos_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
     x : array, shape=(n,)
         Solution to the QP, if found, otherwise ``None``.
 
-    Note
-    ----
+    Notes
+    -----
     This function is adapted from ``ecosqp.m`` in the `ecos-matlab
     <https://github.com/embotech/ecos-matlab/>`_ repository.
     """

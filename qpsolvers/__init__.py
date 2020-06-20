@@ -161,13 +161,16 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, lb=None, ub=None,
     """
     Solve a Quadratic Program defined as:
 
-        minimize
-            (1/2) * x.T * P * x + q.T * x
+    .. math::
 
-        subject to
-            lb <= x <= ub
-            G * x <= h
-            A * x == b
+        \\begin{split}\\begin{array}{ll}
+            \\mbox{minimize} &
+                \\frac{1}{2} x^T P x + q^T x \\\\
+            \\mbox{subject to}
+                & G x \\leq h                \\\\
+                & A x = b                    \\\\
+                & lb \leq x \\leq ub
+        \\end{array}\\end{split}
 
     using one of the available QP solvers.
 
@@ -265,11 +268,16 @@ def solve_safer_qp(P, q, G, h, sw, reg=1e-8, solver='mosek', initvals=None,
     """
     Solve the Quadratic Program defined as:
 
-        minimize
-            (1/2) * x.T * P * x + q.T * x + (1/2) reg |s|^2 - sw 1^T s
+    .. math::
 
-        subject to
-            G * x <= h
+        \\begin{split}\\begin{array}{ll}
+            \\mbox{minimize} &
+                \\frac{1}{2} x^T P x + q^T x +
+                \\frac{1}{2} \\mathit{reg} \\|s\\|^2 - \\mathit{sw} \\1^T s
+                \\\\
+            \\mbox{subject to}
+                & G x \\leq h
+        \\end{array}\\end{split}
 
     Slack variables `s` are increased by an additional term in the cost
     function, so that the solution of this "safer" QP is further inside the

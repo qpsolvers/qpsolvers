@@ -16,19 +16,9 @@ Usage
 =====
 
 The function ``solve_qp(P, q, G, h, A, b, lb, ub)`` is called with the
-``solver`` keyword argument to select the backend solver. The quadratic program
-it solves is, in standard form:
+``solver`` keyword argument to select the backend solver:
 
-.. math::
-    \begin{split}\begin{array}{ll}
-      \mbox{minimize} & \frac{1}{2} x^T P x + q^T x \\
-      \mbox{subject to} & G x \leq h \\
-        & A x = h \\
-        & lb \leq x \leq ub
-    \end{array}\end{split}
-
-where :math:`x` is the optimization variable, and vector inequalities are taken
-coordinate by coordinate.
+.. autofunction:: qpsolvers.solve_qp
 
 Solvers
 =======

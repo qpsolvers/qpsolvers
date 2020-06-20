@@ -27,6 +27,19 @@ options['show_progress'] = False  # disable cvxopt output
 
 
 def cvxopt_matrix(M):
+    """
+    Convert matrix to CVXOPT format.
+
+    Parameters
+    ----------
+    M : numpy.array
+        Matrix in NumPy format.
+
+    Returns
+    -------
+    N : cvxopt.matrix
+        Matrix in CVXOPT format.
+    """
     if type(M) is ndarray:
         return matrix(M)
     elif type(M) is spmatrix or type(M) is matrix:
@@ -41,12 +54,15 @@ def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None, solver=None,
     """
     Solve a Quadratic Program defined as:
 
-        minimize
-            (1/2) * x.T * P * x + q.T * x
+    .. math::
 
-        subject to
-            G * x <= h
-            A * x == b
+        \\begin{split}\\begin{array}{ll}
+        \\mbox{minimize} &
+            \\frac{1}{2} x^T P x + q^T x \\\\
+        \\mbox{subject to}
+            & G x \\leq h                \\\\
+            & A x = h
+        \\end{array}\\end{split}
 
     using `CVXOPT <http://cvxopt.org/>`_.
 

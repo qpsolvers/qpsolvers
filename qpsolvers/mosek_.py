@@ -28,14 +28,18 @@ def mosek_solve_qp(P, q, G, h, A=None, b=None, initvals=None, verbose=False):
     """
     Solve a Quadratic Program defined as:
 
-        minimize
-            (1/2) * x.T * P * x + q.T * x
+    .. math::
 
-        subject to
-            G * x <= h
-            A * x == b
+        \\begin{split}\\begin{array}{ll}
+        \\mbox{minimize} &
+            \\frac{1}{2} x^T P x + q^T x \\\\
+        \\mbox{subject to}
+            & G x \\leq h                \\\\
+            & A x = h                    \\\\
+            & lb \\leq x \\leq ub
+        \\end{array}\\end{split}
 
-    using CVXOPT <http://cvxopt.org/>.
+    using `CVXOPT <http://cvxopt.org/>`_.
 
     Parameters
     ----------
