@@ -39,11 +39,8 @@ def get_nonzero_rows(M):
     return nonzero_rows
 
 
-def gurobi_set_verbosity(verbose):
-    setParam('OutputFlag', 1 if verbose else 0)
-
-
-def gurobi_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
+def gurobi_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
+                    verbose=False):
     """
     Solve a Quadratic Program defined as:
 
@@ -72,12 +69,15 @@ def gurobi_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
         Linear equality constraint vector.
     initvals : array, shape=(n,), optional
         Warm-start guess vector (not used).
+    verbose : bool, optional
+        Set to `True` to print out extra information.
 
     Returns
     -------
     x : array, shape=(n,)
         Solution to the QP, if found, otherwise ``None``.
     """
+    setParam('OutputFlag', 1 if verbose else 0)
     if initvals is not None:
         print("Gurobi: note that warm-start values are ignored by wrapper")
     n = P.shape[1]

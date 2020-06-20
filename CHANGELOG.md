@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 
 - [API documentation](https://scaron.info/doc/qpsolvers/)
 
+### Changed
+
+- Made ``verbose`` an explicit keyword argument of all internal functions
+
 ## [1.3.1] - 2020/06/13
 
 ### Fixed

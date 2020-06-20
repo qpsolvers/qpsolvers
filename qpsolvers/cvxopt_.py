@@ -36,12 +36,8 @@ def cvxopt_matrix(M):
         coo.data.tolist(), coo.row.tolist(), coo.col.tolist(), size=M.shape)
 
 
-def cvxopt_set_verbosity(verbose):
-    options['show_progress'] = verbose
-
-
 def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None, solver=None,
-                    initvals=None):
+                    initvals=None, verbose=False):
     """
     Solve a Quadratic Program defined as:
 
@@ -72,6 +68,8 @@ def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None, solver=None,
         Set to 'mosek' to run MOSEK rather than CVXOPT.
     initvals : numpy.array, optional
         Warm-start guess vector.
+    verbose : bool, optional
+        Set to `True` to print out extra information.
 
     Returns
     -------
@@ -83,6 +81,7 @@ def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None, solver=None,
     CVXOPT only considers the lower entries of `P`, therefore it will use a
     wrong cost function if a non-symmetric matrix is provided.
     """
+    options['show_progress'] = verbose
     args = [cvxopt_matrix(P), cvxopt_matrix(q)]
     kwargs = {'G': None, 'h': None, 'A': None, 'b': None}
     if G is not None:

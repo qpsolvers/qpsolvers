@@ -28,16 +28,11 @@ sparse_solvers = []
 # ======
 
 try:
-    from .cvxopt_ import cvxopt_set_verbosity
     from .cvxopt_ import cvxopt_solve_qp
 
     available_solvers.append('cvxopt')
     dense_solvers.append('cvxopt')
 except ImportError:
-    def cvxopt_set_verbosity(*args, **kwargs):
-        pass
-
-
     def cvxopt_solve_qp(*args, **kwargs):
         raise ImportError("CVXOPT not found")
 
@@ -45,16 +40,11 @@ except ImportError:
 # =====
 
 try:
-    from .cvxpy_ import cvxpy_set_verbosity
     from .cvxpy_ import cvxpy_solve_qp
 
     available_solvers.append('cvxpy')
     sparse_solvers.append('cvxpy')
 except ImportError:
-    def cvxpy_set_verbosity(*args, **kwargs):
-        pass
-
-
     def cvxpy_solve_qp(*args, **kwargs):
         raise ImportError("CVXPY not found")
 
@@ -62,16 +52,11 @@ except ImportError:
 # ====
 
 try:
-    from .ecos_ import ecos_set_verbosity
     from .ecos_ import ecos_solve_qp
 
     available_solvers.append('ecos')
     dense_solvers.append('ecos')  # considered dense as it calls cholesky(P)
 except ImportError:
-    def ecos_set_verbosity(*args, **kwargs):
-        pass
-
-
     def ecos_solve_qp(*args, **kwargs):
         raise ImportError("ECOS not found")
 
@@ -79,16 +64,11 @@ except ImportError:
 # ======
 
 try:
-    from .gurobi_ import gurobi_set_verbosity
     from .gurobi_ import gurobi_solve_qp
 
     available_solvers.append('gurobi')
     sparse_solvers.append('gurobi')
 except ImportError:
-    def gurobi_set_verbosity(*args, **kwargs):
-        pass
-
-
     def gurobi_solve_qp(*args, **kwargs):
         raise ImportError("Gurobi not found")
 
@@ -96,16 +76,11 @@ except ImportError:
 # =====
 
 try:
-    from .mosek_ import mosek_set_verbosity
     from .mosek_ import mosek_solve_qp
 
     available_solvers.append('mosek')
     sparse_solvers.append('mosek')
 except ImportError:
-    def mosek_set_verbosity(*args, **kwargs):
-        pass
-
-
     def mosek_solve_qp(*args, **kwargs):
         raise ImportError("mosek not found")
 
@@ -113,16 +88,11 @@ except ImportError:
 # ====
 
 try:
-    from .osqp_ import osqp_set_verbosity
     from .osqp_ import osqp_solve_qp
 
     available_solvers.append('osqp')
     sparse_solvers.append('osqp')
 except ImportError:
-    def osqp_set_verbosity(*args, **kwargs):
-        pass
-
-
     def osqp_solve_qp(*args, **kwargs):
         raise ImportError("osqp not found")
 
@@ -130,16 +100,11 @@ except ImportError:
 # =======
 
 try:
-    from .qpoases_ import qpoases_set_verbosity
     from .qpoases_ import qpoases_solve_qp
 
     available_solvers.append('qpoases')
     dense_solvers.append('qpoases')
 except ImportError:
-    def qpoases_set_verbosity(*args, **kwargs):
-        pass
-
-
     def qpoases_solve_qp(*args, **kwargs):
         raise ImportError("qpOASES not found")
 
@@ -147,16 +112,11 @@ except ImportError:
 # ========
 
 try:
-    from .quadprog_ import quadprog_set_verbosity
     from .quadprog_ import quadprog_solve_qp
 
     available_solvers.append('quadprog')
     dense_solvers.append('quadprog')
 except ImportError:
-    def quadprog_set_verbosity(*args, **kwargs):
-        pass
-
-
     def quadprog_solve_qp(*args, **kwargs):
         raise ImportError("quadprog not found")
 
@@ -196,7 +156,8 @@ def check_problem(P, q, G, h, A, b, lb, ub):
 
 
 def solve_qp(P, q, G=None, h=None, A=None, b=None, lb=None, ub=None,
-             solver='quadprog', initvals=None, sym_proj=False, verbose=False):
+             solver='quadprog', initvals=None, sym_proj=False, verbose=False,
+             **kwargs):
     """
     Solve a Quadratic Program defined as:
 
@@ -271,30 +232,24 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, lb=None, ub=None,
         else:  # G is not None and h is not None
             G = concatenate((G, eye(len(q))), 0)
             h = concatenate((h, ub))
+    args = P, q, G, h, A, b
+    kwargs = {'initvals': initvals, 'verbose': verbose}
     if solver == 'cvxopt':
-        cvxopt_set_verbosity(verbose)
-        return cvxopt_solve_qp(P, q, G, h, A, b, initvals=initvals)
+        return cvxopt_solve_qp(*args, **kwargs)
     elif solver == 'cvxpy':
-        cvxpy_set_verbosity(verbose)
-        return cvxpy_solve_qp(P, q, G, h, A, b, initvals=initvals)
+        return cvxpy_solve_qp(*args, **kwargs)
     elif solver == 'ecos':
-        ecos_set_verbosity(verbose)
-        return ecos_solve_qp(P, q, G, h, A, b, initvals=initvals)
+        return ecos_solve_qp(*args, **kwargs)
     elif solver == 'gurobi':
-        gurobi_set_verbosity(verbose)
-        return gurobi_solve_qp(P, q, G, h, A, b, initvals=initvals)
+        return gurobi_solve_qp(*args, **kwargs)
     elif solver == 'mosek':
-        mosek_set_verbosity(verbose)
-        return mosek_solve_qp(P, q, G, h, A, b, initvals=initvals)
+        return mosek_solve_qp(*args, **kwargs)
     elif solver == 'osqp':
-        osqp_set_verbosity(verbose)
-        return osqp_solve_qp(P, q, G, h, A, b, initvals=initvals)
+        return osqp_solve_qp(*args, **kwargs)
     elif solver == 'qpoases':
-        qpoases_set_verbosity(verbose)
-        return qpoases_solve_qp(P, q, G, h, A, b, initvals=initvals)
+        return qpoases_solve_qp(*args, **kwargs)
     elif solver == 'quadprog':
-        quadprog_set_verbosity(verbose)
-        return quadprog_solve_qp(P, q, G, h, A, b, initvals=initvals)
+        return quadprog_solve_qp(*args, **kwargs)
     raise Exception("solver '%s' not recognized" % solver)
 
 

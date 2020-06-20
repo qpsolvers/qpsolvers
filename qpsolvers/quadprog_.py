@@ -22,13 +22,8 @@ from numpy import hstack, vstack
 from quadprog import solve_qp
 
 
-def quadprog_set_verbosity(verbose):
-    if verbose:
-        print("qpsolvers: quadprog solver does not provide a verbosity option")
-
-
-
-def quadprog_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
+def quadprog_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
+                      verbose=False):
     """
     Solve a Quadratic Program defined as:
 
@@ -57,6 +52,8 @@ def quadprog_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None):
         Linear equality constraint vector.
     initvals : numpy.array, optional
         Warm-start guess vector (not used).
+    verbose : bool, optional
+        This argument has no effect, it is here for API conformance.
 
     Returns
     -------

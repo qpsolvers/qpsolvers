@@ -23,14 +23,8 @@ import mosek
 
 from .cvxopt_ import cvxopt_solve_qp
 
-cvxopt.solvers.options['mosek'] = {mosek.iparam.log: 0}
 
-
-def mosek_set_verbosity(verbose):
-    cvxopt.solvers.options['mosek'] = {mosek.iparam.log: 1 if verbose else 0}
-
-
-def mosek_solve_qp(P, q, G, h, A=None, b=None, initvals=None):
+def mosek_solve_qp(P, q, G, h, A=None, b=None, initvals=None, verbose=False):
     """
     Solve a Quadratic Program defined as:
 
@@ -59,10 +53,13 @@ def mosek_solve_qp(P, q, G, h, A=None, b=None, initvals=None):
         Linear equality constraint vector.
     initvals : numpy.array, optional
         Warm-start guess vector.
+    verbose : bool, optional
+        Set to `True` to print out extra information.
 
     Returns
     -------
     x : numpy.array
         Solution to the QP, if found, otherwise ``None``.
     """
+    cvxopt.solvers.options['mosek'] = {mosek.iparam.log: 1 if verbose else 0}
     return cvxopt_solve_qp(P, q, G, h, A, b, 'mosek', initvals)

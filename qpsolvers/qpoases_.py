@@ -26,17 +26,13 @@ from qpoases import PyQProblemB as QProblemB
 from qpoases import PyReturnValue as ReturnValue
 
 
-__infty = 1e10
-options = Options()
-options.printLevel = PrintLevel.NONE
-
-
-def qpoases_set_verbosity(verbose):
-    options.printLevel = PrintLevel.MEDIUM if verbose else PrintLevel.NONE
+__infty__ = 1e10
+__options__ = Options()
+__options__.printLevel = PrintLevel.NONE
 
 
 def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
-                     max_wsr=1000):
+                     verbose=False, max_wsr=1000):
     """
     Solve a Quadratic Program defined as:
 
@@ -65,6 +61,8 @@ def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
         Linear equality constraint vector.
     initvals : numpy.array, optional
         Warm-start guess vector.
+    verbose : bool, optional
+        Set to `True` to print out extra information.
     max_wsr : integer, optional
         Maximum number of Working-Set Recalculations given to qpOASES.
 
@@ -103,17 +101,18 @@ def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
         ub_C = b
     elif G is not None and A is not None:
         C = vstack([G, A, A])
-        lb_C = hstack([-__infty * ones(h.shape[0]), b, b])
+        lb_C = hstack([-__infty__ * ones(h.shape[0]), b, b])
         ub_C = hstack([h, b, b])
+    __options__.printLevel = PrintLevel.MEDIUM if verbose else PrintLevel.NONE
     if has_cons:
         qp = QProblem(n, C.shape[0])
-        qp.setOptions(options)
+        qp.setOptions(__options__)
         return_value = qp.init(P, q, C, lb, ub, lb_C, ub_C, array([max_wsr]))
         if return_value == ReturnValue.MAX_NWSR_REACHED:
             print("qpOASES reached the maximum number of WSR (%d)" % max_wsr)
     else:
         qp = QProblemB(n)
-        qp.setOptions(options)
+        qp.setOptions(__options__)
         qp.init(P, q, lb, ub, max_wsr)
     x_opt = zeros(n)
     ret = qp.getPrimalSolution(x_opt)
