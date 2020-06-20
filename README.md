@@ -10,7 +10,7 @@ The simplest way to install this module is:
 pip install qpsolvers
 ```
 You can add the ``--user`` parameter for a user-only installation. See also the
-[wiki page](https://github.com/stephane-caron/qpsolvers/wiki/Installation) for
+[documentation](https://scaron.info/doc/qpsolvers/installation.html) for
 advanced installation instructions.
 
 ## Usage
