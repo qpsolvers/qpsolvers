@@ -33,7 +33,7 @@ def conversion_warning(M):
 
 
 def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
-                  verbose=False):
+                  verbose=False, eps_abs=1e-5, eps_rel=1e-5, polish=True):
     """
     Solve a Quadratic Program defined as:
 
@@ -64,6 +64,16 @@ def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
         Warm-start guess vector.
     verbose : bool, optional
         Set to `True` to print out extra information.
+    eps_abs : scalar, optional
+        Absolute tolerance of the solver. Lower values yield more precise
+        solutions at the cost of computation time.
+    eps_rel : scalar, optional
+        Relative tolerance of the solver. Lower values yield more precise
+        solutions at the cost of computation time.
+    polish : bool, optional
+        Perform `polishing <https://osqp.org/docs/solver/#polishing>`_, an
+        additional step where the solver tries to improve the accuracy of the
+        solution. Default is ``True``.
 
     Returns
     -------
@@ -75,31 +85,41 @@ def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
     OSQP requires `P` to be symmetric, and won't check for errors otherwise.
     Check out for this point if you e.g. `get nan values
     <https://github.com/oxfordcontrol/osqp/issues/10>`_ in your solutions.
+
+    Note
+    ----
+    As of OSQP v0.6.1, the default values for both absolute and relative
+    tolerances are set to ``1e-3``, which results in low solver times but
+    imprecise solutions compared to the other QP solvers. We lower them to
+    ``1e-5`` so that OSQP behaves closer to the norm in terms of numerical
+    accuracy.
     """
     if type(P) is ndarray:
         warn(conversion_warning("P"))
         P = csc_matrix(P)
     solver = OSQP()
+    kwargs = {'eps_abs': eps_abs, 'eps_rel': eps_rel, 'polish': polish,
+              'verbose': verbose}
     if A is None and G is None:
-        solver.setup(P=P, q=q, verbose=verbose)
+        solver.setup(P=P, q=q, **kwargs)
     elif A is not None:
         if type(A) is ndarray:
             warn(conversion_warning("A"))
             A = csc_matrix(A)
         if G is None:
-            solver.setup(P=P, q=q, A=A, l=b, u=b, verbose=verbose)
+            solver.setup(P=P, q=q, A=A, l=b, u=b, **kwargs)
         else:  # G is not None
             l = -inf * ones(len(h))
             qp_A = vstack([G, A]).tocsc()
             qp_l = hstack([l, b])
             qp_u = hstack([h, b])
-            solver.setup(P=P, q=q, A=qp_A, l=qp_l, u=qp_u, verbose=verbose)
+            solver.setup(P=P, q=q, A=qp_A, l=qp_l, u=qp_u, **kwargs)
     else:  # A is None
         if type(G) is ndarray:
             warn(conversion_warning("G"))
             G = csc_matrix(G)
         l = -inf * ones(len(h))
-        solver.setup(P=P, q=q, A=G, l=l, u=h, verbose=verbose)
+        solver.setup(P=P, q=q, A=G, l=l, u=h, **kwargs)
     if initvals is not None:
         solver.warm_start(x=initvals)
     res = solver.solve()

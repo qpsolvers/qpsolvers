@@ -75,6 +75,6 @@ if __name__ == "__main__":
             delta = norm(sol - expected_sol)
             print("%9s's solution: %s\toffset: %.1e" % (
                 solver, sol.round(decimals=5), delta))
-            critical_offset = 2e-3
+            critical_offset = 2e-4
             assert delta < critical_offset, \
                 "%s's solution offset by %.1e on test #%d" % (solver, delta, i)
