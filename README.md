@@ -29,7 +29,7 @@ The list of supported solvers currently includes:
 
 - Dense solvers:
     - [CVXOPT](http://cvxopt.org/)
-    - [qpOASES](https://projects.coin-or.org/qpOASES)
+    - [qpOASES](https://github.com/coin-or/qpOASES)
     - [quadprog](https://pypi.python.org/pypi/quadprog/)
 - Sparse solvers:
     - [ECOS](https://web.stanford.edu/~boyd/papers/ecos.html)
