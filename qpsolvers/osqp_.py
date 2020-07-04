@@ -33,7 +33,7 @@ def conversion_warning(M):
 
 
 def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
-                  verbose=False, eps_abs=1e-5, eps_rel=1e-5, polish=True):
+                  verbose=False, eps_abs=1e-4, eps_rel=1e-4, polish=True):
     """
     Solve a Quadratic Program defined as:
 
