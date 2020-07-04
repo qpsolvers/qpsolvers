@@ -31,7 +31,7 @@ Programming Language :: Python :: 2
 Programming Language :: Python :: 3
 Operating System :: OS Independent"""
 
-equation = 'https://raw.githubusercontent.com/stephane-caron/qpsolvers/master/.qp.gif'
+equation = 'https://raw.githubusercontent.com/stephane-caron/qpsolvers/master/doc/src/images/qp.gif'
 
 long_description = """\
 This module provides a single function ``solve_qp(P, q, G, h, A, b, lb, ub,
@@ -83,7 +83,7 @@ This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``.
 
 setup(
     name='qpsolvers',
-    version='1.3.1',
+    version='1.4',
     description="Quadratic Programming solvers for Python with a unified API",
     long_description=long_description,
     url="https://github.com/stephane-caron/qpsolvers",
