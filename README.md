@@ -6,8 +6,14 @@ interface.
 ## Installation
 
 The simplest way to install this module is:
-```
+```sh
+# Python 2
+sudo apt install python-dev
 pip install qpsolvers
+
+# Python 3
+sudo apt install python3-dev
+pip3 install qpsolvers
 ```
 You can add the ``--user`` parameter for a user-only installation. See also the
 [documentation](https://scaron.info/doc/qpsolvers/installation.html) for
