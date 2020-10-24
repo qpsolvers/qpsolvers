@@ -363,7 +363,7 @@ def solve_ls(R, s, G=None, h=None, A=None, b=None, lb=None, ub=None, W=None,
     Parameters
     ----------
     R : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
-        Matrix factor in the cost function (most solvers require it to be
+        Symmetric matrix of the cost function (most solvers require it to be
         definite).
     s : numpy.array
         Vector term of the cost function.
@@ -386,6 +386,8 @@ def solve_ls(R, s, G=None, h=None, A=None, b=None, lb=None, ub=None, W=None,
         Name of the QP solver, to choose in ``qpsolvers.available_solvers``.
     initvals : array, optional
         Vector of initial `x` values used to warm-start the solver.
+    sym_proj : bool, optional
+        Set to `True` when the `R` matrix provided is not symmetric.
     verbose : bool, optional
         Set to `True` to print out extra information.
 
@@ -400,9 +402,11 @@ def solve_ls(R, s, G=None, h=None, A=None, b=None, lb=None, ub=None, W=None,
     underlying solvers. For example, OSQP has a setting `eps_abs` which we can
     provide by ``solve_ls(R, s, G, h, solver='osqp', eps_abs=1e-4)``.
     """
+    if sym_proj:
+        R = .5 * (R + R.transpose())
     WR = R if W is None else dot(W, R)
-    P = dot(R.T, WR)
-    q = -2 * dot(s.T, WR)
+    P = dot(R.transpose(), WR)
+    q = -2 * dot(s.transpose(), WR)
     return solve_qp(P, q, G, h, A, b, lb, ub, solver=solver, initvals=initvals,
                     sym_proj=False, verbose=verbose, **kwargs)
 
