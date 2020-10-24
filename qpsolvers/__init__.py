@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-from numpy import concatenate, eye, ndarray
+from numpy import concatenate, dot, eye, ndarray
 
 available_solvers = []
 dense_solvers = []
@@ -181,17 +181,17 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, lb=None, ub=None,
         as well).
     q : numpy.array
         Quadratic-cost vector.
-    G : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
+    G : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
         Linear inequality matrix.
-    h : numpy.array
+    h : numpy.array, optional
         Linear inequality vector.
-    A : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
+    A : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
         Linear equality matrix.
-    b : numpy.array
+    b : numpy.array, optional
         Linear equality vector.
-    lb: numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
+    lb: numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
         Lower bound constraint vector.
-    ub: numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
+    ub: numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
         Upper bound constraint vector.
     solver : string, optional
         Name of the QP solver, to choose in ``qpsolvers.available_solvers``.
@@ -341,6 +341,72 @@ def solve_safer_qp(P, q, G, h, sw, reg=1e-8, solver='mosek', initvals=None,
     return x[:n]
 
 
+def solve_ls(R, s, G=None, h=None, A=None, b=None, lb=None, ub=None, W=None,
+             solver='quadprog', initvals=None, sym_proj=False, verbose=False,
+             **kwargs):
+    """
+    Solve a linear Least Squares problem defined as:
+
+    .. math::
+
+        \\begin{split}\\begin{array}{ll}
+            \\mbox{minimize} &
+                \\| R x - s \\|^2_W = (R x - s)^T W (R x - s) \\\\
+            \\mbox{subject to}
+                & G x \\leq h                \\\\
+                & A x = b                    \\\\
+                & lb \leq x \\leq ub
+        \\end{array}\\end{split}
+
+    using one of the available QP solvers.
+
+    Parameters
+    ----------
+    R : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
+        Matrix factor in the cost function (most solvers require it to be
+        definite).
+    s : numpy.array
+        Vector term of the cost function.
+    G : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+        Linear inequality matrix.
+    h : numpy.array, optional
+        Linear inequality vector.
+    A : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+        Linear equality matrix.
+    b : numpy.array, optional
+        Linear equality vector.
+    lb: numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+        Lower bound constraint vector.
+    ub: numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+        Upper bound constraint vector.
+    W : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+        Definite symmetric weight matrix used to define the norm of the cost
+        function. The standard L2 norm (W = Identity) is used by default.
+    solver : string, optional
+        Name of the QP solver, to choose in ``qpsolvers.available_solvers``.
+    initvals : array, optional
+        Vector of initial `x` values used to warm-start the solver.
+    verbose : bool, optional
+        Set to `True` to print out extra information.
+
+    Returns
+    -------
+    x : array or None
+        Optimal solution if found, None otherwise.
+
+    Note
+    ----
+    Extra keyword arguments given to this function are forwarded to the
+    underlying solvers. For example, OSQP has a setting `eps_abs` which we can
+    provide by ``solve_ls(R, s, G, h, solver='osqp', eps_abs=1e-4)``.
+    """
+    WR = R if W is None else dot(W, R)
+    P = dot(R.T, WR)
+    q = -2 * dot(s.T, WR)
+    return solve_qp(P, q, G, h, A, b, lb, ub, solver=solver, initvals=initvals,
+                    sym_proj=False, verbose=verbose, **kwargs)
+
+
 __all__ = [
     'available_solvers',
     'cvxopt_solve_qp',
@@ -350,6 +416,7 @@ __all__ = [
     'mosek_solve_qp',
     'qpoases_solve_qp',
     'quadprog_solve_qp',
+    'solve_ls',
     'solve_qp',
     'solve_safer_qp',
     'sparse_solvers',
