@@ -345,13 +345,14 @@ def solve_ls(R, s, G=None, h=None, A=None, b=None, lb=None, ub=None, W=None,
              solver='quadprog', initvals=None, sym_proj=False, verbose=False,
              **kwargs):
     """
-    Solve a linear Least Squares problem defined as:
+    Solve a constrained weighted linear Least Squares problem defined as:
 
     .. math::
 
         \\begin{split}\\begin{array}{ll}
             \\mbox{minimize} &
-                \\| R x - s \\|^2_W = (R x - s)^T W (R x - s) \\\\
+                \\frac12 \\| R x - s \\|^2_W
+                = \\frac12 (R x - s)^T W (R x - s) \\\\
             \\mbox{subject to}
                 & G x \\leq h                \\\\
                 & A x = b                    \\\\
