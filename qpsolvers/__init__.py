@@ -406,7 +406,7 @@ def solve_ls(R, s, G=None, h=None, A=None, b=None, lb=None, ub=None, W=None,
         R = .5 * (R + R.transpose())
     WR = R if W is None else dot(W, R)
     P = dot(R.transpose(), WR)
-    q = -2 * dot(s.transpose(), WR)
+    q = -dot(s.transpose(), WR)
     return solve_qp(P, q, G, h, A, b, lb, ub, solver=solver, initvals=initvals,
                     sym_proj=False, verbose=verbose, **kwargs)
 
