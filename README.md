@@ -29,20 +29,6 @@ is, in standard form:
 
 Vector inequalities are taken coordinate by coordinate.
 
-## Solvers
-
-The list of supported solvers currently includes:
-
-- Dense solvers:
-    - [CVXOPT](http://cvxopt.org/)
-    - [qpOASES](https://github.com/coin-or/qpOASES)
-    - [quadprog](https://pypi.python.org/pypi/quadprog/)
-- Sparse solvers:
-    - [ECOS](https://web.stanford.edu/~boyd/papers/ecos.html)
-    - [Gurobi](https://www.gurobi.com/)
-    - [MOSEK](https://mosek.com/)
-    - [OSQP](https://github.com/oxfordcontrol/osqp)
-
 ## Example
 
 To solve a quadratic program, simply build the matrices that define it and call
@@ -65,6 +51,29 @@ print("QP solution: x = {}".format(x))
 ```
 
 This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``.
+
+## Solvers
+
+The list of supported solvers currently includes:
+
+- Dense solvers:
+    - [CVXOPT](http://cvxopt.org/)
+    - [qpOASES](https://github.com/coin-or/qpOASES)
+    - [quadprog](https://pypi.python.org/pypi/quadprog/)
+- Sparse solvers:
+    - [ECOS](https://web.stanford.edu/~boyd/papers/ecos.html)
+    - [Gurobi](https://www.gurobi.com/)
+    - [MOSEK](https://mosek.com/)
+    - [OSQP](https://github.com/oxfordcontrol/osqp)
+
+## Frequently Asked Questions
+
+- Can I print the list of solvers available on my machine?
+  - Absolutely: ``print(qpsolvers.available_solvers)``
+- Is it possible to solve a least squares rather than a quadratic program?
+  - Yes, `qpsolvers` also provides a [solve_ls](https://scaron.info/doc/qpsolvers/getting-started.html#qpsolvers.solve_ls) function.
+- I have a squared norm in my cost function, how can I apply a QP solver to my problem?
+  - You can [cast squared norms to QP matrices](https://scaron.info/teaching/conversion-from-least-squares-to-quadratic-programming.html) and feed the result to `solve_qp`.
 
 ## Performances
 
