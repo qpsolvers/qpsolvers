@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 
 - New ``solve_ls`` function to solve linear Least Squares problems
 
+### Fixed
+
+- Handling of quadprog ValueError exceptions
+
 ## [1.4] - 2020/07/04
 
 ### Added
@@ -126,7 +130,7 @@ release!
 
 ### Changed
 
-- CVXOPT version is not 1.1.8 due to [this issue](https://github.com/urinieto/msaf-gpl/issues/2)
+- CVXOPT version is now 1.1.8 due to [this issue](https://github.com/urinieto/msaf-gpl/issues/2)
 - Examples now in a [separate folder](examples)
 
 ## [1.0.4] - 2018/07/05
