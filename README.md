@@ -74,6 +74,8 @@ The list of supported solvers currently includes:
   - Yes, `qpsolvers` also provides a [solve_ls](https://scaron.info/doc/qpsolvers/getting-started.html#qpsolvers.solve_ls) function.
 - I have a squared norm in my cost function, how can I apply a QP solver to my problem?
   - You can [cast squared norms to QP matrices](https://scaron.info/teaching/conversion-from-least-squares-to-quadratic-programming.html) and feed the result to `solve_qp`.
+- I get the following [build error on Windows](https://github.com/stephane-caron/qpsolvers/issues/28) when running `pip install qpsolvers`.
+  - You will need to install the [Visual C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) to build all package dependencies.
 
 ## Performances
 
