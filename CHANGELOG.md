@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+- Call to ``print`` in PyPI description
 - Handling of quadprog ValueError exceptions
 
 ## [1.4] - 2020/07/04
