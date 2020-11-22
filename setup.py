@@ -76,7 +76,7 @@ the ``solve_qp`` function:
     A = array([1., 1., 1.])
     b = array([1.])
 
-    print "QP solution:", solve_qp(P, q, G, h, A, b)
+    print("QP solution:", solve_qp(P, q, G, h, A, b))
 
 This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``.
 """ % equation
