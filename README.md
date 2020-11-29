@@ -21,13 +21,14 @@ advanced installation instructions.
 
 ## Usage
 
-The function ``solve_qp(P, q, G, h, A, b, lb, ub)`` is called with the ``solver``
-keyword argument to select the backend solver. The quadratic program it solves
-is, in standard form:
+The function ``solve_qp(P, q, G, h, A, b, lb, ub)`` is called with the
+``solver`` keyword argument to select the backend solver. The convex quadratic
+program it solves is, in standard form:
 
 ![Equation of Quadratic Program](doc/src/images/qp.gif)
 
-Vector inequalities are taken coordinate by coordinate.
+Vector inequalities are taken coordinate by coordinate. The matrix *P* should
+be positive definite.
 
 ## Example
 
@@ -39,7 +40,7 @@ from numpy import array, dot
 from qpsolvers import solve_qp
 
 M = array([[1., 2., 0.], [-8., 3., 2.], [0., 1., 1.]])
-P = dot(M.T, M)  # quick way to build a symmetric matrix
+P = dot(M.T, M)  # this is a positive definite matrix
 q = dot(array([3., 2., 3.]), M).reshape((3,))
 G = array([[1., 2., 1.], [2., 0., 1.], [-1., 2., -1.]])
 h = array([3., 2., -2.]).reshape((3,))
