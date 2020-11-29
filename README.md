@@ -5,8 +5,7 @@
 [![Downloads](https://static.pepy.tech/badge/qpsolvers)](https://pypi.org/project/qpsolvers/)
 [![Documentation](https://img.shields.io/badge/doxygen-online-brightgreen?logo=read-the-docs&style=flat)](https://scaron.info/doc/qpsolvers/)
 
-Wrapper around Quadratic Programming (QP) solvers in Python, with a unified
-interface.
+Wrapper around Quadratic Programming (QP) solvers in Python, with a unified interface.
 
 ## Installation
 
@@ -20,25 +19,19 @@ pip install qpsolvers
 sudo apt install python3-dev
 pip3 install qpsolvers
 ```
-You can add the ``--user`` parameter for a user-only installation. See also the
-[documentation](https://scaron.info/doc/qpsolvers/installation.html) for
-advanced installation instructions.
+You can add the ``--user`` parameter for a user-only installation. See also the [documentation](https://scaron.info/doc/qpsolvers/installation.html) for advanced installation instructions.
 
 ## Usage
 
-The function ``solve_qp(P, q, G, h, A, b, lb, ub)`` is called with the
-``solver`` keyword argument to select the backend solver. The convex quadratic
-program it solves is, in standard form:
+The function ``solve_qp(P, q, G, h, A, b, lb, ub)`` is called with the ``solver`` keyword argument to select the backend solver. The convex quadratic program it solves is, in standard form:
 
 ![Equation of Quadratic Program](doc/src/images/qp.gif)
 
-Vector inequalities are taken coordinate by coordinate. The matrix *P* should
-be positive definite.
+Vector inequalities are taken coordinate by coordinate. The matrix *P* should be [positive definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix).
 
 ## Example
 
-To solve a quadratic program, simply build the matrices that define it and call
-the ``solve_qp`` function:
+To solve a quadratic program, simply build the matrices that define it and call the ``solve_qp`` function:
 
 ```python
 from numpy import array, dot
@@ -89,8 +82,7 @@ The list of supported solvers currently includes:
 
 ## Performances
 
-On a [dense problem](examples/dense_problem.py), the performance of all solvers
-(as measured by IPython's ``%timeit`` on my machine) is:
+On a [dense problem](examples/dense_problem.py), the performance of all solvers (as measured by IPython's ``%timeit`` on my machine) is:
 
 | Solver   | Type   | Time (ms) |
 | -------- | ------ | --------- |
@@ -116,16 +108,8 @@ On a [sparse problem](examples/sparse_problem.py), these performances become:
 | cvxpy    | Sparse |  654      |
 | qpoases  | Dense  | 2250      |
 
-Finally, here are the results on a benchmark of [random
-problems](examples/random_problems.py) (each data point corresponds to an
-average over 10 runs):
+Finally, here are the results on a benchmark of [random problems](examples/random_problems.py) (each data point corresponds to an average over 10 runs):
 
 <img src="https://scaron.info/images/qp-benchmark.png">
 
-Note that performances of QP solvers largely depend on the problem solved. For
-instance, MOSEK performs an [automatic conversion to Second-Order Cone
-Programming
-(SOCP)](https://docs.mosek.com/8.1/pythonapi/prob-def-quadratic.html) which the
-documentation advises bypassing for better performance. Similarly, ECOS
-reformulates [from QP to SOCP](qpsolvers/ecos_.py) and [works best on small
-problems](https://web.stanford.edu/%7Eboyd/papers/ecos.html).
+Note that performances of QP solvers largely depend on the problem solved. For instance, MOSEK performs an [automatic conversion to Second-Order Cone Programming (SOCP)](https://docs.mosek.com/8.1/pythonapi/prob-def-quadratic.html) which the documentation advises bypassing for better performance. Similarly, ECOS reformulates [from QP to SOCP](qpsolvers/ecos_.py) and [works best on small problems](https://web.stanford.edu/%7Eboyd/papers/ecos.html).
