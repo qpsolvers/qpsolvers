@@ -1,8 +1,8 @@
 # QP Solvers for Python
 
 [![PyPI package](https://badge.fury.io/py/qpsolvers.svg)](https://pypi.org/project/qpsolvers/)
-[![Documentation](https://img.shields.io/badge/doxygen-online-brightgreen?logo=read-the-docs&style=flat)](https://scaron.info/doc/qpsolvers/)
 [![Downloads](https://static.pepy.tech/badge/qpsolvers)](https://pypi.org/project/qpsolvers/)
+[![Documentation](https://img.shields.io/badge/doxygen-online-brightgreen?logo=read-the-docs&style=flat)](https://scaron.info/doc/qpsolvers/)
 
 Wrapper around Quadratic Programming (QP) solvers in Python, with a unified interface.
 
