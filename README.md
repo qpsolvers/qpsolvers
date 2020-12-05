@@ -10,10 +10,15 @@ Wrapper around Quadratic Programming (QP) solvers in Python, with a unified inte
 
 The simplest way to install this module is:
 ```sh
+# Python 3
 sudo apt install python3-dev
 pip3 install qpsolvers
+
+# Python 2
+sudo apt install python-dev
+pip install qpsolvers==1.4.1
 ```
-See also the [documentation](https://scaron.info/doc/qpsolvers/installation.html) for other installation instructions, in particular if you are using [Python 2](https://scaron.info/doc/qpsolvers/installation.html#python-2).
+See also the [documentation](https://scaron.info/doc/qpsolvers/installation.html) for other installation instructions.
 
 ## Usage
 
