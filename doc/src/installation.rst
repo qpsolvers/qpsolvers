@@ -29,15 +29,17 @@ Windows
 Python 2
 ========
 
-If you have an older system with Python 2, for instance Ubuntu 16.04, you can try:
+If you have an older system with Python 2, for instance Ubuntu 16.04, try:
 
 .. code:: bash
 
     sudo apt install python-dev
     pip install -r requirements2.txt
 
-Virtualenv
-----------
+You can also add the ``--user`` parameter for a user-only installation.
+
+Virtual Environment
+-------------------
 
 To create an isolated environment using `Virtualenv <https://virtualenv.pypa.io>`_, you can do:
 
@@ -53,8 +55,11 @@ To create an isolated environment using `Virtualenv <https://virtualenv.pypa.io>
 
 Finally, you can run `deactivate` to exit virtualenv.
 
-Installing qpOASES
-==================
+Solvers
+=======
+
+qpOASES
+-------
 
 Check out the `official qpOASES installation page
 <https://projects.coin-or.org/qpOASES/wiki/QpoasesInstallation>`_ for

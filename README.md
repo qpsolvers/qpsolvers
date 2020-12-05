@@ -13,7 +13,7 @@ The simplest way to install this module is:
 sudo apt install python3-dev
 pip3 install qpsolvers
 ```
-You can add the ``--user`` parameter for a user-only installation. See also the [documentation](https://scaron.info/doc/qpsolvers/installation.html) for other installation instructions.
+See also the [documentation](https://scaron.info/doc/qpsolvers/installation.html) for other installation instructions, in particular if you are using [Python 2](https://scaron.info/doc/qpsolvers/installation.html#python-2).
 
 ## Usage
 
