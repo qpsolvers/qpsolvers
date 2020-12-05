@@ -24,6 +24,8 @@ available_solvers = []
 dense_solvers = []
 sparse_solvers = []
 
+__version__ = '1.5'
+
 # CVXOPT
 # ======
 
@@ -413,6 +415,7 @@ def solve_ls(R, s, G=None, h=None, A=None, b=None, lb=None, ub=None, W=None,
 
 
 __all__ = [
+    '__version__',
     'available_solvers',
     'cvxopt_solve_qp',
     'cvxpy_solve_qp',

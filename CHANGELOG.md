@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Added
+
+- Add `__version__` to main module
+
 ## [1.5] - 2020/12/05
 
 ### Added
