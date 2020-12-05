@@ -1,6 +1,6 @@
 backports.shutil-get-terminal-size==1.0.0
 cvxopt==1.1.8
-cvxpy==1.0.11
+cvxpy==1.1
 Cython==0.29.2
 decorator==4.3.0
 dill==0.2.8.2

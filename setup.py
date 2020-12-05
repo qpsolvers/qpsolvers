@@ -27,7 +27,6 @@ Intended Audience :: Developers
 Intended Audience :: Science/Research
 Topic :: Scientific/Engineering :: Mathematics
 Programming Language :: Python
-Programming Language :: Python :: 2
 Programming Language :: Python :: 3
 Operating System :: OS Independent"""
 
@@ -94,5 +93,6 @@ setup(
     platforms="any",
     classifiers=classifiers.split('\n'),
     packages=['qpsolvers'],
-    install_requires=['quadprog']
+    python_requires='>=3.5',
+    install_requires=['quadprog >= 0.1.8']
 )

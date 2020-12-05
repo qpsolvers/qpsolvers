@@ -2,26 +2,42 @@
 Installation
 ************
 
-The simplest way to install this module is:
+Linux
+=====
+
+The simplest way to install the package on a recent Debian-based system with
+Python 3 is:
+
+.. code:: bash
+
+    sudo apt install python3-dev
+    pip3 install qpsolvers
+
+You can add the ``--user`` parameter for a user-only installation.
+
+Windows
+=======
+
+- First, install the `Visual C++ Build Tools <https://visualstudio.microsoft.com/visual-cpp-build-tools/>`_
+- Install your Python environment, for instance `Anaconda <https://docs.anaconda.com/anaconda/install/windows/>`_
+- Open a terminal configured for Python, for instance from the Anaconda Navigator, and run:
 
 .. code:: bash
 
     pip install qpsolvers
 
-You can add the ``--user`` parameter for a user-only installation.
+Python 2
+========
 
-Installing qpOASES
-==================
+If you have an older system with Python 2, for instance Ubuntu 16.04, you can try:
 
-Check out the `official qpOASES installation page
-<https://projects.coin-or.org/qpOASES/wiki/QpoasesInstallation>`_ for
-instructions. You might run into errors at the ``make python`` step. If so, you
-can check out qpOASES from `this fork
-<https://github.com/stephane-caron/qpOASES>`_, or check out its 4–5 last
-commits to see how to cope with these issues.
+.. code:: bash
+
+    sudo apt install python-dev
+    pip install -r requirements2.txt
 
 Virtualenv
-==========
+----------
 
 To create an isolated environment using `Virtualenv <https://virtualenv.pypa.io>`_, you can do:
 
@@ -33,6 +49,16 @@ To create an isolated environment using `Virtualenv <https://virtualenv.pypa.io>
     git clone https://github.com/stephane-caron/qpsolvers
     cd qpsolvers
     pip install Cython numpy scipy
-    pip install -r requirements.txt
+    pip install -r requirements2.txt
 
 Finally, you can run `deactivate` to exit virtualenv.
+
+Installing qpOASES
+==================
+
+Check out the `official qpOASES installation page
+<https://projects.coin-or.org/qpOASES/wiki/QpoasesInstallation>`_ for
+instructions. You might run into errors at the ``make python`` step. If so, you
+can check out qpOASES from `this fork
+<https://github.com/stephane-caron/qpOASES>`_, or check out its 4–5 last
+commits to see how to cope with these issues.
