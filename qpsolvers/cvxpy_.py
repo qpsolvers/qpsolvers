@@ -71,12 +71,12 @@ def cvxpy_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
     n = q.shape[0]
     x = Variable(n)
     P = Constant(P)  # see http://www.cvxpy.org/en/latest/faq/
-    objective = Minimize(0.5 * quad_form(x, P) + q * x)
+    objective = Minimize(0.5 * quad_form(x, P) + q @ x)
     constraints = []
     if G is not None:
-        constraints.append(G * x <= h)
+        constraints.append(G @ x <= h)
     if A is not None:
-        constraints.append(A * x == b)
+        constraints.append(A @ x == b)
     prob = Problem(objective, constraints)
     prob.solve(solver=solver, verbose=verbose)
     x_opt = array(x.value).reshape((n,))

@@ -4,7 +4,7 @@
 qpsolvers
 #########
 
-.. **Release 1.4.1 -- November 29, 2020**
+.. **Release 1.5 -- December 5, 2020**
 
 The goal of this library is to provide a unified interface to a wide array of
 Quadratic Programming (QP) solvers available in Python.
