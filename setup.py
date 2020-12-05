@@ -82,7 +82,7 @@ This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``.
 
 setup(
     name='qpsolvers',
-    version='1.4.1',
+    version='1.5',
     description="Quadratic Programming solvers for Python with a unified API",
     long_description=long_description,
     url="https://github.com/stephane-caron/qpsolvers",

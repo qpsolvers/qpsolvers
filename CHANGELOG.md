@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5] - 2020/12/05
+
+### Added
+
+- Upgrade to Python 3 and deprecate Python 2
+- Saved Python 2 package versions to `requirements2.txt`
+
+### Fixed
+
+- Deprecation warning in CVXPY
+
 ## [1.4.1] - 2020/11/29
 
 ### Added
