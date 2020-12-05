@@ -16,7 +16,7 @@ pip3 install qpsolvers
 
 # Python 2
 sudo apt install python-dev
-pip install qpsolvers==1.4.1
+pip2 install -r requirements2.txt
 ```
 See also the [documentation](https://scaron.info/doc/qpsolvers/installation.html) for other installation instructions.
 
