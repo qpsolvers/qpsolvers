@@ -22,13 +22,17 @@ from setuptools import setup
 
 classifiers = """\
 Development Status :: 5 - Production/Stable
-License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)
 Intended Audience :: Developers
 Intended Audience :: Science/Research
-Topic :: Scientific/Engineering :: Mathematics
-Programming Language :: Python
+License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)
+Operating System :: OS Independent
 Programming Language :: Python :: 3
-Operating System :: OS Independent"""
+Programming Language :: Python :: 3.5
+Programming Language :: Python :: 3.6
+Programming Language :: Python :: 3.7
+Programming Language :: Python :: 3.8
+Programming Language :: Python :: 3.9
+Topic :: Scientific/Engineering :: Mathematics"""
 
 equation = 'https://raw.githubusercontent.com/stephane-caron/qpsolvers/master/doc/src/images/qp.gif'
 
