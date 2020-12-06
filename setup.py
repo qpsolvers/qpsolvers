@@ -88,6 +88,8 @@ setup(
     url="https://github.com/stephane-caron/qpsolvers",
     author="Stéphane Caron",
     author_email="stephane.caron@normalesup.org",
+    maintainer="Stéphane Caron",
+    maintainer_email="stephane.caron@normalesup.org",
     license="LGPL",
     keywords="qp, quadratic programming, solver",
     platforms="any",
