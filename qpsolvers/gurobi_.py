@@ -85,7 +85,7 @@ def gurobi_solve_qp(P, q, G = None, h = None, A = None, b = None, initvals = Non
         model.addMConstr(G, x, GRB.EQUAL, h)
 
     #build the objective function
-    objective = .5 * (x @ P @ x) + q.flatten() @ x
+    objective = .5 * (x @ P @ x) + q @ x
     model.setObjective(objective, sense=GRB.MINIMIZE)
 
     #optimize
