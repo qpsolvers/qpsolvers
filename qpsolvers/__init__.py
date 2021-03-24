@@ -351,6 +351,8 @@ def solve_safer_qp(P, q, G, h, sw: float, reg: float = 1e-8, solver='mosek',
     x = solve_qp(
         P2, q2, G2, h2, A2, b2, solver=solver, initvals=initvals,
         sym_proj=sym_proj)
+    if x is None:
+        return None
     return x[:n]
 
 

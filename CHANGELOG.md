@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+- Fixed `None` case in `solve_safer_qp` (found by static type checking)
 - Make `quadprog_solve_qp` properly return `None` on unfeasible problems
   (thanks to @DKenefake)
 - Remove Python 2 compatibility line from examples
