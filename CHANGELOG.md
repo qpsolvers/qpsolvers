@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - Add `__version__` to main module
 - First unit tests to check all solvers over a pre-defined set of problems
+- Type hints now decorate all function definitions
 
 ### Changed
 
