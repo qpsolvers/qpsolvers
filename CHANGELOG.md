@@ -9,6 +9,11 @@ All notable changes to this project will be documented in this file.
 - Add `__version__` to main module
 - First unit tests to check all solvers over a pre-defined set of problems
 
+### Changed
+
+- Gurobi performance significantly improved by new matrix API (thanks to
+  @DKenefake)
+
 ### Fixed
 
 - Make `quadprog_solve_qp` properly return `None` on unfeasible problems
