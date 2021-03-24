@@ -22,9 +22,16 @@
 Test all available QP solvers on random quadratic programs.
 """
 
+import sys
+
 from __future__ import print_function  # Python 2 compatibility
 
-from IPython import get_ipython
+try:
+    from IPython import get_ipython
+except ImportError:
+    print("This example requires IPython, try installing ipython3")
+    sys.exit(-1)
+
 from numpy import dot, ones, random
 from os.path import basename
 from scipy.linalg import toeplitz
@@ -55,7 +62,12 @@ def solve_random_qp(n, solver):
 
 
 def plot_results(perfs):
-    from pylab import clf, grid, ion, legend, plot, xscale, yscale
+    try:
+        from pylab import clf, grid, ion, legend, plot, xscale, yscale
+    except ImportError:
+        print("Cannot plot results, try installing python3-matplotlib")
+        print("Results are stored in the global `perfs` dictionary")
+        return
     ion()
     clf()
     for solver in perfs:
