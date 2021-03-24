@@ -209,6 +209,11 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, lb=None, ub=None,
     x : array or None
         Optimal solution if found, None otherwise.
 
+    Raises
+    ------
+    ValueError
+        If the problem is not correctly defined.
+
     Note
     ----
     Extra keyword arguments given to this function are forwarded to the
