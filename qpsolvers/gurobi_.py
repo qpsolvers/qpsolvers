@@ -18,29 +18,12 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-from numpy import empty
-from gurobipy import Model, QuadExpr, GRB, GurobiError, quicksum, setParam
+from gurobipy import GRB
+import gurobipy as gp
+from typing import Optional
 
 
-try:
-    setParam('OutputFlag', 0)
-except GurobiError as e:
-    print("GurobiError: {}".format(e))
-
-
-def get_nonzero_rows(M):
-    nonzero_rows = {}
-    rows, cols = M.nonzero()
-    for ij in zip(rows, cols):
-        i, j = ij
-        if i not in nonzero_rows:
-            nonzero_rows[i] = []
-        nonzero_rows[i].append(j)
-    return nonzero_rows
-
-
-def gurobi_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
-                    verbose=False):
+def gurobi_solve_qp(P, q, G = None, h = None, A = None, b = None, initvals = None, verbose: bool = False) -> Optional[numpy.ndarray]:
     """
     Solve a Quadratic Program defined as:
 
@@ -80,48 +63,39 @@ def gurobi_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
     x : array, shape=(n,)
         Solution to the QP, if found, otherwise ``None``.
     """
-    setParam('OutputFlag', 1 if verbose else 0)
-    if initvals is not None:
-        print("Gurobi: note that warm-start values are ignored by wrapper")
-    n = P.shape[1]
-    model = Model()
-    x = {
-        i: model.addVar(
-            vtype=GRB.CONTINUOUS,
-            name='x_%d' % i,
-            lb=-GRB.INFINITY,
-            ub=+GRB.INFINITY)
-        for i in range(n)
-    }
-    model.update()   # integrate new variables
+    
+    #create gurobi model object
+    model = gp.Model()
 
-    # minimize
-    #     1/2 x.T * P * x + q * x
-    obj = QuadExpr()
-    rows, cols = P.nonzero()
-    for i, j in zip(rows, cols):
-        obj += 0.5 * x[i] * P[i, j] * x[j]
-    for i in range(n):
-        obj += q[i] * x[i]
-    model.setObjective(obj, GRB.MINIMIZE)
+    #optionally turn off solver output
+    if not verbose:
+        model.setParam("OutputFlag", 0)
 
-    # subject to
-    #     G * x <= h
-    if G is not None:
-        G_nonzero_rows = get_nonzero_rows(G)
-        for i, row in G_nonzero_rows.items():
-            model.addConstr(quicksum(G[i, j] * x[j] for j in row) <= h[i])
+    #calculate the number of variables
+    num_vars = P.shape[0]
 
-    # subject to
-    #     A * x == b
+    x = model.addMVar(num_vars, lb=-GRB.INFINITY, ub=GRB.INFINITY, vtype=GRB.CONTINUOUS)
+
+    #include equality constraints
     if A is not None:
-        A_nonzero_rows = get_nonzero_rows(A)
-        for i, row in A_nonzero_rows.items():
-            model.addConstr(quicksum(A[i, j] * x[j] for j in row) == b[i])
+        model.addMConstr(A, x, GRB.EQUAL, b)
 
+    #include inequality constraints
+    if G is not None:
+        model.addMConstr(G, x, GRB.LESS_EQUAL, h)
+
+    #build the objective function
+    objective = .5 * (x @ P @ x) + q @ x
+    model.setObjective(objective, sense=GRB.MINIMIZE)
+
+    #optimize
     model.optimize()
 
-    a = empty(n)
-    for i in range(n):
-        a[i] = model.getVarByName('x_%d' % i).x
-    return a
+    # get gurobi status
+    status = model.status
+
+    # if not solved return None
+    if status != GRB.OPTIMAL and status != GRB.SUBOPTIMAL:
+        return None
+
+    return numpy.array(x.X)
