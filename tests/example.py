@@ -20,13 +20,20 @@
 
 import unittest
 
-from numpy import array, dot
-from qpsolvers import solve_qp
+from numpy import allclose, array, dot
+from qpsolvers import available_solvers, solve_qp
 
 
-class QuadProgTest(unittest.TestCase):
+class ExampleProblem(unittest.TestCase):
+
+    """
+    Test fixture for the README example problem.
+    """
 
     def setUp(self):
+        """
+        Prepare test fixture.
+        """
         M = array([[1., 2., 0.], [-8., 3., 2.], [0., 1., 1.]])
         self.P = dot(M.T, M)  # this is a positive definite matrix
         self.q = dot(array([3., 2., 3.]), M).reshape((3,))
@@ -36,20 +43,53 @@ class QuadProgTest(unittest.TestCase):
         self.b = array([1.])
 
     def get_problem(self):
+        """
+        Get problem as a sextuple of values to unpack.
+
+        Returns
+        -------
+        P : numpy.array
+            Symmetric quadratic-cost matrix .
+        q : numpy.array
+            Quadratic-cost vector.
+        G : numpy.array
+            Linear inequality matrix.
+        h : numpy.array
+            Linear inequality vector.
+        A : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
+            Linear equality matrix.
+        b : numpy.array
+            Linear equality vector.
+        """
         return self.P, self.q, self.G, self.h, self.A, self.b
 
-    def test_feasible(self):
-        P, q, G, h, A, b = self.get_problem()
-        x = solve_qp(P, q, G, h, A, b, solver="quadprog")
-        self.assertTrue((dot(G, x) <= h).all())
+    @staticmethod
+    def get_test(solver):
+        """
+        Closure of test function for a given solver.
 
-    def test_unfeasible(self):
-        P, q, _, h, A, _ = self.get_problem()
-        G_u = array([[1., 1., 1.], [2., 0., 1.], [-1., 2., -1.]])
-        b_u = array([42.])
-        x = solve_qp(P, q, G_u, h, A, b_u)
-        self.assertIsNone(x)
+        Parameters
+        ----------
+        solver : string
+            Name of the solver to test.
+
+        Returns
+        -------
+        test : function
+            Test function for that solver.
+        """
+        def test(self):
+            P, q, G, h, A, b = self.get_problem()
+            print(solver)
+            x = solve_qp(P, q, G, h, A, b, solver=solver)
+            self.assertIsNotNone(x)
+            self.assertTrue((dot(G, x) <= h).all())
+            self.assertTrue(allclose(dot(A, x), b))
+        return test
 
 
 if __name__ == '__main__':
+    for solver in available_solvers:
+        setattr(ExampleProblem, 'test_{}'.format(solver),
+                ExampleProblem.get_test(solver))
     unittest.main()
