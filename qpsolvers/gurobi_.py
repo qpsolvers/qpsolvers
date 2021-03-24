@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2016-2020 Stephane Caron <stephane.caron@normalesup.org>
+# Copyright (C) 2016-2021 Stephane Caron <stephane.caron@normalesup.org>
+# Copyright (C) 2021 Dustin Kenefake
 #
 # This file is part of qpsolvers.
 #
@@ -18,12 +19,17 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
+import gurobipy
+import numpy
+
 from gurobipy import GRB
-import gurobipy as gp
+from numpy import ndarray
 from typing import Optional
+from warnings import warn
 
 
-def gurobi_solve_qp(P, q, G = None, h = None, A = None, b = None, initvals = None, verbose: bool = False) -> Optional[numpy.ndarray]:
+def gurobi_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
+                    verbose: bool = False) -> Optional[ndarray]:
     """
     Solve a Quadratic Program defined as:
 
@@ -63,39 +69,22 @@ def gurobi_solve_qp(P, q, G = None, h = None, A = None, b = None, initvals = Non
     x : array, shape=(n,)
         Solution to the QP, if found, otherwise ``None``.
     """
-    
-    #create gurobi model object
-    model = gp.Model()
-
-    #optionally turn off solver output
-    if not verbose:
+    if initvals is not None:
+        warn("Gurobi: warm-start values given but they will be ignored")
+    model = gurobipy.Model()
+    if not verbose:  # optionally turn off solver output
         model.setParam("OutputFlag", 0)
-
-    #calculate the number of variables
     num_vars = P.shape[0]
-
-    x = model.addMVar(num_vars, lb=-GRB.INFINITY, ub=GRB.INFINITY, vtype=GRB.CONTINUOUS)
-
-    #include equality constraints
-    if A is not None:
+    x = model.addMVar(num_vars, lb=-GRB.INFINITY, ub=GRB.INFINITY,
+                      vtype=GRB.CONTINUOUS)
+    if A is not None:  # include equality constraints
         model.addMConstr(A, x, GRB.EQUAL, b)
-
-    #include inequality constraints
-    if G is not None:
+    if G is not None:  # include inequality constraints
         model.addMConstr(G, x, GRB.LESS_EQUAL, h)
-
-    #build the objective function
     objective = .5 * (x @ P @ x) + q @ x
     model.setObjective(objective, sense=GRB.MINIMIZE)
-
-    #optimize
     model.optimize()
-
-    # get gurobi status
     status = model.status
-
-    # if not solved return None
     if status != GRB.OPTIMAL and status != GRB.SUBOPTIMAL:
         return None
-
     return numpy.array(x.X)
