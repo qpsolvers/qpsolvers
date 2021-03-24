@@ -171,7 +171,7 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, lb=None, ub=None,
             \\mbox{subject to}
                 & G x \\leq h                \\\\
                 & A x = b                    \\\\
-                & lb \leq x \\leq ub
+                & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
     using one of the available QP solvers.
@@ -358,7 +358,7 @@ def solve_ls(R, s, G=None, h=None, A=None, b=None, lb=None, ub=None, W=None,
             \\mbox{subject to}
                 & G x \\leq h                \\\\
                 & A x = b                    \\\\
-                & lb \leq x \\leq ub
+                & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
     using one of the available QP solvers.
