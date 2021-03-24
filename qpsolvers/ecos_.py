@@ -19,13 +19,14 @@
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
 from ecos import solve
-from numpy import hstack, sqrt, vstack, zeros
+from numpy import array, hstack, sqrt, vstack, zeros
 from numpy.linalg import cholesky
 from scipy.sparse import csc_matrix
+from typing import Optional
 
 
 def ecos_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
-                  verbose=False):
+                  verbose: bool = False) -> Optional[array]:
     """
     Solve a Quadratic Program defined as:
 

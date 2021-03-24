@@ -18,13 +18,14 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-from numpy import hstack, vstack
+from numpy import array, hstack, vstack
 from quadprog import solve_qp
+from typing import Optional
 from warnings import warn
 
 
 def quadprog_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
-                      verbose=False):
+                      verbose: bool = False) -> Optional[array]:
     """
     Solve a Quadratic Program defined as:
 

@@ -20,9 +20,10 @@
 
 import osqp
 
-from numpy import hstack, inf, ndarray, ones
+from numpy import array, hstack, inf, ndarray, ones
 from osqp import OSQP
 from scipy.sparse import csc_matrix, vstack
+from typing import Optional
 from warnings import warn
 
 
@@ -33,7 +34,8 @@ def conversion_warning(M):
 
 
 def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
-                  verbose=False, eps_abs=1e-4, eps_rel=1e-4, polish=True):
+                  verbose: bool = False, eps_abs: float = 1e-4, eps_rel: float
+                  = 1e-4, polish: bool = True) -> Optional[array]:
     """
     Solve a Quadratic Program defined as:
 
@@ -67,10 +69,10 @@ def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
         Warm-start guess vector.
     verbose : bool, optional
         Set to `True` to print out extra information.
-    eps_abs : scalar, optional
+    eps_abs : float, optional
         Absolute convergence tolerance of the solver. Lower values yield more
         precise solutions at the cost of computation time.
-    eps_rel : scalar, optional
+    eps_rel : float, optional
         Relative convergence tolerance of the solver. Lower values yield more
         precise solutions at the cost of computation time.
     polish : bool, optional

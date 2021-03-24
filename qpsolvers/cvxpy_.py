@@ -20,10 +20,12 @@
 
 from cvxpy import Constant, Minimize, Problem, Variable, quad_form
 from numpy import array
+from typing import Optional
 
 
 def cvxpy_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
-                   solver=None, verbose=False):
+                   solver: str = None, verbose: bool = False) \
+                   -> Optional[array]:
     """
     Solve a Quadratic Program defined as:
 

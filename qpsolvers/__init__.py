@@ -18,7 +18,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-from numpy import concatenate, dot, eye, ndarray
+from numpy import array, concatenate, dot, eye, ndarray
+from typing import Optional
 
 available_solvers = []
 dense_solvers = []
@@ -123,7 +124,7 @@ except ImportError:
         raise ImportError("quadprog not found")
 
 
-def check_problem(P, q, G, h, A, b, lb, ub):
+def check_problem(P, q, G, h, A, b, lb, ub) -> None:
     """
     Check that problem matrices and vectors are correctly defined.
 
@@ -164,7 +165,7 @@ def check_problem(P, q, G, h, A, b, lb, ub):
 
 def solve_qp(P, q, G=None, h=None, A=None, b=None, lb=None, ub=None,
              solver='quadprog', initvals=None, sym_proj=False, verbose=False,
-             **kwargs):
+             **kwargs) -> Optional[array]:
     """
     Solve a Quadratic Program defined as:
 
@@ -275,8 +276,8 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, lb=None, ub=None,
     raise Exception("solver '%s' not recognized" % solver)
 
 
-def solve_safer_qp(P, q, G, h, sw, reg=1e-8, solver='mosek', initvals=None,
-                   sym_proj=False):
+def solve_safer_qp(P, q, G, h, sw: float, reg: float = 1e-8, solver='mosek',
+                   initvals=None, sym_proj=False) -> Optional[array]:
     """
     Solve the Quadratic Program defined as:
 
@@ -305,11 +306,11 @@ def solve_safer_qp(P, q, G, h, sw, reg=1e-8, solver='mosek', initvals=None,
         Linear inequality matrix.
     h : numpy.array
         Linear inequality vector.
-    sw : scalar
+    sw : float
         Weight of the linear cost on slack variables. Higher values bring the
         solution further inside the constraint region but override the
         minimization of the original objective.
-    reg : scalar
+    reg : float, optional
         Regularization term :math:`(1/2) \\epsilon` in the cost function. Set
         this parameter as small as possible (e.g. 1e-8), and increase it in
         case of numerical instability.
@@ -355,7 +356,7 @@ def solve_safer_qp(P, q, G, h, sw, reg=1e-8, solver='mosek', initvals=None,
 
 def solve_ls(R, s, G=None, h=None, A=None, b=None, lb=None, ub=None, W=None,
              solver='quadprog', initvals=None, sym_proj=False, verbose=False,
-             **kwargs):
+             **kwargs) -> Optional[array]:
     """
     Solve a constrained weighted linear Least Squares problem defined as:
 

@@ -24,6 +24,7 @@ from qpoases import PyPrintLevel as PrintLevel
 from qpoases import PyQProblem as QProblem
 from qpoases import PyQProblemB as QProblemB
 from qpoases import PyReturnValue as ReturnValue
+from typing import Optional
 
 
 __infty__ = 1e10
@@ -32,7 +33,8 @@ __options__.printLevel = PrintLevel.NONE
 
 
 def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
-                     verbose=False, max_wsr=1000):
+                     verbose: bool = False, max_wsr: int = 1000) \
+                     -> Optional[array]:
     """
     Solve a Quadratic Program defined as:
 
@@ -66,7 +68,7 @@ def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
         Warm-start guess vector.
     verbose : bool, optional
         Set to `True` to print out extra information.
-    max_wsr : integer, optional
+    max_wsr : int, optional
         Maximum number of Working-Set Recalculations given to qpOASES.
 
     Returns

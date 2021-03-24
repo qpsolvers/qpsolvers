@@ -22,9 +22,12 @@ import cvxopt.msk
 import mosek
 
 from .cvxopt_ import cvxopt_solve_qp
+from numpy import array
+from typing import Optional
 
 
-def mosek_solve_qp(P, q, G, h, A=None, b=None, initvals=None, verbose=False):
+def mosek_solve_qp(P, q, G, h, A=None, b=None, initvals=None, verbose: bool =
+                   False) -> Optional[array]:
     """
     Solve a Quadratic Program defined as:
 

@@ -21,6 +21,7 @@
 from cvxopt import matrix, spmatrix
 from cvxopt.solvers import options, qp
 from numpy import array, ndarray
+from typing import Optional
 
 
 options['show_progress'] = False  # disable cvxopt output
@@ -49,8 +50,8 @@ def cvxopt_matrix(M):
         coo.data.tolist(), coo.row.tolist(), coo.col.tolist(), size=M.shape)
 
 
-def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None, solver=None,
-                    initvals=None, verbose=False):
+def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None, solver: str = None,
+                    initvals=None, verbose: bool = False) -> Optional[array]:
     """
     Solve a Quadratic Program defined as:
 
@@ -89,7 +90,7 @@ def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None, solver=None,
 
     Returns
     -------
-    x : array, shape=(n,)
+    x : array, shape=(n,), or None
         Solution to the QP, if found, otherwise ``None``.
 
     Note
