@@ -20,13 +20,13 @@ sys.path.insert(0, os.path.abspath('../..'))
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.coverage',
-    'sphinx.ext.mathjax',
+    'sphinx-mathjax-offline',
     'sphinx.ext.napoleon',
     # 'numpydoc',
 ]
 
 # List of modules to be mocked up
-autodoc_mock_imports = ['gurobipy', 'mosek', 'osqp']
+autodoc_mock_imports = ['ecos', 'gurobipy', 'mosek', 'osqp', 'qpoases']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = []
