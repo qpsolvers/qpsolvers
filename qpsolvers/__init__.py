@@ -146,6 +146,11 @@ def check_problem(P, q, G, h, A, b, lb, ub):
         Lower bound constraint vector.
     ub: numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
         Upper bound constraint vector.
+
+    Raises
+    ------
+    ValueError
+        If the problem is not correctly defined.
     """
     if G is None and h is not None:
         raise ValueError("incomplete inequality constraint (missing h)")
