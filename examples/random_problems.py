@@ -24,8 +24,6 @@ Test all available QP solvers on random quadratic programs.
 
 import sys
 
-from __future__ import print_function  # Python 2 compatibility
-
 try:
     from IPython import get_ipython
 except ImportError:

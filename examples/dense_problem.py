@@ -22,8 +22,6 @@
 Test all available QP solvers on a dense quadratic program.
 """
 
-from __future__ import print_function  # Python 2 compatibility
-
 from IPython import get_ipython
 from numpy import array, dot
 from numpy.linalg import norm

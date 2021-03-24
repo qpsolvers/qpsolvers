@@ -22,8 +22,6 @@
 Test the "quadprog" QP solver on a small dense problem.
 """
 
-from __future__ import print_function  # Python 2 compatibility
-
 from numpy import array, dot
 from qpsolvers import solve_qp
 from time import time

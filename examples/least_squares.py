@@ -22,9 +22,7 @@
 Test the "quadprog" QP solver on a small dense problem.
 """
 
-from __future__ import print_function  # Python 2 compatibility
-
-from numpy import array, dot
+from numpy import array
 from qpsolvers import solve_ls
 from time import time
 

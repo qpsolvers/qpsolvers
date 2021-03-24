@@ -22,8 +22,6 @@
 Test all solvers on all combinations of inequality/equality API calls.
 """
 
-from __future__ import print_function  # Python 2 compatibility
-
 from numpy import array, dot
 from numpy.linalg import norm
 
