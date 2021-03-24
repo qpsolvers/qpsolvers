@@ -19,17 +19,14 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-import gurobipy
-import numpy
-
-from gurobipy import GRB
-from numpy import ndarray
+from gurobipy import GRB, Model
+from numpy import array
 from typing import Optional
 from warnings import warn
 
 
 def gurobi_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
-                    verbose: bool = False) -> Optional[ndarray]:
+                    verbose: bool = False) -> Optional[array]:
     """
     Solve a Quadratic Program defined as:
 
@@ -71,7 +68,7 @@ def gurobi_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
     """
     if initvals is not None:
         warn("Gurobi: warm-start values given but they will be ignored")
-    model = gurobipy.Model()
+    model = Model()
     if not verbose:  # optionally turn off solver output
         model.setParam("OutputFlag", 0)
     num_vars = P.shape[0]
@@ -87,4 +84,4 @@ def gurobi_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
     status = model.status
     if status != GRB.OPTIMAL and status != GRB.SUBOPTIMAL:
         return None
-    return numpy.array(x.X)
+    return array(x.X)
