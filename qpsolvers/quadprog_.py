@@ -88,8 +88,11 @@ def quadprog_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
     try:
         return solve_qp(qp_G, qp_a, qp_C, qp_b, meq)[0]
     except ValueError as e:
-        if "matrix G is not positive definite" in str(e):
+        error = str(e)
+        if "matrix G is not positive definite" in error:
             # quadprog writes G the cost matrix that we write P in this package
             raise ValueError("matrix P is not positive definite")
+        elif "no solution" in error:
+            return None
         warn("quadprog raised a ValueError: {}".format(e))
         return None
