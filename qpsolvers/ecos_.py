@@ -22,7 +22,7 @@ from ecos import solve
 from numpy import array, hstack, sqrt, vstack, zeros
 from numpy.linalg import cholesky
 from scipy.sparse import csc_matrix
-from typing import Optional
+from typing import Any, Dict, Optional
 
 
 def ecos_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
@@ -85,7 +85,7 @@ def ecos_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
         zeros(L.shape[0]),
         scale])
 
-    dims = {'q': [L.shape[0] + 2]}
+    dims: Dict[str, Any] = {'q': [L.shape[0] + 2]}
     if G is None:
         G_socp = G_quad
         h_socp = h_quad
