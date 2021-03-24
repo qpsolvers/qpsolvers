@@ -7,6 +7,13 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Add `__version__` to main module
+- First unit tests to check all solvers over a pre-defined set of problems
+
+### Fixed
+
+- Make `quadprog_solve_qp` properly return `None` on unfeasible problems
+  (thanks to @DKenefake)
+- Remove Python 2 compatibility line from examples
 
 ## [1.5] - 2020/12/05
 
