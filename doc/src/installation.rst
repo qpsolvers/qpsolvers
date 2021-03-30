@@ -15,6 +15,28 @@ Python 3 is:
 
 You can add the ``--user`` parameter for a user-only installation.
 
+All Available Solvers
+---------------------
+
+To install all open QP solvers available from `PyPI <https://pypi.org/>`_, run
+``pip`` from the requirements file:
+
+.. code:: bash
+
+    pip3 install --user -r requirements.txt
+
+Python 2
+--------
+
+If you have an older system with Python 2, for instance Ubuntu 16.04, try:
+
+.. code:: bash
+
+    sudo apt install python-dev
+    pip install -r requirements2.txt
+
+You can also add the ``--user`` parameter for a user-only installation.
+
 Windows
 =======
 
@@ -26,20 +48,26 @@ Windows
 
     pip install qpsolvers
 
-Python 2
-========
+Solvers
+=======
 
-If you have an older system with Python 2, for instance Ubuntu 16.04, try:
+Gurobi
+------
+
+Gurobi comes with a `one-line pip installation
+<https://www.gurobi.com/documentation/9.1/quickstart_linux/cs_using_pip_to_install_gr.html>`_
+where you can fetch the solver directly from the company servers:
 
 .. code:: bash
 
-    sudo apt install python-dev
-    pip install -r requirements2.txt
+    python -m pip install -i https://pypi.gurobi.com gurobipy
 
-You can also add the ``--user`` parameter for a user-only installation.
+This version comes with limitations. For instance, trying to solve a problem
+with 500 optimization variables fails with the following warning:
 
-Solvers
-=======
+.. code:: python
+
+    Warning: Model too large for size-limited license; visit https://www.gurobi.com/free-trial for a full license
 
 qpOASES
 -------
