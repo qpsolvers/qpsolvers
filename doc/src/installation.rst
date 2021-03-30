@@ -38,23 +38,6 @@ If you have an older system with Python 2, for instance Ubuntu 16.04, try:
 
 You can also add the ``--user`` parameter for a user-only installation.
 
-Virtual Environment
--------------------
-
-To create an isolated environment using `Virtualenv <https://virtualenv.pypa.io>`_, you can do:
-
-.. code:: bash
-
-    virtualenv -p /usr/bin/python2.7 qpsolvers_env
-    source qpsolvers_env/bin/activate
-    cd qpsolvers_env
-    git clone https://github.com/stephane-caron/qpsolvers
-    cd qpsolvers
-    pip install Cython numpy scipy
-    pip install -r requirements2.txt
-
-Finally, you can run `deactivate` to exit virtualenv.
-
 Solvers
 =======
 
