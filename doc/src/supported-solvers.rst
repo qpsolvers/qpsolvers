@@ -15,6 +15,9 @@ ECOS
 Gurobi
 ======
 
+See the :ref:`installation page <gurobi-install>` for additional instructions
+on installing this solver.
+
 .. autofunction:: qpsolvers.gurobi_solve_qp
 
 MOSEK
@@ -29,6 +32,9 @@ OSQP
 
 qpOASES
 =======
+
+See the :ref:`installation page <qpoases-install>` for additional instructions
+on installing this solver.
 
 .. autofunction:: qpsolvers.qpoases_solve_qp
 

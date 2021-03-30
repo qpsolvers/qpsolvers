@@ -2,8 +2,11 @@
 Installation
 ************
 
+Systems
+=======
+
 Linux
-=====
+-----
 
 The simplest way to install the package on a recent Debian-based system with
 Python 3 is:
@@ -15,19 +18,6 @@ Python 3 is:
 
 You can add the ``--user`` parameter for a user-only installation.
 
-All Available Solvers
----------------------
-
-To install all open QP solvers available from `PyPI <https://pypi.org/>`_, run
-``pip`` from the requirements file:
-
-.. code:: bash
-
-    pip3 install --user -r requirements.txt
-
-Python 2
---------
-
 If you have an older system with Python 2, for instance Ubuntu 16.04, try:
 
 .. code:: bash
@@ -35,10 +25,8 @@ If you have an older system with Python 2, for instance Ubuntu 16.04, try:
     sudo apt install python-dev
     pip install -r requirements2.txt
 
-You can also add the ``--user`` parameter for a user-only installation.
-
 Windows
-=======
+-------
 
 - First, install the `Visual C++ Build Tools <https://visualstudio.microsoft.com/visual-cpp-build-tools/>`_
 - Install your Python environment, for instance `Anaconda <https://docs.anaconda.com/anaconda/install/windows/>`_
@@ -50,6 +38,18 @@ Windows
 
 Solvers
 =======
+
+Getting all PyPI solvers at once
+--------------------------------
+
+To install all open QP solvers available from `PyPI <https://pypi.org/>`_, run
+``pip`` from the requirements file:
+
+.. code:: bash
+
+    pip3 install --user -r requirements.txt
+
+.. _gurobi-install:
 
 Gurobi
 ------
@@ -68,6 +68,8 @@ with 500 optimization variables fails with the following warning:
 .. code:: python
 
     Warning: Model too large for size-limited license; visit https://www.gurobi.com/free-trial for a full license
+
+.. _qpoases-install:
 
 qpOASES
 -------
