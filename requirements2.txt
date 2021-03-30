@@ -1,5 +1,5 @@
 Cython==0.29.2
-Pygments==2.3.1
+Pygments==2.7.4
 backports.shutil-get-terminal-size==1.0.0
 cvxopt==1.1.8
 cvxpy==1.0.11
