@@ -24,5 +24,8 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Mathematics",
 ]
 
+[tool.flit.metadata.requires-extra]
+doc = ["sphinx"]
+
 [tool.flit.metadata.urls]
 Documentation = "https://scaron.info/doc/qpsolvers/"
