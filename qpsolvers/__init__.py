@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2016-2020 Stephane Caron <stephane.caron@normalesup.org>
+# Copyright (C) 2016-2021 Stéphane Caron <stephane.caron@normalesup.org>
 #
 # This file is part of qpsolvers.
 #
@@ -17,6 +17,8 @@
 #
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
+
+"""Quadratic programming solvers in Python with a unified API"""
 
 from numpy import array, concatenate, dot, eye, ndarray
 from typing import Optional
