@@ -20,7 +20,7 @@
 
 """Quadratic programming solvers in Python with a unified API"""
 
-from numpy import array, concatenate, dot, eye, ndarray
+from numpy import array, concatenate, dot, eye, hstack, ones, ndarray, vstack, zeros
 from typing import Optional
 
 available_solvers = []
@@ -377,7 +377,6 @@ def solve_safer_qp(
     Transactions on Robotics, 2009).
     """
     assert solver in dense_solvers, "only available for dense solvers, for now"
-    from numpy import hstack, ones, vstack, zeros
 
     n, m = P.shape[0], G.shape[0]
     E, Z = eye(m), zeros((m, n))
