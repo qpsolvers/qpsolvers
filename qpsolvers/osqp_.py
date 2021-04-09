@@ -114,17 +114,17 @@ def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
         if G is None:
             solver.setup(P=P, q=q, A=A, l=b, u=b, **kwargs)
         else:  # G is not None
-            l = -inf * ones(len(h))
+            l_inf = -inf * ones(len(h))
             qp_A = vstack([G, A]).tocsc()
-            qp_l = hstack([l, b])
+            qp_l = hstack([l_inf, b])
             qp_u = hstack([h, b])
             solver.setup(P=P, q=q, A=qp_A, l=qp_l, u=qp_u, **kwargs)
     else:  # A is None
         if type(G) is ndarray:
             warn(conversion_warning("G"))
             G = csc_matrix(G)
-        l = -inf * ones(len(h))
-        solver.setup(P=P, q=q, A=G, l=l, u=h, **kwargs)
+        l_inf = -inf * ones(len(h))
+        solver.setup(P=P, q=q, A=G, l=l_inf, u=h, **kwargs)
     if initvals is not None:
         solver.warm_start(x=initvals)
     res = solver.solve()
