@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+- CVXPY: properly return `None` on unfeasible problems
 - Consistently warn when `initvals` is passed but ignored by solver interface
 - ECOS: properly return `None` on unfeasible problems
 - Fix `None` case in `solve_safer_qp` (found by static type checking)

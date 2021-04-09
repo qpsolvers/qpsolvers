@@ -92,5 +92,6 @@ def cvxpy_solve_qp(
         constraints.append(A @ x == b)
     prob = Problem(objective, constraints)
     prob.solve(solver=solver, verbose=verbose)
-    x_opt = array(x.value).reshape((n,))
-    return x_opt
+    if x.value is None:
+        return None
+    return array(x.value).reshape((n,))
