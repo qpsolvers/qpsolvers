@@ -9,7 +9,7 @@ build-backend = "flit_core.buildapi"
 module = "qpsolvers"
 author = "Stéphane Caron"
 author-email = "stephane.caron@normalesup.org"
-home-page = "https://scaron.info"
+home-page = "https://github.com/stephane-caron/qpsolvers"
 description-file = "README.md"
 requires-python = ">=3.5"
 classifiers = [
@@ -26,3 +26,6 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Topic :: Scientific/Engineering :: Mathematics",
 ]
+
+[tool.flit.metadata.urls]
+Documentation = "https://scaron.info/doc/qpsolvers/"
