@@ -172,11 +172,11 @@ def check_problem(P, q, G, h, A, b, lb, ub) -> None:
     """
     if G is None and h is not None:
         raise ValueError("incomplete inequality constraint (missing h)")
-    elif G is not None and h is None:
+    if G is not None and h is None:
         raise ValueError("incomplete inequality constraint (missing G)")
     if A is None and b is not None:
         raise ValueError("incomplete equality constraint (missing b)")
-    elif A is not None and b is None:
+    if A is not None and b is None:
         raise ValueError("incomplete equality constraint (missing A)")
 
 
@@ -288,19 +288,19 @@ def solve_qp(
     kwargs["verbose"] = verbose
     if solver == "cvxopt":
         return cvxopt_solve_qp(*args, **kwargs)
-    elif solver == "cvxpy":
+    if solver == "cvxpy":
         return cvxpy_solve_qp(*args, **kwargs)
-    elif solver == "ecos":
+    if solver == "ecos":
         return ecos_solve_qp(*args, **kwargs)
-    elif solver == "gurobi":
+    if solver == "gurobi":
         return gurobi_solve_qp(*args, **kwargs)
-    elif solver == "mosek":
+    if solver == "mosek":
         return mosek_solve_qp(*args, **kwargs)
-    elif solver == "osqp":
+    if solver == "osqp":
         return osqp_solve_qp(*args, **kwargs)
-    elif solver == "qpoases":
+    if solver == "qpoases":
         return qpoases_solve_qp(*args, **kwargs)
-    elif solver == "quadprog":
+    if solver == "quadprog":
         return quadprog_solve_qp(*args, **kwargs)
     raise Exception("solver '%s' not recognized" % solver)
 
