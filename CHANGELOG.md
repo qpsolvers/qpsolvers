@@ -12,15 +12,20 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- Gurobi performance significantly improved by new matrix API (thanks to
-  @DKenefake)
+- Code formatting now applies [Black](https://github.com/psf/black)
+- Gurobi performance significantly improved by new matrix API (thanks to @DKenefake)
+- ECOS: refactor SOCP conversion to improve function readability
 
 ### Fixed
 
-- Fixed `None` case in `solve_safer_qp` (found by static type checking)
-- Make `quadprog_solve_qp` properly return `None` on unfeasible problems
-  (thanks to @DKenefake)
+- Consistently warn when `initvals` is passed but ignored by solver interface
+- Fix `None` case in `solve_safer_qp` (found by static type checking)
+- Fix warnings in repository-level `__init__.py`
+- OSQP: properly return `None` on unfeasible problems
+- Pass Flake8 validation for overall code style
+- Reduce complexity of entry `solve_qp` via a module-level solve-function index
 - Remove Python 2 compatibility line from examples
+- quadprog: properly return `None` on unfeasible problems (thanks to @DKenefake)
 
 ## [1.5] - 2020/12/05
 

@@ -153,5 +153,6 @@ def osqp_solve_qp(
     else:  # more recent versions of OSQP
         success_status = osqp.constant("OSQP_SOLVED")
     if res.info.status_val != success_status:
-        print("OSQP exited with status '%s'" % res.info.status)
+        warn("OSQP exited with status '%s'" % res.info.status)
+        return None
     return res.x
