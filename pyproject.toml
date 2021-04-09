@@ -1,5 +1,8 @@
 [build-system]
-requires = ["flit_core >=2,<4"]
+requires = [
+    "flit_core >= 2",
+    "quadprog >= 0.1.8"
+]
 build-backend = "flit_core.buildapi"
 
 [tool.flit.metadata]
