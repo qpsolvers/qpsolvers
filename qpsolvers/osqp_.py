@@ -31,6 +31,7 @@ from scipy.sparse import csc_matrix, vstack
 
 
 def conversion_warning(M):
+    """Return conversion warning message for a given matrix name."""
     return (
         "Converted %s to scipy.sparse.csc.csc_matrix\n"
         "For best performance, build %s as a csc_matrix "
