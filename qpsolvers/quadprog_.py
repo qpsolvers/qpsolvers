@@ -18,6 +18,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
+"""Solver interface for quadprog"""
+
 from numpy import array, hstack, vstack
 from quadprog import solve_qp
 from typing import Optional
@@ -94,7 +96,7 @@ def quadprog_solve_qp(
         if "matrix G is not positive definite" in error:
             # quadprog writes G the cost matrix that we write P in this package
             raise ValueError("matrix P is not positive definite")
-        elif "no solution" in error:
+        if "no solution" in error:
             return None
         warn("quadprog raised a ValueError: {}".format(e))
         return None

@@ -18,6 +18,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
+"""Solver interface for qpOASES"""
+
 from numpy import array, hstack, ones, vstack, zeros
 from qpoases import PyOptions as Options
 from qpoases import PyPrintLevel as PrintLevel
