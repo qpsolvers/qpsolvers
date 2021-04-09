@@ -21,10 +21,11 @@
 
 """Solver interface for Gurobi"""
 
-from gurobipy import GRB, Model
-from numpy import array
 from typing import Optional
 from warnings import warn
+
+from gurobipy import GRB, Model
+from numpy import array
 
 
 def gurobi_solve_qp(

@@ -20,12 +20,14 @@
 
 """Solver interface for MOSEK"""
 
+from typing import Optional
+
 import cvxopt.msk
 import mosek
 
-from .cvxopt_ import cvxopt_solve_qp
 from numpy import array
-from typing import Optional
+
+from .cvxopt_ import cvxopt_solve_qp
 
 
 def mosek_solve_qp(

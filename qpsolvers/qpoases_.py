@@ -20,13 +20,14 @@
 
 """Solver interface for qpOASES"""
 
+from typing import Optional
+
 from numpy import array, hstack, ones, vstack, zeros
 from qpoases import PyOptions as Options
 from qpoases import PyPrintLevel as PrintLevel
 from qpoases import PyQProblem as QProblem
 from qpoases import PyQProblemB as QProblemB
 from qpoases import PyReturnValue as ReturnValue
-from typing import Optional
 
 
 __infty__ = 1e10

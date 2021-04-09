@@ -20,9 +20,10 @@
 
 """Solver interface for CVXPY"""
 
+from typing import Optional
+
 from cvxpy import Constant, Minimize, Problem, Variable, quad_form
 from numpy import array
-from typing import Optional
 
 
 def cvxpy_solve_qp(

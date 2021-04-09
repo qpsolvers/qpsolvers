@@ -20,11 +20,12 @@
 
 """Solver interface for ECOS"""
 
+from typing import Any, Dict, Optional
+
 from ecos import solve
 from numpy import array, hstack, sqrt, vstack, zeros
 from numpy.linalg import cholesky
 from scipy.sparse import csc_matrix
-from typing import Any, Dict, Optional
 
 
 def ecos_solve_qp(

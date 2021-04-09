@@ -20,13 +20,14 @@
 
 """Solver interface for OSQP"""
 
+from typing import Optional
+from warnings import warn
+
 import osqp
 
 from numpy import array, hstack, inf, ndarray, ones
 from osqp import OSQP
 from scipy.sparse import csc_matrix, vstack
-from typing import Optional
-from warnings import warn
 
 
 def conversion_warning(M):

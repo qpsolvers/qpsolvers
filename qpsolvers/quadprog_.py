@@ -20,10 +20,11 @@
 
 """Solver interface for quadprog"""
 
-from numpy import array, hstack, vstack
-from quadprog import solve_qp
 from typing import Optional
 from warnings import warn
+
+from numpy import array, hstack, vstack
+from quadprog import solve_qp
 
 
 def quadprog_solve_qp(

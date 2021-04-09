@@ -20,14 +20,15 @@
 
 """Quadratic programming solvers in Python with a unified API"""
 
-from numpy import array, concatenate, dot, eye, hstack, ones, ndarray, vstack, zeros
 from typing import Optional
+
+from numpy import array, concatenate, dot, eye, hstack, ones, ndarray, vstack, zeros
 
 available_solvers = []
 dense_solvers = []
 sparse_solvers = []
 
-__version__ = '1.5'
+__version__ = "1.5.2"
 
 # CVXOPT
 # ======

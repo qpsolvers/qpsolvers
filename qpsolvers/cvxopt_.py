@@ -20,10 +20,11 @@
 
 """Solver interface for CVXOPT"""
 
+from typing import Optional
+
 from cvxopt import matrix, spmatrix
 from cvxopt.solvers import options, qp
 from numpy import array, ndarray
-from typing import Optional
 
 
 options["show_progress"] = False  # disable cvxopt output
