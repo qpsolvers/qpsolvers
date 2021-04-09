@@ -133,17 +133,12 @@ class SolverNotFound(Exception):
     pass
 
 
-def check_problem(P, q, G, h, A, b, lb, ub) -> None:
+def check_problem_constraints(G, h, A, b) -> None:
     """
-    Check that problem matrices and vectors are correctly defined.
+    Check that problem constraint matrices and vectors are correctly defined.
 
     Parameters
     ----------
-    P : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
-        Symmetric quadratic-cost matrix (most solvers require it to be definite
-        as well).
-    q : numpy.array
-        Quadratic-cost vector.
     G : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
         Linear inequality matrix.
     h : numpy.array
@@ -152,15 +147,11 @@ def check_problem(P, q, G, h, A, b, lb, ub) -> None:
         Linear equality matrix.
     b : numpy.array
         Linear equality vector.
-    lb: numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
-        Lower bound constraint vector.
-    ub: numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
-        Upper bound constraint vector.
 
     Raises
     ------
     ValueError
-        If the problem is not correctly defined.
+        If the constraints are not properly defined.
     """
     if G is None and h is not None:
         raise ValueError("incomplete inequality constraint (missing h)")
@@ -260,7 +251,7 @@ def solve_qp(
         A = A.reshape((1, A.shape[0]))
     if isinstance(G, ndarray) and G.ndim == 1:
         G = G.reshape((1, G.shape[0]))
-    check_problem(P, q, G, h, A, b, lb, ub)
+    check_problem_constraints(G, h, A, b)
     if lb is not None:
         if G is None:
             G = -eye(len(q))
