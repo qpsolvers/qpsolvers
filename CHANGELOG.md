@@ -2,12 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## [1.6] - 2021/04/09
 
 ### Added
 
 - Add `__version__` to main module
 - First unit tests to check all solvers over a pre-defined set of problems
+- GitHub Actions now make sure the project is built and tested upon updates
 - Type hints now decorate all function definitions
 
 ### Changed
