@@ -24,7 +24,7 @@ from typing import Any, Dict, Optional
 
 from numpy import concatenate, dot, eye, hstack, ones, ndarray, vstack, zeros
 
-__version__ = "1.6"
+__version__ = "1.6.0.2"
 
 available_solvers = []
 dense_solvers = []

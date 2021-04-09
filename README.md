@@ -19,7 +19,7 @@ Check out the documentation for [Python 2](https://scaron.info/doc/qpsolvers/ins
 
 The function ``solve_qp(P, q, G, h, A, b, lb, ub)`` is called with the ``solver`` keyword argument to select the backend solver. The convex quadratic program it solves is, in standard form:
 
-![Equation of Quadratic Program](doc/src/images/qp.gif)
+![Equation of Quadratic Program](https://raw.githubusercontent.com/stephane-caron/qpsolvers/master/doc/src/images/qp.gif)
 
 Vector inequalities are taken coordinate by coordinate. The matrix *P* should be [positive definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix).
 
