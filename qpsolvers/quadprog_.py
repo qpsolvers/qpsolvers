@@ -81,7 +81,7 @@ def quadprog_solve_qp(
     if A is not None:
         if G is None:
             qp_C = -A.T
-            qp_b = -b
+            qp_b = -b  # not None, checked in check_problem_constraints
         else:
             qp_C = -vstack([A, G]).T
             qp_b = -hstack([b, h])
