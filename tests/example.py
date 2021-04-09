@@ -88,8 +88,11 @@ class ExampleProblem(unittest.TestCase):
         return test
 
 
+# Generate test fixtures for each solver
+for solver in available_solvers:
+    setattr(ExampleProblem, 'test_{}'.format(solver),
+            ExampleProblem.get_test(solver))
+
+
 if __name__ == '__main__':
-    for solver in available_solvers:
-        setattr(ExampleProblem, 'test_{}'.format(solver),
-                ExampleProblem.get_test(solver))
     unittest.main()
