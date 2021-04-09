@@ -1,8 +1,5 @@
 [build-system]
-requires = [
-    "flit_core >= 2",
-    "quadprog >= 0.1.8"
-]
+requires = ["flit_core >= 2"]
 build-backend = "flit_core.buildapi"
 
 [tool.flit.metadata]
@@ -12,6 +9,7 @@ author-email = "stephane.caron@normalesup.org"
 home-page = "https://github.com/stephane-caron/qpsolvers"
 description-file = "README.md"
 requires-python = ">=3.6"
+requires = ["quadprog >= 0.1.8"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",

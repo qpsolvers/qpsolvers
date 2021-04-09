@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Fixed
+
+- Add quadprog dependency properly in `pyproject.toml`
+
 ## [1.6] - 2021/04/09
 
 ### Added
