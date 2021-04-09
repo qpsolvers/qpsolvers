@@ -45,7 +45,8 @@ def mosek_solve_qp(
             & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
-    using `CVXOPT <http://cvxopt.org/>`_.
+    using the `MOSEK interface from CVXOPT
+    <https://cvxopt.org/userguide/coneprog.html#optional-solvers>`_.
 
     Parameters
     ----------
