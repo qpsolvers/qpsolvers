@@ -25,8 +25,9 @@ from scipy.sparse import csc_matrix
 from typing import Any, Dict, Optional
 
 
-def ecos_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
-                  verbose: bool = False) -> Optional[array]:
+def ecos_solve_qp(
+    P, q, G=None, h=None, A=None, b=None, initvals=None, verbose: bool = False
+) -> Optional[array]:
     """
     Solve a Quadratic Program defined as:
 
@@ -75,34 +76,32 @@ def ecos_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
     c_socp = hstack([zeros(n), 1])  # new SOCP variable stacked as [x, t]
     L = cholesky(P)
 
-    scale = 1. / sqrt(2)
-    G_quad = vstack([
-        scale * hstack([q, -1.]),
-        hstack([-L.T, zeros((L.shape[0], 1))]),
-        scale * hstack([-q, +1.])])
-    h_quad = hstack([
-        scale,
-        zeros(L.shape[0]),
-        scale])
+    scale = 1.0 / sqrt(2)
+    G_quad = vstack(
+        [
+            scale * hstack([q, -1.0]),
+            hstack([-L.T, zeros((L.shape[0], 1))]),
+            scale * hstack([-q, +1.0]),
+        ]
+    )
+    h_quad = hstack([scale, zeros(L.shape[0]), scale])
 
-    dims: Dict[str, Any] = {'q': [L.shape[0] + 2]}
+    dims: Dict[str, Any] = {"q": [L.shape[0] + 2]}
     if G is None:
         G_socp = G_quad
         h_socp = h_quad
-        dims['l'] = 0
+        dims["l"] = 0
     else:
-        G_socp = vstack([
-            hstack([G, zeros((G.shape[0], 1))]),
-            G_quad])
+        G_socp = vstack([hstack([G, zeros((G.shape[0], 1))]), G_quad])
         h_socp = hstack([h, h_quad])
-        dims['l'] = G.shape[0]
+        dims["l"] = G.shape[0]
 
     G_socp = csc_matrix(G_socp)
-    kwargs = {'verbose': verbose}
+    kwargs = {"verbose": verbose}
     if A is not None:
         A_socp = hstack([A, zeros((A.shape[0], 1))])
         A_socp = csc_matrix(A_socp)
         solution = solve(c_socp, G_socp, h_socp, dims, A_socp, b, **kwargs)
     else:
         solution = solve(c_socp, G_socp, h_socp, dims, **kwargs)
-    return solution['x'][:-1]
+    return solution["x"][:-1]

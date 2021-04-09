@@ -32,9 +32,17 @@ __options__ = Options()
 __options__.printLevel = PrintLevel.NONE
 
 
-def qpoases_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
-                     verbose: bool = False, max_wsr: int = 1000) \
-                     -> Optional[array]:
+def qpoases_solve_qp(
+    P,
+    q,
+    G=None,
+    h=None,
+    A=None,
+    b=None,
+    initvals=None,
+    verbose: bool = False,
+    max_wsr: int = 1000,
+) -> Optional[array]:
     """
     Solve a Quadratic Program defined as:
 

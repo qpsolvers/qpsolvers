@@ -26,8 +26,9 @@ from numpy import array
 from typing import Optional
 
 
-def mosek_solve_qp(P, q, G, h, A=None, b=None, initvals=None, verbose: bool =
-                   False) -> Optional[array]:
+def mosek_solve_qp(
+    P, q, G, h, A=None, b=None, initvals=None, verbose: bool = False
+) -> Optional[array]:
     """
     Solve a Quadratic Program defined as:
 
@@ -68,5 +69,5 @@ def mosek_solve_qp(P, q, G, h, A=None, b=None, initvals=None, verbose: bool =
     x : numpy.array
         Solution to the QP, if found, otherwise ``None``.
     """
-    cvxopt.solvers.options['mosek'] = {mosek.iparam.log: 1 if verbose else 0}
-    return cvxopt_solve_qp(P, q, G, h, A, b, 'mosek', initvals)
+    cvxopt.solvers.options["mosek"] = {mosek.iparam.log: 1 if verbose else 0}
+    return cvxopt_solve_qp(P, q, G, h, A, b, "mosek", initvals)

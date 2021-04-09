@@ -24,8 +24,9 @@ from typing import Optional
 from warnings import warn
 
 
-def quadprog_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
-                      verbose: bool = False) -> Optional[array]:
+def quadprog_solve_qp(
+    P, q, G=None, h=None, A=None, b=None, initvals=None, verbose: bool = False
+) -> Optional[array]:
     """
     Solve a Quadratic Program defined as:
 

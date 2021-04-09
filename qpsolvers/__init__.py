@@ -35,11 +35,13 @@ __version__ = '1.5'
 try:
     from .cvxopt_ import cvxopt_solve_qp
 
-    available_solvers.append('cvxopt')
-    dense_solvers.append('cvxopt')
+    available_solvers.append("cvxopt")
+    dense_solvers.append("cvxopt")
 except ImportError:
+
     def cvxopt_solve_qp(*args, **kwargs):
         raise ImportError("CVXOPT not found")
+
 
 # CVXPY
 # =====
@@ -47,11 +49,13 @@ except ImportError:
 try:
     from .cvxpy_ import cvxpy_solve_qp
 
-    available_solvers.append('cvxpy')
-    sparse_solvers.append('cvxpy')
+    available_solvers.append("cvxpy")
+    sparse_solvers.append("cvxpy")
 except ImportError:
+
     def cvxpy_solve_qp(*args, **kwargs):
         raise ImportError("CVXPY not found")
+
 
 # ECOS
 # ====
@@ -59,11 +63,13 @@ except ImportError:
 try:
     from .ecos_ import ecos_solve_qp
 
-    available_solvers.append('ecos')
-    dense_solvers.append('ecos')  # considered dense as it calls cholesky(P)
+    available_solvers.append("ecos")
+    dense_solvers.append("ecos")  # considered dense as it calls cholesky(P)
 except ImportError:
+
     def ecos_solve_qp(*args, **kwargs):
         raise ImportError("ECOS not found")
+
 
 # Gurobi
 # ======
@@ -71,11 +77,13 @@ except ImportError:
 try:
     from .gurobi_ import gurobi_solve_qp
 
-    available_solvers.append('gurobi')
-    sparse_solvers.append('gurobi')
+    available_solvers.append("gurobi")
+    sparse_solvers.append("gurobi")
 except ImportError:
+
     def gurobi_solve_qp(*args, **kwargs):
         raise ImportError("Gurobi not found")
+
 
 # Mosek
 # =====
@@ -83,11 +91,13 @@ except ImportError:
 try:
     from .mosek_ import mosek_solve_qp
 
-    available_solvers.append('mosek')
-    sparse_solvers.append('mosek')
+    available_solvers.append("mosek")
+    sparse_solvers.append("mosek")
 except ImportError:
+
     def mosek_solve_qp(*args, **kwargs):
         raise ImportError("mosek not found")
+
 
 # OSQP
 # ====
@@ -95,11 +105,13 @@ except ImportError:
 try:
     from .osqp_ import osqp_solve_qp
 
-    available_solvers.append('osqp')
-    sparse_solvers.append('osqp')
+    available_solvers.append("osqp")
+    sparse_solvers.append("osqp")
 except ImportError:
+
     def osqp_solve_qp(*args, **kwargs):
         raise ImportError("osqp not found")
+
 
 # qpOASES
 # =======
@@ -107,11 +119,13 @@ except ImportError:
 try:
     from .qpoases_ import qpoases_solve_qp
 
-    available_solvers.append('qpoases')
-    dense_solvers.append('qpoases')
+    available_solvers.append("qpoases")
+    dense_solvers.append("qpoases")
 except ImportError:
+
     def qpoases_solve_qp(*args, **kwargs):
         raise ImportError("qpOASES not found")
+
 
 # quadprog
 # ========
@@ -119,9 +133,10 @@ except ImportError:
 try:
     from .quadprog_ import quadprog_solve_qp
 
-    available_solvers.append('quadprog')
-    dense_solvers.append('quadprog')
+    available_solvers.append("quadprog")
+    dense_solvers.append("quadprog")
 except ImportError:
+
     def quadprog_solve_qp(*args, **kwargs):
         raise ImportError("quadprog not found")
 
@@ -165,9 +180,21 @@ def check_problem(P, q, G, h, A, b, lb, ub) -> None:
         raise ValueError("incomplete equality constraint (missing A)")
 
 
-def solve_qp(P, q, G=None, h=None, A=None, b=None, lb=None, ub=None,
-             solver='quadprog', initvals=None, sym_proj=False, verbose=False,
-             **kwargs) -> Optional[array]:
+def solve_qp(
+    P,
+    q,
+    G=None,
+    h=None,
+    A=None,
+    b=None,
+    lb=None,
+    ub=None,
+    solver="quadprog",
+    initvals=None,
+    sym_proj=False,
+    verbose=False,
+    **kwargs
+) -> Optional[array]:
     """
     Solve a Quadratic Program defined as:
 
@@ -236,7 +263,7 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, lb=None, ub=None,
     project `P` on its symmetric part, at the cost of some computation time.
     """
     if sym_proj:
-        P = .5 * (P + P.transpose())
+        P = 0.5 * (P + P.transpose())
     if type(A) is ndarray and A.ndim == 1:
         A = A.reshape((1, A.shape[0]))
     if type(G) is ndarray and G.ndim == 1:
@@ -257,29 +284,38 @@ def solve_qp(P, q, G=None, h=None, A=None, b=None, lb=None, ub=None,
             G = concatenate((G, eye(len(q))), 0)
             h = concatenate((h, ub))
     args = P, q, G, h, A, b
-    kwargs['initvals'] = initvals
-    kwargs['verbose'] = verbose
-    if solver == 'cvxopt':
+    kwargs["initvals"] = initvals
+    kwargs["verbose"] = verbose
+    if solver == "cvxopt":
         return cvxopt_solve_qp(*args, **kwargs)
-    elif solver == 'cvxpy':
+    elif solver == "cvxpy":
         return cvxpy_solve_qp(*args, **kwargs)
-    elif solver == 'ecos':
+    elif solver == "ecos":
         return ecos_solve_qp(*args, **kwargs)
-    elif solver == 'gurobi':
+    elif solver == "gurobi":
         return gurobi_solve_qp(*args, **kwargs)
-    elif solver == 'mosek':
+    elif solver == "mosek":
         return mosek_solve_qp(*args, **kwargs)
-    elif solver == 'osqp':
+    elif solver == "osqp":
         return osqp_solve_qp(*args, **kwargs)
-    elif solver == 'qpoases':
+    elif solver == "qpoases":
         return qpoases_solve_qp(*args, **kwargs)
-    elif solver == 'quadprog':
+    elif solver == "quadprog":
         return quadprog_solve_qp(*args, **kwargs)
     raise Exception("solver '%s' not recognized" % solver)
 
 
-def solve_safer_qp(P, q, G, h, sw: float, reg: float = 1e-8, solver='mosek',
-                   initvals=None, sym_proj=False) -> Optional[array]:
+def solve_safer_qp(
+    P,
+    q,
+    G,
+    h,
+    sw: float,
+    reg: float = 1e-8,
+    solver="mosek",
+    initvals=None,
+    sym_proj=False,
+) -> Optional[array]:
     """
     Solve the Quadratic Program defined as:
 
@@ -342,6 +378,7 @@ def solve_safer_qp(P, q, G, h, sw: float, reg: float = 1e-8, solver='mosek',
     """
     assert solver in dense_solvers, "only available for dense solvers, for now"
     from numpy import eye, hstack, ones, vstack, zeros
+
     n, m = P.shape[0], G.shape[0]
     E, Z = eye(m), zeros((m, n))
     P2 = vstack([hstack([P, Z.T]), hstack([Z, reg * eye(m)])])
@@ -351,16 +388,29 @@ def solve_safer_qp(P, q, G, h, sw: float, reg: float = 1e-8, solver='mosek',
     A2 = hstack([G, -E])
     b2 = h
     x = solve_qp(
-        P2, q2, G2, h2, A2, b2, solver=solver, initvals=initvals,
-        sym_proj=sym_proj)
+        P2, q2, G2, h2, A2, b2, solver=solver, initvals=initvals, sym_proj=sym_proj
+    )
     if x is None:
         return None
     return x[:n]
 
 
-def solve_ls(R, s, G=None, h=None, A=None, b=None, lb=None, ub=None, W=None,
-             solver='quadprog', initvals=None, sym_proj=False, verbose=False,
-             **kwargs) -> Optional[array]:
+def solve_ls(
+    R,
+    s,
+    G=None,
+    h=None,
+    A=None,
+    b=None,
+    lb=None,
+    ub=None,
+    W=None,
+    solver="quadprog",
+    initvals=None,
+    sym_proj=False,
+    verbose=False,
+    **kwargs
+) -> Optional[array]:
     """
     Solve a constrained weighted linear Least Squares problem defined as:
 
@@ -421,26 +471,39 @@ def solve_ls(R, s, G=None, h=None, A=None, b=None, lb=None, ub=None, W=None,
     provide by ``solve_ls(R, s, G, h, solver='osqp', eps_abs=1e-4)``.
     """
     if sym_proj:
-        R = .5 * (R + R.transpose())
+        R = 0.5 * (R + R.transpose())
     WR = R if W is None else dot(W, R)
     P = dot(R.transpose(), WR)
     q = -dot(s.transpose(), WR)
-    return solve_qp(P, q, G, h, A, b, lb, ub, solver=solver, initvals=initvals,
-                    sym_proj=False, verbose=verbose, **kwargs)
+    return solve_qp(
+        P,
+        q,
+        G,
+        h,
+        A,
+        b,
+        lb,
+        ub,
+        solver=solver,
+        initvals=initvals,
+        sym_proj=False,
+        verbose=verbose,
+        **kwargs
+    )
 
 
 __all__ = [
-    '__version__',
-    'available_solvers',
-    'cvxopt_solve_qp',
-    'cvxpy_solve_qp',
-    'dense_solvers',
-    'gurobi_solve_qp',
-    'mosek_solve_qp',
-    'qpoases_solve_qp',
-    'quadprog_solve_qp',
-    'solve_ls',
-    'solve_qp',
-    'solve_safer_qp',
-    'sparse_solvers',
+    "__version__",
+    "available_solvers",
+    "cvxopt_solve_qp",
+    "cvxpy_solve_qp",
+    "dense_solvers",
+    "gurobi_solve_qp",
+    "mosek_solve_qp",
+    "qpoases_solve_qp",
+    "quadprog_solve_qp",
+    "solve_ls",
+    "solve_qp",
+    "solve_safer_qp",
+    "sparse_solvers",
 ]

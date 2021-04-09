@@ -25,8 +25,9 @@ from typing import Optional
 from warnings import warn
 
 
-def gurobi_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
-                    verbose: bool = False) -> Optional[array]:
+def gurobi_solve_qp(
+    P, q, G=None, h=None, A=None, b=None, initvals=None, verbose: bool = False
+) -> Optional[array]:
     """
     Solve a Quadratic Program defined as:
 
@@ -72,13 +73,12 @@ def gurobi_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
     if not verbose:  # optionally turn off solver output
         model.setParam("OutputFlag", 0)
     num_vars = P.shape[0]
-    x = model.addMVar(num_vars, lb=-GRB.INFINITY, ub=GRB.INFINITY,
-                      vtype=GRB.CONTINUOUS)
+    x = model.addMVar(num_vars, lb=-GRB.INFINITY, ub=GRB.INFINITY, vtype=GRB.CONTINUOUS)
     if A is not None:  # include equality constraints
         model.addMConstr(A, x, GRB.EQUAL, b)
     if G is not None:  # include inequality constraints
         model.addMConstr(G, x, GRB.LESS_EQUAL, h)
-    objective = .5 * (x @ P @ x) + q @ x
+    objective = 0.5 * (x @ P @ x) + q @ x
     model.setObjective(objective, sense=GRB.MINIMIZE)
     model.optimize()
     status = model.status

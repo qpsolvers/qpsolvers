@@ -24,7 +24,7 @@ from numpy import array, ndarray
 from typing import Optional
 
 
-options['show_progress'] = False  # disable cvxopt output
+options["show_progress"] = False  # disable cvxopt output
 
 
 def cvxopt_matrix(M):
@@ -46,12 +46,20 @@ def cvxopt_matrix(M):
     elif type(M) is spmatrix or type(M) is matrix:
         return M
     coo = M.tocoo()
-    return spmatrix(
-        coo.data.tolist(), coo.row.tolist(), coo.col.tolist(), size=M.shape)
+    return spmatrix(coo.data.tolist(), coo.row.tolist(), coo.col.tolist(), size=M.shape)
 
 
-def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None, solver: str = None,
-                    initvals=None, verbose: bool = False) -> Optional[array]:
+def cvxopt_solve_qp(
+    P,
+    q,
+    G=None,
+    h=None,
+    A=None,
+    b=None,
+    solver: str = None,
+    initvals=None,
+    verbose: bool = False,
+) -> Optional[array]:
     """
     Solve a Quadratic Program defined as:
 
@@ -98,16 +106,16 @@ def cvxopt_solve_qp(P, q, G=None, h=None, A=None, b=None, solver: str = None,
     CVXOPT only considers the lower entries of `P`, therefore it will use a
     wrong cost function if a non-symmetric matrix is provided.
     """
-    options['show_progress'] = verbose
+    options["show_progress"] = verbose
     args = [cvxopt_matrix(P), cvxopt_matrix(q)]
-    kwargs = {'G': None, 'h': None, 'A': None, 'b': None}
+    kwargs = {"G": None, "h": None, "A": None, "b": None}
     if G is not None:
-        kwargs['G'] = cvxopt_matrix(G)
-        kwargs['h'] = cvxopt_matrix(h)
+        kwargs["G"] = cvxopt_matrix(G)
+        kwargs["h"] = cvxopt_matrix(h)
     if A is not None:
-        kwargs['A'] = cvxopt_matrix(A)
-        kwargs['b'] = cvxopt_matrix(b)
+        kwargs["A"] = cvxopt_matrix(A)
+        kwargs["b"] = cvxopt_matrix(b)
     sol = qp(*args, solver=solver, initvals=initvals, **kwargs)
-    if 'optimal' not in sol['status']:
+    if "optimal" not in sol["status"]:
         return None
-    return array(sol['x']).reshape((q.shape[0],))
+    return array(sol["x"]).reshape((q.shape[0],))

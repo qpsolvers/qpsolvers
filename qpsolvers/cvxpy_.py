@@ -23,9 +23,17 @@ from numpy import array
 from typing import Optional
 
 
-def cvxpy_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
-                   solver: str = None, verbose: bool = False) \
-                   -> Optional[array]:
+def cvxpy_solve_qp(
+    P,
+    q,
+    G=None,
+    h=None,
+    A=None,
+    b=None,
+    initvals=None,
+    solver: str = None,
+    verbose: bool = False,
+) -> Optional[array]:
     """
     Solve a Quadratic Program defined as:
 

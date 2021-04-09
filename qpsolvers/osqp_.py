@@ -28,14 +28,26 @@ from warnings import warn
 
 
 def conversion_warning(M):
-    return "Converted %s to scipy.sparse.csc.csc_matrix\n" \
-        "For best performance, build %s as a csc_matrix " \
+    return (
+        "Converted %s to scipy.sparse.csc.csc_matrix\n"
+        "For best performance, build %s as a csc_matrix "
         "rather than as a numpy.ndarray" % (M, M)
+    )
 
 
-def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
-                  verbose: bool = False, eps_abs: float = 1e-4, eps_rel: float
-                  = 1e-4, polish: bool = True) -> Optional[array]:
+def osqp_solve_qp(
+    P,
+    q,
+    G=None,
+    h=None,
+    A=None,
+    b=None,
+    initvals=None,
+    verbose: bool = False,
+    eps_abs: float = 1e-4,
+    eps_rel: float = 1e-4,
+    polish: bool = True,
+) -> Optional[array]:
     """
     Solve a Quadratic Program defined as:
 
@@ -103,8 +115,12 @@ def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
         warn(conversion_warning("P"))
         P = csc_matrix(P)
     solver = OSQP()
-    kwargs = {'eps_abs': eps_abs, 'eps_rel': eps_rel, 'polish': polish,
-              'verbose': verbose}
+    kwargs = {
+        "eps_abs": eps_abs,
+        "eps_rel": eps_rel,
+        "polish": polish,
+        "verbose": verbose,
+    }
     if A is None and G is None:
         solver.setup(P=P, q=q, **kwargs)
     elif A is not None:
@@ -128,10 +144,10 @@ def osqp_solve_qp(P, q, G=None, h=None, A=None, b=None, initvals=None,
     if initvals is not None:
         solver.warm_start(x=initvals)
     res = solver.solve()
-    if hasattr(solver, 'constant'):
-        success_status = solver.constant('OSQP_SOLVED')
+    if hasattr(solver, "constant"):
+        success_status = solver.constant("OSQP_SOLVED")
     else:  # more recent versions of OSQP
-        success_status = osqp.constant('OSQP_SOLVED')
+        success_status = osqp.constant("OSQP_SOLVED")
     if res.info.status_val != success_status:
         print("OSQP exited with status '%s'" % res.info.status)
     return res.x
