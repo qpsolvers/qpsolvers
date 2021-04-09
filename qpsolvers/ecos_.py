@@ -24,7 +24,7 @@ from typing import Any, Dict, Optional
 from warnings import warn
 
 from ecos import solve
-from numpy import array, hstack, sqrt, vstack, zeros
+from numpy import hstack, ndarray, sqrt, vstack, zeros
 from numpy.linalg import cholesky
 from scipy.sparse import csc_matrix
 
@@ -105,7 +105,7 @@ def convert_to_socp(P, q, G, h):
 
 def ecos_solve_qp(
     P, q, G=None, h=None, A=None, b=None, initvals=None, verbose: bool = False
-) -> Optional[array]:
+) -> Optional[ndarray]:
     """
     Solve a Quadratic Program defined as:
 

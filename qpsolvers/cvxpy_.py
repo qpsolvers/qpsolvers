@@ -23,7 +23,7 @@
 from typing import Optional
 
 from cvxpy import Constant, Minimize, Problem, Variable, quad_form
-from numpy import array
+from numpy import array, ndarray
 
 
 def cvxpy_solve_qp(
@@ -36,7 +36,7 @@ def cvxpy_solve_qp(
     initvals=None,
     solver: str = None,
     verbose: bool = False,
-) -> Optional[array]:
+) -> Optional[ndarray]:
     """
     Solve a Quadratic Program defined as:
 

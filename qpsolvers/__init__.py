@@ -22,7 +22,7 @@
 
 from typing import Optional
 
-from numpy import array, concatenate, dot, eye, hstack, ones, ndarray, vstack, zeros
+from numpy import concatenate, dot, eye, hstack, ones, ndarray, vstack, zeros
 
 __version__ = "1.5.3"
 
@@ -177,7 +177,7 @@ def solve_qp(
     sym_proj=False,
     verbose=False,
     **kwargs,
-) -> Optional[array]:
+) -> Optional[ndarray]:
     """
     Solve a Quadratic Program defined as:
 
@@ -285,7 +285,7 @@ def solve_safer_qp(
     solver="mosek",
     initvals=None,
     sym_proj=False,
-) -> Optional[array]:
+) -> Optional[ndarray]:
     """
     Solve the Quadratic Program defined as:
 
@@ -379,7 +379,7 @@ def solve_ls(
     sym_proj=False,
     verbose=False,
     **kwargs,
-) -> Optional[array]:
+) -> Optional[ndarray]:
     """
     Solve a constrained weighted linear Least Squares problem defined as:
 

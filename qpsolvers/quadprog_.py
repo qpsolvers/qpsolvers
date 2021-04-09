@@ -23,13 +23,13 @@
 from typing import Optional
 from warnings import warn
 
-from numpy import array, hstack, vstack
+from numpy import hstack, ndarray, vstack
 from quadprog import solve_qp
 
 
 def quadprog_solve_qp(
     P, q, G=None, h=None, A=None, b=None, initvals=None, verbose: bool = False
-) -> Optional[array]:
+) -> Optional[ndarray]:
     """
     Solve a Quadratic Program defined as:
 

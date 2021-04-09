@@ -25,12 +25,12 @@ from typing import Optional
 from warnings import warn
 
 from gurobipy import GRB, Model
-from numpy import array
+from numpy import array, ndarray
 
 
 def gurobi_solve_qp(
     P, q, G=None, h=None, A=None, b=None, initvals=None, verbose: bool = False
-) -> Optional[array]:
+) -> Optional[ndarray]:
     """
     Solve a Quadratic Program defined as:
 

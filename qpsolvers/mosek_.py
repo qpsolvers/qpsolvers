@@ -25,14 +25,14 @@ from typing import Optional
 import cvxopt.msk
 import mosek
 
-from numpy import array
+from numpy import ndarray
 
 from .cvxopt_ import cvxopt_solve_qp
 
 
 def mosek_solve_qp(
     P, q, G, h, A=None, b=None, initvals=None, verbose: bool = False
-) -> Optional[array]:
+) -> Optional[ndarray]:
     """
     Solve a Quadratic Program defined as:
 

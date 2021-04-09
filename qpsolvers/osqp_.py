@@ -25,7 +25,7 @@ from warnings import warn
 
 import osqp
 
-from numpy import array, hstack, inf, ndarray, ones
+from numpy import hstack, inf, ndarray, ones
 from osqp import OSQP
 from scipy.sparse import csc_matrix, vstack
 
@@ -51,7 +51,7 @@ def osqp_solve_qp(
     eps_abs: float = 1e-4,
     eps_rel: float = 1e-4,
     polish: bool = True,
-) -> Optional[array]:
+) -> Optional[ndarray]:
     """
     Solve a Quadratic Program defined as:
 

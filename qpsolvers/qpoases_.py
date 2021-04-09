@@ -22,7 +22,7 @@
 
 from typing import Optional
 
-from numpy import array, hstack, ones, vstack, zeros
+from numpy import array, hstack, ndarray, ones, vstack, zeros
 from qpoases import PyOptions as Options
 from qpoases import PyPrintLevel as PrintLevel
 from qpoases import PyQProblem as QProblem
@@ -45,7 +45,7 @@ def qpoases_solve_qp(
     initvals=None,
     verbose: bool = False,
     max_wsr: int = 1000,
-) -> Optional[array]:
+) -> Optional[ndarray]:
     """
     Solve a Quadratic Program defined as:
 
