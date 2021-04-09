@@ -21,6 +21,7 @@
 """Solver interface for ECOS"""
 
 from typing import Any, Dict, Optional
+from warnings import warn
 
 from ecos import solve
 from numpy import array, hstack, sqrt, vstack, zeros
@@ -75,6 +76,9 @@ def ecos_solve_qp(
     This function is adapted from ``ecosqp.m`` in the `ecos-matlab
     <https://github.com/embotech/ecos-matlab/>`_ repository.
     """
+    if initvals is not None:
+        warn("note that warm-start values ignored by this wrapper")
+
     n = P.shape[1]  # dimension of QP variable
     c_socp = hstack([zeros(n), 1])  # new SOCP variable stacked as [x, t]
     L = cholesky(P)

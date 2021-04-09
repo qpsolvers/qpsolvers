@@ -75,7 +75,7 @@ def quadprog_solve_qp(
     will use a wrong cost function if a non-symmetric matrix is provided.
     """
     if initvals is not None:
-        print("quadprog: note that warm-start values ignored by wrapper")
+        warn("note that warm-start values ignored by this wrapper")
     qp_G = P
     qp_a = -q
     if A is not None:
