@@ -29,6 +29,80 @@ from numpy.linalg import cholesky
 from scipy.sparse import csc_matrix
 
 
+def convert_to_socp(P, q, G, h):
+    """
+    Convert the Quadratic Program defined by:
+
+    .. math::
+
+        \\begin{split}\\begin{array}{ll}
+        \\mbox{minimize} & \\frac{1}{2} x^T P x + q^T x \\\\
+        \\mbox{subject to} & G x \\leq h
+        \\end{array}\\end{split}
+
+    to an equivalent Second-Order Cone Program:
+
+    .. math::
+
+        \\begin{split}\\begin{array}{ll}
+        \\mbox{minimize} & c^T_s y \\\\
+        \\mbox{subject to} & G_s y \\leq_{\\cal K} h_s
+        \\end{array}\\end{split}
+
+    This function is adapted from ``ecosqp.m`` in the `ecos-matlab
+    <https://github.com/embotech/ecos-matlab/>`_ repository. See the documentation in
+    that script for details on this reformulation.
+
+    Parameters
+    ----------
+    P : numpy.array
+        Primal quadratic cost matrix.
+    q : numpy.array
+        Primal quadratic cost vector.
+    G : numpy.array
+        Linear inequality constraint matrix.
+    h : numpy.array
+        Linear inequality constraint vector.
+
+    Returns
+    -------
+    c_socp : array
+        SOCP cost vector.
+    G_socp : array
+        SOCP inequality matrix.
+    h_socp : array
+        SOCP inequality vector.
+    dims : dict
+        Dimension dictionary used by ECOS.
+    """
+    n = P.shape[1]  # dimension of QP variable
+    c_socp = hstack([zeros(n), 1])  # new SOCP variable stacked as [x, t]
+    L = cholesky(P)
+
+    scale = 1.0 / sqrt(2)
+    G_quad = vstack(
+        [
+            scale * hstack([q, -1.0]),
+            hstack([-L.T, zeros((L.shape[0], 1))]),
+            scale * hstack([-q, +1.0]),
+        ]
+    )
+    h_quad = hstack([scale, zeros(L.shape[0]), scale])
+
+    dims: Dict[str, Any] = {"q": [L.shape[0] + 2]}
+    if G is None:
+        G_socp = G_quad
+        h_socp = h_quad
+        dims["l"] = 0
+    else:
+        G_socp = vstack([hstack([G, zeros((G.shape[0], 1))]), G_quad])
+        h_socp = hstack([h, h_quad])
+        dims["l"] = G.shape[0]
+
+    G_socp = csc_matrix(G_socp)
+    return c_socp, G_socp, h_socp, dims
+
+
 def ecos_solve_qp(
     P, q, G=None, h=None, A=None, b=None, initvals=None, verbose: bool = False
 ) -> Optional[array]:
@@ -70,45 +144,14 @@ def ecos_solve_qp(
     -------
     x : array, shape=(n,)
         Solution to the QP, if found, otherwise ``None``.
-
-    Notes
-    -----
-    This function is adapted from ``ecosqp.m`` in the `ecos-matlab
-    <https://github.com/embotech/ecos-matlab/>`_ repository.
     """
     if initvals is not None:
         warn("note that warm-start values ignored by this wrapper")
-
-    n = P.shape[1]  # dimension of QP variable
-    c_socp = hstack([zeros(n), 1])  # new SOCP variable stacked as [x, t]
-    L = cholesky(P)
-
-    scale = 1.0 / sqrt(2)
-    G_quad = vstack(
-        [
-            scale * hstack([q, -1.0]),
-            hstack([-L.T, zeros((L.shape[0], 1))]),
-            scale * hstack([-q, +1.0]),
-        ]
-    )
-    h_quad = hstack([scale, zeros(L.shape[0]), scale])
-
-    dims: Dict[str, Any] = {"q": [L.shape[0] + 2]}
-    if G is None:
-        G_socp = G_quad
-        h_socp = h_quad
-        dims["l"] = 0
-    else:
-        G_socp = vstack([hstack([G, zeros((G.shape[0], 1))]), G_quad])
-        h_socp = hstack([h, h_quad])
-        dims["l"] = G.shape[0]
-
-    G_socp = csc_matrix(G_socp)
-    kwargs = {"verbose": verbose}
+    c_socp, G_socp, h_socp, dims = convert_to_socp(P, q, G, h)
     if A is not None:
         A_socp = hstack([A, zeros((A.shape[0], 1))])
         A_socp = csc_matrix(A_socp)
-        solution = solve(c_socp, G_socp, h_socp, dims, A_socp, b, **kwargs)
+        solution = solve(c_socp, G_socp, h_socp, dims, A_socp, b, verbose=verbose)
     else:
-        solution = solve(c_socp, G_socp, h_socp, dims, **kwargs)
+        solution = solve(c_socp, G_socp, h_socp, dims, verbose=verbose)
     return solution["x"][:-1]
