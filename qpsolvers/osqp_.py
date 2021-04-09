@@ -111,7 +111,7 @@ def osqp_solve_qp(
     ``1e-5`` so that OSQP behaves closer to the norm in terms of numerical
     accuracy.
     """
-    if type(P) is ndarray:
+    if isinstance(P, ndarray):
         warn(conversion_warning("P"))
         P = csc_matrix(P)
     solver = OSQP()
@@ -124,7 +124,7 @@ def osqp_solve_qp(
     if A is None and G is None:
         solver.setup(P=P, q=q, **kwargs)
     elif A is not None:
-        if type(A) is ndarray:
+        if isinstance(A, ndarray):
             warn(conversion_warning("A"))
             A = csc_matrix(A)
         if G is None:
@@ -136,7 +136,7 @@ def osqp_solve_qp(
             qp_u = hstack([h, b])
             solver.setup(P=P, q=q, A=qp_A, l=qp_l, u=qp_u, **kwargs)
     else:  # A is None
-        if type(G) is ndarray:
+        if isinstance(G, ndarray):
             warn(conversion_warning("G"))
             G = csc_matrix(G)
         l_inf = -inf * ones(len(h))

@@ -43,7 +43,7 @@ def cvxopt_matrix(M):
     """
     if isinstance(M, ndarray):
         return matrix(M)
-    if isinstance(M, spmatrix) or isinstance(M, matrix):
+    if isinstance(M, (spmatrix, matrix)):
         return M
     coo = M.tocoo()
     return spmatrix(coo.data.tolist(), coo.row.tolist(), coo.col.tolist(), size=M.shape)
