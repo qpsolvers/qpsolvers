@@ -10,11 +10,13 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
+        env:
+            USING_COVERAGE: "3.8"
+
         strategy:
             matrix:
                 python-version: [3.5, 3.6, 3.7, 3.8, 3.9]
-        env:
-            USING_COVERAGE: "3.8"
+
         steps:
             - name: Checkout sources
               uses: actions/checkout@v2
@@ -22,7 +24,7 @@ jobs:
             - name: Set up Python
               uses: actions/setup-python@v2
               with:
-                  python-version: $
+                  python-version: "${{ matrix.python-version }}"
 
             - name: Install dependencies
               run: |
