@@ -264,9 +264,9 @@ def solve_qp(
     """
     if sym_proj:
         P = 0.5 * (P + P.transpose())
-    if type(A) is ndarray and A.ndim == 1:
+    if isinstance(A, ndarray) and A.ndim == 1:
         A = A.reshape((1, A.shape[0]))
-    if type(G) is ndarray and G.ndim == 1:
+    if isinstance(G, ndarray) and G.ndim == 1:
         G = G.reshape((1, G.shape[0]))
     check_problem(P, q, G, h, A, b, lb, ub)
     if lb is not None:
@@ -377,7 +377,7 @@ def solve_safer_qp(
     Transactions on Robotics, 2009).
     """
     assert solver in dense_solvers, "only available for dense solvers, for now"
-    from numpy import eye, hstack, ones, vstack, zeros
+    from numpy import hstack, ones, vstack, zeros
 
     n, m = P.shape[0], G.shape[0]
     E, Z = eye(m), zeros((m, n))

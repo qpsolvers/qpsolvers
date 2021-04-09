@@ -41,9 +41,9 @@ def cvxopt_matrix(M):
     N : cvxopt.matrix
         Matrix in CVXOPT format.
     """
-    if type(M) is ndarray:
+    if isinstance(M, ndarray):
         return matrix(M)
-    elif type(M) is spmatrix or type(M) is matrix:
+    if isinstance(M, spmatrix) or isinstance(M, matrix):
         return M
     coo = M.tocoo()
     return spmatrix(coo.data.tolist(), coo.row.tolist(), coo.col.tolist(), size=M.shape)

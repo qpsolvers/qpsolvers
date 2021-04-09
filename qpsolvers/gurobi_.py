@@ -82,6 +82,6 @@ def gurobi_solve_qp(
     model.setObjective(objective, sense=GRB.MINIMIZE)
     model.optimize()
     status = model.status
-    if status != GRB.OPTIMAL and status != GRB.SUBOPTIMAL:
+    if status not in (GRB.OPTIMAL, GRB.SUBOPTIMAL):
         return None
     return array(x.X)
