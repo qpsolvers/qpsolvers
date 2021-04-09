@@ -13,12 +13,13 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - Code formatting now applies [Black](https://github.com/psf/black)
-- Gurobi performance significantly improved by new matrix API (thanks to @DKenefake)
 - ECOS: refactor SOCP conversion to improve function readability
+- Gurobi performance significantly improved by new matrix API (thanks to @DKenefake)
 
 ### Fixed
 
 - Consistently warn when `initvals` is passed but ignored by solver interface
+- ECOS: properly return `None` on unfeasible problems
 - Fix `None` case in `solve_safer_qp` (found by static type checking)
 - Fix warnings in repository-level `__init__.py`
 - OSQP: properly return `None` on unfeasible problems

@@ -29,6 +29,14 @@ from numpy.linalg import cholesky
 from scipy.sparse import csc_matrix
 
 
+__exit_flag_meaning__ = {
+    0: "OPTIMAL",
+    1: "PRIMAL INFEASIBLE",
+    2: "DUAL INFEASIBLE",
+    -1: "MAXIT REACHED",
+}
+
+
 def convert_to_socp(P, q, G, h):
     """
     Convert the Quadratic Program defined by:
@@ -154,4 +162,8 @@ def ecos_solve_qp(
         solution = solve(c_socp, G_socp, h_socp, dims, A_socp, b, verbose=verbose)
     else:
         solution = solve(c_socp, G_socp, h_socp, dims, verbose=verbose)
+    flag = solution["info"]["exitFlag"]
+    if flag != 0:
+        warn(f"ECOS returned exit flag {flag} ({__exit_flag_meaning__[flag]})")
+        return None
     return solution["x"][:-1]
