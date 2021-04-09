@@ -2,7 +2,7 @@
 
 [![PyPI package](https://img.shields.io/pypi/v/qpsolvers)](https://pypi.org/project/qpsolvers/)
 [![Documentation](https://img.shields.io/badge/documentation-online-brightgreen?logo=read-the-docs&style=flat)](https://scaron.info/doc/qpsolvers/)
-[![Status](https://img.shields.io/pypi/status/qpsolvers)](https://scaron.info/doc/qpsolvers/)
+![Status](https://img.shields.io/pypi/status/qpsolvers)
 
 Wrapper around Quadratic Programming (QP) solvers in Python, with a unified interface.
 
@@ -67,8 +67,8 @@ The list of supported solvers currently includes:
 - I have a squared norm in my cost function, how can I apply a QP solver to my problem?
   - You can [cast squared norms to QP matrices](https://scaron.info/teaching/conversion-from-least-squares-to-quadratic-programming.html) and feed the result to `solve_qp`.
 - I have a non-convex quadratic program. Is there a solver I can use?
-  - Unfortunately most available QP solvers are designed for convex problems. 
-  - If your cost matrix *P* is semi-definite rather than definite, try OSQP. 
+  - Unfortunately most available QP solvers are designed for convex problems.
+  - If your cost matrix *P* is semi-definite rather than definite, try OSQP.
   - If your problem has concave components, go for a nonlinear solver such as [IPOPT](https://pypi.org/project/ipopt/) *e.g.* using [CasADi](https://web.casadi.org/).
 - I get the following [build error on Windows](https://github.com/stephane-caron/qpsolvers/issues/28) when running `pip install qpsolvers`.
   - You will need to install the [Visual C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) to build all package dependencies.
