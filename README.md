@@ -1,6 +1,6 @@
 # QP Solvers for Python
 
-[![build](https://github.com/stephane-caron/qpsolvers/workflows/CI/badge.svg)](https://github.com/stephane-caron/qpsolvers/actions)
+[![build](https://img.shields.io/github/workflow/status/stephane-caron/qpsolvers/CI)](https://github.com/stephane-caron/qpsolvers/actions)
 [![PyPI package](https://img.shields.io/pypi/v/qpsolvers)](https://pypi.org/project/qpsolvers/)
 [![Documentation](https://img.shields.io/badge/documentation-online-brightgreen?logo=read-the-docs&style=flat)](https://scaron.info/doc/qpsolvers/)
 ![Status](https://img.shields.io/pypi/status/qpsolvers)
