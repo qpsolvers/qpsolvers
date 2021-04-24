@@ -10,11 +10,11 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- ...
+- ECOS: simplify sparse matrix conversions
 
 ### Fixed
 
-- Forward keyword arguments to quadprog solver
+- quadprog: forward keyword arguments to solver properly
 
 ## [1.6.1] - 2021/04/09
 

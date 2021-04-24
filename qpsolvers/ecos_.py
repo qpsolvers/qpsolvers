@@ -26,7 +26,7 @@ from warnings import warn
 from ecos import solve
 from numpy import hstack, ndarray, sqrt, vstack, zeros
 from numpy.linalg import cholesky
-from scipy.sparse import csc_matrix
+from scipy import sparse
 
 
 __exit_flag_meaning__ = {
@@ -107,7 +107,7 @@ def convert_to_socp(P, q, G, h):
         h_socp = hstack([h, h_quad])
         dims["l"] = G.shape[0]
 
-    G_socp = csc_matrix(G_socp)
+    G_socp = sparse.csc_matrix(G_socp)
     return c_socp, G_socp, h_socp, dims
 
 
@@ -157,8 +157,7 @@ def ecos_solve_qp(
         warn("note that warm-start values ignored by this wrapper")
     c_socp, G_socp, h_socp, dims = convert_to_socp(P, q, G, h)
     if A is not None:
-        A_socp = hstack([A, zeros((A.shape[0], 1))])
-        A_socp = csc_matrix(A_socp)
+        A_socp = sparse.hstack([A, sparse.csc_matrix((A.shape[0], 1))], format="csc")
         solution = solve(c_socp, G_socp, h_socp, dims, A_socp, b, verbose=verbose)
     else:
         solution = solve(c_socp, G_socp, h_socp, dims, verbose=verbose)
