@@ -128,6 +128,18 @@ try:
 except ImportError:
     pass
 
+# SCS
+# ========
+
+try:
+    from .scs_ import scs_solve_qp
+
+    __solve_function__["scs"] = scs_solve_qp
+    available_solvers.append("scs")
+    dense_solvers.append("scs")
+except ImportError:
+    pass
+
 
 class SolverNotFound(Exception):
     pass

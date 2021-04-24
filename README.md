@@ -58,6 +58,7 @@ The list of supported solvers currently includes:
     - [Gurobi](https://www.gurobi.com/)
     - [MOSEK](https://mosek.com/)
     - [OSQP](https://github.com/oxfordcontrol/osqp)
+    - [SCS](https://github.com/cvxgrp/scs)
 
 ## Frequently Asked Questions
 
