@@ -142,7 +142,8 @@ except ImportError:
 
 
 class SolverNotFound(Exception):
-    pass
+
+    """Exception raised when a requested solver is not found."""
 
 
 def check_problem_constraints(G, h, A, b) -> None:
@@ -283,8 +284,8 @@ def solve_qp(
     kwargs["verbose"] = verbose
     try:
         return __solve_function__[solver](*args, **kwargs)
-    except KeyError:
-        raise SolverNotFound(f"solver '{solver}' is not available")
+    except KeyError as e:
+        raise SolverNotFound(f"solver '{solver}' is not available") from e
 
 
 def solve_safer_qp(

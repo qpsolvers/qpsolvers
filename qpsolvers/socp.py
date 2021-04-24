@@ -20,10 +20,11 @@
 
 """Convert quadratic programs to second-order cone programs"""
 
+from typing import Any, Dict
+
 from numpy import hstack, sqrt, vstack, zeros
 from numpy.linalg import cholesky
 from scipy.sparse import csc_matrix
-from typing import Any, Dict
 
 
 def convert_to_socp(P, q, G, h):
