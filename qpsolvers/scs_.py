@@ -46,7 +46,17 @@ __status_val_meaning__ = {
 
 
 def scs_solve_qp(
-    P, q, G=None, h=None, A=None, b=None, initvals=None, verbose: bool = False, **kwargs
+    P,
+    q,
+    G=None,
+    h=None,
+    A=None,
+    b=None,
+    initvals=None,
+    verbose: bool = False,
+    eps: float = 1e-7,
+    use_indirect: bool = True,
+    **kwargs,
 ) -> Optional[ndarray]:
     """
     Solve a Quadratic Program defined as:
@@ -81,31 +91,44 @@ def scs_solve_qp(
         Warm-start guess vector (not used).
     verbose : bool, optional
         Set to `True` to print out extra information.
-
-    Note
-    ----
-    All other keyword arguments are forwarded to the SCS solver. For instance, you can
-    call ``scs_solve_qp(P, q, G, h, use_indirect=True, normalize=True)``. See the solver
-    documentation for details.
+    eps : float, optional
+        Convergence tolerange.
+    use_indirect: bool, optional
+        Solve linear systems either "directly" via a sparse LDL factorization or
+        "indirectly" by means of a `conjugate gradient method
+        <https://stanford.edu/~boyd/papers/pdf/scs_long.pdf>`_.
 
     Returns
     -------
     x : array, shape=(n,)
         Solution to the QP, if found, otherwise ``None``.
+
+    Notes
+    -----
+    As of SCS 2.1.2, the default convergence tolerance ``eps`` is set to ``1e-5``,
+    resulting in inequality constraints that are violated by more than ``1e-6`` as
+    opposed to ``1e-10`` for other solvers e.g. on the README problem. We lower it to
+    ``1e-7`` and switch ``use_indirect=True`` so that SCS behaves closer to the other
+    solvers on this example.
+
+    All other keyword arguments are forwarded as is to SCS. For instance, you can call
+    ``scs_solve_qp(P, q, G, h, use_indirect=True, normalize=True)``. See the solver
+    documentation for details.
     """
     if initvals is not None:
         warn("note that warm-start values ignored by this wrapper")
     c_socp, G_socp, h_socp, dims = convert_to_socp(P, q, G, h)
+    kwargs.update({"eps": eps, "use_indirect": use_indirect, "verbose": verbose})
     if A is not None:
         dims["f"] = A.shape[0]  # number of equality constraints
         A_socp = sparse.hstack([A, sparse.csc_matrix((A.shape[0], 1))], format="csc")
         A_scs = sparse.vstack([A_socp, G_socp], format="csc")
         b_scs = hstack([b, h_socp])
         data = {"A": A_scs, "b": b_scs, "c": c_socp}
-        solution = solve(data, dims, verbose=verbose, **kwargs)
+        solution = solve(data, dims, **kwargs)
     else:
         data = {"A": G_socp, "b": h_socp, "c": c_socp}
-        solution = solve(data, dims, verbose=verbose, **kwargs)
+        solution = solve(data, dims, **kwargs)
     status_val = solution["info"]["statusVal"]
     if status_val != 1:
         warn(f"SCS returned {status_val}: {__status_val_meaning__[status_val]}")
