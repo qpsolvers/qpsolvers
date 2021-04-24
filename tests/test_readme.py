@@ -83,10 +83,9 @@ class ReadmeProblem(unittest.TestCase):
         """
         def test(self):
             P, q, G, h, A, b = self.get_problem()
-            print(solver)
             x = solve_qp(P, q, G, h, A, b, solver=solver)
             self.assertIsNotNone(x)
-            self.assertTrue((dot(G, x) <= h).all())
+            self.assertTrue(max(dot(G, x) - h) <= 1e-10)
             self.assertTrue(allclose(dot(A, x), b))
         return test
 

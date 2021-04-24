@@ -83,7 +83,6 @@ class UnfeasibleProblem(unittest.TestCase):
         """
         def test(self):
             P, q, G, h, A, b = self.get_problem()
-            print(solver)
             x = solve_qp(P, q, G, h, A, b, solver=solver)
             self.assertIsNone(x)
         return test

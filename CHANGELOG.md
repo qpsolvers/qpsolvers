@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 
 - ECOS: simplify sparse matrix conversions
 - Ignore warnings when running unit tests
+- Inequality tolerance is now 1e-10 when validating solvers on README example
 - Refactor QP to SOCP conversion to use more than one SOCP solver
 - Rename "example problem" for testing to "README problem" (less ambiguous)
 
