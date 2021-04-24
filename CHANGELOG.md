@@ -6,12 +6,13 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- ...
+- Example script corresponding exactly to the README
 
 ### Changed
 
 - ECOS: simplify sparse matrix conversions
 - Refactor QP to SOCP conversion to use more than one SOCP solver
+- Rename "example problem" for testing to "README problem" (less ambiguous)
 
 ### Fixed
 

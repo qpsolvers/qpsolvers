@@ -24,7 +24,7 @@ from numpy import allclose, array, dot
 from qpsolvers import available_solvers, solve_qp
 
 
-class ExampleProblem(unittest.TestCase):
+class ReadmeProblem(unittest.TestCase):
 
     """
     Test fixture for the README example problem.
@@ -90,8 +90,8 @@ class ExampleProblem(unittest.TestCase):
 
 # Generate test fixtures for each solver
 for solver in available_solvers:
-    setattr(ExampleProblem, 'test_{}'.format(solver),
-            ExampleProblem.get_test(solver))
+    setattr(ReadmeProblem, 'test_{}'.format(solver),
+            ReadmeProblem.get_test(solver))
 
 
 if __name__ == '__main__':
