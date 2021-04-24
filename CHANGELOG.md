@@ -14,7 +14,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
-- ...
+- Forward keyword arguments to quadprog solver
 
 ## [1.6.1] - 2021/04/09
 

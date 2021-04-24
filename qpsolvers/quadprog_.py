@@ -28,7 +28,7 @@ from quadprog import solve_qp
 
 
 def quadprog_solve_qp(
-    P, q, G=None, h=None, A=None, b=None, initvals=None, verbose: bool = False
+    P, q, G=None, h=None, A=None, b=None, initvals=None, verbose: bool = False, **kwargs
 ) -> Optional[ndarray]:
     """
     Solve a Quadratic Program defined as:
@@ -64,6 +64,12 @@ def quadprog_solve_qp(
     verbose : bool, optional
         This argument has no effect, it is here for API conformance.
 
+    Note
+    ----
+    All other keyword arguments are forwarded to the quadprog solver. For instance, you
+    can call ``quadprog_solve_qp(P, q, G, h, factorized=True)``. See the solver
+    documentation for details.
+
     Returns
     -------
     x : numpy.array
@@ -91,7 +97,7 @@ def quadprog_solve_qp(
         qp_b = -h if h is not None else None
         meq = 0
     try:
-        return solve_qp(qp_G, qp_a, qp_C, qp_b, meq)[0]
+        return solve_qp(qp_G, qp_a, qp_C, qp_b, meq, **kwargs)[0]
     except ValueError as e:
         error = str(e)
         if "matrix G is not positive definite" in error:
