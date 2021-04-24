@@ -19,6 +19,7 @@
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
 import unittest
+import warnings
 
 from numpy import array, dot
 from qpsolvers import available_solvers, solve_qp
@@ -35,6 +36,7 @@ class UnfeasibleProblem(unittest.TestCase):
         """
         Prepare test fixture.
         """
+        warnings.simplefilter('ignore', category=UserWarning)
         M = array([[1., 2., 0.], [-8., 3., 2.], [0., 1., 1.]])
         self.P = dot(M.T, M)  # this is a positive definite matrix
         self.q = dot(array([3., 2., 3.]), M).reshape((3,))

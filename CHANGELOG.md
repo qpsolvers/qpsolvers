@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - ECOS: simplify sparse matrix conversions
+- Ignore warnings when running unit tests
 - Refactor QP to SOCP conversion to use more than one SOCP solver
 - Rename "example problem" for testing to "README problem" (less ambiguous)
 
