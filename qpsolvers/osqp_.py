@@ -51,6 +51,7 @@ def osqp_solve_qp(
     eps_abs: float = 1e-4,
     eps_rel: float = 1e-4,
     polish: bool = True,
+    **kwargs
 ) -> Optional[ndarray]:
     """
     Solve a Quadratic Program defined as:
@@ -103,17 +104,20 @@ def osqp_solve_qp(
 
     Note
     ----
-    OSQP requires `P` to be symmetric, and won't check for errors otherwise.
-    Check out for this point if you e.g. `get nan values
-    <https://github.com/oxfordcontrol/osqp/issues/10>`_ in your solutions.
+    OSQP requires a symmetric `P` and won't check for errors otherwise. Check out this
+    point if you `get nan values <https://github.com/oxfordcontrol/osqp/issues/10>`_ in
+    your solutions.
 
-    Note
-    ----
-    As of OSQP v0.6.1, the default values for both absolute and relative
-    tolerances are set to ``1e-3``, which results in low solver times but
-    imprecise solutions compared to the other QP solvers. We lower them to
-    ``1e-5`` so that OSQP behaves closer to the norm in terms of numerical
-    accuracy.
+    Notes
+    -----
+    As of OSQP 0.6.1, the default values for both absolute and relative tolerances are
+    set to ``1e-3``, which results in low solver times but imprecise solutions compared
+    to the other QP solvers. We lower them to ``1e-5`` so that OSQP behaves closer to
+    the other solvers in terms of numerical accuracy.
+
+    All other keyword arguments are forwarded to the OSQP solver. For instance, you can
+    call ``osqp_solve_qp(P, q, G, h, u, alpha=1.42)``. See the `solver documentation
+    <https://osqp.org/docs/interfaces/solver_settings.html>`_ for details.
     """
     if isinstance(P, ndarray):
         warn(conversion_warning("P"))

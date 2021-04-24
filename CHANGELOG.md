@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+- OSQP: forward keyword arguments to solver properly
 - quadprog: forward keyword arguments to solver properly
 
 ## [1.6.1] - 2021/04/09
