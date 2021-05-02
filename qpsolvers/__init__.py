@@ -136,7 +136,7 @@ try:
 
     __solve_function__["scs"] = scs_solve_qp
     available_solvers.append("scs")
-    dense_solvers.append("scs")
+    sparse_solvers.append("scs")
 except ImportError:
     pass
 
