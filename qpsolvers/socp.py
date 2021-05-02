@@ -71,7 +71,8 @@ def convert_to_socp(P, q, G, h):
     h_socp : array
         SOCP inequality vector.
     dims : dict
-        Dimension dictionary used by ECOS.
+        Dimension dictionary used by SOCP solvers, where ``dims["l"]`` is the number of
+        inequality constraints.
     """
     n = P.shape[1]  # dimension of QP variable
     c_socp = hstack([zeros(n), 1])  # new SOCP variable stacked as [x, t]
