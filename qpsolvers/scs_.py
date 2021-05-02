@@ -75,19 +75,19 @@ def scs_solve_qp(
 
     Parameters
     ----------
-    P : numpy.array
+    P : numpy.array, shape=(n, n)
         Primal quadratic cost matrix.
-    q : numpy.array
+    q : numpy.array, shape=(n,)
         Primal quadratic cost vector.
-    G : numpy.array
+    G : numpy.array, shape=(m, n)
         Linear inequality constraint matrix.
-    h : numpy.array
+    h : numpy.array, shape=(m,)
         Linear inequality constraint vector.
-    A : numpy.array, optional
+    A : numpy.array, shape=(k, n), optional
         Linear equality constraint matrix.
-    b : numpy.array, optional
+    b : numpy.array, shape=(k, n), optional
         Linear equality constraint vector.
-    initvals : numpy.array, optional
+    initvals : numpy.array, shape=(n,), optional
         Warm-start guess vector (not used).
     verbose : bool, optional
         Set to `True` to print out extra information.

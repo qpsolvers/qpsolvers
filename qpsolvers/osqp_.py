@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2016-2020 Stephane Caron <stephane.caron@normalesup.org>
+# Copyright (C) 2016-2021 Stephane Caron <stephane.caron@normalesup.org>
 #
 # This file is part of qpsolvers.
 #
@@ -27,16 +27,9 @@ import osqp
 
 from numpy import hstack, inf, ndarray, ones
 from osqp import OSQP
-from scipy.sparse import csc_matrix, vstack
+from scipy import sparse
 
-
-def conversion_warning(M):
-    """Return conversion warning message for a given matrix name."""
-    return (
-        "Converted %s to scipy.sparse.csc.csc_matrix\n"
-        "For best performance, build %s as a csc_matrix "
-        "rather than as a numpy.ndarray" % (M, M)
-    )
+from .warnings import warn_about_conversion
 
 
 def osqp_solve_qp(
@@ -120,8 +113,8 @@ def osqp_solve_qp(
     <https://osqp.org/docs/interfaces/solver_settings.html>`_ for details.
     """
     if isinstance(P, ndarray):
-        warn(conversion_warning("P"))
-        P = csc_matrix(P)
+        warn_about_conversion("P")
+        P = sparse.csc_matrix(P)
     solver = OSQP()
     kwargs = {
         "eps_abs": eps_abs,
@@ -133,20 +126,20 @@ def osqp_solve_qp(
         solver.setup(P=P, q=q, **kwargs)
     elif A is not None:
         if isinstance(A, ndarray):
-            warn(conversion_warning("A"))
-            A = csc_matrix(A)
+            warn_about_conversion("A")
+            A = sparse.csc_matrix(A)
         if G is None:
             solver.setup(P=P, q=q, A=A, l=b, u=b, **kwargs)
         else:  # G is not None
             l_inf = -inf * ones(len(h))
-            qp_A = vstack([G, A]).tocsc()
+            qp_A = sparse.vstack([G, A], format="csc")
             qp_l = hstack([l_inf, b])
             qp_u = hstack([h, b])
             solver.setup(P=P, q=q, A=qp_A, l=qp_l, u=qp_u, **kwargs)
     else:  # A is None
         if isinstance(G, ndarray):
-            warn(conversion_warning("G"))
-            G = csc_matrix(G)
+            warn_about_conversion("G")
+            G = sparse.csc_matrix(G)
         l_inf = -inf * ones(len(h))
         solver.setup(P=P, q=q, A=G, l=l_inf, u=h, **kwargs)
     if initvals is not None:
