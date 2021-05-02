@@ -25,6 +25,8 @@ from warnings import warn
 
 def warn_about_conversion(M):
     """Return conversion warning message for a given matrix name."""
-    warn("Converted %s to scipy.sparse.csc.csc_matrix\n"
-         "For best performance, build %s as a csc_matrix "
-         "rather than as a numpy.ndarray" % (M, M))
+    warn(
+        "Converted %s to scipy.sparse.csc.csc_matrix\n"
+        "For best performance, build %s as a csc_matrix "
+        "rather than as a numpy.ndarray" % (M, M)
+    )
