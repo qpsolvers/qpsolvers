@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""Solver interface for ECOS"""
+"""Solver interface for SCS"""
 
 from typing import Optional
 from warnings import warn
@@ -27,7 +27,7 @@ from numpy import hstack, ndarray
 from scs import solve
 from scipy import sparse
 
-from .socp import convert_to_socp
+from .warnings import warn_about_conversion
 
 
 # See https://github.com/cvxgrp/scs/blob/master/include/glbopts.h
@@ -54,7 +54,6 @@ def scs_solve_qp(
     b=None,
     initvals=None,
     verbose: bool = False,
-    eps: float = 1e-7,
     use_indirect: bool = True,
     **kwargs,
 ) -> Optional[ndarray]:
@@ -91,8 +90,6 @@ def scs_solve_qp(
         Warm-start guess vector (not used).
     verbose : bool, optional
         Set to `True` to print out extra information.
-    eps : float, optional
-        Convergence tolerange.
     use_indirect: bool, optional
         Solve linear systems either "directly" via a sparse LDL factorization or
         "indirectly" by means of a `conjugate gradient method
@@ -105,34 +102,33 @@ def scs_solve_qp(
 
     Notes
     -----
-    As of SCS 2.1.2, the default convergence tolerance ``eps`` is set to ``1e-5``,
-    resulting in inequality constraints that are violated by more than ``1e-6`` as
-    opposed to ``1e-10`` for other solvers e.g. on the README problem. We lower it to
-    ``1e-7`` and switch ``use_indirect=True`` so that SCS behaves closer to the other
-    solvers on this example.
-
     All other keyword arguments are forwarded as is to SCS. For instance, you can call
     ``scs_solve_qp(P, q, G, h, use_indirect=True, normalize=True)``. See the solver
     documentation for details.
     """
+    if isinstance(P, ndarray):
+        warn_about_conversion("P")
+        P = sparse.csc_matrix(P)
     if initvals is not None:
         warn("note that warm-start values ignored by this wrapper")
-    c_socp, G_socp, h_socp, dims = convert_to_socp(P, q, G, h)
-    kwargs.update({"eps": eps, "use_indirect": use_indirect, "verbose": verbose})
+    data = {"P": P, "c": q}
+    dims = {"l": G.shape[0]}
+    kwargs.update({"use_indirect": use_indirect, "verbose": verbose})
     if A is not None:
         dims["f"] = A.shape[0]  # number of equality constraints
-        A_socp = sparse.hstack([A, sparse.csc_matrix((A.shape[0], 1))], format="csc")
-        A_scs = sparse.vstack([A_socp, G_socp], format="csc")
-        b_scs = hstack([b, h_socp])
-        data = {"A": A_scs, "b": b_scs, "c": c_socp}
-        solution = solve(data, dims, **kwargs)
-    else:
-        data = {"A": G_socp, "b": h_socp, "c": c_socp}
-        solution = solve(data, dims, **kwargs)
+        data["A"] = sparse.vstack([A, G], format="csc")
+        data["b"] = hstack([b, h])
+    else:  # only inequality constraints
+        if isinstance(G, ndarray):
+            warn_about_conversion("G")
+            G = sparse.csc_matrix(G)
+        data["A"] = G
+        data["b"] = h
+    solution = solve(data, dims, **kwargs)
     status_val = solution["info"]["statusVal"]
     if status_val != 1:
         warn(f"SCS returned {status_val}: {__status_val_meaning__[status_val]}")
         if status_val != 2:
             # it's not that the solution is inaccurate, so the optimization failed
             return None
-    return solution["x"][:-1]
+    return solution["x"]
