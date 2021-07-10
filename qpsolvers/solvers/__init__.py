@@ -36,7 +36,7 @@ try:
     available_solvers.append("cvxopt")
     dense_solvers.append("cvxopt")
 except ImportError:
-    pass
+    cvxopt_solve_qp = None
 
 
 # CVXPY
@@ -49,7 +49,7 @@ try:
     available_solvers.append("cvxpy")
     sparse_solvers.append("cvxpy")
 except ImportError:
-    pass
+    cvxpy_solve_qp = None
 
 
 # ECOS
@@ -62,7 +62,7 @@ try:
     available_solvers.append("ecos")
     dense_solvers.append("ecos")  # considered dense as it calls cholesky(P)
 except ImportError:
-    pass
+    ecos_solve_qp = None
 
 
 # Gurobi
@@ -75,7 +75,7 @@ try:
     available_solvers.append("gurobi")
     sparse_solvers.append("gurobi")
 except ImportError:
-    pass
+    gurobi_solve_qp = None
 
 
 # MOSEK
@@ -88,7 +88,7 @@ try:
     available_solvers.append("mosek")
     sparse_solvers.append("mosek")
 except ImportError:
-    pass
+    mosek_solve_qp = None
 
 
 # OSQP
@@ -101,7 +101,7 @@ try:
     available_solvers.append("osqp")
     sparse_solvers.append("osqp")
 except ImportError:
-    pass
+    osqp_solve_qp = None
 
 
 # qpOASES
@@ -114,7 +114,7 @@ try:
     available_solvers.append("qpoases")
     dense_solvers.append("qpoases")
 except ImportError:
-    pass
+    qpoases_solve_qp = None
 
 
 # quadprog
@@ -127,7 +127,7 @@ try:
     available_solvers.append("quadprog")
     dense_solvers.append("quadprog")
 except ImportError:
-    pass
+    quadprog_solve_qp = None
 
 
 # SCS
@@ -140,7 +140,7 @@ try:
     available_solvers.append("scs")
     dense_solvers.append("scs")
 except ImportError:
-    pass
+    scs_solve_qp = None
 
 
 __all__ = [
