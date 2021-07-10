@@ -175,7 +175,7 @@ try:
     available_solvers.append("mosek")
     sparse_solvers.append("mosek")
 except ImportError:
-    mosek_solve_qp = None
+    pass
 
 
 # OSQP
@@ -204,7 +204,7 @@ try:
     available_solvers.append("osqp")
     sparse_solvers.append("osqp")
 except ImportError:
-    osqp_solve_qp = None
+    pass
 
 
 # qpOASES
@@ -240,6 +240,22 @@ except ImportError:
 # quadprog
 # ========
 
+quadprog_solve_qp: Optional[
+    Callable[
+        [
+            ndarray,
+            ndarray,
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            bool,
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
 try:
     from .quadprog_ import quadprog_solve_qp
 
@@ -247,7 +263,7 @@ try:
     available_solvers.append("quadprog")
     dense_solvers.append("quadprog")
 except ImportError:
-    quadprog_solve_qp = None
+    pass
 
 
 # SCS
@@ -262,8 +278,9 @@ scs_solve_qp: Optional[
             Optional[ndarray],
             Optional[ndarray],
             Optional[ndarray],
-            Optional[str],
             Optional[ndarray],
+            bool,
+            float,
             bool,
         ],
         Optional[ndarray],

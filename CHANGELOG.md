@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Example script corresponding exactly to the README
+- Type annotations to all solve functions
 
 ### Changed
 
