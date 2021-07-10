@@ -26,6 +26,8 @@ from cvxopt import matrix, spmatrix
 from cvxopt.solvers import options, qp
 from numpy import array, ndarray
 
+from .typing import CvxoptReadyMatrix
+
 
 options["show_progress"] = False  # disable cvxopt output
 
@@ -55,12 +57,12 @@ def cvxopt_matrix(M: ndarray) -> matrix:
 
 
 def cvxopt_solve_qp(
-    P: ndarray,
-    q: ndarray,
-    G: Optional[ndarray] = None,
-    h: Optional[ndarray] = None,
-    A: Optional[ndarray] = None,
-    b: Optional[ndarray] = None,
+    P: CvxoptReadyMatrix,
+    q: CvxoptReadyMatrix,
+    G: Optional[CvxoptReadyMatrix] = None,
+    h: Optional[CvxoptReadyMatrix] = None,
+    A: Optional[CvxoptReadyMatrix] = None,
+    b: Optional[CvxoptReadyMatrix] = None,
     solver: str = None,
     initvals: Optional[ndarray] = None,
     verbose: bool = False,

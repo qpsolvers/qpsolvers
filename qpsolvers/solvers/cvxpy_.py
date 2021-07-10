@@ -27,14 +27,14 @@ from numpy import array, ndarray
 
 
 def cvxpy_solve_qp(
-    P,
-    q,
-    G=None,
-    h=None,
-    A=None,
-    b=None,
-    initvals=None,
-    solver: str = None,
+    P: ndarray,
+    q: ndarray,
+    G: Optional[ndarray] = None,
+    h: Optional[ndarray] = None,
+    A: Optional[ndarray] = None,
+    b: Optional[ndarray] = None,
+    initvals: Optional[ndarray] = None,
+    solver: Optional[str] = None,
     verbose: bool = False,
 ) -> Optional[ndarray]:
     """

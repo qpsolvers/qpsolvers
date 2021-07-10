@@ -42,13 +42,13 @@ def warn_about_conversion(M):
 
 
 def osqp_solve_qp(
-    P,
-    q,
-    G=None,
-    h=None,
-    A=None,
-    b=None,
-    initvals=None,
+    P: OsqpReadyMatrix,
+    q: OsqpReadyMatrix,
+    G: Optional[OsqpReadyMatrix] = None,
+    h: Optional[OsqpReadyMatrix] = None,
+    A: Optional[OsqpReadyMatrix] = None,
+    b: Optional[OsqpReadyMatrix] = None,
+    initvals: Optional[OsqpReadyMatrix] = None,
     verbose: bool = False,
     eps_abs: float = 1e-4,
     eps_rel: float = 1e-4,
@@ -133,26 +133,26 @@ def osqp_solve_qp(
         "polish": polish,
         "verbose": verbose,
     }
-    if A is None and G is None:
-        solver.setup(P=P, q=q, **kwargs)
-    elif A is not None:
+    if A is not None and b is not None:
         if isinstance(A, ndarray):
             warn_about_conversion("A")
             A = sparse.csc_matrix(A)
-        if G is None:
-            solver.setup(P=P, q=q, A=A, l=b, u=b, **kwargs)
-        else:  # G is not None
+        if G is not None and h is not None:
             l_inf = -inf * ones(len(h))
             qp_A = sparse.vstack([G, A], format="csc")
             qp_l = hstack([l_inf, b])
             qp_u = hstack([h, b])
             solver.setup(P=P, q=q, A=qp_A, l=qp_l, u=qp_u, **kwargs)
-    else:  # A is None
+        else:  # no inequality constraint
+            solver.setup(P=P, q=q, A=A, l=b, u=b, **kwargs)
+    elif G is not None and h is not None:
         if isinstance(G, ndarray):
             warn_about_conversion("G")
             G = sparse.csc_matrix(G)
         l_inf = -inf * ones(len(h))
         solver.setup(P=P, q=q, A=G, l=l_inf, u=h, **kwargs)
+    else:  # no inequality nor equality constraint
+        solver.setup(P=P, q=q, **kwargs)
     if initvals is not None:
         solver.warm_start(x=initvals)
     res = solver.solve()

@@ -28,10 +28,18 @@ import mosek
 from numpy import ndarray
 
 from .cvxopt_ import cvxopt_solve_qp
+from .typing import CvxoptReadyMatrix
 
 
 def mosek_solve_qp(
-    P, q, G, h, A=None, b=None, initvals=None, verbose: bool = False
+    P: CvxoptReadyMatrix,
+    q: CvxoptReadyMatrix,
+    G: CvxoptReadyMatrix,
+    h: CvxoptReadyMatrix,
+    A: Optional[CvxoptReadyMatrix] = None,
+    b: Optional[CvxoptReadyMatrix] = None,
+    initvals: Optional[CvxoptReadyMatrix] = None,
+    verbose: bool = False,
 ) -> Optional[ndarray]:
     """
     Solve a Quadratic Program defined as:

@@ -22,6 +22,9 @@ from typing import Any, Callable, Dict, Optional
 
 from numpy import ndarray
 
+from .typing import CvxoptReadyMatrix
+from .typing import OsqpReadyMatrix
+
 available_solvers = []
 dense_solvers = []
 solve_function: Dict[str, Any] = {}
@@ -34,15 +37,15 @@ sparse_solvers = []
 cvxopt_solve_qp: Optional[
     Callable[
         [
-            ndarray,
-            ndarray,
-            Optional[ndarray],
-            Optional[ndarray],
-            Optional[ndarray],
-            Optional[ndarray],
-            Optional[str],
-            Optional[ndarray],
-            bool,
+            CvxoptReadyMatrix,            # P
+            CvxoptReadyMatrix,            # q
+            Optional[CvxoptReadyMatrix],  # G
+            Optional[CvxoptReadyMatrix],  # h
+            Optional[CvxoptReadyMatrix],  # A
+            Optional[CvxoptReadyMatrix],  # b
+            Optional[str],                # solver
+            Optional[CvxoptReadyMatrix],  # initvals
+            bool,                         # verbose
         ],
         Optional[ndarray],
     ]
@@ -61,6 +64,23 @@ except ImportError:
 # CVXPY
 # =====
 
+cvxpy_solve_qp: Optional[
+    Callable[
+        [
+            ndarray,            # P
+            ndarray,            # q
+            Optional[ndarray],  # G
+            Optional[ndarray],  # h
+            Optional[ndarray],  # A
+            Optional[ndarray],  # b
+            Optional[ndarray],  # initvals
+            Optional[str],      # solver
+            bool,               # verbose
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
 try:
     from .cvxpy_ import cvxpy_solve_qp
 
@@ -68,7 +88,7 @@ try:
     available_solvers.append("cvxpy")
     sparse_solvers.append("cvxpy")
 except ImportError:
-    cvxpy_solve_qp = None
+    pass
 
 
 # ECOS
@@ -77,15 +97,14 @@ except ImportError:
 ecos_solve_qp: Optional[
     Callable[
         [
-            ndarray,
-            ndarray,
-            Optional[ndarray],
-            Optional[ndarray],
-            Optional[ndarray],
-            Optional[ndarray],
-            Optional[str],
-            Optional[ndarray],
-            bool,
+            ndarray,            # P
+            ndarray,            # q
+            Optional[ndarray],  # G
+            Optional[ndarray],  # h
+            Optional[ndarray],  # A
+            Optional[ndarray],  # b
+            Optional[ndarray],  # initvals
+            bool,               # verbose
         ],
         Optional[ndarray],
     ]
@@ -104,6 +123,22 @@ except ImportError:
 # Gurobi
 # ======
 
+gurobi_solve_qp: Optional[
+    Callable[
+        [
+            ndarray,            # P
+            ndarray,            # q
+            Optional[ndarray],  # G
+            Optional[ndarray],  # h
+            Optional[ndarray],  # A
+            Optional[ndarray],  # b
+            Optional[ndarray],  # initvals
+            bool,               # verbose
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
 try:
     from .gurobi_ import gurobi_solve_qp
 
@@ -111,11 +146,27 @@ try:
     available_solvers.append("gurobi")
     sparse_solvers.append("gurobi")
 except ImportError:
-    gurobi_solve_qp = None
+    pass
 
 
 # MOSEK
 # =====
+
+mosek_solve_qp: Optional[
+    Callable[
+        [
+            CvxoptReadyMatrix,            # P
+            CvxoptReadyMatrix,            # q
+            Optional[CvxoptReadyMatrix],  # G
+            Optional[CvxoptReadyMatrix],  # h
+            Optional[CvxoptReadyMatrix],  # A
+            Optional[CvxoptReadyMatrix],  # b
+            Optional[CvxoptReadyMatrix],  # initvals
+            bool,                         # verbose
+        ],
+        Optional[ndarray],
+    ]
+] = None
 
 try:
     from .mosek_ import mosek_solve_qp
@@ -129,6 +180,22 @@ except ImportError:
 
 # OSQP
 # ====
+
+osqp_solve_qp: Optional[
+    Callable[
+        [
+            OsqpReadyMatrix,            # P
+            OsqpReadyMatrix,            # q
+            Optional[OsqpReadyMatrix],  # G
+            Optional[OsqpReadyMatrix],  # h
+            Optional[OsqpReadyMatrix],  # A
+            Optional[OsqpReadyMatrix],  # b
+            Optional[OsqpReadyMatrix],  # initvals
+            bool,                       # verbose
+        ],
+        Optional[ndarray],
+    ]
+] = None
 
 try:
     from .osqp_ import osqp_solve_qp
