@@ -37,15 +37,15 @@ sparse_solvers = []
 cvxopt_solve_qp: Optional[
     Callable[
         [
-            CvxoptReadyMatrix,            # P
-            CvxoptReadyMatrix,            # q
-            Optional[CvxoptReadyMatrix],  # G
-            Optional[CvxoptReadyMatrix],  # h
-            Optional[CvxoptReadyMatrix],  # A
-            Optional[CvxoptReadyMatrix],  # b
-            Optional[str],                # solver
-            Optional[CvxoptReadyMatrix],  # initvals
-            bool,                         # verbose
+            CvxoptReadyMatrix,
+            CvxoptReadyMatrix,
+            Optional[CvxoptReadyMatrix],
+            Optional[CvxoptReadyMatrix],
+            Optional[CvxoptReadyMatrix],
+            Optional[CvxoptReadyMatrix],
+            Optional[str],
+            Optional[CvxoptReadyMatrix],
+            bool,
         ],
         Optional[ndarray],
     ]
@@ -67,15 +67,15 @@ except ImportError:
 cvxpy_solve_qp: Optional[
     Callable[
         [
-            ndarray,            # P
-            ndarray,            # q
-            Optional[ndarray],  # G
-            Optional[ndarray],  # h
-            Optional[ndarray],  # A
-            Optional[ndarray],  # b
-            Optional[ndarray],  # initvals
-            Optional[str],      # solver
-            bool,               # verbose
+            ndarray,
+            ndarray,
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[str],
+            bool,
         ],
         Optional[ndarray],
     ]
@@ -97,14 +97,14 @@ except ImportError:
 ecos_solve_qp: Optional[
     Callable[
         [
-            ndarray,            # P
-            ndarray,            # q
-            Optional[ndarray],  # G
-            Optional[ndarray],  # h
-            Optional[ndarray],  # A
-            Optional[ndarray],  # b
-            Optional[ndarray],  # initvals
-            bool,               # verbose
+            ndarray,
+            ndarray,
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            bool,
         ],
         Optional[ndarray],
     ]
@@ -126,14 +126,14 @@ except ImportError:
 gurobi_solve_qp: Optional[
     Callable[
         [
-            ndarray,            # P
-            ndarray,            # q
-            Optional[ndarray],  # G
-            Optional[ndarray],  # h
-            Optional[ndarray],  # A
-            Optional[ndarray],  # b
-            Optional[ndarray],  # initvals
-            bool,               # verbose
+            ndarray,
+            ndarray,
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            bool,
         ],
         Optional[ndarray],
     ]
@@ -155,14 +155,14 @@ except ImportError:
 mosek_solve_qp: Optional[
     Callable[
         [
-            CvxoptReadyMatrix,            # P
-            CvxoptReadyMatrix,            # q
-            Optional[CvxoptReadyMatrix],  # G
-            Optional[CvxoptReadyMatrix],  # h
-            Optional[CvxoptReadyMatrix],  # A
-            Optional[CvxoptReadyMatrix],  # b
-            Optional[CvxoptReadyMatrix],  # initvals
-            bool,                         # verbose
+            CvxoptReadyMatrix,
+            CvxoptReadyMatrix,
+            Optional[CvxoptReadyMatrix],
+            Optional[CvxoptReadyMatrix],
+            Optional[CvxoptReadyMatrix],
+            Optional[CvxoptReadyMatrix],
+            Optional[CvxoptReadyMatrix],
+            bool,
         ],
         Optional[ndarray],
     ]
@@ -184,14 +184,14 @@ except ImportError:
 osqp_solve_qp: Optional[
     Callable[
         [
-            OsqpReadyMatrix,            # P
-            OsqpReadyMatrix,            # q
-            Optional[OsqpReadyMatrix],  # G
-            Optional[OsqpReadyMatrix],  # h
-            Optional[OsqpReadyMatrix],  # A
-            Optional[OsqpReadyMatrix],  # b
-            Optional[OsqpReadyMatrix],  # initvals
-            bool,                       # verbose
+            OsqpReadyMatrix,
+            OsqpReadyMatrix,
+            Optional[OsqpReadyMatrix],
+            Optional[OsqpReadyMatrix],
+            Optional[OsqpReadyMatrix],
+            Optional[OsqpReadyMatrix],
+            Optional[OsqpReadyMatrix],
+            bool,
         ],
         Optional[ndarray],
     ]
@@ -219,9 +219,9 @@ qpoases_solve_qp: Optional[
             Optional[ndarray],
             Optional[ndarray],
             Optional[ndarray],
-            Optional[str],
             Optional[ndarray],
             bool,
+            int,
         ],
         Optional[ndarray],
     ]

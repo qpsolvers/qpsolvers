@@ -36,13 +36,13 @@ __options__.printLevel = PrintLevel.NONE
 
 
 def qpoases_solve_qp(
-    P,
-    q,
-    G=None,
-    h=None,
-    A=None,
-    b=None,
-    initvals=None,
+    P: ndarray,
+    q: ndarray,
+    G: Optional[ndarray] = None,
+    h: Optional[ndarray] = None,
+    A: Optional[ndarray] = None,
+    b: Optional[ndarray] = None,
+    initvals: Optional[ndarray] = None,
     verbose: bool = False,
     max_wsr: int = 1000,
 ) -> Optional[ndarray]:
@@ -105,28 +105,33 @@ def qpoases_solve_qp(
     if initvals is not None:
         print("qpOASES: note that warm-start values ignored by wrapper")
     n = P.shape[0]
-    lb, ub = None, None
-    has_cons = G is not None or A is not None
-    if G is not None and A is None:
-        C = G
-        lb_C = None  # NB:
-        ub_C = h
-    elif G is None and A is not None:
-        C = A
-        lb_C = b
-        ub_C = b
-    elif G is not None and A is not None:
-        C = vstack([G, A, A])
-        lb_C = hstack([-__infty__ * ones(h.shape[0]), b, b])
-        ub_C = hstack([h, b, b])
+    lb: Optional[ndarray] = None
+    ub: Optional[ndarray] = None
+    lb_C: Optional[ndarray] = None
+    has_constraint = True
+    if G is not None and h is not None:
+        if A is not None and b is not None:
+            C = vstack([G, A, A])
+            lb_C = hstack([-__infty__ * ones(h.shape[0]), b, b])
+            ub_C = hstack([h, b, b])
+        else:  # no equality constraint
+            C = G
+            ub_C = h
+    else:  # no inequality constraint
+        if A is not None and b is not None:
+            C = A
+            lb_C = b
+            ub_C = b
+        else:  # no equality constraint either
+            has_constraint = False
     __options__.printLevel = PrintLevel.MEDIUM if verbose else PrintLevel.NONE
-    if has_cons:
+    if has_constraint:
         qp = QProblem(n, C.shape[0])
         qp.setOptions(__options__)
         return_value = qp.init(P, q, C, lb, ub, lb_C, ub_C, array([max_wsr]))
         if return_value == ReturnValue.MAX_NWSR_REACHED:
             print("qpOASES reached the maximum number of WSR (%d)" % max_wsr)
-    else:
+    else:  # no constraint
         qp = QProblemB(n)
         qp.setOptions(__options__)
         qp.init(P, q, lb, ub, max_wsr)

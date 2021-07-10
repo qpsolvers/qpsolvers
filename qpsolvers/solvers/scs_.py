@@ -118,14 +118,10 @@ def scs_solve_qp(
     if initvals is not None:
         warn("note that warm-start values ignored by this wrapper")
     c_socp, G_socp, h_socp, dims = convert_to_socp(P, q, G, h)
-    kwargs.update(
-        {"eps": eps, "use_indirect": use_indirect, "verbose": verbose}
-    )
+    kwargs.update({"eps": eps, "use_indirect": use_indirect, "verbose": verbose})
     if A is not None and b is not None:
         dims["f"] = A.shape[0]  # number of equality constraints
-        A_socp = sparse.hstack(
-            [A, sparse.csc_matrix((A.shape[0], 1))], format="csc"
-        )
+        A_socp = sparse.hstack([A, sparse.csc_matrix((A.shape[0], 1))], format="csc")
         A_scs = sparse.vstack([A_socp, G_socp], format="csc")
         b_scs = hstack([b, h_socp])
         data = {"A": A_scs, "b": b_scs, "c": c_socp}
@@ -135,9 +131,7 @@ def scs_solve_qp(
         solution = solve(data, dims, **kwargs)
     status_val = solution["info"]["statusVal"]
     if status_val != 1:
-        warn(
-            f"SCS returned {status_val}: {__status_val_meaning__[status_val]}"
-        )
+        warn(f"SCS returned {status_val}: {__status_val_meaning__[status_val]}")
         if status_val != 2:
             # solution is not inaccurate, so the optimization failed
             return None

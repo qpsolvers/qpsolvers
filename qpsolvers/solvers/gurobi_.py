@@ -83,9 +83,7 @@ def gurobi_solve_qp(
     if not verbose:  # optionally turn off solver output
         model.setParam("OutputFlag", 0)
     num_vars = P.shape[0]
-    x = model.addMVar(
-        num_vars, lb=-GRB.INFINITY, ub=GRB.INFINITY, vtype=GRB.CONTINUOUS
-    )
+    x = model.addMVar(num_vars, lb=-GRB.INFINITY, ub=GRB.INFINITY, vtype=GRB.CONTINUOUS)
     if A is not None:  # include equality constraints
         model.addMConstr(A, x, GRB.EQUAL, b)
     if G is not None:  # include inequality constraints
