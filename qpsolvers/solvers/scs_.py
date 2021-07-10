@@ -75,27 +75,27 @@ def scs_solve_qp(
 
     Parameters
     ----------
-    P : numpy.array, shape=(n, n)
+    P : numpy.ndarray, shape=(n, n)
         Primal quadratic cost matrix.
-    q : numpy.array, shape=(n,)
+    q : numpy.ndarray, shape=(n,)
         Primal quadratic cost vector.
-    G : numpy.array, shape=(m, n)
+    G : numpy.ndarray, shape=(m, n)
         Linear inequality constraint matrix.
-    h : numpy.array, shape=(m,)
+    h : numpy.ndarray, shape=(m,)
         Linear inequality constraint vector.
-    A : numpy.array, shape=(k, n), optional
+    A : numpy.ndarray, shape=(k, n), optional
         Linear equality constraint matrix.
-    b : numpy.array, shape=(k, n), optional
+    b : numpy.ndarray, shape=(k, n), optional
         Linear equality constraint vector.
-    initvals : numpy.array, shape=(n,), optional
+    initvals : numpy.ndarray, shape=(n,), optional
         Warm-start guess vector (not used).
     verbose : bool, optional
         Set to `True` to print out extra information.
     eps : float, optional
         Convergence tolerange.
     use_indirect: bool, optional
-        Solve linear systems either "directly" via a sparse LDL factorization or
-        "indirectly" by means of a `conjugate gradient method
+        Solve linear systems either "directly" via a sparse LDL factorization
+        or "indirectly" by means of a `conjugate gradient method
         <https://stanford.edu/~boyd/papers/pdf/scs_long.pdf>`_.
 
     Returns
@@ -105,15 +105,15 @@ def scs_solve_qp(
 
     Notes
     -----
-    As of SCS 2.1.2, the default convergence tolerance ``eps`` is set to ``1e-5``,
-    resulting in inequality constraints that are violated by more than ``1e-6`` as
-    opposed to ``1e-10`` for other solvers e.g. on the README problem. We lower it to
-    ``1e-7`` and switch ``use_indirect=True`` so that SCS behaves closer to the other
-    solvers on this example.
+    As of SCS 2.1.2, the default convergence tolerance ``eps`` is set to
+    ``1e-5``, resulting in inequality constraints that are violated by more
+    than ``1e-6`` as opposed to ``1e-10`` for other solvers e.g. on the README
+    problem. We lower it to ``1e-7`` and switch ``use_indirect=True`` so that
+    SCS behaves closer to the other solvers on this example.
 
-    All other keyword arguments are forwarded as is to SCS. For instance, you can call
-    ``scs_solve_qp(P, q, G, h, use_indirect=True, normalize=True)``. See the solver
-    documentation for details.
+    All other keyword arguments are forwarded as is to SCS. For instance, you
+    can call ``scs_solve_qp(P, q, G, h, use_indirect=True, normalize=True)``.
+    See the solver documentation for details.
     """
     if initvals is not None:
         warn("note that warm-start values ignored by this wrapper")

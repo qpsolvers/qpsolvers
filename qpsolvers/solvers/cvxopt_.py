@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""Solver interface for CVXOPT"""
+"""Solver interface for CVXOPT."""
 
 from typing import Optional
 
@@ -30,13 +30,13 @@ from numpy import array, ndarray
 options["show_progress"] = False  # disable cvxopt output
 
 
-def cvxopt_matrix(M):
+def cvxopt_matrix(M: ndarray) -> matrix:
     """
     Convert matrix to CVXOPT format.
 
     Parameters
     ----------
-    M : numpy.array
+    M : numpy.ndarray
         Matrix in NumPy format.
 
     Returns
@@ -80,21 +80,21 @@ def cvxopt_solve_qp(
 
     Parameters
     ----------
-    P : numpy.array, cvxopt.matrix or cvxopt.spmatrix
+    P : numpy.ndarray, cvxopt.matrix or cvxopt.spmatrix
         Symmetric quadratic-cost matrix.
-    q : numpy.array, cvxopt.matrix or cvxopt.spmatrix
+    q : numpy.ndarray, cvxopt.matrix or cvxopt.spmatrix
         Quadratic-cost vector.
-    G : numpy.array, cvxopt.matrix or cvxopt.spmatrix
+    G : numpy.ndarray, cvxopt.matrix or cvxopt.spmatrix
         Linear inequality matrix.
-    h : numpy.array, cvxopt.matrix or cvxopt.spmatrix
+    h : numpy.ndarray, cvxopt.matrix or cvxopt.spmatrix
         Linear inequality vector.
-    A : numpy.array, cvxopt.matrix or cvxopt.spmatrix
+    A : numpy.ndarray, cvxopt.matrix or cvxopt.spmatrix
         Linear equality constraint matrix.
-    b : numpy.array, cvxopt.matrix or cvxopt.spmatrix
+    b : numpy.ndarray, cvxopt.matrix or cvxopt.spmatrix
         Linear equality constraint vector.
     solver : string, optional
         Set to 'mosek' to run MOSEK rather than CVXOPT.
-    initvals : numpy.array, optional
+    initvals : numpy.ndarray, optional
         Warm-start guess vector.
     verbose : bool, optional
         Set to `True` to print out extra information.

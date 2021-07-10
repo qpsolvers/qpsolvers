@@ -63,22 +63,22 @@ def solve_qp(
 
     Parameters
     ----------
-    P : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
+    P : numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix
         Symmetric quadratic-cost matrix (most solvers require it to be definite
         as well).
-    q : numpy.array
+    q : numpy.ndarray
         Quadratic-cost vector.
-    G : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+    G : numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
         Linear inequality matrix.
-    h : numpy.array, optional
+    h : numpy.ndarray, optional
         Linear inequality vector.
-    A : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+    A : numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
         Linear equality matrix.
-    b : numpy.array, optional
+    b : numpy.ndarray, optional
         Linear equality vector.
-    lb: numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+    lb: numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
         Lower bound constraint vector.
-    ub: numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+    ub: numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
         Upper bound constraint vector.
     solver : string, optional
         Name of the QP solver, to choose in ``qpsolvers.available_solvers``.
@@ -173,13 +173,13 @@ def solve_safer_qp(
 
     Parameters
     ----------
-    P : numpy.array
+    P : numpy.ndarray
         Symmetric quadratic-cost matrix.
-    q : numpy.array
+    q : numpy.ndarray
         Quadratic-cost vector.
-    G : numpy.array
+    G : numpy.ndarray
         Linear inequality matrix.
-    h : numpy.array
+    h : numpy.ndarray
         Linear inequality vector.
     sw : float
         Weight of the linear cost on slack variables. Higher values bring the

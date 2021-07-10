@@ -58,19 +58,19 @@ def ecos_solve_qp(
 
     Parameters
     ----------
-    P : numpy.array
+    P : numpy.ndarray
         Primal quadratic cost matrix.
-    q : numpy.array
+    q : numpy.ndarray
         Primal quadratic cost vector.
-    G : numpy.array
+    G : numpy.ndarray
         Linear inequality constraint matrix.
-    h : numpy.array
+    h : numpy.ndarray
         Linear inequality constraint vector.
-    A : numpy.array, optional
+    A : numpy.ndarray, optional
         Linear equality constraint matrix.
-    b : numpy.array, optional
+    b : numpy.ndarray, optional
         Linear equality constraint vector.
-    initvals : numpy.array, optional
+    initvals : numpy.ndarray, optional
         Warm-start guess vector (not used).
     verbose : bool, optional
         Set to `True` to print out extra information.

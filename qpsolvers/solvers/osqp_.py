@@ -65,17 +65,17 @@ def osqp_solve_qp(
     ----------
     P : scipy.sparse.csc_matrix
         Symmetric quadratic-cost matrix.
-    q : numpy.array
+    q : numpy.ndarray
         Quadratic cost vector.
     G : scipy.sparse.csc_matrix
         Linear inequality constraint matrix.
-    h : numpy.array
+    h : numpy.ndarray
         Linear inequality constraint vector.
     A : scipy.sparse.csc_matrix, optional
         Linear equality constraint matrix.
-    b : numpy.array, optional
+    b : numpy.ndarray, optional
         Linear equality constraint vector.
-    initvals : numpy.array, optional
+    initvals : numpy.ndarray, optional
         Warm-start guess vector.
     verbose : bool, optional
         Set to `True` to print out extra information.
@@ -97,20 +97,22 @@ def osqp_solve_qp(
 
     Note
     ----
-    OSQP requires a symmetric `P` and won't check for errors otherwise. Check out this
-    point if you `get nan values <https://github.com/oxfordcontrol/osqp/issues/10>`_ in
-    your solutions.
+    OSQP requires a symmetric `P` and won't check for errors otherwise. Check
+    out this point if you `get nan values
+    <https://github.com/oxfordcontrol/osqp/issues/10>`_ in your solutions.
 
     Notes
     -----
-    As of OSQP 0.6.1, the default values for both absolute and relative tolerances are
-    set to ``1e-3``, which results in low solver times but imprecise solutions compared
-    to the other QP solvers. We lower them to ``1e-5`` so that OSQP behaves closer to
-    the other solvers in terms of numerical accuracy.
+    As of OSQP 0.6.1, the default values for both absolute and relative
+    tolerances are set to ``1e-3``, which results in low solver times but
+    imprecise solutions compared to the other QP solvers. We lower them to
+    ``1e-5`` so that OSQP behaves closer to the other solvers in terms of
+    numerical accuracy.
 
-    All other keyword arguments are forwarded to the OSQP solver. For instance, you can
-    call ``osqp_solve_qp(P, q, G, h, u, alpha=1.42)``. See the `solver documentation
-    <https://osqp.org/docs/interfaces/solver_settings.html>`_ for details.
+    All other keyword arguments are forwarded to the OSQP solver. For instance,
+    you can call ``osqp_solve_qp(P, q, G, h, u, alpha=1.42)``. See the `solver
+    documentation <https://osqp.org/docs/interfaces/solver_settings.html>`_ for
+    details.
     """
     if isinstance(P, ndarray):
         warn_about_conversion("P")

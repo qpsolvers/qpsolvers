@@ -60,24 +60,24 @@ def solve_ls(
 
     Parameters
     ----------
-    R : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
+    R : numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix
         Symmetric matrix of the cost function (most solvers require it to be
         definite).
-    s : numpy.array
+    s : numpy.ndarray
         Vector term of the cost function.
-    G : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+    G : numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
         Linear inequality matrix.
-    h : numpy.array, optional
+    h : numpy.ndarray, optional
         Linear inequality vector.
-    A : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+    A : numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
         Linear equality matrix.
-    b : numpy.array, optional
+    b : numpy.ndarray, optional
         Linear equality vector.
-    lb: numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+    lb: numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
         Lower bound constraint vector.
-    ub: numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+    ub: numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
         Upper bound constraint vector.
-    W : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+    W : numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
         Definite symmetric weight matrix used to define the norm of the cost
         function. The standard L2 norm (W = Identity) is used by default.
     solver : string, optional

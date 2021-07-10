@@ -48,18 +48,18 @@ def convert_to_socp(P, q, G, h):
         \\end{array}\\end{split}
 
     This function is adapted from ``ecosqp.m`` in the `ecos-matlab
-    <https://github.com/embotech/ecos-matlab/>`_ repository. See the documentation in
-    that script for details on this reformulation.
+    <https://github.com/embotech/ecos-matlab/>`_ repository. See the
+    documentation in that script for details on this reformulation.
 
     Parameters
     ----------
-    P : numpy.array
+    P : numpy.ndarray
         Primal quadratic cost matrix.
-    q : numpy.array
+    q : numpy.ndarray
         Primal quadratic cost vector.
-    G : numpy.array
+    G : numpy.ndarray
         Linear inequality constraint matrix.
-    h : numpy.array
+    h : numpy.ndarray
         Linear inequality constraint vector.
 
     Returns
@@ -71,8 +71,8 @@ def convert_to_socp(P, q, G, h):
     h_socp : array
         SOCP inequality vector.
     dims : dict
-        Dimension dictionary used by SOCP solvers, where ``dims["l"]`` is the number of
-        inequality constraints.
+        Dimension dictionary used by SOCP solvers, where ``dims["l"]`` is the
+        number of inequality constraints.
     """
     n = P.shape[1]  # dimension of QP variable
     c_socp = hstack([zeros(n), 1])  # new SOCP variable stacked as [x, t]

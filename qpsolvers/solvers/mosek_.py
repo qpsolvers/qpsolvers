@@ -52,26 +52,26 @@ def mosek_solve_qp(
 
     Parameters
     ----------
-    P : numpy.array, cvxopt.matrix or cvxopt.spmatrix
+    P : numpy.ndarray, cvxopt.matrix or cvxopt.spmatrix
         Symmetric quadratic-cost matrix.
-    q : numpy.array, cvxopt.matrix or cvxopt.spmatrix
+    q : numpy.ndarray, cvxopt.matrix or cvxopt.spmatrix
         Quadratic-cost vector.
-    G : numpy.array, cvxopt.matrix or cvxopt.spmatrix
+    G : numpy.ndarray, cvxopt.matrix or cvxopt.spmatrix
         Linear inequality constraint matrix.
-    h : numpy.array, cvxopt.matrix or cvxopt.spmatrix
+    h : numpy.ndarray, cvxopt.matrix or cvxopt.spmatrix
         Linear inequality constraint vector.
-    A : numpy.array, cvxopt.matrix or cvxopt.spmatrix
+    A : numpy.ndarray, cvxopt.matrix or cvxopt.spmatrix
         Linear equality constraint matrix.
-    b : numpy.array, cvxopt.matrix or cvxopt.spmatrix
+    b : numpy.ndarray, cvxopt.matrix or cvxopt.spmatrix
         Linear equality constraint vector.
-    initvals : numpy.array, optional
+    initvals : numpy.ndarray, optional
         Warm-start guess vector.
     verbose : bool, optional
         Set to `True` to print out extra information.
 
     Returns
     -------
-    x : numpy.array
+    x : numpy.ndarray
         Solution to the QP, if found, otherwise ``None``.
     """
     cvxopt.solvers.options["mosek"] = {mosek.iparam.log: 1 if verbose else 0}

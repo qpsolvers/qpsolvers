@@ -29,13 +29,13 @@ def check_problem_constraints(G, h, A, b) -> None:
 
     Parameters
     ----------
-    G : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
+    G : numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix
         Linear inequality matrix.
-    h : numpy.array
+    h : numpy.ndarray
         Linear inequality vector.
-    A : numpy.array, scipy.sparse.csc_matrix or cvxopt.spmatrix
+    A : numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix
         Linear equality matrix.
-    b : numpy.array
+    b : numpy.ndarray
         Linear equality vector.
 
     Raises
