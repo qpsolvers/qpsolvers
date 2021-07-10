@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 - Refactor QP to SOCP conversion to use more than one SOCP solver
 - Rename "example problem" for testing to "README problem" (less ambiguous)
 - Reorganize code with a qpsolvers/solvers submodule
+- quadprog: warning when `initvals is not None` is now verbose
 
 ### Fixed
 

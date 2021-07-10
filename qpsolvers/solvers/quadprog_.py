@@ -88,8 +88,8 @@ def quadprog_solve_qp(
     The quadprog solver only considers the lower entries of `P`, therefore it
     will use a wrong cost function if a non-symmetric matrix is provided.
     """
-    if initvals is not None:
-        warn("note that warm-start values ignored by this wrapper")
+    if initvals is not None and verbose:
+        warn("note that warm-start values ignored by quadprog")
     qp_G = P
     qp_a = -q
     qp_C: Optional[ndarray] = None
