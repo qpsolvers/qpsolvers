@@ -30,7 +30,53 @@ from scipy.sparse import csc_matrix
 from .typing import Matrix, Vector
 
 
-def convert_bounds_to_inequalities(
+def concatenate_bound(
+    G: Optional[Matrix],
+    h: Optional[Vector],
+    b: Vector,
+    sign: float,
+) -> Tuple[Optional[Matrix], Optional[Vector]]:
+    """
+    Append bound constraint vectors to inequality constraints.
+
+    Parameters
+    ----------
+    G : numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+        Linear inequality matrix.
+    h : numpy.ndarray, optional
+        Linear inequality vector.
+    b: numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+        Bound constraint vector.
+    sign: float
+        Sign factor: -1.0 for a lower and +1.0 for an upper bound.
+
+    Returns
+    -------
+    G : numpy.ndarray, scipy.sparse.csc_matrix, cvxopt.spmatrix, or None
+        Updated linear inequality matrix.
+    h : numpy.ndarray or None
+        Updated linear inequality vector.
+    """
+    if G is None:
+        G = sign * np.eye(len(b))
+        h = sign * b
+    else:  # G is not None and h is not None
+        if isinstance(G, ndarray):
+            G = concatenate((G, sign * np.eye(len(b))), 0)
+        elif isinstance(G, csc_matrix):
+            G = sparse.vstack([G, sign * sparse.eye(len(b))])
+        else:  # isinstance(G, cvxopt.spmatrix)
+            G = cvxopt.sparse(
+                [
+                    [G],
+                    sign * cvxopt.spmatrix(1.0, range(len(b)), range(len(b))),
+                ]
+            )
+        h = concatenate((h, sign * b))
+    return (G, h)
+
+
+def concatenate_bounds(
     G: Optional[Matrix],
     h: Optional[Vector],
     lb: Optional[Vector],
@@ -53,42 +99,12 @@ def convert_bounds_to_inequalities(
     Returns
     -------
     G : numpy.ndarray, scipy.sparse.csc_matrix, cvxopt.spmatrix, or None
-        Linear inequality matrix.
+        Updated linear inequality matrix.
     h : numpy.ndarray or None
-        Linear inequality vector.
+        Updated linear inequality vector.
     """
     if lb is not None:
-        if G is None:
-            G = -np.eye(len(lb))
-            h = -lb
-        else:  # G is not None and h is not None
-            if isinstance(G, ndarray):
-                G = concatenate((G, -np.eye(len(lb))), 0)
-            elif isinstance(G, csc_matrix):
-                G = sparse.vstack([G, -sparse.eye(len(lb))])
-            else:  # isinstance(G, cvxopt.spmatrix)
-                G = cvxopt.sparse(
-                    [
-                        [G],
-                        -cvxopt.spmatrix(1.0, range(len(lb)), range(len(lb))),
-                    ]
-                )
-            h = concatenate((h, -lb))
+        G, h = concatenate_bound(G, h, lb, -1.0)
     if ub is not None:
-        if G is None:
-            G = np.eye(len(ub))
-            h = ub
-        else:  # G is not None and h is not None
-            if isinstance(G, ndarray):
-                G = concatenate((G, np.eye(len(ub))), 0)
-            elif isinstance(G, csc_matrix):
-                G = sparse.vstack([G, sparse.eye(len(ub))])
-            else:  # isinstance(G, cvxopt.spmatrix)
-                G = cvxopt.sparse(
-                    [
-                        [G],
-                        cvxopt.spmatrix(1.0, range(len(ub)), range(len(ub))),
-                    ]
-                )
-            h = concatenate((h, ub))
+        G, h = concatenate_bound(G, h, ub, +1.0)
     return (G, h)

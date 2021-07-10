@@ -25,7 +25,7 @@ from typing import Optional
 from numpy import eye, hstack, ones, ndarray, vstack, zeros
 
 from .check_problem_constraints import check_problem_constraints
-from .convert_bounds_to_inequalities import convert_bounds_to_inequalities
+from .concatenate_bounds import concatenate_bounds
 from .exceptions import SolverNotFound
 from .solvers import dense_solvers
 from .solvers import solve_function
@@ -121,7 +121,7 @@ def solve_qp(
     if isinstance(G, ndarray) and G.ndim == 1:
         G = G.reshape((1, G.shape[0]))
     check_problem_constraints(G, h, A, b)
-    G, h = convert_bounds_to_inequalities(G, h, lb, ub)
+    G, h = concatenate_bounds(G, h, lb, ub)
     kwargs["initvals"] = initvals
     kwargs["verbose"] = verbose
     try:
