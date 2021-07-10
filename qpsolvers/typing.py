@@ -18,18 +18,18 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""Types for solve_qp function arguments."""
+"""Types for ."""
 
 from typing import Union
 
 from numpy import ndarray
-from cvxopt import matrix, spmatrix
+from cvxopt import spmatrix
 from scipy.sparse import csc_matrix
 
-CvxoptReadyMatrix = Union[ndarray, matrix, spmatrix]
-OsqpReadyMatrix = Union[ndarray, csc_matrix]
+Matrix = Union[ndarray, csc_matrix, spmatrix]
+Vector = Union[ndarray, csc_matrix, spmatrix]
 
 __all__ = [
-    "CvxoptReadyMatrix",
-    "OsqpReadyMatrix",
+    "Matrix",
+    "Vector",
 ]

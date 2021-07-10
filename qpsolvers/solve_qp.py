@@ -22,27 +22,29 @@
 
 from typing import Optional
 
-from numpy import concatenate, eye, hstack, ones, ndarray, vstack, zeros
+from numpy import eye, hstack, ones, ndarray, vstack, zeros
 
 from .check_problem_constraints import check_problem_constraints
+from .convert_bounds_to_inequalities import convert_bounds_to_inequalities
 from .exceptions import SolverNotFound
 from .solvers import dense_solvers
 from .solvers import solve_function
+from .typing import Matrix, Vector
 
 
 def solve_qp(
-    P,
-    q,
-    G=None,
-    h=None,
-    A=None,
-    b=None,
-    lb=None,
-    ub=None,
-    solver="quadprog",
-    initvals=None,
-    sym_proj=False,
-    verbose=False,
+    P: Matrix,
+    q: Vector,
+    G: Optional[Matrix] = None,
+    h: Optional[Vector] = None,
+    A: Optional[Matrix] = None,
+    b: Optional[Vector] = None,
+    lb: Optional[Vector] = None,
+    ub: Optional[Vector] = None,
+    solver: str = "quadprog",
+    initvals: Optional[Vector] = None,
+    sym_proj: bool = False,
+    verbose: bool = False,
     **kwargs,
 ) -> Optional[ndarray]:
     """
@@ -119,25 +121,11 @@ def solve_qp(
     if isinstance(G, ndarray) and G.ndim == 1:
         G = G.reshape((1, G.shape[0]))
     check_problem_constraints(G, h, A, b)
-    if lb is not None:
-        if G is None:
-            G = -eye(len(q))
-            h = -lb
-        else:  # G is not None and h is not None
-            G = concatenate((G, -eye(len(q))), 0)
-            h = concatenate((h, -lb))
-    if ub is not None:
-        if G is None:
-            G = eye(len(q))
-            h = ub
-        else:  # G is not None and h is not None
-            G = concatenate((G, eye(len(q))), 0)
-            h = concatenate((h, ub))
-    args = P, q, G, h, A, b
+    G, h = convert_bounds_to_inequalities(G, h, lb, ub)
     kwargs["initvals"] = initvals
     kwargs["verbose"] = verbose
     try:
-        return solve_function[solver](*args, **kwargs)
+        return solve_function[solver](P, q, G, h, A, b, **kwargs)
     except KeyError as e:
         raise SolverNotFound(f"solver '{solver}' is not available") from e
 
