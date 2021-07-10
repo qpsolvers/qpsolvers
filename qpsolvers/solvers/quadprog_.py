@@ -59,9 +59,9 @@ def quadprog_solve_qp(
         Symmetric quadratic-cost matrix.
     q : numpy.ndarray
         Quadratic-cost vector.
-    G : numpy.ndarray
+    G : numpy.ndarray, optional
         Linear inequality constraint matrix.
-    h : numpy.ndarray
+    h : numpy.ndarray, optional
         Linear inequality constraint vector.
     A : numpy.ndarray, optional
         Linear equality constraint matrix.
@@ -70,7 +70,7 @@ def quadprog_solve_qp(
     initvals : numpy.ndarray, optional
         Warm-start guess vector (not used).
     verbose : bool, optional
-        This argument has no effect, it is here for API conformance.
+        Set to `True` to print out extra information.
 
     Note
     ----

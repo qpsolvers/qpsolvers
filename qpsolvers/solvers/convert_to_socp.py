@@ -20,14 +20,16 @@
 
 """Convert quadratic programs to second-order cone programs"""
 
-from typing import Any, Dict
+from typing import Any, Dict, Optional, Tuple
 
-from numpy import hstack, sqrt, vstack, zeros
+from numpy import hstack, ndarray, sqrt, vstack, zeros
 from numpy.linalg import cholesky
 from scipy.sparse import csc_matrix
 
 
-def convert_to_socp(P, q, G, h):
+def convert_to_socp(
+    P: ndarray, q: ndarray, G: Optional[ndarray], h: Optional[ndarray]
+) -> Tuple[ndarray, ndarray, ndarray, Dict[str, Any]]:
     """
     Convert the Quadratic Program defined by:
 
@@ -89,14 +91,14 @@ def convert_to_socp(P, q, G, h):
     h_quad = hstack([scale, zeros(L.shape[0]), scale])
 
     dims: Dict[str, Any] = {"q": [L.shape[0] + 2]}
-    if G is None:
-        G_socp = G_quad
-        h_socp = h_quad
-        dims["l"] = 0
-    else:
+    if G is not None and h is not None:
         G_socp = vstack([hstack([G, zeros((G.shape[0], 1))]), G_quad])
         h_socp = hstack([h, h_quad])
         dims["l"] = G.shape[0]
+    else:  # no linear inequality constraint
+        G_socp = G_quad
+        h_socp = h_quad
+        dims["l"] = 0
 
     G_socp = csc_matrix(G_socp)
     return c_socp, G_socp, h_socp, dims

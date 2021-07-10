@@ -103,7 +103,7 @@ def solve_ls(
     """
     if sym_proj:
         R = 0.5 * (R + R.transpose())
-    WR = R if W is None else dot(W, R)
+    WR: Matrix = R if W is None else dot(W, R)
     P = dot(R.transpose(), WR)
     q = -dot(s.transpose(), WR)
     return solve_qp(
