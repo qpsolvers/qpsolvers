@@ -49,18 +49,20 @@ def cvxopt_matrix(M: ndarray) -> matrix:
     if isinstance(M, (spmatrix, matrix)):
         return M
     coo = M.tocoo()
-    return spmatrix(coo.data.tolist(), coo.row.tolist(), coo.col.tolist(), size=M.shape)
+    return spmatrix(
+        coo.data.tolist(), coo.row.tolist(), coo.col.tolist(), size=M.shape
+    )
 
 
 def cvxopt_solve_qp(
-    P,
-    q,
-    G=None,
-    h=None,
-    A=None,
-    b=None,
+    P: ndarray,
+    q: ndarray,
+    G: Optional[ndarray] = None,
+    h: Optional[ndarray] = None,
+    A: Optional[ndarray] = None,
+    b: Optional[ndarray] = None,
     solver: str = None,
-    initvals=None,
+    initvals: Optional[ndarray] = None,
     verbose: bool = False,
 ) -> Optional[ndarray]:
     """
@@ -112,10 +114,10 @@ def cvxopt_solve_qp(
     options["show_progress"] = verbose
     args = [cvxopt_matrix(P), cvxopt_matrix(q)]
     kwargs = {"G": None, "h": None, "A": None, "b": None}
-    if G is not None:
+    if G is not None and h is not None:
         kwargs["G"] = cvxopt_matrix(G)
         kwargs["h"] = cvxopt_matrix(h)
-    if A is not None:
+    if A is not None and b is not None:
         kwargs["A"] = cvxopt_matrix(A)
         kwargs["b"] = cvxopt_matrix(b)
     sol = qp(*args, solver=solver, initvals=initvals, **kwargs)

@@ -18,7 +18,9 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Any, Dict
+from typing import Any, Callable, Dict, Optional
+
+from numpy import ndarray
 
 available_solvers = []
 dense_solvers = []
@@ -29,6 +31,23 @@ sparse_solvers = []
 # CVXOPT
 # ======
 
+cvxopt_solve_qp: Optional[
+    Callable[
+        [
+            ndarray,
+            ndarray,
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[str],
+            Optional[ndarray],
+            bool,
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
 try:
     from .cvxopt_ import cvxopt_solve_qp
 
@@ -36,7 +55,7 @@ try:
     available_solvers.append("cvxopt")
     dense_solvers.append("cvxopt")
 except ImportError:
-    cvxopt_solve_qp = None
+    pass
 
 
 # CVXPY
@@ -55,6 +74,23 @@ except ImportError:
 # ECOS
 # ====
 
+ecos_solve_qp: Optional[
+    Callable[
+        [
+            ndarray,
+            ndarray,
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[str],
+            Optional[ndarray],
+            bool,
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
 try:
     from .ecos_ import ecos_solve_qp
 
@@ -62,7 +98,7 @@ try:
     available_solvers.append("ecos")
     dense_solvers.append("ecos")  # considered dense as it calls cholesky(P)
 except ImportError:
-    ecos_solve_qp = None
+    pass
 
 
 # Gurobi
@@ -107,6 +143,23 @@ except ImportError:
 # qpOASES
 # =======
 
+qpoases_solve_qp: Optional[
+    Callable[
+        [
+            ndarray,
+            ndarray,
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[str],
+            Optional[ndarray],
+            bool,
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
 try:
     from .qpoases_ import qpoases_solve_qp
 
@@ -114,7 +167,7 @@ try:
     available_solvers.append("qpoases")
     dense_solvers.append("qpoases")
 except ImportError:
-    qpoases_solve_qp = None
+    pass
 
 
 # quadprog
@@ -133,6 +186,23 @@ except ImportError:
 # SCS
 # ========
 
+scs_solve_qp: Optional[
+    Callable[
+        [
+            ndarray,
+            ndarray,
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[str],
+            Optional[ndarray],
+            bool,
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
 try:
     from .scs_ import scs_solve_qp
 
@@ -140,7 +210,7 @@ try:
     available_solvers.append("scs")
     dense_solvers.append("scs")
 except ImportError:
-    scs_solve_qp = None
+    pass
 
 
 __all__ = [
