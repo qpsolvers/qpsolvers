@@ -27,7 +27,7 @@ from numpy import hstack, ndarray
 from scs import solve
 from scipy import sparse
 
-from .socp import convert_to_socp
+from .convert_to_socp import convert_to_socp
 
 
 # See https://github.com/cvxgrp/scs/blob/master/include/glbopts.h

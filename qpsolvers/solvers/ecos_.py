@@ -27,7 +27,7 @@ from ecos import solve
 from numpy import ndarray
 from scipy import sparse
 
-from .socp import convert_to_socp
+from .convert_to_socp import convert_to_socp
 
 
 __exit_flag_meaning__ = {
