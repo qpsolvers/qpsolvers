@@ -23,22 +23,23 @@ from typing import Optional
 from numpy import dot, ndarray
 
 from .solve_qp import solve_qp
+from .typing import Matrix, Vector
 
 
 def solve_ls(
-    R,
-    s,
-    G=None,
-    h=None,
-    A=None,
-    b=None,
-    lb=None,
-    ub=None,
-    W=None,
-    solver="quadprog",
-    initvals=None,
-    sym_proj=False,
-    verbose=False,
+    R: Matrix,
+    s: Vector,
+    G: Optional[Matrix] = None,
+    h: Optional[Vector] = None,
+    A: Optional[Matrix] = None,
+    b: Optional[Vector] = None,
+    lb: Optional[Vector] = None,
+    ub: Optional[Vector] = None,
+    W: Optional[Matrix] = None,
+    solver: str = "quadprog",
+    initvals: Optional[Vector] = None,
+    sym_proj: bool = False,
+    verbose: bool = False,
     **kwargs,
 ) -> Optional[ndarray]:
     """
