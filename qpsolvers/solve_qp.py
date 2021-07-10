@@ -143,15 +143,15 @@ def solve_qp(
 
 
 def solve_safer_qp(
-    P,
-    q,
-    G,
-    h,
+    P: ndarray,
+    q: ndarray,
+    G: ndarray,
+    h: ndarray,
     sw: float,
     reg: float = 1e-8,
-    solver="mosek",
-    initvals=None,
-    sym_proj=False,
+    solver: str = "mosek",
+    initvals: Optional[ndarray] = None,
+    sym_proj: bool = False,
 ) -> Optional[ndarray]:
     """
     Solve the Quadratic Program defined as:
@@ -205,6 +205,10 @@ def solve_safer_qp(
     ------
     ValueError
         If the QP is not feasible.
+
+    Note
+    ----
+    This is a legacy function.
 
     Notes
     -----
