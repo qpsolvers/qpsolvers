@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Example script corresponding exactly to the README
+- Handle lower and upper bounds with sparse matrices (thanks to @MeindertHH)
 - Type annotations to all solve functions
 
 ### Changed

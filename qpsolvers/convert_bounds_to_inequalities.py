@@ -20,7 +20,12 @@
 
 from typing import Optional, Tuple
 
-from numpy import concatenate, eye
+import cvxopt
+import numpy as np
+
+from numpy import concatenate, ndarray
+from scipy import sparse
+from scipy.sparse import csc_matrix
 
 from .typing import Matrix, Vector
 
@@ -34,6 +39,8 @@ def convert_bounds_to_inequalities(
     """
     Append lower or upper bound constraint vectors to inequality constraints.
 
+    Parameters
+    ----------
     G : numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
         Linear inequality matrix.
     h : numpy.ndarray, optional
@@ -42,19 +49,46 @@ def convert_bounds_to_inequalities(
         Lower bound constraint vector.
     ub: numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
         Upper bound constraint vector.
+
+    Returns
+    -------
+    G : numpy.ndarray, scipy.sparse.csc_matrix, cvxopt.spmatrix, or None
+        Linear inequality matrix.
+    h : numpy.ndarray or None
+        Linear inequality vector.
     """
     if lb is not None:
         if G is None:
-            G = -eye(len(lb))
+            G = -np.eye(len(lb))
             h = -lb
         else:  # G is not None and h is not None
-            G = concatenate((G, -eye(len(lb))), 0)
+            if isinstance(G, ndarray):
+                G = concatenate((G, -np.eye(len(lb))), 0)
+            elif isinstance(G, csc_matrix):
+                G = sparse.vstack([G, -sparse.eye(len(lb))])
+            else:  # isinstance(G, cvxopt.spmatrix)
+                G = cvxopt.sparse(
+                    [
+                        [G],
+                        -cvxopt.spmatrix(1.0, range(len(lb)), range(len(lb))),
+                    ]
+                )
             h = concatenate((h, -lb))
     if ub is not None:
         if G is None:
-            G = eye(len(ub))
+            G = np.eye(len(ub))
             h = ub
         else:  # G is not None and h is not None
-            G = concatenate((G, eye(len(ub))), 0)
+            if isinstance(G, ndarray):
+                G = concatenate((G, np.eye(len(ub))), 0)
+            elif isinstance(G, csc_matrix):
+                G = sparse.vstack([G, sparse.eye(len(ub))])
+            else:  # isinstance(G, cvxopt.spmatrix)
+                G = cvxopt.sparse(
+                    [
+                        [G],
+                        cvxopt.spmatrix(1.0, range(len(ub)), range(len(ub))),
+                    ]
+                )
             h = concatenate((h, ub))
     return (G, h)
