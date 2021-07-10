@@ -92,6 +92,8 @@ def quadprog_solve_qp(
         warn("note that warm-start values ignored by this wrapper")
     qp_G = P
     qp_a = -q
+    qp_C: Optional[ndarray] = None
+    qp_b: Optional[ndarray] = None
     if A is not None and b is not None:
         if G is not None and h is not None:
             qp_C = -vstack([A, G]).T
@@ -101,8 +103,9 @@ def quadprog_solve_qp(
             qp_b = -b
         meq = A.shape[0]
     else:  # no equality constraint
-        qp_C = -G.T if G is not None else None
-        qp_b = -h if h is not None else None
+        if G is not None and h is not None:
+            qp_C = -G.T
+            qp_b = -h
         meq = 0
     try:
         return solve_qp(qp_G, qp_a, qp_C, qp_b, meq, **kwargs)[0]
