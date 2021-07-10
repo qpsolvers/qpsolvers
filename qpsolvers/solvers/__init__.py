@@ -220,6 +220,7 @@ __all__ = [
     "dense_solvers",
     "gurobi_solve_qp",
     "mosek_solve_qp",
+    "osqp_solve_qp",
     "qpoases_solve_qp",
     "quadprog_solve_qp",
     "solve_function",

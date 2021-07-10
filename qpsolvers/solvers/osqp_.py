@@ -29,7 +29,16 @@ from numpy import hstack, inf, ndarray, ones
 from osqp import OSQP
 from scipy import sparse
 
-from .warnings import warn_about_conversion
+from .typing import OsqpReadyMatrix
+
+
+def warn_about_conversion(M):
+    """Return conversion warning message for a given matrix name."""
+    warn(
+        "Converted %s to scipy.sparse.csc.csc_matrix\n"
+        "For best performance, build %s as a csc_matrix "
+        "rather than as a numpy.ndarray" % (M, M)
+    )
 
 
 def osqp_solve_qp(

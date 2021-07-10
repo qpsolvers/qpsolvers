@@ -29,6 +29,7 @@ from .solvers import cvxpy_solve_qp
 from .solvers import dense_solvers
 from .solvers import gurobi_solve_qp
 from .solvers import mosek_solve_qp
+from .solvers import osqp_solve_qp
 from .solvers import qpoases_solve_qp
 from .solvers import quadprog_solve_qp
 from .solvers import sparse_solvers
@@ -43,6 +44,7 @@ __all__ = [
     "dense_solvers",
     "gurobi_solve_qp",
     "mosek_solve_qp",
+    "osqp_solve_qp",
     "qpoases_solve_qp",
     "quadprog_solve_qp",
     "solve_ls",
