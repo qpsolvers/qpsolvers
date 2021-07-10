@@ -28,7 +28,15 @@ from quadprog import solve_qp
 
 
 def quadprog_solve_qp(
-    P, q, G=None, h=None, A=None, b=None, initvals=None, verbose: bool = False, **kwargs
+    P: ndarray,
+    q: ndarray,
+    G: Optional[ndarray] = None,
+    h: Optional[ndarray] = None,
+    A: Optional[ndarray] = None,
+    b: Optional[ndarray] = None,
+    initvals: ndarray = None,
+    verbose: bool = False,
+    **kwargs
 ) -> Optional[ndarray]:
     """
     Solve a Quadratic Program defined as:
@@ -66,9 +74,9 @@ def quadprog_solve_qp(
 
     Note
     ----
-    All other keyword arguments are forwarded to the quadprog solver. For instance, you
-    can call ``quadprog_solve_qp(P, q, G, h, factorized=True)``. See the solver
-    documentation for details.
+    All other keyword arguments are forwarded to the quadprog solver. For
+    instance, you can call ``quadprog_solve_qp(P, q, G, h, factorized=True)``.
+    See the solver documentation for details.
 
     Returns
     -------
@@ -84,13 +92,13 @@ def quadprog_solve_qp(
         warn("note that warm-start values ignored by this wrapper")
     qp_G = P
     qp_a = -q
-    if A is not None:
-        if G is None:
-            qp_C = -A.T
-            qp_b = -b  # not None, checked in check_problem_constraints
-        else:
+    if A is not None and b is not None:
+        if G is not None and h is not None:
             qp_C = -vstack([A, G]).T
             qp_b = -hstack([b, h])
+        else:
+            qp_C = -A.T
+            qp_b = -b
         meq = A.shape[0]
     else:  # no equality constraint
         qp_C = -G.T if G is not None else None
