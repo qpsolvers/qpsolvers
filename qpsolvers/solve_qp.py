@@ -82,7 +82,7 @@ def solve_qp(
         Upper bound constraint vector.
     solver : string, optional
         Name of the QP solver, to choose in ``qpsolvers.available_solvers``.
-    initvals : array, optional
+    initvals : numpy.ndarray, optional
         Vector of initial `x` values used to warm-start the solver.
     sym_proj : bool, optional
         Set to `True` when the `P` matrix provided is not symmetric.
@@ -191,14 +191,14 @@ def solve_safer_qp(
         case of numerical instability.
     solver : string, optional
         Name of the QP solver to use (default is MOSEK).
-    initvals : array, optional
+    initvals : numpy.ndarray, optional
         Vector of initial `x` values used to warm-start the solver.
     sym_proj : bool, optional
         Set to `True` when the `P` matrix provided is not symmetric.
 
     Returns
     -------
-    x : array, shape=(n,)
+    x : numpy.ndarray, shape=(n,)
         Optimal solution to the relaxed QP, if found.
 
     Raises

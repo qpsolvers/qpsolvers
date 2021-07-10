@@ -82,7 +82,7 @@ def solve_ls(
         function. The standard L2 norm (W = Identity) is used by default.
     solver : string, optional
         Name of the QP solver, to choose in ``qpsolvers.available_solvers``.
-    initvals : array, optional
+    initvals : numpy.ndarray, optional
         Vector of initial `x` values used to warm-start the solver.
     sym_proj : bool, optional
         Set to `True` when the `R` matrix provided is not symmetric.

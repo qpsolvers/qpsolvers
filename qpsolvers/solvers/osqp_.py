@@ -92,7 +92,7 @@ def osqp_solve_qp(
 
     Returns
     -------
-    x : array, shape=(n,)
+    x : numpy.ndarray, shape=(n,)
         Solution to the QP, if found, otherwise ``None``.
 
     Note

@@ -48,26 +48,26 @@ def gurobi_solve_qp(
 
     Parameters
     ----------
-    P : array, shape=(n, n)
+    P : numpy.ndarray, shape=(n, n)
         Primal quadratic cost matrix.
-    q : array, shape=(n,)
+    q : numpy.ndarray, shape=(n,)
         Primal quadratic cost vector.
-    G : array, shape=(m, n)
+    G : numpy.ndarray, shape=(m, n)
         Linear inequality constraint matrix.
-    h : array, shape=(m,)
+    h : numpy.ndarray, shape=(m,)
         Linear inequality constraint vector.
-    A : array, shape=(meq, n), optional
+    A : numpy.ndarray, shape=(meq, n), optional
         Linear equality constraint matrix.
-    b : array, shape=(meq,), optional
+    b : numpy.ndarray, shape=(meq,), optional
         Linear equality constraint vector.
-    initvals : array, shape=(n,), optional
+    initvals : numpy.ndarray, shape=(n,), optional
         Warm-start guess vector (not used).
     verbose : bool, optional
         Set to `True` to print out extra information.
 
     Returns
     -------
-    x : array, shape=(n,)
+    x : numpy.ndarray, shape=(n,)
         Solution to the QP, if found, otherwise ``None``.
     """
     if initvals is not None:
@@ -76,7 +76,9 @@ def gurobi_solve_qp(
     if not verbose:  # optionally turn off solver output
         model.setParam("OutputFlag", 0)
     num_vars = P.shape[0]
-    x = model.addMVar(num_vars, lb=-GRB.INFINITY, ub=GRB.INFINITY, vtype=GRB.CONTINUOUS)
+    x = model.addMVar(
+        num_vars, lb=-GRB.INFINITY, ub=GRB.INFINITY, vtype=GRB.CONTINUOUS
+    )
     if A is not None:  # include equality constraints
         model.addMConstr(A, x, GRB.EQUAL, b)
     if G is not None:  # include inequality constraints

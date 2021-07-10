@@ -77,15 +77,19 @@ def ecos_solve_qp(
 
     Returns
     -------
-    x : array, shape=(n,)
+    x : numpy.ndarray, shape=(n,)
         Solution to the QP, if found, otherwise ``None``.
     """
     if initvals is not None:
         warn("note that warm-start values ignored by this wrapper")
     c_socp, G_socp, h_socp, dims = convert_to_socp(P, q, G, h)
     if A is not None:
-        A_socp = sparse.hstack([A, sparse.csc_matrix((A.shape[0], 1))], format="csc")
-        solution = solve(c_socp, G_socp, h_socp, dims, A_socp, b, verbose=verbose)
+        A_socp = sparse.hstack(
+            [A, sparse.csc_matrix((A.shape[0], 1))], format="csc"
+        )
+        solution = solve(
+            c_socp, G_socp, h_socp, dims, A_socp, b, verbose=verbose
+        )
     else:
         solution = solve(c_socp, G_socp, h_socp, dims, verbose=verbose)
     flag = solution["info"]["exitFlag"]

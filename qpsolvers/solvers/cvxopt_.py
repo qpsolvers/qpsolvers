@@ -103,7 +103,7 @@ def cvxopt_solve_qp(
 
     Returns
     -------
-    x : array, shape=(n,), or None
+    x : numpy.ndarray, shape=(n,), or None
         Solution to the QP, if found, otherwise ``None``.
 
     Note
