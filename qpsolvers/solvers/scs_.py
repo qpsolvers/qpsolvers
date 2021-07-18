@@ -18,10 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Solver interface for the `Splitting Conic Solver (SCS)
-<https://github.com/cvxgrp/scs>`_.
-"""
+"""Solver interface for SCS"""
 
 from typing import Optional
 from warnings import warn

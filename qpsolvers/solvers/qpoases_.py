@@ -59,7 +59,7 @@ def qpoases_solve_qp(
             & A x = h
         \\end{array}\\end{split}
 
-    using `qpOASES <https://projects.coin-or.org/qpOASES>`_.
+    using `qpOASES <https://github.com/coin-or/qpOASES>`__.
 
     Parameters
     ----------
