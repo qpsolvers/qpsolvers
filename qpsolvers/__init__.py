@@ -27,11 +27,13 @@ from .solvers import available_solvers
 from .solvers import cvxopt_solve_qp
 from .solvers import cvxpy_solve_qp
 from .solvers import dense_solvers
+from .solvers import ecos_solve_qp
 from .solvers import gurobi_solve_qp
 from .solvers import mosek_solve_qp
 from .solvers import osqp_solve_qp
 from .solvers import qpoases_solve_qp
 from .solvers import quadprog_solve_qp
+from .solvers import scs_solve_qp
 from .solvers import sparse_solvers
 
 __version__ = "1.7.0"
@@ -42,11 +44,13 @@ __all__ = [
     "cvxopt_solve_qp",
     "cvxpy_solve_qp",
     "dense_solvers",
+    "ecos_solve_qp",
     "gurobi_solve_qp",
     "mosek_solve_qp",
     "osqp_solve_qp",
     "qpoases_solve_qp",
     "quadprog_solve_qp",
+    "scs_solve_qp",
     "solve_ls",
     "solve_qp",
     "solve_safer_qp",

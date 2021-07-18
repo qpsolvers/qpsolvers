@@ -42,3 +42,8 @@ quadprog
 ========
 
 .. autofunction:: qpsolvers.quadprog_solve_qp
+
+SCS
+===
+
+.. autofunction:: qpsolvers.scs_solve_qp
