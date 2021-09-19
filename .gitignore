@@ -7,4 +7,5 @@ MANIFEST
 build/
 dist/
 gurobi.log
+htmlcov/
 qpsolvers.egg-info
