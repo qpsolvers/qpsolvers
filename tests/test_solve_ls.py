@@ -42,7 +42,7 @@ class TestSolveLS(unittest.TestCase):
         """
         warnings.simplefilter("ignore", category=DeprecationWarning)
         warnings.simplefilter("ignore", category=UserWarning)
-        self.R = array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
+        self.R = array([[1.0, 2.0, 0.0], [2.0, 3.0, 4.0], [0.0, 4.0, 1.0]])
         self.s = array([3.0, 2.0, 3.0])
         self.G = array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
         self.h = array([3.0, 2.0, -2.0]).reshape((3,))
@@ -89,11 +89,14 @@ class TestSolveLS(unittest.TestCase):
         def test(self):
             R, s, G, h, A, b = self.get_problem()
             x = solve_ls(R, s, G, h, A, b, solver=solver)
+            x_sp = solve_ls(R, s, G, h, A, b, solver=solver, sym_proj=True)
             self.assertIsNotNone(x)
-            known_solution = array([-0.01633987, -0.33333333, 1.3496732])
-            sol_tolerance = 1e-5 if solver == "ecos" else 1e-8
+            self.assertIsNotNone(x_sp)
+            known_solution = array([2.0 / 3, -1.0 / 3, 2.0 / 3])
+            sol_tolerance = 1e-5 if solver == "ecos" else 1e-6
             self.assertTrue(norm(x - known_solution) < sol_tolerance)
-            self.assertTrue(max(dot(G, x) - h) <= 1e-10)
+            self.assertTrue(norm(x_sp - known_solution) < sol_tolerance)
+            self.assertTrue(max(dot(G, x) - h) <= 1e-9)
             self.assertTrue(allclose(dot(A, x), b))
 
         return test
