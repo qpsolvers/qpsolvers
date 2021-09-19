@@ -187,6 +187,36 @@ class TestSolveQP(unittest.TestCase):
         return test
 
     @staticmethod
+    def get_test_one_ineq(solver):
+        """
+        Get test function for a given solver. In this variant, there is
+        only one inequality constraint.
+
+        Parameters
+        ----------
+        solver : string
+            Name of the solver to test.
+
+        Returns
+        -------
+        test : function
+            Test function for that solver.
+        """
+
+        def test(self):
+            P, q, G, h, A, b = self.get_problem()
+            G, h = G[1], h[1].reshape((1,))
+            x = solve_qp(P, q, G, h, A, b, solver=solver)
+            self.assertIsNotNone(x)
+            known_solution = array([0.30769231, -0.69230769, 1.38461538])
+            sol_tolerance = 1e-6 if solver in ["cvxopt", "ecos"] else 1e-8
+            self.assertTrue(norm(x - known_solution) < sol_tolerance)
+            self.assertLess(dot(G, x) - h, 1e-8)
+            self.assertTrue(allclose(dot(A, x), b))
+
+        return test
+
+    @staticmethod
     def get_test_warmstart(solver):
         """
         Get test function for a given solver. This variant warm starts.
@@ -245,6 +275,11 @@ for solver in available_solvers:
         TestSolveQP,
         "test_no_ineq_{}".format(solver),
         TestSolveQP.get_test_no_ineq(solver),
+    )
+    setattr(
+        TestSolveQP,
+        "test_one_ineq_{}".format(solver),
+        TestSolveQP.get_test_one_ineq(solver),
     )
     setattr(
         TestSolveQP,
