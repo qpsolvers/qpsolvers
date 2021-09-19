@@ -38,15 +38,8 @@ class UnfeasibleProblem(unittest.TestCase):
         Prepare test fixture.
         """
         warnings.simplefilter('ignore', category=UserWarning)
-        M = array([[1., 2., 0.], [-8., 3., 2.], [0., 1., 1.]])
-        self.P = dot(M.T, M)  # this is a positive definite matrix
-        self.q = dot(array([3., 2., 3.]), M).reshape((3,))
-        self.G = array([[1., 1., 1.], [2., 0., 1.], [-1., 2., -1.]])
-        self.h = array([3., 2., -2.]).reshape((3,))
-        self.A = array([1., 1., 1.])
-        self.b = array([42.])
 
-    def get_problem(self):
+    def get_dense_problem(self):
         """
         Get problem as a sextuple of values to unpack.
 
@@ -65,7 +58,14 @@ class UnfeasibleProblem(unittest.TestCase):
         b : numpy.ndarray
             Linear equality vector.
         """
-        return self.P, self.q, self.G, self.h, self.A, self.b
+        M = array([[1., 2., 0.], [-8., 3., 2.], [0., 1., 1.]])
+        P = dot(M.T, M)  # this is a positive definite matrix
+        q = dot(array([3., 2., 3.]), M).reshape((3,))
+        G = array([[1., 1., 1.], [2., 0., 1.], [-1., 2., -1.]])
+        h = array([3., 2., -2.]).reshape((3,))
+        A = array([1., 1., 1.])
+        b = array([42.])
+        return P, q, G, h, A, b
 
     @staticmethod
     def get_test(solver):
@@ -83,7 +83,7 @@ class UnfeasibleProblem(unittest.TestCase):
             Test function for that solver.
         """
         def test(self):
-            P, q, G, h, A, b = self.get_problem()
+            P, q, G, h, A, b = self.get_dense_problem()
             x = solve_qp(P, q, G, h, A, b, solver=solver)
             self.assertIsNone(x)
         return test
@@ -104,7 +104,7 @@ class UnfeasibleProblem(unittest.TestCase):
             Test function for that solver.
         """
         def test(self):
-            P, q, G, h, _, _ = self.get_problem()
+            P, q, G, h, _, _ = self.get_dense_problem()
             G[0] = 0
             h[0] = -10000.
             x = solve_safer_qp(P, q, G, h, sr=1e-2, solver=solver)
