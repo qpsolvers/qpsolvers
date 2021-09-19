@@ -72,8 +72,18 @@ qpOASES
 -------
 
 Check out the `official qpOASES installation page
-<https://projects.coin-or.org/qpOASES/wiki/QpoasesInstallation>`_ for
-instructions. You might run into errors at the ``make python`` step. If so, you
-can check out qpOASES from `this fork
-<https://github.com/stephane-caron/qpOASES>`_, or check out its 4–5 last
-commits to see how to cope with these issues.
+<https://projects.coin-or.org/qpOASES/wiki/QpoasesInstallation>`_ for the
+latest release. However, you might run into errors at the ``make python`` step.
+If so, you can check out qpOASES from `this fork
+<https://github.com/stephane-caron/qpOASES>`_ and follow these instructions:
+
+.. code:: bash
+
+    git clone --recursive https://github.com/stephane-caron/qpOASES.git
+    cd qpOASES
+    make
+    cd interfaces/python
+    python setup.py install --user
+
+The `setup.py` script takes the same command-line arguments as `pip`. Remove
+`--user` and run it as root to install the library system-wide.
