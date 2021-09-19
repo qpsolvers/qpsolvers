@@ -297,6 +297,33 @@ class TestSolveQP(unittest.TestCase):
         return test
 
     @staticmethod
+    def get_test_sparse(solver):
+        """
+        Get test function for a given solver. This variant tests a sparse
+        problem.
+
+        Parameters
+        ----------
+        solver : string
+            Name of the solver to test.
+
+        Returns
+        -------
+        test : function
+            Test function for that solver.
+        """
+        def test(self):
+            P, q, G, h = self.get_sparse_problem()
+            x = solve_qp(P, q, G, h, solver=solver)
+            self.assertIsNotNone(x)
+            known_solution = array([2.] * 149 + [3.])
+            tol = 1e-3 if solver == "gurobi" else 1e-8  # aouch for Gurobi!
+            self.assertTrue(norm(x - known_solution) < tol)
+            self.assertTrue(max(G * x - h) <= 1e-10)
+
+        return test
+
+    @staticmethod
     def get_test_warmstart(solver):
         """
         Get test function for a given solver. This variant warm starts.
@@ -376,6 +403,12 @@ for solver in available_solvers:
         "test_safer_{}".format(solver),
         TestSolveQP.get_test_safer(solver),
     )
+    if solver in sparse_solvers:
+        setattr(
+            TestSolveQP,
+            "test_sparse_{}".format(solver),
+            TestSolveQP.get_test_sparse(solver),
+        )
     setattr(
         TestSolveQP,
         "test_warmstart_{}".format(solver),
