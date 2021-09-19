@@ -21,7 +21,7 @@
 import unittest
 import warnings
 
-from numpy import allclose, array, dot
+from numpy import allclose, array, dot, random
 from numpy.linalg import norm
 from qpsolvers import available_solvers, solve_qp
 
@@ -36,15 +36,15 @@ class ReadmeProblem(unittest.TestCase):
         """
         Prepare test fixture.
         """
-        warnings.simplefilter('ignore', category=DeprecationWarning)
-        warnings.simplefilter('ignore', category=UserWarning)
-        M = array([[1., 2., 0.], [-8., 3., 2.], [0., 1., 1.]])
+        warnings.simplefilter("ignore", category=DeprecationWarning)
+        warnings.simplefilter("ignore", category=UserWarning)
+        M = array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
         self.P = dot(M.T, M)  # this is a positive definite matrix
-        self.q = dot(array([3., 2., 3.]), M).reshape((3,))
-        self.G = array([[1., 2., 1.], [2., 0., 1.], [-1., 2., -1.]])
-        self.h = array([3., 2., -2.]).reshape((3,))
-        self.A = array([1., 1., 1.])
-        self.b = array([1.])
+        self.q = dot(array([3.0, 2.0, 3.0]), M).reshape((3,))
+        self.G = array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
+        self.h = array([3.0, 2.0, -2.0]).reshape((3,))
+        self.A = array([1.0, 1.0, 1.0])
+        self.b = array([1.0])
 
     def get_problem(self):
         """
@@ -152,6 +152,35 @@ class ReadmeProblem(unittest.TestCase):
 
         return test
 
+    @staticmethod
+    def get_test_warmstart(solver):
+        """
+        Closure of test function for a given solver.
+
+        Parameters
+        ----------
+        solver : string
+            Name of the solver to test.
+
+        Returns
+        -------
+        test : function
+            Test function for that solver.
+        """
+
+        def test(self):
+            P, q, G, h, A, b = self.get_problem()
+            known_solution = array([0.30769231, -0.69230769, 1.38461538])
+            initvals = known_solution + 0.1 * random.random(3)
+            x = solve_qp(P, q, G, h, A, b, solver=solver, initvals=initvals)
+            self.assertIsNotNone(x)
+            sol_tolerance = 1e-4 if solver == "ecos" else 1e-8
+            self.assertTrue(norm(x - known_solution) < sol_tolerance)
+            self.assertTrue(max(dot(G, x) - h) <= 1e-10)
+            self.assertTrue(allclose(dot(A, x), b))
+
+        return test
+
 
 # Generate test fixtures for each solver
 for solver in available_solvers:
@@ -167,6 +196,11 @@ for solver in available_solvers:
         ReadmeProblem,
         "test_no_ineq_{}".format(solver),
         ReadmeProblem.get_test_no_ineq(solver),
+    )
+    setattr(
+        ReadmeProblem,
+        "test_warmstart_{}".format(solver),
+        ReadmeProblem.get_test_warmstart(solver),
     )
 
 
