@@ -28,6 +28,7 @@ import warnings
 from numpy import allclose, array, dot, random
 from numpy.linalg import norm
 from qpsolvers import available_solvers, solve_qp
+from qpsolvers.exceptions import SolverNotFound
 
 
 class TestSolveQP(unittest.TestCase):
@@ -254,6 +255,11 @@ class TestSolveQP(unittest.TestCase):
             self.assertTrue(allclose(dot(A, x), b))
 
         return test
+
+    def test_solver_not_found(self):
+        P, q, G, h, A, b = self.get_problem()
+        with self.assertRaises(SolverNotFound):
+            solve_qp(P, q, G, h, A, b, solver="ideal")
 
 
 # Generate test fixtures for each solver
