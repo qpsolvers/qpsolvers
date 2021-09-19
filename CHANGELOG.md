@@ -2,14 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Added
+
+### Changed
+
+### Fixed
+
 ## [1.7] - 2021/09/19
 
 ### Added
 
 - Example script corresponding exactly to the README
 - Handle lower and upper bounds with sparse matrices (thanks to @MeindertHH)
+- SCS 2.0 solver interface
 - Type annotations to all solve functions
-- Unit test: package coverage is now 94% (up from 77% in 1.6.1)
+- Unit tests: package coverage is now 94%
 
 ### Changed
 
@@ -24,7 +33,6 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
-- Avoid undesired CSC-to-COO conversion when stacking sparse matrices
 - OSQP: forward keyword arguments to solver properly
 - quadprog: forward keyword arguments to solver properly
 
