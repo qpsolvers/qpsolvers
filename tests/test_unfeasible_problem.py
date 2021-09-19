@@ -22,7 +22,8 @@ import unittest
 import warnings
 
 from numpy import array, dot
-from qpsolvers import available_solvers, solve_qp
+from qpsolvers import available_solvers, dense_solvers
+from qpsolvers import solve_qp, solve_safer_qp
 
 
 class UnfeasibleProblem(unittest.TestCase):
@@ -87,6 +88,29 @@ class UnfeasibleProblem(unittest.TestCase):
             self.assertIsNone(x)
         return test
 
+    @staticmethod
+    def get_test_safer(solver):
+        """
+        Closure of test function for a given solver.
+
+        Parameters
+        ----------
+        solver : string
+            Name of the solver to test.
+
+        Returns
+        -------
+        test : function
+            Test function for that solver.
+        """
+        def test(self):
+            P, q, G, h, _, _ = self.get_problem()
+            G[0] = 0
+            h[0] = -10000.
+            x = solve_safer_qp(P, q, G, h, sr=1e-2, solver=solver)
+            self.assertIsNone(x)
+        return test
+
 
 # Generate test fixtures for each solver
 for solver in available_solvers:
@@ -96,6 +120,9 @@ for solver in available_solvers:
         continue
     setattr(UnfeasibleProblem, 'test_{}'.format(solver),
             UnfeasibleProblem.get_test(solver))
+    if solver in dense_solvers:
+        setattr(UnfeasibleProblem, 'test_safer_{}'.format(solver),
+                UnfeasibleProblem.get_test_safer(solver))
 
 
 if __name__ == '__main__':
