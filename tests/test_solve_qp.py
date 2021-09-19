@@ -18,6 +18,10 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
+"""
+Tests for the main `solve_qp` function.
+"""
+
 import unittest
 import warnings
 
@@ -26,7 +30,7 @@ from numpy.linalg import norm
 from qpsolvers import available_solvers, solve_qp
 
 
-class ReadmeProblem(unittest.TestCase):
+class TestSolveQP(unittest.TestCase):
 
     """
     Test fixture for the README example problem.
@@ -222,27 +226,27 @@ class ReadmeProblem(unittest.TestCase):
 # Generate test fixtures for each solver
 for solver in available_solvers:
     setattr(
-        ReadmeProblem, "test_{}".format(solver), ReadmeProblem.get_test(solver)
+        TestSolveQP, "test_{}".format(solver), TestSolveQP.get_test(solver)
     )
     setattr(
-        ReadmeProblem,
+        TestSolveQP,
         "test_no_cons_{}".format(solver),
-        ReadmeProblem.get_test_no_cons(solver),
+        TestSolveQP.get_test_no_cons(solver),
     )
     setattr(
-        ReadmeProblem,
+        TestSolveQP,
         "test_no_eq_{}".format(solver),
-        ReadmeProblem.get_test_no_eq(solver),
+        TestSolveQP.get_test_no_eq(solver),
     )
     setattr(
-        ReadmeProblem,
+        TestSolveQP,
         "test_no_ineq_{}".format(solver),
-        ReadmeProblem.get_test_no_ineq(solver),
+        TestSolveQP.get_test_no_ineq(solver),
     )
     setattr(
-        ReadmeProblem,
+        TestSolveQP,
         "test_warmstart_{}".format(solver),
-        ReadmeProblem.get_test_warmstart(solver),
+        TestSolveQP.get_test_warmstart(solver),
     )
 
 
