@@ -22,7 +22,7 @@
 Test all available QP solvers on a sparse quadratic program.
 """
 
-import numpy
+import numpy as np
 import scipy.sparse
 
 from IPython import get_ipython
@@ -40,11 +40,11 @@ for i in range(1, n - 1):
     M[i, i + 1] = -1
     M[i, i - 1] = 1
 P = csc_matrix(M.dot(M.transpose()))
-q = -numpy.ones((n,))
+q = -np.ones((n,))
 G = csc_matrix(-scipy.sparse.eye(n))
-h = -2 * numpy.ones((n,))
-P_array = numpy.array(P.todense())
-G_array = numpy.array(G.todense())
+h = -2 * np.ones((n,))
+P_array = np.array(P.todense())
+G_array = np.array(G.todense())
 
 
 def check_same_solutions(tol=0.05):
