@@ -18,6 +18,10 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
+"""
+Helper function to solve least squares.
+"""
+
 from typing import Optional
 
 from numpy import dot, ndarray

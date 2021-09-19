@@ -51,9 +51,7 @@ def cvxopt_matrix(M: CvxoptReadyMatrix) -> matrix:
     if isinstance(M, (spmatrix, matrix)):
         return M
     coo = M.tocoo()
-    return spmatrix(
-        coo.data.tolist(), coo.row.tolist(), coo.col.tolist(), size=M.shape
-    )
+    return spmatrix(coo.data.tolist(), coo.row.tolist(), coo.col.tolist(), size=M.shape)
 
 
 def cvxopt_solve_qp(

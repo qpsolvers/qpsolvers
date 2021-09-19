@@ -18,7 +18,9 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""Main function to solve quadratic programs."""
+"""
+Main function to solve quadratic programs.
+"""
 
 from typing import Optional
 
