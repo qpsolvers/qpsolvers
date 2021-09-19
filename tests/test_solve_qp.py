@@ -105,6 +105,36 @@ class TestSolveQP(unittest.TestCase):
         return test
 
     @staticmethod
+    def get_test_bounds(solver):
+        """
+        Get test function for a given solver. This variant adds vector bounds.
+
+        Parameters
+        ----------
+        solver : string
+            Name of the solver to test.
+
+        Returns
+        -------
+        test : function
+            Test function for that solver.
+        """
+
+        def test(self):
+            P, q, G, h, A, b = self.get_problem()
+            lb = array([-1.0, -2.0, -0.5])
+            ub = array([1.0, -0.2, 1.0])
+            x = solve_qp(P, q, G, h, A, b, lb, ub, solver=solver)
+            self.assertIsNotNone(x)
+            known_solution = array([0.41463415, -0.41463415, 1.])
+            sol_tolerance = 1e-6 if solver == "ecos" else 1e-8
+            self.assertTrue(norm(x - known_solution) < sol_tolerance)
+            self.assertTrue(max(dot(G, x) - h) <= 1e-10)
+            self.assertTrue(allclose(dot(A, x), b))
+
+        return test
+
+    @staticmethod
     def get_test_no_cons(solver):
         """
         Get test function for a given solver. In this variant, there is
@@ -299,6 +329,11 @@ class TestSolveQP(unittest.TestCase):
 for solver in available_solvers:
     setattr(
         TestSolveQP, "test_{}".format(solver), TestSolveQP.get_test(solver)
+    )
+    setattr(
+        TestSolveQP,
+        "test_bounds_{}".format(solver),
+        TestSolveQP.get_test_bounds(solver),
     )
     setattr(
         TestSolveQP,
