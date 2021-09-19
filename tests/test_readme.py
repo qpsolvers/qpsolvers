@@ -22,6 +22,7 @@ import unittest
 import warnings
 
 from numpy import allclose, array, dot
+from numpy.linalg import norm
 from qpsolvers import available_solvers, solve_qp
 
 
@@ -81,12 +82,17 @@ class ReadmeProblem(unittest.TestCase):
         test : function
             Test function for that solver.
         """
+
         def test(self):
             P, q, G, h, A, b = self.get_problem()
             x = solve_qp(P, q, G, h, A, b, solver=solver)
             self.assertIsNotNone(x)
+            known_solution = array([0.30769231, -0.69230769, 1.38461538])
+            sol_tolerance = 1e-4 if solver == "ecos" else 1e-8
+            self.assertTrue(norm(x - known_solution) < sol_tolerance)
             self.assertTrue(max(dot(G, x) - h) <= 1e-10)
             self.assertTrue(allclose(dot(A, x), b))
+
         return test
 
     @staticmethod
@@ -105,11 +111,17 @@ class ReadmeProblem(unittest.TestCase):
         test : function
             Test function for that solver.
         """
+
         def test(self):
             P, q, G, h, A, b = self.get_problem()
             x = solve_qp(P, q, G, h, solver=solver)
             self.assertIsNotNone(x)
-            self.assertTrue(max(dot(G, x) - h) <= 1e-10)
+            known_solution = array([-0.49025721, -1.57755261, -0.66484801])
+            sol_tolerance = 1e-3 if solver == "ecos" else 1e-6
+            ineq_tolerance = 1e-7 if solver == "scs" else 1e-10
+            self.assertTrue(norm(x - known_solution) < sol_tolerance)
+            self.assertTrue(max(dot(G, x) - h) <= ineq_tolerance)
+
         return test
 
     @staticmethod
@@ -128,21 +140,35 @@ class ReadmeProblem(unittest.TestCase):
         test : function
             Test function for that solver.
         """
+
         def test(self):
             P, q, G, h, A, b = self.get_problem()
             x = solve_qp(P, q, A=A, b=b, solver=solver)
             self.assertIsNotNone(x)
+            known_solution = array([0.28026906, -1.55156951, 2.27130045])
+            sol_tolerance = 1e-5 if solver in ["ecos", "scs"] else 1e-8
+            self.assertTrue(norm(x - known_solution) < sol_tolerance)
             self.assertTrue(allclose(dot(A, x), b))
+
         return test
 
 
 # Generate test fixtures for each solver
 for solver in available_solvers:
-    setattr(ReadmeProblem, 'test_{}'.format(solver),
-            ReadmeProblem.get_test(solver))
-    setattr(ReadmeProblem, 'test_no_ineq_{}'.format(solver),
-            ReadmeProblem.get_test_no_ineq(solver))
+    setattr(
+        ReadmeProblem, "test_{}".format(solver), ReadmeProblem.get_test(solver)
+    )
+    setattr(
+        ReadmeProblem,
+        "test_no_eq_{}".format(solver),
+        ReadmeProblem.get_test_no_eq(solver),
+    )
+    setattr(
+        ReadmeProblem,
+        "test_no_ineq_{}".format(solver),
+        ReadmeProblem.get_test_no_ineq(solver),
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
