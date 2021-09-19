@@ -135,29 +135,31 @@ def solve_safer_qp(
     q: ndarray,
     G: ndarray,
     h: ndarray,
-    sw: float,
+    sr: float,
     reg: float = 1e-8,
     solver: str = "mosek",
     initvals: Optional[ndarray] = None,
     sym_proj: bool = False,
 ) -> Optional[ndarray]:
     """
-    Solve the Quadratic Program defined as:
+    Solve the "safer" Quadratic Program with repulsive inequality constraints,
+    defined as:
 
     .. math::
 
         \\begin{split}\\begin{array}{ll}
             \\mbox{minimize} &
                 \\frac{1}{2} x^T P x + q^T x +
-                \\frac{1}{2} \\mathit{reg} \\|s\\|^2 - \\mathit{sw} \\1^T s
+                \\frac{1}{2} \\mathit{reg} \\|s\\|^2 - \\mathit{sr} \\1^T s
                 \\\\
             \\mbox{subject to}
                 & G x \\leq h
         \\end{array}\\end{split}
 
-    Slack variables `s` are increased by an additional term in the cost
-    function, so that the solution of this "safer" QP is further inside the
-    constraint region.
+    Slack variables `s` (i.e. distance to inequality constraints) are added to
+    the vector of optimization variables and included in the cost function.
+    This pushes the solution of this "safer" QP is further inside the
+    linear constraint region.
 
     Parameters
     ----------
@@ -169,14 +171,17 @@ def solve_safer_qp(
         Linear inequality matrix.
     h : numpy.ndarray
         Linear inequality vector.
-    sw : float
-        Weight of the linear cost on slack variables. Higher values bring the
+    sr : float
+        This is the "slack repulsion" parameter that makes inequality
+        constraints repulsive. In practice it weighs the linear term on slack
+        variables in the augmented cost function. Higher values bring the
         solution further inside the constraint region but override the
         minimization of the original objective.
     reg : float, optional
-        Regularization term :math:`(1/2) \\epsilon` in the cost function. Set
-        this parameter as small as possible (e.g. 1e-8), and increase it in
-        case of numerical instability.
+        Regularization term that weighs squared slack variables in the cost
+        function. Increase this parameter in case of numerical instability, and
+        otherwise set it as small as possible compared, so that the squared
+        slack cost is as small as possible compared to the regular cost.
     solver : string, optional
         Name of the QP solver to use (default is MOSEK).
     initvals : numpy.ndarray, optional
@@ -209,7 +214,7 @@ def solve_safer_qp(
     n, m = P.shape[0], G.shape[0]
     E, Z = eye(m), zeros((m, n))
     P2 = vstack([hstack([P, Z.T]), hstack([Z, reg * eye(m)])])
-    q2 = hstack([q, -sw * ones(m)])
+    q2 = hstack([q, -sr * ones(m)])
     G2 = hstack([Z, E])
     h2 = zeros(m)
     A2 = hstack([G, -E])
