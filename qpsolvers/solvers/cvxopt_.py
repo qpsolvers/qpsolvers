@@ -32,7 +32,7 @@ from .typing import CvxoptReadyMatrix
 options["show_progress"] = False  # disable cvxopt output
 
 
-def cvxopt_matrix(M: ndarray) -> matrix:
+def cvxopt_matrix(M: CvxoptReadyMatrix) -> matrix:
     """
     Convert matrix to CVXOPT format.
 
@@ -51,7 +51,9 @@ def cvxopt_matrix(M: ndarray) -> matrix:
     if isinstance(M, (spmatrix, matrix)):
         return M
     coo = M.tocoo()
-    return spmatrix(coo.data.tolist(), coo.row.tolist(), coo.col.tolist(), size=M.shape)
+    return spmatrix(
+        coo.data.tolist(), coo.row.tolist(), coo.col.tolist(), size=M.shape
+    )
 
 
 def cvxopt_solve_qp(

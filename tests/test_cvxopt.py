@@ -18,17 +18,27 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
+import cvxopt
+import numpy as np
 import unittest
 import warnings
 
-from numpy import array, dot, eye
+from typing import Tuple
+
+import scipy
+
+from numpy import array, ones
+from numpy.linalg import norm
+from scipy.sparse import csc_matrix
+
 from qpsolvers import solve_qp
+from qpsolvers.solvers.cvxopt_ import cvxopt_matrix
 
 
-class TestQuadprog(unittest.TestCase):
+class TestCVXOPT(unittest.TestCase):
 
     """
-    Test fixture for the quadprog solver.
+    Test fixture for the CVXOPT solver.
     """
 
     def setUp(self):
@@ -37,44 +47,41 @@ class TestQuadprog(unittest.TestCase):
         """
         warnings.simplefilter("ignore", category=UserWarning)
 
-    def get_dense_problem(self):
+    def get_sparse_problem(
+        self,
+    ) -> Tuple[cvxopt.matrix, np.ndarray, cvxopt.matrix, np.ndarray]:
         """
-        Get problem as a sextuple of values to unpack.
+        Get sparse problem as a quadruplet of values to unpack.
 
         Returns
         -------
-        P : numpy.ndarray
+        P : cvxopt.matrix
             Symmetric quadratic-cost matrix .
         q : numpy.ndarray
             Quadratic-cost vector.
-        G : numpy.ndarray
+        G : cvxopt.matrix
             Linear inequality matrix.
         h : numpy.ndarray
             Linear inequality vector.
-        A : numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix
-            Linear equality matrix.
-        b : numpy.ndarray
-            Linear equality vector.
         """
-        M = array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
-        P = dot(M.T, M)  # this is a positive definite matrix
-        q = dot(array([3.0, 2.0, 3.0]), M).reshape((3,))
-        G = array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
-        h = array([3.0, 2.0, -2.0]).reshape((3,))
-        A = array([1.0, 1.0, 1.0])
-        b = array([1.0])
-        return P, q, G, h, A, b
+        n = 150
+        M = scipy.sparse.lil_matrix(scipy.sparse.eye(n))
+        for i in range(1, n - 1):
+            M[i, i + 1] = -1
+            M[i, i - 1] = 1
+        P = cvxopt_matrix(csc_matrix(M.dot(M.transpose())))
+        q = -ones((n,))
+        G = cvxopt_matrix(csc_matrix(-scipy.sparse.eye(n)))
+        h = -2.0 * ones((n,))
+        return P, q, G, h
 
-    def test_non_psd_cost(self):
-        P, q, G, h, A, b = self.get_dense_problem()
-        P -= eye(3)
-        with self.assertRaises(ValueError):
-            solve_qp(P, q, G, h, A, b, solver="quadprog")
-
-    def test_quadprog_value_error(self):
-        P, q, G, h, A, b = self.get_dense_problem()
-        q = q[1:]  # raise quadprog's "G and a must have the same dimension"
-        self.assertIsNone(solve_qp(P, q, G, h, A, b, solver="quadprog"))
+    def test_sparse(self):
+        P, q, G, h = self.get_sparse_problem()
+        x = solve_qp(P, q, G, h, solver="cvxopt")
+        self.assertIsNotNone(x)
+        known_solution = array([2.0] * 149 + [3.0])
+        self.assertTrue(norm(x - known_solution) < 1e-2)  # aouch, not great!
+        self.assertTrue(max(G * cvxopt_matrix(x) - cvxopt_matrix(h)) <= 1e-10)
 
 
 if __name__ == "__main__":

@@ -51,7 +51,7 @@ class TestSolveQP(unittest.TestCase):
 
     def get_dense_problem(self):
         """
-        Get problem as a sextuple of values to unpack.
+        Get dense problem as a sextuple of values to unpack.
 
         Returns
         -------
@@ -78,6 +78,20 @@ class TestSolveQP(unittest.TestCase):
         return P, q, G, h, A, b
 
     def get_sparse_problem(self):
+        """
+        Get sparse problem as a quadruplet of values to unpack.
+
+        Returns
+        -------
+        P : scipy.sparse.csc_matrix
+            Symmetric quadratic-cost matrix .
+        q : numpy.ndarray
+            Quadratic-cost vector.
+        G : scipy.sparse.csc_matrix
+            Linear inequality matrix.
+        h : numpy.ndarray
+            Linear inequality vector.
+        """
         n = 150
         M = scipy.sparse.lil_matrix(scipy.sparse.eye(n))
         for i in range(1, n - 1):
