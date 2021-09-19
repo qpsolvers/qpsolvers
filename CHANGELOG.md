@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Example script corresponding exactly to the README
 - Handle lower and upper bounds with sparse matrices (thanks to @MeindertHH)
 - Type annotations to all solve functions
+- Unit test: package coverage is now 93% (up from 77% in 1.6.1)
 
 ### Changed
 
