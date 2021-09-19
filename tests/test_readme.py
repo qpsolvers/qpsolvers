@@ -89,11 +89,36 @@ class ReadmeProblem(unittest.TestCase):
             self.assertTrue(allclose(dot(A, x), b))
         return test
 
+    @staticmethod
+    def get_test_no_ineq(solver):
+        """
+        Closure of test function for a given solver. In this variant, there is
+        no inequality constraint.
+
+        Parameters
+        ----------
+        solver : string
+            Name of the solver to test.
+
+        Returns
+        -------
+        test : function
+            Test function for that solver.
+        """
+        def test(self):
+            P, q, G, h, A, b = self.get_problem()
+            x = solve_qp(P, q, A=A, b=b, solver=solver)
+            self.assertIsNotNone(x)
+            self.assertTrue(allclose(dot(A, x), b))
+        return test
+
 
 # Generate test fixtures for each solver
 for solver in available_solvers:
     setattr(ReadmeProblem, 'test_{}'.format(solver),
             ReadmeProblem.get_test(solver))
+    setattr(ReadmeProblem, 'test_no_ineq_{}'.format(solver),
+            ReadmeProblem.get_test_no_ineq(solver))
 
 
 if __name__ == '__main__':
