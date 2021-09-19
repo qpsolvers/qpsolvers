@@ -66,7 +66,7 @@ def concatenate_bound(
         if isinstance(G, ndarray):
             G = concatenate((G, sign * np.eye(len(b))), 0)
         elif isinstance(G, csc_matrix):
-            G = sparse.vstack([G, sign * sparse.eye(len(b))])
+            G = sparse.vstack([G, sign * sparse.eye(len(b))], format="csc")
         else:  # isinstance(G, cvxopt.spmatrix)
             G = cvxopt.sparse(
                 [

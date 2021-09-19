@@ -23,6 +23,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+- Avoid undesired CSC-to-COO conversion when stacking sparse matrices
 - OSQP: forward keyword arguments to solver properly
 - quadprog: forward keyword arguments to solver properly
 
