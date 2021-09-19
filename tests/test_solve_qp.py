@@ -355,6 +355,32 @@ class TestSolveQP(unittest.TestCase):
         return test
 
     @staticmethod
+    def get_test_sparse_unfeasible(solver):
+        """
+        Get test function for a given solver. This variant tests an unfeasible
+        sparse problem with additional vector lower and upper bounds.
+
+        Parameters
+        ----------
+        solver : string
+            Name of the solver to test.
+
+        Returns
+        -------
+        test : function
+            Test function for that solver.
+        """
+
+        def test(self):
+            P, q, G, h = self.get_sparse_problem()
+            lb = +0.5 * ones(q.shape)
+            ub = +1.5 * ones(q.shape)
+            x = solve_qp(P, q, G, h, lb=lb, ub=ub, solver=solver)
+            self.assertIsNone(x)
+
+        return test
+
+    @staticmethod
     def get_test_warmstart(solver):
         """
         Get test function for a given solver. This variant warm starts.
@@ -444,6 +470,11 @@ for solver in available_solvers:
             TestSolveQP,
             "test_sparse_bounds_{}".format(solver),
             TestSolveQP.get_test_sparse_bounds(solver),
+        )
+        setattr(
+            TestSolveQP,
+            "test_sparse_unfeasible_{}".format(solver),
+            TestSolveQP.get_test_sparse_unfeasible(solver),
         )
     setattr(
         TestSolveQP,
