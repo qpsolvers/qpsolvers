@@ -42,8 +42,8 @@ Solvers
 PyPI solvers
 ------------
 
-To install at once all QP solvers available from `PyPI <https://pypi.org/>`_,
-run ``pip`` from the requirements file:
+To install at once all QP solvers available from the `Python Package Index
+<https://pypi.org/>`_, run ``pip`` from the requirements file:
 
 .. code:: bash
 
