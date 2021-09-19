@@ -90,10 +90,13 @@ class TestSolveQP(unittest.TestCase):
         def test(self):
             P, q, G, h, A, b = self.get_problem()
             x = solve_qp(P, q, G, h, A, b, solver=solver)
+            x_sp = solve_qp(P, q, G, h, A, b, solver=solver, sym_proj=True)
             self.assertIsNotNone(x)
+            self.assertIsNotNone(x_sp)
             known_solution = array([0.30769231, -0.69230769, 1.38461538])
             sol_tolerance = 1e-4 if solver == "ecos" else 1e-8
             self.assertTrue(norm(x - known_solution) < sol_tolerance)
+            self.assertTrue(norm(x_sp - known_solution) < sol_tolerance)
             self.assertTrue(max(dot(G, x) - h) <= 1e-10)
             self.assertTrue(allclose(dot(A, x), b))
 
