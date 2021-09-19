@@ -25,8 +25,12 @@ Tests for the main `solve_qp` function.
 import unittest
 import warnings
 
-from numpy import allclose, array, dot, random
+import scipy
+
+from numpy import allclose, array, dot, ones, random, zeros
 from numpy.linalg import norm
+from scipy.sparse import csc_matrix
+
 from qpsolvers import available_solvers, sparse_solvers
 from qpsolvers import solve_qp, solve_safer_qp
 from qpsolvers.exceptions import SolverNotFound
@@ -44,15 +48,8 @@ class TestSolveQP(unittest.TestCase):
         """
         warnings.simplefilter("ignore", category=DeprecationWarning)
         warnings.simplefilter("ignore", category=UserWarning)
-        M = array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
-        self.P = dot(M.T, M)  # this is a positive definite matrix
-        self.q = dot(array([3.0, 2.0, 3.0]), M).reshape((3,))
-        self.G = array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
-        self.h = array([3.0, 2.0, -2.0]).reshape((3,))
-        self.A = array([1.0, 1.0, 1.0])
-        self.b = array([1.0])
 
-    def get_problem(self):
+    def get_dense_problem(self):
         """
         Get problem as a sextuple of values to unpack.
 
@@ -71,7 +68,26 @@ class TestSolveQP(unittest.TestCase):
         b : numpy.ndarray
             Linear equality vector.
         """
-        return self.P, self.q, self.G, self.h, self.A, self.b
+        M = array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
+        P = dot(M.T, M)  # this is a positive definite matrix
+        q = dot(array([3.0, 2.0, 3.0]), M).reshape((3,))
+        G = array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
+        h = array([3.0, 2.0, -2.0]).reshape((3,))
+        A = array([1.0, 1.0, 1.0])
+        b = array([1.0])
+        return P, q, G, h, A, b
+
+    def get_sparse_problem(self):
+        n = 150
+        M = scipy.sparse.lil_matrix(scipy.sparse.eye(n))
+        for i in range(1, n - 1):
+            M[i, i + 1] = -1
+            M[i, i - 1] = 1
+        P = csc_matrix(M.dot(M.transpose()))
+        q = -ones((n,))
+        G = csc_matrix(-scipy.sparse.eye(n))
+        h = -2.0 * ones((n,))
+        return P, q, G, h
 
     @staticmethod
     def get_test(solver):
@@ -90,7 +106,7 @@ class TestSolveQP(unittest.TestCase):
         """
 
         def test(self):
-            P, q, G, h, A, b = self.get_problem()
+            P, q, G, h, A, b = self.get_dense_problem()
             x = solve_qp(P, q, G, h, A, b, solver=solver)
             x_sp = solve_qp(P, q, G, h, A, b, solver=solver, sym_proj=True)
             self.assertIsNotNone(x)
@@ -121,12 +137,12 @@ class TestSolveQP(unittest.TestCase):
         """
 
         def test(self):
-            P, q, G, h, A, b = self.get_problem()
+            P, q, G, h, A, b = self.get_dense_problem()
             lb = array([-1.0, -2.0, -0.5])
             ub = array([1.0, -0.2, 1.0])
             x = solve_qp(P, q, G, h, A, b, lb, ub, solver=solver)
             self.assertIsNotNone(x)
-            known_solution = array([0.41463415, -0.41463415, 1.])
+            known_solution = array([0.41463415, -0.41463415, 1.0])
             sol_tolerance = 1e-6 if solver == "ecos" else 1e-8
             self.assertTrue(norm(x - known_solution) < sol_tolerance)
             self.assertTrue(max(dot(G, x) - h) <= 1e-10)
@@ -152,7 +168,7 @@ class TestSolveQP(unittest.TestCase):
         """
 
         def test(self):
-            P, q, G, h, A, b = self.get_problem()
+            P, q, G, h, A, b = self.get_dense_problem()
             x = solve_qp(P, q, solver=solver)
             self.assertIsNotNone(x)
             known_solution = array([-0.64705882, -1.17647059, -1.82352941])
@@ -179,7 +195,7 @@ class TestSolveQP(unittest.TestCase):
         """
 
         def test(self):
-            P, q, G, h, A, b = self.get_problem()
+            P, q, G, h, A, b = self.get_dense_problem()
             x = solve_qp(P, q, G, h, solver=solver)
             self.assertIsNotNone(x)
             known_solution = array([-0.49025721, -1.57755261, -0.66484801])
@@ -208,7 +224,7 @@ class TestSolveQP(unittest.TestCase):
         """
 
         def test(self):
-            P, q, G, h, A, b = self.get_problem()
+            P, q, G, h, A, b = self.get_dense_problem()
             x = solve_qp(P, q, A=A, b=b, solver=solver)
             self.assertIsNotNone(x)
             known_solution = array([0.28026906, -1.55156951, 2.27130045])
@@ -236,7 +252,7 @@ class TestSolveQP(unittest.TestCase):
         """
 
         def test(self):
-            P, q, G, h, A, b = self.get_problem()
+            P, q, G, h, A, b = self.get_dense_problem()
             G, h = G[1], h[1].reshape((1,))
             x = solve_qp(P, q, G, h, A, b, solver=solver)
             self.assertIsNotNone(x)
@@ -265,7 +281,7 @@ class TestSolveQP(unittest.TestCase):
         """
 
         def test(self):
-            P, q, G, h, _, _ = self.get_problem()
+            P, q, G, h, _, _ = self.get_dense_problem()
             if solver in sparse_solvers:
                 with self.assertRaises(AssertionError):
                     solve_safer_qp(P, q, G, h, sr=1e-4, solver=solver)
@@ -297,7 +313,7 @@ class TestSolveQP(unittest.TestCase):
         """
 
         def test(self):
-            P, q, G, h, A, b = self.get_problem()
+            P, q, G, h, A, b = self.get_dense_problem()
             known_solution = array([0.30769231, -0.69230769, 1.38461538])
             initvals = known_solution + 0.1 * random.random(3)
             x = solve_qp(
@@ -320,7 +336,7 @@ class TestSolveQP(unittest.TestCase):
         return test
 
     def test_solver_not_found(self):
-        P, q, G, h, A, b = self.get_problem()
+        P, q, G, h, A, b = self.get_dense_problem()
         with self.assertRaises(SolverNotFound):
             solve_qp(P, q, G, h, A, b, solver="ideal")
 
