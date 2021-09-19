@@ -90,6 +90,29 @@ class ReadmeProblem(unittest.TestCase):
         return test
 
     @staticmethod
+    def get_test_no_eq(solver):
+        """
+        Closure of test function for a given solver. In this variant, there is
+        no equality constraint.
+
+        Parameters
+        ----------
+        solver : string
+            Name of the solver to test.
+
+        Returns
+        -------
+        test : function
+            Test function for that solver.
+        """
+        def test(self):
+            P, q, G, h, A, b = self.get_problem()
+            x = solve_qp(P, q, G, h, solver=solver)
+            self.assertIsNotNone(x)
+            self.assertTrue(max(dot(G, x) - h) <= 1e-10)
+        return test
+
+    @staticmethod
     def get_test_no_ineq(solver):
         """
         Closure of test function for a given solver. In this variant, there is
