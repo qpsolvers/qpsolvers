@@ -27,7 +27,7 @@ import warnings
 
 import scipy
 
-from numpy import allclose, array, dot, ones, random, zeros
+from numpy import allclose, array, dot, ones, random
 from numpy.linalg import norm
 from scipy.sparse import csc_matrix
 
@@ -312,11 +312,12 @@ class TestSolveQP(unittest.TestCase):
         test : function
             Test function for that solver.
         """
+
         def test(self):
             P, q, G, h = self.get_sparse_problem()
             x = solve_qp(P, q, G, h, solver=solver)
             self.assertIsNotNone(x)
-            known_solution = array([2.] * 149 + [3.])
+            known_solution = array([2.0] * 149 + [3.0])
             tol = 1e-3 if solver == "gurobi" else 1e-8  # aouch for Gurobi!
             self.assertTrue(norm(x - known_solution) < tol)
             self.assertTrue(max(G * x - h) <= 1e-10)
@@ -339,13 +340,14 @@ class TestSolveQP(unittest.TestCase):
         test : function
             Test function for that solver.
         """
+
         def test(self):
             P, q, G, h = self.get_sparse_problem()
-            lb = zeros(q.shape)
-            ub = +2.0 * ones(q.shape)
+            lb = +2.2 * ones(q.shape)
+            ub = +2.4 * ones(q.shape)
             x = solve_qp(P, q, G, h, lb=lb, ub=ub, solver=solver)
             self.assertIsNotNone(x)
-            known_solution = array([2.] * 149 + [3.])
+            known_solution = array([2.2] * 149 + [2.4])
             tol = 1e-3 if solver == "gurobi" else 1e-8  # aouch for Gurobi!
             self.assertTrue(norm(x - known_solution) < tol)
             self.assertTrue(max(G * x - h) <= 1e-10)
