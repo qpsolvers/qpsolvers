@@ -27,7 +27,8 @@ import warnings
 
 from numpy import allclose, array, dot, random
 from numpy.linalg import norm
-from qpsolvers import available_solvers, solve_qp
+from qpsolvers import available_solvers, sparse_solvers
+from qpsolvers import solve_qp, solve_safer_qp
 from qpsolvers.exceptions import SolverNotFound
 
 
@@ -218,6 +219,38 @@ class TestSolveQP(unittest.TestCase):
         return test
 
     @staticmethod
+    def get_test_safer(solver):
+        """
+        Get test function for a given solver.
+
+        Parameters
+        ----------
+        solver : string
+            Name of the solver to test.
+
+        Returns
+        -------
+        test : function
+            Test function for that solver.
+        """
+
+        def test(self):
+            P, q, G, h, _, _ = self.get_problem()
+            if solver in sparse_solvers:
+                with self.assertRaises(AssertionError):
+                    solve_safer_qp(P, q, G, h, sr=1e-4, solver=solver)
+                return
+            x = solve_safer_qp(P, q, G, h, sr=1e-4, solver=solver)
+            self.assertIsNotNone(x)
+            known_solution = array([-0.49021915, -1.57749935, -0.66477954])
+            sol_tolerance = 1e-4 if solver in ["ecos", "scs"] else 1e-6
+            ineq_tolerance = 1e-7 if solver == "scs" else 1e-10
+            self.assertTrue(norm(x - known_solution) < sol_tolerance)
+            self.assertTrue(max(dot(G, x) - h) <= ineq_tolerance)
+
+        return test
+
+    @staticmethod
     def get_test_warmstart(solver):
         """
         Get test function for a given solver. This variant warm starts.
@@ -286,6 +319,11 @@ for solver in available_solvers:
         TestSolveQP,
         "test_one_ineq_{}".format(solver),
         TestSolveQP.get_test_one_ineq(solver),
+    )
+    setattr(
+        TestSolveQP,
+        "test_safer_{}".format(solver),
+        TestSolveQP.get_test_safer(solver),
     )
     setattr(
         TestSolveQP,
