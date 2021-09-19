@@ -70,7 +70,7 @@ class ReadmeProblem(unittest.TestCase):
     @staticmethod
     def get_test(solver):
         """
-        Closure of test function for a given solver.
+        Get test function for a given solver.
 
         Parameters
         ----------
@@ -96,9 +96,36 @@ class ReadmeProblem(unittest.TestCase):
         return test
 
     @staticmethod
+    def get_test_no_cons(solver):
+        """
+        Get test function for a given solver. In this variant, there is
+        no equality nor inequality constraint.
+
+        Parameters
+        ----------
+        solver : string
+            Name of the solver to test.
+
+        Returns
+        -------
+        test : function
+            Test function for that solver.
+        """
+
+        def test(self):
+            P, q, G, h, A, b = self.get_problem()
+            x = solve_qp(P, q, solver=solver)
+            self.assertIsNotNone(x)
+            known_solution = array([-0.64705882, -1.17647059, -1.82352941])
+            sol_tolerance = 1e-3 if solver == "ecos" else 1e-6
+            self.assertTrue(norm(x - known_solution) < sol_tolerance)
+
+        return test
+
+    @staticmethod
     def get_test_no_eq(solver):
         """
-        Closure of test function for a given solver. In this variant, there is
+        Get test function for a given solver. In this variant, there is
         no equality constraint.
 
         Parameters
@@ -127,7 +154,7 @@ class ReadmeProblem(unittest.TestCase):
     @staticmethod
     def get_test_no_ineq(solver):
         """
-        Closure of test function for a given solver. In this variant, there is
+        Get test function for a given solver. In this variant, there is
         no inequality constraint.
 
         Parameters
@@ -155,7 +182,7 @@ class ReadmeProblem(unittest.TestCase):
     @staticmethod
     def get_test_warmstart(solver):
         """
-        Closure of test function for a given solver.
+        Get test function for a given solver. This variant warm starts.
 
         Parameters
         ----------
@@ -172,7 +199,17 @@ class ReadmeProblem(unittest.TestCase):
             P, q, G, h, A, b = self.get_problem()
             known_solution = array([0.30769231, -0.69230769, 1.38461538])
             initvals = known_solution + 0.1 * random.random(3)
-            x = solve_qp(P, q, G, h, A, b, solver=solver, initvals=initvals)
+            x = solve_qp(
+                P,
+                q,
+                G,
+                h,
+                A,
+                b,
+                solver=solver,
+                initvals=initvals,
+                verbose=True,  # increases coverage
+            )
             self.assertIsNotNone(x)
             sol_tolerance = 1e-4 if solver == "ecos" else 1e-8
             self.assertTrue(norm(x - known_solution) < sol_tolerance)
@@ -186,6 +223,11 @@ class ReadmeProblem(unittest.TestCase):
 for solver in available_solvers:
     setattr(
         ReadmeProblem, "test_{}".format(solver), ReadmeProblem.get_test(solver)
+    )
+    setattr(
+        ReadmeProblem,
+        "test_no_cons_{}".format(solver),
+        ReadmeProblem.get_test_no_cons(solver),
     )
     setattr(
         ReadmeProblem,
