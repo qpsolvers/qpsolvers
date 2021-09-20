@@ -94,9 +94,10 @@ class TestSolveLS(unittest.TestCase):
             self.assertIsNotNone(x_sp)
             known_solution = array([2.0 / 3, -1.0 / 3, 2.0 / 3])
             sol_tolerance = 1e-5 if solver == "ecos" else 1e-6
+            ineq_tolerance = 1e-7 if solver == "scs" else 1e-9
             self.assertTrue(norm(x - known_solution) < sol_tolerance)
             self.assertTrue(norm(x_sp - known_solution) < sol_tolerance)
-            self.assertTrue(max(dot(G, x) - h) <= 1e-9)
+            self.assertTrue(max(dot(G, x) - h) <= ineq_tolerance)
             self.assertTrue(allclose(dot(A, x), b))
 
         return test
