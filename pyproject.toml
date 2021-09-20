@@ -2,14 +2,17 @@
 requires = ["flit_core >=2,<4"]
 build-backend = "flit_core.buildapi"
 
-[tool.flit.metadata]
-module = "qpsolvers"
-author = "Stéphane Caron"
-author-email = "stephane.caron@normalesup.org"
-home-page = "https://github.com/stephane-caron/qpsolvers"
-description-file = "README.md"
+[project]
+name = "qpsolvers"
+readme = "README.md"
+authors = [
+    {name = "Stéphane Caron", email = "stephane.caron@normalesup.org"},
+]
+maintainers = [
+    {name = "Stéphane Caron", email = "stephane.caron@normalesup.org"},
+]
+dynamic = ['version', 'description']
 requires-python = ">=3.6"
-requires = ["quadprog >=0.1.8"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
@@ -23,9 +26,26 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Topic :: Scientific/Engineering :: Mathematics",
 ]
+dependencies = [
+    "Cython >=0.29.22",
+    "numpy >=1.20.2",
+    "qdldl >=0.1.5",
+    "quadprog >=0.1.8",
+    "scipy >=1.6.2",
+]
 
-[tool.flit.metadata.requires-extra]
-doc = ["sphinx"]
+[project.optional-dependencies]
+doc = [
+    "sphinx",
+]
+solvers = [
+    "cvxopt >=1.2.6",
+    "cvxpy >=1.1.11",
+    "ecos >=2.0.7.post1",
+    "osqp >=0.6.2",
+    "scs >=2.1.2,<3.0",
+]
 
-[tool.flit.metadata.urls]
+[project.urls]
 Documentation = "https://scaron.info/doc/qpsolvers/"
+Source = "https://github.com/stephane-caron/qpsolvers"
