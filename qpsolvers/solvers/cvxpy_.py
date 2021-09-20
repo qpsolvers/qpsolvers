@@ -83,8 +83,8 @@ def cvxpy_solve_qp(
         print("CVXPY: note that warm-start values are ignored by wrapper")
     n = q.shape[0]
     x = Variable(n)
-    P = Constant(P)  # see http://www.cvxpy.org/en/latest/faq/
-    objective = Minimize(0.5 * quad_form(x, P) + q @ x)
+    P_cst = Constant(P)  # see http://www.cvxpy.org/en/latest/faq/
+    objective = Minimize(0.5 * quad_form(x, P_cst) + q @ x)
     constraints = []
     if G is not None:
         constraints.append(G @ x <= h)
