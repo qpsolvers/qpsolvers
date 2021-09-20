@@ -43,13 +43,13 @@ def concatenate_bound(
 
     Parameters
     ----------
-    G : numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+    G :
         Linear inequality matrix.
-    h : numpy.ndarray, optional
+    h :
         Linear inequality vector.
-    b: numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+    b:
         Bound constraint vector.
-    sign: float
+    sign:
         Sign factor: -1.0 for a lower and +1.0 for an upper bound.
 
     Returns
@@ -89,13 +89,13 @@ def concatenate_bounds(
 
     Parameters
     ----------
-    G : numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+    G :
         Linear inequality matrix.
-    h : numpy.ndarray, optional
+    h :
         Linear inequality vector.
-    lb: numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+    lb:
         Lower bound constraint vector.
-    ub: numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+    ub:
         Upper bound constraint vector.
 
     Returns

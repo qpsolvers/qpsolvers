@@ -38,7 +38,7 @@ def cvxopt_matrix(M: CvxoptReadyMatrix) -> matrix:
 
     Parameters
     ----------
-    M : numpy.ndarray
+    M :
         Matrix in NumPy format.
 
     Returns
@@ -82,28 +82,28 @@ def cvxopt_solve_qp(
 
     Parameters
     ----------
-    P : numpy.ndarray, cvxopt.matrix or cvxopt.spmatrix
+    P :
         Symmetric quadratic-cost matrix.
-    q : numpy.ndarray, cvxopt.matrix or cvxopt.spmatrix
+    q :
         Quadratic-cost vector.
-    G : numpy.ndarray, cvxopt.matrix or cvxopt.spmatrix
+    G :
         Linear inequality matrix.
-    h : numpy.ndarray, cvxopt.matrix or cvxopt.spmatrix
+    h :
         Linear inequality vector.
-    A : numpy.ndarray, cvxopt.matrix or cvxopt.spmatrix
+    A :
         Linear equality constraint matrix.
-    b : numpy.ndarray, cvxopt.matrix or cvxopt.spmatrix
+    b :
         Linear equality constraint vector.
-    solver : string, optional
+    solver :
         Set to 'mosek' to run MOSEK rather than CVXOPT.
-    initvals : numpy.ndarray, optional
+    initvals :
         Warm-start guess vector.
-    verbose : bool, optional
+    verbose :
         Set to `True` to print out extra information.
 
     Returns
     -------
-    x : numpy.ndarray, shape=(n,), or None
+    :
         Solution to the QP, if found, otherwise ``None``.
 
     Note

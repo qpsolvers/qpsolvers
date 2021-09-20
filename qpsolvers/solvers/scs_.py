@@ -75,32 +75,32 @@ def scs_solve_qp(
 
     Parameters
     ----------
-    P : numpy.ndarray, shape=(n, n)
+    P :
         Primal quadratic cost matrix.
-    q : numpy.ndarray, shape=(n,)
+    q :
         Primal quadratic cost vector.
-    G : numpy.ndarray, shape=(m, n)
+    G :
         Linear inequality constraint matrix.
-    h : numpy.ndarray, shape=(m,)
+    h :
         Linear inequality constraint vector.
-    A : numpy.ndarray, shape=(k, n), optional
+    A :
         Linear equality constraint matrix.
-    b : numpy.ndarray, shape=(k, n), optional
+    b :
         Linear equality constraint vector.
-    initvals : numpy.ndarray, shape=(n,), optional
+    initvals :
         Warm-start guess vector (not used).
-    verbose : bool, optional
+    verbose :
         Set to `True` to print out extra information.
-    eps : float, optional
+    eps :
         Convergence tolerange.
-    use_indirect: bool, optional
+    use_indirect:
         Solve linear systems either "directly" via a sparse LDL factorization
         or "indirectly" by means of a `conjugate gradient method
         <https://stanford.edu/~boyd/papers/pdf/scs_long.pdf>`_.
 
     Returns
     -------
-    x : numpy.ndarray, shape=(n,)
+    :
         Solution to the QP, if found, otherwise ``None``.
 
     Notes

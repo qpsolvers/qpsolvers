@@ -45,17 +45,17 @@ class UnfeasibleProblem(unittest.TestCase):
 
         Returns
         -------
-        P : numpy.ndarray
+        P :
             Symmetric quadratic-cost matrix .
-        q : numpy.ndarray
+        q :
             Quadratic-cost vector.
-        G : numpy.ndarray
+        G :
             Linear inequality matrix.
-        h : numpy.ndarray
+        h :
             Linear inequality vector.
-        A : numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix
+        A :
             Linear equality matrix.
-        b : numpy.ndarray
+        b :
             Linear equality vector.
         """
         M = array([[1., 2., 0.], [-8., 3., 2.], [0., 1., 1.]])

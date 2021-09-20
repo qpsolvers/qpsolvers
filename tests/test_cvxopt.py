@@ -55,13 +55,13 @@ class TestCVXOPT(unittest.TestCase):
 
         Returns
         -------
-        P : cvxopt.matrix
+        P :
             Symmetric quadratic-cost matrix .
-        q : numpy.ndarray
+        q :
             Quadratic-cost vector.
-        G : cvxopt.matrix
+        G :
             Linear inequality matrix.
-        h : numpy.ndarray
+        h :
             Linear inequality vector.
         """
         n = 150

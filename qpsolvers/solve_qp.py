@@ -67,36 +67,36 @@ def solve_qp(
 
     Parameters
     ----------
-    P : numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix
+    P :
         Symmetric quadratic-cost matrix (most solvers require it to be definite
         as well).
-    q : numpy.ndarray
+    q :
         Quadratic-cost vector.
-    G : numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+    G :
         Linear inequality matrix.
-    h : numpy.ndarray, optional
+    h :
         Linear inequality vector.
-    A : numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+    A :
         Linear equality matrix.
-    b : numpy.ndarray, optional
+    b :
         Linear equality vector.
-    lb: numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+    lb:
         Lower bound constraint vector.
-    ub: numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+    ub:
         Upper bound constraint vector.
-    solver : string, optional
+    solver :
         Name of the QP solver, to choose in ``qpsolvers.available_solvers``.
-    initvals : numpy.ndarray, optional
-        Vector of initial `x` values used to warm-start the solver.
-    sym_proj : bool, optional
-        Set to `True` when the `P` matrix provided is not symmetric.
-    verbose : bool, optional
-        Set to `True` to print out extra information.
+    initvals :
+        Vector of initial :math:`x` values used to warm-start the solver.
+    sym_proj :
+        Set to ``True`` when the :math:`P` matrix provided is not symmetric.
+    verbose :
+        Set to ``True`` to print out extra information.
 
     Returns
     -------
-    x : array or None
-        Optimal solution if found, None otherwise.
+    :
+        Optimal solution if found, otherwise ``None``.
 
     Raises
     ------
@@ -165,36 +165,36 @@ def solve_safer_qp(
 
     Parameters
     ----------
-    P : numpy.ndarray
+    P :
         Symmetric quadratic-cost matrix.
-    q : numpy.ndarray
+    q :
         Quadratic-cost vector.
-    G : numpy.ndarray
+    G :
         Linear inequality matrix.
-    h : numpy.ndarray
+    h :
         Linear inequality vector.
-    sr : float
+    sr :
         This is the "slack repulsion" parameter that makes inequality
         constraints repulsive. In practice it weighs the linear term on slack
         variables in the augmented cost function. Higher values bring the
         solution further inside the constraint region but override the
         minimization of the original objective.
-    reg : float, optional
+    reg :
         Regularization term that weighs squared slack variables in the cost
         function. Increase this parameter in case of numerical instability, and
         otherwise set it as small as possible compared, so that the squared
         slack cost is as small as possible compared to the regular cost.
-    solver : string, optional
+    solver :
         Name of the QP solver to use (default is MOSEK).
-    initvals : numpy.ndarray, optional
+    initvals :
         Vector of initial `x` values used to warm-start the solver.
-    sym_proj : bool, optional
+    sym_proj :
         Set to `True` when the `P` matrix provided is not symmetric.
 
     Returns
     -------
-    x : numpy.ndarray, shape=(n,)
-        Optimal solution to the relaxed QP, if found.
+    :
+        Optimal solution to the relaxed QP, if found, otherwise ``None``.
 
     Raises
     ------

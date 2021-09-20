@@ -55,13 +55,13 @@ def convert_to_socp(
 
     Parameters
     ----------
-    P : numpy.ndarray
+    P :
         Primal quadratic cost matrix.
-    q : numpy.ndarray
+    q :
         Primal quadratic cost vector.
-    G : numpy.ndarray
+    G :
         Linear inequality constraint matrix.
-    h : numpy.ndarray
+    h :
         Linear inequality constraint vector.
 
     Returns

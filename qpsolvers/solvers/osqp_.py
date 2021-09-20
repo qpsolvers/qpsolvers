@@ -72,36 +72,36 @@ def osqp_solve_qp(
 
     Parameters
     ----------
-    P : scipy.sparse.csc_matrix
+    P :
         Symmetric quadratic-cost matrix.
-    q : numpy.ndarray
+    q :
         Quadratic cost vector.
-    G : scipy.sparse.csc_matrix
+    G :
         Linear inequality constraint matrix.
-    h : numpy.ndarray
+    h :
         Linear inequality constraint vector.
-    A : scipy.sparse.csc_matrix, optional
+    A :
         Linear equality constraint matrix.
-    b : numpy.ndarray, optional
+    b :
         Linear equality constraint vector.
-    initvals : numpy.ndarray, optional
+    initvals :
         Warm-start guess vector.
-    verbose : bool, optional
+    verbose :
         Set to `True` to print out extra information.
-    eps_abs : float, optional
+    eps_abs :
         Absolute convergence tolerance of the solver. Lower values yield more
         precise solutions at the cost of computation time.
-    eps_rel : float, optional
+    eps_rel :
         Relative convergence tolerance of the solver. Lower values yield more
         precise solutions at the cost of computation time.
-    polish : bool, optional
+    polish :
         Perform `polishing <https://osqp.org/docs/solver/#polishing>`_, an
         additional step where the solver tries to improve the accuracy of the
         solution. Default is ``True``.
 
     Returns
     -------
-    x : numpy.ndarray, shape=(n,)
+    :
         Solution to the QP, if found, otherwise ``None``.
 
     Note

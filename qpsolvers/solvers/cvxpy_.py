@@ -55,28 +55,28 @@ def cvxpy_solve_qp(
 
     Parameters
     ----------
-    P : numpy.ndarray, shape=(n, n)
+    P :
         Primal quadratic cost matrix.
-    q : numpy.ndarray, shape=(n,)
+    q :
         Primal quadratic cost vector.
-    G : numpy.ndarray, shape=(m, n)
+    G :
         Linear inequality constraint matrix.
-    h : numpy.ndarray, shape=(m,)
+    h :
         Linear inequality constraint vector.
-    A : numpy.ndarray, shape=(meq, n), optional
+    A :
         Linear equality constraint matrix.
-    b : numpy.ndarray, shape=(meq,), optional
+    b :
         Linear equality constraint vector.
-    initvals : numpy.ndarray, shape=(n,), optional
+    initvals :
         Warm-start guess vector (not used).
-    solver : string, optional
+    solver :
         Solver name in ``cvxpy.installed_solvers()``.
-    verbose : bool, optional
+    verbose :
         Set to `True` to print out extra information.
 
     Returns
     -------
-    x : numpy.ndarray, shape=(n,)
+    :
         Solution to the QP, if found, otherwise ``None``.
     """
     if initvals is not None:

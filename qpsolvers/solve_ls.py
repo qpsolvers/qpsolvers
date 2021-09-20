@@ -65,39 +65,39 @@ def solve_ls(
 
     Parameters
     ----------
-    R : numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix
+    R :
         Symmetric matrix of the cost function (most solvers require it to be
         definite).
-    s : numpy.ndarray
+    s :
         Vector term of the cost function.
-    G : numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+    G :
         Linear inequality matrix.
-    h : numpy.ndarray, optional
+    h :
         Linear inequality vector.
-    A : numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+    A :
         Linear equality matrix.
-    b : numpy.ndarray, optional
+    b :
         Linear equality vector.
-    lb: numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+    lb:
         Lower bound constraint vector.
-    ub: numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+    ub:
         Upper bound constraint vector.
-    W : numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix, optional
+    W :
         Definite symmetric weight matrix used to define the norm of the cost
         function. The standard L2 norm (W = Identity) is used by default.
-    solver : string, optional
+    solver :
         Name of the QP solver, to choose in ``qpsolvers.available_solvers``.
-    initvals : numpy.ndarray, optional
+    initvals :
         Vector of initial `x` values used to warm-start the solver.
-    sym_proj : bool, optional
+    sym_proj :
         Set to `True` when the `R` matrix provided is not symmetric.
-    verbose : bool, optional
+    verbose :
         Set to `True` to print out extra information.
 
     Returns
     -------
-    x : array or None
-        Optimal solution if found, None otherwise.
+    :
+        Optimal solution if found, otherwise ``None``.
 
     Note
     ----

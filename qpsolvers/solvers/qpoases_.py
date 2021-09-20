@@ -63,28 +63,28 @@ def qpoases_solve_qp(
 
     Parameters
     ----------
-    P : numpy.ndarray
+    P :
         Symmetric quadratic-cost matrix.
-    q : numpy.ndarray
+    q :
         Quadratic-cost vector.
-    G : numpy.ndarray
+    G :
         Linear inequality constraint matrix.
-    h : numpy.ndarray
+    h :
         Linear inequality constraint vector.
-    A : numpy.ndarray, optional
+    A :
         Linear equality constraint matrix.
-    b : numpy.ndarray, optional
+    b :
         Linear equality constraint vector.
-    initvals : numpy.ndarray, optional
+    initvals :
         Warm-start guess vector.
-    verbose : bool, optional
+    verbose :
         Set to `True` to print out extra information.
-    max_wsr : int, optional
+    max_wsr :
         Maximum number of Working-Set Recalculations given to qpOASES.
 
     Returns
     -------
-    x : numpy.ndarray
+    :
         Solution to the QP, if found, otherwise ``None``.
 
     Note

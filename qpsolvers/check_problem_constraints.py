@@ -22,20 +22,22 @@
 Utility function to check that a quadratic program is well-defined.
 """
 
+from .typing import Matrix, Vector
 
-def check_problem_constraints(G, h, A, b) -> None:
+
+def check_problem_constraints(G: Matrix, h: Vector, A: Matrix, b: Vector) -> None:
     """
     Check that problem constraint matrices and vectors are correctly defined.
 
     Parameters
     ----------
-    G : numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix
+    G :
         Linear inequality matrix.
-    h : numpy.ndarray
+    h :
         Linear inequality vector.
-    A : numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix
+    A :
         Linear equality matrix.
-    b : numpy.ndarray
+    b :
         Linear equality vector.
 
     Raises

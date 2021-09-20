@@ -55,34 +55,34 @@ class TestSolveLS(unittest.TestCase):
 
         Returns
         -------
-        R : numpy.ndarray
-            Least-squares matrix .
-        s : numpy.ndarray
+        R :
+            Least-squares matrix.
+        s :
             Least-squares vector.
-        G : numpy.ndarray
+        G :
             Linear inequality matrix.
-        h : numpy.ndarray
+        h :
             Linear inequality vector.
-        A : numpy.ndarray, scipy.sparse.csc_matrix or cvxopt.spmatrix
+        A :
             Linear equality matrix.
-        b : numpy.ndarray
+        b :
             Linear equality vector.
         """
         return self.R, self.s, self.G, self.h, self.A, self.b
 
     @staticmethod
-    def get_test(solver):
+    def get_test(solver: str):
         """
         Get test function for a given solver.
 
         Parameters
         ----------
-        solver : string
+        solver :
             Name of the solver to test.
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
         """
 

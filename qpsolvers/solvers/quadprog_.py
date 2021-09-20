@@ -55,21 +55,21 @@ def quadprog_solve_qp(
 
     Parameters
     ----------
-    P : numpy.ndarray
+    P :
         Symmetric quadratic-cost matrix.
-    q : numpy.ndarray
+    q :
         Quadratic-cost vector.
-    G : numpy.ndarray, optional
+    G :
         Linear inequality constraint matrix.
-    h : numpy.ndarray, optional
+    h :
         Linear inequality constraint vector.
-    A : numpy.ndarray, optional
+    A :
         Linear equality constraint matrix.
-    b : numpy.ndarray, optional
+    b :
         Linear equality constraint vector.
-    initvals : numpy.ndarray, optional
+    initvals :
         Warm-start guess vector (not used).
-    verbose : bool, optional
+    verbose :
         Set to `True` to print out extra information.
 
     Note
@@ -80,13 +80,14 @@ def quadprog_solve_qp(
 
     Returns
     -------
-    x : numpy.ndarray
+    :
         Solution to the QP, if found, otherwise ``None``.
 
     Note
     ----
-    The quadprog solver only considers the lower entries of `P`, therefore it
-    will use a wrong cost function if a non-symmetric matrix is provided.
+    The quadprog solver only considers the lower entries of :math:`P`,
+    therefore it will use a wrong cost function if a non-symmetric matrix is
+    provided.
     """
     if initvals is not None and verbose:
         warn("note that warm-start values ignored by quadprog")
