@@ -87,20 +87,17 @@ def qpoases_solve_qp(
     :
         Solution to the QP, if found, otherwise ``None``.
 
-    Note
-    ----
+    Notes
+    -----
     This function relies on some updates from the standard distribution of
-    qpOASES (details below). A fully compatible repository is published at
-    <https://github.com/stephane-caron/qpOASES>. (Quick install instructions:
-    run ``make`` from the cloned repository, then go to interfaces/python and
-    run ``sudo python setup.py install``.)
+    qpOASES. See the `installation instructions
+    <https://scaron.info/doc/qpsolvers/installation.html#qpoases>`_ for
+    details.
 
-    Note
-    ----
-    This function allows empty bounds (lb, ub, lbA or ubA). This was
-    provisioned by the C++ API but not by the Python API of qpOASES (as of
-    version 3.2.0). Be sure to update the Cython file (qpoases.pyx) to convert
-    ``None`` to the null pointer.
+    Empty bounds (`lb`, `ub`, `lbA` or `ubA`) are allowed. This is possible in
+    the C++ API but not by the Python API of qpOASES (as of version 3.2.0). If
+    using them, be sure to update the Cython file (`qpoases.pyx`) in your
+    distribution of qpOASES to convert ``None`` to the null pointer.
     """
     if initvals is not None:
         print("qpOASES: note that warm-start values ignored by wrapper")
