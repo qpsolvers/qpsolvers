@@ -43,7 +43,7 @@ def cvxopt_matrix(M: CvxoptReadyMatrix) -> matrix:
 
     Returns
     -------
-    N : cvxopt.matrix
+    :
         Matrix in CVXOPT format.
     """
     if isinstance(M, ndarray):
@@ -51,7 +51,9 @@ def cvxopt_matrix(M: CvxoptReadyMatrix) -> matrix:
     if isinstance(M, (spmatrix, matrix)):
         return M
     coo = M.tocoo()
-    return spmatrix(coo.data.tolist(), coo.row.tolist(), coo.col.tolist(), size=M.shape)
+    return spmatrix(
+        coo.data.tolist(), coo.row.tolist(), coo.col.tolist(), size=M.shape
+    )
 
 
 def cvxopt_solve_qp(
@@ -109,7 +111,7 @@ def cvxopt_solve_qp(
     Note
     ----
     CVXOPT only considers the lower entries of `P`, therefore it will use a
-    wrong cost function if a non-symmetric matrix is provided.
+    different cost than the one intended if a non-symmetric matrix is provided.
     """
     options["show_progress"] = verbose
     args = [cvxopt_matrix(P), cvxopt_matrix(q)]

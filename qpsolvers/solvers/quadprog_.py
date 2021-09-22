@@ -72,16 +72,16 @@ def quadprog_solve_qp(
     verbose :
         Set to `True` to print out extra information.
 
+    Returns
+    -------
+    :
+        Solution to the QP, if found, otherwise ``None``.
+
     Note
     ----
     The quadprog solver only considers the lower entries of :math:`P`,
     therefore it will use a different cost than the one intended if a
     non-symmetric matrix is provided.
-
-    Returns
-    -------
-    :
-        Solution to the QP, if found, otherwise ``None``.
 
     Notes
     -----
