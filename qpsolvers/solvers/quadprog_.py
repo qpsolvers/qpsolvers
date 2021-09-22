@@ -74,20 +74,20 @@ def quadprog_solve_qp(
 
     Note
     ----
-    All other keyword arguments are forwarded to the quadprog solver. For
-    instance, you can call ``quadprog_solve_qp(P, q, G, h, factorized=True)``.
-    See the solver documentation for details.
+    The quadprog solver only considers the lower entries of :math:`P`,
+    therefore it will use a different cost than the one intended if a
+    non-symmetric matrix is provided.
 
     Returns
     -------
     :
         Solution to the QP, if found, otherwise ``None``.
 
-    Note
-    ----
-    The quadprog solver only considers the lower entries of :math:`P`,
-    therefore it will use a wrong cost function if a non-symmetric matrix is
-    provided.
+    Notes
+    -----
+    All other keyword arguments are forwarded to the quadprog solver. For
+    instance, you can call ``quadprog_solve_qp(P, q, G, h, factorized=True)``.
+    See the solver documentation for details.
     """
     if initvals is not None and verbose:
         warn("note that warm-start values ignored by quadprog")

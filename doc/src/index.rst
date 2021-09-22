@@ -12,5 +12,6 @@ Quadratic Programming (QP) solvers available in Python.
 .. toctree::
 
     installation.rst
-    getting-started.rst
+    quadratic-programming.rst
+    least-squares.rst
     supported-solvers.rst
