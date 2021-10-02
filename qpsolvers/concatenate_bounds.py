@@ -22,7 +22,6 @@
 
 from typing import Optional, Tuple
 
-import cvxopt
 import numpy as np
 
 from numpy import concatenate, ndarray
@@ -30,6 +29,45 @@ from scipy import sparse
 from scipy.sparse import csc_matrix
 
 from .typing import Matrix, Vector
+
+
+try:
+    import cvxopt
+
+    def cvxopt_concatenate(G, sign: float, m: int):
+        """
+        Concatenate the sparse matrix `sign * eye(m)` to a CVXOPT matrix `G`.
+
+        Parameters
+        ----------
+        G :
+            Linear inequality matrix.
+        sign :
+            Sign factor: -1.0 for a lower and +1.0 for an upper bound.
+        m :
+            Dimension of the identity matrix.
+
+        Returns
+        -------
+        G :
+            Updated linear inequality matrix.
+        """
+        return cvxopt.sparse(
+            [
+                [G],
+                sign * cvxopt.spmatrix(1.0, range(m), range(m)),
+            ]
+        )
+
+
+except ImportError:
+
+    def cvxopt_concatenate(G, sign: float, m: int):
+        raise TypeError(
+            "Inequality matrix G has type cvxopt.spmatrix "
+            "(it is neither an ndarray nor a csc_matrix), "
+            "but CVXOPT is not installed"
+        )
 
 
 def concatenate_bound(
@@ -68,12 +106,7 @@ def concatenate_bound(
         elif isinstance(G, csc_matrix):
             G = sparse.vstack([G, sign * sparse.eye(len(b))], format="csc")
         else:  # isinstance(G, cvxopt.spmatrix)
-            G = cvxopt.sparse(
-                [
-                    [G],
-                    sign * cvxopt.spmatrix(1.0, range(len(b)), range(len(b))),
-                ]
-            )
+            G = cvxopt_concatenate(G, sign, len(b))
         h = concatenate((h, sign * b))
     return (G, h)
 
