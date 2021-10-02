@@ -86,7 +86,8 @@ def solve_ls(
         Definite symmetric weight matrix used to define the norm of the cost
         function. The standard L2 norm (W = Identity) is used by default.
     solver :
-        Name of the QP solver, to choose in ``qpsolvers.available_solvers``.
+        Name of the QP solver, to choose in
+        :data:`qpsolvers.available_solvers`.
     initvals :
         Vector of initial `x` values used to warm-start the solver.
     sym_proj :

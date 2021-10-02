@@ -85,7 +85,8 @@ def solve_qp(
     ub:
         Upper bound constraint vector.
     solver :
-        Name of the QP solver, to choose in ``qpsolvers.available_solvers``.
+        Name of the QP solver, to choose in
+        :data:`qpsolvers.available_solvers`.
     initvals :
         Vector of initial :math:`x` values used to warm-start the solver.
     sym_proj :
