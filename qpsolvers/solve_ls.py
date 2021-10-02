@@ -99,8 +99,8 @@ def solve_ls(
     :
         Optimal solution if found, otherwise ``None``.
 
-    Note
-    ----
+    Notes
+    -----
     Extra keyword arguments given to this function are forwarded to the
     underlying solvers. For example, OSQP has a setting `eps_abs` which we can
     provide by ``solve_ls(R, s, G, h, solver='osqp', eps_abs=1e-4)``.

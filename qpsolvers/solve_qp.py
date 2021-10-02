@@ -105,16 +105,17 @@ def solve_qp(
 
     Note
     ----
-    Extra keyword arguments given to this function are forwarded to the
-    underlying solvers. For example, OSQP has a setting `eps_abs` which we can
-    provide by ``solve_qp(P, q, G, h, solver='osqp', eps_abs=1e-4)``.
+    In quadratic programming, the matrix :math:`P` should be symmetric. Many
+    solvers (including CVXOPT, OSQP and quadprog) leverage this property and
+    may return unintended results when it is not the case. You can set
+    ``sym_proj=True`` to project :math:`P` on its symmetric part, at the cost
+    of some computation time.
 
     Notes
     -----
-    In quadratic programming, the matrix `P` should be symmetric. Many solvers
-    (including CVXOPT, OSQP and quadprog) leverage this property and may return
-    erroneous results when it is not the case. You can set ``sym_proj=True`` to
-    project `P` on its symmetric part, at the cost of some computation time.
+    Extra keyword arguments given to this function are forwarded to the
+    underlying solvers. For example, OSQP has a setting `eps_abs` which we can
+    provide by ``solve_qp(P, q, G, h, solver='osqp', eps_abs=1e-4)``.
     """
     if sym_proj:
         P = 0.5 * (P + P.transpose())
