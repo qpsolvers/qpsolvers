@@ -23,10 +23,15 @@
 from typing import Union
 
 from numpy import ndarray
-from cvxopt import matrix, spmatrix
 from scipy.sparse import csc_matrix
 
-CvxoptReadyMatrix = Union[ndarray, matrix, spmatrix]
+try:
+    from cvxopt import matrix, spmatrix
+
+    CvxoptReadyMatrix = Union[ndarray, matrix, spmatrix]
+except ImportError:
+    CvxoptReadyMatrix = ndarray  # type: ignore
+
 OsqpReadyMatrix = Union[ndarray, csc_matrix]
 
 __all__ = [

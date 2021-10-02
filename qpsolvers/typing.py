@@ -18,16 +18,21 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""Types for ."""
+"""Types for solve_qp function arguments."""
 
 from typing import Union
 
 from numpy import ndarray
-from cvxopt import spmatrix
 from scipy.sparse import csc_matrix
 
-Matrix = Union[ndarray, csc_matrix, spmatrix]
-Vector = Union[ndarray, csc_matrix, spmatrix]
+try:
+    from cvxopt import spmatrix
+
+    Matrix = Union[ndarray, csc_matrix, spmatrix]
+    Vector = Union[ndarray, csc_matrix, spmatrix]
+except ImportError:
+    Matrix = Union[ndarray, csc_matrix]  # type: ignore
+    Vector = Union[ndarray, csc_matrix]  # type: ignore
 
 __all__ = [
     "Matrix",
