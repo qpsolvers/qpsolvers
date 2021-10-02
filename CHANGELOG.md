@@ -2,13 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
-
-### Added
-
-### Changed
+## [1.7.1] - 2021/10/02
 
 ### Fixed
+
+- Make CVXOPT optional again (thanks to @adamoppenheimer)
 
 ## [1.7] - 2021/09/19
 

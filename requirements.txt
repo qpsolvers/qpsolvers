@@ -5,7 +5,7 @@ ecos==2.0.7.post1
 numpy==1.20.2
 osqp==0.6.2.post0
 qdldl==0.1.5.post0
-qpsolvers==1.7.0
+qpsolvers==1.7.1
 quadprog==0.1.8
 scipy==1.6.2
 scs==2.1.4
