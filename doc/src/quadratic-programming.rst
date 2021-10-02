@@ -1,11 +1,10 @@
+:github_url: https://github.com/stephane-caron/qpsolvers/tree/master/doc/src/quadratic-programming.rst
+
+.. _Quadratic programming:
+
 *********************
 Quadratic programming
 *********************
-
-The function ``solve_qp(P, q, G, h, A, b, lb, ub)`` is called with the
-``solver`` keyword argument to select the backend solver:
-
-.. autofunction:: qpsolvers.solve_qp
 
 To solve a quadratic program, simply build the matrices that define it and call
 the ``solve_qp`` function:
@@ -27,5 +26,15 @@ the ``solve_qp`` function:
     print("QP solution: x = {}".format(x))
 
 This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``.
+The :func:`.solve_qp` function accepts a ``solver`` keyword argument to select
+the backend solver:
 
-See the ``examples/`` folder in the repository for more advanced use cases.
+.. autofunction:: qpsolvers.solve_qp
+
+Installed solvers are listed in:
+
+.. autodata:: qpsolvers.available_solvers
+
+See the ``examples/`` folder in the repository for other use cases. For a more
+general introduction you can also check out this post on `quadratic programming
+in Python <https://scaron.info/blog/quadratic-programming-in-python.html>`_.

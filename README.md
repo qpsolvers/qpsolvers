@@ -5,7 +5,7 @@
 [![Documentation](https://img.shields.io/badge/documentation-online-brightgreen?logo=read-the-docs&style=flat)](https://scaron.info/doc/qpsolvers/)
 ![Status](https://img.shields.io/pypi/status/qpsolvers)
 
-Wrapper around Quadratic Programming (QP) solvers in Python, with a unified interface.
+Unified interface to Quadratic Programming (QP) solvers available in Python.
 
 ## Installation
 
@@ -17,15 +17,15 @@ Check out the documentation for [Python 2](https://scaron.info/doc/qpsolvers/ins
 
 ## Usage
 
-The function ``solve_qp(P, q, G, h, A, b, lb, ub)`` is called with the ``solver`` keyword argument to select the backend solver. The convex quadratic program it solves is, in standard form:
+The library provides a one-stop shop ``solve_qp(P, q, G, h, A, b, lb, ub)`` function with a ``solver`` keyword argument to select the backend solver. It solves convex quadratic programs in standard form:
 
-![Equation of Quadratic Program](https://raw.githubusercontent.com/stephane-caron/qpsolvers/master/doc/src/images/qp.gif)
+![Quadratic program in standard form](https://raw.githubusercontent.com/stephane-caron/qpsolvers/master/doc/src/images/qp.gif)
 
 Vector inequalities are taken coordinate by coordinate. The matrix *P* should be [positive definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix).
 
 ## Example
 
-To solve a quadratic program, simply build the matrices that define it and call the ``solve_qp`` function:
+To solve a quadratic program, build the matrices that define it and call the ``solve_qp`` function:
 
 ```python
 from numpy import array, dot

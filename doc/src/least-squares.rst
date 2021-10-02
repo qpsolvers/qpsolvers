@@ -1,14 +1,13 @@
+:github_url: https://github.com/stephane-caron/qpsolvers/tree/master/doc/src/least-squares.rst
+
+.. _Least squares:
+
 *************
 Least squares
 *************
 
-The function ``solve_ls(P, q, G, h, A, b, lb, ub)`` is called with the
-``solver`` keyword argument to select the backend solver:
-
-.. autofunction:: qpsolvers.solve_ls
-
 To solve a linear least-squares problem, simply build the matrices that define
-it and call the ``solve_ls`` function:
+it and call the :func:`.solve_ls` function:
 
 .. code:: python
 
@@ -23,6 +22,12 @@ it and call the ``solve_ls`` function:
     x_sol = solve_ls(R, s, G, h, solver=solver, verbose=True)
     print("LS solution: x = {}".format(x))
 
-This example outputs the solution ``[-0.0530504, 0.0265252, 2.1061008]``.
+This example outputs the solution ``[-0.0530504, 0.0265252, 2.1061008]``. The
+:func:`solve_ls` function accepts a ``solver`` keyword argument to select the
+backend solver:
 
-See the ``examples/`` folder in the repository for more advanced use cases.
+.. autofunction:: qpsolvers.solve_ls
+
+See the ``examples/`` folder in the repository for more advanced use cases. For
+a more general introduction you can also check out this post on `least squares
+in Python <https://scaron.info/robotics/least-squares.html>`_.
