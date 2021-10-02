@@ -4,11 +4,8 @@
 Installation
 ************
 
-Operating systems
-=================
-
 Linux
------
+=====
 
 The simplest way to install the package on a recent Debian-based system with
 Python 3 is:
@@ -28,7 +25,7 @@ If you have an older system with Python 2, for instance Ubuntu 16.04, try:
     pip install -r requirements2.txt
 
 Windows
--------
+=======
 
 - First, install the `Visual C++ Build Tools <https://visualstudio.microsoft.com/visual-cpp-build-tools/>`_
 - Install your Python environment, for instance `Anaconda <https://docs.anaconda.com/anaconda/install/windows/>`_
@@ -41,8 +38,8 @@ Windows
 Solvers
 =======
 
-PyPI solvers
-------------
+Open source solvers
+-------------------
 
 To install at once all QP solvers available from the `Python Package Index
 <https://pypi.org/>`_, run ``pip`` from the requirements file:
