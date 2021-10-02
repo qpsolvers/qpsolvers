@@ -8,11 +8,27 @@ qpsolvers
 
 .. **Release 1.7.1 -- October 2, 2021**
 
-This library provides a unified interface to a wide array of Quadratic
-Programming (QP) solvers available in Python.
+Unified interface to Quadratic Programming (QP) solvers available in Python.
+
+The library provides a one-stop shop :func:`.solve_qp` function with a
+``solver`` keyword argument to select the backend solver. It solves
+:ref:`convex quadratic programs <Quadratic programming>` in standard form:
+
+.. math::
+
+    \begin{split}\begin{array}{ll}
+        \mbox{minimize} &
+            \frac{1}{2} x^T P x + q^T x \\
+        \mbox{subject to}
+            & G x \leq h                \\
+            & A x = b                    \\
+            & lb \leq x \leq ub
+    \end{array}\end{split}
+
+A similar function is provided for :ref:`least squares <Least squares>`. 
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
 
     installation.rst
     getting-started.rst

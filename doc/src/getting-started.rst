@@ -4,6 +4,8 @@
 Getting started
 ***************
 
+.. _Quadratic programming:
+
 Quadratic programming
 =====================
 
@@ -32,11 +34,15 @@ the backend solver:
 
 .. autofunction:: qpsolvers.solve_qp
 
+Installed solvers are listed in:
+
 .. autodata:: qpsolvers.available_solvers
 
 See the ``examples/`` folder in the repository for other use cases. For a more
 general introduction you can also check out this post on `quadratic programming
 in Python <https://scaron.info/blog/quadratic-programming-in-python.html>`_.
+
+.. _Least squares:
 
 Least squares
 =============
