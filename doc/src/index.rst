@@ -1,3 +1,5 @@
+:github_url: https://github.com/stephane-caron/qpsolvers/tree/master/doc/src/index.rst
+
 .. title:: Table of Contents
 
 #########
@@ -10,6 +12,7 @@ This library provides a unified interface to a wide array of Quadratic
 Programming (QP) solvers available in Python.
 
 .. toctree::
+    :maxdepth: 2
 
     installation.rst
     getting-started.rst

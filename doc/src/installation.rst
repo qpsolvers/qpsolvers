@@ -1,3 +1,5 @@
+:github_url: https://github.com/stephane-caron/qpsolvers/tree/master/doc/src/installation.rst
+
 ************
 Installation
 ************
