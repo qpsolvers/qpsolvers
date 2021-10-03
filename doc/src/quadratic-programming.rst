@@ -7,7 +7,7 @@ Quadratic programming
 *********************
 
 To solve a quadratic program, simply build the matrices that define it and call
-the ``solve_qp`` function:
+the :func:`.solve_qp` function:
 
 .. code:: python
 
