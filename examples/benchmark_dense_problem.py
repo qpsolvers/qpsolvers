@@ -32,32 +32,31 @@ from qpsolvers import dense_solvers, sparse_solvers
 from qpsolvers import solve_qp
 
 
-M = array([
-    [1., 2., 0.],
-    [-8., 3., 2.],
-    [0., 1., 1.]])
+M = array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
 P = dot(M.T, M)
-q = dot(array([3., 2., 3.]), M).reshape((3,))
-G = array([
-    [1., 2., 1.],
-    [2., 0., 1.],
-    [-1., 2., -1.]])
-h = array([3., 2., -2.]).reshape((3,))
+q = dot(array([3.0, 2.0, 3.0]), M).reshape((3,))
+G = array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
+h = array([3.0, 2.0, -2.0]).reshape((3,))
 P_csc = csc_matrix(P)
 G_csc = csc_matrix(G)
 
 
 if __name__ == "__main__":
     if get_ipython() is None:
-        print("Usage: ipython -i %s" % basename(__file__))
+        print(
+            "Run the benchmark with IPython:\n\n"
+            f"\tipython -i {basename(__file__)}\n"
+        )
         exit()
 
     dense_instr = {
-        solver: "u = solve_qp(P, q, G, h, solver='%s')" % solver
-        for solver in dense_solvers}
+        solver: f"u = solve_qp(P, q, G, h, solver='{solver}')"
+        for solver in dense_solvers
+    }
     sparse_instr = {
-        solver: "u = solve_qp(P_csc, q, G_csc, h, solver='%s')" % solver
-        for solver in sparse_solvers}
+        solver: f"u = solve_qp(P_csc, q, G_csc, h, solver='{solver}')"
+        for solver in sparse_solvers
+    }
 
     print("\nTesting all QP solvers on a dense quadratic program...")
 
@@ -66,18 +65,18 @@ if __name__ == "__main__":
     for solver in dense_solvers:
         sol = solve_qp(P, q, G, h, solver=solver)
         delta = norm(sol - sol0)
-        assert delta < abstol, "%s's solution offset by %.1e" % (solver, delta)
+        assert delta < abstol, f"{solver}'s solution offset by {delta:.1e}"
     for solver in sparse_solvers:
         sol = solve_qp(P_csc, q, G_csc, h, solver=solver)
         delta = norm(sol - sol0)
-        assert delta < abstol, "%s's solution offset by %.1e" % (solver, delta)
+        assert delta < abstol, f"{solver}'s solution offset by {delta:.1e}"
 
     print("\nDense solvers\n-------------")
     for solver, instr in dense_instr.items():
-        print("%s: " % solver, end='')
-        get_ipython().magic('timeit %s' % instr)
+        print(f"{solver}: ", end="")
+        get_ipython().magic(f"timeit {instr}")
 
     print("\nSparse solvers\n--------------")
     for solver, instr in sparse_instr.items():
-        print("%s: " % solver, end='')
-        get_ipython().magic('timeit %s' % instr)
+        print(f"{solver}: ", end="")
+        get_ipython().magic(f"timeit {instr}")

@@ -53,37 +53,46 @@ def check_same_solutions(tol=0.05):
         sol = solve_qp(P, q, G, h, solver=solver)
         relvar = norm(sol - sol0) / norm(sol0)
         assert relvar < tol, "%s's solution offset by %.1f%%" % (
-            solver, 100. * relvar)
+            solver,
+            100.0 * relvar,
+        )
     for solver in dense_solvers:
         sol = solve_qp(P_array, q, G_array, h, solver=solver)
         relvar = norm(sol - sol0) / norm(sol0)
         assert relvar < tol, "%s's solution offset by %.1f%%" % (
-            solver, 100. * relvar)
+            solver,
+            100.0 * relvar,
+        )
 
 
 def time_dense_solvers():
     instructions = {
         solver: "u = solve_qp(P_array, q, G_array, h, solver='%s')" % solver
-        for solver in dense_solvers}
+        for solver in dense_solvers
+    }
     print("\nDense solvers\n-------------")
     for solver, instr in instructions.items():
-        print("%s: " % solver, end='')
-        get_ipython().magic('timeit %s' % instr)
+        print("%s: " % solver, end="")
+        get_ipython().magic("timeit %s" % instr)
 
 
 def time_sparse_solvers():
     instructions = {
         solver: "u = solve_qp(P, q, G, h, solver='%s')" % solver
-        for solver in sparse_solvers}
+        for solver in sparse_solvers
+    }
     print("\nSparse solvers\n--------------")
     for solver, instr in instructions.items():
-        print("%s: " % solver, end='')
-        get_ipython().magic('timeit %s' % instr)
+        print("%s: " % solver, end="")
+        get_ipython().magic("timeit %s" % instr)
 
 
 if __name__ == "__main__":
     if get_ipython() is None:
-        print("Usage: ipython -i %s" % basename(__file__))
+        print(
+            "Run the benchmark with IPython:\n\n"
+            f"\tipython -i {basename(__file__)}\n"
+        )
         exit()
     print("\nTesting all QP solvers on a sparse quadratic program...")
     check_same_solutions()

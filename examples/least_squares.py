@@ -26,10 +26,10 @@ from numpy import array
 from qpsolvers import solve_ls
 from time import time
 
-R = array([[1., 2., 0.], [-8., 3., 2.], [0., 1., 1.]])
-s = array([3., 2., 3.])
-G = array([[1., 2., 1.], [2., 0., 1.], [-1., 2., -1.]])
-h = array([3., 2., -2.]).reshape((3,))
+R = array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
+s = array([3.0, 2.0, 3.0])
+G = array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
+h = array([3.0, 2.0, -2.0]).reshape((3,))
 
 t_start = time()
 solver = "quadprog"  # see qpsolvers.available_solvers
@@ -46,5 +46,5 @@ print("G =", G)
 print("h =", h)
 print("")
 print("Solution: x =", x_sol)
-print("Solve time:", 1000. * (t_end - t_start), "[ms]")
+print("Solve time:", 1000.0 * (t_end - t_start), "[ms]")
 print("Solver:", solver)
