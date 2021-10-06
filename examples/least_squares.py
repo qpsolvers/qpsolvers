@@ -22,29 +22,29 @@
 Test the "quadprog" QP solver on a small dense problem.
 """
 
-from numpy import array
-from qpsolvers import solve_ls
+import numpy as np
+
+from qpsolvers import solve_ls, print_matrix_vector
 from time import time
 
-R = array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
-s = array([3.0, 2.0, 3.0])
-G = array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
-h = array([3.0, 2.0, -2.0]).reshape((3,))
+R = np.array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
+s = np.array([3.0, 2.0, 3.0])
+G = np.array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
+h = np.array([3.0, 2.0, -2.0]).reshape((3,))
 
-t_start = time()
+start_time = time()
 solver = "quadprog"  # see qpsolvers.available_solvers
-x_sol = solve_ls(R, s, G, h, solver=solver, verbose=True)
-t_end = time()
+x = solve_ls(R, s, G, h, solver=solver, verbose=True)
+end_time = time()
 
 print("")
 print("    min. || R * x - s ||^2")
 print("    s.t. G * x <= h")
 print("")
-print("R =", R)
-print("s =", s)
-print("G =", G)
-print("h =", h)
+print_matrix_vector(R, "R", s, "s")
 print("")
-print("Solution: x =", x_sol)
-print("Solve time:", 1000.0 * (t_end - t_start), "[ms]")
-print("Solver:", solver)
+print_matrix_vector(G, "G", h, "h")
+print("")
+print(f"Solution: x = {x}")
+print(f"Solve time: {1e6 * (end_time - start_time):.0f} [us]")
+print(f"Solver: {solver}")

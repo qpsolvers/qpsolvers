@@ -22,21 +22,22 @@
 Test the "quadprog" QP solver on a small dense problem.
 """
 
-from numpy import array, dot
-from qpsolvers import solve_qp
+import numpy as np
+
+from qpsolvers import solve_qp, print_matrix_vector
 from time import time
 
-M = array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
-P = dot(M.T, M)  # this is a positive definite matrix
-q = dot(array([3.0, 2.0, 3.0]), M).reshape((3,))
-G = array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
-h = array([3.0, 2.0, -2.0]).reshape((3,))
-A = array([1.0, 1.0, 1.0])
-b = array([1.0])
+M = np.array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
+P = np.dot(M.T, M)  # this is a positive definite matrix
+q = np.dot(np.array([3.0, 2.0, 3.0]), M).reshape((3,))
+G = np.array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
+h = np.array([3.0, 2.0, -2.0]).reshape((3,))
+A = np.array([1.0, 1.0, 1.0])
+b = np.array([1.0])
 
 start_time = time()
 solver = "quadprog"  # see qpsolvers.available_solvers
-solution = solve_qp(P, q, G, h, A, b, solver=solver)
+x = solve_qp(P, q, G, h, A, b, solver=solver)
 end_time = time()
 
 print("")
@@ -44,13 +45,12 @@ print("    min. 1/2 x^T P x + q^T x")
 print("    s.t. G * x <= h")
 print("         A * x == b")
 print("")
-print(f"P = {P}")
-print(f"q = {q}")
-print(f"G = {G}")
-print(f"h = {h}")
-print(f"A = {G}")
-print(f"b = {h}")
+print_matrix_vector(P, "P", q, "q")
 print("")
-print(f"Solution: x = {solution}")
-print(f"Solve time: {1000. * (end_time - start_time)} [ms]")
-print("Solver:", solver)
+print_matrix_vector(G, "G", h, "h")
+print("")
+print_matrix_vector(A, "A", b, "b")
+print("")
+print(f"Solution: x = {x}")
+print(f"Solve time: {1e6 * (end_time - start_time):.0f} [us]")
+print(f"Solver: {solver}")
