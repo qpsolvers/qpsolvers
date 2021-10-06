@@ -94,15 +94,15 @@ if __name__ == "__main__":
         try:
             perfs[solver] = []
             for size in sizes:
-                print("Running %s on problem size %d..." % (solver, size))
+                print(f"Running {solver} on problem size {size}...")
                 cum_time = timeit(
-                    stmt="solve_random_qp(%d, '%s')" % (size, solver),
+                    stmt=f"solve_random_qp({size}, '{solver}')",
                     setup="from __main__ import solve_random_qp",
                     number=nb_iter,
                 )
                 perfs[solver].append(cum_time / nb_iter)
         except Exception as e:
-            print("Warning: %s" % str(e))
+            print(f"Warning: {str(e)}")
             if solver in perfs:
                 del perfs[solver]
     plot_results(perfs)

@@ -52,39 +52,37 @@ def check_same_solutions(tol=0.05):
     for solver in sparse_solvers:
         sol = solve_qp(P, q, G, h, solver=solver)
         relvar = norm(sol - sol0) / norm(sol0)
-        assert relvar < tol, "%s's solution offset by %.1f%%" % (
-            solver,
-            100.0 * relvar,
-        )
+        assert (
+            relvar < tol
+        ), f"{solver}'s solution offset by {100.0 * relvar:.1f}%"
     for solver in dense_solvers:
         sol = solve_qp(P_array, q, G_array, h, solver=solver)
         relvar = norm(sol - sol0) / norm(sol0)
-        assert relvar < tol, "%s's solution offset by %.1f%%" % (
-            solver,
-            100.0 * relvar,
-        )
+        assert (
+            relvar < tol
+        ), f"{solver}'s solution offset by {100.0 * relvar:.1f}%"
 
 
 def time_dense_solvers():
     instructions = {
-        solver: "u = solve_qp(P_array, q, G_array, h, solver='%s')" % solver
+        solver: f"u = solve_qp(P_array, q, G_array, h, solver='{solver}')"
         for solver in dense_solvers
     }
     print("\nDense solvers\n-------------")
     for solver, instr in instructions.items():
-        print("%s: " % solver, end="")
-        get_ipython().magic("timeit %s" % instr)
+        print(f"{solver}: ", end="")
+        get_ipython().magic(f"timeit {instr}")
 
 
 def time_sparse_solvers():
     instructions = {
-        solver: "u = solve_qp(P, q, G, h, solver='%s')" % solver
+        solver: f"u = solve_qp(P, q, G, h, solver='{solver}')"
         for solver in sparse_solvers
     }
     print("\nSparse solvers\n--------------")
     for solver, instr in instructions.items():
-        print("%s: " % solver, end="")
-        get_ipython().magic("timeit %s" % instr)
+        print(f"{solver}: ", end="")
+        get_ipython().magic(f"timeit {instr}")
 
 
 if __name__ == "__main__":
