@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Added
+
+- Convenience function to prettyprint a matrix and vector side by side
+
+### Changed
+
+- Move old tests from the examples folder to the unit test suite
+
 ## [1.7.1] - 2021/10/02
 
 ### Fixed
