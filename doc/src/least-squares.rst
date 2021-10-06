@@ -20,7 +20,7 @@ it and call the :func:`.solve_ls` function:
     h = array([3., 2., -2.]).reshape((3,))
 
     x_sol = solve_ls(R, s, G, h, solver=solver, verbose=True)
-    print("LS solution: x = {}".format(x))
+    print(f"LS solution: x = {x}")
 
 This example outputs the solution ``[-0.0530504, 0.0265252, 2.1061008]``. The
 :func:`solve_ls` function accepts a ``solver`` keyword argument to select the
