@@ -135,6 +135,62 @@ class TestSolveQP(unittest.TestCase):
         return test
 
     @staticmethod
+    def get_test_all_shapes(solver):
+        """
+        Get test function for a given solver. This variant tries all possible
+        shapes for matrix and vector parameters.
+
+        Parameters
+        ----------
+        solver : string
+            Name of the solver to test.
+
+        Returns
+        -------
+        test : function
+            Test function for that solver.
+        """
+
+        def test(self):
+            P, q, G, h, _, _ = self.get_dense_problem()
+            h0 = array([h[0]])
+            A = array([[1.0, 0.0, 0.0], [0.0, 0.4, 0.5]])
+            b = array([-0.5, -1.2])
+            b0 = array([b[0]])
+            lb = array([-1.0, -1.0, -1.0])
+            ub = array([+1.0, +1.0, +1.0])
+
+            cases = [
+                {"P": P, "q": q},
+                {"P": P, "q": q, "G": G, "h": h},
+                {"P": P, "q": q, "A": A, "b": b},
+                {"P": P, "q": q, "G": G[0], "h": h0},
+                {"P": P, "q": q, "A": A[0], "b": b0},
+                {"P": P, "q": q, "G": G, "h": h, "A": A, "b": b},
+                {"P": P, "q": q, "G": G[0], "h": h0, "A": A, "b": b},
+                {"P": P, "q": q, "G": G, "h": h, "A": A[0], "b": b0},
+                {"P": P, "q": q, "G": G[0], "h": h0, "A": A[0], "b": b0},
+                {
+                    "P": P,
+                    "q": q,
+                    "G": G[0],
+                    "h": h0,
+                    "A": A[0],
+                    "b": b0,
+                    "lb": lb,
+                    "ub": ub,
+                },
+            ]
+
+            for (i, case) in enumerate(cases):
+                quadprog_solution = solve_qp(solver="quadprog", **case)
+                for solver in available_solvers:
+                    x = solve_qp(solver=solver, **case)
+                    self.assertTrue(norm(x - quadprog_solution) < 2e-4)
+
+        return test
+
+    @staticmethod
     def get_test_bounds(solver):
         """
         Get test function for a given solver. This variant adds vector bounds.
@@ -446,6 +502,11 @@ class TestSolveQP(unittest.TestCase):
 for solver in available_solvers:
     setattr(
         TestSolveQP, "test_{}".format(solver), TestSolveQP.get_test(solver)
+    )
+    setattr(
+        TestSolveQP,
+        "test_all_shapes_{}".format(solver),
+        TestSolveQP.get_test_all_shapes(solver),
     )
     setattr(
         TestSolveQP,
