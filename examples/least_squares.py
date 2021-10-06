@@ -25,17 +25,17 @@ Test the "quadprog" QP solver on a small dense problem.
 import numpy as np
 
 from qpsolvers import solve_ls, print_matrix_vector
-from time import time
+from time import perf_counter
 
 R = np.array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
 s = np.array([3.0, 2.0, 3.0])
 G = np.array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
 h = np.array([3.0, 2.0, -2.0]).reshape((3,))
 
-start_time = time()
+start_time = perf_counter()
 solver = "quadprog"  # see qpsolvers.available_solvers
 x = solve_ls(R, s, G, h, solver=solver, verbose=True)
-end_time = time()
+end_time = perf_counter()
 
 print("")
 print("    min. || R * x - s ||^2")

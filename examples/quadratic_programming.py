@@ -25,7 +25,7 @@ Test the "quadprog" QP solver on a small dense problem.
 import numpy as np
 
 from qpsolvers import solve_qp, print_matrix_vector
-from time import time
+from time import perf_counter
 
 M = np.array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
 P = np.dot(M.T, M)  # this is a positive definite matrix
@@ -35,10 +35,10 @@ h = np.array([3.0, 2.0, -2.0]).reshape((3,))
 A = np.array([1.0, 1.0, 1.0])
 b = np.array([1.0])
 
-start_time = time()
+start_time = perf_counter()
 solver = "quadprog"  # see qpsolvers.available_solvers
 x = solve_qp(P, q, G, h, A, b, solver=solver)
-end_time = time()
+end_time = perf_counter()
 
 print("")
 print("    min. 1/2 x^T P x + q^T x")
