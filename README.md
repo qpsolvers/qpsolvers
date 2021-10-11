@@ -77,7 +77,7 @@ The list of supported solvers currently includes:
 
 ## Performances
 
-On a [dense problem](examples/dense_problem.py), the performance of all solvers (as measured by IPython's ``%timeit`` on my machine) is:
+On a [dense problem](examples/benchmark_dense_problem.py), the performance of all solvers (as measured by IPython's ``%timeit`` on my machine) is:
 
 | Solver   | Type   | Time (ms) |
 | -------- | ------ | --------- |
@@ -90,7 +90,7 @@ On a [dense problem](examples/dense_problem.py), the performance of all solvers 
 | cvxpy    | Sparse | 3.40      |
 | mosek    | Sparse | 7.17      |
 
-On a [sparse problem](examples/sparse_problem.py), these performances become:
+On a [sparse problem](examples/benchmark_sparse_problem.py), these performances become:
 
 | Solver   | Type   | Time (ms) |
 | -------- | ------ | --------- |
@@ -103,7 +103,7 @@ On a [sparse problem](examples/sparse_problem.py), these performances become:
 | cvxpy    | Sparse |  654      |
 | qpoases  | Dense  | 2250      |
 
-Finally, here are the results on a benchmark of [random problems](examples/random_problems.py) (each data point corresponds to an average over 10 runs):
+Finally, here are the results on a benchmark of [random problems](examples/benchmark_random_problems.py) (each data point corresponds to an average over 10 runs):
 
 <img src="https://scaron.info/images/qp-benchmark.png">
 
