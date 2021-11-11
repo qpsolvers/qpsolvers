@@ -25,7 +25,7 @@ The library provides a one-stop shop :func:`.solve_qp` function with a
             & lb \leq x \leq ub
     \end{array}\end{split}
 
-A similar function is provided for :ref:`least squares <Least squares>`. 
+A similar function is provided for :ref:`least squares <Least squares>`.
 
 .. toctree::
     :maxdepth: 1
