@@ -24,6 +24,8 @@ If you have an older system with Python 2, for instance Ubuntu 16.04, try:
     sudo apt install python-dev
     pip install -r requirements2.txt
 
+Python 2 is not supported any more, but this may still work.
+
 Windows
 =======
 
@@ -42,11 +44,14 @@ Open source solvers
 -------------------
 
 To install at once all QP solvers available from the `Python Package Index
-<https://pypi.org/>`_, run ``pip`` from the requirements file:
+<https://pypi.org/>`_, run the ``pip`` command with the optional
+``all_pypi_solvers`` dependency:
 
 .. code:: bash
 
-    pip3 install --user -r requirements.txt
+    pip3 install "qpsolvers[all_pypi_solvers]"
+
+This may take a while.
 
 .. _gurobi-install:
 
