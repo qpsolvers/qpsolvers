@@ -28,7 +28,7 @@ classifiers = [
 ]
 dependencies = [
     "quadprog >=0.1.8",
-    "scipy >=1.3.3",
+    "scipy >=1.2.0",
 ]
 
 [project.optional-dependencies]
