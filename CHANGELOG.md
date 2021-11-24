@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - Move old tests from the examples folder to the unit test suite
+- Removed deprecated ``requirements.txt`` installation file
 - Renamed ``solvers`` optional dependencies to ``all_pypi_solvers``
 
 ## [1.7.1] - 2021/10/02
