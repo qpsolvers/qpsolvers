@@ -49,3 +49,6 @@ solvers = [
 [project.urls]
 Documentation = "https://scaron.info/doc/qpsolvers/"
 Source = "https://github.com/stephane-caron/qpsolvers"
+
+[tool.black]
+line-length = 79

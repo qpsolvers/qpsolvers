@@ -25,7 +25,9 @@ Utility function to check that a quadratic program is well-defined.
 from .typing import Matrix, Vector
 
 
-def check_problem_constraints(G: Matrix, h: Vector, A: Matrix, b: Vector) -> None:
+def check_problem_constraints(
+    G: Matrix, h: Vector, A: Matrix, b: Vector
+) -> None:
     """
     Check that problem constraint matrices and vectors are correctly defined.
 
