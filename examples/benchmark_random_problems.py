@@ -40,12 +40,13 @@ from qpsolvers import available_solvers, solve_qp
 colors = {
     "cvxopt": "r",
     "cvxpy": "c",
-    "ecos": "c",
+    "ecos": "g",
     "gurobi": "b",
     "mosek": "g",
     "osqp": "k",
     "qpoases": "y",
     "quadprog": "m",
+    "scs": "b",
 }
 
 nb_iter = 10
@@ -65,6 +66,7 @@ def solve_random_qp(n, solver):
 def plot_results(perfs):
     try:
         from pylab import clf, grid, ion, legend, plot, xscale, yscale
+        from pylab import xlabel, ylabel
     except ImportError:
         print("Cannot plot results, try installing python3-matplotlib")
         print("Results are stored in the global `perfs` dictionary")
@@ -77,6 +79,8 @@ def plot_results(perfs):
     legend(list(perfs.keys()), loc="lower right")
     xscale("log")
     yscale("log")
+    xlabel("Problem size $n$")
+    ylabel("Time (s)")
     for solver in perfs:
         plot(sizes, perfs[solver], marker="o", color=colors[solver])
 
@@ -89,7 +93,7 @@ if __name__ == "__main__":
         )
         exit()
     perfs = {}
-    print("\nTesting all QP solvers on a random quadratic programs...\n")
+    print("\nTesting all QP solvers on random quadratic programs...\n")
     for solver in available_solvers:
         try:
             perfs[solver] = []
