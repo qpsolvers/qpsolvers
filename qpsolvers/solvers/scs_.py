@@ -54,8 +54,8 @@ def scs_solve_qp(
     A: Optional[DenseOrCSCMatrix] = None,
     b: Optional[ndarray] = None,
     initvals: Optional[ndarray] = None,
-    eps_abs: float = 1e-9,
-    eps_rel: float = 1e-9,
+    eps_abs: float = 1e-4,
+    eps_rel: float = 1e-4,
     verbose: bool = False,
     **kwargs,
 ) -> Optional[ndarray]:
