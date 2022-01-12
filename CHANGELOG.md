@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 
 - Handle sparse matrices in ``print_matrix_vector``
+- Run unit tests in GitHub Actions
 - Typing error in bound concatenation
 
 ## [1.7.2] - 2021/11/24
