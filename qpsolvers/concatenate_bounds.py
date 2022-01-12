@@ -97,7 +97,7 @@ def concatenate_bound(
     h : numpy.ndarray or None
         Updated linear inequality vector.
     """
-    if G is None:
+    if G is None or h is None:
         G = sign * np.eye(len(b))
         h = sign * b
     else:  # G is not None and h is not None
