@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Added
+
+- Build and test for Python 3.10 in GitHub Actions
+
 ### Changed
 
 - Removed ``requirements2.txt`` and update Python 2 installation instructions
