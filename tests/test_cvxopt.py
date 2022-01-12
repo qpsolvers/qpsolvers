@@ -83,8 +83,8 @@ try:
             known_solution = array([2.0] * 149 + [3.0])
             sol_tolerance = 1e-2  # aouch, not great!
             h_cvxopt, x_cvxopt = cvxopt_matrix(h), cvxopt_matrix(x)
-            self.assertTrue(norm(x - known_solution) < sol_tolerance)
-            self.assertTrue(max(G * x_cvxopt - h_cvxopt) <= 1e-10)
+            self.assertLess(norm(x - known_solution), sol_tolerance)
+            self.assertLess(max(G * x_cvxopt - h_cvxopt), 1e-10)
 
 
 except ImportError:  # CVXOPT is not installed
