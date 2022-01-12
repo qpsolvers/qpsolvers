@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Changed
+
+- Removed ``requirements2.txt`` and update Python 2 installation instructions
+
 ## [1.7.2] - 2021/11/24
 
 ### Added

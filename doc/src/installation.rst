@@ -22,7 +22,7 @@ If you have an older system with Python 2, for instance Ubuntu 16.04, try:
 .. code:: bash
 
     sudo apt install python-dev
-    pip install -r requirements2.txt
+    pip qpsolvers==1.4.1
 
 Python 2 is not supported any more, but this may still work.
 
