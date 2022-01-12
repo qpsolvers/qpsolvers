@@ -113,17 +113,20 @@ def scs_solve_qp(
         A = sparse.csc_matrix(A)
     kwargs["verbose"] = verbose
     data = {"P": P, "c": q}
+    cone = {}
     if initvals is not None:
         data["x"] = initvals
     if G is None or h is None:
-        raise ValueError("SCS is not available for unconstrained problems")
+        raise ValueError("SCS cannot work with unconstrained problems")
     elif A is not None and b is not None:
-        data["A"] = sparse.vstack([G, A, -A], format="csc")
-        data["b"] = hstack([h, b, -b])
+        data["A"] = sparse.vstack([A, G], format="csc")
+        data["b"] = hstack([b, h])
+        cone["z"] = b.shape[0]  # zero cone
+        cone["l"] = h.shape[0]  # positive orthant
     else:  # G is not None and h is not None
         data["A"] = G
         data["b"] = h
-    cone = {"l": data["b"].shape[0]}
+        cone["l"] = h.shape[0]  # positive orthant
     solution = solve(data, cone, **kwargs)
     status_val = solution["info"]["status_val"]
     if status_val != 1:

@@ -46,6 +46,7 @@ colors = {
     "osqp": "k",
     "qpoases": "y",
     "quadprog": "m",
+    "scs": "b",
 }
 
 nb_iter = 10
