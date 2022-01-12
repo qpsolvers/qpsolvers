@@ -6,7 +6,9 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- Moved SCS to sparse solvers
 - Removed ``requirements2.txt`` and update Python 2 installation instructions
+- Updated SCS to new 3.0 version
 
 ### Fixed
 
