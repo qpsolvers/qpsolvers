@@ -117,23 +117,22 @@ def scs_solve_qp(
     cone = {}
     if initvals is not None:
         data["x"] = initvals
-    has_equality_constraints = A is not None and b is not None
-    has_inequality_constraints = G is not None and h is not None
-    if has_equality_constraints and has_inequality_constraints:
-        data["A"] = sparse.vstack([A, G], format="csc")
-        data["b"] = hstack([b, h])
-        cone["z"] = b.shape[0]  # zero cone
-        cone["l"] = h.shape[0]  # positive orthant
-    elif has_equality_constraints:
-        data["A"] = A
-        data["b"] = b
-        cone["z"] = b.shape[0]  # zero cone
-    elif has_inequality_constraints:
+    if A is not None and b is not None:
+        if G is not None and h is not None:
+            data["A"] = sparse.vstack([A, G], format="csc")
+            data["b"] = hstack([b, h])
+            cone["z"] = b.shape[0]  # zero cone
+            cone["l"] = h.shape[0]  # positive orthant
+        else:  # A is not None and b is not None
+            data["A"] = A
+            data["b"] = b
+            cone["z"] = b.shape[0]  # zero cone
+    elif G is not None and h is not None:
         data["A"] = G
         data["b"] = h
         cone["l"] = h.shape[0]  # positive orthant
     else:  # no constraint
-        return linalg.lstsq(P, -q)
+        return linalg.lstsq(P, -q)[0]
     solution = solve(data, cone, **kwargs)
     status_val = solution["info"]["status_val"]
     if status_val != 1:

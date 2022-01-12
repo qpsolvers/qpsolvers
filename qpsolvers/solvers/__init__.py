@@ -282,8 +282,6 @@ scs_solve_qp: Optional[
             Optional[ndarray],
             Optional[ndarray],
             bool,
-            float,
-            bool,
         ],
         Optional[ndarray],
     ]
