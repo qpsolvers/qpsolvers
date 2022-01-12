@@ -19,6 +19,7 @@
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
 from numpy import ndarray
+from scipy.sparse import csc_matrix
 
 from .typing import Matrix, Vector
 
@@ -44,6 +45,8 @@ def print_matrix_vector(
     """
     if isinstance(A, ndarray) and A.ndim == 1:
         A = A.reshape((1, A.shape[0]))
+    if isinstance(A, csc_matrix):
+        A = A.toarray()
     A_string = f"{A_label} =\n{A}"
     b_string = f"{b_label} =\n{b.reshape((A.shape[0], 1))}"
     A_lines = A_string.splitlines()
