@@ -18,6 +18,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
+"""Utility functions"""
+
 from numpy import ndarray
 from scipy.sparse import csc_matrix
 
