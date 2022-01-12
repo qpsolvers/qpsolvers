@@ -27,10 +27,11 @@ from numpy import hstack, ndarray
 from scs import solve
 from scipy import sparse
 
-from .convert_to_socp import convert_to_socp
+from .typing import DenseOrCSCMatrix
+from .typing import warn_about_sparse_conversion
 
 
-# See https://github.com/cvxgrp/scs/blob/master/include/glbopts.h
+# See https://www.cvxgrp.org/scs/api/exit_flags.html#exit-flags
 __status_val_meaning__ = {
     -7: "INFEASIBLE_INACCURATE",
     -6: "UNBOUNDED_INACCURATE",
@@ -46,16 +47,14 @@ __status_val_meaning__ = {
 
 
 def scs_solve_qp(
-    P: ndarray,
+    P: DenseOrCSCMatrix,
     q: ndarray,
-    G: Optional[ndarray] = None,
+    G: Optional[DenseOrCSCMatrix] = None,
     h: Optional[ndarray] = None,
-    A: Optional[ndarray] = None,
+    A: Optional[DenseOrCSCMatrix] = None,
     b: Optional[ndarray] = None,
     initvals: Optional[ndarray] = None,
     verbose: bool = False,
-    eps: float = 1e-7,
-    use_indirect: bool = True,
     **kwargs,
 ) -> Optional[ndarray]:
     """
@@ -91,12 +90,6 @@ def scs_solve_qp(
         Warm-start guess vector (not used).
     verbose :
         Set to `True` to print out extra information.
-    eps :
-        Convergence tolerange.
-    use_indirect:
-        Solve linear systems either "directly" via a sparse LDL factorization
-        or "indirectly" by means of a `conjugate gradient method
-        <https://stanford.edu/~boyd/papers/pdf/scs_long.pdf>`_.
 
     Returns
     -------
@@ -105,35 +98,34 @@ def scs_solve_qp(
 
     Notes
     -----
-    As of SCS 2.1.2, the default convergence tolerance ``eps`` is set to
-    ``1e-5``, resulting in inequality constraints that are violated by more
-    than ``1e-6`` as opposed to ``1e-10`` for other solvers e.g. on the README
-    problem. We lower it to ``1e-7`` and switch ``use_indirect=True`` so that
-    SCS behaves closer to the other solvers on this example.
-
-    All other keyword arguments are forwarded as is to SCS. For instance, you
-    can call ``scs_solve_qp(P, q, G, h, use_indirect=True, normalize=True)``.
-    See the solver documentation for details.
+    Keyword arguments are forwarded as is to SCS. For instance, you can call
+    ``scs_solve_qp(P, q, G, h,normalize=True)``. Solver settings for SCS are
+    described `here <https://www.cvxgrp.org/scs/api/settings.html#settings>`_.
     """
+    if isinstance(P, ndarray):
+        warn_about_sparse_conversion("P")
+        P = sparse.csc_matrix(P)
+    if isinstance(G, ndarray):
+        warn_about_sparse_conversion("G")
+        G = sparse.csc_matrix(G)
+    if isinstance(A, ndarray):
+        warn_about_sparse_conversion("A")
+        A = sparse.csc_matrix(A)
+    kwargs["verbose"] = verbose
+    data = {"P": P, "c": q}
     if initvals is not None:
-        warn("note that warm-start values ignored by this wrapper")
-    c_socp, G_socp, h_socp, dims = convert_to_socp(P, q, G, h)
-    kwargs.update(
-        {"eps": eps, "use_indirect": use_indirect, "verbose": verbose}
-    )
-    if A is not None and b is not None:
-        dims["f"] = A.shape[0]  # number of equality constraints
-        A_socp = sparse.hstack(
-            [A, sparse.csc_matrix((A.shape[0], 1))], format="csc"
-        )
-        A_scs = sparse.vstack([A_socp, G_socp], format="csc")
-        b_scs = hstack([b, h_socp])
-        data = {"A": A_scs, "b": b_scs, "c": c_socp}
-        solution = solve(data, dims, **kwargs)
-    else:
-        data = {"A": G_socp, "b": h_socp, "c": c_socp}
-        solution = solve(data, dims, **kwargs)
-    status_val = solution["info"]["statusVal"]
+        data["x"] = initvals
+    if G is None or h is None:
+        raise ValueError("SCS is not available for unconstrained problems")
+    elif A is not None and b is not None:
+        data["A"] = sparse.vstack([G, A, -A], format="csc")
+        data["b"] = hstack([h, b, -b])
+    else:  # G is not None and h is not None
+        data["A"] = G
+        data["b"] = h
+    cone = {"l": data["b"].shape[0]}
+    solution = solve(data, cone, **kwargs)
+    status_val = solution["info"]["status_val"]
     if status_val != 1:
         warn(
             f"SCS returned {status_val}: {__status_val_meaning__[status_val]}"
@@ -141,4 +133,4 @@ def scs_solve_qp(
         if status_val != 2:
             # solution is not inaccurate, so the optimization failed
             return None
-    return solution["x"][:-1]
+    return solution["x"]
