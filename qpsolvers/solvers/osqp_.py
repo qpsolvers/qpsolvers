@@ -57,7 +57,7 @@ def osqp_solve_qp(
             \\frac{1}{2} x^T P x + q^T x \\\\
         \\mbox{subject to}
             & G x \\leq h                \\\\
-            & A x = h
+            & A x = b
         \\end{array}\\end{split}
 
     using `OSQP <https://github.com/oxfordcontrol/osqp>`_.

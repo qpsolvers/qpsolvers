@@ -56,7 +56,7 @@ def qpoases_solve_qp(
             \\frac{1}{2} x^T P x + q^T x \\\\
         \\mbox{subject to}
             & G x \\leq h                \\\\
-            & A x = h
+            & A x = b
         \\end{array}\\end{split}
 
     using `qpOASES <https://github.com/coin-or/qpOASES>`__.
