@@ -127,9 +127,10 @@ class TestSolveQP(unittest.TestCase):
             self.assertIsNotNone(x_sp)
             known_solution = array([0.30769231, -0.69230769, 1.38461538])
             sol_tolerance = 1e-4 if solver == "ecos" else 1e-8
+            ineq_tolerance = 1e-10
             self.assertLess(norm(x - known_solution), sol_tolerance)
             self.assertLess(norm(x_sp - known_solution), sol_tolerance)
-            self.assertLess(max(dot(G, x) - h), 1e-10)
+            self.assertLess(max(dot(G, x) - h), ineq_tolerance)
             self.assertTrue(allclose(dot(A, x), b))
 
         return test
@@ -214,8 +215,9 @@ class TestSolveQP(unittest.TestCase):
             self.assertIsNotNone(x)
             known_solution = array([0.41463415, -0.41463415, 1.0])
             sol_tolerance = 1e-6 if solver in ["ecos", "scs"] else 1e-8
+            ineq_tolerance = 1e-10
             self.assertLess(norm(x - known_solution), sol_tolerance)
-            self.assertLess(max(dot(G, x) - h), 1e-10)
+            self.assertLess(max(dot(G, x) - h), ineq_tolerance)
             self.assertTrue(allclose(dot(A, x), b))
 
         return test
@@ -423,9 +425,10 @@ class TestSolveQP(unittest.TestCase):
             x = solve_qp(P, q, G, h, lb=lb, ub=ub, solver=solver)
             self.assertIsNotNone(x)
             known_solution = array([2.2] * 149 + [2.4])
-            tol = 1e-3 if solver == "gurobi" else 1e-8  # aouch for Gurobi!
-            self.assertLess(norm(x - known_solution), tol)
-            self.assertLess(max(G * x - h), 1e-10)
+            sol_tolerance = 1e-3 if solver == "gurobi" else 1e-8
+            ineq_tolerance = 1e-10
+            self.assertLess(norm(x - known_solution), sol_tolerance)
+            self.assertLess(max(G * x - h), ineq_tolerance)
 
         return test
 
@@ -488,8 +491,9 @@ class TestSolveQP(unittest.TestCase):
             )
             self.assertIsNotNone(x)
             sol_tolerance = 1e-4 if solver == "ecos" else 1e-8
+            ineq_tolerance = 1e-10
             self.assertLess(norm(x - known_solution), sol_tolerance)
-            self.assertLess(max(dot(G, x) - h), 1e-10)
+            self.assertLess(max(dot(G, x) - h), ineq_tolerance)
             self.assertTrue(allclose(dot(A, x), b))
 
         return test
