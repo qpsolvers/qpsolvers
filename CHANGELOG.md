@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 
 - Removed ``requirements2.txt`` and update Python 2 installation instructions
 
+### Fixed
+
+- Handle sparse matrices in ``print_matrix_vector``
+
 ## [1.7.2] - 2021/11/24
 
 ### Added
