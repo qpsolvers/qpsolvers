@@ -55,8 +55,8 @@ def scs_solve_qp(
     A: Optional[DenseOrCSCMatrix] = None,
     b: Optional[ndarray] = None,
     initvals: Optional[ndarray] = None,
-    eps_abs: float = 1e-4,
-    eps_rel: float = 1e-4,
+    eps_abs: float = 1e-7,
+    eps_rel: float = 1e-7,
     verbose: bool = False,
     **kwargs,
 ) -> Optional[ndarray]:
@@ -108,9 +108,8 @@ def scs_solve_qp(
     Notes
     -----
     Keyword arguments are forwarded as is to SCS. For instance, you can call
-    ``scs_solve_qp(P, q, G, h, eps_abs=1e-9, eps_rel=1e-9, normalize=True)``.
-    Solver settings for SCS are described `here
-    <https://www.cvxgrp.org/scs/api/settings.html#settings>`_.
+    ``scs_solve_qp(P, q, G, h, normalize=True)``. Solver settings for SCS are
+    described `here <https://www.cvxgrp.org/scs/api/settings.html#settings>`_.
 
     As of SCS 3.0.1, the default feasibility tolerances are set ``1e-4``,
     resulting in larger inequality constraint violations than with other
