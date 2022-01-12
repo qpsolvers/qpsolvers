@@ -24,8 +24,9 @@ from typing import Optional
 from warnings import warn
 
 from numpy import hstack, ndarray
-from scs import solve
+from numpy import linalg
 from scipy import sparse
+from scs import solve
 
 from .typing import DenseOrCSCMatrix
 from .typing import warn_about_sparse_conversion
@@ -116,17 +117,23 @@ def scs_solve_qp(
     cone = {}
     if initvals is not None:
         data["x"] = initvals
-    if G is None or h is None:
-        raise ValueError("SCS cannot work with unconstrained problems")
-    elif A is not None and b is not None:
+    has_equality_constraints = A is not None and b is not None
+    has_inequality_constraints = G is not None and h is not None
+    if has_equality_constraints and has_inequality_constraints:
         data["A"] = sparse.vstack([A, G], format="csc")
         data["b"] = hstack([b, h])
         cone["z"] = b.shape[0]  # zero cone
         cone["l"] = h.shape[0]  # positive orthant
-    else:  # G is not None and h is not None
+    elif has_equality_constraints:
+        data["A"] = A
+        data["b"] = b
+        cone["z"] = b.shape[0]  # zero cone
+    elif has_inequality_constraints:
         data["A"] = G
         data["b"] = h
         cone["l"] = h.shape[0]  # positive orthant
+    else:  # no constraint
+        return linalg.lstsq(P, -q)
     solution = solve(data, cone, **kwargs)
     status_val = solution["info"]["status_val"]
     if status_val != 1:
