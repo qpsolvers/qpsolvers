@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 
 - Handle sparse matrices in ``print_matrix_vector``
+- Match ``__all__`` in model and top-level ``__init__.py``
 - Run unit tests in GitHub Actions
 - Typing error in bound concatenation
 

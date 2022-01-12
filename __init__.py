@@ -27,10 +27,14 @@ from .qpsolvers import available_solvers
 from .qpsolvers import cvxopt_solve_qp
 from .qpsolvers import cvxpy_solve_qp
 from .qpsolvers import dense_solvers
+from .qpsolvers import ecos_solve_qp
 from .qpsolvers import gurobi_solve_qp
 from .qpsolvers import mosek_solve_qp
+from .qpsolvers import osqp_solve_qp
+from .qpsolvers import print_matrix_vector
 from .qpsolvers import qpoases_solve_qp
 from .qpsolvers import quadprog_solve_qp
+from .qpsolvers import scs_solve_qp
 from .qpsolvers import solve_ls
 from .qpsolvers import solve_qp
 from .qpsolvers import solve_safer_qp
@@ -42,10 +46,14 @@ __all__ = [
     "cvxopt_solve_qp",
     "cvxpy_solve_qp",
     "dense_solvers",
+    "ecos_solve_qp",
     "gurobi_solve_qp",
     "mosek_solve_qp",
+    "osqp_solve_qp",
+    "print_matrix_vector",
     "qpoases_solve_qp",
     "quadprog_solve_qp",
+    "scs_solve_qp",
     "solve_ls",
     "solve_qp",
     "solve_safer_qp",
