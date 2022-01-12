@@ -24,7 +24,10 @@ If you have an older system with Python 2, for instance Ubuntu 16.04, try:
     sudo apt install python-dev
     pip qpsolvers==1.4.1
 
-Python 2 is not supported any more, but this may still work.
+Python 2 is not supported any more, but this may still work. Note that
+vulnerabilities `have been discovered
+<https://github.com/stephane-caron/qpsolvers/pull/49>`_ in the dependencies of
+this old version.
 
 Windows
 =======
