@@ -24,7 +24,6 @@ from typing import Optional
 from warnings import warn
 
 from numpy import hstack, ndarray
-from numpy import linalg
 from scipy import sparse
 from scs import solve
 
@@ -132,7 +131,7 @@ def scs_solve_qp(
         data["b"] = h
         cone["l"] = h.shape[0]  # positive orthant
     else:  # no constraint
-        return linalg.lstsq(P, -q)[0]
+        return sparse.linalg.lsqr(P, -q)[0]
     solution = solve(data, cone, **kwargs)
     status_val = solution["info"]["status_val"]
     if status_val != 1:
