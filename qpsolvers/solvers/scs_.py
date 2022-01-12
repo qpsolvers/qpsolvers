@@ -24,6 +24,7 @@ from typing import Optional
 from warnings import warn
 
 from numpy import hstack, ndarray
+from numpy.linalg import norm
 from scipy import sparse
 from scs import solve
 
@@ -107,8 +108,9 @@ def scs_solve_qp(
     Notes
     -----
     Keyword arguments are forwarded as is to SCS. For instance, you can call
-    ``scs_solve_qp(P, q, G, h,normalize=True)``. Solver settings for SCS are
-    described `here <https://www.cvxgrp.org/scs/api/settings.html#settings>`_.
+    ``scs_solve_qp(P, q, G, h, eps_abs=1e-9, eps_rel=1e-9, normalize=True)``.
+    Solver settings for SCS are described `here
+    <https://www.cvxgrp.org/scs/api/settings.html#settings>`_.
 
     As of SCS 3.0.1, the default feasibility tolerances are set ``1e-4``,
     resulting in larger inequality constraint violations than with other
@@ -151,7 +153,13 @@ def scs_solve_qp(
         data["b"] = h
         cone["l"] = h.shape[0]  # positive orthant
     else:  # no constraint
-        return sparse.linalg.lsqr(P, -q)[0]
+        x = sparse.linalg.lsqr(P, -q)[0]
+        if norm(P @ x + q) > 1e-9:
+            raise ValueError(
+                "problem is unbounded below, "
+                "q has component in the nullspace of P"
+            )
+        return x
     solution = solve(data, cone, **kwargs)
     status_val = solution["info"]["status_val"]
     if status_val != 1:
