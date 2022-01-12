@@ -54,6 +54,8 @@ def scs_solve_qp(
     A: Optional[DenseOrCSCMatrix] = None,
     b: Optional[ndarray] = None,
     initvals: Optional[ndarray] = None,
+    eps_abs: float = 1e-9,
+    eps_rel: float = 1e-9,
     verbose: bool = False,
     **kwargs,
 ) -> Optional[ndarray]:
@@ -88,6 +90,12 @@ def scs_solve_qp(
         Linear equality constraint vector.
     initvals :
         Warm-start guess vector (not used).
+    eps_abs : float
+        Absolute feasibility tolerance, see `Termination criteria
+        <https://www.cvxgrp.org/scs/algorithm/index.html#termination>`_.
+    eps_rel : float
+        Relative feasibility tolerance, see `Termination criteria
+        <https://www.cvxgrp.org/scs/algorithm/index.html#termination>`_.
     verbose :
         Set to `True` to print out extra information.
 
@@ -101,6 +109,12 @@ def scs_solve_qp(
     Keyword arguments are forwarded as is to SCS. For instance, you can call
     ``scs_solve_qp(P, q, G, h,normalize=True)``. Solver settings for SCS are
     described `here <https://www.cvxgrp.org/scs/api/settings.html#settings>`_.
+
+    As of SCS 3.0.1, the default feasibility tolerances are set ``1e-4``,
+    resulting in larger inequality constraint violations than with other
+    solvers on the README and unit test problems. We lower them to ``1e-9`` so
+    that SCS behaves closer to the other solvers. If you don't need that much
+    precision, increase them for better performance.
     """
     if isinstance(P, ndarray):
         warn_about_sparse_conversion("P")
@@ -111,7 +125,13 @@ def scs_solve_qp(
     if isinstance(A, ndarray):
         warn_about_sparse_conversion("A")
         A = sparse.csc_matrix(A)
-    kwargs["verbose"] = verbose
+    kwargs.update(
+        {
+            "eps_abs": eps_abs,
+            "eps_rel": eps_rel,
+            "verbose": verbose,
+        }
+    )
     data = {"P": P, "c": q}
     cone = {}
     if initvals is not None:

@@ -281,6 +281,8 @@ scs_solve_qp: Optional[
             Optional[DenseOrCSCMatrix],
             Optional[ndarray],
             Optional[ndarray],
+            float,
+            float,
             bool,
         ],
         Optional[ndarray],
