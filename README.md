@@ -13,7 +13,7 @@ Unified interface to Quadratic Programming (QP) solvers available in Python.
 sudo apt install python3-dev
 pip3 install qpsolvers
 ```
-Check out the documentation for [Python 2](https://scaron.info/doc/qpsolvers/installation.html#linux) or [Windows](https://scaron.info/doc/qpsolvers/installation.html#windows) instructions.
+Check out the documentation for [Python 2](https://scaron.info/doc/qpsolvers/installation.html#python-2) or [Windows](https://scaron.info/doc/qpsolvers/installation.html#windows) instructions.
 
 ## Usage
 

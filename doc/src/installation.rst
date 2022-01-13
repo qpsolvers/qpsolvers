@@ -17,6 +17,9 @@ Python 3 is:
 
 You can add the ``--user`` parameter for a user-only installation.
 
+Python 2
+--------
+
 If you have an older system with Python 2, for instance Ubuntu 16.04, try:
 
 .. code:: bash
@@ -39,6 +42,33 @@ Windows
 .. code:: bash
 
     pip install qpsolvers
+
+Microsoft Visual Studio
+-----------------------
+
+- Open Microsoft Visual Studio
+- Create a new project:
+    - Select a new "Python Application" project template
+    - Click "Next"
+    - Give a name to your project
+    - Click "Create"
+- Go to Tools → Python → Python Environments:
+    - To the left of the "Python Environments" tab that opens, select a Python version >= 3.8
+    - Click on "Packages (PyPI)"
+    - In the search box, type "qpsolvers"
+    - Below the search box, click on "Run command: pip install qpsolvers"
+    - A window pops up asking for administrator privileges: grant them
+    - Check the text messages in the "Output" pane at the bottom of the window
+- Go to the main code tab (it should be your project name followed by the ".py" extension)
+- Copy the `example code <https://github.com/stephane-caron/qpsolvers#example>`_ from the README and paste it there
+- Click on the "Run" icon in the toolbar to execute this program
+
+At this point a ``python.exe`` window should open with the following output:
+
+.. code:: bash
+
+    QP solution: x = [0.30769231, -0.69230769, 1.38461538]
+    Press any key to continue . . .
 
 Solvers
 =======
