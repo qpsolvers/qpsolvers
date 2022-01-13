@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Added
+
+- Setup instructions for Microsoft Visual Studio
+
+### Fixed
+
+- Clear all Pylint warnings
+- Disable Pylint false positives that are covered by mypy
+
 ## [1.8] - 2022/01/13
 
 ### Added
