@@ -63,6 +63,9 @@ try:
 except ImportError:
 
     def cvxopt_concatenate(G, sign: float, m: int):
+        """
+        This function is not available because CVXOPT is not installed.
+        """
         raise TypeError(
             "Inequality matrix G has type cvxopt.spmatrix "
             "(it is neither an ndarray nor a csc_matrix), "
