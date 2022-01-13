@@ -77,17 +77,18 @@ The list of supported solvers currently includes:
 
 ## Performances
 
-On a [dense problem](examples/benchmark_dense_problem.py), the performance of all solvers (as measured by IPython's ``%timeit`` on my machine) is:
+On a [dense problem](examples/benchmark_dense_problem.py), the performance of all solvers (as measured by IPython's ``%timeit`` on an Intel(R) Core(TM) i7-6700K CPU @ 4.00GHz) is:
 
 | Solver   | Type   | Time (ms) |
 | -------- | ------ | --------- |
-| quadprog | Dense  | 0.02      |
-| qpoases  | Dense  | 0.03      |
-| osqp     | Sparse | 0.04      |
-| ecos     | Sparse | 0.34      |
-| cvxopt   | Dense  | 0.46      |
-| gurobi   | Sparse | 0.84      |
-| cvxpy    | Sparse | 3.40      |
+| quadprog | Dense  | 0.01      |
+| qpoases  | Dense  | 0.02      |
+| osqp     | Sparse | 0.03      |
+| scs      | Sparse | 0.03      |
+| ecos     | Sparse | 0.27      |
+| cvxopt   | Dense  | 0.44      |
+| gurobi   | Sparse | 1.74      |
+| cvxpy    | Sparse | 5.71      |
 | mosek    | Sparse | 7.17      |
 
 On a [sparse problem](examples/benchmark_sparse_problem.py), these performances become:
@@ -95,16 +96,17 @@ On a [sparse problem](examples/benchmark_sparse_problem.py), these performances 
 | Solver   | Type   | Time (ms) |
 | -------- | ------ | --------- |
 | osqp     | Sparse |    1      |
+| scs      | Sparse |    4      |
+| cvxpy    | Sparse |   11      |
 | mosek    | Sparse |   17      |
-| ecos     | Sparse |   21      |
-| cvxopt   | Dense  |  186      |
+| ecos     | Sparse |   33      |
+| cvxopt   | Dense  |   51      |
 | gurobi   | Sparse |  221      |
-| quadprog | Dense  |  550      |
-| cvxpy    | Sparse |  654      |
-| qpoases  | Dense  | 2250      |
+| quadprog | Dense  |  427      |
+| qpoases  | Dense  | 1560      |
 
-Finally, here are the results on a benchmark of [random problems](examples/benchmark_random_problems.py) (each data point corresponds to an average over 10 runs):
+Finally, is a small benchmark of [random dense problems](examples/benchmark_random_problems.py) (each data point corresponds to an average over 10 runs):
 
-<img src="https://scaron.info/images/qp-benchmark.png">
+<img src="https://scaron.info/images/qp-benchmark-2022.png">
 
 Note that performances of QP solvers largely depend on the problem solved. For instance, MOSEK performs an [automatic conversion to Second-Order Cone Programming (SOCP)](https://docs.mosek.com/8.1/pythonapi/prob-def-quadratic.html) which the documentation advises bypassing for better performance. Similarly, ECOS reformulates [from QP to SOCP](qpsolvers/solvers/convert_to_socp.py) and [works best on small problems](https://web.stanford.edu/%7Eboyd/papers/ecos.html).

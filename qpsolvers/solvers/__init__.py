@@ -25,7 +25,7 @@ from typing import Any, Callable, Dict, Optional
 from numpy import ndarray
 
 from .typing import CvxoptReadyMatrix
-from .typing import OsqpReadyMatrix
+from .typing import DenseOrCSCMatrix
 
 available_solvers = []
 dense_solvers = []
@@ -186,13 +186,13 @@ except ImportError:
 osqp_solve_qp: Optional[
     Callable[
         [
-            OsqpReadyMatrix,
-            OsqpReadyMatrix,
-            Optional[OsqpReadyMatrix],
-            Optional[OsqpReadyMatrix],
-            Optional[OsqpReadyMatrix],
-            Optional[OsqpReadyMatrix],
-            Optional[OsqpReadyMatrix],
+            DenseOrCSCMatrix,
+            DenseOrCSCMatrix,
+            Optional[DenseOrCSCMatrix],
+            Optional[DenseOrCSCMatrix],
+            Optional[DenseOrCSCMatrix],
+            Optional[DenseOrCSCMatrix],
+            Optional[DenseOrCSCMatrix],
             bool,
         ],
         Optional[ndarray],
@@ -274,14 +274,14 @@ except ImportError:
 scs_solve_qp: Optional[
     Callable[
         [
+            DenseOrCSCMatrix,
             ndarray,
-            ndarray,
+            Optional[DenseOrCSCMatrix],
+            Optional[ndarray],
+            Optional[DenseOrCSCMatrix],
             Optional[ndarray],
             Optional[ndarray],
-            Optional[ndarray],
-            Optional[ndarray],
-            Optional[ndarray],
-            bool,
+            float,
             float,
             bool,
         ],
@@ -294,7 +294,7 @@ try:
 
     solve_function["scs"] = scs_solve_qp
     available_solvers.append("scs")
-    dense_solvers.append("scs")
+    sparse_solvers.append("scs")
 except ImportError:
     pass
 

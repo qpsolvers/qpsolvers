@@ -47,7 +47,7 @@ def cvxpy_solve_qp(
             \\frac{1}{2} x^T P x + q^T x \\\\
         \\mbox{subject to}
             & G x \\leq h                \\\\
-            & A x = h
+            & A x = b
         \\end{array}\\end{split}
 
     calling a given solver using the `CVXPY <http://www.cvxpy.org/>`_ modelling

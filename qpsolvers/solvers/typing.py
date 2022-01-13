@@ -21,6 +21,7 @@
 """Types for solve_qp function arguments."""
 
 from typing import Union
+from warnings import warn
 
 from numpy import ndarray
 from scipy.sparse import csc_matrix
@@ -32,9 +33,27 @@ try:
 except ImportError:
     CvxoptReadyMatrix = ndarray  # type: ignore
 
-OsqpReadyMatrix = Union[ndarray, csc_matrix]
+DenseOrCSCMatrix = Union[ndarray, csc_matrix]
+
+
+def warn_about_sparse_conversion(matrix_name: str):
+    """
+    Warn about conversion from dense to sparse matrix.
+
+    Parameters
+    ----------
+    matrix_name :
+        Name of matrix being converted from dense to sparse.
+    """
+    warn(
+        f"Converted {matrix_name} to scipy.sparse.csc.csc_matrix\n"
+        f"For best performance, build {matrix_name} as a "
+        "scipy.sparse.csc_matrix rather than as a numpy.ndarray"
+    )
+
 
 __all__ = [
     "CvxoptReadyMatrix",
-    "OsqpReadyMatrix",
+    "DenseOrCSCMatrix",
+    "warn_about_sparse_conversion",
 ]

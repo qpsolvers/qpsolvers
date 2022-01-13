@@ -29,26 +29,18 @@ from numpy import hstack, inf, ndarray, ones
 from osqp import OSQP
 from scipy import sparse
 
-from .typing import OsqpReadyMatrix
-
-
-def warn_about_conversion(M):
-    """Return conversion warning message for a given matrix name."""
-    warn(
-        "Converted %s to scipy.sparse.csc.csc_matrix\n"
-        "For best performance, build %s as a csc_matrix "
-        "rather than as a numpy.ndarray" % (M, M)
-    )
+from .typing import DenseOrCSCMatrix
+from .typing import warn_about_sparse_conversion
 
 
 def osqp_solve_qp(
-    P: OsqpReadyMatrix,
-    q: OsqpReadyMatrix,
-    G: Optional[OsqpReadyMatrix] = None,
-    h: Optional[OsqpReadyMatrix] = None,
-    A: Optional[OsqpReadyMatrix] = None,
-    b: Optional[OsqpReadyMatrix] = None,
-    initvals: Optional[OsqpReadyMatrix] = None,
+    P: DenseOrCSCMatrix,
+    q: DenseOrCSCMatrix,
+    G: Optional[DenseOrCSCMatrix] = None,
+    h: Optional[DenseOrCSCMatrix] = None,
+    A: Optional[DenseOrCSCMatrix] = None,
+    b: Optional[DenseOrCSCMatrix] = None,
+    initvals: Optional[DenseOrCSCMatrix] = None,
     verbose: bool = False,
     eps_abs: float = 1e-4,
     eps_rel: float = 1e-4,
@@ -65,7 +57,7 @@ def osqp_solve_qp(
             \\frac{1}{2} x^T P x + q^T x \\\\
         \\mbox{subject to}
             & G x \\leq h                \\\\
-            & A x = h
+            & A x = b
         \\end{array}\\end{split}
 
     using `OSQP <https://github.com/oxfordcontrol/osqp>`_.
@@ -124,7 +116,7 @@ def osqp_solve_qp(
     details.
     """
     if isinstance(P, ndarray):
-        warn_about_conversion("P")
+        warn_about_sparse_conversion("P")
         P = sparse.csc_matrix(P)
     solver = OSQP()
     kwargs = {
@@ -135,7 +127,7 @@ def osqp_solve_qp(
     }
     if A is not None and b is not None:
         if isinstance(A, ndarray):
-            warn_about_conversion("A")
+            warn_about_sparse_conversion("A")
             A = sparse.csc_matrix(A)
         if G is not None and h is not None:
             l_inf = -inf * ones(len(h))
@@ -147,7 +139,7 @@ def osqp_solve_qp(
             solver.setup(P=P, q=q, A=A, l=b, u=b, **kwargs)
     elif G is not None and h is not None:
         if isinstance(G, ndarray):
-            warn_about_conversion("G")
+            warn_about_sparse_conversion("G")
             G = sparse.csc_matrix(G)
         l_inf = -inf * ones(len(h))
         solver.setup(P=P, q=q, A=G, l=l_inf, u=h, **kwargs)
