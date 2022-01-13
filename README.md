@@ -105,7 +105,7 @@ On a [sparse problem](examples/benchmark_sparse_problem.py), these performances 
 | quadprog | Dense  |  427      |
 | qpoases  | Dense  | 1560      |
 
-Finally, is a small benchmark of [random dense problems](examples/benchmark_random_problems.py) (each data point corresponds to an average over 10 runs):
+Finally, here is a small benchmark of [random dense problems](examples/benchmark_random_problems.py) (each data point corresponds to an average over 10 runs):
 
 <img src="https://scaron.info/images/qp-benchmark-2022.png">
 
