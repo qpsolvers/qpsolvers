@@ -36,7 +36,7 @@ def quadprog_solve_qp(
     b: Optional[ndarray] = None,
     initvals: ndarray = None,
     verbose: bool = False,
-    **kwargs
+    **kwargs,
 ) -> Optional[ndarray]:
     """
     Solve a Quadratic Program defined as:
@@ -117,5 +117,5 @@ def quadprog_solve_qp(
             raise ValueError("matrix P is not positive definite") from e
         if "no solution" in error:
             return None
-        warn("quadprog raised a ValueError: {}".format(e))
+        warn(f"quadprog raised a ValueError: {e}")
         return None

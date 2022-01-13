@@ -45,7 +45,7 @@ def osqp_solve_qp(
     eps_abs: float = 1e-4,
     eps_rel: float = 1e-4,
     polish: bool = True,
-    **kwargs
+    **kwargs,
 ) -> Optional[ndarray]:
     """
     Solve a Quadratic Program defined as:
@@ -153,6 +153,6 @@ def osqp_solve_qp(
     else:  # more recent versions of OSQP
         success_status = osqp.constant("OSQP_SOLVED")
     if res.info.status_val != success_status:
-        warn("OSQP exited with status '%s'" % res.info.status)
+        warn(f"OSQP exited with status '{res.info.status}'")
         return None
     return res.x

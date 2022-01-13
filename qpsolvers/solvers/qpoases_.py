@@ -127,7 +127,7 @@ def qpoases_solve_qp(
         qp.setOptions(__options__)
         return_value = qp.init(P, q, C, lb, ub, lb_C, ub_C, array([max_wsr]))
         if return_value == ReturnValue.MAX_NWSR_REACHED:
-            print("qpOASES reached the maximum number of WSR (%d)" % max_wsr)
+            print(f"qpOASES reached the maximum number of WSR ({max_wsr})")
     else:  # no constraint
         qp = QProblemB(n)
         qp.setOptions(__options__)
@@ -135,5 +135,5 @@ def qpoases_solve_qp(
     x_opt = zeros(n)
     ret = qp.getPrimalSolution(x_opt)
     if ret != 0:  # 0 == SUCCESSFUL_RETURN code of qpOASES
-        print("qpOASES failed with return code %d" % ret)
+        print(f"qpOASES failed with return code {ret}")
     return x_opt
