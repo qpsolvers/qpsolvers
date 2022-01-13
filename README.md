@@ -91,7 +91,7 @@ On a [dense problem](examples/benchmark_dense_problem.py), the performance of al
 | cvxpy    | Sparse | 5.71      |
 | mosek    | Sparse | 7.17      |
 
-On a [sparse problem](examples/benchmark_sparse_problem.py), these performances become:
+On a [sparse problem](examples/benchmark_sparse_problem.py) with *n = 500* optimization variables, these performances become:
 
 | Solver   | Type   | Time (ms) |
 | -------- | ------ | --------- |
