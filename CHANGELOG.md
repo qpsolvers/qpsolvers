@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 
 - Setup instructions for Microsoft Visual Studio
 
+### Changed
+
+- Minimum supported Python version is now 3.7
+
 ### Fixed
 
 - Clear all Pylint warnings
