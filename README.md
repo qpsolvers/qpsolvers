@@ -21,7 +21,7 @@ The library provides a one-stop shop ``solve_qp(P, q, G, h, A, b, lb, ub)`` func
 
 ![Quadratic program in standard form](https://raw.githubusercontent.com/stephane-caron/qpsolvers/master/doc/src/images/qp.gif)
 
-Vector inequalities are taken coordinate by coordinate. The matrix *P* should be [positive definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix).
+Vector inequalities are taken coordinate by coordinate. For most solvers, the matrix *P* should be [positive definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix).
 
 ## Example
 
