@@ -51,7 +51,7 @@ a:hover, a:active {
 }
 
 .wy-side-nav-search {
-    background: #def;
+    background: rgb(168, 211, 255);
 }
 
 .wy-side-nav-search > div.version {
