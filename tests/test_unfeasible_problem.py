@@ -22,8 +22,8 @@ import unittest
 import warnings
 
 from numpy import array, dot
-from qpsolvers import available_solvers, dense_solvers
-from qpsolvers import solve_qp, solve_safer_qp
+from ..qpsolvers import available_solvers, dense_solvers
+from ..qpsolvers import solve_qp, solve_safer_qp
 
 
 class UnfeasibleProblem(unittest.TestCase):

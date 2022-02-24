@@ -22,7 +22,7 @@ import unittest
 import warnings
 
 from numpy import array, dot, eye
-from qpsolvers import solve_qp
+from ..qpsolvers import solve_qp
 
 
 class TestQuadprog(unittest.TestCase):

@@ -21,7 +21,7 @@
 import unittest
 
 from numpy import allclose, array, eye
-from qpsolvers.concatenate_bounds import concatenate_bounds
+from ..qpsolvers.concatenate_bounds import concatenate_bounds
 
 
 class TestConcatenateBounds(unittest.TestCase):

@@ -21,7 +21,7 @@
 import unittest
 
 from numpy import array
-from qpsolvers.check_problem_constraints import check_problem_constraints
+from ..qpsolvers.check_problem_constraints import check_problem_constraints
 
 
 class TestCheckProblemConstraints(unittest.TestCase):

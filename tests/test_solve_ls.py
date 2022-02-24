@@ -27,7 +27,7 @@ import warnings
 
 from numpy import allclose, array, dot
 from numpy.linalg import norm
-from qpsolvers import available_solvers, solve_ls
+from ..qpsolvers import available_solvers, solve_ls
 
 
 class TestSolveLS(unittest.TestCase):

@@ -31,9 +31,9 @@ from numpy import allclose, array, dot, ones, random
 from numpy.linalg import norm
 from scipy.sparse import csc_matrix
 
-from qpsolvers import available_solvers, sparse_solvers
-from qpsolvers import solve_qp, solve_safer_qp
-from qpsolvers.exceptions import SolverNotFound
+from ..qpsolvers import available_solvers, sparse_solvers
+from ..qpsolvers import solve_qp, solve_safer_qp
+from ..qpsolvers.exceptions import SolverNotFound
 
 
 class TestSolveQP(unittest.TestCase):

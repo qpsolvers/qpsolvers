@@ -34,7 +34,7 @@ from qpsolvers import solve_qp
 
 try:
     import cvxopt
-    from qpsolvers.solvers.cvxopt_ import cvxopt_matrix
+    from ..qpsolvers.solvers.cvxopt_ import cvxopt_matrix
 
     class TestCVXOPT(unittest.TestCase):
 
