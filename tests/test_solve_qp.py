@@ -330,8 +330,11 @@ class TestSolveQP(unittest.TestCase):
             self.assertIsNotNone(x)
             known_solution = array([0.30769231, -0.69230769, 1.38461538])
             sol_tolerance = (
-                1e-5 if solver == "scs" else
-                1e-6 if solver in ["cvxopt", "ecos"] else 1e-8
+                1e-5
+                if solver == "scs"
+                else 1e-6
+                if solver in ["cvxopt", "ecos"]
+                else 1e-8
             )
             ineq_tolerance = 1e-7 if solver == "scs" else 1e-8
             self.assertLess(norm(x - known_solution), sol_tolerance)
