@@ -18,9 +18,12 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-# This file allows the whole repository to act as a Python module when e.g.
-# included as a git submodule inside a project. It incurs some redundant
-# bookkeeping but some users find it useful.
+"""
+This file allows the whole repository to act as a Python module when e.g.
+included as a git submodule inside a project. It incurs redundant bookkeeping
+but some users find it useful. (See 4b128db662cfedbe366b8387a59cd18e36c643a3
+and comments related to this commit on GitHub.)
+"""
 
 from .qpsolvers import __version__
 from .qpsolvers import available_solvers
