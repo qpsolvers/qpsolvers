@@ -428,7 +428,13 @@ class TestSolveQP(unittest.TestCase):
             x = solve_qp(P, q, G, h, lb=lb, ub=ub, solver=solver)
             self.assertIsNotNone(x)
             known_solution = array([2.2] * 149 + [2.4])
-            sol_tolerance = 1e-3 if solver == "gurobi" else 1e-8
+            sol_tolerance = (
+                1e-3
+                if solver == "gurobi"
+                else 1e-7
+                if solver == "scs"
+                else 1e-8
+            )
             ineq_tolerance = 1e-10
             self.assertLess(norm(x - known_solution), sol_tolerance)
             self.assertLess(max(G * x - h), ineq_tolerance)
