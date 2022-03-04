@@ -34,3 +34,4 @@ A similar function is provided for :ref:`least squares <Least squares>`.
     quadratic-programming.rst
     least-squares.rst
     supported-solvers.rst
+    developer-notes.rst
