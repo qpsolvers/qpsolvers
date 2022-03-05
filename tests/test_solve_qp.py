@@ -512,6 +512,14 @@ class TestSolveQP(unittest.TestCase):
         with self.assertRaises(SolverNotFound):
             solve_qp(P, q, G, h, A, b, solver="ideal")
 
+    def test_unbounded_problem_scs(self):
+        v = array([5.4, -1.2, -1e-2, 1e4])
+        P = dot(v.reshape(4, 1), v.reshape(1, 4))
+        q = array([-1.0, -2, 0, 3e-4])
+        # q is in the nullspace of P, so the problem is unbounded below
+        with self.assertRaises(ValueError):
+            solve_qp(P, q, solver="scs")
+
 
 # Generate test fixtures for each solver
 for solver in available_solvers:
