@@ -96,6 +96,16 @@ def osqp_solve_qp(
     :
         Solution to the QP, if found, otherwise ``None``.
 
+    Raises
+    ------
+    ValueError
+        If the problem is clearly non-convex. See `this recommendation
+        <https://osqp.org/docs/interfaces/status_values.html#status-values>`_.
+        Note that OSQP may find the problem unfeasible if the problem is
+        slightly non-convex (in this context, the meaning of "clearly" and
+        "slightly" depends on how close the negative eigenvalues of :math:`P`
+        are to zero).
+
     Note
     ----
     OSQP requires a symmetric `P` and won't check for errors otherwise. Check
