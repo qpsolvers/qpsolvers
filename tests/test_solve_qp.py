@@ -108,6 +108,14 @@ class TestSolveQP(unittest.TestCase):
         h = -2.0 * ones((n,))
         return P, q, G, h
 
+    def test_solver_not_found(self):
+        """
+        Check that SolverNotFound is raised when the solver does not exist.
+        """
+        P, q, G, h, A, b = self.get_dense_problem()
+        with self.assertRaises(SolverNotFound):
+            solve_qp(P, q, G, h, A, b, solver="ideal")
+
     @staticmethod
     def get_test(solver):
         """
@@ -512,80 +520,96 @@ class TestSolveQP(unittest.TestCase):
 
         return test
 
-    def test_solver_not_found(self):
-        P, q, G, h, A, b = self.get_dense_problem()
-        with self.assertRaises(SolverNotFound):
-            solve_qp(P, q, G, h, A, b, solver="ideal")
+    @staticmethod
+    def get_test_unbounded_below(solver):
+        """
+        Check that a ValueError is raised when the problem is unbounded below.
 
-    def test_unbounded_problem_scs(self):
-        v = array([5.4, -1.2, -1e-2, 1e4])
-        P = dot(v.reshape(4, 1), v.reshape(1, 4))
-        q = array([-1.0, -2, 0, 3e-4])
-        # q is in the nullspace of P, so the problem is unbounded below
-        with self.assertRaises(ValueError):
-            solve_qp(P, q, solver="scs")
+        Parameters
+        ----------
+        solver : string
+            Name of the solver to test.
+
+        Returns
+        -------
+        test : function
+            Test function for that solver.
+        """
+
+        def test(self):
+            v = array([5.4, -1.2, -1e-2, 1e4])
+            P = dot(v.reshape(4, 1), v.reshape(1, 4))
+            q = array([-1.0, -2, 0, 3e-4])
+            # q is in the nullspace of P, so the problem is unbounded below
+            with self.assertRaises(ValueError):
+                solve_qp(P, q, solver=solver)
+
+        return test
 
 
 # Generate test fixtures for each solver
 for solver in available_solvers:
-    setattr(
-        TestSolveQP, "test_{}".format(solver), TestSolveQP.get_test(solver)
-    )
+    setattr(TestSolveQP, f"test_{solver}", TestSolveQP.get_test(solver))
     setattr(
         TestSolveQP,
-        "test_all_shapes_{}".format(solver),
+        f"test_all_shapes_{solver}",
         TestSolveQP.get_test_all_shapes(solver),
     )
     setattr(
         TestSolveQP,
-        "test_bounds_{}".format(solver),
+        f"test_bounds_{solver}",
         TestSolveQP.get_test_bounds(solver),
     )
     setattr(
         TestSolveQP,
-        "test_no_cons_{}".format(solver),
+        f"test_no_cons_{solver}",
         TestSolveQP.get_test_no_cons(solver),
     )
     setattr(
         TestSolveQP,
-        "test_no_eq_{}".format(solver),
+        f"test_no_eq_{solver}",
         TestSolveQP.get_test_no_eq(solver),
     )
     setattr(
         TestSolveQP,
-        "test_no_ineq_{}".format(solver),
+        f"test_no_ineq_{solver}",
         TestSolveQP.get_test_no_ineq(solver),
     )
     setattr(
         TestSolveQP,
-        "test_one_ineq_{}".format(solver),
+        f"test_one_ineq_{solver}",
         TestSolveQP.get_test_one_ineq(solver),
     )
     setattr(
         TestSolveQP,
-        "test_safer_{}".format(solver),
+        f"test_safer_{solver}",
         TestSolveQP.get_test_safer(solver),
     )
     if solver in sparse_solvers:
         setattr(
             TestSolveQP,
-            "test_sparse_{}".format(solver),
+            f"test_sparse_{solver}",
             TestSolveQP.get_test_sparse(solver),
         )
         setattr(
             TestSolveQP,
-            "test_sparse_bounds_{}".format(solver),
+            f"test_sparse_bounds_{solver}",
             TestSolveQP.get_test_sparse_bounds(solver),
         )
         setattr(
             TestSolveQP,
-            "test_sparse_unfeasible_{}".format(solver),
+            f"test_sparse_unfeasible_{solver}",
             TestSolveQP.get_test_sparse_unfeasible(solver),
         )
     setattr(
         TestSolveQP,
-        "test_warmstart_{}".format(solver),
+        f"test_warmstart_{solver}",
         TestSolveQP.get_test_warmstart(solver),
+    )
+    setattr(
+        TestSolveQP,
+        f"test_unbounded_below_{solver}",
+        TestSolveQP.get_test_unbounded_below(solver),
     )
 
 

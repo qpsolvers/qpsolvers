@@ -102,7 +102,8 @@ def solve_qp(
     Raises
     ------
     ValueError
-        If the problem is not correctly defined.
+        If the problem is not correctly defined. For instance, if the solver
+        requires a definite matrix :math:`P` but the one provided is not.
 
     Note
     ----
