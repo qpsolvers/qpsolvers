@@ -35,6 +35,15 @@ from qpsolvers import available_solvers, sparse_solvers
 from qpsolvers import solve_qp, solve_safer_qp
 from qpsolvers.exceptions import SolverNotFound
 
+# Raising a ValueError when the problem is unbounded below is desired but not
+# achieved by some solvers. Here are the behaviors observed as of v1.8.0. We
+# only test solvers that raise successfully:
+behavior_on_unbounded = {
+    "raise_value_error": ["cvxopt", "ecos", "quadprog", "scs"],
+    "return_crazy_solution": ["qpoases"],
+    "return_none": ["cvxpy", "osqp"],
+}
+
 
 class TestSolveQP(unittest.TestCase):
 
@@ -521,7 +530,7 @@ class TestSolveQP(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_unbounded_below(solver):
+    def get_test_raise_on_unbounded_below(solver):
         """
         Check that a ValueError is raised when the problem is unbounded below.
 
@@ -534,6 +543,14 @@ class TestSolveQP(unittest.TestCase):
         -------
         test : function
             Test function for that solver.
+
+        Notes
+        -----
+        Detecting non-convexity is not a trivial problem and most solvers leave
+        it to the user. See for instance the `recommendation from OSQP
+        <https://osqp.org/docs/interfaces/status_values.html#status-values>`_.
+        We only run this test for functions that successfully detect unbounded
+        problems when the eigenvalues of :math:`P` are close to zero.
         """
 
         def test(self):
@@ -606,11 +623,12 @@ for solver in available_solvers:
         f"test_warmstart_{solver}",
         TestSolveQP.get_test_warmstart(solver),
     )
-    setattr(
-        TestSolveQP,
-        f"test_unbounded_below_{solver}",
-        TestSolveQP.get_test_unbounded_below(solver),
-    )
+    if solver in behavior_on_unbounded["raise_value_error"]:
+        setattr(
+            TestSolveQP,
+            f"test_raise_on_unbounded_below_{solver}",
+            TestSolveQP.get_test_raise_on_unbounded_below(solver),
+        )
 
 
 if __name__ == "__main__":

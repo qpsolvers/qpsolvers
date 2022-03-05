@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Setup instructions for Microsoft Visual Studio
+- Unit tests where the problem is unbounded below
 
 ### Changed
 
