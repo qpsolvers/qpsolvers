@@ -24,6 +24,7 @@ from typing import Any, Dict, Optional, Tuple
 
 from numpy import hstack, ndarray, sqrt, vstack, zeros
 from numpy.linalg import cholesky
+from numpy.linalg import LinAlgError
 from scipy.sparse import csc_matrix
 
 
@@ -78,7 +79,14 @@ def convert_to_socp(
     """
     n = P.shape[1]  # dimension of QP variable
     c_socp = hstack([zeros(n), 1])  # new SOCP variable stacked as [x, t]
-    L = cholesky(P)
+    try:
+        L = cholesky(P)
+    except LinAlgError as e:
+        error = str(e)
+        if "not positive definite" in error:
+            raise ValueError("matrix P is not positive definite") from e
+        else:  # other linear algebraic error
+            raise e
 
     scale = 1.0 / sqrt(2)
     G_quad = vstack(

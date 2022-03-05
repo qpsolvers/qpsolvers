@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 
 - Clear all Pylint warnings
 - Disable Pylint false positives that are covered by mypy
+- ECOS: raise a ValueError when the cost matrix is not positive definite
 
 ## [1.8] - 2022/01/13
 
