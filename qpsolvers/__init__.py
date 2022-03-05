@@ -37,7 +37,7 @@ from .solvers import scs_solve_qp
 from .solvers import sparse_solvers
 from .utils import print_matrix_vector
 
-__version__ = "1.8.0"
+__version__ = "1.8.1"
 
 __all__ = [
     "__version__",

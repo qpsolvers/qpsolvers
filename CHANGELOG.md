@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## [1.8.1] - 2022/03/05
 
 ### Added
 
@@ -19,7 +19,7 @@ All notable changes to this project will be documented in this file.
 - Disable Pylint false positives that are covered by mypy
 - ECOS: raise a ValueError when the cost matrix is not positive definite
 
-## [1.8] - 2022/01/13
+## [1.8.0] - 2022/01/13
 
 ### Added
 
@@ -57,7 +57,7 @@ All notable changes to this project will be documented in this file.
 
 - Make CVXOPT optional again (thanks to @adamoppenheimer)
 
-## [1.7] - 2021/09/19
+## [1.7.0] - 2021/09/19
 
 ### Added
 

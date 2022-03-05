@@ -36,8 +36,8 @@ from qpsolvers import solve_qp, solve_safer_qp
 from qpsolvers.exceptions import SolverNotFound
 
 # Raising a ValueError when the problem is unbounded below is desired but not
-# achieved by some solvers. Here are the behaviors observed as of v1.8.0. We
-# only test solvers that raise successfully:
+# achieved by some solvers. Here are the behaviors observed as of March 2022.
+# Unit tests only cover solvers that raise successfully:
 behavior_on_unbounded = {
     "raise_value_error": ["cvxopt", "ecos", "quadprog", "scs"],
     "return_crazy_solution": ["qpoases"],
