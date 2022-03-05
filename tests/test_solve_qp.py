@@ -39,7 +39,12 @@ from qpsolvers.exceptions import SolverNotFound
 class TestSolveQP(unittest.TestCase):
 
     """
-    Test fixture for the README example problem.
+    Test fixture for a variety of quadratic programs.
+
+    Solver-specific tests are implemented in static methods called
+    ``get_test_{foo}`` that return the test function for a given solver. The
+    corresponding test function ``test_{foo}_{solver}`` is then added to the
+    fixture below the class definition.
     """
 
     def setUp(self):
