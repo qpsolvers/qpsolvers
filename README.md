@@ -1,7 +1,13 @@
 # QP Solvers for Python
 
+[**Installation**](#installation)
+| [**Documentation**](https://scaron.info/doc/qpsolvers/)
+| [**Examples**](examples)
+| [**Solvers**](#solvers)
+| [**FAQ**](#frequently-asked-questions)
+| [**Benchmark**](#benchmark)
+
 [![build](https://img.shields.io/github/workflow/status/stephane-caron/qpsolvers/CI)](https://github.com/stephane-caron/qpsolvers/actions)
-[![Documentation](https://img.shields.io/badge/docs-online-brightgreen?logo=read-the-docs&style=flat)](https://scaron.info/doc/qpsolvers/)
 [![PyPI package](https://img.shields.io/pypi/v/qpsolvers)](https://pypi.org/project/qpsolvers/)
 ![Status](https://img.shields.io/pypi/status/qpsolvers)
 
@@ -74,7 +80,7 @@ The list of supported solvers currently includes:
 - *I get the following [build error on Windows](https://github.com/stephane-caron/qpsolvers/issues/28) when running `pip install qpsolvers`.*
   - You will need to install the [Visual C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) to build all package dependencies.
 
-## Performances
+## Benchmark
 
 On a [dense problem](examples/benchmark_dense_problem.py), the performance of all solvers (as measured by IPython's ``%timeit`` on an Intel(R) Core(TM) i7-6700K CPU @ 4.00GHz) is:
 
