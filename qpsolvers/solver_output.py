@@ -10,7 +10,8 @@ class QPOutput:
     This is the generic Solver output object. This is the general extra infor return object for solvers. It contains\\
     all of the information you would need for the optimization solution including, optimal value, optimal solution, the \\
     active set, the value of the slack variables and the largange multipliers associated with every constraint.
-    Members:
+    Parameters
+    ----------
     obj: optimal objective \n
     sol: x*, numpy array \n
     Optional Parameters -> None or numpy.ndarray type
