@@ -29,7 +29,7 @@ import numpy
 
 
 @dataclass
-class QPOutput:
+class SolverOutput:
     """
     This is the generic Solver output object. This is the general extra infor return object for solvers. It contains\\
     all of the information you would need for the optimization solution including, optimal value, optimal solution, the \\
