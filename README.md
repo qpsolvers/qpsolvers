@@ -2,7 +2,7 @@
 
 [**Installation**](#installation)
 | [**Documentation**](https://scaron.info/doc/qpsolvers/)
-| [**Examples**](examples)
+| [**Example**](#example)
 | [**Solvers**](#solvers)
 | [**FAQ**](#frequently-asked-questions)
 | [**Benchmark**](#benchmark)
