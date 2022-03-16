@@ -6,8 +6,6 @@
 qpsolvers
 #########
 
-.. **Release 1.8.1 -- March 5, 2022**
-
 Unified interface to Quadratic Programming (QP) solvers available in Python.
 
 The library provides a one-stop shop :func:`.solve_qp` function with a
