@@ -145,5 +145,5 @@ def qpswift_solve_qp(
         )
     exit_flag = result["basicInfo"]["ExitFlag"]
     if exit_flag != 0:
-        print(f"qpSWIFT failed with exit flag {exit_flag}")
+        return None
     return result["sol"]
