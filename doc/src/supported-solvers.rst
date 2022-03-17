@@ -40,6 +40,12 @@ on installing this solver.
 
 .. autofunction:: qpsolvers.qpoases_solve_qp
 
+qpSWIFT
+=======
+
+.. automodule:: qpsolvers.solvers.qpswift_
+    :members:
+
 quadprog
 ========
 

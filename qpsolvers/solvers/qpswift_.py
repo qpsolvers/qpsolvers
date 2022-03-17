@@ -19,7 +19,7 @@
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
 """
-Solver interface for qpSWIFT
+Solver interface for `qpSWIFT <https://github.com/qpSWIFT/qpSWIFT>`__.
 
 qpSWIFT is light-weight sparse Quadratic Programming solver targetted for
 embedded and robotic applications. It employs Primal-Dual Interioir Point
@@ -28,25 +28,9 @@ solving the linear system of equations, sparse LDL' factorization is used along
 with approximate minimum degree heuristic to minimize fill-in of the
 factorizations.
 
-Citing qpSWIFT
---------------
-
-If you like qpSWIFT and are using it in your work, please cite the following
-paper:
-
-.. bibtex::
-
-    @article{pandala2019qpswift,
-      title     = {qpSWIFT: A Real-Time Sparse Quadratic Program Solver for
-                   Robotic Applications},
-      author    = {Pandala, Abhishek Goud and Ding, Yanran and Park, Hae-Won},
-      journal   = {IEEE Robotics and Automation Letters},
-      volume    = {4},
-      number    = {4},
-      pages     = {3355--3362},
-      year      = {2019},
-      publisher = {IEEE}
-    }
+If you use qpSWIFT in your research, consider citing the corresponding paper:
+`qpSWIFT: A Real-Time Sparse Quadratic Program Solver for Robotic Applications
+<https://doi.org/10.1109/LRA.2019.2926664>`_.
 """
 
 from typing import Optional
@@ -81,6 +65,10 @@ def qpswift_solve_qp(
 
     using `qpSWIFT <https://github.com/qpSWIFT/qpSWIFT>`__.
 
+    Note
+    ----
+    This solver does not handle problems without inequality constraints yet.
+
     Parameters
     ----------
     P :
@@ -111,14 +99,12 @@ def qpswift_solve_qp(
     -----
     The option dictionary accepts the following settings:
 
-    .. list-table:: Options
-       :widths: 50 50
+    .. list-table::
+       :widths: 30 70
        :header-rows: 1
 
        * - Name
          - Effect
-       * - Row 2, column 1
-         - Row 2, column 3
        * - MAXITER
          - maximum number of iterations needed
        * - ABSTOL
