@@ -54,17 +54,17 @@ This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``.
 
 The list of supported solvers currently includes:
 
-- Dense solvers:
-    - [CVXOPT](http://cvxopt.org/)
-    - [qpOASES](https://github.com/coin-or/qpOASES)
-    - [qpSWIFT](https://github.com/qpSWIFT/qpSWIFT)
-    - [quadprog](https://pypi.python.org/pypi/quadprog/)
-- Sparse solvers:
-    - [ECOS](https://web.stanford.edu/~boyd/papers/ecos.html)
-    - [Gurobi](https://www.gurobi.com/)
-    - [MOSEK](https://mosek.com/)
-    - [OSQP](https://github.com/oxfordcontrol/osqp)
-    - [SCS](https://github.com/cvxgrp/scs)
+| Solver | Keyword | Type | License |
+| ------ | ------- | ---- | ------- |
+| [CVXOPT](http://cvxopt.org/) | ``cvxopt`` | Dense | GPL-3.0 |
+| [ECOS](https://web.stanford.edu/~boyd/papers/ecos.html) | ``ecos`` | Sparse | GPL-3.0 |
+| [Gurobi](https://www.gurobi.com/) | ``gurobi`` | Sparse | Commercial |
+| [MOSEK](https://mosek.com/) | ``mosek`` | Sparse | Commercial |
+| [OSQP](https://github.com/oxfordcontrol/osqp) | ``osqp`` | Sparse | Apache-2.0 |
+| [qpOASES](https://github.com/coin-or/qpOASES) | ``qpoases`` | Dense | LGPL-2.1 |
+| [qpSWIFT](https://github.com/qpSWIFT/qpSWIFT) | ``qpswift`` | Sparse | GPL-3.0 |
+| [quadprog](https://pypi.python.org/pypi/quadprog/) | ``quadprog`` | Dense | GPL-2.0 |
+| [SCS](https://github.com/cvxgrp/scs) | ``scs`` | Sparse | MIT |
 
 ## Frequently Asked Questions
 
