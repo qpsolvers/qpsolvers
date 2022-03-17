@@ -30,24 +30,13 @@ except ImportError:
     print("This example requires IPython, try installing ipython3")
     sys.exit(-1)
 
-from numpy import dot, ones, random
+from numpy import dot, linspace, ones, random
 from os.path import basename
 from scipy.linalg import toeplitz
 from timeit import timeit
 
 from qpsolvers import available_solvers, solve_qp
 
-colors = {
-    "cvxopt": "r",
-    "cvxpy": "c",
-    "ecos": "g",
-    "gurobi": "b",
-    "mosek": "g",
-    "osqp": "k",
-    "qpoases": "y",
-    "quadprog": "m",
-    "scs": "b",
-}
 
 nb_iter = 10
 sizes = [10, 20, 50, 100, 200, 500, 1000, 2000]
@@ -65,16 +54,21 @@ def solve_random_qp(n, solver):
 
 def plot_results(perfs):
     try:
-        from pylab import clf, grid, ion, legend, plot, xscale, yscale
-        from pylab import xlabel, ylabel
+        from pylab import clf, get_cmap, grid, ion, legend, plot
+        from pylab import xlabel, xscale, ylabel, yscale
     except ImportError:
         print("Cannot plot results, try installing python3-matplotlib")
         print("Results are stored in the global `perfs` dictionary")
         return
+    cmap = get_cmap("tab10")
+    colors = cmap(linspace(0, 1, len(available_solvers)))
+    solver_color = {
+        solver: colors[i] for i, solver in enumerate(available_solvers)
+    }
     ion()
     clf()
     for solver in perfs:
-        plot(sizes, perfs[solver], lw=2, color=colors[solver])
+        plot(sizes, perfs[solver], lw=2, color=solver_color[solver])
     grid(True)
     legend(list(perfs.keys()), loc="lower right")
     xscale("log")
@@ -82,7 +76,7 @@ def plot_results(perfs):
     xlabel("Problem size $n$")
     ylabel("Time (s)")
     for solver in perfs:
-        plot(sizes, perfs[solver], marker="o", color=colors[solver])
+        plot(sizes, perfs[solver], marker="o", color=solver_color[solver])
 
 
 if __name__ == "__main__":
