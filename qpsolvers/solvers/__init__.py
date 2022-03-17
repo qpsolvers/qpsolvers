@@ -239,6 +239,36 @@ except ImportError:
     pass
 
 
+# qpSWIFT
+# =======
+
+qpswift_solve_qp: Optional[
+    Callable[
+        [
+            ndarray,
+            ndarray,
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            bool,
+            dict,
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
+try:
+    from .qpswift_ import qpswift_solve_qp
+
+    solve_function["qpswift"] = qpswift_solve_qp
+    available_solvers.append("qpswift")
+    dense_solvers.append("qpswift")
+except ImportError:
+    pass
+
+
 # quadprog
 # ========
 
