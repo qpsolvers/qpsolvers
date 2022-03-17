@@ -87,6 +87,7 @@ On a [dense problem](examples/benchmark_dense_problem.py), the performance of al
 
 | Solver   | Type   | Time (ms) |
 | -------- | ------ | --------- |
+| qpswift  | Dense  | 0.008     |
 | quadprog | Dense  | 0.01      |
 | qpoases  | Dense  | 0.02      |
 | osqp     | Sparse | 0.03      |
@@ -102,6 +103,7 @@ On a [sparse problem](examples/benchmark_sparse_problem.py) with *n = 500* optim
 | Solver   | Type   | Time (ms) |
 | -------- | ------ | --------- |
 | osqp     | Sparse |    1      |
+| qpswift  | Dense  |    2      |
 | scs      | Sparse |    4      |
 | cvxpy    | Sparse |   11      |
 | mosek    | Sparse |   17      |
