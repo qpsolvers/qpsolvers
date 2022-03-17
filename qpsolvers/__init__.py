@@ -32,12 +32,13 @@ from .solvers import gurobi_solve_qp
 from .solvers import mosek_solve_qp
 from .solvers import osqp_solve_qp
 from .solvers import qpoases_solve_qp
+from .solvers import qpswift_solve_qp
 from .solvers import quadprog_solve_qp
 from .solvers import scs_solve_qp
 from .solvers import sparse_solvers
 from .utils import print_matrix_vector
 
-__version__ = "1.8.1"
+__version__ = "1.9.0"
 
 __all__ = [
     "__version__",
@@ -51,6 +52,7 @@ __all__ = [
     "osqp_solve_qp",
     "print_matrix_vector",
     "qpoases_solve_qp",
+    "qpswift_solve_qp",
     "quadprog_solve_qp",
     "scs_solve_qp",
     "solve_ls",

@@ -36,6 +36,7 @@ from .qpsolvers import mosek_solve_qp
 from .qpsolvers import osqp_solve_qp
 from .qpsolvers import print_matrix_vector
 from .qpsolvers import qpoases_solve_qp
+from .qpsolvers import qpswift_solve_qp
 from .qpsolvers import quadprog_solve_qp
 from .qpsolvers import scs_solve_qp
 from .qpsolvers import solve_ls
@@ -55,6 +56,7 @@ __all__ = [
     "osqp_solve_qp",
     "print_matrix_vector",
     "qpoases_solve_qp",
+    "qpswift_solve_qp",
     "quadprog_solve_qp",
     "scs_solve_qp",
     "solve_ls",

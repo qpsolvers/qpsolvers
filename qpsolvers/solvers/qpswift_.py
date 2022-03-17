@@ -131,7 +131,7 @@ def qpswift_solve_qp(
     if initvals is not None:
         print("qpSWIFT: note that warm-start values ignored by wrapper")
     result: dict = {}
-    opts["OUTPUT"] = 1
+    opts["OUTPUT"] = 1  # include "sol" and "basicInfo"
     opts["VERBOSE"] = 1 if verbose else 0
     if G is not None and h is not None:
         if A is not None and b is not None:
@@ -139,10 +139,10 @@ def qpswift_solve_qp(
         else:  # no equality constraint
             result = qpSWIFT.run(q, h, P, G, opts=opts)
     else:  # no inequality constraint
-        if A is not None and b is not None:
-            pass
-        else:  # no equality constraint either
-            pass
+        # See https://qpswift.github.io/index.html#updates
+        raise NotImplementedError(
+            "QP without inequality constraints is still WIP for qpSWIFT"
+        )
     exit_flag = result["basicInfo"]["ExitFlag"]
     if exit_flag != 0:
         print(f"qpSWIFT failed with exit flag {exit_flag}")

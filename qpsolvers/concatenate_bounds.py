@@ -59,7 +59,6 @@ try:
             ]
         )
 
-
 except ImportError:
 
     def cvxopt_concatenate(G, sign: float, m: int):

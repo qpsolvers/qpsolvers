@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Added
+
+- qpSWIFT 0.0.2 solver interface
+
 ## [1.8.1] - 2022/03/05
 
 ### Added
