@@ -85,8 +85,7 @@ def convert_to_socp(
         error = str(e)
         if "not positive definite" in error:
             raise ValueError("matrix P is not positive definite") from e
-        else:  # other linear algebraic error
-            raise e
+        raise e  # other linear algebraic error
 
     scale = 1.0 / sqrt(2)
     G_quad = vstack(
