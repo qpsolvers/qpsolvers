@@ -44,7 +44,7 @@ sizes = [10, 20, 50, 100, 200, 500, 1000, 2000]
 
 def solve_random_qp(n, solver):
     M, b = random.random((n, n)), random.random(n)
-    P, q = dot(M.T, M), dot(b, M).reshape((n,))
+    P, q = dot(M.T, M), dot(b, M)
     G = toeplitz(
         [1.0, 0.0, 0.0] + [0.0] * (n - 3), [1.0, 2.0, 3.0] + [0.0] * (n - 3)
     )

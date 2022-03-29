@@ -30,7 +30,7 @@ from time import perf_counter
 R = np.array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
 s = np.array([3.0, 2.0, 3.0])
 G = np.array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
-h = np.array([3.0, 2.0, -2.0]).reshape((3,))
+h = np.array([3.0, 2.0, -2.0])
 
 start_time = perf_counter()
 solver = "quadprog"  # see qpsolvers.available_solvers

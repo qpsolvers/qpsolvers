@@ -29,9 +29,9 @@ from time import perf_counter
 
 M = np.array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
 P = np.dot(M.T, M)  # this is a positive definite matrix
-q = np.dot(np.array([3.0, 2.0, 3.0]), M).reshape((3,))
+q = np.dot(np.array([3.0, 2.0, 3.0]), M)
 G = np.array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
-h = np.array([3.0, 2.0, -2.0]).reshape((3,))
+h = np.array([3.0, 2.0, -2.0])
 A = np.array([1.0, 1.0, 1.0])
 b = np.array([1.0])
 

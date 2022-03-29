@@ -34,9 +34,9 @@ from qpsolvers import solve_qp
 
 M = array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
 P = dot(M.T, M)
-q = dot(array([3.0, 2.0, 3.0]), M).reshape((3,))
+q = dot(array([3.0, 2.0, 3.0]), M)
 G = array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
-h = array([3.0, 2.0, -2.0]).reshape((3,))
+h = array([3.0, 2.0, -2.0])
 P_csc = csc_matrix(P)
 G_csc = csc_matrix(G)
 
