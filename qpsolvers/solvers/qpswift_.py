@@ -48,7 +48,7 @@ def qpswift_solve_qp(
     b: Optional[np.ndarray] = None,
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
-    opts: dict = {},
+    opts: Optional[dict] = None,
 ) -> Optional[np.ndarray]:
     """
     Solve a Quadratic Program defined as:
@@ -117,6 +117,8 @@ def qpswift_solve_qp(
     if initvals is not None:
         print("qpSWIFT: note that warm-start values ignored by wrapper")
     result: dict = {}
+    if opts is None:
+        opts = {}
     opts["OUTPUT"] = 1  # include "sol" and "basicInfo"
     opts["VERBOSE"] = 1 if verbose else 0
     if G is not None and h is not None:
