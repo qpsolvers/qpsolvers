@@ -34,6 +34,7 @@ import numpy as np
 import pylab
 
 from qpsolvers import solve_qp
+from scipy.sparse import csc_matrix
 
 gravity = 9.81  # [m] / [s]^2
 
@@ -145,24 +146,17 @@ class LinearModelPredictiveControl:
         self.q = q
         self.G = np.vstack(G_list)
         self.h = np.hstack(h_list)
+        self.P_csc = csc_matrix(self.P)
+        self.G_csc = csc_matrix(self.G)
 
-    def solve(self, solver: str):
-        """
-        Compute the series of controls that minimizes the preview QP.
-
-        """
-        U = solve_qp(self.P, self.q, self.G, self.h, solver=solver)
+    def solve(self, solver: str, sparse: bool = False, **kwargs):
+        P = self.P_csc if sparse else self.P
+        G = self.G_csc if sparse else self.G
+        U = solve_qp(P, self.q, G, self.h, solver=solver, **kwargs)
         self.U = U.reshape((self.nb_timesteps, self.u_dim))
 
     @property
     def states(self):
-        """
-        Series of system states over the preview window.
-
-        Note
-        ----
-        This property is only available after ``solve()`` has been called.
-        """
         assert self.U is not None, "you need to solve() the MPC problem first"
         X = np.zeros((self.nb_timesteps + 1, self.x_dim))
         X[0] = self.x_init

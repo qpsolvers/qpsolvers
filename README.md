@@ -113,6 +113,19 @@ On a [sparse problem](examples/benchmark_sparse_problem.py) with *n = 500* optim
 | quadprog | Dense  |  427      |
 | qpoases  | Dense  | 1560      |
 
+On a [model predictive control](examples/model_predictive_control.py) problem for robot locomotion, we get:
+
+| Solver   | Type   | Time (ms) |
+| -------- | ------ | --------- |
+| quadprog | Dense  | 0.03      |
+| qpoases  | Dense  | 0.36      |
+| osqp     | Sparse | 0.48      |
+| ecos     | Sparse | 0.69      |
+| scs      | Sparse | 0.76      |
+| cvxopt   | Dense  | 2.75      |
+| cvxpy    | Sparse | 7.02      |
+| qpswift  | Dense  | [issue](https://github.com/qpSWIFT/qpSWIFT/issues/3) |
+
 Finally, here is a small benchmark of [random dense problems](examples/benchmark_random_problems.py) (each data point corresponds to an average over 10 runs):
 
 <img src="https://scaron.info/images/qp-benchmark-2022.png">

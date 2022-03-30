@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- Benchmark on model predictive control problem
 - Model predictive control example
 - qpSWIFT 0.0.2 solver interface
 
