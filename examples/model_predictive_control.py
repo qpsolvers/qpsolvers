@@ -124,8 +124,11 @@ class LinearModelPredictiveControl:
                 G[:, k * self.u_dim:(k + 1) * self.u_dim] = D
             if C is not None:
                 G += C.dot(psi)
-            G_list.append(G)
-            h_list.append(h)
+            if k == 0 and D is None:  # corner case, input has no effect
+                assert(np.all(h >= 0.0))
+            else:  # regular case
+                G_list.append(G)
+                h_list.append(h)
             phi = self.A.dot(phi)
             psi = self.A.dot(psi)
             psi[:, self.u_dim * k:self.u_dim * (k + 1)] = self.B
@@ -230,5 +233,5 @@ def plot_mpc_solution(problem, mpc):
 if __name__ == "__main__":
     problem = HumanoidSteppingProblem()
     mpc = HumanoidModelPredictiveControl(problem)
-    mpc.solve(solver="quadprog")
+    mpc.solve(solver="qpswift")
     plot_mpc_solution(problem, mpc)
