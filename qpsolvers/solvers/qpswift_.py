@@ -21,12 +21,11 @@
 """
 Solver interface for `qpSWIFT <https://github.com/qpSWIFT/qpSWIFT>`__.
 
-qpSWIFT is light-weight sparse Quadratic Programming solver targetted for
-embedded and robotic applications. It employs Primal-Dual Interioir Point
-method with Mehrotra Predictor corrector step and Nesterov Todd scaling. For
-solving the linear system of equations, sparse LDL' factorization is used along
-with approximate minimum degree heuristic to minimize fill-in of the
-factorizations.
+qpSWIFT is a light-weight sparse Quadratic Programming solver targeted for
+embedded and robotic applications. It employs Primal-Dual Interior Point method
+with Mehrotra Predictor corrector step and Nesterov Todd scaling. For solving
+the linear system of equations, sparse LDL' factorization is used along with
+approximate minimum degree heuristic to minimize fill-in of the factorizations.
 
 If you use qpSWIFT in your research, consider citing the corresponding paper:
 `qpSWIFT: A Real-Time Sparse Quadratic Program Solver for Robotic Applications
@@ -71,10 +70,8 @@ def qpswift_solve_qp(
 
     Note
     ----
-    qpSWIFT requires both inequality and equality constraint matrices to be
-    full row rank. It does not perform rank checks for performance reasons. If
-    a verbose output shows that the maximum number of iterations is reached,
-    check the ranks of your constraint matrices.
+    qpSWIFT requires the equality constraint matrix to be full row rank. For
+    performance reasons it will not perform a rank check on this matrix.
 
     Parameters
     ----------
@@ -83,7 +80,7 @@ def qpswift_solve_qp(
     q :
         Quadratic-cost vector.
     G :
-        Linear inequality constraint matrix. It needs to be full row rank.
+        Linear inequality constraint matrix.
     h :
         Linear inequality constraint vector.
     A :
@@ -120,6 +117,10 @@ def qpswift_solve_qp(
          - relative tolerance
        * - SIGMA
          - maximum centering allowed
+
+    If a verbose output shows that the maximum number of iterations is reached,
+    check e.g. (1) the rank of your equality constraint matrix and (2) that
+    your inequality constraint matrix does not have zero rows.
     """
     if initvals is not None:
         print("qpSWIFT: note that warm-start values ignored by wrapper")

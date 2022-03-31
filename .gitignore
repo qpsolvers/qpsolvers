@@ -6,6 +6,7 @@
 MANIFEST
 build/
 dist/
+examples/qpsolvers
 gurobi.log
 htmlcov/
 qpsolvers.egg-info
