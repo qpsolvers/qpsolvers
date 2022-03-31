@@ -69,6 +69,13 @@ def qpswift_solve_qp(
     ----
     This solver does not handle problems without inequality constraints yet.
 
+    Note
+    ----
+    qpSWIFT requires both inequality and equality constraint matrices to be
+    full row rank. It does not perform rank checks for performance reasons. If
+    a verbose output shows that the maximum number of iterations is reached,
+    check the ranks of your constraint matrices.
+
     Parameters
     ----------
     P :
@@ -76,11 +83,11 @@ def qpswift_solve_qp(
     q :
         Quadratic-cost vector.
     G :
-        Linear inequality constraint matrix.
+        Linear inequality constraint matrix. It needs to be full row rank.
     h :
         Linear inequality constraint vector.
     A :
-        Linear equality constraint matrix.
+        Linear equality constraint matrix. It needs to be full row rank.
     b :
         Linear equality constraint vector.
     initvals :
