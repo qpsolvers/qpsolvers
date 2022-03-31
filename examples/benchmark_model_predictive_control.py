@@ -45,8 +45,6 @@ if __name__ == "__main__":
     dense_instr = {
         solver: f"u = mpc.solve(solver='{solver}', sparse=False)"
         for solver in dense_solvers
-        # skip qpSWIFT: https://github.com/qpSWIFT/qpSWIFT/issues/3
-        if solver != "qpswift"
     }
     sparse_instr = {
         solver: f"u = mpc.solve(solver='{solver}', sparse=True)"

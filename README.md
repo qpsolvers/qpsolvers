@@ -118,13 +118,13 @@ On a [model predictive control](examples/model_predictive_control.py) problem fo
 | Solver   | Type   | Time (ms) |
 | -------- | ------ | --------- |
 | quadprog | Dense  | 0.03      |
+| qpswift  | Dense  | 0.08      |
 | qpoases  | Dense  | 0.36      |
 | osqp     | Sparse | 0.48      |
 | ecos     | Sparse | 0.69      |
 | scs      | Sparse | 0.76      |
 | cvxopt   | Dense  | 2.75      |
 | cvxpy    | Sparse | 7.02      |
-| qpswift  | Dense  | [issue](https://github.com/qpSWIFT/qpSWIFT/issues/3) |
 
 Finally, here is a small benchmark of [random dense problems](examples/benchmark_random_problems.py) (each data point corresponds to an average over 10 runs):
 
