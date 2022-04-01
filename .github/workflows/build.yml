@@ -29,13 +29,18 @@ jobs:
             - name: "Install dependencies"
               run: |
                   python -m pip install --upgrade pip
-                  python -m pip install black coverage cvxopt cvxpy ecos flake8 flit mccabe mypy numpy osqp pylint pytest quadprog tox tox-gh-actions
+                  python -m pip install black coverage coveragepy-lcov cvxopt cvxpy ecos flake8 flit mccabe mypy numpy osqp pylint pytest quadprog tox tox-gh-actions
 
             - name: "Run tox targets for ${{ matrix.python-version }}"
               run: |
                   tox -e py
 
+            - name: "Convert coverage report to LCOV"
+              run: |
+                  coveragepy-lcov
+
             - name: "Coveralls"
               uses: coverallsapp/github-action@1.1.3
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
+                  path-to-lcov: "lcov.info"
