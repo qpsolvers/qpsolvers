@@ -34,3 +34,6 @@ jobs:
             - name: "Run tox targets for ${{ matrix.python-version }}"
               run: |
                   tox -e py
+
+            - name: "Coveralls GitHub Action"
+              uses: coverallsapp/github-action@1.1.3
