@@ -68,23 +68,25 @@ def qpswift_solve_qp(
     ----
     This solver does not handle problems without inequality constraints yet.
 
-    Note
-    ----
-    qpSWIFT requires the equality constraint matrix to be full row rank. For
-    performance reasons it will not perform a rank check on this matrix.
-
     Parameters
     ----------
     P :
-        Symmetric quadratic-cost matrix.
+        Symmetric quadratic-cost matrix. Together with :math:`A` and :math:`G`,
+        it should satisfy :math:`\\mathrm{rank}([P\\ A^T\\ G^T]) = n`, see the
+        rank assumptions below.
     q :
         Quadratic-cost vector.
     G :
-        Linear inequality constraint matrix.
+        Linear inequality constraint matrix. Together with :math:`P` and
+        :math:`A`, it should satisfy :math:`\\mathrm{rank}([P\\ A^T\\ G^T]) =
+        n`, see the rank assumptions below.
     h :
         Linear inequality constraint vector.
     A :
-        Linear equality constraint matrix. It needs to be full row rank.
+        Linear equality constraint matrix. It needs to be full row rank, and
+        together with :math:`P` and :math:`G` satisfy
+        :math:`\\mathrm{rank}([P\\ A^T\\ G^T]) = n`. See the rank assumptions
+        below.
     b :
         Linear equality constraint vector.
     initvals :
@@ -98,6 +100,24 @@ def qpswift_solve_qp(
     -------
     :
         Solution to the QP, if found, otherwise ``None``.
+
+    Note
+    ----
+    **Rank assumptions:** qpSWIFT requires the QP matrices to satisfy the
+
+    .. math::
+
+        \\begin{split}\\begin{array}{cc}
+        \\mathrm{rank}(A) = p
+        &
+        \\mathrm{rank}([P\\ A^T\\ G^T]) = n
+        \\end{array}\\end{split}
+
+    where :math:`p` is the number of rows of :math:`A` and :math:`n` is the
+    number of optimization variables. This is the same requirement as
+    :func:`cvxopt_solve_qp`, however qpSWIFT does not perform rank checks as it
+    prioritizes performance. If the solver fails on your problem, try running
+    CVXOPT on it for rank checks.
 
     Notes
     -----
