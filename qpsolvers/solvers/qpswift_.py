@@ -141,6 +141,11 @@ def qpswift_solve_qp(
     If a verbose output shows that the maximum number of iterations is reached,
     check e.g. (1) the rank of your equality constraint matrix and (2) that
     your inequality constraint matrix does not have zero rows.
+
+    As qpSWIFT does not sanity check its inputs, it should be used with a
+    little more care than the other solvers. For instance, make sure you don't
+    have zero rows in your input matrices, as it can `make the solver
+    numerically unstable <https://github.com/qpSWIFT/qpSWIFT/issues/3>`_.
     """
     if initvals is not None:
         print("qpSWIFT: note that warm-start values ignored by wrapper")
