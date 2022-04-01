@@ -85,15 +85,22 @@ def cvxopt_solve_qp(
     Parameters
     ----------
     P :
-        Symmetric quadratic-cost matrix.
+        Symmetric quadratic-cost matrix. Together with :math:`A` and :math:`G`,
+        it should satisfy :math:`\\mathrm{rank}([P\\ A^T\\ G^T]) = n`, see the
+        rank assumptions below.
     q :
         Quadratic-cost vector.
     G :
-        Linear inequality matrix.
+        Linear inequality matrix. Together with :math:`P` and :math:`A`, it
+        should satisfy :math:`\\mathrm{rank}([P\\ A^T\\ G^T]) = n`, see the
+        rank assumptions below.
     h :
         Linear inequality vector.
     A :
-        Linear equality constraint matrix.
+        Linear equality constraint matrix. It needs to be full row rank, and
+        together with :math:`P` and :math:`G` satisfy
+        :math:`\\mathrm{rank}([P\\ A^T\\ G^T]) = n`. See the rank assumptions
+        below.
     b :
         Linear equality constraint vector.
     solver :
@@ -110,6 +117,23 @@ def cvxopt_solve_qp(
 
     Note
     ----
+    **Rank assumptions:** CVXOPT requires the QP matrices to satisfy the
+
+    .. math::
+
+        \\begin{split}\\begin{array}{cc}
+        \\mathrm{rank}(A) = p
+        &
+        \\mathrm{rank}([P\\ A^T\\ G^T]) = n
+        \\end{array}\\end{split}
+
+    where :math:`p` is the number of rows of :math:`A` and :math:`n` is the
+    number of optimization variables. See the "Rank assumptions" paragraph in
+    the report `The CVXOPT linear and quadratic cone program solvers
+    <http://www.ee.ucla.edu/~vandenbe/publications/coneprog.pdf>`_ for details.
+
+    Notes
+    -----
     CVXOPT only considers the lower entries of `P`, therefore it will use a
     different cost than the one intended if a non-symmetric matrix is provided.
     """
