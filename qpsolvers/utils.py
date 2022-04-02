@@ -49,6 +49,8 @@ def print_matrix_vector(
         A = A.reshape((1, A.shape[0]))
     if isinstance(A, csc_matrix):
         A = A.toarray()
+    if A.shape[0] != b.shape[0]:
+        raise ValueError("matrix and vector need the same first dimension")
     A_string = f"{A_label} =\n{A}"
     b_string = f"{b_label} =\n{b.reshape((A.shape[0], 1))}"
     A_lines = A_string.splitlines()
