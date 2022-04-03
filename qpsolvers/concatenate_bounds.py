@@ -34,9 +34,9 @@ from .typing import Matrix, Vector
 try:
     import cvxopt
 
-    def cvxopt_concatenate(G, sign: float, m: int):
+    def cvxopt_concatenate(G, sign: float, n: int):
         """
-        Concatenate the sparse matrix `sign * eye(m)` to a CVXOPT matrix `G`.
+        Concatenate the sparse matrix `sign * eye(n)` to a CVXOPT matrix `G`.
 
         Parameters
         ----------
@@ -44,8 +44,9 @@ try:
             Linear inequality matrix.
         sign :
             Sign factor: -1.0 for a lower and +1.0 for an upper bound.
-        m :
-            Dimension of the identity matrix.
+        n :
+            Dimension of the identity matrix, which in context should also be
+            the number of optimization variables.
 
         Returns
         -------
@@ -61,7 +62,7 @@ try:
 
 except ImportError:
 
-    def cvxopt_concatenate(G, sign: float, m: int):
+    def cvxopt_concatenate(G, sign: float, n: int):
         """
         This function is not available because CVXOPT is not installed.
         """
@@ -99,16 +100,17 @@ def concatenate_bound(
     h : numpy.ndarray or None
         Updated linear inequality vector.
     """
+    n = len(b)  # == number of optimization variables
     if G is None or h is None:
-        G = sign * np.eye(len(b))
+        G = sign * np.eye(n)
         h = sign * b
     else:  # G is not None and h is not None
         if isinstance(G, ndarray):
-            G = concatenate((G, sign * np.eye(len(b))), 0)
+            G = concatenate((G, sign * np.eye(n)), 0)
         elif isinstance(G, csc_matrix):
-            G = sparse.vstack([G, sign * sparse.eye(len(b))], format="csc")
+            G = sparse.vstack([G, sign * sparse.eye(n)], format="csc")
         else:  # isinstance(G, cvxopt.spmatrix)
-            G = cvxopt_concatenate(G, sign, len(b))
+            G = cvxopt_concatenate(G, sign, n)
         h = concatenate((h, sign * b))
     return (G, h)
 
