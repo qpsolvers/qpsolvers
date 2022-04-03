@@ -56,7 +56,7 @@ try:
         return cvxopt.sparse(
             [
                 G,
-                sign * cvxopt.spmatrix(1.0, range(m), range(m)),
+                sign * cvxopt.spmatrix(1.0, range(n), range(n)),
             ]
         )
 
