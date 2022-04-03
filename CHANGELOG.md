@@ -14,6 +14,10 @@ All notable changes to this project will be documented in this file.
 
 - Compute colors automatically in benchmark example
 
+### Fixed
+
+- Bounds concatenation for CVXOPT sparse matrices
+
 ## [1.8.1] - 2022/03/05
 
 ### Added

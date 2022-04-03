@@ -54,7 +54,7 @@ try:
         """
         return cvxopt.sparse(
             [
-                [G],
+                G,
                 sign * cvxopt.spmatrix(1.0, range(m), range(m)),
             ]
         )
