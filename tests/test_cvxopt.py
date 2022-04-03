@@ -30,10 +30,13 @@ from numpy import array, ones
 from numpy.linalg import norm
 from scipy.sparse import csc_matrix
 
+from qpsolvers.concatenate_bounds import concatenate_bounds
 from qpsolvers import solve_qp
 
 try:
     import cvxopt
+
+    from cvxopt import matrix as dense_matrix
     from qpsolvers.solvers.cvxopt_ import cvxopt_matrix
 
     class TestCVXOPT(unittest.TestCase):
@@ -77,6 +80,9 @@ try:
             return P, q, G, h
 
         def test_sparse(self):
+            """
+            Test CVXOPT on a sparse problem.
+            """
             P, q, G, h = self.get_sparse_problem()
             x = solve_qp(P, q, G, h, solver="cvxopt")
             self.assertIsNotNone(x)
@@ -85,6 +91,22 @@ try:
             h_cvxopt, x_cvxopt = cvxopt_matrix(h), cvxopt_matrix(x)
             self.assertLess(norm(x - known_solution), sol_tolerance)
             self.assertLess(max(G * x_cvxopt - h_cvxopt), 1e-10)
+
+        def test_concatenate_bounds(self):
+            """
+            Concatenate bounds with a CVXOPT inequality matrix.
+            """
+            _, _, G, h = self.get_sparse_problem()
+            lb = -np.ones(G.size[1])
+            ub = +np.ones(G.size[1])
+            G2, h2 = concatenate_bounds(G, h, lb, ub)
+            G2 = np.array(dense_matrix(G2))
+            m = G.size[0]
+            n = lb.shape[0]
+            self.assertTrue(np.allclose(G2[m:m + n, :], -np.eye(n)))
+            self.assertTrue(np.allclose(h2[m:m + n], -lb))
+            self.assertTrue(np.allclose(G2[m + n:m + 2 * n, :], np.eye(n)))
+            self.assertTrue(np.allclose(h2[m + n:m + 2 * n], ub))
 
 
 except ImportError:  # CVXOPT is not installed
