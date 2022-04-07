@@ -18,7 +18,15 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""Solver interface for OSQP"""
+"""
+Solver interface for `OSQP <https://osqp.org/>`__.
+
+The OSQP solver implements an Operator-Splitting method for large-scale convex
+quadratic programming. It is designed for both dense and sparse problems, and
+convexity is the only assumption it makes on problem data (for instance, it
+does not make any rank assumption contrary to :ref:`CVXOPT <CVXOPT rank
+assumptions>` or :ref:`qpSWIFT <qpSWIFT rank assumptions>`).
+"""
 
 from typing import Optional
 from warnings import warn

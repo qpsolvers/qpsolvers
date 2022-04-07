@@ -103,6 +103,8 @@ def qpswift_solve_qp(
 
     Note
     ----
+    .. _qpSWIFT rank assumptions:
+
     **Rank assumptions:** qpSWIFT requires the QP matrices to satisfy the
 
     .. math::

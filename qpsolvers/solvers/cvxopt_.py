@@ -117,6 +117,8 @@ def cvxopt_solve_qp(
 
     Note
     ----
+    .. _CVXOPT rank assumptions:
+
     **Rank assumptions:** CVXOPT requires the QP matrices to satisfy the
 
     .. math::

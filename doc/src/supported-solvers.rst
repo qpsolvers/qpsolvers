@@ -30,7 +30,8 @@ MOSEK
 OSQP
 ====
 
-.. autofunction:: qpsolvers.osqp_solve_qp
+.. automodule:: qpsolvers.solvers.osqp_
+    :members:
 
 qpOASES
 =======
