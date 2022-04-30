@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased - 2022/04/30
+
+### Fixed
+
+- OSQP: Pass extra keyword arguments properly (thanks to @urob)
+
 ## [1.9.0] - 2022/04/03
 
 ### Added
