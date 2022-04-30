@@ -279,4 +279,5 @@ release!
 ## [1.0.4] - 2018/07/05
 
 ### Added
+
 - Let's take this change log from there.
