@@ -16,14 +16,14 @@ Unified interface to Quadratic Programming (QP) solvers available in Python.
 
 ## Installation
 
-```sh
+```console
 pip install qpsolvers
 ```
 Check out the documentation for [Python 2](https://scaron.info/doc/qpsolvers/installation.html#python-2) or [Windows](https://scaron.info/doc/qpsolvers/installation.html#windows) instructions.
 
 ## Usage
 
-The library provides a one-stop shop ``solve_qp(P, q, G, h, A, b, lb, ub)`` function with a ``solver`` keyword argument to select the backend solver. It solves convex quadratic programs in standard form:
+The library provides a one-stop shop [``solve_qp``](https://scaron.info/doc/qpsolvers/quadratic-programming.html#qpsolvers.solve_qp) function with a ``solver`` keyword argument to select the backend solver. It solves convex quadratic programs in standard form:
 
 $$ 
 \begin{split}
@@ -38,7 +38,7 @@ $$
 \end{split}
 $$
 
-Vector inequalities are taken coordinate by coordinate. For most solvers, the matrix *P* should be [positive definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix).
+Vector inequalities are taken coordinate by coordinate. For most solvers, the matrix $P$ should be [positive definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix).
 
 ## Example
 
