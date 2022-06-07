@@ -25,7 +25,18 @@ Check out the documentation for [Python 2](https://scaron.info/doc/qpsolvers/ins
 
 The library provides a one-stop shop ``solve_qp(P, q, G, h, A, b, lb, ub)`` function with a ``solver`` keyword argument to select the backend solver. It solves convex quadratic programs in standard form:
 
-> ![Quadratic program in standard form](https://raw.githubusercontent.com/stephane-caron/qpsolvers/master/doc/src/images/qp.gif)
+$$ 
+\begin{split}
+\begin{array}{ll}
+\mbox{minimize} 
+    & \frac{1}{2} x^T P x + q^T x \\
+\mbox{subject to} 
+    & G x \leq h \\ 
+    & A x = b \\ 
+    & lb \leq x \leq ub 
+\end{array}
+\end{split}
+$$
 
 Vector inequalities are taken coordinate by coordinate. For most solvers, the matrix *P* should be [positive definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix).
 
