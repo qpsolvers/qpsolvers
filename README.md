@@ -1,7 +1,7 @@
 # QP Solvers for Python
 
 [**Installation**](https://github.com/stephane-caron/qpsolvers#installation)
-| [**Documentation**](https://scaron.info/doc/qpsolvers/)
+| [**Usage**](https://github.com/stephane-caron/qpsolvers#usage)
 | [**Example**](https://github.com/stephane-caron/qpsolvers#example)
 | [**Solvers**](https://github.com/stephane-caron/qpsolvers#solvers)
 | [**FAQ**](https://github.com/stephane-caron/qpsolvers#frequently-asked-questions)
@@ -9,6 +9,7 @@
 
 [![Build](https://img.shields.io/github/workflow/status/stephane-caron/qpsolvers/CI)](https://github.com/stephane-caron/qpsolvers/actions)
 [![Coverage](https://coveralls.io/repos/github/stephane-caron/qpsolvers/badge.svg?branch=master)](https://coveralls.io/github/stephane-caron/qpsolvers?branch=master)
+[![Documentation](https://img.shields.io/badge/docs-online-brightgreen?logo=read-the-docs&style=flat)](https://scaron.info/doc/qpsolvers/)
 [![PyPI version](https://img.shields.io/pypi/v/qpsolvers)](https://pypi.org/project/qpsolvers/)
 ![Status](https://img.shields.io/pypi/status/qpsolvers)
 
@@ -25,15 +26,15 @@ Check out the documentation for [Python 2](https://scaron.info/doc/qpsolvers/ins
 
 The library provides a one-stop shop [``solve_qp``](https://scaron.info/doc/qpsolvers/quadratic-programming.html#qpsolvers.solve_qp) function with a ``solver`` keyword argument to select the backend solver. It solves convex quadratic programs in standard form:
 
-$$ 
+$$
 \begin{split}
 \begin{array}{ll}
-\mbox{minimize} 
+\mbox{minimize}
     & \frac{1}{2} x^T P x + q^T x \\
-\mbox{subject to} 
-    & G x \leq h \\ 
-    & A x = b \\ 
-    & lb \leq x \leq ub 
+\mbox{subject to}
+    & G x \leq h \\
+    & A x = b \\
+    & lb \leq x \leq ub
 \end{array}
 \end{split}
 $$
