@@ -86,7 +86,7 @@ The list of supported solvers currently includes:
 - *Is it possible to solve a least squares rather than a quadratic program?*
   - Yes, `qpsolvers` also provides a [solve\_ls](https://scaron.info/doc/qpsolvers/least-squares.html#qpsolvers.solve_ls) function.
 - *I have a squared norm in my cost function, how can I apply a QP solver to my problem?*
-  - You can [cast squared norms to QP matrices](https://scaron.info/teaching/conversion-from-least-squares-to-quadratic-programming.html) and feed the result to `solve_qp`.
+  - You can [cast squared norms to QP matrices](https://scaron.info/blog/conversion-from-least-squares-to-quadratic-programming.html) and feed the result to `solve_qp`.
 - *I have a non-convex quadratic program. Is there a solver I can use?*
   - Unfortunately most available QP solvers are designed for convex problems.
   - If your cost matrix *P* is semi-definite rather than definite, try OSQP.
