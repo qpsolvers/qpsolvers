@@ -48,6 +48,13 @@ quadprog_source = [
 quadprog_wheel = [
     "quadprog-wheel >=0.1.11",
 ]
+starter_solvers = [
+    "cvxopt >=1.2.6",
+    "cvxpy >=1.1.11",
+    "ecos >=2.0.7.post1",
+    "osqp >=0.6.2",
+    "scs >=3.0.1",
+]
 
 [project.urls]
 Documentation = "https://scaron.info/doc/qpsolvers/"

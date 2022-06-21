@@ -17,6 +17,14 @@ Unified interface to Quadratic Programming (QP) solvers available in Python.
 
 ## Installation
 
+To install both the library and a starter set of QP solvers:
+
+```console
+pip install qpsolvers[starter_solvers]
+```
+
+To only install the library:
+
 ```console
 pip install qpsolvers
 ```
