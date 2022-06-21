@@ -22,10 +22,13 @@
 Test the "quadprog" QP solver on a small dense problem.
 """
 
+import random
+import sys
+from time import perf_counter
+
 import numpy as np
 
-from qpsolvers import solve_qp, print_matrix_vector
-from time import perf_counter
+from qpsolvers import available_solvers, print_matrix_vector, solve_qp
 
 M = np.array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
 P = np.dot(M.T, M)  # this is a positive definite matrix
@@ -36,8 +39,15 @@ A = np.array([1.0, 1.0, 1.0])
 b = np.array([1.0])
 
 if __name__ == "__main__":
+    if not available_solvers:
+        print(
+            "No QP solver found, you can install some by e.g. running "
+            "``pip install qpsolvers[starter_solvers]``"
+        )
+        sys.exit(-1)
+
     start_time = perf_counter()
-    solver = "quadprog"  # see qpsolvers.available_solvers
+    solver = random.choice(available_solvers)
     x = solve_qp(P, q, G, h, A, b, solver=solver)
     end_time = perf_counter()
 

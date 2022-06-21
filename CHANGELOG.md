@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- Quadratic programming example now randomly selects an available solver
 - The ``solver`` kwargs is now mandatory (previously defaulted to "quadprog")
 
 ## [1.9.1] - 2022/05/02
