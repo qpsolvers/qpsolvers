@@ -149,7 +149,10 @@ def solve_qp(
     try:
         return solve_function[solver](P, q, G, h, A, b, **kwargs)
     except KeyError as e:
-        raise SolverNotFound(f"solver '{solver}' is not available") from e
+        raise SolverNotFound(
+            f"solver '{solver}' is not in the list "
+            f"{available_solvers} of available solvers"
+        ) from e
 
 
 def solve_safer_qp(
