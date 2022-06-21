@@ -65,7 +65,7 @@ h = array([3., 2., -2.])
 A = array([1., 1., 1.])
 b = array([1.])
 
-x = solve_qp(P, q, G, h, A, b)
+x = solve_qp(P, q, G, h, A, b, solver="osqp")
 print("QP solution: x = {}".format(x))
 ```
 
