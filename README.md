@@ -49,6 +49,8 @@ $$
 
 Vector inequalities are taken coordinate by coordinate. For most solvers, the matrix $P$ should be [positive definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix).
 
+⚠️ With v2.0.0, the ``solver`` keyword argument has become mandatory.
+
 ## Example
 
 To solve a quadratic program, build the matrices that define it and call the ``solve_qp`` function:
