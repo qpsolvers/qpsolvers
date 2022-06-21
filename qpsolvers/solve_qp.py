@@ -162,7 +162,7 @@ def solve_safer_qp(
     h: ndarray,
     sr: float,
     reg: float = 1e-8,
-    solver: str = "mosek",
+    solver: Optional[str] = None,
     initvals: Optional[ndarray] = None,
     sym_proj: bool = False,
 ) -> Optional[ndarray]:
@@ -235,7 +235,15 @@ def solve_safer_qp(
     "optimally safe" tension distribution algorithm of Borgstrom et al. (IEEE
     Transactions on Robotics, 2009).
     """
-    assert solver in dense_solvers, "only available for dense solvers, for now"
+    if solver is None:
+        raise NoSolverSelected(
+            "Set the `solver` keyword argument to one of the "
+            f"available dense solvers in {dense_solvers}"
+        )
+    if solver not in dense_solvers:
+        raise NotImplementedError(
+            "This function is only available for dense solvers"
+        )
     n, m = P.shape[0], G.shape[0]
     E, Z = eye(m), zeros((m, n))
     P2 = vstack([hstack([P, Z.T]), hstack([Z, reg * eye(m)])])
