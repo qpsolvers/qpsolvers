@@ -42,7 +42,7 @@ all_pypi_solvers = [
 doc = [
     "sphinx",
 ]
-quadprog = [
+quadprog_source = [
     "quadprog >=0.1.11",
 ]
 quadprog_wheel = [

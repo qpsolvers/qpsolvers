@@ -21,6 +21,11 @@
 """Exceptions."""
 
 
+class NoSolverSelected(Exception):
+
+    """Exception raised when the `solver` keyword argument is not set."""
+
+
 class SolverNotFound(Exception):
 
     """Exception raised when a requested solver is not found."""

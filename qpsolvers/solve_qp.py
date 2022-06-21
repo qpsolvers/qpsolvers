@@ -24,13 +24,12 @@ Main function to solve quadratic programs.
 
 from typing import Optional
 
-from numpy import eye, hstack, ones, ndarray, vstack, zeros
+from numpy import eye, hstack, ndarray, ones, vstack, zeros
 
 from .check_problem_constraints import check_problem_constraints
 from .concatenate_bounds import concatenate_bounds
-from .exceptions import SolverNotFound
-from .solvers import dense_solvers
-from .solvers import solve_function
+from .exceptions import NoSolverSelected, SolverNotFound
+from .solvers import available_solvers, dense_solvers, solve_function
 from .typing import Matrix, Vector
 
 

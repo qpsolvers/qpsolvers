@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Added
+
+- Exception ``NoSolverSelected`` raised when the solver kwarg is missing
+
 ### Changed
 
 - The ``solver`` kwargs is now mandatory (previously defaulted to "quadprog")
