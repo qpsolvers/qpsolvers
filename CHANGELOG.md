@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Exception ``NoSolverSelected`` raised when the solver kwarg is missing
+- Starter set of QP solvers as optional dependencies
 
 ### Changed
 
