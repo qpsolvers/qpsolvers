@@ -384,7 +384,7 @@ class TestSolveQP(unittest.TestCase):
         def test(self):
             P, q, G, h, _, _ = self.get_dense_problem()
             if solver in sparse_solvers:
-                with self.assertRaises(AssertionError):
+                with self.assertRaises(NotImplementedError):
                     solve_safer_qp(P, q, G, h, sr=1e-4, solver=solver)
                 return
             x = solve_safer_qp(P, q, G, h, sr=1e-4, solver=solver)
