@@ -43,7 +43,7 @@ def solve_qp(
     b: Optional[Vector] = None,
     lb: Optional[Vector] = None,
     ub: Optional[Vector] = None,
-    solver: str = "quadprog",
+    solver: Optional[str] = None,
     initvals: Optional[Vector] = None,
     sym_proj: bool = False,
     verbose: bool = False,
