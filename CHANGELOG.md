@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Changed
+
+- The ``solver`` kwargs is now mandatory (previously defaulted to "quadprog")
+
 ## [1.9.1] - 2022/05/02
 
 ### Fixed
