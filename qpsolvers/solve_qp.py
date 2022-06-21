@@ -108,6 +108,12 @@ def solve_qp(
 
     Raises
     ------
+    NoSolverSelected
+        If the ``solver`` keyword argument is not set.
+
+    SolverNotFound
+        If the requested solver is not in :data:`qpsolvers.available_solvers`.
+
     ValueError
         If the problem is not correctly defined. For instance, if the solver
         requires a definite matrix :math:`P` but the one provided is not.
@@ -125,6 +131,11 @@ def solve_qp(
     underlying solver. For example, OSQP has a setting `eps_abs` which we can
     provide by ``solve_qp(P, q, G, h, solver='osqp', eps_abs=1e-4)``.
     """
+    if solver is None:
+        raise NoSolverSelected(
+            "Set the `solver` keyword argument to one of the "
+            f"available solvers in {available_solvers}"
+        )
     if sym_proj:
         P = 0.5 * (P + P.transpose())
     if isinstance(A, ndarray) and A.ndim == 1:
