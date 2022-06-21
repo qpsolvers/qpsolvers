@@ -117,7 +117,7 @@ If you have a C compiler, you can install the quadprog solver from source:
 
     pip install quadprog
 
-If this command returns a `build issue
+If this command returns a `build error
 <https://github.com/quadprog/quadprog/issues/15>`__, you can install the solver
 from pre-built wheels instead:
 
