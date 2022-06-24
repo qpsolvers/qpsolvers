@@ -168,7 +168,9 @@ def scs_solve_qp(
         cone["bu"] = ub
         k = lb.shape[0]
         zero_row = sparse.csc_matrix((1, k))
-        data["A"] = sparse.vstack((data["A"], zero_row, -sparse.eye(k)))
+        data["A"] = sparse.vstack(
+            (data["A"], zero_row, -sparse.eye(k)), format="csc",
+        )
         data["b"] = np.hstack((data["b"], 1.0, np.zeros(k)))
         cone["bsize"] = k + 1
     solution = solve(data, cone, **kwargs)
