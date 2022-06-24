@@ -135,7 +135,7 @@ def solve_qp(
     kwargs["initvals"] = initvals
     kwargs["verbose"] = verbose
     try:
-        if solver == "scs" and lb is not None:
+        if solver == "scs_box" and lb is not None:
             return solve_function["scs"](P, q, G, h, A, b, lb, ub, **kwargs)
         else:  # all other solvers, bounds or not
             G, h = concatenate_bounds(G, h, lb, ub)
