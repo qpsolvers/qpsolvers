@@ -21,24 +21,25 @@
 """Quadratic programming solvers in Python with a unified API"""
 
 from .solve_ls import solve_ls
-from .solve_qp import solve_qp
-from .solve_qp import solve_safer_qp
-from .solvers import available_solvers
-from .solvers import cvxopt_solve_qp
-from .solvers import cvxpy_solve_qp
-from .solvers import dense_solvers
-from .solvers import ecos_solve_qp
-from .solvers import gurobi_solve_qp
-from .solvers import mosek_solve_qp
-from .solvers import osqp_solve_qp
-from .solvers import qpoases_solve_qp
-from .solvers import qpswift_solve_qp
-from .solvers import quadprog_solve_qp
-from .solvers import scs_solve_qp
-from .solvers import sparse_solvers
+from .solve_qp import solve_qp, solve_safer_qp
+from .solvers import (
+    available_solvers,
+    cvxopt_solve_qp,
+    cvxpy_solve_qp,
+    dense_solvers,
+    ecos_solve_qp,
+    gurobi_solve_qp,
+    mosek_solve_qp,
+    osqp_solve_qp,
+    qpoases_solve_qp,
+    qpswift_solve_qp,
+    quadprog_solve_qp,
+    scs_solve_qp,
+    sparse_solvers,
+)
 from .utils import print_matrix_vector
 
-__version__ = "1.9.1"
+__version__ = "1.10.0"
 
 __all__ = [
     "__version__",
