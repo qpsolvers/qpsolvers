@@ -23,14 +23,12 @@
 from typing import Optional
 from warnings import warn
 
-from numpy import hstack, ndarray
+import numpy as np
 from numpy.linalg import norm
 from scipy import sparse
 from scs import solve
 
-from .typing import DenseOrCSCMatrix
-from .typing import warn_about_sparse_conversion
-
+from .typing import DenseOrCSCMatrix, warn_about_sparse_conversion
 
 # See https://www.cvxgrp.org/scs/api/exit_flags.html#exit-flags
 __status_val_meaning__ = {
@@ -49,17 +47,19 @@ __status_val_meaning__ = {
 
 def scs_solve_qp(
     P: DenseOrCSCMatrix,
-    q: ndarray,
+    q: np.ndarray,
     G: Optional[DenseOrCSCMatrix] = None,
-    h: Optional[ndarray] = None,
+    h: Optional[np.ndarray] = None,
     A: Optional[DenseOrCSCMatrix] = None,
-    b: Optional[ndarray] = None,
-    initvals: Optional[ndarray] = None,
+    b: Optional[np.ndarray] = None,
+    lb: Optional[np.ndarray] = None,
+    ub: Optional[np.ndarray] = None,
+    initvals: Optional[np.ndarray] = None,
     eps_abs: float = 1e-7,
     eps_rel: float = 1e-7,
     verbose: bool = False,
     **kwargs,
-) -> Optional[ndarray]:
+) -> Optional[np.ndarray]:
     """
     Solve a Quadratic Program defined as:
 
@@ -89,6 +89,10 @@ def scs_solve_qp(
         Linear equality constraint matrix.
     b :
         Linear equality constraint vector.
+    lb:
+        Lower bound constraint vector.
+    ub:
+        Upper bound constraint vector.
     initvals :
         Warm-start guess vector (not used).
     eps_abs : float
@@ -117,13 +121,13 @@ def scs_solve_qp(
     that SCS behaves closer to the other solvers. If you don't need that much
     precision, increase them for better performance.
     """
-    if isinstance(P, ndarray):
+    if isinstance(P, np.ndarray):
         warn_about_sparse_conversion("P")
         P = sparse.csc_matrix(P)
-    if isinstance(G, ndarray):
+    if isinstance(G, np.ndarray):
         warn_about_sparse_conversion("G")
         G = sparse.csc_matrix(G)
-    if isinstance(A, ndarray):
+    if isinstance(A, np.ndarray):
         warn_about_sparse_conversion("A")
         A = sparse.csc_matrix(A)
     kwargs.update(
@@ -140,17 +144,17 @@ def scs_solve_qp(
     if A is not None and b is not None:
         if G is not None and h is not None:
             data["A"] = sparse.vstack([A, G], format="csc")
-            data["b"] = hstack([b, h])
+            data["b"] = np.hstack([b, h])
             cone["z"] = b.shape[0]  # zero cone
-            cone["l"] = h.shape[0]  # positive orthant
-        else:  # A is not None and b is not None
+            cone["l"] = h.shape[0]  # positive cone
+        else:  # G is None and h is None
             data["A"] = A
             data["b"] = b
             cone["z"] = b.shape[0]  # zero cone
     elif G is not None and h is not None:
         data["A"] = G
         data["b"] = h
-        cone["l"] = h.shape[0]  # positive orthant
+        cone["l"] = h.shape[0]  # positive cone
     else:  # no constraint
         x = sparse.linalg.lsqr(P, -q)[0]
         if norm(P @ x + q) > 1e-9:
@@ -159,6 +163,14 @@ def scs_solve_qp(
                 "q has component in the nullspace of P"
             )
         return x
+    if lb is not None and ub is not None:
+        cone["bl"] = lb
+        cone["bu"] = ub
+        k = lb.shape[0]
+        zero_row = sparse.csc_matrix((1, k))
+        data["A"] = sparse.vstack((data["A"], zero_row, -sparse.eye(k)))
+        data["b"] = np.hstack((data["b"], 1.0, np.zeros(k)))
+        cone["bsize"] = k + 1
     solution = solve(data, cone, **kwargs)
     status_val = solution["info"]["status_val"]
     if status_val != 1:

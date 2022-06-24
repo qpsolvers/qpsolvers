@@ -24,8 +24,7 @@ from typing import Any, Callable, Dict, Optional
 
 from numpy import ndarray
 
-from .typing import CvxoptReadyMatrix
-from .typing import DenseOrCSCMatrix
+from .typing import CvxoptReadyMatrix, DenseOrCSCMatrix
 
 available_solvers = []
 dense_solvers = []
@@ -308,6 +307,8 @@ scs_solve_qp: Optional[
             Optional[DenseOrCSCMatrix],
             Optional[ndarray],
             Optional[DenseOrCSCMatrix],
+            Optional[ndarray],
+            Optional[ndarray],
             Optional[ndarray],
             Optional[ndarray],
             float,
