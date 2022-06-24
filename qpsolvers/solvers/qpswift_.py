@@ -47,7 +47,7 @@ def qpswift_solve_qp(
     b: Optional[np.ndarray] = None,
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
-    opts: Optional[dict] = None,
+    **kwargs,
 ) -> Optional[np.ndarray]:
     """
     Solve a Quadratic Program defined as:
@@ -93,8 +93,6 @@ def qpswift_solve_qp(
         Warm-start guess vector.
     verbose :
         Set to `True` to print out extra information.
-    opts :
-        Option dictionary for qpSWIFT.
 
     Returns
     -------
@@ -148,19 +146,27 @@ def qpswift_solve_qp(
     little more care than the other solvers. For instance, make sure you don't
     have zero rows in your input matrices, as it can `make the solver
     numerically unstable <https://github.com/qpSWIFT/qpSWIFT/issues/3>`_.
+
+    Notes
+    -----
+    All other keyword arguments are forwarded as options to the qpSWIFT solver.
+    For instance, you can call ``qpswift_solve_qp(P, q, G, h, ABSTOL=1e-5)``.
+    See the solver documentation for details.
     """
     if initvals is not None:
         print("qpSWIFT: note that warm-start values ignored by wrapper")
     result: dict = {}
-    if opts is None:
-        opts = {}
-    opts["OUTPUT"] = 1  # include "sol" and "basicInfo"
-    opts["VERBOSE"] = 1 if verbose else 0
+    kwargs.update(
+        {
+            "OUTPUT": 1,  # include "sol" and "basicInfo"
+            "VERBOSE": 1 if verbose else 0,
+        }
+    )
     if G is not None and h is not None:
         if A is not None and b is not None:
-            result = qpSWIFT.run(q, h, P, G, A, b, opts)
+            result = qpSWIFT.run(q, h, P, G, A, b, kwargs)
         else:  # no equality constraint
-            result = qpSWIFT.run(q, h, P, G, opts=opts)
+            result = qpSWIFT.run(q, h, P, G, opts=kwargs)
     else:  # no inequality constraint
         # See https://qpswift.github.io/index.html#updates
         raise NotImplementedError(

@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Changed
+
+- qpSWIFT: Forward solver options as keywords arguments as with other solvers
+
 ## [1.9.1] - 2022/05/02
 
 ### Fixed
