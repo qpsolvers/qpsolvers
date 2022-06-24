@@ -24,13 +24,12 @@ Main function to solve quadratic programs.
 
 from typing import Optional
 
-from numpy import eye, hstack, ones, ndarray, vstack, zeros
+from numpy import eye, hstack, ndarray, ones, vstack, zeros
 
 from .check_problem_constraints import check_problem_constraints
 from .concatenate_bounds import concatenate_bounds
 from .exceptions import SolverNotFound
-from .solvers import dense_solvers
-from .solvers import solve_function
+from .solvers import dense_solvers, solve_function
 from .typing import Matrix, Vector
 
 
@@ -133,11 +132,14 @@ def solve_qp(
     if isinstance(G, ndarray) and G.ndim == 1:
         G = G.reshape((1, G.shape[0]))
     check_problem_constraints(G, h, A, b)
-    G, h = concatenate_bounds(G, h, lb, ub)
     kwargs["initvals"] = initvals
     kwargs["verbose"] = verbose
     try:
-        return solve_function[solver](P, q, G, h, A, b, **kwargs)
+        if solver == "scs" and lb is not None:
+            return solve_function["scs"](P, q, G, h, A, b, lb, ub, **kwargs)
+        else:  # all other solvers, bounds or not
+            G, h = concatenate_bounds(G, h, lb, ub)
+            return solve_function[solver](P, q, G, h, A, b, **kwargs)
     except KeyError as e:
         raise SolverNotFound(f"solver '{solver}' is not available") from e
 
