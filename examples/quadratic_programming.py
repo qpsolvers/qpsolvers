@@ -22,11 +22,10 @@
 Test the "quadprog" QP solver on a small dense problem.
 """
 
-from time import perf_counter
-
 import numpy as np
 
-from qpsolvers import print_matrix_vector, solve_qp
+from qpsolvers import solve_qp, print_matrix_vector
+from time import perf_counter
 
 M = np.array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
 P = np.dot(M.T, M)  # this is a positive definite matrix
@@ -38,8 +37,8 @@ b = np.array([1.0])
 
 if __name__ == "__main__":
     start_time = perf_counter()
-    solver = "qpswift"  # see qpsolvers.available_solvers
-    x = solve_qp(P, q, G, h, A, b, solver=solver, ABSTOL=1e-5, RELTOL=1e-5)
+    solver = "quadprog"  # see qpsolvers.available_solvers
+    x = solve_qp(P, q, G, h, A, b, solver=solver)
     end_time = perf_counter()
 
     print("")
