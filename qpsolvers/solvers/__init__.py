@@ -253,7 +253,6 @@ qpswift_solve_qp: Optional[
             Optional[ndarray],
             Optional[ndarray],
             bool,
-            Optional[dict],
         ],
         Optional[ndarray],
     ]
