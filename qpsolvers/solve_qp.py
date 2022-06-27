@@ -208,7 +208,7 @@ def solve_safer_qp(
         otherwise set it as small as possible compared, so that the squared
         slack cost is as small as possible compared to the regular cost.
     solver :
-        Name of the QP solver to use (default is MOSEK).
+        Name of the QP solver to use.
     initvals :
         Vector of initial `x` values used to warm-start the solver.
     sym_proj :
