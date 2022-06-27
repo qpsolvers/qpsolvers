@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [2.0.0] - Unreleased
+## Unreleased
 
 ### Added
 
@@ -13,6 +13,12 @@ All notable changes to this project will be documented in this file.
 
 - **Breaking:** The ``solver`` keyword argument is now mandatory
 - Quadratic programming example now randomly selects an available solver
+
+## [1.10.0] - 2022/06/25
+
+### Changed
+
+- qpSWIFT: Forward solver options as keywords arguments as with other solvers
 
 ## [1.9.1] - 2022/05/02
 
