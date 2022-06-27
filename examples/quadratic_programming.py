@@ -34,11 +34,13 @@ G = np.array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
 h = np.array([3.0, 2.0, -2.0])
 A = np.array([1.0, 1.0, 1.0])
 b = np.array([1.0])
+lb = -0.5 * np.ones(3)
+ub = 1.0 * np.ones(3)
 
 if __name__ == "__main__":
     start_time = perf_counter()
-    solver = "quadprog"  # see qpsolvers.available_solvers
-    x = solve_qp(P, q, G, h, A, b, solver=solver)
+    solver = "scs_box"  # see qpsolvers.available_solvers
+    x = solve_qp(P, q, G, h, A, b, lb=lb, ub=ub, solver=solver)
     end_time = perf_counter()
 
     print("")
