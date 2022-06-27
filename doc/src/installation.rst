@@ -123,7 +123,7 @@ from pre-built wheels instead:
 
 .. code:: bash
 
-    pip install quadprog-wheels
+    pip install quadprog-wheel
 
 qpOASES
 -------
