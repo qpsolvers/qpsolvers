@@ -42,10 +42,10 @@ all_pypi_solvers = [
 doc = [
     "sphinx",
 ]
-quadprog_source = [
+quadprog = [
     "quadprog >=0.1.11",
 ]
-quadprog_wheel = [
+quadprog-wheel = [
     "quadprog-wheel >=0.1.11",
 ]
 starter_solvers = [
