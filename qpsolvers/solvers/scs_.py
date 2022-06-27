@@ -172,7 +172,6 @@ def scs_solve_qp(
             (data["A"], zero_row, -sparse.eye(k)), format="csc",
         )
         data["b"] = np.hstack((data["b"], 1.0, np.zeros(k)))
-        cone["bsize"] = k + 1
     solution = solve(data, cone, **kwargs)
     status_val = solution["info"]["status_val"]
     if status_val != 1:
