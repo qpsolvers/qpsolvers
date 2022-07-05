@@ -17,6 +17,14 @@ Unified interface to Quadratic Programming (QP) solvers available in Python.
 
 ## Installation
 
+To install both the library and a starter set of QP solvers:
+
+```console
+pip install qpsolvers[starter_solvers]
+```
+
+To only install the library:
+
 ```console
 pip install qpsolvers
 ```
@@ -41,6 +49,8 @@ $$
 
 Vector inequalities are taken coordinate by coordinate. For most solvers, the matrix $P$ should be [positive definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix).
 
+⚠️ With v2.0.0, the ``solver`` keyword argument has become mandatory.
+
 ## Example
 
 To solve a quadratic program, build the matrices that define it and call the ``solve_qp`` function:
@@ -57,7 +67,7 @@ h = array([3., 2., -2.])
 A = array([1., 1., 1.])
 b = array([1.])
 
-x = solve_qp(P, q, G, h, A, b)
+x = solve_qp(P, q, G, h, A, b, solver="osqp")
 print("QP solution: x = {}".format(x))
 ```
 

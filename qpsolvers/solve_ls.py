@@ -40,7 +40,7 @@ def solve_ls(
     lb: Optional[Vector] = None,
     ub: Optional[Vector] = None,
     W: Optional[Matrix] = None,
-    solver: str = "quadprog",
+    solver: Optional[str] = None,
     initvals: Optional[Vector] = None,
     sym_proj: bool = False,
     verbose: bool = False,

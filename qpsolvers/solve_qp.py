@@ -24,13 +24,12 @@ Main function to solve quadratic programs.
 
 from typing import Optional
 
-from numpy import eye, hstack, ones, ndarray, vstack, zeros
+from numpy import eye, hstack, ndarray, ones, vstack, zeros
 
 from .check_problem_constraints import check_problem_constraints
 from .concatenate_bounds import concatenate_bounds
-from .exceptions import SolverNotFound
-from .solvers import dense_solvers
-from .solvers import solve_function
+from .exceptions import NoSolverSelected, SolverNotFound
+from .solvers import available_solvers, dense_solvers, solve_function
 from .typing import Matrix, Vector
 
 
@@ -43,7 +42,7 @@ def solve_qp(
     b: Optional[Vector] = None,
     lb: Optional[Vector] = None,
     ub: Optional[Vector] = None,
-    solver: str = "quadprog",
+    solver: Optional[str] = None,
     initvals: Optional[Vector] = None,
     sym_proj: bool = False,
     verbose: bool = False,
@@ -109,6 +108,12 @@ def solve_qp(
 
     Raises
     ------
+    NoSolverSelected
+        If the ``solver`` keyword argument is not set.
+
+    SolverNotFound
+        If the requested solver is not in :data:`qpsolvers.available_solvers`.
+
     ValueError
         If the problem is not correctly defined. For instance, if the solver
         requires a definite matrix :math:`P` but the one provided is not.
@@ -126,6 +131,11 @@ def solve_qp(
     underlying solver. For example, OSQP has a setting `eps_abs` which we can
     provide by ``solve_qp(P, q, G, h, solver='osqp', eps_abs=1e-4)``.
     """
+    if solver is None:
+        raise NoSolverSelected(
+            "Set the `solver` keyword argument to one of the "
+            f"available solvers in {available_solvers}"
+        )
     if sym_proj:
         P = 0.5 * (P + P.transpose())
     if isinstance(A, ndarray) and A.ndim == 1:
@@ -139,7 +149,10 @@ def solve_qp(
     try:
         return solve_function[solver](P, q, G, h, A, b, **kwargs)
     except KeyError as e:
-        raise SolverNotFound(f"solver '{solver}' is not available") from e
+        raise SolverNotFound(
+            f"solver '{solver}' is not in the list "
+            f"{available_solvers} of available solvers"
+        ) from e
 
 
 def solve_safer_qp(
@@ -149,7 +162,7 @@ def solve_safer_qp(
     h: ndarray,
     sr: float,
     reg: float = 1e-8,
-    solver: str = "mosek",
+    solver: Optional[str] = None,
     initvals: Optional[ndarray] = None,
     sym_proj: bool = False,
 ) -> Optional[ndarray]:
@@ -195,7 +208,7 @@ def solve_safer_qp(
         otherwise set it as small as possible compared, so that the squared
         slack cost is as small as possible compared to the regular cost.
     solver :
-        Name of the QP solver to use (default is MOSEK).
+        Name of the QP solver to use.
     initvals :
         Vector of initial `x` values used to warm-start the solver.
     sym_proj :
@@ -222,7 +235,15 @@ def solve_safer_qp(
     "optimally safe" tension distribution algorithm of Borgstrom et al. (IEEE
     Transactions on Robotics, 2009).
     """
-    assert solver in dense_solvers, "only available for dense solvers, for now"
+    if solver is None:
+        raise NoSolverSelected(
+            "Set the `solver` keyword argument to one of the "
+            f"available dense solvers in {dense_solvers}"
+        )
+    if solver not in dense_solvers:
+        raise NotImplementedError(
+            "This function is only available for dense solvers"
+        )
     n, m = P.shape[0], G.shape[0]
     E, Z = eye(m), zeros((m, n))
     P2 = vstack([hstack([P, Z.T]), hstack([Z, reg * eye(m)])])

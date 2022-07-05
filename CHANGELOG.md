@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Added
+
+- Exception ``NoSolverSelected`` raised when the solver kwarg is missing
+- Starter set of QP solvers as optional dependencies
+- Test exceptions raised by `solve_ls` and `solve_qp`
+
+### Changed
+
+- **Breaking:** The ``solver`` keyword argument is now mandatory
+- Quadratic programming example now randomly selects an available solver
+
 ## [1.10.0] - 2022/06/25
 
 ### Changed

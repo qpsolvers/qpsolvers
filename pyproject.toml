@@ -27,15 +27,28 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Mathematics",
 ]
 dependencies = [
-    "quadprog >=0.1.8",
     "scipy >=1.2.0",
 ]
 
 [project.optional-dependencies]
+all_pypi_solvers = [
+    "cvxopt >=1.2.6",
+    "cvxpy >=1.1.11",
+    "ecos >=2.0.7.post1",
+    "osqp >=0.6.2",
+    "quadprog >=0.1.11",
+    "scs >=3.0.1",
+]
 doc = [
     "sphinx",
 ]
-all_pypi_solvers = [
+quadprog = [
+    "quadprog >=0.1.11",
+]
+quadprog-wheel = [
+    "quadprog-wheel >=0.1.11",
+]
+starter_solvers = [
     "cvxopt >=1.2.6",
     "cvxpy >=1.1.11",
     "ecos >=2.0.7.post1",
