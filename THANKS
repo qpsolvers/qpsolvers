@@ -1,23 +1,25 @@
 qpsolvers is a project led by Stéphane Caron <https://scaron.info/> but many
 people have contributed to it over time. This file is here to thank them :)
 
+@AntoineD - Antoine Dechaume
+@DKenefake - Dustin Kenefake
 @MeindertHH
+@abhishek-pandala - Abhishek Pandala
+@adamoppenheimer - Adam A. Oppenheimer
 @bdelhaisse
-@rimaddo
-Abhishek Pandala
-Adam A. Oppenheimer
-Brendan O'Donoghue
-Donato Meoli
-Dustin Kenefake
-Giacomo Mazzamuto
+@bodono - Brendan O'Donoghue
+@dmeoli - Donato Meoli
+@gmazzamuto - Giacomo Mazzamuto
+@nekketsuuu - Takuma Ishikawa
+@nvitucci - Nicola Vitucci
+@rimaddo - Rachel
+@soerenwolfers - Soeren Wolfers
+@suraj2596 - Suraj Bonagiri
+@urob - Robert U
 Juan José Quiroz Omaña
-Nicola Vitucci
 Nikolai Flowers
 Paarth Shah
 Samuel St-Jean
-Soeren Wolfers
-Suraj Bonagiri
-Takuma Ishikawa
 
 You can also have a look at the contributor graphs produced by GitHub:
 https://github.com/stephane-caron/qpsolvers/graphs/contributors
