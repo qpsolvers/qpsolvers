@@ -12,7 +12,8 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- **Breaking:** The ``solver`` keyword argument is now mandatory
+- **Breaking:** ``solver`` keyword argument is now mandatory for `solve_ls`
+- **Breaking:** ``solver`` keyword argument is now mandatory for `solve_qp`
 - Quadratic programming example now randomly selects an available solver
 
 ## [1.10.0] - 2022/06/25

@@ -62,7 +62,7 @@ def solve_qp(
                 & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
-    using one of the available QP solvers.
+    using the QP solver selected by the ``solver`` keyword argument.
 
     Parameters
     ----------
@@ -85,7 +85,7 @@ def solve_qp(
         Upper bound constraint vector.
     solver :
         Name of the QP solver, to choose in
-        :data:`qpsolvers.available_solvers`.
+        :data:`qpsolvers.available_solvers`. This argument is mandatory.
     initvals :
         Vector of initial :math:`x` values used to warm-start the solver.
     sym_proj :
