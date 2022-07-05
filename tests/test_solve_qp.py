@@ -33,7 +33,7 @@ from scipy.sparse import csc_matrix
 
 from qpsolvers import available_solvers, sparse_solvers
 from qpsolvers import solve_qp, solve_safer_qp
-from qpsolvers.exceptions import SolverNotFound
+from qpsolvers.exceptions import NoSolverSelected, SolverNotFound
 
 # Raising a ValueError when the problem is unbounded below is desired but not
 # achieved by some solvers. Here are the behaviors observed as of March 2022.
@@ -116,6 +116,14 @@ class TestSolveQP(unittest.TestCase):
         G = csc_matrix(-scipy.sparse.eye(n))
         h = -2.0 * ones((n,))
         return P, q, G, h
+
+    def test_no_solver_selected(self):
+        """
+        Check that NoSolverSelected is raised when applicable.
+        """
+        P, q, G, h, A, b = self.get_dense_problem()
+        with self.assertRaises(NoSolverSelected):
+            solve_qp(P, q, G, h, A, b, solver=None)
 
     def test_solver_not_found(self):
         """
