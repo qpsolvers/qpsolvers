@@ -23,8 +23,8 @@ it and call the :func:`.solve_ls` function:
     print(f"LS solution: x = {x}")
 
 This example outputs the solution ``[-0.0530504, 0.0265252, 2.1061008]``. The
-:func:`.solve_ls` function accepts a ``solver`` keyword argument to select the
-backend solver:
+backend QP solver used by :func:`.solve_ls` is selected via the ``solver``
+keyword argument.
 
 .. autofunction:: qpsolvers.solve_ls
 
