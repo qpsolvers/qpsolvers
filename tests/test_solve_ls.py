@@ -28,6 +28,7 @@ import warnings
 from numpy import allclose, array, dot
 from numpy.linalg import norm
 from qpsolvers import available_solvers, solve_ls
+from qpsolvers.exceptions import NoSolverSelected, SolverNotFound
 
 
 class TestSolveLS(unittest.TestCase):
@@ -101,6 +102,22 @@ class TestSolveLS(unittest.TestCase):
             self.assertTrue(allclose(dot(A, x), b))
 
         return test
+
+    def test_no_solver_selected(self):
+        """
+        Check that NoSolverSelected is raised when applicable.
+        """
+        R, s, G, h, A, b = self.get_problem()
+        with self.assertRaises(NoSolverSelected):
+            solve_ls(R, s, G, h, A, b, solver=None)
+
+    def test_solver_not_found(self):
+        """
+        Check that SolverNotFound is raised when the solver does not exist.
+        """
+        R, s, G, h, A, b = self.get_problem()
+        with self.assertRaises(SolverNotFound):
+            solve_ls(R, s, G, h, A, b, solver="ideal")
 
 
 # Generate test fixtures for each solver
