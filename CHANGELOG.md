@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Added
+
+- Document how to add a new QP solver to the library
+
 ## [2.0.0] - 2022/07/05
 
 ### Added
