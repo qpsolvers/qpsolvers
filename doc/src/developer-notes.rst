@@ -4,17 +4,6 @@
 Developer notes
 ***************
 
-Testing
-=======
-
-To run all CI checks locally, go to the repository folder and run
-
-.. code:: bash
-
-    tox -e py
-
-This will run linters and unit tests.
-
 Adding a new solver
 ===================
 
@@ -70,3 +59,14 @@ The process to add AwesomeQP to *qpsolvers* goes as follows:
 6. Import ``awesomeqp_solve_qp`` from ``qpsolvers/__init__.py`` and add it to ``__all__``
 7. Import ``awesomeqp_solve_qp`` from the convenience ``__init__.py`` at the root of the repository, and add it to ``__all__``
 8. Update the benchmark: run the scripts ``examples/benchmark_*.py`` and update the corresponding tables and plot in the README
+
+Testing locally
+===============
+
+To run all CI checks locally, go to the repository folder and run
+
+.. code:: bash
+
+    tox -e py
+
+This will run linters and unit tests.
