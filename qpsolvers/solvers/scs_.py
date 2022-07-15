@@ -21,7 +21,6 @@
 """Solver interface for SCS"""
 
 from typing import Optional
-from warnings import warn
 
 import numpy as np
 from numpy.linalg import norm
