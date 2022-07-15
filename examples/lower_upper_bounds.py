@@ -22,6 +22,8 @@
 Test the "quadprog" QP solver on a small dense problem.
 """
 
+import random
+
 from time import perf_counter
 
 import numpy as np
@@ -41,7 +43,8 @@ ub = 1.0 * np.ones(3)
 if __name__ == "__main__":
     start_time = perf_counter()
     solver = "scs" if "scs" in available_solvers else available_solvers[0]
-    x = solve_qp(P, q, A=A, b=b, lb=lb, ub=ub, solver="scs")
+    solver = random.choice(available_solvers)
+    x = solve_qp(P, q, A=A, b=b, lb=lb, ub=ub, solver=solver)
     end_time = perf_counter()
 
     print("")
@@ -58,6 +61,3 @@ if __name__ == "__main__":
     print(f"Solution: x = {x}")
     print(f"Solve time: {1e6 * (end_time - start_time):.0f} [us]")
     print(f"Solver: {solver}")
-
-    x = solve_qp(P, q, A=A, b=b, lb=lb, ub=ub, solver="quadprog")
-    print(f"Solution (quadprog): x = {x}")
