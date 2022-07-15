@@ -66,7 +66,7 @@ def check_same_solutions(tol=0.05):
 def time_dense_solvers():
     instructions = {
         solver: "u = solve_qp(P_array, q, G_array, h, lb=lb, ub=ub, "
-        "solver='{solver}')"
+        f"solver='{solver}')"
         for solver in dense_solvers
     }
     print("\nDense solvers\n-------------")

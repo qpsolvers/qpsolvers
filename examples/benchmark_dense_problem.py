@@ -57,7 +57,7 @@ if __name__ == "__main__":
     }
     sparse_instr = {
         solver: "u = solve_qp("
-        "P_csc, q, G_csc, h, lb=lb, ub=ub, solver='{solver}')"
+        f"P_csc, q, G_csc, h, lb=lb, ub=ub, solver='{solver}')"
         for solver in sparse_solvers
     }
 
