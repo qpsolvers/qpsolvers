@@ -163,15 +163,15 @@ def scs_solve_qp(
             )
         return x
     if lb is not None or ub is not None:
-        cone["bl"] = lb
-        cone["bu"] = ub
-        k = lb.shape[0]
-        zero_row = sparse.csc_matrix((1, k))
+        n = P.shape[1]
+        cone["bl"] = lb if lb is not None else np.full((n,), -np.inf)
+        cone["bu"] = ub if ub is not None else np.full((n,), +np.inf)
+        zero_row = sparse.csc_matrix((1, n))
         data["A"] = sparse.vstack(
-            (data["A"], zero_row, -sparse.eye(k)),
+            (data["A"], zero_row, -sparse.eye(n)),
             format="csc",
         )
-        data["b"] = np.hstack((data["b"], 1.0, np.zeros(k)))
+        data["b"] = np.hstack((data["b"], 1.0, np.zeros(n)))
     solution = solve(data, cone, **kwargs)
     status_val = solution["info"]["status_val"]
     if status_val != 1:
