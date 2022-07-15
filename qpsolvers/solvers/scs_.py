@@ -20,7 +20,7 @@
 
 """Solver interface for SCS"""
 
-from typing import Optional
+from typing import Any, Dict, Optional
 
 import numpy as np
 from numpy.linalg import norm
@@ -136,8 +136,8 @@ def scs_solve_qp(
             "verbose": verbose,
         }
     )
-    data = {"P": P, "c": q}
-    cone = {}
+    data: Dict[str, Any] = {"P": P, "c": q}
+    cone: Dict[str, Any] = {}
     if initvals is not None:
         data["x"] = initvals
     if A is not None and b is not None:
