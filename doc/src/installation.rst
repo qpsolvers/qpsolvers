@@ -108,6 +108,23 @@ with 200 optimization variables fails with the following warning:
 
 .. _qpoases-install:
 
+quadprog
+--------
+
+If you have a C compiler, you can install the quadprog solver from source:
+
+.. code:: bash
+
+    pip install quadprog
+
+If this command returns a `build error
+<https://github.com/quadprog/quadprog/issues/15>`__, you can install the solver
+from pre-built wheels instead:
+
+.. code:: bash
+
+    pip install quadprog-wheel
+
 qpOASES
 -------
 

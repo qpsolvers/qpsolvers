@@ -17,6 +17,14 @@ Unified interface to Quadratic Programming (QP) solvers available in Python.
 
 ## Installation
 
+To install both the library and a starter set of QP solvers:
+
+```console
+pip install qpsolvers[starter_solvers]
+```
+
+To only install the library:
+
 ```console
 pip install qpsolvers
 ```
@@ -24,7 +32,7 @@ Check out the documentation for [Python 2](https://scaron.info/doc/qpsolvers/ins
 
 ## Usage
 
-The library provides a one-stop shop [``solve_qp``](https://scaron.info/doc/qpsolvers/quadratic-programming.html#qpsolvers.solve_qp) function with a ``solver`` keyword argument to select the backend solver. It solves convex quadratic programs in standard form:
+The library provides a one-stop shop [`solve_qp`](https://scaron.info/doc/qpsolvers/quadratic-programming.html#qpsolvers.solve_qp) function with a ``solver`` keyword argument to select the backend solver. It solves convex quadratic programs in standard form:
 
 $$
 \begin{split}
@@ -40,6 +48,8 @@ $$
 $$
 
 Vector inequalities are taken coordinate by coordinate. For most solvers, the matrix $P$ should be [positive definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix).
+
+⚠️ With v2.0.0, the ``solver`` keyword argument has become mandatory.
 
 ## Example
 
@@ -57,7 +67,7 @@ h = array([3., 2., -2.])
 A = array([1., 1., 1.])
 b = array([1.])
 
-x = solve_qp(P, q, G, h, A, b)
+x = solve_qp(P, q, G, h, A, b, solver="osqp")
 print("QP solution: x = {}".format(x))
 ```
 
@@ -84,9 +94,9 @@ The list of supported solvers currently includes:
 - *Can I print the list of solvers available on my machine?*
   - Absolutely: ``print(qpsolvers.available_solvers)``
 - *Is it possible to solve a least squares rather than a quadratic program?*
-  - Yes, `qpsolvers` also provides a [solve\_ls](https://scaron.info/doc/qpsolvers/least-squares.html#qpsolvers.solve_ls) function.
+  - Yes, `qpsolvers` also provides a [`solve_ls`](https://scaron.info/doc/qpsolvers/least-squares.html#qpsolvers.solve_ls) function.
 - *I have a squared norm in my cost function, how can I apply a QP solver to my problem?*
-  - You can [cast squared norms to QP matrices](https://scaron.info/blog/conversion-from-least-squares-to-quadratic-programming.html) and feed the result to `solve_qp`.
+  - You can [cast squared norms to QP matrices](https://scaron.info/blog/conversion-from-least-squares-to-quadratic-programming.html) and feed the result to [`solve_qp`](https://scaron.info/doc/qpsolvers/quadratic-programming.html#qpsolvers.solve_qp).
 - *I have a non-convex quadratic program. Is there a solver I can use?*
   - Unfortunately most available QP solvers are designed for convex problems.
   - If your cost matrix *P* is semi-definite rather than definite, try OSQP.

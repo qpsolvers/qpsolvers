@@ -137,12 +137,14 @@ def osqp_solve_qp(
         warn_about_sparse_conversion("P")
         P = sparse.csc_matrix(P)
     solver = OSQP()
-    kwargs.update({
-        "eps_abs": eps_abs,
-        "eps_rel": eps_rel,
-        "polish": polish,
-        "verbose": verbose,
-    })
+    kwargs.update(
+        {
+            "eps_abs": eps_abs,
+            "eps_rel": eps_rel,
+            "polish": polish,
+            "verbose": verbose,
+        }
+    )
     if A is not None and b is not None:
         if isinstance(A, ndarray):
             warn_about_sparse_conversion("A")
