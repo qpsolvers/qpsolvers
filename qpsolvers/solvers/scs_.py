@@ -21,6 +21,7 @@
 """Solver interface for SCS"""
 
 from typing import Any, Dict, Optional
+from warnings import warn
 
 import numpy as np
 from numpy.linalg import norm
@@ -175,7 +176,7 @@ def scs_solve_qp(
     solution = solve(data, cone, **kwargs)
     status_val = solution["info"]["status_val"]
     if status_val != 1:
-        print(
+        warn(
             f"SCS returned {status_val}: {__status_val_meaning__[status_val]}"
         )
         if status_val != 2:
