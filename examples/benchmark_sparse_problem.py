@@ -32,9 +32,6 @@ from scipy.sparse import csc_matrix
 
 from qpsolvers import dense_solvers, solve_qp, sparse_solvers
 
-dense_solvers = []
-sparse_solvers = ["scs", "scs_box"]
-
 n = 500
 M = scipy.sparse.lil_matrix(scipy.sparse.eye(n))
 for i in range(1, n - 1):
@@ -68,7 +65,8 @@ def check_same_solutions(tol=0.05):
 
 def time_dense_solvers():
     instructions = {
-        solver: f"u = solve_qp(P_array, q, G_array, h, lb=lb, ub=ub, solver='{solver}')"
+        solver: "u = solve_qp(P_array, q, G_array, h, lb=lb, ub=ub, "
+        "solver='{solver}')"
         for solver in dense_solvers
     }
     print("\nDense solvers\n-------------")

@@ -38,8 +38,6 @@ from scipy.linalg import toeplitz
 
 from qpsolvers import available_solvers, solve_qp
 
-available_solvers = ["scs", "scs_box"]
-
 
 nb_iter = 10
 sizes = [10, 20, 50, 100, 200, 500, 1000]

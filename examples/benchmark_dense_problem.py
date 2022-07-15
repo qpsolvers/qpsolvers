@@ -32,9 +32,6 @@ from scipy.sparse import csc_matrix
 
 from qpsolvers import dense_solvers, solve_qp, sparse_solvers
 
-dense_solvers = ["scs", "scs_box"]
-sparse_solvers = []
-
 M = array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
 P = dot(M.T, M)
 q = dot(array([3.0, 2.0, 3.0]), M)
@@ -59,7 +56,8 @@ if __name__ == "__main__":
         for solver in dense_solvers
     }
     sparse_instr = {
-        solver: f"u = solve_qp(P_csc, q, G_csc, h, lb=lb, ub=ub, solver='{solver}')"
+        solver: "u = solve_qp("
+        "P_csc, q, G_csc, h, lb=lb, ub=ub, solver='{solver}')"
         for solver in sparse_solvers
     }
 
