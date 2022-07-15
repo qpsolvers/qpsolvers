@@ -22,23 +22,21 @@
 Test all available QP solvers on a dense quadratic program.
 """
 
-from os.path import basename
-
-import numpy as np
 from IPython import get_ipython
 from numpy import array, dot
 from numpy.linalg import norm
+from os.path import basename
 from scipy.sparse import csc_matrix
 
-from qpsolvers import dense_solvers, solve_qp, sparse_solvers
+from qpsolvers import dense_solvers, sparse_solvers
+from qpsolvers import solve_qp
+
 
 M = array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
 P = dot(M.T, M)
 q = dot(array([3.0, 2.0, 3.0]), M)
 G = array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
 h = array([3.0, 2.0, -2.0])
-lb = -0.5 * np.ones(3)
-ub = 1.0 * np.ones(3)
 P_csc = csc_matrix(P)
 G_csc = csc_matrix(G)
 
@@ -52,25 +50,24 @@ if __name__ == "__main__":
         exit()
 
     dense_instr = {
-        solver: f"u = solve_qp(P, q, G, h, lb=lb, ub=ub, solver='{solver}')"
+        solver: f"u = solve_qp(P, q, G, h, solver='{solver}')"
         for solver in dense_solvers
     }
     sparse_instr = {
-        solver: "u = solve_qp("
-        f"P_csc, q, G_csc, h, lb=lb, ub=ub, solver='{solver}')"
+        solver: f"u = solve_qp(P_csc, q, G_csc, h, solver='{solver}')"
         for solver in sparse_solvers
     }
 
     print("\nTesting all QP solvers on a dense quadratic program...")
 
-    sol0 = solve_qp(P, q, G, h, lb=lb, ub=ub, solver=dense_solvers[0])
+    sol0 = solve_qp(P, q, G, h, solver=dense_solvers[0])
     abstol = 2e-4  # tolerance on absolute solution error
     for solver in dense_solvers:
-        sol = solve_qp(P, q, G, h, lb=lb, ub=ub, solver=solver)
+        sol = solve_qp(P, q, G, h, solver=solver)
         delta = norm(sol - sol0)
         assert delta < abstol, f"{solver}'s solution offset by {delta:.1e}"
     for solver in sparse_solvers:
-        sol = solve_qp(P_csc, q, G_csc, h, lb=lb, ub=ub, solver=solver)
+        sol = solve_qp(P_csc, q, G_csc, h, solver=solver)
         delta = norm(sol - sol0)
         assert delta < abstol, f"{solver}'s solution offset by {delta:.1e}"
 

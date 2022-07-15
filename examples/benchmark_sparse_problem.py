@@ -22,15 +22,17 @@
 Test all available QP solvers on a sparse quadratic program.
 """
 
-from os.path import basename
-
 import numpy as np
 import scipy.sparse
+
 from IPython import get_ipython
 from numpy.linalg import norm
+from os.path import basename
 from scipy.sparse import csc_matrix
 
-from qpsolvers import dense_solvers, solve_qp, sparse_solvers
+from qpsolvers import dense_solvers, sparse_solvers
+from qpsolvers import solve_qp
+
 
 n = 500
 M = scipy.sparse.lil_matrix(scipy.sparse.eye(n))
@@ -41,22 +43,20 @@ P = csc_matrix(M.dot(M.transpose()))
 q = -np.ones((n,))
 G = csc_matrix(-scipy.sparse.eye(n))
 h = -2 * np.ones((n,))
-lb = h
-ub = -lb
 P_array = np.array(P.todense())
 G_array = np.array(G.todense())
 
 
 def check_same_solutions(tol=0.05):
-    sol0 = solve_qp(P, q, G, h, lb=lb, ub=ub, solver=sparse_solvers[0])
+    sol0 = solve_qp(P, q, G, h, solver=sparse_solvers[0])
     for solver in sparse_solvers:
-        sol = solve_qp(P, q, G, h, lb=lb, ub=ub, solver=solver)
+        sol = solve_qp(P, q, G, h, solver=solver)
         relvar = norm(sol - sol0) / norm(sol0)
         assert (
             relvar < tol
         ), f"{solver}'s solution offset by {100.0 * relvar:.1f}%"
     for solver in dense_solvers:
-        sol = solve_qp(P_array, q, G_array, h, lb=lb, ub=ub, solver=solver)
+        sol = solve_qp(P_array, q, G_array, h, solver=solver)
         relvar = norm(sol - sol0) / norm(sol0)
         assert (
             relvar < tol
@@ -65,8 +65,7 @@ def check_same_solutions(tol=0.05):
 
 def time_dense_solvers():
     instructions = {
-        solver: "u = solve_qp(P_array, q, G_array, h, lb=lb, ub=ub, "
-        f"solver='{solver}')"
+        solver: f"u = solve_qp(P_array, q, G_array, h, solver='{solver}')"
         for solver in dense_solvers
     }
     print("\nDense solvers\n-------------")
@@ -77,7 +76,7 @@ def time_dense_solvers():
 
 def time_sparse_solvers():
     instructions = {
-        solver: f"u = solve_qp(P, q, G, h, lb=lb, ub=ub, solver='{solver}')"
+        solver: f"u = solve_qp(P, q, G, h, solver='{solver}')"
         for solver in sparse_solvers
     }
     print("\nSparse solvers\n--------------")

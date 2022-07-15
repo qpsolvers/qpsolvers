@@ -30,11 +30,10 @@ except ImportError:
     print("This example requires IPython, try installing ipython3")
     sys.exit(-1)
 
-from os.path import basename
-from timeit import timeit
-
 from numpy import dot, linspace, ones, random
+from os.path import basename
 from scipy.linalg import toeplitz
+from timeit import timeit
 
 from qpsolvers import available_solvers, solve_qp
 
@@ -50,25 +49,13 @@ def solve_random_qp(n, solver):
         [1.0, 0.0, 0.0] + [0.0] * (n - 3), [1.0, 2.0, 3.0] + [0.0] * (n - 3)
     )
     h = ones(n)
-    lb = -0.03 * ones(n)
-    ub = +0.03 * ones(n)
-    return solve_qp(P, q, G, h, lb=lb, ub=ub, solver=solver)
+    return solve_qp(P, q, G, h, solver=solver)
 
 
 def plot_results(perfs):
     try:
-        from pylab import (
-            clf,
-            get_cmap,
-            grid,
-            ion,
-            legend,
-            plot,
-            xlabel,
-            xscale,
-            ylabel,
-            yscale,
-        )
+        from pylab import clf, get_cmap, grid, ion, legend, plot
+        from pylab import xlabel, xscale, ylabel, yscale
     except ImportError:
         print("Cannot plot results, try installing python3-matplotlib")
         print("Results are stored in the global `perfs` dictionary")
