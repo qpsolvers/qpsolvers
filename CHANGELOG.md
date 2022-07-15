@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 
 - Document how to add a new QP solver to the library
 
+### Changed
+
+- SCS: use the box cone API when lower/upper bounds are set
+
 ## [2.0.0] - 2022/07/05
 
 ### Added
