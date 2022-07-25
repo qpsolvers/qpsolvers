@@ -70,7 +70,8 @@ def scs_solve_qp(
             \\frac{1}{2} x^T P x + q^T x \\\\
         \\mbox{subject to}
             & G x \\leq h                \\\\
-            & A x = b
+            & A x = b                    \\\\
+            & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
     using `SCS <https://github.com/cvxgrp/scs>`_.
