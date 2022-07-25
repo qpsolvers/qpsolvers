@@ -7,7 +7,12 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Document how to add a new QP solver to the library
+- Example with (box) lower and upper bounds
 - Test case where `lb` XOR `ub` is set
+
+### Changed
+
+- SCS: use the box cone API when lower/upper bounds are set
 
 ## [2.0.0] - 2022/07/05
 

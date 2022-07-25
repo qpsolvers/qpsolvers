@@ -143,11 +143,14 @@ def solve_qp(
     if isinstance(G, ndarray) and G.ndim == 1:
         G = G.reshape((1, G.shape[0]))
     check_problem_constraints(G, h, A, b)
-    G, h = concatenate_bounds(G, h, lb, ub)
     kwargs["initvals"] = initvals
     kwargs["verbose"] = verbose
     try:
-        return solve_function[solver](P, q, G, h, A, b, **kwargs)
+        if (lb is not None or ub is not None) and solver == "scs":
+            return solve_function["scs"](P, q, G, h, A, b, lb, ub, **kwargs)
+        else:  # all other solvers, bounds or not
+            G, h = concatenate_bounds(G, h, lb, ub)
+            return solve_function[solver](P, q, G, h, A, b, **kwargs)
     except KeyError as e:
         raise SolverNotFound(
             f"solver '{solver}' is not in the list "
