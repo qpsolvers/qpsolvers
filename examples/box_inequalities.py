@@ -19,7 +19,7 @@
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
 """
-Test the "quadprog" QP solver on a small dense problem.
+Test one of the available QP solvers on a small problem with box inequalities.
 """
 
 import random
@@ -33,8 +33,6 @@ from qpsolvers import available_solvers, print_matrix_vector, solve_qp
 M = np.array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
 P = np.dot(M.T, M)  # this is a positive definite matrix
 q = np.dot(np.array([3.0, 2.0, 3.0]), M)
-G = np.array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
-h = np.array([3.0, 2.0, -2.0])
 A = np.array([1.0, 1.0, 1.0])
 b = np.array([1.0])
 lb = -0.5 * np.ones(3)
@@ -42,22 +40,20 @@ ub = 1.0 * np.ones(3)
 
 if __name__ == "__main__":
     start_time = perf_counter()
-    solver = "scs" if "scs" in available_solvers else available_solvers[0]
     solver = random.choice(available_solvers)
     x = solve_qp(P, q, A=A, b=b, lb=lb, ub=ub, solver=solver)
     end_time = perf_counter()
 
     print("")
     print("    min. 1/2 x^T P x + q^T x")
-    print("    s.t. G * x <= h")
-    print("         A * x == b")
+    print("    s.t. A * x == b")
+    print("         lb <= x <= ub")
     print("")
     print_matrix_vector(P, "P", q, "q")
     print("")
-    print_matrix_vector(G, "G", h, "h")
-    print("")
     print_matrix_vector(A, "A", b, "b")
     print("")
-    print(f"Solution: x = {x}")
-    print(f"Solve time: {1e6 * (end_time - start_time):.0f} [us]")
-    print(f"Solver: {solver}")
+    print_matrix_vector(lb.reshape((3, 1)), "lb", ub, "ub")
+    print("")
+    print(f"Solution:\n\n    x = {x}\n")
+    print(f"Found in {1e6 * (end_time - start_time):.0f} [us] with {solver}")
