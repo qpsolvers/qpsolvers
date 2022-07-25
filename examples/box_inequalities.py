@@ -46,7 +46,7 @@ if __name__ == "__main__":
 
     print("")
     print("    min. 1/2 x^T P x + q^T x")
-    print("    s.t. A * x == b")
+    print("    s.t.   A * x == b")
     print("         lb <= x <= ub")
     print("")
     print_matrix_vector(P, "P", q, "q")
