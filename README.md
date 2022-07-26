@@ -154,3 +154,9 @@ Finally, here is a small benchmark of [random dense problems](examples/benchmark
 <img src="https://scaron.info/images/qp-benchmark-2022.png">
 
 Note that performances of QP solvers largely depend on the problem solved. For instance, MOSEK performs an [automatic conversion to Second-Order Cone Programming (SOCP)](https://docs.mosek.com/8.1/pythonapi/prob-def-quadratic.html) which the documentation advises bypassing for better performance. Similarly, ECOS reformulates [from QP to SOCP](qpsolvers/solvers/convert_to_socp.py) and [works best on small problems](https://web.stanford.edu/%7Eboyd/papers/ecos.html).
+
+## Can I help?
+
+Absolutely! The first step is to install the library and use it. Report any bug you encounter in the [issue tracker](https://github.com/stephane-caron/qpsolvers/issues).
+
+If you're a developer looking to hack on open source, check out [CONTRIBUTING.md](CONTRIBUTING.md).
