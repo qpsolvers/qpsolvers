@@ -157,6 +157,4 @@ Note that performances of QP solvers largely depend on the problem solved. For i
 
 ## Can I help?
 
-Absolutely! The first step is to install the library and use it. Report any bug you encounter in the [issue tracker](https://github.com/stephane-caron/qpsolvers/issues).
-
-If you're a developer looking to hack on open source, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+Absolutely! The first step is to install the library and use it. Report any bug you encounter in the [issue tracker](https://github.com/stephane-caron/qpsolvers/issues). If you're a developer looking to hack on open source, check out [CONTRIBUTING.md](CONTRIBUTING.md).
