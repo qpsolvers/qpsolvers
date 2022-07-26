@@ -105,7 +105,7 @@ The list of supported solvers currently includes:
   - You will need to install the [Visual C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) to build all package dependencies.
 - *Can I help?*
   - Absolutely! The first step is to install the library and use it. Report any bug you encounter in the [issue tracker](https://github.com/stephane-caron/qpsolvers/issues).
-  - If you're a developer looking to hack on open source, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+  - If you're a developer looking to hack on open source, check out the [contribution guidelines](CONTRIBUTING.md) for suggestions.
 
 ## Benchmark
 
