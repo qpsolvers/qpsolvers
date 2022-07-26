@@ -103,6 +103,9 @@ The list of supported solvers currently includes:
   - If your problem has concave components, go for a nonlinear solver such as [IPOPT](https://pypi.org/project/ipopt/) *e.g.* using [CasADi](https://web.casadi.org/).
 - *I get the following [build error on Windows](https://github.com/stephane-caron/qpsolvers/issues/28) when running `pip install qpsolvers`.*
   - You will need to install the [Visual C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) to build all package dependencies.
+- *Can I help?*
+  - Absolutely! The first step is to install the library and use it. Report any bug you encounter in the [issue tracker](https://github.com/stephane-caron/qpsolvers/issues).
+  - If you're a developer looking to hack on open source, check out [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Benchmark
 
@@ -154,7 +157,3 @@ Finally, here is a small benchmark of [random dense problems](examples/benchmark
 <img src="https://scaron.info/images/qp-benchmark-2022.png">
 
 Note that performances of QP solvers largely depend on the problem solved. For instance, MOSEK performs an [automatic conversion to Second-Order Cone Programming (SOCP)](https://docs.mosek.com/8.1/pythonapi/prob-def-quadratic.html) which the documentation advises bypassing for better performance. Similarly, ECOS reformulates [from QP to SOCP](qpsolvers/solvers/convert_to_socp.py) and [works best on small problems](https://web.stanford.edu/%7Eboyd/papers/ecos.html).
-
-## Can I help?
-
-Absolutely! The first step is to install the library and use it. Report any bug you encounter in the [issue tracker](https://github.com/stephane-caron/qpsolvers/issues). If you're a developer looking to hack on open source, check out [CONTRIBUTING.md](CONTRIBUTING.md).
