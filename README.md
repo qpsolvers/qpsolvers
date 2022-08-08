@@ -15,8 +15,6 @@
 
 Unified interface to Quadratic Programming (QP) solvers available in Python.
 
-Check out the 📢 [Announcements](https://github.com/stephane-caron/qpsolvers/discussions/categories/announcements) for news about recent or upcoming changes to the library.
-
 ## Installation
 
 To install both the library and a starter set of QP solvers:
@@ -50,6 +48,8 @@ $$
 $$
 
 Vector inequalities are taken coordinate by coordinate. For most solvers, the matrix $P$ should be [positive definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix).
+
+📢 The ``solver`` keyword argument has become mandatory in v2.0. (Before that, a default solver was implicitly selected.)
 
 ## Example
 
