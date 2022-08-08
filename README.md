@@ -15,7 +15,7 @@
 
 Unified interface to Quadratic Programming (QP) solvers available in Python.
 
-📢 **With v2.0, the ``solver`` keyword argument has become mandatory.** There is no implicit default solver any more.
+Check out the 📢 [Announcements](https://github.com/stephane-caron/qpsolvers/discussions/categories/announcements) for news about recent or upcoming changes to the library.
 
 ## Installation
 
