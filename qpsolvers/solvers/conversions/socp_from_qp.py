@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""Convert quadratic programs to second-order cone programs"""
+"""Convert quadratic programs to second-order cone programs."""
 
 from typing import Any, Dict, Optional, Tuple
 
