@@ -28,7 +28,7 @@ import numpy as np
 from gurobipy import GRB, Model
 from numpy import array
 
-from .conversions import concatenate_bounds
+from .conversions import linear_from_box_inequalities
 
 
 def gurobi_solve_qp(
@@ -90,7 +90,7 @@ def gurobi_solve_qp(
     if initvals is not None:
         warn("Gurobi: warm-start values given but they will be ignored")
     if lb is not None or ub is not None:
-        G, h = concatenate_bounds(G, h, lb, ub)
+        G, h = linear_from_box_inequalities(G, h, lb, ub)
     model = Model()
     if not verbose:  # optionally turn off solver output
         model.setParam("OutputFlag", 0)

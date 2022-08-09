@@ -26,7 +26,7 @@ from cvxopt import matrix, spmatrix
 from cvxopt.solvers import options, qp
 from numpy import array, ndarray
 
-from .conversions import concatenate_bounds
+from .conversions import linear_from_box_inequalities
 from .typing import CvxoptReadyMatrix
 
 
@@ -148,7 +148,7 @@ def cvxopt_solve_qp(
     different cost than the one intended if a non-symmetric matrix is provided.
     """
     if lb is not None or ub is not None:
-        G, h = concatenate_bounds(G, h, lb, ub)
+        G, h = linear_from_box_inequalities(G, h, lb, ub)
     options["show_progress"] = verbose
     args = [cvxopt_matrix(P), cvxopt_matrix(q)]
     kwargs = {"G": None, "h": None, "A": None, "b": None}

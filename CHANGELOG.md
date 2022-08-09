@@ -11,6 +11,8 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - Moved ``concatenate_bounds`` to internal ``conversions`` submodule
+- Moved ``convert_to_socp`` to internal ``conversions`` submodule
+- Renamed ``concatenate_bounds`` to ``linear_from_box_inequalities``
 - Renamed internal ``convert_to_socp`` function to ``socp_from_qp``
 
 ## [2.1.0] - 2022/07/25

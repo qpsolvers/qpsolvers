@@ -37,7 +37,7 @@ from numpy import hstack, inf, ndarray, ones
 from osqp import OSQP
 from scipy import sparse
 
-from .conversions import concatenate_bounds
+from .conversions import linear_from_box_inequalities
 from .typing import DenseOrCSCMatrix
 from .typing import warn_about_sparse_conversion
 
@@ -144,7 +144,7 @@ def osqp_solve_qp(
         warn_about_sparse_conversion("P")
         P = sparse.csc_matrix(P)
     if lb is not None or ub is not None:
-        G, h = concatenate_bounds(G, h, lb, ub)
+        G, h = linear_from_box_inequalities(G, h, lb, ub)
     solver = OSQP()
     kwargs.update(
         {

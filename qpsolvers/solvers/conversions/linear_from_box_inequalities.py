@@ -115,7 +115,7 @@ def concatenate_bound(
     return (G, h)
 
 
-def concatenate_bounds(
+def linear_from_box_inequalities(
     G: Optional[Matrix],
     h: Optional[Vector],
     lb: Optional[Vector],
