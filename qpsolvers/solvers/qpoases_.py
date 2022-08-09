@@ -30,7 +30,7 @@ from qpoases import PyQProblem as QProblem
 from qpoases import PyQProblemB as QProblemB
 from qpoases import PyReturnValue as ReturnValue
 
-from .conversions import concatenate_bounds
+from .conversions import linear_from_box_inequalities
 
 
 __infty__ = 1e10
@@ -112,7 +112,7 @@ def qpoases_solve_qp(
     if initvals is not None:
         print("qpOASES: note that warm-start values ignored by wrapper")
     if lb is not None or ub is not None:
-        G, h = concatenate_bounds(G, h, lb, ub)
+        G, h = linear_from_box_inequalities(G, h, lb, ub)
     n = P.shape[0]
     lb = None  # TODO(scaron): use native qpOASES box bounds
     ub = None  # TODO(scaron): idem

@@ -26,7 +26,7 @@ import numpy as np
 from cvxpy import Constant, Minimize, Problem, Variable, quad_form
 from numpy import array
 
-from .conversions import concatenate_bounds
+from .conversions import linear_from_box_inequalities
 
 
 def cvxpy_solve_qp(
@@ -92,7 +92,7 @@ def cvxpy_solve_qp(
     if initvals is not None:
         print("CVXPY: note that warm-start values are ignored by wrapper")
     if lb is not None or ub is not None:
-        G, h = concatenate_bounds(G, h, lb, ub)
+        G, h = linear_from_box_inequalities(G, h, lb, ub)
     n = q.shape[0]
     x = Variable(n)
     P_cst = Constant(P)  # see http://www.cvxpy.org/en/latest/faq/

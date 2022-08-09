@@ -30,7 +30,7 @@ from numpy import array, ones
 from numpy.linalg import norm
 from scipy.sparse import csc_matrix
 
-from qpsolvers.solvers.conversions import concatenate_bounds
+from qpsolvers.solvers.conversions import linear_from_box_inequalities
 from qpsolvers import solve_qp
 
 try:
@@ -99,14 +99,14 @@ try:
             _, _, G, h = self.get_sparse_problem()
             lb = -np.ones(G.size[1])
             ub = +np.ones(G.size[1])
-            G2, h2 = concatenate_bounds(G, h, lb, ub)
+            G2, h2 = linear_from_box_inequalities(G, h, lb, ub)
             G2 = np.array(dense_matrix(G2))
             m = G.size[0]
             n = lb.shape[0]
-            self.assertTrue(np.allclose(G2[m:m + n, :], -np.eye(n)))
-            self.assertTrue(np.allclose(h2[m:m + n], -lb))
-            self.assertTrue(np.allclose(G2[m + n:m + 2 * n, :], np.eye(n)))
-            self.assertTrue(np.allclose(h2[m + n:m + 2 * n], ub))
+            self.assertTrue(np.allclose(G2[m : m + n, :], -np.eye(n)))
+            self.assertTrue(np.allclose(h2[m : m + n], -lb))
+            self.assertTrue(np.allclose(G2[m + n : m + 2 * n, :], np.eye(n)))
+            self.assertTrue(np.allclose(h2[m + n : m + 2 * n], ub))
 
 
 except ImportError:  # CVXOPT is not installed

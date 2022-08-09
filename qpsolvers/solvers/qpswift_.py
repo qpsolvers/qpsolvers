@@ -37,7 +37,7 @@ from typing import Optional
 import numpy as np
 import qpSWIFT
 
-from .conversions import concatenate_bounds
+from .conversions import linear_from_box_inequalities
 
 
 def qpswift_solve_qp(
@@ -165,7 +165,7 @@ def qpswift_solve_qp(
     if initvals is not None:
         print("qpSWIFT: note that warm-start values ignored by wrapper")
     if lb is not None or ub is not None:
-        G, h = concatenate_bounds(G, h, lb, ub)
+        G, h = linear_from_box_inequalities(G, h, lb, ub)
     result: dict = {}
     kwargs.update(
         {

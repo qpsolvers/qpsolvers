@@ -27,7 +27,7 @@ import numpy as np
 from numpy import hstack, vstack
 from quadprog import solve_qp
 
-from .conversions import concatenate_bounds
+from .conversions import linear_from_box_inequalities
 
 
 def quadprog_solve_qp(
@@ -102,7 +102,7 @@ def quadprog_solve_qp(
     if initvals is not None and verbose:
         warn("note that warm-start values ignored by quadprog")
     if lb is not None or ub is not None:
-        G, h = concatenate_bounds(G, h, lb, ub)
+        G, h = linear_from_box_inequalities(G, h, lb, ub)
     qp_G = P
     qp_a = -q
     qp_C: Optional[np.ndarray] = None

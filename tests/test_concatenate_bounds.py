@@ -21,13 +21,13 @@
 import unittest
 
 from numpy import allclose, array, eye
-from qpsolvers.solvers.conversions import concatenate_bounds
+from qpsolvers.solvers.conversions import linear_from_box_inequalities
 
 
 class TestConcatenateBounds(unittest.TestCase):
 
     """
-    Test fixture for `concatenate_bounds`.
+    Test fixture for box to linear inequality conversion.
     """
 
     def setUp(self):
@@ -37,7 +37,7 @@ class TestConcatenateBounds(unittest.TestCase):
         self.ub = array([1.0, 1.0, 1.0])
 
     def check_concatenation(self, G, h, lb, ub):
-        G2, h2 = concatenate_bounds(G, h, lb, ub)
+        G2, h2 = linear_from_box_inequalities(G, h, lb, ub)
         m = G.shape[0] if G is not None else 0
         k = lb.shape[0]
         self.assertTrue(allclose(G2[m : m + k, :], -eye(k)))

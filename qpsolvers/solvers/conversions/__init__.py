@@ -20,10 +20,10 @@
 
 """Convert problems from and to standard QP form."""
 
-from .concatenate_bounds import concatenate_bounds
+from .linear_from_box_inequalities import linear_from_box_inequalities
 from .socp_from_qp import socp_from_qp
 
 __all__ = [
-    "concatenate_bounds",
+    "linear_from_box_inequalities",
     "socp_from_qp",
 ]
