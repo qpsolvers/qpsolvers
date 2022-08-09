@@ -49,7 +49,7 @@ $$
 
 Vector inequalities are taken coordinate by coordinate. For most solvers, the matrix $P$ should be [positive definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix).
 
-📢 The ``solver`` keyword argument is mandatory since v2.0. (In prior versions, a default solver was implicitly selected.)
+📢 The ``solver`` keyword argument is mandatory since v2.0. (In prior versions, a default solver was implicitly selected.) Changes to the library are documented in [Announcements](https://github.com/stephane-caron/qpsolvers/discussions/categories/announcements).
 
 ## Example
 
