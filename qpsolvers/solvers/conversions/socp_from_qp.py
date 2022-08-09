@@ -28,7 +28,7 @@ from numpy.linalg import LinAlgError
 from scipy.sparse import csc_matrix
 
 
-def convert_to_socp(
+def socp_from_qp(
     P: ndarray, q: ndarray, G: Optional[ndarray], h: Optional[ndarray]
 ) -> Tuple[ndarray, ndarray, ndarray, Dict[str, Any]]:
     """
