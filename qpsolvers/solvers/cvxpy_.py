@@ -22,21 +22,26 @@
 
 from typing import Optional
 
+import numpy as np
 from cvxpy import Constant, Minimize, Problem, Variable, quad_form
-from numpy import array, ndarray
+from numpy import array
+
+from .conversions import concatenate_bounds
 
 
 def cvxpy_solve_qp(
-    P: ndarray,
-    q: ndarray,
-    G: Optional[ndarray] = None,
-    h: Optional[ndarray] = None,
-    A: Optional[ndarray] = None,
-    b: Optional[ndarray] = None,
-    initvals: Optional[ndarray] = None,
+    P: np.ndarray,
+    q: np.ndarray,
+    G: Optional[np.ndarray] = None,
+    h: Optional[np.ndarray] = None,
+    A: Optional[np.ndarray] = None,
+    b: Optional[np.ndarray] = None,
+    lb: Optional[np.ndarray] = None,
+    ub: Optional[np.ndarray] = None,
+    initvals: Optional[np.ndarray] = None,
     solver: Optional[str] = None,
     verbose: bool = False,
-) -> Optional[ndarray]:
+) -> Optional[np.ndarray]:
     """
     Solve a Quadratic Program defined as:
 
@@ -47,7 +52,8 @@ def cvxpy_solve_qp(
             \\frac{1}{2} x^T P x + q^T x \\\\
         \\mbox{subject to}
             & G x \\leq h                \\\\
-            & A x = b
+            & A x = b                    \\\\
+            & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
     calling a given solver using the `CVXPY <http://www.cvxpy.org/>`_ modelling
@@ -67,6 +73,10 @@ def cvxpy_solve_qp(
         Linear equality constraint matrix.
     b :
         Linear equality constraint vector.
+    lb :
+        Lower bound constraint vector.
+    ub :
+        Upper bound constraint vector.
     initvals :
         Warm-start guess vector (not used).
     solver :
@@ -81,6 +91,8 @@ def cvxpy_solve_qp(
     """
     if initvals is not None:
         print("CVXPY: note that warm-start values are ignored by wrapper")
+    if lb is not None or ub is not None:
+        G, h = concatenate_bounds(G, h, lb, ub)
     n = q.shape[0]
     x = Variable(n)
     P_cst = Constant(P)  # see http://www.cvxpy.org/en/latest/faq/

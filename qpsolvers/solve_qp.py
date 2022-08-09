@@ -27,7 +27,6 @@ from typing import Optional
 from numpy import eye, hstack, ndarray, ones, vstack, zeros
 
 from .check_problem_constraints import check_problem_constraints
-from .concatenate_bounds import concatenate_bounds
 from .exceptions import NoSolverSelected, SolverNotFound
 from .solvers import available_solvers, dense_solvers, solve_function
 from .typing import Matrix, Vector
@@ -79,9 +78,9 @@ def solve_qp(
         Linear equality matrix.
     b :
         Linear equality vector.
-    lb:
+    lb :
         Lower bound constraint vector.
-    ub:
+    ub :
         Upper bound constraint vector.
     solver :
         Name of the QP solver, to choose in
@@ -146,11 +145,7 @@ def solve_qp(
     kwargs["initvals"] = initvals
     kwargs["verbose"] = verbose
     try:
-        if (lb is not None or ub is not None) and solver == "scs":
-            return solve_function["scs"](P, q, G, h, A, b, lb, ub, **kwargs)
-        else:  # all other solvers, bounds or not
-            G, h = concatenate_bounds(G, h, lb, ub)
-            return solve_function[solver](P, q, G, h, A, b, **kwargs)
+        return solve_function[solver](P, q, G, h, A, b, lb, ub, **kwargs)
     except KeyError as e:
         raise SolverNotFound(
             f"solver '{solver}' is not in the list "

@@ -130,9 +130,9 @@ def concatenate_bounds(
         Linear inequality matrix.
     h :
         Linear inequality vector.
-    lb:
+    lb :
         Lower bound constraint vector.
-    ub:
+    ub :
         Upper bound constraint vector.
 
     Returns

@@ -37,6 +37,7 @@ from numpy import hstack, inf, ndarray, ones
 from osqp import OSQP
 from scipy import sparse
 
+from .conversions import concatenate_bounds
 from .typing import DenseOrCSCMatrix
 from .typing import warn_about_sparse_conversion
 
@@ -48,6 +49,8 @@ def osqp_solve_qp(
     h: Optional[DenseOrCSCMatrix] = None,
     A: Optional[DenseOrCSCMatrix] = None,
     b: Optional[DenseOrCSCMatrix] = None,
+    lb: Optional[DenseOrCSCMatrix] = None,
+    ub: Optional[DenseOrCSCMatrix] = None,
     initvals: Optional[DenseOrCSCMatrix] = None,
     verbose: bool = False,
     eps_abs: float = 1e-4,
@@ -84,6 +87,10 @@ def osqp_solve_qp(
         Linear equality constraint matrix.
     b :
         Linear equality constraint vector.
+    lb :
+        Lower bound constraint vector.
+    ub :
+        Upper bound constraint vector.
     initvals :
         Warm-start guess vector.
     verbose :
@@ -136,6 +143,8 @@ def osqp_solve_qp(
     if isinstance(P, ndarray):
         warn_about_sparse_conversion("P")
         P = sparse.csc_matrix(P)
+    if lb is not None or ub is not None:
+        G, h = concatenate_bounds(G, h, lb, ub)
     solver = OSQP()
     kwargs.update(
         {

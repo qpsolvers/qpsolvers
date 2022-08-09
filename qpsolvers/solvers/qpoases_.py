@@ -22,12 +22,15 @@
 
 from typing import Optional
 
-from numpy import array, hstack, ndarray, ones, vstack, zeros
+import numpy as np
+from numpy import array, hstack, ones, vstack, zeros
 from qpoases import PyOptions as Options
 from qpoases import PyPrintLevel as PrintLevel
 from qpoases import PyQProblem as QProblem
 from qpoases import PyQProblemB as QProblemB
 from qpoases import PyReturnValue as ReturnValue
+
+from .conversions import concatenate_bounds
 
 
 __infty__ = 1e10
@@ -36,16 +39,18 @@ __options__.printLevel = PrintLevel.NONE
 
 
 def qpoases_solve_qp(
-    P: ndarray,
-    q: ndarray,
-    G: Optional[ndarray] = None,
-    h: Optional[ndarray] = None,
-    A: Optional[ndarray] = None,
-    b: Optional[ndarray] = None,
-    initvals: Optional[ndarray] = None,
+    P: np.ndarray,
+    q: np.ndarray,
+    G: Optional[np.ndarray] = None,
+    h: Optional[np.ndarray] = None,
+    A: Optional[np.ndarray] = None,
+    b: Optional[np.ndarray] = None,
+    lb: Optional[np.ndarray] = None,
+    ub: Optional[np.ndarray] = None,
+    initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
     max_wsr: int = 1000,
-) -> Optional[ndarray]:
+) -> Optional[np.ndarray]:
     """
     Solve a Quadratic Program defined as:
 
@@ -56,7 +61,8 @@ def qpoases_solve_qp(
             \\frac{1}{2} x^T P x + q^T x \\\\
         \\mbox{subject to}
             & G x \\leq h                \\\\
-            & A x = b
+            & A x = b                    \\\\
+            & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
     using `qpOASES <https://github.com/coin-or/qpOASES>`__.
@@ -75,6 +81,10 @@ def qpoases_solve_qp(
         Linear equality constraint matrix.
     b :
         Linear equality constraint vector.
+    lb :
+        Lower bound constraint vector.
+    ub :
+        Upper bound constraint vector.
     initvals :
         Warm-start guess vector.
     verbose :
@@ -101,10 +111,12 @@ def qpoases_solve_qp(
     """
     if initvals is not None:
         print("qpOASES: note that warm-start values ignored by wrapper")
+    if lb is not None or ub is not None:
+        G, h = concatenate_bounds(G, h, lb, ub)
     n = P.shape[0]
-    lb: Optional[ndarray] = None
-    ub: Optional[ndarray] = None
-    lb_C: Optional[ndarray] = None
+    lb = None  # TODO(scaron): use native qpOASES box bounds
+    ub = None  # TODO(scaron): idem
+    lb_C: Optional[np.ndarray] = None
     has_constraint = True
     if G is not None and h is not None:
         if A is not None and b is not None:

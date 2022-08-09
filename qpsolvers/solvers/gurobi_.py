@@ -24,20 +24,25 @@
 from typing import Optional
 from warnings import warn
 
+import numpy as np
 from gurobipy import GRB, Model
-from numpy import array, ndarray
+from numpy import array
+
+from .conversions import concatenate_bounds
 
 
 def gurobi_solve_qp(
-    P: ndarray,
-    q: ndarray,
-    G: Optional[ndarray] = None,
-    h: Optional[ndarray] = None,
-    A: Optional[ndarray] = None,
-    b: Optional[ndarray] = None,
-    initvals: Optional[ndarray] = None,
+    P: np.ndarray,
+    q: np.ndarray,
+    G: Optional[np.ndarray] = None,
+    h: Optional[np.ndarray] = None,
+    A: Optional[np.ndarray] = None,
+    b: Optional[np.ndarray] = None,
+    lb: Optional[np.ndarray] = None,
+    ub: Optional[np.ndarray] = None,
+    initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
-) -> Optional[ndarray]:
+) -> Optional[np.ndarray]:
     """
     Solve a Quadratic Program defined as:
 
@@ -48,7 +53,8 @@ def gurobi_solve_qp(
             \\frac{1}{2} x^T P x + q^T x \\\\
         \\mbox{subject to}
             & G x \\leq h                \\\\
-            & A x = b
+            & A x = b                    \\\\
+            & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
     using `Gurobi <http://www.gurobi.com/>`_.
@@ -67,6 +73,10 @@ def gurobi_solve_qp(
         Linear equality constraint matrix.
     b :
         Linear equality constraint vector.
+    lb :
+        Lower bound constraint vector.
+    ub :
+        Upper bound constraint vector.
     initvals :
         Warm-start guess vector (not used).
     verbose :
@@ -79,6 +89,8 @@ def gurobi_solve_qp(
     """
     if initvals is not None:
         warn("Gurobi: warm-start values given but they will be ignored")
+    if lb is not None or ub is not None:
+        G, h = concatenate_bounds(G, h, lb, ub)
     model = Model()
     if not verbose:  # optionally turn off solver output
         model.setParam("OutputFlag", 0)

@@ -20,19 +20,7 @@
 
 """Types for solve_qp function arguments."""
 
-from typing import Union
-
-from numpy import ndarray
-from scipy.sparse import csc_matrix
-
-try:
-    from cvxopt import spmatrix
-
-    Matrix = Union[ndarray, csc_matrix, spmatrix]
-    Vector = Union[ndarray, csc_matrix, spmatrix]
-except ImportError:
-    Matrix = Union[ndarray, csc_matrix]  # type: ignore
-    Vector = Union[ndarray, csc_matrix]  # type: ignore
+from .solvers.conversions.typing import Matrix, Vector
 
 __all__ = [
     "Matrix",
