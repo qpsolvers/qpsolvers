@@ -21,7 +21,9 @@
 """Convert problems from and to standard QP form."""
 
 from .concatenate_bounds import concatenate_bounds
+from .socp_from_qp import socp_from_qp
 
 __all__ = [
     "concatenate_bounds",
+    "socp_from_qp",
 ]

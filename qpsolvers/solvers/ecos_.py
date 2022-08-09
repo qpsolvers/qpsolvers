@@ -27,8 +27,7 @@ import numpy as np
 from ecos import solve
 from scipy import sparse
 
-from .convert_to_socp import convert_to_socp
-from .conversions import concatenate_bounds
+from .conversions import concatenate_bounds, socp_from_qp
 
 
 __exit_flag_meaning__ = {
@@ -94,7 +93,7 @@ def ecos_solve_qp(
         warn("note that warm-start values ignored by this wrapper")
     if lb is not None or ub is not None:
         G, h = concatenate_bounds(G, h, lb, ub)
-    c_socp, G_socp, h_socp, dims = convert_to_socp(P, q, G, h)
+    c_socp, G_socp, h_socp, dims = socp_from_qp(P, q, G, h)
     if A is not None:
         A_socp = sparse.hstack(
             [A, sparse.csc_matrix((A.shape[0], 1))], format="csc"

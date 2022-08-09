@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Added
+
+- Internal ``qpsolvers.solvers.conversions`` submodule
+
+### Changed
+
+- Moved ``concatenate_bounds`` to internal ``conversions`` submodule
+- Renamed internal ``convert_to_socp`` function to ``socp_from_qp``
+
 ## [2.1.0] - 2022/07/25
 
 ### Added
