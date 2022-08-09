@@ -26,6 +26,7 @@ from cvxopt import matrix, spmatrix
 from cvxopt.solvers import options, qp
 from numpy import array, ndarray
 
+from .conversions import concatenate_bounds
 from .typing import CvxoptReadyMatrix
 
 
@@ -39,7 +40,7 @@ def cvxopt_matrix(M: CvxoptReadyMatrix) -> matrix:
     Parameters
     ----------
     M :
-        Matrix in NumPy format.
+        Matrix in NumPy or CVXOPT format.
 
     Returns
     -------
@@ -63,6 +64,8 @@ def cvxopt_solve_qp(
     h: Optional[CvxoptReadyMatrix] = None,
     A: Optional[CvxoptReadyMatrix] = None,
     b: Optional[CvxoptReadyMatrix] = None,
+    lb: Optional[CvxoptReadyMatrix] = None,
+    ub: Optional[CvxoptReadyMatrix] = None,
     solver: str = None,
     initvals: Optional[ndarray] = None,
     verbose: bool = False,
@@ -77,7 +80,8 @@ def cvxopt_solve_qp(
             \\frac{1}{2} x^T P x + q^T x \\\\
         \\mbox{subject to}
             & G x \\leq h                \\\\
-            & A x = b
+            & A x = b                    \\\\
+            & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
     using `CVXOPT <http://cvxopt.org/>`_.
@@ -103,6 +107,10 @@ def cvxopt_solve_qp(
         below.
     b :
         Linear equality constraint vector.
+    lb :
+        Lower bound constraint vector.
+    ub :
+        Upper bound constraint vector.
     solver :
         Set to 'mosek' to run MOSEK rather than CVXOPT.
     initvals :
@@ -139,6 +147,8 @@ def cvxopt_solve_qp(
     CVXOPT only considers the lower entries of `P`, therefore it will use a
     different cost than the one intended if a non-symmetric matrix is provided.
     """
+    if lb is not None or ub is not None:
+        G, h = concatenate_bounds(G, h, lb, ub)
     options["show_progress"] = verbose
     args = [cvxopt_matrix(P), cvxopt_matrix(q)]
     kwargs = {"G": None, "h": None, "A": None, "b": None}

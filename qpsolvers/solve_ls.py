@@ -78,9 +78,9 @@ def solve_ls(
         Linear equality matrix.
     b :
         Linear equality vector.
-    lb:
+    lb :
         Lower bound constraint vector.
-    ub:
+    ub :
         Upper bound constraint vector.
     W :
         Definite symmetric weight matrix used to define the norm of the cost

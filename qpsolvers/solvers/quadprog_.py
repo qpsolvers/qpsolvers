@@ -23,21 +23,26 @@
 from typing import Optional
 from warnings import warn
 
-from numpy import hstack, ndarray, vstack
+import numpy as np
+from numpy import hstack, vstack
 from quadprog import solve_qp
+
+from .conversions import concatenate_bounds
 
 
 def quadprog_solve_qp(
-    P: ndarray,
-    q: ndarray,
-    G: Optional[ndarray] = None,
-    h: Optional[ndarray] = None,
-    A: Optional[ndarray] = None,
-    b: Optional[ndarray] = None,
-    initvals: ndarray = None,
+    P: np.ndarray,
+    q: np.ndarray,
+    G: Optional[np.ndarray] = None,
+    h: Optional[np.ndarray] = None,
+    A: Optional[np.ndarray] = None,
+    b: Optional[np.ndarray] = None,
+    lb: Optional[np.ndarray] = None,
+    ub: Optional[np.ndarray] = None,
+    initvals: np.ndarray = None,
     verbose: bool = False,
     **kwargs,
-) -> Optional[ndarray]:
+) -> Optional[np.ndarray]:
     """
     Solve a Quadratic Program defined as:
 
@@ -48,7 +53,8 @@ def quadprog_solve_qp(
             \\frac{1}{2} x^T P x + q^T x \\\\
         \\mbox{subject to}
             & G x \\leq h                \\\\
-            & A x = b
+            & A x = b                    \\\\
+            & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
     using `quadprog <https://pypi.python.org/pypi/quadprog/>`_.
@@ -67,6 +73,10 @@ def quadprog_solve_qp(
         Linear equality constraint matrix.
     b :
         Linear equality constraint vector.
+    lb :
+        Lower bound constraint vector.
+    ub :
+        Upper bound constraint vector.
     initvals :
         Warm-start guess vector (not used).
     verbose :
@@ -91,10 +101,12 @@ def quadprog_solve_qp(
     """
     if initvals is not None and verbose:
         warn("note that warm-start values ignored by quadprog")
+    if lb is not None or ub is not None:
+        G, h = concatenate_bounds(G, h, lb, ub)
     qp_G = P
     qp_a = -q
-    qp_C: Optional[ndarray] = None
-    qp_b: Optional[ndarray] = None
+    qp_C: Optional[np.ndarray] = None
+    qp_b: Optional[np.ndarray] = None
     if A is not None and b is not None:
         if G is not None and h is not None:
             qp_C = -vstack([A, G]).T

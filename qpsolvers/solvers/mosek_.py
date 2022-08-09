@@ -38,6 +38,8 @@ def mosek_solve_qp(
     h: CvxoptReadyMatrix,
     A: Optional[CvxoptReadyMatrix] = None,
     b: Optional[CvxoptReadyMatrix] = None,
+    lb: Optional[CvxoptReadyMatrix] = None,
+    ub: Optional[CvxoptReadyMatrix] = None,
     initvals: Optional[CvxoptReadyMatrix] = None,
     verbose: bool = False,
 ) -> Optional[ndarray]:
@@ -72,6 +74,10 @@ def mosek_solve_qp(
         Linear equality constraint matrix.
     b :
         Linear equality constraint vector.
+    lb :
+        Lower bound constraint vector.
+    ub :
+        Upper bound constraint vector.
     initvals :
         Warm-start guess vector.
     verbose :
@@ -83,4 +89,4 @@ def mosek_solve_qp(
         Solution to the QP, if found, otherwise ``None``.
     """
     cvxopt.solvers.options["mosek"] = {mosek.iparam.log: 1 if verbose else 0}
-    return cvxopt_solve_qp(P, q, G, h, A, b, "mosek", initvals)
+    return cvxopt_solve_qp(P, q, G, h, A, b, lb, ub, "mosek", initvals)

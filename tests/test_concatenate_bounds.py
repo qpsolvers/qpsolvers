@@ -21,7 +21,7 @@
 import unittest
 
 from numpy import allclose, array, eye
-from qpsolvers.concatenate_bounds import concatenate_bounds
+from qpsolvers.solvers.conversions import concatenate_bounds
 
 
 class TestConcatenateBounds(unittest.TestCase):
@@ -40,10 +40,10 @@ class TestConcatenateBounds(unittest.TestCase):
         G2, h2 = concatenate_bounds(G, h, lb, ub)
         m = G.shape[0] if G is not None else 0
         k = lb.shape[0]
-        self.assertTrue(allclose(G2[m:m + k, :], -eye(k)))
-        self.assertTrue(allclose(h2[m:m + k], -lb))
-        self.assertTrue(allclose(G2[m + k:m + 2 * k, :], eye(k)))
-        self.assertTrue(allclose(h2[m + k:m + 2 * k], ub))
+        self.assertTrue(allclose(G2[m : m + k, :], -eye(k)))
+        self.assertTrue(allclose(h2[m : m + k], -lb))
+        self.assertTrue(allclose(G2[m + k : m + 2 * k, :], eye(k)))
+        self.assertTrue(allclose(h2[m + k : m + 2 * k], ub))
 
     def test_concatenate_bounds(self):
         G, h, lb, ub = self.G, self.h, self.lb, self.ub

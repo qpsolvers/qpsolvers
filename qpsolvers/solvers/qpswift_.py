@@ -37,6 +37,8 @@ from typing import Optional
 import numpy as np
 import qpSWIFT
 
+from .conversions import concatenate_bounds
+
 
 def qpswift_solve_qp(
     P: np.ndarray,
@@ -45,6 +47,8 @@ def qpswift_solve_qp(
     h: Optional[np.ndarray] = None,
     A: Optional[np.ndarray] = None,
     b: Optional[np.ndarray] = None,
+    lb: Optional[np.ndarray] = None,
+    ub: Optional[np.ndarray] = None,
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
     **kwargs,
@@ -59,7 +63,8 @@ def qpswift_solve_qp(
             \\frac{1}{2} x^T P x + q^T x \\\\
         \\mbox{subject to}
             & G x \\leq h                \\\\
-            & A x = b
+            & A x = b                    \\\\
+            & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
     using `qpSWIFT <https://github.com/qpSWIFT/qpSWIFT>`__.
@@ -89,6 +94,10 @@ def qpswift_solve_qp(
         below.
     b :
         Linear equality constraint vector.
+    lb :
+        Lower bound constraint vector.
+    ub :
+        Upper bound constraint vector.
     initvals :
         Warm-start guess vector.
     verbose :
@@ -155,6 +164,8 @@ def qpswift_solve_qp(
     """
     if initvals is not None:
         print("qpSWIFT: note that warm-start values ignored by wrapper")
+    if lb is not None or ub is not None:
+        G, h = concatenate_bounds(G, h, lb, ub)
     result: dict = {}
     kwargs.update(
         {

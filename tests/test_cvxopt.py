@@ -30,7 +30,7 @@ from numpy import array, ones
 from numpy.linalg import norm
 from scipy.sparse import csc_matrix
 
-from qpsolvers.concatenate_bounds import concatenate_bounds
+from qpsolvers.solvers.conversions import concatenate_bounds
 from qpsolvers import solve_qp
 
 try:

@@ -90,9 +90,9 @@ def scs_solve_qp(
         Linear equality constraint matrix.
     b :
         Linear equality constraint vector.
-    lb:
+    lb :
         Lower bound constraint vector.
-    ub:
+    ub :
         Upper bound constraint vector.
     initvals :
         Warm-start guess vector (not used).

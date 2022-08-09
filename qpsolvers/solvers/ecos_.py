@@ -23,11 +23,12 @@
 from typing import Optional
 from warnings import warn
 
+import numpy as np
 from ecos import solve
-from numpy import ndarray
 from scipy import sparse
 
 from .convert_to_socp import convert_to_socp
+from .conversions import concatenate_bounds
 
 
 __exit_flag_meaning__ = {
@@ -39,15 +40,17 @@ __exit_flag_meaning__ = {
 
 
 def ecos_solve_qp(
-    P: ndarray,
-    q: ndarray,
-    G: Optional[ndarray] = None,
-    h: Optional[ndarray] = None,
-    A: Optional[ndarray] = None,
-    b: Optional[ndarray] = None,
-    initvals: Optional[ndarray] = None,
+    P: np.ndarray,
+    q: np.ndarray,
+    G: Optional[np.ndarray] = None,
+    h: Optional[np.ndarray] = None,
+    A: Optional[np.ndarray] = None,
+    b: Optional[np.ndarray] = None,
+    lb: Optional[np.ndarray] = None,
+    ub: Optional[np.ndarray] = None,
+    initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
-) -> Optional[ndarray]:
+) -> Optional[np.ndarray]:
     """
     Solve a Quadratic Program defined as:
 
@@ -89,6 +92,8 @@ def ecos_solve_qp(
     """
     if initvals is not None:
         warn("note that warm-start values ignored by this wrapper")
+    if lb is not None or ub is not None:
+        G, h = concatenate_bounds(G, h, lb, ub)
     c_socp, G_socp, h_socp, dims = convert_to_socp(P, q, G, h)
     if A is not None:
         A_socp = sparse.hstack(
