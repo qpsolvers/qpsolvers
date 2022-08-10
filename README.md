@@ -49,7 +49,7 @@ $$
 
 Vector inequalities are taken coordinate by coordinate. For most solvers, the matrix $P$ should be [positive definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix).
 
-📢 The ``solver`` keyword argument is mandatory since v2.0. (In prior versions, a default solver was implicitly selected.) Changes to the library are documented in [Announcements](https://github.com/stephane-caron/qpsolvers/discussions/categories/announcements).
+📢 The ``solver`` keyword argument is mandatory since v2.0. (In prior versions, a default solver was implicitly selected.) Changes to the API are reported in the [Announcements](https://github.com/stephane-caron/qpsolvers/discussions/categories/announcements).
 
 ## Example
 
@@ -104,7 +104,7 @@ The list of supported solvers currently includes:
 - *I get the following [build error on Windows](https://github.com/stephane-caron/qpsolvers/issues/28) when running `pip install qpsolvers`.*
   - You will need to install the [Visual C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) to build all package dependencies.
 - *Can I help?*
-  - Absolutely! The first step is to install the library and use it. Report any bug you encounter in the [issue tracker](https://github.com/stephane-caron/qpsolvers/issues).
+  - Absolutely! The first step is to install the library and use it. Report any bug in the [issue tracker](https://github.com/stephane-caron/qpsolvers/issues).
   - If you're a developer looking to hack on open source, check out the [contribution guidelines](CONTRIBUTING.md) for suggestions.
 
 ## Benchmark
