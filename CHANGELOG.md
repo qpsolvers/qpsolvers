@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- Add `lb` and `ub` arguments to all `<solver>_solve_qp` functions
 - Internal ``qpsolvers.solvers.conversions`` submodule
 
 ### Changed
