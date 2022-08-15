@@ -55,5 +55,5 @@ def print_matrix_vector(
     b_string = f"{b_label} =\n{b.reshape((A.shape[0], 1))}"
     A_lines = A_string.splitlines()
     b_lines = b_string.splitlines()
-    for i, _ in enumerate(A_lines):
-        print(A_lines[i].ljust(column_width) + b_lines[i].ljust(column_width))
+    for i, A_line in enumerate(A_lines):
+        print(A_line.ljust(column_width) + b_lines[i].ljust(column_width))
