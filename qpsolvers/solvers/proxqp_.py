@@ -102,4 +102,28 @@ def proxqp_solve_qp(
     """
     if initvals is not None:
         print("ProxQP: note that warm-start values ignored by wrapper")
-    return None
+    if lb is not None or ub is not None:
+        # TODO(scaron): use native ProxQP bounds
+        G, h = linear_from_box_inequalities(G, h, lb, ub)
+    if A is None:
+        A = []
+    if b is None:
+        b = []
+    if G is None:
+        G = []
+    if h is None:
+        h = []
+        no_lower_bound = []
+    else:  # h is not None
+        no_lower_bound = np.full(h.shape, -np.infty)
+    results = proxsuite.proxqp.dense.solve(
+        P,
+        q,
+        A,
+        b,
+        G,
+        h,
+        no_lower_bound,
+        verbose=verbose,
+    )
+    return results.x
