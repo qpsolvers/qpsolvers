@@ -248,6 +248,7 @@ try:
     solve_function["proxqp"] = proxqp_solve_qp
     available_solvers.append("proxqp")
     dense_solvers.append("proxqp")
+    sparse_solvers.append("proxqp")
 except ImportError:
     pass
 
