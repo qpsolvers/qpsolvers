@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Fixed
+
+- Remove redundant solver loop from ``test_all_shapes``
+
 ## [2.2.0] - 2022/08/15
 
 ### Added

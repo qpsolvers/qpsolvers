@@ -26,13 +26,16 @@ import unittest
 import warnings
 
 import scipy
-
 from numpy import allclose, array, dot, ones, random
 from numpy.linalg import norm
 from scipy.sparse import csc_matrix
 
-from qpsolvers import available_solvers, sparse_solvers
-from qpsolvers import solve_qp, solve_safer_qp
+from qpsolvers import (
+    available_solvers,
+    solve_qp,
+    solve_safer_qp,
+    sparse_solvers,
+)
 from qpsolvers.exceptions import NoSolverSelected, SolverNotFound
 
 # Raising a ValueError when the problem is unbounded below is desired but not
@@ -180,6 +183,10 @@ class TestSolveQP(unittest.TestCase):
         -------
         test : function
             Test function for that solver.
+
+        Note
+        ----
+        This function relies on "quadprog" to find groundtruth solutions.
         """
 
         def test(self):
@@ -233,11 +240,10 @@ class TestSolveQP(unittest.TestCase):
                 },
             ]
 
-            for (i, case) in enumerate(cases):
-                quadprog_solution = solve_qp(solver="quadprog", **case)
-                for solver in available_solvers:
-                    x = solve_qp(solver=solver, **case)
-                    self.assertLess(norm(x - quadprog_solution), 2e-4)
+            for (i, test_case) in enumerate(cases):
+                quadprog_solution = solve_qp(solver="quadprog", **test_case)
+                x = solve_qp(solver=solver, **test_case)
+                self.assertLess(norm(x - quadprog_solution), 2e-4)
 
         return test
 
