@@ -105,25 +105,19 @@ def proxqp_solve_qp(
     if lb is not None or ub is not None:
         # TODO(scaron): use native ProxQP bounds
         G, h = linear_from_box_inequalities(G, h, lb, ub)
-    if A is None:
-        A = np.empty((0,))
-    if b is None:
-        b = np.empty((0,))
-    if G is None:
-        G = np.empty((0,))
-    if h is None:
-        h = np.empty((0,))
-        no_lower_bound = np.empty((0,))
-    else:  # h is not None
-        no_lower_bound = np.full(h.shape, -np.infty)
+    A_prox = [] if A is None else A
+    b_prox = [] if b is None else b
+    C_prox = [] if G is None else G
+    u_prox = [] if h is None else h
+    l_prox = [] if h is None else np.full(h.shape, -np.infty)
     results = proxsuite.proxqp.dense.solve(
         P,
         q,
-        A,
-        b,
-        G,
-        h,
-        no_lower_bound,
+        A_prox,
+        b_prox,
+        C_prox,
+        u_prox,
+        l_prox,
         verbose=verbose,
     )
     return results.x
