@@ -106,14 +106,14 @@ def proxqp_solve_qp(
         # TODO(scaron): use native ProxQP bounds
         G, h = linear_from_box_inequalities(G, h, lb, ub)
     if A is None:
-        A = []
+        A = np.empty((0,))
     if b is None:
-        b = []
+        b = np.empty((0,))
     if G is None:
-        G = []
+        G = np.empty((0,))
     if h is None:
-        h = []
-        no_lower_bound = []
+        h = np.empty((0,))
+        no_lower_bound = np.empty((0,))
     else:  # h is not None
         no_lower_bound = np.full(h.shape, -np.infty)
     results = proxsuite.proxqp.dense.solve(
