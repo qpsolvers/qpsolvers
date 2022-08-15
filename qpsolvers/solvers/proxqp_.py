@@ -48,6 +48,7 @@ def proxqp_solve_qp(
     ub: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
+    backend: Optional[str] = None,
     **kwargs,
 ) -> Optional[np.ndarray]:
     """
@@ -86,6 +87,9 @@ def proxqp_solve_qp(
         Upper bound constraint vector.
     initvals :
         Warm-start guess vector.
+    backend :
+        ProxQP backend to use in ``[None, "dense", "sparse"]``. If ``None``
+        (default), the backend is selected based on the type of ``P``.
     verbose :
         Set to `True` to print out extra information.
 
@@ -111,7 +115,18 @@ def proxqp_solve_qp(
     C_prox = [] if G is None else G
     u_prox = [] if h is None else h
     l_prox = [] if h is None else np.full(h.shape, -np.infty)
-    results = proxsuite.proxqp.dense.solve(
+    if backend is None:
+        if isinstance(P, np.ndarray):
+            solve_function = proxsuite.proxqp.dense.solve
+        else:  # isinstance(P, spa.csc_matrix):
+            solve_function = proxsuite.proxqp.sparse.solve
+    elif backend == "dense":
+        solve_function = proxsuite.proxqp.dense.solve
+    elif backend == "sparse":
+        solve_function = proxsuite.proxqp.sparse.solve
+    else:  # invalid argument
+        raise ValueError(f'Unknown ProxQP backend "{backend}')
+    result = solve_function(
         P,
         q,
         A_prox,
@@ -122,8 +137,8 @@ def proxqp_solve_qp(
         verbose=verbose,
         **kwargs,
     )
-    found_solution = False  # TODO(scaron): this is a placeholder
+    found_solution = True  # TODO(scaron): this is a placeholder
     if not found_solution:
         # needs https://github.com/Simple-Robotics/proxsuite/issues/7
         return None
-    return results.x
+    return result.x
