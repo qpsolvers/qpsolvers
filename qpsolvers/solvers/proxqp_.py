@@ -119,5 +119,6 @@ def proxqp_solve_qp(
         u_prox,
         l_prox,
         verbose=verbose,
+        **kwargs,
     )
     return results.x
