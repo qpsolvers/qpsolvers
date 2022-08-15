@@ -82,6 +82,7 @@ This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``.
 | [Gurobi](https://www.gurobi.com/) | ``gurobi`` | Sparse | Commercial | ✖️ |
 | [MOSEK](https://mosek.com/) | ``mosek`` | Sparse | Commercial | ✔️ |
 | [OSQP](https://github.com/oxfordcontrol/osqp) | ``osqp`` | Sparse | Apache-2.0 | ✔️ |
+| [ProxQP](https://github.com/Simple-Robotics/proxsuite) | ``proxqp`` | Dense & Sparse | BSD-2-Clause | ✔️ |
 | [qpOASES](https://github.com/coin-or/qpOASES) | ``qpoases`` | Dense | LGPL-2.1 | ➖ |
 | [qpSWIFT](https://github.com/qpSWIFT/qpSWIFT) | ``qpswift`` | Sparse | GPL-3.0 | ✖️ |
 | [quadprog](https://pypi.python.org/pypi/quadprog/) | ``quadprog`` | Dense | GPL-2.0 | ✖️ |
