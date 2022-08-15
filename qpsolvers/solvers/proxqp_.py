@@ -97,8 +97,9 @@ def proxqp_solve_qp(
     Notes
     -----
     All other keyword arguments are forwarded as options to ProxQP. For
-    instance, you can call ``proxqp_solve_qp(P, q, G, h, TODO(scaron): ...)``.
-    See the solver documentation for details.
+    instance, you can call ``proxqp_solve_qp(P, q, G, h, eps_abs=1e-6)``. See
+    the `solver documentation <https://simple-robotics.github.io/proxsuite/>`__
+    for details.
     """
     if initvals is not None:
         print("ProxQP: note that warm-start values ignored by wrapper")
