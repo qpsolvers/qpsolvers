@@ -25,6 +25,7 @@ from warnings import warn
 
 import numpy as np
 from numpy.linalg import norm
+from scipy.sparse.linalg import lsqr
 from scipy import sparse
 from scs import solve
 
@@ -157,7 +158,7 @@ def scs_solve_qp(
         data["b"] = h
         cone["l"] = h.shape[0]  # positive cone
     else:  # no constraint
-        x = sparse.linalg.lsqr(P, -q)[0]
+        x = lsqr(P, -q)[0]
         if norm(P @ x + q) > 1e-9:
             raise ValueError(
                 "problem is unbounded below, "
