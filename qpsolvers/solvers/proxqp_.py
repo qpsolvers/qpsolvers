@@ -121,4 +121,8 @@ def proxqp_solve_qp(
         verbose=verbose,
         **kwargs,
     )
+    found_solution = False  # TODO(scaron): this is a placeholder
+    if not found_solution:
+        # needs https://github.com/Simple-Robotics/proxsuite/issues/7
+        return None
     return results.x
