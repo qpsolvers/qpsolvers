@@ -20,9 +20,10 @@
 
 """Import available QP solvers."""
 
-from typing import Any, Callable, Dict, Optional
+from typing import Any, Callable, Dict, Optional, Union
 
 from numpy import ndarray
+from scipy.sparse import csc_matrix
 
 from .typing import CvxoptReadyMatrix, DenseOrCSCMatrix
 
@@ -216,6 +217,37 @@ try:
     solve_function["osqp"] = osqp_solve_qp
     available_solvers.append("osqp")
     sparse_solvers.append("osqp")
+except ImportError:
+    pass
+
+
+# ProxQP
+# =======
+
+proxqp_solve_qp: Optional[
+    Callable[
+        [
+            Union[ndarray, csc_matrix],
+            Union[ndarray, csc_matrix],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            bool,
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
+try:
+    from .proxqp_ import proxqp_solve_qp
+
+    solve_function["proxqp"] = proxqp_solve_qp
+    available_solvers.append("proxqp")
+    dense_solvers.append("proxqp")
 except ImportError:
     pass
 

@@ -28,23 +28,24 @@ Quadratic Programming Solver for Robotics and beyond
 <https://hal.inria.fr/hal-03683733/file/Yet_another_QP_solver_for_robotics_and_beyond.pdf/>`__.
 """
 
-from typing import Optional
+from typing import Optional, Union
 
 import numpy as np
 import proxsuite
+import scipy.sparse as spa
 
 from .conversions import linear_from_box_inequalities
 
 
-def proxsuite_solve_qp(
-    P: np.ndarray,
-    q: np.ndarray,
-    G: Optional[np.ndarray] = None,
-    h: Optional[np.ndarray] = None,
-    A: Optional[np.ndarray] = None,
-    b: Optional[np.ndarray] = None,
-    lb: Optional[np.ndarray] = None,
-    ub: Optional[np.ndarray] = None,
+def proxqp_solve_qp(
+    P: Union[np.ndarray, spa.csc_matrix],
+    q: Union[np.ndarray, spa.csc_matrix],
+    G: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    h: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    A: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    b: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    lb: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    ub: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
     **kwargs,
@@ -68,22 +69,15 @@ def proxsuite_solve_qp(
     Parameters
     ----------
     P :
-        Symmetric quadratic-cost matrix. Together with :math:`A` and :math:`G`,
-        it should satisfy :math:`\\mathrm{rank}([P\\ A^T\\ G^T]) = n`, see the
-        rank assumptions below.
+        Positive semidefinite quadratic-cost matrix.
     q :
         Quadratic-cost vector.
     G :
-        Linear inequality constraint matrix. Together with :math:`P` and
-        :math:`A`, it should satisfy :math:`\\mathrm{rank}([P\\ A^T\\ G^T]) =
-        n`, see the rank assumptions below.
+        Linear inequality constraint matrix.
     h :
         Linear inequality constraint vector.
     A :
-        Linear equality constraint matrix. It needs to be full row rank, and
-        together with :math:`P` and :math:`G` satisfy
-        :math:`\\mathrm{rank}([P\\ A^T\\ G^T]) = n`. See the rank assumptions
-        below.
+        Linear equality constraint matrix.
     b :
         Linear equality constraint vector.
     lb :
