@@ -110,11 +110,13 @@ def proxqp_solve_qp(
     if lb is not None or ub is not None:
         # TODO(scaron): use native ProxQP bounds
         G, h = linear_from_box_inequalities(G, h, lb, ub)
-    A_prox = [] if A is None else A
-    b_prox = [] if b is None else b
-    C_prox = [] if G is None else G
-    u_prox = [] if h is None else h
-    l_prox = [] if h is None else np.full(h.shape, -np.infty)
+    # TODO(scaron): https://github.com/Simple-Robotics/proxsuite/issues/6
+    n = P.shape[1]
+    A_prox = np.zeros((0, n)) if A is None else A
+    b_prox = np.zeros(0) if b is None else b
+    C_prox = np.zeros((0, n)) if G is None else G
+    u_prox = np.zeros(0) if h is None else h
+    l_prox = np.zeros(0) if h is None else np.full(h.shape, -np.infty)
     if backend is None:
         if isinstance(P, np.ndarray):
             solve_function = proxsuite.proxqp.dense.solve
