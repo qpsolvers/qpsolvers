@@ -88,17 +88,11 @@ def solve_qp(
     initvals :
         Vector of initial :math:`x` values used to warm-start the solver.
     sym_proj :
-        Set to ``True`` when the :math:`P` matrix provided is not symmetric.
+        Set to ``True`` to project the cost matrix :math:`P` to its symmetric
+        part. Some solvers assume :math:`P` is symmetric and will return
+        unintended results if it is not the case.
     verbose :
         Set to ``True`` to print out extra information.
-
-    Note
-    ----
-    In quadratic programming, the matrix :math:`P` should be symmetric. Many
-    solvers (including CVXOPT, OSQP and quadprog) leverage this property and
-    may return unintended results when it is not the case. You can set
-    ``sym_proj=True`` to project :math:`P` on its symmetric part, at the cost
-    of some computation time.
 
     Returns
     -------
@@ -115,20 +109,25 @@ def solve_qp(
 
     ValueError
         If the problem is not correctly defined. For instance, if the solver
-        requires a definite matrix :math:`P` but the one provided is not.
-
-    Note
-    ----
-    We don't guarantee that a ``ValueError`` is raised if the provided problem
-    is non-convex, as some solvers don't check for this. Rather, if the problem
-    is non-convex and the solver fails because of that, then a ``ValueError``
-    will be raised.
+        requires a definite cost matrix but the provided matrix :math:`P` is
+        not.
 
     Notes
     -----
     Extra keyword arguments given to this function are forwarded to the
     underlying solver. For example, OSQP has a setting `eps_abs` which we can
     provide by ``solve_qp(P, q, G, h, solver='osqp', eps_abs=1e-4)``.
+
+    In quadratic programming, the matrix :math:`P` should be symmetric. Many
+    solvers (including CVXOPT, OSQP and quadprog) leverage this property and
+    may return unintended results when it is not the case. You can set
+    ``sym_proj=True`` to project :math:`P` on its symmetric part, at the cost
+    of some computation time.
+
+    We don't guarantee that a ``ValueError`` is raised if the provided problem
+    is non-convex, as some solvers don't check for this. Rather, if the problem
+    is non-convex and the solver fails because of that, then a ``ValueError``
+    will be raised.
     """
     if solver is None:
         raise NoSolverSelected(
