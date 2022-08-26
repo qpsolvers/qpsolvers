@@ -4,8 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Added
+
+- New solver: [ProxQP](https://github.com/Simple-Robotics/proxsuite)
+
+### Changed
+
+- Clean up unused dependencies in GitHub workflow
+- Non-default solver parameters in unit tests to test their precision
+
 ### Fixed
 
+- Configuration of `tox-gh-actions` for Python 3.7
+- Enforce `USING_COVERAGE` in GitHub workflow configuration
 - Remove redundant solver loop from ``test_all_shapes``
 
 ## [2.2.0] - 2022/08/15
