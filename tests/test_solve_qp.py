@@ -32,6 +32,7 @@ from scipy.sparse import csc_matrix
 
 from qpsolvers import (
     available_solvers,
+    dense_solvers,
     solve_qp,
     solve_safer_qp,
     sparse_solvers,
@@ -46,6 +47,17 @@ behavior_on_unbounded = {
     "return_crazy_solution": ["qpoases"],
     "return_none": ["cvxpy", "osqp"],
 }
+
+
+def solve_qp_with_test_params(*args, **kwargs):
+    """
+    Call ``solve_qp`` with additional solver parameters
+    """
+    params = {}
+    if kwargs["solver"] == "proxqp":
+        params["eps_abs"] = 1e-9
+    kwargs.update(params)
+    return solve_qp(*args, **kwargs)
 
 
 class TestSolveQP(unittest.TestCase):
@@ -126,7 +138,7 @@ class TestSolveQP(unittest.TestCase):
         """
         P, q, G, h, A, b = self.get_dense_problem()
         with self.assertRaises(NoSolverSelected):
-            solve_qp(P, q, G, h, A, b, solver=None)
+            solve_qp_with_test_params(P, q, G, h, A, b, solver=None)
 
     def test_solver_not_found(self):
         """
@@ -134,7 +146,7 @@ class TestSolveQP(unittest.TestCase):
         """
         P, q, G, h, A, b = self.get_dense_problem()
         with self.assertRaises(SolverNotFound):
-            solve_qp(P, q, G, h, A, b, solver="ideal")
+            solve_qp_with_test_params(P, q, G, h, A, b, solver="ideal")
 
     @staticmethod
     def get_test(solver):
@@ -154,8 +166,10 @@ class TestSolveQP(unittest.TestCase):
 
         def test(self):
             P, q, G, h, A, b = self.get_dense_problem()
-            x = solve_qp(P, q, G, h, A, b, solver=solver)
-            x_sp = solve_qp(P, q, G, h, A, b, solver=solver, sym_proj=True)
+            x = solve_qp_with_test_params(P, q, G, h, A, b, solver=solver)
+            x_sp = solve_qp_with_test_params(
+                P, q, G, h, A, b, solver=solver, sym_proj=True
+            )
             self.assertIsNotNone(x)
             self.assertIsNotNone(x_sp)
             known_solution = array([0.30769231, -0.69230769, 1.38461538])
@@ -269,12 +283,14 @@ class TestSolveQP(unittest.TestCase):
                     k: v.shape if v is not None else "None"
                     for k, v in test_case.items()
                 }
-                quadprog_solution = solve_qp(solver="quadprog", **test_case)
+                quadprog_solution = solve_qp_with_test_params(
+                    solver="quadprog", **test_case
+                )
                 self.assertIsNotNone(
                     quadprog_solution,
                     f"Baseline failed on parameters: {test_comp}",
                 )
-                solver_solution = solve_qp(solver=solver, **test_case)
+                solver_solution = solve_qp_with_test_params(solver=solver, **test_case)
                 self.assertLess(
                     norm(solver_solution - quadprog_solution),
                     2e-4,
@@ -303,7 +319,9 @@ class TestSolveQP(unittest.TestCase):
             P, q, G, h, A, b = self.get_dense_problem()
             lb = array([-1.0, -2.0, -0.5])
             ub = array([1.0, -0.2, 1.0])
-            x = solve_qp(P, q, G, h, A, b, lb, ub, solver=solver)
+            x = solve_qp_with_test_params(
+                P, q, G, h, A, b, lb, ub, solver=solver
+            )
             self.assertIsNotNone(x)
             known_solution = array([0.41463415, -0.41463415, 1.0])
             sol_tolerance = 1e-6 if solver in ["ecos", "scs"] else 1e-8
@@ -333,7 +351,7 @@ class TestSolveQP(unittest.TestCase):
 
         def test(self):
             P, q, G, h, A, b = self.get_dense_problem()
-            x = solve_qp(P, q, solver=solver)
+            x = solve_qp_with_test_params(P, q, solver=solver)
             self.assertIsNotNone(x)
             known_solution = array([-0.64705882, -1.17647059, -1.82352941])
             sol_tolerance = 1e-3 if solver == "ecos" else 1e-6
@@ -360,7 +378,7 @@ class TestSolveQP(unittest.TestCase):
 
         def test(self):
             P, q, G, h, A, b = self.get_dense_problem()
-            x = solve_qp(P, q, G, h, solver=solver)
+            x = solve_qp_with_test_params(P, q, G, h, solver=solver)
             self.assertIsNotNone(x)
             known_solution = array([-0.49025721, -1.57755261, -0.66484801])
             sol_tolerance = 1e-3 if solver == "ecos" else 1e-6
@@ -389,7 +407,7 @@ class TestSolveQP(unittest.TestCase):
 
         def test(self):
             P, q, G, h, A, b = self.get_dense_problem()
-            x = solve_qp(P, q, A=A, b=b, solver=solver)
+            x = solve_qp_with_test_params(P, q, A=A, b=b, solver=solver)
             self.assertIsNotNone(x)
             known_solution = array([0.28026906, -1.55156951, 2.27130045])
             sol_tolerance = 1e-5 if solver in ["ecos", "scs"] else 1e-8
@@ -418,7 +436,7 @@ class TestSolveQP(unittest.TestCase):
         def test(self):
             P, q, G, h, A, b = self.get_dense_problem()
             G, h = G[1], h[1].reshape((1,))
-            x = solve_qp(P, q, G, h, A, b, solver=solver)
+            x = solve_qp_with_test_params(P, q, G, h, A, b, solver=solver)
             self.assertIsNotNone(x)
             known_solution = array([0.30769231, -0.69230769, 1.38461538])
             sol_tolerance = (
@@ -453,14 +471,20 @@ class TestSolveQP(unittest.TestCase):
 
         def test(self):
             P, q, G, h, _, _ = self.get_dense_problem()
-            if solver in sparse_solvers:
+            if solver not in dense_solvers:
                 with self.assertRaises(NotImplementedError):
                     solve_safer_qp(P, q, G, h, sr=1e-4, solver=solver)
                 return
             x = solve_safer_qp(P, q, G, h, sr=1e-4, solver=solver)
             self.assertIsNotNone(x)
             known_solution = array([-0.49021915, -1.57749935, -0.66477954])
-            sol_tolerance = 1e-4 if solver in ["ecos", "scs"] else 1e-6
+            sol_tolerance = (
+                2e-3
+                if solver == "proxqp"  # test params not applied
+                else 1e-4
+                if solver in ["ecos", "scs"]
+                else 1e-6
+            )
             ineq_tolerance = 1e-7 if solver == "scs" else 1e-10
             self.assertLess(norm(x - known_solution), sol_tolerance)
             self.assertLess(max(dot(G, x) - h), ineq_tolerance)
@@ -486,7 +510,7 @@ class TestSolveQP(unittest.TestCase):
 
         def test(self):
             P, q, G, h = self.get_sparse_problem()
-            x = solve_qp(P, q, G, h, solver=solver)
+            x = solve_qp_with_test_params(P, q, G, h, solver=solver)
             self.assertIsNotNone(x)
             known_solution = array([2.0] * 149 + [3.0])
             sol_tolerance = 1e-3 if solver == "gurobi" else 1e-7
@@ -517,7 +541,9 @@ class TestSolveQP(unittest.TestCase):
             P, q, G, h = self.get_sparse_problem()
             lb = +2.2 * ones(q.shape)
             ub = +2.4 * ones(q.shape)
-            x = solve_qp(P, q, G, h, lb=lb, ub=ub, solver=solver)
+            x = solve_qp_with_test_params(
+                P, q, G, h, lb=lb, ub=ub, solver=solver
+            )
             self.assertIsNotNone(x)
             known_solution = array([2.2] * 149 + [2.4])
             sol_tolerance = (
@@ -554,7 +580,9 @@ class TestSolveQP(unittest.TestCase):
             P, q, G, h = self.get_sparse_problem()
             lb = +0.5 * ones(q.shape)
             ub = +1.5 * ones(q.shape)
-            x = solve_qp(P, q, G, h, lb=lb, ub=ub, solver=solver)
+            x = solve_qp_with_test_params(
+                P, q, G, h, lb=lb, ub=ub, solver=solver
+            )
             self.assertIsNone(x)
 
         return test
@@ -579,7 +607,7 @@ class TestSolveQP(unittest.TestCase):
             P, q, G, h, A, b = self.get_dense_problem()
             known_solution = array([0.30769231, -0.69230769, 1.38461538])
             initvals = known_solution + 0.1 * random.random(3)
-            x = solve_qp(
+            x = solve_qp_with_test_params(
                 P,
                 q,
                 G,
@@ -629,7 +657,7 @@ class TestSolveQP(unittest.TestCase):
             q = array([-1.0, -2, 0, 3e-4])
             # q is in the nullspace of P, so the problem is unbounded below
             with self.assertRaises(ValueError):
-                solve_qp(P, q, solver=solver)
+                solve_qp_with_test_params(P, q, solver=solver)
 
         return test
 
