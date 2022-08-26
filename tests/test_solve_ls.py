@@ -19,7 +19,7 @@
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
 """
-Tests for the main `solve_qp` function.
+Tests for the `solve_lp` function.
 """
 
 import unittest

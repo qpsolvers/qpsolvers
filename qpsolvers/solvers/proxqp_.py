@@ -110,33 +110,33 @@ def proxqp_solve_qp(
 
        * - Name
          - Effect
-       * - `x`
+       * - ``x``
          - Warm start value for the primal variable.
-       * - `y`
+       * - ``y``
          - Warm start value for the dual Lagrange multiplier for equality
            constraints.
-       * - `z`
+       * - ``z``
          - Warm start value for the dual Lagrange multiplier for inequality
            constraints.
-       * - `eps_abs`
+       * - ``eps_abs``
          - Asbolute stopping criterion of the solver (default: 1e-3, note that
            this is a laxer default than other solvers).
-       * - `eps_rel`
+       * - ``eps_rel``
          - Relative stopping criterion of the solver.
-       * - `mu_eq`
+       * - ``mu_eq``
          - Proximal step size wrt equality constraints multiplier.
-       * - `mu_in`
+       * - ``mu_in``
          - Proximal step size wrt inequality constraints multiplier.
-       * - `rho`
+       * - ``rho``
          - Proximal step size wrt primal variable.
-       * - `compute_preconditioner`
+       * - ``compute_preconditioner``
          - If ``True`` (default), the preconditioner will be derived.
-       * - `compute_timings`
+       * - ``compute_timings``
          - If ``True`` (default), timings will be computed by the solver (setup
            time, solving time, and run time = setup time + solving time).
-       * - `max_iter`
+       * - ``max_iter``
          - Maximal number of authorized outer iterations.
-       * - `initial_guess`
+       * - ``initial_guess``
          - Sets the initial guess option for initilizing x, y and z.
 
     This list is not exhaustive. Check out the `solver documentation
