@@ -101,9 +101,46 @@ def proxqp_solve_qp(
     Notes
     -----
     All other keyword arguments are forwarded as options to ProxQP. For
-    instance, you can call ``proxqp_solve_qp(P, q, G, h, eps_abs=1e-6)``. See
-    the `solver documentation <https://simple-robotics.github.io/proxsuite/>`__
-    for details.
+    instance, you can call ``proxqp_solve_qp(P, q, G, h, eps_abs=1e-6)``.
+    For a quick overview, the solver accepts the following settings:
+
+    .. list-table::
+       :widths: 30 70
+       :header-rows: 1
+
+       * - Name
+         - Effect
+       * - `x`
+         - Warm start value for the primal variable.
+       * - `y`
+         - Warm start value for the dual Lagrange multiplier for equality
+           constraints.
+       * - `z`
+         - Warm start value for the dual Lagrange multiplier for inequality
+           constraints.
+       * - `eps_abs`
+         - Asbolute stopping criterion of the solver (default: 1e-3, note that
+           this is a laxer default than other solvers).
+       * - `eps_rel`
+         - Relative stopping criterion of the solver.
+       * - `mu_eq`
+         - Proximal step size wrt equality constraints multiplier.
+       * - `mu_in`
+         - Proximal step size wrt inequality constraints multiplier.
+       * - `rho`
+         - Proximal step size wrt primal variable.
+       * - `compute_preconditioner`
+         - If ``True`` (default), the preconditioner will be derived.
+       * - `compute_timings`
+         - If ``True`` (default), timings will be computed by the solver (setup
+           time, solving time, and run time = setup time + solving time).
+       * - `max_iter`
+         - Maximal number of authorized outer iterations.
+       * - `initial_guess`
+         - Sets the initial guess option for initilizing x, y and z.
+
+    This list is not exhaustive. Check out the `solver documentation
+    <https://simple-robotics.github.io/proxsuite/>`__ for details.
     """
     if initvals is not None:
         print("ProxQP: note that warm-start values ignored by wrapper")

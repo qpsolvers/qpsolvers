@@ -130,7 +130,11 @@ def qpswift_solve_qp(
 
     Notes
     -----
-    The option dictionary accepts the following settings:
+    All other keyword arguments are forwarded as options to the qpSWIFT solver.
+    For instance, you can call ``qpswift_solve_qp(P, q, G, h, ABSTOL=1e-5)``.
+    See the solver documentation for details.
+
+    For a quick overview, the solver accepts the following settings:
 
     .. list-table::
        :widths: 30 70
@@ -155,12 +159,6 @@ def qpswift_solve_qp(
     little more care than the other solvers. For instance, make sure you don't
     have zero rows in your input matrices, as it can `make the solver
     numerically unstable <https://github.com/qpSWIFT/qpSWIFT/issues/3>`_.
-
-    Notes
-    -----
-    All other keyword arguments are forwarded as options to the qpSWIFT solver.
-    For instance, you can call ``qpswift_solve_qp(P, q, G, h, ABSTOL=1e-5)``.
-    See the solver documentation for details.
     """
     if initvals is not None:
         print("qpSWIFT: note that warm-start values ignored by wrapper")
