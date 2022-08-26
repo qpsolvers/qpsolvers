@@ -145,10 +145,6 @@ def proxqp_solve_qp(
     if initvals is not None:
         # TODO(scaron): forward warm-start values
         print("ProxQP: note that warm-start values ignored by wrapper")
-    if lb is not None or ub is not None:
-        # TODO(scaron): use native ProxQP bounds
-        G, h = linear_from_box_inequalities(G, h, lb, ub)
-    l_prox = np.full(h.shape, -np.infty) if h is not None else None
     if backend is None:
         if isinstance(P, np.ndarray):
             solve_function = proxsuite.proxqp.dense.solve
@@ -160,6 +156,10 @@ def proxqp_solve_qp(
         solve_function = proxsuite.proxqp.sparse.solve
     else:  # invalid argument
         raise ValueError(f'Unknown ProxQP backend "{backend}')
+    if lb is not None or ub is not None:
+        # TODO(scaron): use native ProxQP bounds
+        G, h = linear_from_box_inequalities(G, h, lb, ub)
+    l_prox = np.full(h.shape, -np.infty) if h is not None else None
     result = solve_function(
         P,
         q,
