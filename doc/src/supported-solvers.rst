@@ -33,6 +33,12 @@ OSQP
 .. automodule:: qpsolvers.solvers.osqp_
     :members:
 
+ProxQP
+======
+
+.. automodule:: qpsolvers.solvers.proxqp_
+    :members:
+
 qpOASES
 =======
 
