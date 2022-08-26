@@ -143,6 +143,7 @@ def proxqp_solve_qp(
     <https://simple-robotics.github.io/proxsuite/>`__ for details.
     """
     if initvals is not None:
+        # TODO(scaron): forward warm-start values
         print("ProxQP: note that warm-start values ignored by wrapper")
     if lb is not None or ub is not None:
         # TODO(scaron): use native ProxQP bounds
