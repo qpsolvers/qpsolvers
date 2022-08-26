@@ -33,7 +33,7 @@ jobs:
 
             - name: "Run tox targets for ${{ matrix.python-version }}"
               run: |
-                  tox -e py
+                  tox
 
             - name: "Coveralls"
               env:
