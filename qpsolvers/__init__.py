@@ -39,7 +39,7 @@ from .solvers import (
 )
 from .utils import print_matrix_vector
 
-__version__ = "2.3.0-rc0"
+__version__ = "2.3.0"
 
 __all__ = [
     "__version__",
