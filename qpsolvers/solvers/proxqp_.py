@@ -220,8 +220,11 @@ def proxqp_solve_qp(
     <https://simple-robotics.github.io/proxsuite/>`__ for details.
     """
     if initvals is not None:
-        # TODO(scaron): forward warm-start values
-        print("ProxQP: note that warm-start values ignored by wrapper")
+        if "x" in kwargs:
+            raise ValueError(
+                "Warm-start value specified in both `initvals` and `x` kwargs"
+            )
+        kwargs["x"] = initvals
     n: int = q.shape[0]
     use_csc: bool = isinstance(P, spa.csc_matrix)
     C_prox, u_prox, l_prox = proxqp_combine_inequalities(
