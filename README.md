@@ -75,8 +75,6 @@ This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``.
 
 ## Solvers
 
-The list of supported solvers currently includes:
-
 | Solver | Keyword | Type | License | Warm-start |
 | ------ | ------- | ---- | ------- |------------|
 | [CVXOPT](http://cvxopt.org/) | ``cvxopt`` | Dense | GPL-3.0 | ✔️ |
@@ -94,7 +92,7 @@ The list of supported solvers currently includes:
 - *Can I print the list of solvers available on my machine?*
   - Absolutely: ``print(qpsolvers.available_solvers)``
 - *Is it possible to solve a least squares rather than a quadratic program?*
-  - Yes, `qpsolvers` also provides a [`solve_ls`](https://scaron.info/doc/qpsolvers/least-squares.html#qpsolvers.solve_ls) function.
+  - Yes, there is also a [`solve_ls`](https://scaron.info/doc/qpsolvers/least-squares.html#qpsolvers.solve_ls) function.
 - *I have a squared norm in my cost function, how can I apply a QP solver to my problem?*
   - You can [cast squared norms to QP matrices](https://scaron.info/blog/conversion-from-least-squares-to-quadratic-programming.html) and feed the result to [`solve_qp`](https://scaron.info/doc/qpsolvers/quadratic-programming.html#qpsolvers.solve_qp).
 - *I have a non-convex quadratic program. Is there a solver I can use?*
