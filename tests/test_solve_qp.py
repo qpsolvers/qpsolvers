@@ -201,8 +201,8 @@ class TestSolveQP(unittest.TestCase):
             cases = [
                 {"P": P, "q": q},
                 {"P": P, "q": q, "G": G, "h": h},
-                {"P": P, "q": q, "A": A, "b": b},
                 {"P": P, "q": q, "G": G[0], "h": h0},
+                {"P": P, "q": q, "A": A, "b": b},
                 {"P": P, "q": q, "A": A[0], "b": b0},
                 {"P": P, "q": q, "G": G, "h": h, "A": A, "b": b},
                 {"P": P, "q": q, "G": G[0], "h": h0, "A": A, "b": b},
@@ -211,39 +211,75 @@ class TestSolveQP(unittest.TestCase):
                 {
                     "P": P,
                     "q": q,
-                    "G": G[0],
-                    "h": h0,
-                    "A": A[0],
-                    "b": b0,
+                    "G": G,
+                    "h": h,
+                    "A": A,
+                    "b": b,
                     "lb": lb,
                     "ub": None,
                 },
                 {
                     "P": P,
                     "q": q,
-                    "G": G[0],
-                    "h": h0,
-                    "A": A[0],
-                    "b": b0,
+                    "G": G,
+                    "h": h,
+                    "A": A,
+                    "b": b,
                     "lb": None,
                     "ub": ub,
                 },
                 {
                     "P": P,
                     "q": q,
-                    "G": G[0],
-                    "h": h0,
-                    "A": A[0],
-                    "b": b0,
+                    "G": G,
+                    "h": h,
+                    "A": A,
+                    "b": b,
+                    "lb": lb,
+                    "ub": ub,
+                },
+                {
+                    "P": P,
+                    "q": q,
+                    "G": G,
+                    "h": h,
+                    "lb": lb,
+                    "ub": None,
+                },
+                {
+                    "P": P,
+                    "q": q,
+                    "G": G,
+                    "h": h,
+                    "lb": None,
+                    "ub": ub,
+                },
+                {
+                    "P": P,
+                    "q": q,
+                    "G": G,
+                    "h": h,
                     "lb": lb,
                     "ub": ub,
                 },
             ]
 
             for (i, test_case) in enumerate(cases):
+                test_comp = {
+                    k: v.shape if v is not None else "None"
+                    for k, v in test_case.items()
+                }
                 quadprog_solution = solve_qp(solver="quadprog", **test_case)
-                x = solve_qp(solver=solver, **test_case)
-                self.assertLess(norm(x - quadprog_solution), 2e-4)
+                self.assertIsNotNone(
+                    quadprog_solution,
+                    f"Baseline failed on parameters: {test_comp}",
+                )
+                solver_solution = solve_qp(solver=solver, **test_case)
+                self.assertLess(
+                    norm(solver_solution - quadprog_solution),
+                    2e-4,
+                    f"Solver failed on parameters: {test_comp}",
+                )
 
         return test
 
