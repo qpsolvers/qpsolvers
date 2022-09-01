@@ -107,12 +107,11 @@ def proxqp_select_backend(backend: Optional[str], use_csc: bool):
             if use_csc
             else proxsuite.proxqp.dense.solve
         )
-    elif backend == "dense":
+    if backend == "dense":
         return proxsuite.proxqp.dense.solve
-    elif backend == "sparse":
+    if backend == "sparse":
         return proxsuite.proxqp.sparse.solve
-    else:  # invalid argument
-        raise ValueError(f'Unknown ProxQP backend "{backend}')
+    raise ValueError(f'Unknown ProxQP backend "{backend}')
 
 
 def proxqp_solve_qp(
