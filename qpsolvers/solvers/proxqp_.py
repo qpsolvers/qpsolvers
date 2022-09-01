@@ -35,6 +35,86 @@ import proxsuite
 import scipy.sparse as spa
 
 
+def proxqp_combine_inequalities(G, h, lb, ub, n: int, use_csc: bool):
+    """
+    Combine linear and box inequalities for ProxQP.
+
+    Parameters
+    ----------
+    G :
+        Linear inequality constraint matrix.
+    h :
+        Linear inequality constraint vector.
+    lb :
+        Lower bound constraint vector.
+    ub :
+        Upper bound constraint vector.
+    n :
+        Number of optimization variables.
+    use_csc :
+        If ``True``, use sparse rather than dense matrices.
+
+    Returns
+    -------
+    :
+        Linear inequality matrices :math:`C`, :math:`l` and :math:`u`.
+    """
+    if lb is None and ub is None:
+        C_prox = G
+        u_prox = h
+        l_prox = np.full(h.shape, -np.infty) if h is not None else None
+    elif G is None:
+        # lb is not None or ub is not None:
+        C_prox = spa.eye(n, format="csc") if use_csc else np.eye(n)
+        u_prox = ub
+        l_prox = lb
+    elif h is not None:
+        # G is not None and h is not None and not (lb is None and ub is None)
+        C_prox = (
+            spa.vstack((G, spa.eye(n)), format="csc")
+            if use_csc
+            else np.vstack((G, np.eye(n)))
+        )
+        ub = ub if ub is not None else np.full(h.shape, +np.infty)
+        lb = lb if lb is not None else np.full(h.shape, -np.infty)
+        l_prox = np.hstack((np.full(h.shape, -np.infty), lb))
+        u_prox = np.hstack((h, ub))
+    else:  # G is not None and h is None
+        raise ValueError("Inconsistent inequalities: G is set but h is None")
+    return C_prox, u_prox, l_prox
+
+
+def proxqp_select_backend(backend: Optional[str], use_csc: bool):
+    """
+    Select backend function for ProxQP.
+
+    Parameters
+    ----------
+    backend :
+        ProxQP backend to use in ``[None, "dense", "sparse"]``. If ``None``
+        (default), the backend is selected based on the type of ``P``.
+    use_csc :
+        If ``True``, use sparse matrices if the backend is not specified.
+
+    Returns
+    -------
+    :
+        Backend solve function.
+    """
+    if backend is None:
+        return (
+            proxsuite.proxqp.sparse.solve
+            if use_csc
+            else proxsuite.proxqp.dense.solve
+        )
+    elif backend == "dense":
+        return proxsuite.proxqp.dense.solve
+    elif backend == "sparse":
+        return proxsuite.proxqp.sparse.solve
+    else:  # invalid argument
+        raise ValueError(f'Unknown ProxQP backend "{backend}')
+
+
 def proxqp_solve_qp(
     P: Union[np.ndarray, spa.csc_matrix],
     q: Union[np.ndarray, spa.csc_matrix],
@@ -143,48 +223,12 @@ def proxqp_solve_qp(
     if initvals is not None:
         # TODO(scaron): forward warm-start values
         print("ProxQP: note that warm-start values ignored by wrapper")
-    use_csc = isinstance(P, spa.csc_matrix)
-
-    # Combine linear inequalities
-    if lb is None and ub is None:
-        C_prox = G
-        u_prox = h
-        l_prox = np.full(h.shape, -np.infty) if h is not None else None
-    elif G is None:
-        # lb is not None or ub is not None:
-        n = q.shape[0]
-        C_prox = spa.eye(n, format="csc") if use_csc else np.eye(n)
-        u_prox = ub
-        l_prox = lb
-    elif h is not None:
-        # G is not None and h is not None and not (lb is None and ub is None)
-        n = q.shape[0]
-        C_prox = (
-            spa.vstack((G, spa.eye(n)), format="csc")
-            if use_csc
-            else np.vstack((G, np.eye(n)))
-        )
-        ub = ub if ub is not None else np.full(h.shape, +np.infty)
-        lb = lb if lb is not None else np.full(h.shape, -np.infty)
-        l_prox = np.hstack((np.full(h.shape, -np.infty), lb))
-        u_prox = np.hstack((h, ub))
-    else:  # G is not None and h is None
-        raise ValueError("Inconsistent inequalities: G is set but h is None")
-
-    # Select backend function
-    if backend is None:
-        solve_function = (
-            proxsuite.proxqp.sparse.solve
-            if use_csc
-            else proxsuite.proxqp.dense.solve
-        )
-    elif backend == "dense":
-        solve_function = proxsuite.proxqp.dense.solve
-    elif backend == "sparse":
-        solve_function = proxsuite.proxqp.sparse.solve
-    else:  # invalid argument
-        raise ValueError(f'Unknown ProxQP backend "{backend}')
-
+    n: int = q.shape[0]
+    use_csc: bool = isinstance(P, spa.csc_matrix)
+    C_prox, u_prox, l_prox = proxqp_combine_inequalities(
+        G, h, lb, ub, n, use_csc
+    )
+    solve_function = proxqp_select_backend(backend, use_csc)
     result = solve_function(
         P,
         q,
