@@ -34,8 +34,6 @@ import numpy as np
 import proxsuite
 import scipy.sparse as spa
 
-from .conversions import linear_from_box_inequalities
-
 
 def proxqp_solve_qp(
     P: Union[np.ndarray, spa.csc_matrix],
@@ -145,28 +143,55 @@ def proxqp_solve_qp(
     if initvals is not None:
         # TODO(scaron): forward warm-start values
         print("ProxQP: note that warm-start values ignored by wrapper")
+    use_csc = isinstance(P, spa.csc_matrix)
+
+    # Combine linear inequalities
+    if lb is None and ub is None:
+        C_prox = G
+        u_prox = h
+        l_prox = np.full(h.shape, -np.infty) if h is not None else None
+    elif G is None:
+        # lb is not None or ub is not None:
+        n = q.shape[0]
+        C_prox = spa.eye(n, format="csc") if use_csc else np.eye(n)
+        u_prox = ub
+        l_prox = lb
+    elif h is not None:
+        # G is not None and h is not None and not (lb is None and ub is None)
+        n = q.shape[0]
+        C_prox = (
+            spa.vstack((G, spa.eye(n)), format="csc")
+            if use_csc
+            else np.vstack((G, np.eye(n)))
+        )
+        ub = ub if ub is not None else np.full(h.shape, +np.infty)
+        lb = lb if lb is not None else np.full(h.shape, -np.infty)
+        l_prox = np.hstack((np.full(h.shape, -np.infty), lb))
+        u_prox = np.hstack((h, ub))
+    else:  # G is not None and h is None
+        raise ValueError("Inconsistent inequalities: G is set but h is None")
+
+    # Select backend function
     if backend is None:
-        if isinstance(P, np.ndarray):
-            solve_function = proxsuite.proxqp.dense.solve
-        else:  # isinstance(P, spa.csc_matrix):
-            solve_function = proxsuite.proxqp.sparse.solve
+        solve_function = (
+            proxsuite.proxqp.sparse.solve
+            if use_csc
+            else proxsuite.proxqp.dense.solve
+        )
     elif backend == "dense":
         solve_function = proxsuite.proxqp.dense.solve
     elif backend == "sparse":
         solve_function = proxsuite.proxqp.sparse.solve
     else:  # invalid argument
         raise ValueError(f'Unknown ProxQP backend "{backend}')
-    if lb is not None or ub is not None:
-        # TODO(scaron): use native ProxQP bounds
-        G, h = linear_from_box_inequalities(G, h, lb, ub)
-    l_prox = np.full(h.shape, -np.infty) if h is not None else None
+
     result = solve_function(
         P,
         q,
         A,
         b,
-        G,
-        h,
+        C_prox,
+        u_prox,
         l_prox,
         verbose=verbose,
         **kwargs,
