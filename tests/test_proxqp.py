@@ -24,49 +24,67 @@ import numpy as np
 
 from qpsolvers import solve_qp
 
+try:
+    import proxsuite
 
-class TestproxQP(unittest.TestCase):
+    class TestproxQP(unittest.TestCase):
 
-    """
-    Test fixture specific to the ProxQP solver.
-    """
-
-    def get_dense_problem(self):
         """
-        Get problem as a sextuple of values to unpack.
+        Test fixture specific to the ProxQP solver.
+        """
 
-        Returns
-        -------
-        P :
-            Symmetric quadratic-cost matrix .
-        q :
-            Quadratic-cost vector.
-        G :
-            Linear inequality matrix.
-        h :
-            Linear inequality vector.
-        A :
-            Linear equality matrix.
-        b :
-            Linear equality vector.
-        """
-        M = np.array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
-        P = np.dot(M.T, M)  # this is a positive definite matrix
-        q = np.dot(np.array([3.0, 2.0, 3.0]), M).reshape((3,))
-        G = np.array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
-        h = np.array([3.0, 2.0, -2.0]).reshape((3,))
-        A = np.array([1.0, 1.0, 1.0])
-        b = np.array([1.0])
-        return P, q, G, h, A, b
+        def get_dense_problem(self):
+            """
+            Get problem as a sextuple of values to unpack.
 
-    def test_double_warm_start(self):
-        """
-        Raise an exception when two warm-start values are provided at the same
-        time.
-        """
-        P, q, G, h, A, b = self.get_dense_problem()
-        with self.assertRaises(ValueError):
-            solve_qp(P, q, G, h, A, b, solver="proxqp", initvals=q, x=q)
+            Returns
+            -------
+            P :
+                Symmetric quadratic-cost matrix .
+            q :
+                Quadratic-cost vector.
+            G :
+                Linear inequality matrix.
+            h :
+                Linear inequality vector.
+            A :
+                Linear equality matrix.
+            b :
+                Linear equality vector.
+            """
+            M = np.array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
+            P = np.dot(M.T, M)  # this is a positive definite matrix
+            q = np.dot(np.array([3.0, 2.0, 3.0]), M).reshape((3,))
+            G = np.array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
+            h = np.array([3.0, 2.0, -2.0]).reshape((3,))
+            A = np.array([1.0, 1.0, 1.0])
+            b = np.array([1.0])
+            return P, q, G, h, A, b
+
+        def test_double_warm_start(self):
+            """
+            Raise an exception when two warm-start values are provided at the
+            same time.
+            """
+            P, q, G, h, A, b = self.get_dense_problem()
+            with self.assertRaises(ValueError):
+                solve_qp(
+                    P,
+                    q,
+                    G,
+                    h,
+                    A,
+                    b,
+                    solver="proxqp",
+                    initvals=q,
+                    x=q,
+                    avoid_unused_import_warning=proxsuite,
+                )
+
+
+except ImportError:  # ProxSuite is not installed
+
+    pass
 
 
 if __name__ == "__main__":
