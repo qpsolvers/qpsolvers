@@ -25,24 +25,27 @@ but some users find it useful. (See 4b128db662cfedbe366b8387a59cd18e36c643a3
 and comments related to this commit on GitHub.)
 """
 
-from .qpsolvers import __version__
-from .qpsolvers import available_solvers
-from .qpsolvers import cvxopt_solve_qp
-from .qpsolvers import cvxpy_solve_qp
-from .qpsolvers import dense_solvers
-from .qpsolvers import ecos_solve_qp
-from .qpsolvers import gurobi_solve_qp
-from .qpsolvers import mosek_solve_qp
-from .qpsolvers import osqp_solve_qp
-from .qpsolvers import print_matrix_vector
-from .qpsolvers import qpoases_solve_qp
-from .qpsolvers import qpswift_solve_qp
-from .qpsolvers import quadprog_solve_qp
-from .qpsolvers import scs_solve_qp
-from .qpsolvers import solve_ls
-from .qpsolvers import solve_qp
-from .qpsolvers import solve_safer_qp
-from .qpsolvers import sparse_solvers
+from .qpsolvers import (
+    __version__,
+    available_solvers,
+    cvxopt_solve_qp,
+    cvxpy_solve_qp,
+    dense_solvers,
+    ecos_solve_qp,
+    gurobi_solve_qp,
+    mosek_solve_qp,
+    osqp_solve_qp,
+    print_matrix_vector,
+    proxqp_solve_qp,
+    qpoases_solve_qp,
+    qpswift_solve_qp,
+    quadprog_solve_qp,
+    scs_solve_qp,
+    solve_ls,
+    solve_qp,
+    solve_safer_qp,
+    sparse_solvers,
+)
 
 __all__ = [
     "__version__",
@@ -55,6 +58,7 @@ __all__ = [
     "mosek_solve_qp",
     "osqp_solve_qp",
     "print_matrix_vector",
+    "proxqp_solve_qp",
     "qpoases_solve_qp",
     "qpswift_solve_qp",
     "quadprog_solve_qp",
