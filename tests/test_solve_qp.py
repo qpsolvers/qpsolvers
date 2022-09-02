@@ -195,7 +195,7 @@ class TestSolveQP(unittest.TestCase):
             A = array([[1.0, 0.0, 0.0], [0.0, 0.4, 0.5]])
             b = array([-0.5, -1.2])
             b0 = array([b[0]])
-            lb = array([-1.0, -1.0, -1.0])
+            lb = array([-0.5, -2, -0.8])
             ub = array([+1.0, +1.0, +1.0])
 
             cases = [
