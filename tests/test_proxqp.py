@@ -65,7 +65,7 @@ try:
 
         def test_dense_backend(self):
             """
-            Make sure we try the dense backend.
+            Try the dense backend.
             """
             P, q, G, h, A, b = self.get_dense_problem()
             solve_qp(
@@ -81,7 +81,7 @@ try:
 
         def test_sparse_backend(self):
             """
-            Make sure we try the sparse backend.
+            Try the sparse backend.
             """
             P, q, G, h, A, b = self.get_dense_problem()
             solve_qp(
@@ -94,6 +94,23 @@ try:
                 solver="proxqp",
                 backend="sparse",
             )
+
+        def test_invalid_backend(self):
+            """
+            Exception raised when asking for an invalid backend.
+            """
+            P, q, G, h, A, b = self.get_dense_problem()
+            with self.assertRaises(ValueError):
+                solve_qp(
+                    P,
+                    q,
+                    G,
+                    h,
+                    A,
+                    b,
+                    solver="proxqp",
+                    backend="invalid",
+                )
 
         def test_double_warm_start(self):
             """
