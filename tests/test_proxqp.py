@@ -63,6 +63,38 @@ try:
             b = np.array([1.0])
             return P, q, G, h, A, b
 
+        def test_dense_backend(self):
+            """
+            Make sure we try the dense backend.
+            """
+            P, q, G, h, A, b = self.get_dense_problem()
+            solve_qp(
+                P,
+                q,
+                G,
+                h,
+                A,
+                b,
+                solver="proxqp",
+                backend="dense",
+            )
+
+        def test_sparse_backend(self):
+            """
+            Make sure we try the sparse backend.
+            """
+            P, q, G, h, A, b = self.get_dense_problem()
+            solve_qp(
+                P,
+                q,
+                G,
+                h,
+                A,
+                b,
+                solver="proxqp",
+                backend="sparse",
+            )
+
         def test_double_warm_start(self):
             """
             Raise an exception when two warm-start values are provided at the
