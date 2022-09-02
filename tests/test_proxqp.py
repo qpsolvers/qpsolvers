@@ -133,6 +133,12 @@ try:
                 )
 
         def test_invalid_inequalities(self):
+            """
+            Raise an exception when G is None but not h.
+
+            This won't happen when the function is called by `solve_qp`, but it
+            may happen when it is called directly.
+            """
             P, q, _, h, _, _ = self.get_dense_problem()
             with self.assertRaises(ValueError):
                 proxqp_solve_qp(P, q, G=None, h=h)
