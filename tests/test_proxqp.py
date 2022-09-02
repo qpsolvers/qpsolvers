@@ -27,6 +27,8 @@ from qpsolvers import solve_qp
 try:
     import proxsuite
 
+    from qpsolvers import proxqp_solve_qp
+
     class TestproxQP(unittest.TestCase):
 
         """
@@ -80,6 +82,11 @@ try:
                     x=q,
                     avoid_unused_import_warning=proxsuite,
                 )
+
+        def test_invalid_inequalities(self):
+            P, q, _, h, _, _ = self.get_dense_problem()
+            with self.assertRaises(ValueError):
+                proxqp_solve_qp(P, q, G=None, h=h)
 
 
 except ImportError:  # ProxSuite is not installed
