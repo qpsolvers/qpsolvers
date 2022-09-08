@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Added
+
+- Raise error when there is no available solver
+
 ## [2.3.0] - 2022/09/06
 
 ### Added
