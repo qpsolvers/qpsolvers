@@ -381,6 +381,13 @@ except ImportError:
     pass
 
 
+if not available_solvers:
+    raise ImportError(
+        "no QP solver found, you can install some by running:\n\n"
+        "\tpip install qpsolvers[starter_solvers]\n"
+    )
+
+
 __all__ = [
     "available_solvers",
     "cvxopt_solve_qp",
