@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 
 - Raise error when there is no available solver
 
+### Fixed
+
+- Correct documentation of R argument to ``solve_ls``
+
 ## [2.3.0] - 2022/09/06
 
 ### Added
