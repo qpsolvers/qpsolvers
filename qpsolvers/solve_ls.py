@@ -66,8 +66,9 @@ def solve_ls(
     Parameters
     ----------
     R :
-        Symmetric matrix of the cost function (most solvers require it to be
-        definite).
+        Matrix factor of the cost function (most solvers require :math:`R^T W
+        R` to be positive definite, which means :math:`R` should have full row
+        rank).
     s :
         Vector term of the cost function.
     G :
