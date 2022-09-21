@@ -1,12 +1,5 @@
 # QP Solvers for Python
 
-[**Installation**](https://github.com/stephane-caron/qpsolvers#installation)
-| [**Usage**](https://github.com/stephane-caron/qpsolvers#usage)
-| [**Example**](https://github.com/stephane-caron/qpsolvers#example)
-| [**Solvers**](https://github.com/stephane-caron/qpsolvers#solvers)
-| [**FAQ**](https://github.com/stephane-caron/qpsolvers#frequently-asked-questions)
-| [**Benchmark**](https://github.com/stephane-caron/qpsolvers#benchmark)
-
 [![Build](https://img.shields.io/github/workflow/status/stephane-caron/qpsolvers/CI)](https://github.com/stephane-caron/qpsolvers/actions)
 [![Coverage](https://coveralls.io/repos/github/stephane-caron/qpsolvers/badge.svg?branch=master)](https://coveralls.io/github/stephane-caron/qpsolvers?branch=master)
 [![Documentation](https://img.shields.io/badge/docs-online-brightgreen?logo=read-the-docs&style=flat)](https://scaron.info/doc/qpsolvers/)
