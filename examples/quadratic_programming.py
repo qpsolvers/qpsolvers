@@ -62,6 +62,7 @@ if __name__ == "__main__":
     print("")
     print_matrix_vector(A, "A", b, "b")
     print("")
-    print(f"Solution: x = {x}")
+    print(f"Solution:   x = {x}")
+    print("Should be: x* = [ 0.30769231 -0.69230769  1.38461538]")
     print(f"Solve time: {1e6 * (end_time - start_time):.0f} [us]")
     print(f"Solver: {solver}")
