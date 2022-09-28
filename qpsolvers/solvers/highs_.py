@@ -184,4 +184,4 @@ def highs_solve_qp(
     if model_status != highspy.HighsModelStatus.kOptimal:
         print(f"{info.ipm_iteration_count=}, {info.qp_iteration_count=}")
         return None
-    return solution
+    return np.array(solution.col_value)
