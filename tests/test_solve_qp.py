@@ -412,7 +412,13 @@ class TestSolveQP(unittest.TestCase):
             x = solve_qp_with_test_params(P, q, A=A, b=b, solver=solver)
             self.assertIsNotNone(x)
             known_solution = array([0.28026906, -1.55156951, 2.27130045])
-            sol_tolerance = 1e-5 if solver in ["ecos", "scs"] else 1e-8
+            sol_tolerance = (
+                1e-5
+                if solver in ["ecos", "scs"]
+                else 1e-6
+                if solver == "highs"
+                else 1e-8
+            )
             self.assertLess(norm(x - known_solution), sol_tolerance)
             self.assertTrue(allclose(dot(A, x), b))
 
@@ -515,7 +521,13 @@ class TestSolveQP(unittest.TestCase):
             x = solve_qp_with_test_params(P, q, G, h, solver=solver)
             self.assertIsNotNone(x)
             known_solution = array([2.0] * 149 + [3.0])
-            sol_tolerance = 1e-3 if solver == "gurobi" else 1e-7
+            sol_tolerance = (
+                1e-3
+                if solver == "gurobi"
+                else 1e-6
+                if solver == "highs"
+                else 1e-7
+            )
             ineq_tolerance = 1e-7
             self.assertLess(norm(x - known_solution), sol_tolerance)
             self.assertLess(max(G * x - h), ineq_tolerance)
