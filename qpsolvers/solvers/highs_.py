@@ -147,9 +147,9 @@ def highs_solve_qp(
 
     # Row inequalities:  L <= A * x <+ U
     lp.num_row_ = 0
-    row_list = []
-    row_lower = []
-    row_upper = []
+    row_list: list = []
+    row_lower: list = []
+    row_upper: list = []
     if G is not None:
         lp.num_row_ += G.shape[0]
         row_list.append(G)
