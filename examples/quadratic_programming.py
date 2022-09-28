@@ -38,6 +38,8 @@ h = np.array([3.0, 2.0, -2.0])
 A = np.array([1.0, 1.0, 1.0])
 b = np.array([1.0])
 
+x_sol = np.array([0.3076923111580727, -0.6923076888419274, 1.3846153776838548])
+
 if __name__ == "__main__":
     if not available_solvers:
         print(
@@ -62,7 +64,7 @@ if __name__ == "__main__":
     print("")
     print_matrix_vector(A, "A", b, "b")
     print("")
-    print(f"Solution:   x = {x}")
-    print("Should be: x* = [ 0.30769231 -0.69230769  1.38461538]")
+    print(f"Solution: x = {x}")
+    print(f"It should be close to x* = {x_sol}")
     print(f"Solve time: {1e6 * (end_time - start_time):.0f} [us]")
     print(f"Solver: {solver}")
