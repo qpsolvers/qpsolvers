@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- New solver: [HiGHS](https://github.com/ERGO-Code/HiGHS)
 - Raise error when there is no available solver
 
 ### Fixed
