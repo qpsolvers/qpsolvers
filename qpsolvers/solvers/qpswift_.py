@@ -161,7 +161,7 @@ def qpswift_solve_qp(
     numerically unstable <https://github.com/qpSWIFT/qpSWIFT/issues/3>`_.
     """
     if initvals is not None:
-        print("qpSWIFT: note that warm-start values ignored by wrapper")
+        print("qpSWIFT: warm-start values are ignored by wrapper")
     if lb is not None or ub is not None:
         G, h = linear_from_box_inequalities(G, h, lb, ub)
     result: dict = {}

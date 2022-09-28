@@ -290,7 +290,9 @@ class TestSolveQP(unittest.TestCase):
                     quadprog_solution,
                     f"Baseline failed on parameters: {test_comp}",
                 )
-                solver_solution = solve_qp_with_test_params(solver=solver, **test_case)
+                solver_solution = solve_qp_with_test_params(
+                    solver=solver, **test_case
+                )
                 self.assertLess(
                     norm(solver_solution - quadprog_solution),
                     2e-4,
