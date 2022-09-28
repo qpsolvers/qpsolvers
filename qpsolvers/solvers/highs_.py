@@ -177,6 +177,7 @@ def highs_solve_qp(
 
     solver = highspy.Highs()
     solver.passModel(model)
+    solver.run()
     solution = solver.getSolution()
     info = solver.getInfo()
     model_status = solver.getModelStatus()
