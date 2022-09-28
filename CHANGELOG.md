@@ -9,9 +9,14 @@ All notable changes to this project will be documented in this file.
 - New solver: [HiGHS](https://github.com/ERGO-Code/HiGHS)
 - Raise error when there is no available solver
 
+### Changed
+
+- Make sure plot is shown in MPC example
+- Print expected solutions in QP, LS and box-inequality examples
+
 ### Fixed
 
-- Correct documentation of R argument to ``solve_ls``
+- Correct documentation of ``R`` argument to ``solve_ls``
 
 ## [2.3.0] - 2022/09/06
 
