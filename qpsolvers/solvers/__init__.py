@@ -165,11 +165,11 @@ except ImportError:
 highs_solve_qp: Optional[
     Callable[
         [
-            csc_matrix,
+            DenseOrCSCMatrix,
             ndarray,
-            Optional[csc_matrix],
+            Optional[DenseOrCSCMatrix],
             Optional[ndarray],
-            Optional[csc_matrix],
+            Optional[DenseOrCSCMatrix],
             Optional[ndarray],
             Optional[ndarray],
             Optional[ndarray],
