@@ -159,6 +159,37 @@ except ImportError:
     pass
 
 
+# HiGHS
+# =====
+
+highs_solve_qp: Optional[
+    Callable[
+        [
+            csc_matrix,
+            ndarray,
+            Optional[csc_matrix],
+            Optional[ndarray],
+            Optional[csc_matrix],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            bool,
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
+try:
+    from .highs_ import highs_solve_qp
+
+    solve_function["highs"] = highs_solve_qp
+    available_solvers.append("highs")
+    sparse_solvers.append("highs")
+except ImportError:
+    pass
+
+
 # MOSEK
 # =====
 
