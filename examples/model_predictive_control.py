@@ -29,12 +29,14 @@ See the following post for context:
 
 from dataclasses import dataclass
 from typing import Optional
+import random
 
 import numpy as np
 import pylab
-
-from qpsolvers import solve_qp
 from scipy.sparse import csc_matrix
+
+import qpsolvers
+from qpsolvers import solve_qp
 
 gravity = 9.81  # [m] / [s]^2
 
@@ -121,17 +123,17 @@ class LinearModelPredictiveControl:
             h = e if C is None else e - np.dot(C.dot(phi), self.x_init)
             if D is not None:
                 # we rely on G == 0 to avoid a slower +=
-                G[:, k * self.u_dim:(k + 1) * self.u_dim] = D
+                G[:, k * self.u_dim : (k + 1) * self.u_dim] = D
             if C is not None:
                 G += C.dot(psi)
             if k == 0 and D is None:  # corner case, input has no effect
-                assert(np.all(h >= 0.0))
+                assert np.all(h >= 0.0)
             else:  # regular case
                 G_list.append(G)
                 h_list.append(h)
             phi = self.A.dot(phi)
             psi = self.A.dot(psi)
-            psi[:, self.u_dim * k:self.u_dim * (k + 1)] = self.B
+            psi[:, self.u_dim * k : self.u_dim * (k + 1)] = self.B
         P = self.wu * np.eye(self.U_dim)
         q = np.zeros(self.U_dim)
         if self.wxt is not None and self.wxt > 1e-10:
@@ -169,7 +171,6 @@ class LinearModelPredictiveControl:
 
 
 class HumanoidModelPredictiveControl(LinearModelPredictiveControl):
-
     def __init__(self, problem: HumanoidSteppingProblem):
         T = problem.horizon_duration / problem.nb_timesteps
         nb_init_dsp_steps = int(round(problem.dsp_duration / T))
@@ -228,10 +229,11 @@ def plot_mpc_solution(problem, mpc):
     pylab.plot(t, zmp_min, "g:")
     pylab.plot(t, zmp_max, "b:")
     pylab.grid(True)
+    pylab.show(block=True)
 
 
 if __name__ == "__main__":
     problem = HumanoidSteppingProblem()
     mpc = HumanoidModelPredictiveControl(problem)
-    mpc.solve(solver="qpswift")
+    mpc.solve(solver=random.choice(qpsolvers.available_solvers))
     plot_mpc_solution(problem, mpc)
