@@ -29,6 +29,7 @@ classifiers = [
 dependencies = [
     "scipy >=1.2.0",
 ]
+keywords = ["quadratic programming", "solver", "numerical optimization"]
 
 [project.optional-dependencies]
 all_pypi_solvers = [
