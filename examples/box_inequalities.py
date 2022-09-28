@@ -23,7 +23,6 @@ Test one of the available QP solvers on a small problem with box inequalities.
 """
 
 import random
-
 from time import perf_counter
 
 import numpy as np
@@ -37,6 +36,8 @@ A = np.array([1.0, 1.0, 1.0])
 b = np.array([1.0])
 lb = -0.5 * np.ones(3)
 ub = 1.0 * np.ones(3)
+
+x_sol = np.array([0.41463414566726164, -0.41463414566726164, 1.0])
 
 if __name__ == "__main__":
     start_time = perf_counter()
@@ -55,5 +56,6 @@ if __name__ == "__main__":
     print("")
     print_matrix_vector(lb.reshape((3, 1)), "lb", ub, "ub")
     print("")
-    print(f"Solution:\n\n    x = {x}\n")
+    print(f"Solution: x = {x}")
+    print(f"It should be close to x* = {x_sol}")
     print(f"Found in {1e6 * (end_time - start_time):.0f} [us] with {solver}")
