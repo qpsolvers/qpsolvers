@@ -144,6 +144,8 @@ def __set_rows(
         row_list.append(A)
         row_lower.append(b)
         row_upper.append(b)
+    if not row_list:
+        return
     row_matrix = spa.vstack(row_list, format="csc")
     lp.a_matrix_.format_ = highspy.MatrixFormat.kColwise
     lp.a_matrix_.start_ = row_matrix.indptr
