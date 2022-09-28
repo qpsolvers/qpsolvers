@@ -133,68 +133,54 @@ def highs_solve_qp(
         warn_about_sparse_conversion("A")
         A = spa.csc_matrix(A)
 
-    # Cost:  (1/2) x^T H x + c^T x + d
-    num_cols = P.shape[1]
-    hessian_format = highspy.HessianFormat.kSquare
-    hessian_start = P.indptr
-    hessian_index = P.indices
-    hessian_value = P.data
-    hessian_num_nz = P.getnnz()
-    col_cost = q
-    integrality = np.zeros(num_cols)
+    model = highspy.HighsModel()
+    hessian = model.hessian_
 
-    # Column inequalities: l <= x <= u
-    col_lower = (
-        lb if lb is not None else np.full((num_cols,), -highspy.kHighsInf)
-    )
-    col_upper = (
-        ub if ub is not None else np.full((num_cols,), highspy.kHighsInf)
-    )
+    # Hessian part of the cost
+    hessian.dim_ = P.shape[0]
+    hessian.start_ = P.indptr
+    hessian.index_ = P.indices
+    hessian.value_ = P.data
+
+    # Linear part of the cost
+    n = P.shape[1]
+    lp = model.lp_
+    lp.num_col_ = n
+    lp.col_cost_ = q
+    lp.col_lower_ = lb if lb is not None else np.full((n,), -highspy.kHighsInf)
+    lp.col_upper_ = ub if ub is not None else np.full((n,), highspy.kHighsInf)
 
     # Row inequalities:  L <= A * x <+ U
-    num_rows = 0
+    lp.num_row_ = 0
     row_list = []
     row_lower = []
     row_upper = []
     if G is not None:
-        num_rows += G.shape[0]
+        lp.num_row_ += G.shape[0]
         row_list.append(G)
         row_lower.append(np.full((G.shape[0],), -highspy.kHighsInf))
         row_upper.append(h)
     if A is not None:
-        num_rows += A.shape[0]
+        lp.num_row_ += A.shape[0]
         row_list.append(A)
         row_lower.append(b)
         row_upper.append(b)
     row_matrix = spa.vstack(row_list, format="csc")
-    row_matrix_format = highspy.MatrixFormat.kColwise
-    row_matrix_start = row_matrix.indptr
-    row_matrix_index = row_matrix.indices
-    row_matrix_value = row_matrix.data
-    row_matrix_num_nz = row_matrix.getnnz()
+    lp.a_matrix_.format_ = highspy.MatrixFormat.kColwise
+    lp.a_matrix_.start_ = row_matrix.indptr
+    lp.a_matrix_.index_ = row_matrix.indices
+    lp.a_matrix_.value_ = row_matrix.data
+    lp.a_matrix_.num_row_ = row_matrix.shape[0]
+    lp.a_matrix_.num_col_ = row_matrix.shape[1]
+    lp.row_lower_ = np.hstack(row_lower)
+    lp.row_upper_ = np.hstack(row_upper)
 
     solver = highspy.Highs()
-    solver.passModel(
-        num_cols,
-        num_rows,
-        row_matrix_num_nz,
-        hessian_num_nz,
-        row_matrix_format,
-        hessian_format,
-        highspy.ObjSense.kMinimize,
-        0.0,
-        col_cost,
-        col_lower,
-        col_upper,
-        row_lower,
-        row_upper,
-        row_matrix_start,
-        row_matrix_index,
-        row_matrix_value,
-        hessian_start,
-        hessian_index,
-        hessian_value,
-        integrality,
-    )
+    solver.passModel(model)
     solution = solver.getSolution()
+    info = solver.getInfo()
+    model_status = solver.getModelStatus()
+    if model_status != highspy.HighsModelStatus.kOptimal:
+        print(f"{info.ipm_iteration_count=}, {info.qp_iteration_count=}")
+        return None
     return solution
