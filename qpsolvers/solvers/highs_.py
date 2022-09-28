@@ -171,6 +171,14 @@ def highs_solve_qp(
     lp.row_upper_ = np.hstack(row_upper)
 
     solver = highspy.Highs()
+    if verbose:
+        solver.setOptionValue("log_to_console", True)
+        solver.setOptionValue("log_dev_level", highspy.HighsLogType.kVerbose)
+        solver.setOptionValue(
+            "highs_debug_level", highspy.HighsLogType.kVerbose
+        )
+    else:  # not verbose
+        solver.setOptionValue("log_to_console", False)
     solver.passModel(model)
     solver.run()
     solution = solver.getSolution()
