@@ -69,8 +69,6 @@ def highs_solve_qp(
     ub: Optional[np.ndarray] = None,
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
-    backend: Optional[str] = None,
-    **kwargs,
 ) -> Optional[np.ndarray]:
     """
     Solve a Quadratic Program defined as:
@@ -108,9 +106,6 @@ def highs_solve_qp(
         Upper bound constraint vector.
     initvals :
         Warm-start guess vector.
-    backend :
-        ProxQP backend to use in ``[None, "dense", "sparse"]``. If ``None``
-        (default), the backend is selected based on the type of ``P``.
     verbose :
         Set to `True` to print out extra information.
 
