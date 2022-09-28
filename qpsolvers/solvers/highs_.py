@@ -55,13 +55,15 @@ import highspy
 import numpy as np
 import scipy.sparse as spa
 
+from .typing import DenseOrCSCMatrix, warn_about_sparse_conversion
+
 
 def highs_solve_qp(
-    P: spa.csc_matrix,
+    P: DenseOrCSCMatrix,
     q: np.ndarray,
-    G: Optional[spa.csc_matrix] = None,
+    G: Optional[DenseOrCSCMatrix] = None,
     h: Optional[np.ndarray] = None,
-    A: Optional[spa.csc_matrix] = None,
+    A: Optional[DenseOrCSCMatrix] = None,
     b: Optional[np.ndarray] = None,
     lb: Optional[np.ndarray] = None,
     ub: Optional[np.ndarray] = None,
@@ -121,6 +123,16 @@ def highs_solve_qp(
     -----
     ...
     """
+    if isinstance(P, np.ndarray):
+        warn_about_sparse_conversion("P")
+        P = spa.csc_matrix(P)
+    if isinstance(G, np.ndarray):
+        warn_about_sparse_conversion("G")
+        G = spa.csc_matrix(G)
+    if isinstance(A, np.ndarray):
+        warn_about_sparse_conversion("A")
+        A = spa.csc_matrix(A)
+
     # Cost:  (1/2) x^T H x + c^T x + d
     num_cols = P.shape[1]
     hessian_format = highspy.HessianFormat.kSquare
