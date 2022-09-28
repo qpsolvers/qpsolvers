@@ -19,12 +19,12 @@ it and call the :func:`.solve_ls` function:
     G = array([[1., 2., 1.], [2., 0., 1.], [-1., 2., -1.]])
     h = array([3., 2., -2.]).reshape((3,))
 
-    x_sol = solve_ls(R, s, G, h, solver="osqp", verbose=True)
+    x_sol = solve_ls(R, s, G, h, solver="osqp")
     print(f"LS solution: x = {x}")
 
-This example outputs the solution ``[-0.0530504, 0.0265252, 2.1061008]``. The
-backend QP solver used by :func:`.solve_ls` is selected via the ``solver``
-keyword argument.
+The backend QP solver is selected among :ref:`supported solvers <Supported
+solvers>` via the ``solver`` keyword argument. This example outputs the
+solution ``[-0.0530504, 0.0265252, 2.1061008]``.
 
 .. autofunction:: qpsolvers.solve_ls
 

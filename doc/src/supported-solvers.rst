@@ -1,5 +1,7 @@
 :github_url: https://github.com/stephane-caron/qpsolvers/tree/master/doc/src/supported-solvers.rst
 
+.. _Supported solvers:
+
 *****************
 Supported solvers
 *****************

@@ -6,8 +6,8 @@
 Quadratic programming
 *********************
 
-To solve a quadratic program, simply build the matrices that define it and call
-the :func:`.solve_qp` function:
+To solve a quadratic program, build the matrices that define it and call the
+:func:`.solve_qp` function:
 
 .. code:: python
 
@@ -25,9 +25,9 @@ the :func:`.solve_qp` function:
     x = solve_qp(P, q, G, h, A, b, solver="osqp")
     print(f"QP solution: x = {x}")
 
-This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``.
-The backend QP solver used by :func:`.solve_qp` is selected via the ``solver``
-keyword argument.
+The backend QP solver is selected among :ref:`supported solvers <Supported
+solvers>` via the ``solver`` keyword argument. This example outputs the
+solution ``[0.30769231, -0.69230769,  1.38461538]``.
 
 .. autofunction:: qpsolvers.solve_qp
 
