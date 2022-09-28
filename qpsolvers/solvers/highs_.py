@@ -58,6 +58,103 @@ import scipy.sparse as spa
 from .typing import DenseOrCSCMatrix, warn_about_sparse_conversion
 
 
+def __set_hessian(model: highspy.HighsModel, P: spa.csc_matrix) -> None:
+    """
+    Set Hessian :math:`Q` of the cost :math:`(1/2) x^T Q x + c^T x`.
+
+    Parameters
+    ----------
+    model :
+        HiGHS model.
+    P :
+        Positive semidefinite quadratic-cost matrix.
+    """
+    model.hessian_.dim_ = P.shape[0]
+    model.hessian_.start_ = P.indptr
+    model.hessian_.index_ = P.indices
+    model.hessian_.value_ = P.data
+
+
+def __set_columns(
+    model: highspy.HighsModel,
+    q: np.ndarray,
+    lb: Optional[np.ndarray] = None,
+    ub: Optional[np.ndarray] = None,
+) -> None:
+    """
+    Set columns of the model, that is:
+
+    - Linear part :math:`c` of the cost :math:`(1/2) x^T Q x + c^T x`
+    - Box inequalities :math:`l \\leq x \\leq u``
+
+    Parameters
+    ----------
+    model :
+        HiGHS model.
+    q :
+        Quadratic-cost vector.
+    lb :
+        Lower bound constraint vector.
+    ub :
+        Upper bound constraint vector.
+    """
+    n = q.shape[0]
+    lp = model.lp_
+    lp.num_col_ = n
+    lp.col_cost_ = q
+    lp.col_lower_ = lb if lb is not None else np.full((n,), -highspy.kHighsInf)
+    lp.col_upper_ = ub if ub is not None else np.full((n,), highspy.kHighsInf)
+
+
+def __set_rows(
+    model: highspy.HighsModel,
+    G: Optional[spa.csc_matrix] = None,
+    h: Optional[np.ndarray] = None,
+    A: Optional[spa.csc_matrix] = None,
+    b: Optional[np.ndarray] = None,
+) -> None:
+    """
+    Set rows :math:`L \\leq A x \\leq U`` of the model.
+
+    Parameters
+    ----------
+    model :
+        HiGHS model.
+    G :
+        Linear inequality constraint matrix.
+    h :
+        Linear inequality constraint vector.
+    A :
+        Linear equality constraint matrix.
+    b :
+        Linear equality constraint vector.
+    """
+    lp = model.lp_
+    lp.num_row_ = 0
+    row_list: list = []
+    row_lower: list = []
+    row_upper: list = []
+    if G is not None:
+        lp.num_row_ += G.shape[0]
+        row_list.append(G)
+        row_lower.append(np.full((G.shape[0],), -highspy.kHighsInf))
+        row_upper.append(h)
+    if A is not None:
+        lp.num_row_ += A.shape[0]
+        row_list.append(A)
+        row_lower.append(b)
+        row_upper.append(b)
+    row_matrix = spa.vstack(row_list, format="csc")
+    lp.a_matrix_.format_ = highspy.MatrixFormat.kColwise
+    lp.a_matrix_.start_ = row_matrix.indptr
+    lp.a_matrix_.index_ = row_matrix.indices
+    lp.a_matrix_.value_ = row_matrix.data
+    lp.a_matrix_.num_row_ = row_matrix.shape[0]
+    lp.a_matrix_.num_col_ = row_matrix.shape[1]
+    lp.row_lower_ = np.hstack(row_lower)
+    lp.row_upper_ = np.hstack(row_upper)
+
+
 def highs_solve_qp(
     P: DenseOrCSCMatrix,
     q: np.ndarray,
@@ -127,48 +224,13 @@ def highs_solve_qp(
     if isinstance(A, np.ndarray):
         warn_about_sparse_conversion("A")
         A = spa.csc_matrix(A)
+    if initvals is not None:
+        print("qpSWIFT: warm-start values are ignored by wrapper")
 
     model = highspy.HighsModel()
-    hessian = model.hessian_
-
-    # Hessian part of the cost
-    hessian.dim_ = P.shape[0]
-    hessian.start_ = P.indptr
-    hessian.index_ = P.indices
-    hessian.value_ = P.data
-
-    # Linear part of the cost
-    n = P.shape[1]
-    lp = model.lp_
-    lp.num_col_ = n
-    lp.col_cost_ = q
-    lp.col_lower_ = lb if lb is not None else np.full((n,), -highspy.kHighsInf)
-    lp.col_upper_ = ub if ub is not None else np.full((n,), highspy.kHighsInf)
-
-    # Row inequalities:  L <= A * x <+ U
-    lp.num_row_ = 0
-    row_list: list = []
-    row_lower: list = []
-    row_upper: list = []
-    if G is not None:
-        lp.num_row_ += G.shape[0]
-        row_list.append(G)
-        row_lower.append(np.full((G.shape[0],), -highspy.kHighsInf))
-        row_upper.append(h)
-    if A is not None:
-        lp.num_row_ += A.shape[0]
-        row_list.append(A)
-        row_lower.append(b)
-        row_upper.append(b)
-    row_matrix = spa.vstack(row_list, format="csc")
-    lp.a_matrix_.format_ = highspy.MatrixFormat.kColwise
-    lp.a_matrix_.start_ = row_matrix.indptr
-    lp.a_matrix_.index_ = row_matrix.indices
-    lp.a_matrix_.value_ = row_matrix.data
-    lp.a_matrix_.num_row_ = row_matrix.shape[0]
-    lp.a_matrix_.num_col_ = row_matrix.shape[1]
-    lp.row_lower_ = np.hstack(row_lower)
-    lp.row_upper_ = np.hstack(row_upper)
+    __set_hessian(model, P)
+    __set_columns(model, q, lb, ub)
+    __set_rows(model, G, h, A, b)
 
     solver = highspy.Highs()
     if verbose:
@@ -181,6 +243,7 @@ def highs_solve_qp(
         solver.setOptionValue("log_to_console", False)
     solver.passModel(model)
     solver.run()
+
     solution = solver.getSolution()
     model_status = solver.getModelStatus()
     if model_status != highspy.HighsModelStatus.kOptimal:
