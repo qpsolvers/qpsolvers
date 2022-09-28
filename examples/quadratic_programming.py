@@ -66,5 +66,4 @@ if __name__ == "__main__":
     print("")
     print(f"Solution: x = {x}")
     print(f"It should be close to x* = {x_sol}")
-    print(f"Solve time: {1e6 * (end_time - start_time):.0f} [us]")
-    print(f"Solver: {solver}")
+    print(f"Found in {1e6 * (end_time - start_time):.0f} [us] with {solver}")
