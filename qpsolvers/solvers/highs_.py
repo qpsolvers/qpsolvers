@@ -1,0 +1,188 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2016-2022 Stéphane Caron and the qpsolvers contributors.
+#
+# This file is part of qpsolvers.
+#
+# qpsolvers is free software: you can redistribute it and/or modify it under
+# the terms of the GNU Lesser General Public License as published by the Free
+# Software Foundation, either version 3 of the License, or (at your option) any
+# later version.
+#
+# qpsolvers is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
+# details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
+
+"""
+Solver interface for `HiGHS <https://github.com/ERGO-Code/HiGHS>`__.
+
+HiGHS is a high performance serial and parallel solver for large scale sparse
+linear optimization problems of the form
+
+.. math::
+
+    \\mathrm{minimize } (1/2) x^T Q x + c^T x
+    \\quad
+    \\mathrm{subject to } L \\leq Ax \\leq U;
+    \\quad
+    l \\leq x \\leq u
+
+where Q must be positive semi-definite and, if Q is zero, there may be a
+requirement that some of the variables take integer values. Thus HiGHS can
+solve linear programming (LP) problems, convex quadratic programming (QP)
+problems, and mixed integer programming (MIP) problems. It is mainly written in
+C++, but also has some C. It has been developed and tested on various Linux,
+MacOS and Windows installations using both the GNU (g++) and Intel (icc) C++
+compilers. Note that HiGHS requires (at least) version 4.9 of the GNU compiler.
+It has no third-party dependencies.
+
+HiGHS has primal and dual revised simplex solvers, originally written by Qi
+Huangfu and further developed by Julian Hall. It also has an interior point
+solver for LP written by Lukas Schork, an active set solver for QP written by
+Michael Feldmeier, and a MIP solver written by Leona Gottwald. Other features
+have been added by Julian Hall and Ivet Galabova, who manages the software
+engineering of HiGHS and interfaces to C, C#, FORTRAN, Julia and Python.
+"""
+
+from typing import Optional
+
+import highspy
+import numpy as np
+import scipy.sparse as spa
+
+
+def highs_solve_qp(
+    P: spa.csc_matrix,
+    q: np.ndarray,
+    G: Optional[spa.csc_matrix] = None,
+    h: Optional[np.ndarray] = None,
+    A: Optional[spa.csc_matrix] = None,
+    b: Optional[np.ndarray] = None,
+    lb: Optional[np.ndarray] = None,
+    ub: Optional[np.ndarray] = None,
+    initvals: Optional[np.ndarray] = None,
+    verbose: bool = False,
+    backend: Optional[str] = None,
+    **kwargs,
+) -> Optional[np.ndarray]:
+    """
+    Solve a Quadratic Program defined as:
+
+    .. math::
+
+        \\begin{split}\\begin{array}{ll}
+        \\mbox{minimize} &
+            \\frac{1}{2} x^T P x + q^T x \\\\
+        \\mbox{subject to}
+            & G x \\leq h                \\\\
+            & A x = b                    \\\\
+            & lb \\leq x \\leq ub
+        \\end{array}\\end{split}
+
+    using `HiGHS <https://github.com/ERGO-Code/HiGHS>`__.
+
+    Parameters
+    ----------
+    P :
+        Positive semidefinite quadratic-cost matrix.
+    q :
+        Quadratic-cost vector.
+    G :
+        Linear inequality constraint matrix.
+    h :
+        Linear inequality constraint vector.
+    A :
+        Linear equality constraint matrix.
+    b :
+        Linear equality constraint vector.
+    lb :
+        Lower bound constraint vector.
+    ub :
+        Upper bound constraint vector.
+    initvals :
+        Warm-start guess vector.
+    backend :
+        ProxQP backend to use in ``[None, "dense", "sparse"]``. If ``None``
+        (default), the backend is selected based on the type of ``P``.
+    verbose :
+        Set to `True` to print out extra information.
+
+    Returns
+    -------
+    :
+        Solution to the QP, if found, otherwise ``None``.
+
+    Notes
+    -----
+    ...
+    """
+    # Cost:  (1/2) x^T H x + c^T x + d
+    num_cols = P.shape[1]
+    hessian_format = highspy.HessianFormat.kSquare
+    hessian_start = P.indptr
+    hessian_index = P.indices
+    hessian_value = P.data
+    hessian_num_nz = P.getnnz()
+    col_cost = q
+    integrality = np.zeros(num_cols)
+
+    # Column inequalities: l <= x <= u
+    col_lower = (
+        lb if lb is not None else np.full((num_cols,), -highspy.kHighsInf)
+    )
+    col_upper = (
+        ub if ub is not None else np.full((num_cols,), highspy.kHighsInf)
+    )
+
+    # Row inequalities:  L <= A * x <+ U
+    num_rows = 0
+    row_list = []
+    row_lower = []
+    row_upper = []
+    if G is not None:
+        num_rows += G.shape[0]
+        row_list.append(G)
+        row_lower.append(np.full((G.shape[0],), -highspy.kHighsInf))
+        row_upper.append(h)
+    if A is not None:
+        num_rows += A.shape[0]
+        row_list.append(A)
+        row_lower.append(b)
+        row_upper.append(b)
+    row_matrix = spa.vstack(row_list, format="csc")
+    row_matrix_format = highspy.MatrixFormat.kColwise
+    row_matrix_start = row_matrix.indptr
+    row_matrix_index = row_matrix.indices
+    row_matrix_value = row_matrix.data
+    row_matrix_num_nz = row_matrix.getnnz()
+
+    solver = highspy.Highs()
+    solver.passModel(
+        num_cols,
+        num_rows,
+        row_matrix_num_nz,
+        hessian_num_nz,
+        row_matrix_format,
+        hessian_format,
+        highspy.ObjSense.kMinimize,
+        0.0,
+        col_cost,
+        col_lower,
+        col_upper,
+        row_lower,
+        row_upper,
+        row_matrix_start,
+        row_matrix_index,
+        row_matrix_value,
+        hessian_start,
+        hessian_index,
+        hessian_value,
+        integrality,
+    )
+    solution = solver.getSolution()
+    return solution
