@@ -73,6 +73,7 @@ This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``.
 | [CVXOPT](http://cvxopt.org/) | ``cvxopt`` | Dense | GPL-3.0 | ✔️ |
 | [ECOS](https://web.stanford.edu/~boyd/papers/ecos.html) | ``ecos`` | Sparse | GPL-3.0 | ✖️ |
 | [Gurobi](https://www.gurobi.com/) | ``gurobi`` | Sparse | Commercial | ✖️ |
+| [HiGHS](https://highs.dev/) | ``highs`` | Sparse | MIT | ✖️ |
 | [MOSEK](https://mosek.com/) | ``mosek`` | Sparse | Commercial | ✔️ |
 | [OSQP](https://github.com/oxfordcontrol/osqp) | ``osqp`` | Sparse | Apache-2.0 | ✔️ |
 | [ProxQP](https://github.com/Simple-Robotics/proxsuite) | ``proxqp`` | Dense & Sparse | BSD-2-Clause | ✔️ |
