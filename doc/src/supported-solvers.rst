@@ -24,6 +24,11 @@ on installing this solver.
 
 .. autofunction:: qpsolvers.gurobi_solve_qp
 
+HiGHS
+=====
+
+.. autofunction:: qpsolvers.highs_solve_qp
+
 MOSEK
 =====
 
