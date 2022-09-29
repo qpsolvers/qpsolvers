@@ -227,7 +227,7 @@ def highs_solve_qp(
         A = spa.csc_matrix(A)
     if initvals is not None:
         print(
-            "HiGHS: warm-start values are not wrapped by highspy yet, "
+            "HiGHS: warm-start values are not available for this solver, "
             "see: https://github.com/stephane-caron/qpsolvers/issues/94"
         )
 
