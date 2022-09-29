@@ -44,7 +44,7 @@ if __name__ == "__main__":
     if not available_solvers:
         print(
             "No QP solver found, you can install some by e.g. running "
-            "``pip install qpsolvers[starter_solvers]``"
+            "``pip install qpsolvers[open_source_solvers]``"
         )
         sys.exit(-1)
 

@@ -35,28 +35,26 @@ keywords = ["quadratic programming", "solver", "numerical optimization"]
 all_pypi_solvers = [
     "cvxopt >=1.2.6",
     "cvxpy >=1.1.11",
-    "ecos >=2.0.7.post1",
+    "ecos >=2.0.8",
+    "highspy >=1.1.2.dev3",
     "osqp >=0.6.2",
     "proxsuite >=0.1.0",
     "quadprog >=0.1.11",
     "scs >=3.0.1",
 ]
-doc = [
-    "sphinx",
+open_source_solvers = [
+    "cvxopt >=1.2.6",
+    "cvxpy >=1.1.11",
+    "ecos >=2.0.8",
+    "osqp >=0.6.2",
+    "proxsuite >=0.1.0",
+    "scs >=3.0.1",
 ]
 quadprog = [
     "quadprog >=0.1.11",
 ]
 quadprog-wheel = [
     "quadprog-wheel >=0.1.11",
-]
-starter_solvers = [
-    "cvxopt >=1.2.6",
-    "cvxpy >=1.1.11",
-    "ecos >=2.0.7.post1",
-    "osqp >=0.6.2",
-    "proxsuite >=0.1.0",
-    "scs >=3.0.1",
 ]
 
 [project.urls]
