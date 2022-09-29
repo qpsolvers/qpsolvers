@@ -107,6 +107,18 @@ with 200 optimization variables fails with the following warning:
 
 .. _qpoases-install:
 
+HiGHS
+-----
+
+The simplest way to install HiGHS is:
+
+.. code:: bash
+
+    pip install highspy
+
+If this solution doesn't work for you, follow the `Python installation
+instructions <https://github.com/ERGO-Code/HiGHS#python>`__ from the README.
+
 quadprog
 --------
 
