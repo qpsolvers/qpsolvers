@@ -22,8 +22,7 @@
 
 import re
 import sys
-
-from os.path import dirname, join, abspath
+from os.path import abspath, dirname, join
 
 sys.path.insert(0, abspath("../.."))
 
@@ -41,7 +40,7 @@ extensions = [
     "sphinx.ext.coverage",
     "sphinx-mathjax-offline",
     "sphinx.ext.napoleon",  # before sphinx_autodoc_typehints
-    "sphinx_autodoc_typehints"
+    "sphinx_autodoc_typehints",
 ]
 
 # List of modules to be mocked up
@@ -84,7 +83,7 @@ init_path = join(
 )
 with open(f"{init_path}/__init__.py", "r") as fh:
     for line in fh:
-        match = re.match('__version__ = "((\\d.\\d).\\d)".*', line)
+        match = re.match('__version__ = "((\\d.\\d).\\d)[a-z0-9\\-]*".*', line)
         if match is not None:
             release = match.group(1)
             version = match.group(2)
