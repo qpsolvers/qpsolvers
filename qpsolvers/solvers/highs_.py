@@ -227,8 +227,10 @@ def highs_solve_qp(
         warn_about_sparse_conversion("A")
         A = spa.csc_matrix(A)
     if initvals is not None:
-        # TODO(scaron): https://github.com/stephane-caron/qpsolvers/issues/94
-        print("HiGHS: warm-start values are ignored by wrapper")
+        print(
+            "HiGHS: warm-start values are not wrapped by highspy yet, "
+            "see: https://github.com/stephane-caron/qpsolvers/issues/94"
+        )
 
     model = highspy.HighsModel()
     __set_hessian(model, P)
