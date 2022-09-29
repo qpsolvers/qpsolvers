@@ -21,25 +21,30 @@
 """
 Solver interface for `HiGHS <https://github.com/ERGO-Code/HiGHS>`__.
 
-HiGHS is a high performance serial and parallel solver for large scale sparse
-quadratic optimization problems of the form:
+HiGHS is an open source, high performance serial and parallel solver for large
+scale sparse linear programming (LP), mixed-integer programming (MIP), and
+quadratic programming (QP). It is written mostly in C++11.
 
-.. math::
+HiGHS is freely available under the MIT licence, and can be installed by:
 
-    \\mathrm{minimize } (1/2) x^T Q x + c^T x
-    \\quad
-    \\mathrm{subject to } L \\leq Ax \\leq U;
-    \\quad
-    l \\leq x \\leq u
+.. code:: console
 
-where :math:`Q` must be positive semi-definite.
+    pip install highspy
 
-HiGHS has primal and dual revised simplex solvers, originally written by Qi
-Huangfu and further developed by Julian Hall. It also has an interior point
-solver for LP written by Lukas Schork, an active set solver for QP written by
-Michael Feldmeier, and a MIP solver written by Leona Gottwald. Other features
-have been added by Julian Hall and Ivet Galabova, who manages the software
-engineering of HiGHS and interfaces to C, C#, FORTRAN, Julia and Python.
+HiGHS is based on the high performance dual revised simplex implementation
+(HSOL) and its parallel variant (PAMI) developed by Qi Huangfu. Features such
+as presolve, crash and advanced basis start have been added by Julian Hall and
+Ivet Galabova. The QP solver and original language interfaces were written by
+Michael Feldmeier. Leona Gottwald wrote the MIP solver. The software
+engineering of HiGHS was developed by Ivet Galabova.
+
+In the absence of a release paper, academic users of HiGHS are kindly requested
+to cite the following article:
+
+    Parallelizing the dual revised simplex method,
+    Q. Huangfu and J. A. J. Hall,
+    Mathematical Programming Computation, 10 (1), 119-142, 2018.
+    DOI: 10.1007/s12532-017-0130-5
 """
 
 from typing import Optional
@@ -205,6 +210,11 @@ def highs_solve_qp(
     -------
     :
         Solution to the QP, if found, otherwise ``None``.
+
+    Notes
+    -----
+        The solver documentation is available `online
+        <https://ergo-code.github.io/HiGHS/>`_.
     """
     if isinstance(P, np.ndarray):
         warn_about_sparse_conversion("P")
