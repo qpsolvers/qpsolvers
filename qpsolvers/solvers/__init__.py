@@ -415,7 +415,7 @@ except ImportError:
 if not available_solvers:
     raise ImportError(
         "no QP solver found, you can install some by running:\n\n"
-        "\tpip install qpsolvers[starter_solvers]\n"
+        "\tpip install qpsolvers[open_source_solvers]\n"
     )
 
 

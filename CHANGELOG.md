@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 
 - Make sure plot is shown in MPC example
 - Print expected solutions in QP, LS and box-inequality examples
+- Renamed ``starter_solvers`` optional deps to ``open_source_solvers``
 
 ### Fixed
 

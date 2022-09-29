@@ -76,13 +76,12 @@ Solvers
 Open source solvers
 -------------------
 
-To install at once all QP solvers available from the `Python Package Index
-<https://pypi.org/>`_, run the ``pip`` command with the optional
-``all_pypi_solvers`` dependency:
+To install at once all open source QP solvers available from the `Python
+Package Index <https://pypi.org/>`_, run the ``pip`` command as follows:
 
 .. code:: bash
 
-    pip3 install "qpsolvers[all_pypi_solvers]"
+    pip3 install "qpsolvers[open_source_solvers]"
 
 This may take a while.
 
