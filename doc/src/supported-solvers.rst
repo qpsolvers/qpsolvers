@@ -27,7 +27,8 @@ on installing this solver.
 HiGHS
 =====
 
-.. autofunction:: qpsolvers.highs_solve_qp
+.. automodule:: qpsolvers.solvers.highs_
+    :members:
 
 MOSEK
 =====
