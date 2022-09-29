@@ -22,7 +22,7 @@
 Solver interface for `HiGHS <https://github.com/ERGO-Code/HiGHS>`__.
 
 HiGHS is a high performance serial and parallel solver for large scale sparse
-linear optimization problems of the form
+quadratic optimization problems of the form:
 
 .. math::
 
@@ -32,14 +32,7 @@ linear optimization problems of the form
     \\quad
     l \\leq x \\leq u
 
-where Q must be positive semi-definite and, if Q is zero, there may be a
-requirement that some of the variables take integer values. Thus HiGHS can
-solve linear programming (LP) problems, convex quadratic programming (QP)
-problems, and mixed integer programming (MIP) problems. It is mainly written in
-C++, but also has some C. It has been developed and tested on various Linux,
-MacOS and Windows installations using both the GNU (g++) and Intel (icc) C++
-compilers. Note that HiGHS requires (at least) version 4.9 of the GNU compiler.
-It has no third-party dependencies.
+where :math:`Q` must be positive semi-definite.
 
 HiGHS has primal and dual revised simplex solvers, originally written by Qi
 Huangfu and further developed by Julian Hall. It also has an interior point
@@ -204,7 +197,7 @@ def highs_solve_qp(
     ub :
         Upper bound constraint vector.
     initvals :
-        Warm-start guess vector.
+        Warm-start guess vector for the primal solution.
     verbose :
         Set to `True` to print out extra information.
 
@@ -212,10 +205,6 @@ def highs_solve_qp(
     -------
     :
         Solution to the QP, if found, otherwise ``None``.
-
-    Notes
-    -----
-    ...
     """
     if isinstance(P, np.ndarray):
         warn_about_sparse_conversion("P")
