@@ -237,8 +237,8 @@ def proxqp_solve_qp(
         A,
         b,
         C_prox,
-        u_prox,
         l_prox,
+        u_prox,
         verbose=verbose,
         **kwargs,
     )
