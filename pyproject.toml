@@ -38,7 +38,7 @@ all_pypi_solvers = [
     "ecos >=2.0.8",
     "highspy >=1.1.2.dev3",
     "osqp >=0.6.2",
-    "proxsuite >=0.1.0",
+    "proxsuite >=0.2.2",
     "quadprog >=0.1.11",
     "scs >=3.0.1",
 ]
@@ -47,7 +47,7 @@ open_source_solvers = [
     "cvxpy >=1.1.11",
     "ecos >=2.0.8",
     "osqp >=0.6.2",
-    "proxsuite >=0.1.0",
+    "proxsuite >=0.2.2",
     "scs >=3.0.1",
 ]
 quadprog = [
