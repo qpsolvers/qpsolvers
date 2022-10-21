@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.4.1] - 2022/10/21
+
+### Changed
+
+- Update ProxQP to version 0.2.2
+
 ## [2.4.0] - 2022/09/29
 
 ### Added
