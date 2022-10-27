@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Added
+
+- HiGHS: ``time_limit`` parameter
+
 ## [2.4.1] - 2022/10/21
 
 ### Changed
