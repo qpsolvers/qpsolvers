@@ -175,6 +175,7 @@ highs_solve_qp: Optional[
             Optional[ndarray],
             Optional[ndarray],
             bool,
+            Optional[float],
         ],
         Optional[ndarray],
     ]

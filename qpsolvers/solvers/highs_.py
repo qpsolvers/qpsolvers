@@ -166,6 +166,7 @@ def highs_solve_qp(
     ub: Optional[np.ndarray] = None,
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
+    time_limit: Optional[float] = None,
 ) -> Optional[np.ndarray]:
     """
     Solve a Quadratic Program defined as:
@@ -205,6 +206,8 @@ def highs_solve_qp(
         Warm-start guess vector for the primal solution.
     verbose :
         Set to `True` to print out extra information.
+    time_limit :
+        Set a run time limit in seconds.
 
     Returns
     -------
@@ -245,6 +248,8 @@ def highs_solve_qp(
         )
     else:  # not verbose
         solver.setOptionValue("log_to_console", False)
+    if time_limit:
+        solver.setOptionValue("time_limit", time_limit)
     solver.passModel(model)
     solver.run()
 
