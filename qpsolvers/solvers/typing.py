@@ -20,20 +20,7 @@
 
 """Types for solve_qp function arguments."""
 
-from typing import Union
 from warnings import warn
-
-from numpy import ndarray
-from scipy.sparse import csc_matrix
-
-try:
-    from cvxopt import matrix, spmatrix
-
-    CvxoptReadyMatrix = Union[ndarray, matrix, spmatrix]
-except ImportError:
-    CvxoptReadyMatrix = ndarray  # type: ignore
-
-DenseOrCSCMatrix = Union[ndarray, csc_matrix]
 
 
 def warn_about_sparse_conversion(matrix_name: str) -> None:
@@ -53,7 +40,5 @@ def warn_about_sparse_conversion(matrix_name: str) -> None:
 
 
 __all__ = [
-    "CvxoptReadyMatrix",
-    "DenseOrCSCMatrix",
     "warn_about_sparse_conversion",
 ]

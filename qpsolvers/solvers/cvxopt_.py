@@ -20,19 +20,19 @@
 
 """Solver interface for CVXOPT."""
 
-from typing import Optional
+from typing import Optional, Union
 
-from cvxopt import matrix, spmatrix
+import cvxopt
 from cvxopt.solvers import options, qp
 from numpy import array, ndarray
+from scipy.sparse import csc_matrix
 
 from .conversions import linear_from_box_inequalities
-from .typing import CvxoptReadyMatrix
 
 options["show_progress"] = False  # disable CVXOPT output by default
 
 
-def cvxopt_matrix(M: CvxoptReadyMatrix) -> matrix:
+def to_cvxopt(M: Union[ndarray, csc_matrix]) -> Union[cvxopt.matrix, cvxopt.spmatrix]:
     """
     Convert matrix to CVXOPT format.
 
@@ -47,24 +47,22 @@ def cvxopt_matrix(M: CvxoptReadyMatrix) -> matrix:
         Matrix in CVXOPT format.
     """
     if isinstance(M, ndarray):
-        return matrix(M)
-    if isinstance(M, (spmatrix, matrix)):
-        return M
+        return cvxopt.matrix(M)
     coo = M.tocoo()
-    return spmatrix(
+    return cvxopt.spmatrix(
         coo.data.tolist(), coo.row.tolist(), coo.col.tolist(), size=M.shape
     )
 
 
 def cvxopt_solve_qp(
-    P: CvxoptReadyMatrix,
-    q: CvxoptReadyMatrix,
-    G: Optional[CvxoptReadyMatrix] = None,
-    h: Optional[CvxoptReadyMatrix] = None,
-    A: Optional[CvxoptReadyMatrix] = None,
-    b: Optional[CvxoptReadyMatrix] = None,
-    lb: Optional[CvxoptReadyMatrix] = None,
-    ub: Optional[CvxoptReadyMatrix] = None,
+    P: Union[ndarray, csc_matrix],
+    q: ndarray,
+    G: Optional[Union[ndarray, csc_matrix]] = None,
+    h: Optional[ndarray] = None,
+    A: Optional[Union[ndarray, csc_matrix]] = None,
+    b: Optional[ndarray] = None,
+    lb: Optional[ndarray] = None,
+    ub: Optional[ndarray] = None,
     solver: str = None,
     initvals: Optional[ndarray] = None,
     verbose: bool = False,
@@ -184,14 +182,18 @@ def cvxopt_solve_qp(
     if refinement:
         options["refinement"] = refinement
 
-    args = [cvxopt_matrix(P), cvxopt_matrix(q)]
+    args = [to_cvxopt(P), to_cvxopt(q)]
     kwargs = {"G": None, "h": None, "A": None, "b": None}
     if G is not None and h is not None:
-        kwargs["G"] = cvxopt_matrix(G)
-        kwargs["h"] = cvxopt_matrix(h)
+        kwargs["G"] = to_cvxopt(G)
+        kwargs["h"] = to_cvxopt(h)
     if A is not None and b is not None:
-        kwargs["A"] = cvxopt_matrix(A)
-        kwargs["b"] = cvxopt_matrix(b)
+        kwargs["A"] = to_cvxopt(A)
+        kwargs["b"] = to_cvxopt(b)
+    # initvals_dict: Dict[str, cvxopt.matrix] = {}
+    if initvals is not None:
+        # initvals_dict = {"x": to_cvxopt(initvals)}
+        pass
     sol = qp(*args, solver=solver, initvals=initvals, **kwargs)
     if "optimal" not in sol["status"]:
         return None

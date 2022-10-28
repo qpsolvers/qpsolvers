@@ -28,30 +28,29 @@ does not make any rank assumption contrary to :ref:`CVXOPT <CVXOPT rank
 assumptions>` or :ref:`qpSWIFT <qpSWIFT rank assumptions>`).
 """
 
-from typing import Optional
+from typing import Optional, Union
 from warnings import warn
 
 import osqp
-
 from numpy import hstack, inf, ndarray, ones
 from osqp import OSQP
-from scipy import sparse
+from scipy.sparse import csc_matrix
+import scipy.sparse as spa
 
 from .conversions import linear_from_box_inequalities
-from .typing import DenseOrCSCMatrix
 from .typing import warn_about_sparse_conversion
 
 
 def osqp_solve_qp(
-    P: DenseOrCSCMatrix,
-    q: DenseOrCSCMatrix,
-    G: Optional[DenseOrCSCMatrix] = None,
-    h: Optional[DenseOrCSCMatrix] = None,
-    A: Optional[DenseOrCSCMatrix] = None,
-    b: Optional[DenseOrCSCMatrix] = None,
-    lb: Optional[DenseOrCSCMatrix] = None,
-    ub: Optional[DenseOrCSCMatrix] = None,
-    initvals: Optional[DenseOrCSCMatrix] = None,
+    P: Union[ndarray, csc_matrix],
+    q: Union[ndarray, csc_matrix],
+    G: Optional[Union[ndarray, csc_matrix]] = None,
+    h: Optional[Union[ndarray, csc_matrix]] = None,
+    A: Optional[Union[ndarray, csc_matrix]] = None,
+    b: Optional[Union[ndarray, csc_matrix]] = None,
+    lb: Optional[Union[ndarray, csc_matrix]] = None,
+    ub: Optional[Union[ndarray, csc_matrix]] = None,
+    initvals: Optional[Union[ndarray, csc_matrix]] = None,
     verbose: bool = False,
     eps_abs: float = 1e-4,
     eps_rel: float = 1e-4,
@@ -142,7 +141,7 @@ def osqp_solve_qp(
     """
     if isinstance(P, ndarray):
         warn_about_sparse_conversion("P")
-        P = sparse.csc_matrix(P)
+        P = csc_matrix(P)
     if lb is not None or ub is not None:
         G, h = linear_from_box_inequalities(G, h, lb, ub)
     solver = OSQP()
@@ -157,10 +156,10 @@ def osqp_solve_qp(
     if A is not None and b is not None:
         if isinstance(A, ndarray):
             warn_about_sparse_conversion("A")
-            A = sparse.csc_matrix(A)
+            A = csc_matrix(A)
         if G is not None and h is not None:
             l_inf = -inf * ones(len(h))
-            qp_A = sparse.vstack([G, A], format="csc")
+            qp_A = spa.vstack([G, A], format="csc")
             qp_l = hstack([l_inf, b])
             qp_u = hstack([h, b])
             solver.setup(P=P, q=q, A=qp_A, l=qp_l, u=qp_u, **kwargs)
@@ -169,7 +168,7 @@ def osqp_solve_qp(
     elif G is not None and h is not None:
         if isinstance(G, ndarray):
             warn_about_sparse_conversion("G")
-            G = sparse.csc_matrix(G)
+            G = csc_matrix(G)
         l_inf = -inf * ones(len(h))
         solver.setup(P=P, q=q, A=G, l=l_inf, u=h, **kwargs)
     else:  # no inequality nor equality constraint

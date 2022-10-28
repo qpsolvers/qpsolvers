@@ -25,8 +25,6 @@ from typing import Any, Callable, Dict, Optional, Union
 from numpy import ndarray
 from scipy.sparse import csc_matrix
 
-from .typing import CvxoptReadyMatrix, DenseOrCSCMatrix
-
 available_solvers = []
 dense_solvers = []
 solve_function: Dict[str, Any] = {}
@@ -39,16 +37,16 @@ sparse_solvers = []
 cvxopt_solve_qp: Optional[
     Callable[
         [
-            CvxoptReadyMatrix,
-            CvxoptReadyMatrix,
-            Optional[CvxoptReadyMatrix],
-            Optional[CvxoptReadyMatrix],
-            Optional[CvxoptReadyMatrix],
-            Optional[CvxoptReadyMatrix],
-            Optional[CvxoptReadyMatrix],
-            Optional[CvxoptReadyMatrix],
+            Union[ndarray, csc_matrix],
+            ndarray,
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
             Optional[str],
-            Optional[CvxoptReadyMatrix],
+            Optional[ndarray],
             bool,
         ],
         Optional[ndarray],
@@ -166,11 +164,11 @@ except ImportError:
 highs_solve_qp: Optional[
     Callable[
         [
-            DenseOrCSCMatrix,
+            Union[ndarray, csc_matrix],
             ndarray,
-            Optional[DenseOrCSCMatrix],
+            Optional[Union[ndarray, csc_matrix]],
             Optional[ndarray],
-            Optional[DenseOrCSCMatrix],
+            Optional[Union[ndarray, csc_matrix]],
             Optional[ndarray],
             Optional[ndarray],
             Optional[ndarray],
@@ -198,15 +196,15 @@ except ImportError:
 mosek_solve_qp: Optional[
     Callable[
         [
-            CvxoptReadyMatrix,
-            CvxoptReadyMatrix,
-            Optional[CvxoptReadyMatrix],
-            Optional[CvxoptReadyMatrix],
-            Optional[CvxoptReadyMatrix],
-            Optional[CvxoptReadyMatrix],
-            Optional[CvxoptReadyMatrix],
-            Optional[CvxoptReadyMatrix],
-            Optional[CvxoptReadyMatrix],
+            Union[ndarray, csc_matrix],
+            ndarray,
+            Union[ndarray, csc_matrix],
+            ndarray,
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
             bool,
         ],
         Optional[ndarray],
@@ -229,15 +227,15 @@ except ImportError:
 osqp_solve_qp: Optional[
     Callable[
         [
-            DenseOrCSCMatrix,
-            DenseOrCSCMatrix,
-            Optional[DenseOrCSCMatrix],
-            Optional[DenseOrCSCMatrix],
-            Optional[DenseOrCSCMatrix],
-            Optional[DenseOrCSCMatrix],
-            Optional[DenseOrCSCMatrix],
-            Optional[DenseOrCSCMatrix],
-            Optional[DenseOrCSCMatrix],
+            Union[ndarray, csc_matrix],
+            Union[ndarray, csc_matrix],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
             bool,
         ],
         Optional[ndarray],
@@ -387,11 +385,11 @@ except ImportError:
 scs_solve_qp: Optional[
     Callable[
         [
-            DenseOrCSCMatrix,
+            Union[ndarray, csc_matrix],
             ndarray,
-            Optional[DenseOrCSCMatrix],
+            Optional[Union[ndarray, csc_matrix]],
             Optional[ndarray],
-            Optional[DenseOrCSCMatrix],
+            Optional[Union[ndarray, csc_matrix]],
             Optional[ndarray],
             Optional[ndarray],
             Optional[ndarray],

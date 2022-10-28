@@ -47,13 +47,15 @@ to cite the following article:
     DOI: 10.1007/s12532-017-0130-5
 """
 
-from typing import Optional
+from typing import Optional, Union
 
 import highspy
 import numpy as np
 import scipy.sparse as spa
+from numpy import ndarray
+from scipy.sparse import csc_matrix
 
-from .typing import DenseOrCSCMatrix, warn_about_sparse_conversion
+from .typing import warn_about_sparse_conversion
 
 
 def __set_hessian(model: highspy.HighsModel, P: spa.csc_matrix) -> None:
@@ -156,11 +158,11 @@ def __set_rows(
 
 
 def highs_solve_qp(
-    P: DenseOrCSCMatrix,
+    P: Union[ndarray, csc_matrix],
     q: np.ndarray,
-    G: Optional[DenseOrCSCMatrix] = None,
+    G: Optional[Union[ndarray, csc_matrix]] = None,
     h: Optional[np.ndarray] = None,
-    A: Optional[DenseOrCSCMatrix] = None,
+    A: Optional[Union[ndarray, csc_matrix]] = None,
     b: Optional[np.ndarray] = None,
     lb: Optional[np.ndarray] = None,
     ub: Optional[np.ndarray] = None,
