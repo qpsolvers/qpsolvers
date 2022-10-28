@@ -6,6 +6,11 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- CVXOPT: absolute tolerance parameter
+- CVXOPT: feasibility tolerance parameter
+- CVXOPT: limit maximum number of iterations
+- CVXOPT: refinement parameter
+- CVXOPT: relative tolerance parameter
 - Gurobi: time limit parameter
 - HiGHS: time limit parameter
 
