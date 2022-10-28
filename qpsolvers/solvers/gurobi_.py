@@ -89,6 +89,12 @@ def gurobi_solve_qp(
     -------
     :
         Solution to the QP, if found, otherwise ``None``.
+
+    Notes
+    -----
+        Check out the `Gurobi documentation
+        <https://www.gurobi.com/documentation/>`_ for more information on the
+        solver.
     """
     if initvals is not None:
         warn("Gurobi: warm-start values given but they will be ignored")
