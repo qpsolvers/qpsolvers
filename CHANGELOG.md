@@ -19,6 +19,10 @@ All notable changes to this project will be documented in this file.
 - Remove internal CVXOPT-specific type annotation
 - Simplify intermediate internal type annotations
 
+### Fixed
+
+- CVXOPT: Pass warm-start primal properly
+
 ## [2.4.1] - 2022/10/21
 
 ### Changed
