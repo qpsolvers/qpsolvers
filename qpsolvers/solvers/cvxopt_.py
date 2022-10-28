@@ -29,8 +29,7 @@ from numpy import array, ndarray
 from .conversions import linear_from_box_inequalities
 from .typing import CvxoptReadyMatrix
 
-
-options["show_progress"] = False  # disable cvxopt output
+options["show_progress"] = False  # disable CVXOPT output by default
 
 
 def cvxopt_matrix(M: CvxoptReadyMatrix) -> matrix:
@@ -69,6 +68,11 @@ def cvxopt_solve_qp(
     solver: str = None,
     initvals: Optional[ndarray] = None,
     verbose: bool = False,
+    maxiters: Optional[int] = None,
+    abstol: Optional[float] = None,
+    reltol: Optional[float] = None,
+    feastol: Optional[float] = None,
+    refinement: Optional[int] = None,
 ) -> Optional[ndarray]:
     """
     Solve a Quadratic Program defined as:
@@ -117,6 +121,18 @@ def cvxopt_solve_qp(
         Warm-start guess vector.
     verbose :
         Set to `True` to print out extra information.
+    maxiters :
+        Maximum number of iterations (default: ``100``).
+    abstol :
+        Absolute accuracy (default: ``1e-7``).
+    reltol :
+        Relative accuracy (default: ``1e-6``).
+    feastol :
+        Tolerance for feasibility conditions (default: ``1e-7``).
+    refinement :
+        Number of iterative refinement steps when solving KKT equations
+        (default: ``0`` if the problem has no second-order cone or matrix
+        inequality constraints; ``1`` otherwise).
 
     Returns
     -------
@@ -149,7 +165,20 @@ def cvxopt_solve_qp(
     """
     if lb is not None or ub is not None:
         G, h = linear_from_box_inequalities(G, h, lb, ub)
+
+    # Update solver options if applicable
     options["show_progress"] = verbose
+    if maxiters:
+        options["maxiters"] = maxiters
+    if abstol:
+        options["abstol"] = abstol
+    if reltol:
+        options["reltol"] = reltol
+    if feastol:
+        options["feastol"] = feastol
+    if refinement:
+        options["refinement"] = refinement
+
     args = [cvxopt_matrix(P), cvxopt_matrix(q)]
     kwargs = {"G": None, "h": None, "A": None, "b": None}
     if G is not None and h is not None:
