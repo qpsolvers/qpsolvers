@@ -6,7 +6,8 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- HiGHS: ``time_limit`` parameter
+- Gurobi: time limit parameter
+- HiGHS: time limit parameter
 
 ## [2.4.1] - 2022/10/21
 
@@ -216,7 +217,7 @@ All notable changes to this project will be documented in this file.
 
 - Code formatting now applies [Black](https://github.com/psf/black)
 - ECOS: refactor SOCP conversion to improve function readability
-- Gurobi performance significantly improved by new matrix API (thanks to @DKenefake)
+- Gurobi: performance significantly improved by new matrix API (thanks to @DKenefake)
 
 ### Fixed
 
@@ -286,10 +287,10 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- cvxpy: verbose keyword argument
-- ecos: verbose keyword argument
-- gurobi: verbose keyword argument
-- osqp: verbose keyword argument
+- CVXPY: verbose keyword argument
+- ECOS: verbose keyword argument
+- Gurobi: verbose keyword argument
+- OSQP: verbose keyword argument
 
 ### Fixed
 
