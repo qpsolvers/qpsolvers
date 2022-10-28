@@ -162,6 +162,11 @@ def cvxopt_solve_qp(
     -----
     CVXOPT only considers the lower entries of `P`, therefore it will use a
     different cost than the one intended if a non-symmetric matrix is provided.
+
+    See the `Algorithm Parameters
+    <https://cvxopt.org/userguide/coneprog.html#algorithm-parameters>`_ section
+    of the solver documentation for more details and default values of the
+    solver parameters.
     """
     if lb is not None or ub is not None:
         G, h = linear_from_box_inequalities(G, h, lb, ub)
