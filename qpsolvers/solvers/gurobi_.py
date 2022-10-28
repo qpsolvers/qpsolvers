@@ -42,6 +42,7 @@ def gurobi_solve_qp(
     ub: Optional[np.ndarray] = None,
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
+    time_limit: Optional[float] = None,
 ) -> Optional[np.ndarray]:
     """
     Solve a Quadratic Program defined as:
@@ -81,6 +82,8 @@ def gurobi_solve_qp(
         Warm-start guess vector (not used).
     verbose :
         Set to `True` to print out extra information.
+    time_limit :
+        Set a run time limit in seconds.
 
     Returns
     -------
@@ -92,8 +95,10 @@ def gurobi_solve_qp(
     if lb is not None or ub is not None:
         G, h = linear_from_box_inequalities(G, h, lb, ub)
     model = Model()
-    if not verbose:  # optionally turn off solver output
+    if not verbose:
         model.setParam("OutputFlag", 0)
+    if time_limit:
+        model.setParam("TimeLimit", time_limit)
     num_vars = P.shape[0]
     x = model.addMVar(
         num_vars, lb=-GRB.INFINITY, ub=GRB.INFINITY, vtype=GRB.CONTINUOUS
