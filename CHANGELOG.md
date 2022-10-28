@@ -14,6 +14,11 @@ All notable changes to this project will be documented in this file.
 - Gurobi: time limit parameter
 - HiGHS: time limit parameter
 
+### Changed
+
+- Remove internal CVXOPT-specific type annotation
+- Simplify intermediate internal type annotations
+
 ## [2.4.1] - 2022/10/21
 
 ### Changed

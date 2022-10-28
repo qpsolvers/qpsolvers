@@ -20,16 +20,18 @@
 
 """Solver interface for SCS"""
 
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Union
 from warnings import warn
 
 import numpy as np
+import scipy.sparse as spa
+from numpy import ndarray
 from numpy.linalg import norm
+from scipy.sparse import csc_matrix
 from scipy.sparse.linalg import lsqr
-from scipy import sparse
 from scs import solve
 
-from .typing import DenseOrCSCMatrix, warn_about_sparse_conversion
+from .typing import warn_about_sparse_conversion
 
 # See https://www.cvxgrp.org/scs/api/exit_flags.html#exit-flags
 __status_val_meaning__ = {
@@ -47,20 +49,20 @@ __status_val_meaning__ = {
 
 
 def scs_solve_qp(
-    P: DenseOrCSCMatrix,
-    q: np.ndarray,
-    G: Optional[DenseOrCSCMatrix] = None,
-    h: Optional[np.ndarray] = None,
-    A: Optional[DenseOrCSCMatrix] = None,
-    b: Optional[np.ndarray] = None,
-    lb: Optional[np.ndarray] = None,
-    ub: Optional[np.ndarray] = None,
-    initvals: Optional[np.ndarray] = None,
+    P: Union[ndarray, csc_matrix],
+    q: ndarray,
+    G: Optional[Union[ndarray, csc_matrix]] = None,
+    h: Optional[ndarray] = None,
+    A: Optional[Union[ndarray, csc_matrix]] = None,
+    b: Optional[ndarray] = None,
+    lb: Optional[ndarray] = None,
+    ub: Optional[ndarray] = None,
+    initvals: Optional[ndarray] = None,
     eps_abs: float = 1e-7,
     eps_rel: float = 1e-7,
     verbose: bool = False,
     **kwargs,
-) -> Optional[np.ndarray]:
+) -> Optional[ndarray]:
     """
     Solve a Quadratic Program defined as:
 
@@ -123,15 +125,15 @@ def scs_solve_qp(
     that SCS behaves closer to the other solvers. If you don't need that much
     precision, increase them for better performance.
     """
-    if isinstance(P, np.ndarray):
+    if isinstance(P, ndarray):
         warn_about_sparse_conversion("P")
-        P = sparse.csc_matrix(P)
-    if isinstance(G, np.ndarray):
+        P = csc_matrix(P)
+    if isinstance(G, ndarray):
         warn_about_sparse_conversion("G")
-        G = sparse.csc_matrix(G)
-    if isinstance(A, np.ndarray):
+        G = csc_matrix(G)
+    if isinstance(A, ndarray):
         warn_about_sparse_conversion("A")
-        A = sparse.csc_matrix(A)
+        A = csc_matrix(A)
     kwargs.update(
         {
             "eps_abs": eps_abs,
@@ -145,7 +147,7 @@ def scs_solve_qp(
         data["x"] = initvals
     if A is not None and b is not None:
         if G is not None and h is not None:
-            data["A"] = sparse.vstack([A, G], format="csc")
+            data["A"] = spa.vstack([A, G], format="csc")
             data["b"] = np.hstack([b, h])
             cone["z"] = b.shape[0]  # zero cone
             cone["l"] = h.shape[0]  # positive cone
@@ -169,9 +171,9 @@ def scs_solve_qp(
         n = P.shape[1]
         cone["bl"] = lb if lb is not None else np.full((n,), -np.inf)
         cone["bu"] = ub if ub is not None else np.full((n,), +np.inf)
-        zero_row = sparse.csc_matrix((1, n))
-        data["A"] = sparse.vstack(
-            (data["A"], zero_row, -sparse.eye(n)),
+        zero_row = csc_matrix((1, n))
+        data["A"] = spa.vstack(
+            (data["A"], zero_row, -spa.eye(n)),
             format="csc",
         )
         data["b"] = np.hstack((data["b"], 1.0, np.zeros(n)))

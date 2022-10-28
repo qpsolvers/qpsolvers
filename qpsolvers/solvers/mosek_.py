@@ -20,27 +20,26 @@
 
 """Solver interface for MOSEK"""
 
-from typing import Optional
+from typing import Optional, Union
 
 import cvxopt.msk
 import mosek
-
 from numpy import ndarray
+from scipy.sparse import csc_matrix
 
 from .cvxopt_ import cvxopt_solve_qp
-from .typing import CvxoptReadyMatrix
 
 
 def mosek_solve_qp(
-    P: CvxoptReadyMatrix,
-    q: CvxoptReadyMatrix,
-    G: CvxoptReadyMatrix,
-    h: CvxoptReadyMatrix,
-    A: Optional[CvxoptReadyMatrix] = None,
-    b: Optional[CvxoptReadyMatrix] = None,
-    lb: Optional[CvxoptReadyMatrix] = None,
-    ub: Optional[CvxoptReadyMatrix] = None,
-    initvals: Optional[CvxoptReadyMatrix] = None,
+    P: Union[ndarray, csc_matrix],
+    q: ndarray,
+    G: Union[ndarray, csc_matrix],
+    h: ndarray,
+    A: Optional[Union[ndarray, csc_matrix]] = None,
+    b: Optional[ndarray] = None,
+    lb: Optional[ndarray] = None,
+    ub: Optional[ndarray] = None,
+    initvals: Optional[ndarray] = None,
     verbose: bool = False,
 ) -> Optional[ndarray]:
     """
