@@ -20,7 +20,7 @@
 
 """Solver interface for CVXOPT."""
 
-from typing import Optional, Union
+from typing import Dict, Optional, Union
 
 import cvxopt
 from cvxopt.solvers import options, qp
@@ -32,7 +32,9 @@ from .conversions import linear_from_box_inequalities
 options["show_progress"] = False  # disable CVXOPT output by default
 
 
-def to_cvxopt(M: Union[ndarray, csc_matrix]) -> Union[cvxopt.matrix, cvxopt.spmatrix]:
+def to_cvxopt(
+    M: Union[ndarray, csc_matrix]
+) -> Union[cvxopt.matrix, cvxopt.spmatrix]:
     """
     Convert matrix to CVXOPT format.
 
@@ -190,11 +192,10 @@ def cvxopt_solve_qp(
     if A is not None and b is not None:
         kwargs["A"] = to_cvxopt(A)
         kwargs["b"] = to_cvxopt(b)
-    # initvals_dict: Dict[str, cvxopt.matrix] = {}
+    initvals_dict: Optional[Dict[str, cvxopt.matrix]] = None
     if initvals is not None:
-        # initvals_dict = {"x": to_cvxopt(initvals)}
-        pass
-    sol = qp(*args, solver=solver, initvals=initvals, **kwargs)
+        initvals_dict = {"x": to_cvxopt(initvals)}
+    sol = qp(*args, solver=solver, initvals=initvals_dict, **kwargs)
     if "optimal" not in sol["status"]:
         return None
     return array(sol["x"]).reshape((q.shape[0],))
