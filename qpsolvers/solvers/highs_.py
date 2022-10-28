@@ -216,8 +216,9 @@ def highs_solve_qp(
 
     Notes
     -----
-        The solver documentation is available `online
-        <https://ergo-code.github.io/HiGHS/>`_.
+        Check out the `HiGHS documentation
+        <https://ergo-code.github.io/HiGHS/>`_ for more information on the
+        solver.
     """
     if isinstance(P, np.ndarray):
         warn_about_sparse_conversion("P")
