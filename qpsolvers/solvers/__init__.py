@@ -59,6 +59,7 @@ try:
     solve_function["cvxopt"] = cvxopt_solve_qp
     available_solvers.append("cvxopt")
     dense_solvers.append("cvxopt")
+    sparse_solvers.append("cvxopt")
 except ImportError:
     pass
 

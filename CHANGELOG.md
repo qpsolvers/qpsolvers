@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- CVXOPT: solver is now listed as sparse as well
 - Remove internal CVXOPT-specific type annotation
 - Simplify intermediate internal type annotations
 
