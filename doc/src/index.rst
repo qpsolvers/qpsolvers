@@ -33,5 +33,6 @@ A similar function is provided for :ref:`least squares <Least squares>`.
     least-squares.rst
     supported-solvers.rst
     developer-notes.rst
+    references.rst
 
 You can also download this documentation as a `PDF document <qpsolvers.pdf>`_.
