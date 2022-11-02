@@ -169,6 +169,8 @@ def highs_solve_qp(
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
     time_limit: Optional[float] = None,
+    primal_feasibility_tolerance: Optional[float] = None,
+    dual_feasibility_tolerance: Optional[float] = None,
 ) -> Optional[np.ndarray]:
     """
     Solve a Quadratic Program defined as:
@@ -210,6 +212,10 @@ def highs_solve_qp(
         Set to `True` to print out extra information.
     time_limit :
         Set a run time limit in seconds.
+    primal_feasibility_tolerance:
+        Primal feasibility tolerance.
+    dual_feasibility_tolerance:
+        Dual feasibility tolerance.
 
     Returns
     -------
@@ -253,6 +259,14 @@ def highs_solve_qp(
         solver.setOptionValue("log_to_console", False)
     if time_limit:
         solver.setOptionValue("time_limit", time_limit)
+    if primal_feasibility_tolerance:
+        solver.setOptionValue(
+            "primal_feasibility_tolerance", primal_feasibility_tolerance
+        )
+    if dual_feasibility_tolerance:
+        solver.setOptionValue(
+            "dual_feasibility_tolerance", dual_feasibility_tolerance
+        )
     solver.passModel(model)
     solver.run()
 
