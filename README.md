@@ -68,19 +68,19 @@ This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``.
 
 ## Solvers
 
-| Solver | Keyword | Matrices | License | Warm-start |
-| ------ | ------- | -------- | ------- |------------|
-| [CVXOPT](http://cvxopt.org/) | ``cvxopt`` | Dense | GPL-3.0 | ✔️ |
-| [ECOS](https://web.stanford.edu/~boyd/papers/ecos.html) | ``ecos`` | Sparse | GPL-3.0 | ✖️ |
-| [Gurobi](https://www.gurobi.com/) | ``gurobi`` | Sparse | Commercial | ✖️ |
-| [HiGHS](https://highs.dev/) | ``highs`` | Sparse | MIT | ✖️ |
-| [MOSEK](https://mosek.com/) | ``mosek`` | Sparse | Commercial | ✔️ |
-| [OSQP](https://osqp.org/) | ``osqp`` | Sparse | Apache-2.0 | ✔️ |
-| [ProxQP](https://github.com/Simple-Robotics/proxsuite) | ``proxqp`` | Dense & Sparse | BSD-2-Clause | ✔️ |
-| [qpOASES](https://github.com/coin-or/qpOASES) | ``qpoases`` | Dense | LGPL-2.1 | ➖ |
-| [qpSWIFT](https://qpswift.github.io/) | ``qpswift`` | Sparse | GPL-3.0 | ✖️ |
-| [quadprog](https://pypi.python.org/pypi/quadprog/) | ``quadprog`` | Dense | GPL-2.0 | ✖️ |
-| [SCS](https://www.cvxgrp.org/scs/) | ``scs`` | Sparse | MIT | ✔️ |
+| Solver | Keyword | Algorithm | Matrices | License | Warm-start |
+| ------ | ------- | --------- | -------- | ------- |------------|
+| [CVXOPT](http://cvxopt.org/) | ``cvxopt`` | Interior point | Dense | GPL-3.0 | ✔️ |
+| [ECOS](https://web.stanford.edu/~boyd/papers/ecos.html) | ``ecos`` | Interior point | Sparse | GPL-3.0 | ✖️ |
+| [Gurobi](https://www.gurobi.com/) | ``gurobi`` | Interior point | Sparse | Commercial | ✖️ |
+| [HiGHS](https://highs.dev/) | ``highs`` | Active set | Sparse | MIT | ✖️ |
+| [MOSEK](https://mosek.com/) | ``mosek`` | Interior point | Sparse | Commercial | ✔️ |
+| [OSQP](https://osqp.org/) | ``osqp`` | Augmented Lagrangian | Sparse | Apache-2.0 | ✔️ |
+| [ProxQP](https://github.com/Simple-Robotics/proxsuite) | ``proxqp`` | Augmented Lagrangian | Dense & Sparse | BSD-2-Clause | ✔️ |
+| [qpOASES](https://github.com/coin-or/qpOASES) | ``qpoases`` | Active set | Dense | LGPL-2.1 | ➖ |
+| [qpSWIFT](https://qpswift.github.io/) | ``qpswift`` | Interior point | Sparse | GPL-3.0 | ✖️ |
+| [quadprog](https://pypi.python.org/pypi/quadprog/) | ``quadprog`` | Active set | Dense | GPL-2.0 | ✖️ |
+| [SCS](https://www.cvxgrp.org/scs/) | ``scs`` | Augmented Lagrangian | Sparse | MIT | ✔️ |
 
 Matrix arguments are NumPy arrays for dense solvers and SciPy Compressed Sparse Column (CSC) matrices for sparse ones.
 
