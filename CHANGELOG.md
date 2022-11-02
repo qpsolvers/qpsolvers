@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - CVXOPT: relative tolerance parameter
 - ECOS: document additional parameters
 - Gurobi: time limit parameter
+- Documentation: reference solver papers
 - HiGHS: time limit parameter
 
 ### Changed
