@@ -143,13 +143,17 @@ def qpswift_solve_qp(
        * - Name
          - Effect
        * - MAXITER
-         - maximum number of iterations needed
+         - Maximum number of iterations needed.
        * - ABSTOL
-         - absolute tolerance
+         - Absolute tolerance on the duality gap :math:`(h - Gx)^T z / m`. See
+           [Pandala2019]_ for details.
        * - RELTOL
-         - relative tolerance
+         - Relative tolerance on the residuals :math:`r_x = P x + G^T z + q`
+           (dual residual), :math:`r_y = A x - b` (primal residual on equality
+           constraints) and :math:`r_z = h - G x - s` (primal residual on
+           inequality constraints). See [Pandala2019]_ for details.
        * - SIGMA
-         - maximum centering allowed
+         - Maximum centering allowed.
 
     If a verbose output shows that the maximum number of iterations is reached,
     check e.g. (1) the rank of your equality constraint matrix and (2) that
