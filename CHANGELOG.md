@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- CVXOPT: improve documentation
 - CVXOPT: solver is now listed as sparse as well
 - ECOS: type annotations allow sparse input matrices
 - Remove internal CVXOPT-specific type annotation
@@ -25,7 +26,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
-- CVXOPT: Pass warm-start primal properly
+- CVXOPT: pass warm-start primal properly
 
 ## [2.4.1] - 2022/10/21
 
@@ -111,13 +112,13 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- qpSWIFT: Forward solver options as keywords arguments as with other solvers
+- qpSWIFT: forward solver options as keywords arguments as with other solvers
 
 ## [1.9.1] - 2022/05/02
 
 ### Fixed
 
-- OSQP: Pass extra keyword arguments properly (thanks to @urob)
+- OSQP: pass extra keyword arguments properly (thanks to @urob)
 
 ## [1.9.0] - 2022/04/03
 
