@@ -32,10 +32,10 @@ from typing import Optional, Union
 from warnings import warn
 
 import osqp
+import scipy.sparse as spa
 from numpy import hstack, inf, ndarray, ones
 from osqp import OSQP
 from scipy.sparse import csc_matrix
-import scipy.sparse as spa
 
 from .conversions import linear_from_box_inequalities
 from .typing import warn_about_sparse_conversion
@@ -96,10 +96,12 @@ def osqp_solve_qp(
         Set to `True` to print out extra information.
     eps_abs :
         Absolute convergence tolerance of the solver. Lower values yield more
-        precise solutions at the cost of computation time.
+        precise solutions at the cost of computation time. See *e.g.*
+        [tolprimer]_ for an overview of solver tolerances.
     eps_rel :
         Relative convergence tolerance of the solver. Lower values yield more
-        precise solutions at the cost of computation time.
+        precise solutions at the cost of computation time. See *e.g.*
+        [tolprimer]_ for an overview of solver tolerances.
     polish :
         Perform `polishing <https://osqp.org/docs/solver/#polishing>`_, an
         additional step where the solver tries to improve the accuracy of the

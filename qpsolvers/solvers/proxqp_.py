@@ -197,9 +197,11 @@ def proxqp_solve_qp(
            constraints.
        * - ``eps_abs``
          - Asbolute stopping criterion of the solver (default: 1e-3, note that
-           this is a laxer default than other solvers).
+           this is a laxer default than other solvers). See *e.g.*
+           [tolprimer]_ for an overview of solver tolerances.
        * - ``eps_rel``
-         - Relative stopping criterion of the solver.
+         - Relative stopping criterion of the solver. See *e.g.* [tolprimer]_
+           for an overview of solver tolerances.
        * - ``mu_eq``
          - Proximal step size wrt equality constraints multiplier.
        * - ``mu_in``
