@@ -20,15 +20,14 @@
 
 """Solver interface for ECOS"""
 
-from typing import Optional
+from typing import Optional, Union
 from warnings import warn
 
 import numpy as np
 from ecos import solve
-from scipy import sparse
+from scipy import sparse as spa
 
 from .conversions import linear_from_box_inequalities, socp_from_qp
-
 
 __exit_flag_meaning__ = {
     0: "OPTIMAL",
@@ -39,11 +38,11 @@ __exit_flag_meaning__ = {
 
 
 def ecos_solve_qp(
-    P: np.ndarray,
+    P: Union[np.ndarray, spa.csc_matrix],
     q: np.ndarray,
-    G: Optional[np.ndarray] = None,
+    G: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
     h: Optional[np.ndarray] = None,
-    A: Optional[np.ndarray] = None,
+    A: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
     b: Optional[np.ndarray] = None,
     lb: Optional[np.ndarray] = None,
     ub: Optional[np.ndarray] = None,
@@ -95,9 +94,7 @@ def ecos_solve_qp(
         G, h = linear_from_box_inequalities(G, h, lb, ub)
     c_socp, G_socp, h_socp, dims = socp_from_qp(P, q, G, h)
     if A is not None:
-        A_socp = sparse.hstack(
-            [A, sparse.csc_matrix((A.shape[0], 1))], format="csc"
-        )
+        A_socp = spa.hstack([A, spa.csc_matrix((A.shape[0], 1))], format="csc")
         solution = solve(
             c_socp, G_socp, h_socp, dims, A_socp, b, verbose=verbose
         )

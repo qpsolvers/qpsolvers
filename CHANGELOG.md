@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - CVXOPT: solver is now listed as sparse as well
+- ECOS: type annotations allow sparse input matrices
 - Remove internal CVXOPT-specific type annotation
 - Simplify intermediate internal type annotations
 
