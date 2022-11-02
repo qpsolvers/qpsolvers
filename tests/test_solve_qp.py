@@ -522,7 +522,9 @@ class TestSolveQP(unittest.TestCase):
             self.assertIsNotNone(x)
             known_solution = array([2.0] * 149 + [3.0])
             sol_tolerance = (
-                1e-3
+                5e-3
+                if solver == "cvxopt"
+                else 1e-3
                 if solver == "gurobi"
                 else 1e-6
                 if solver == "highs"
@@ -564,7 +566,7 @@ class TestSolveQP(unittest.TestCase):
                 1e-3
                 if solver == "gurobi"
                 else 1e-7
-                if solver == "scs"
+                if solver in ["cvxopt", "scs"]
                 else 1e-8
             )
             ineq_tolerance = 1e-10
