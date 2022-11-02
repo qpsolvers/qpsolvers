@@ -48,6 +48,7 @@ def ecos_solve_qp(
     ub: Optional[np.ndarray] = None,
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
+    **kwargs,
 ) -> Optional[np.ndarray]:
     """
     Solve a Quadratic Program defined as:
@@ -128,14 +129,17 @@ def ecos_solve_qp(
         warn("note that warm-start values ignored by this wrapper")
     if lb is not None or ub is not None:
         G, h = linear_from_box_inequalities(G, h, lb, ub)
+    kwargs.update(
+        {
+            "verbose": verbose,
+        }
+    )
     c_socp, G_socp, h_socp, dims = socp_from_qp(P, q, G, h)
     if A is not None:
         A_socp = spa.hstack([A, spa.csc_matrix((A.shape[0], 1))], format="csc")
-        solution = solve(
-            c_socp, G_socp, h_socp, dims, A_socp, b, verbose=verbose
-        )
+        solution = solve(c_socp, G_socp, h_socp, dims, A_socp, b, **kwargs)
     else:
-        solution = solve(c_socp, G_socp, h_socp, dims, verbose=verbose)
+        solution = solve(c_socp, G_socp, h_socp, dims, **kwargs)
     flag = solution["info"]["exitFlag"]
     if flag != 0:
         warn(f"ECOS returned exit flag {flag} ({__exit_flag_meaning__[flag]})")

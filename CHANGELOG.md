@@ -27,6 +27,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 
 - CVXOPT: pass warm-start primal properly
+- ECOS: forward keyword arguments
 
 ## [2.4.1] - 2022/10/21
 
