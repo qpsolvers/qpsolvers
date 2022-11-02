@@ -596,6 +596,10 @@ class TestSolveQP(unittest.TestCase):
             P, q, G, h = self.get_sparse_problem()
             lb = +0.5 * ones(q.shape)
             ub = +1.5 * ones(q.shape)
+            if solver == "cvxopt":
+                # Skipping this test for CVXOPT for now
+                # See https://github.com/cvxopt/cvxopt/issues/229
+                return
             x = solve_qp_with_test_params(
                 P, q, G, h, lb=lb, ub=ub, solver=solver
             )
