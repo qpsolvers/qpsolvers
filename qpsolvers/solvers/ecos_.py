@@ -87,6 +87,42 @@ def ecos_solve_qp(
     -------
     :
         Solution to the QP, if found, otherwise ``None``.
+
+    Notes
+    -----
+    All other keyword arguments are forwarded as options to the ECOS solver.
+    For instance, you can call ``qpswift_solve_qp(P, q, G, h, abstol=1e-5)``.
+
+    For a quick overview, the solver accepts the following settings:
+
+    .. list-table::
+       :widths: 30 70
+       :header-rows: 1
+
+       * - Name
+         - Effect
+       * - ``feastol``
+         - the tolerance on the primal and dual residual
+       * - ``abstol``
+         - the absolute tolerance on the duality gap
+       * - ``reltol``
+         - the relative tolerance on the duality gap
+       * - ``feastol_inacc``
+         - the tolerance on the primal and dual residual if reduced precisions
+       * - ``abstol_inacc``
+         - the absolute tolerance on the duality gap if reduced precision
+       * - ``reltolL_inacc``
+         - the relative tolerance on the duality gap if reduced precision
+       * - ``max_iters``
+         - the maximum numer of iterations.
+       * - ``nitref``
+         - the number of iterative refinement steps.
+       * - ``verbose``
+         - signals to print on non zero value.
+
+    See the `ECOS Python wrapper documentation
+    <https://github.com/embotech/ecos-python#calling-ecos-from-python>`_ for
+    more details.
     """
     if initvals is not None:
         warn("note that warm-start values ignored by this wrapper")
