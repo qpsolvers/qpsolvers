@@ -12,6 +12,8 @@ All notable changes to this project will be documented in this file.
 - CVXOPT: refinement parameter
 - CVXOPT: relative tolerance parameter
 - ECOS: document additional parameters
+- HiGHS: primal feasibility tolerance parameter
+- HiGHS: dual feasibility tolerance parameter
 - Gurobi: time limit parameter
 - Documentation: reference solver papers
 - HiGHS: time limit parameter
