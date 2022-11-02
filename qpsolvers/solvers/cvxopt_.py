@@ -124,14 +124,15 @@ def cvxopt_solve_qp(
     maxiters :
         Maximum number of iterations.
     abstol :
-        Absolute tolerance on the duality gap :math:`(h - Gx)^T z / m`. See
-        [Vandenberghe2010]_ for details.
+        Absolute tolerance on the duality gap. See [Vandenberghe2010]_ or
+        *e.g.* [tolprimer]_ for a primer on the duality gap.
     reltol :
-        Relative tolerance on the duality gap :math:`s^T z / m`. See
-        [Vandenberghe2010]_ for details.
+        Relative tolerance on the duality gap. See [Vandenberghe2010]_ or
+        *e.g.* [tolprimer]_ for a primer on the duality gap.
     feastol :
-        Tolerance for feasibility conditions, that is, for equality and
-        inequality constraints (default: ``1e-7``).
+        Tolerance for feasibility conditions, that is, for the primal residual
+        equality and inequality constraints. See *e.g.* [tolprimer]_ for a
+        primer on primal-dual residuals.
     refinement :
         Number of iterative refinement steps when solving KKT equations
         (default: ``0`` if the problem has no second-order cone or matrix

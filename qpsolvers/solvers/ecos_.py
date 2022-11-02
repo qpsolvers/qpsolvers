@@ -103,27 +103,26 @@ def ecos_solve_qp(
        * - Name
          - Effect
        * - ``feastol``
-         - the tolerance on the primal and dual residual
+         -  Tolerance on the primal and dual residual.
        * - ``abstol``
-         - the absolute tolerance on the duality gap
+         -  Absolute tolerance on the duality gap.
        * - ``reltol``
-         - the relative tolerance on the duality gap
+         -  Relative tolerance on the duality gap.
        * - ``feastol_inacc``
-         - the tolerance on the primal and dual residual if reduced precisions
+         -  Tolerance on the primal and dual residual if reduced precisions.
        * - ``abstol_inacc``
-         - the absolute tolerance on the duality gap if reduced precision
+         - Absolute tolerance on the duality gap if reduced precision.
        * - ``reltolL_inacc``
-         - the relative tolerance on the duality gap if reduced precision
+         - Relative tolerance on the duality gap if reduced precision.
        * - ``max_iters``
-         - the maximum numer of iterations.
+         - Maximum numer of iterations.
        * - ``nitref``
-         - the number of iterative refinement steps.
-       * - ``verbose``
-         - signals to print on non zero value.
+         - Number of iterative refinement steps.
 
     See the `ECOS Python wrapper documentation
     <https://github.com/embotech/ecos-python#calling-ecos-from-python>`_ for
-    more details.
+    more details. You can also check out [tolprimer]_ for a primer on
+    primal-dual residuals or the duality gap.
     """
     if initvals is not None:
         warn("note that warm-start values ignored by this wrapper")

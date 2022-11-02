@@ -100,11 +100,13 @@ def scs_solve_qp(
     initvals :
         Warm-start guess vector (not used).
     eps_abs : float
-        Absolute feasibility tolerance, see `Termination criteria
-        <https://www.cvxgrp.org/scs/algorithm/index.html#termination>`_.
+        Absolute feasibility tolerance. See `Termination criteria
+        <https://www.cvxgrp.org/scs/algorithm/index.html#termination>`_ or
+        *e.g.* [tolprimer]_ for a primer on tolerance settings.
     eps_rel : float
-        Relative feasibility tolerance, see `Termination criteria
-        <https://www.cvxgrp.org/scs/algorithm/index.html#termination>`_.
+        Relative feasibility tolerance. See `Termination criteria
+        <https://www.cvxgrp.org/scs/algorithm/index.html#termination>`_ or
+        *e.g.* [tolprimer]_ for a primer on tolerance settings.
     verbose :
         Set to `True` to print out extra information.
 

@@ -145,13 +145,13 @@ def qpswift_solve_qp(
        * - MAXITER
          - Maximum number of iterations needed.
        * - ABSTOL
-         - Absolute tolerance on the duality gap :math:`(h - Gx)^T z / m`. See
-           [Pandala2019]_ for details.
+         - Absolute tolerance on the duality gap. See *e.g.* [tolprimer]_ for a
+           primer on the duality gap and solver tolerances.
        * - RELTOL
          - Relative tolerance on the residuals :math:`r_x = P x + G^T z + q`
            (dual residual), :math:`r_y = A x - b` (primal residual on equality
            constraints) and :math:`r_z = h - G x - s` (primal residual on
-           inequality constraints). See [Pandala2019]_ for details.
+           inequality constraints). See equation (21) in [Pandala2019]_.
        * - SIGMA
          - Maximum centering allowed.
 
