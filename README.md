@@ -68,8 +68,8 @@ This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``.
 
 ## Solvers
 
-| Solver | Keyword | Type | License | Warm-start |
-| ------ | ------- | ---- | ------- |------------|
+| Solver | Keyword | Matrices | License | Warm-start |
+| ------ | ------- | -------- | ------- |------------|
 | [CVXOPT](http://cvxopt.org/) | ``cvxopt`` | Dense | GPL-3.0 | ✔️ |
 | [ECOS](https://web.stanford.edu/~boyd/papers/ecos.html) | ``ecos`` | Sparse | GPL-3.0 | ✖️ |
 | [Gurobi](https://www.gurobi.com/) | ``gurobi`` | Sparse | Commercial | ✖️ |
@@ -81,6 +81,8 @@ This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``.
 | [qpSWIFT](https://qpswift.github.io/) | ``qpswift`` | Sparse | GPL-3.0 | ✖️ |
 | [quadprog](https://pypi.python.org/pypi/quadprog/) | ``quadprog`` | Dense | GPL-2.0 | ✖️ |
 | [SCS](https://www.cvxgrp.org/scs/) | ``scs`` | Sparse | MIT | ✔️ |
+
+Matrix arguments are NumPy arrays for dense solvers and SciPy Compressed Sparse Column (CSC) matrices for sparse ones.
 
 ## Frequently Asked Questions
 
