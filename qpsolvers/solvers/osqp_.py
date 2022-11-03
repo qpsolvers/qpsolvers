@@ -157,14 +157,7 @@ def osqp_solve_qp(
     if lb is not None or ub is not None:
         G, h = linear_from_box_inequalities(G, h, lb, ub)
     solver = OSQP()
-    kwargs.update(
-        {
-            "eps_abs": eps_abs,
-            "eps_rel": eps_rel,
-            "polish": polish,
-            "verbose": verbose,
-        }
-    )
+    kwargs["verbose"] = verbose
     if A is not None and b is not None:
         if isinstance(A, ndarray):
             warn_about_sparse_conversion("A")
