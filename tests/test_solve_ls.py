@@ -25,7 +25,7 @@ Tests for the `solve_lp` function.
 import unittest
 import warnings
 
-from numpy import allclose, array, dot
+from numpy import array, dot
 from numpy.linalg import norm
 
 from qpsolvers import available_solvers, solve_ls
@@ -108,12 +108,22 @@ class TestSolveLS(unittest.TestCase):
             self.assertIsNotNone(x)
             self.assertIsNotNone(x_sp)
             known_solution = array([2.0 / 3, -1.0 / 3, 2.0 / 3])
-            sol_tolerance = 1e-5 if solver == "ecos" else 1e-6
-            ineq_tolerance = 2e-7 if solver == "scs" else 1e-9
+            sol_tolerance = (
+                5e-3
+                if solver == "osqp"
+                else 1e-5
+                if solver == "ecos"
+                else 1e-6
+            )
+            eq_tolerance = 1e-9
+            ineq_tolerance = (
+                1e-3 if solver == "osqp" else 2e-7 if solver == "scs" else 1e-9
+            )
             self.assertLess(norm(x - known_solution), sol_tolerance)
             self.assertLess(norm(x_sp - known_solution), sol_tolerance)
             self.assertLess(max(dot(G, x) - h), ineq_tolerance)
-            self.assertTrue(allclose(dot(A, x), b))
+            self.assertLess(max(dot(A, x) - b), eq_tolerance)
+            self.assertLess(min(dot(A, x) - b), eq_tolerance)
 
         return test
 
