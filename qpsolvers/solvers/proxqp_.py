@@ -19,7 +19,8 @@
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
 """
-Solver interface for `ProxQP <https://github.com/qpSWIFT/qpSWIFT>`__.
+Solver interface for `ProxQP
+<https://github.com/Simple-Robotics/proxsuite#proxqp>`__.
 
 ProxQP is the QP solver from ProxSuite, a collection of open-source solvers
 rooted in revisited primal-dual proximal algorithms. If you are using ProxQP in
