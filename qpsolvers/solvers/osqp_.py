@@ -94,18 +94,6 @@ def osqp_solve_qp(
         Warm-start guess vector.
     verbose :
         Set to `True` to print out extra information.
-    eps_abs :
-        Absolute convergence tolerance of the solver. Lower values yield more
-        precise solutions at the cost of computation time. See *e.g.*
-        [tolprimer]_ for an overview of solver tolerances.
-    eps_rel :
-        Relative convergence tolerance of the solver. Lower values yield more
-        precise solutions at the cost of computation time. See *e.g.*
-        [tolprimer]_ for an overview of solver tolerances.
-    polish :
-        Perform `polishing <https://osqp.org/docs/solver/#polishing>`_, an
-        additional step where the solver tries to improve the accuracy of the
-        solution. Default is ``True``.
 
     Returns
     -------
@@ -130,16 +118,41 @@ def osqp_solve_qp(
 
     Notes
     -----
-    As of OSQP 0.6.1, the default values for both absolute and relative
-    tolerances are set to ``1e-3``, which results in low solver times but
-    imprecise solutions compared to the other QP solvers. We lower them to
-    ``1e-5`` so that OSQP behaves closer to the other solvers in terms of
-    numerical accuracy.
+    Keyword arguments are forwarded to OSQP. For instance, we can call
+    ``osqp_solve_qp(P, q, G, h, u, eps_abs=1e-8, eps_rel=0.0)``. OSQP settings
+    include the following:
 
-    All other keyword arguments are forwarded to the OSQP solver. For instance,
-    you can call ``osqp_solve_qp(P, q, G, h, u, alpha=1.42)``. See the `solver
-    documentation <https://osqp.org/docs/interfaces/solver_settings.html>`_ for
-    details.
+    .. list-table::
+       :widths: 30 70
+       :header-rows: 1
+
+       * - Name
+         - Description
+       * - ``max_iter``
+         - Maximum number of iterations.
+       * - ``time_limit``
+         - Run time limit in seconds, 0 to disable.
+       * - ``eps_abs``
+         - Absolute feasibility tolerance. See `Convergence
+           <https://osqp.org/docs/solver/index.html#convergence>`__.
+       * - ``eps_rel``
+         - Relative feasibility tolerance. See `Convergence
+           <https://osqp.org/docs/solver/index.html#convergence>`__.
+       * - ``eps_prim_inf``
+         - Primal infeasibility tolerance.
+       * - ``eps_dual_inf``
+         - Dual infeasibility tolerance.
+       * - ``polish``
+         - Perform polishing. See `Polishing
+           <https://osqp.org/docs/solver/#polishing>`_.
+
+    Check out the `OSQP settings
+    <https://osqp.org/docs/interfaces/solver_settings.html>`_ documentation for
+    all available settings..
+
+    Lower values for absolute or relative tolerances yield more precise
+    solutions at the cost of computation time. See *e.g.* [tolprimer]_ for an
+    overview of solver tolerances.
     """
     if isinstance(P, ndarray):
         warn_about_sparse_conversion("P")
