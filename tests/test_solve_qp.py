@@ -173,8 +173,10 @@ class TestSolveQP(unittest.TestCase):
             self.assertIsNotNone(x)
             self.assertIsNotNone(x_sp)
             known_solution = array([0.30769231, -0.69230769, 1.38461538])
-            sol_tolerance = 1e-4 if solver == "ecos" else 1e-8
-            ineq_tolerance = 1e-10
+            sol_tolerance = (
+                5e-4 if solver == "scs" else 1e-4 if solver == "ecos" else 1e-8
+            )
+            ineq_tolerance = 2e-4 if solver == "scs" else 1e-10
             self.assertLess(norm(x - known_solution), sol_tolerance)
             self.assertLess(norm(x_sp - known_solution), sol_tolerance)
             self.assertLess(max(dot(G, x) - h), ineq_tolerance)
@@ -326,7 +328,9 @@ class TestSolveQP(unittest.TestCase):
             )
             self.assertIsNotNone(x)
             known_solution = array([0.41463415, -0.41463415, 1.0])
-            sol_tolerance = 1e-6 if solver in ["ecos", "scs"] else 1e-8
+            sol_tolerance = (
+                5e-5 if solver == "scs" else 1e-6 if solver == "ecos" else 1e-8
+            )
             ineq_tolerance = 1e-10
             self.assertLess(norm(x - known_solution), sol_tolerance)
             self.assertLess(max(dot(G, x) - h), ineq_tolerance)
@@ -526,11 +530,13 @@ class TestSolveQP(unittest.TestCase):
                 if solver == "cvxopt"
                 else 1e-3
                 if solver == "gurobi"
+                else 1e-4
+                if solver == "scs"
                 else 1e-6
                 if solver == "highs"
                 else 1e-7
             )
-            ineq_tolerance = 1e-7
+            ineq_tolerance = 1e-4 if solver == "scs" else 1e-7
             self.assertLess(norm(x - known_solution), sol_tolerance)
             self.assertLess(max(G * x - h), ineq_tolerance)
 
@@ -639,8 +645,10 @@ class TestSolveQP(unittest.TestCase):
                 verbose=True,  # increases coverage
             )
             self.assertIsNotNone(x)
-            sol_tolerance = 1e-4 if solver == "ecos" else 1e-8
-            ineq_tolerance = 1e-10
+            sol_tolerance = (
+                5e-4 if solver == "scs" else 1e-4 if solver == "ecos" else 1e-8
+            )
+            ineq_tolerance = 2e-4 if solver == "scs" else 1e-10
             self.assertLess(norm(x - known_solution), sol_tolerance)
             self.assertLess(max(dot(G, x) - h), ineq_tolerance)
             self.assertTrue(allclose(dot(A, x), b))
