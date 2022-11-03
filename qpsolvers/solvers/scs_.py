@@ -107,9 +107,9 @@ def scs_solve_qp(
 
     Notes
     -----
-    Keyword arguments are forwarded as is to SCS. For instance, you can call
-    ``scs_solve_qp(P, q, G, h, normalize=True)``. SCS settings include the
-    following:
+    Keyword arguments are forwarded as is to SCS. For instance, we can call
+    ``scs_solve_qp(P, q, G, h, eps_abs=1e-6, eps_rel=1e-4)``. SCS settings
+    include the following:
 
     .. list-table::
        :widths: 30 70
