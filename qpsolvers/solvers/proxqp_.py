@@ -23,9 +23,7 @@ Solver interface for `ProxQP <https://github.com/qpSWIFT/qpSWIFT>`__.
 
 ProxQP is the QP solver from ProxSuite, a collection of open-source solvers
 rooted in revisited primal-dual proximal algorithms. If you are using ProxQP in
-your work, consider citing the corresponding paper: `PROX-QP: Yet another
-Quadratic Programming Solver for Robotics and beyond
-<https://hal.inria.fr/hal-03683733/file/Yet_another_QP_solver_for_robotics_and_beyond.pdf/>`__.
+your work, consider citing the corresponding paper: [Bambade2022]_.
 """
 
 from typing import Optional, Union
