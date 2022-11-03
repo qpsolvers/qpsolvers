@@ -34,7 +34,7 @@ import proxsuite
 import scipy.sparse as spa
 
 
-def proxqp_combine_inequalities(G, h, lb, ub, n: int, use_csc: bool):
+def __combine_inequalities(G, h, lb, ub, n: int, use_csc: bool):
     """
     Combine linear and box inequalities for ProxQP.
 
@@ -83,7 +83,7 @@ def proxqp_combine_inequalities(G, h, lb, ub, n: int, use_csc: bool):
     return C_prox, u_prox, l_prox
 
 
-def proxqp_select_backend(backend: Optional[str], use_csc: bool):
+def __select_backend(backend: Optional[str], use_csc: bool):
     """
     Select backend function for ProxQP.
 
@@ -228,10 +228,8 @@ def proxqp_solve_qp(
         kwargs["x"] = initvals
     n: int = q.shape[0]
     use_csc: bool = isinstance(P, spa.csc_matrix)
-    C_prox, u_prox, l_prox = proxqp_combine_inequalities(
-        G, h, lb, ub, n, use_csc
-    )
-    solve_function = proxqp_select_backend(backend, use_csc)
+    C_prox, u_prox, l_prox = __combine_inequalities(G, h, lb, ub, n, use_csc)
+    solve_function = __select_backend(backend, use_csc)
     result = solve_function(
         P,
         q,
