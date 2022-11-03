@@ -58,8 +58,6 @@ def scs_solve_qp(
     lb: Optional[ndarray] = None,
     ub: Optional[ndarray] = None,
     initvals: Optional[ndarray] = None,
-    eps_abs: float = 1e-7,
-    eps_rel: float = 1e-7,
     verbose: bool = False,
     **kwargs,
 ) -> Optional[ndarray]:
@@ -99,14 +97,6 @@ def scs_solve_qp(
         Upper bound constraint vector.
     initvals :
         Warm-start guess vector (not used).
-    eps_abs : float
-        Absolute feasibility tolerance. See `Termination criteria
-        <https://www.cvxgrp.org/scs/algorithm/index.html#termination>`_ or
-        *e.g.* [tolprimer]_ for a primer on tolerance settings.
-    eps_rel : float
-        Relative feasibility tolerance. See `Termination criteria
-        <https://www.cvxgrp.org/scs/algorithm/index.html#termination>`_ or
-        *e.g.* [tolprimer]_ for a primer on tolerance settings.
     verbose :
         Set to `True` to print out extra information.
 
@@ -118,14 +108,37 @@ def scs_solve_qp(
     Notes
     -----
     Keyword arguments are forwarded as is to SCS. For instance, you can call
-    ``scs_solve_qp(P, q, G, h, normalize=True)``. Solver settings for SCS are
-    described `here <https://www.cvxgrp.org/scs/api/settings.html#settings>`_.
+    ``scs_solve_qp(P, q, G, h, normalize=True)``. SCS settings include the
+    following:
 
-    As of SCS 3.0.1, the default feasibility tolerances are set ``1e-4``,
-    resulting in larger inequality constraint violations than with other
-    solvers on the README and unit test problems. We lower them to ``1e-9`` so
-    that SCS behaves closer to the other solvers. If you don't need that much
-    precision, increase them for better performance.
+    .. list-table::
+       :widths: 30 70
+       :header-rows: 1
+
+       * - Name
+         - Description
+       * - ``max_iters``
+         - Maximum number of iterations to run.
+       * - ``time_limit_secs``
+         - Time limit for solve run in seconds (can be fractional). 0 is
+           interpreted as no limit.
+       * - ``eps_abs``
+         - Absolute feasibility tolerance. See `Termination criteria
+           <https://www.cvxgrp.org/scs/algorithm/index.html#termination>`__.
+       * - ``eps_rel``
+         - Relative feasibility tolerance. See `Termination criteria
+           <https://www.cvxgrp.org/scs/algorithm/index.html#termination>`__.
+       * - ``eps_infeas``
+         - Infeasibility tolerance (primal and dual), see `Certificate of
+           infeasibility
+           <https://www.cvxgrp.org/scs/algorithm/index.html#certificate-of-infeasibility>`_.
+       * - ``normalize``
+         - Whether to perform heuristic data rescaling. See `Data equilibration
+           <https://www.cvxgrp.org/scs/algorithm/equilibration.html#equilibration>`__.
+
+    Check out the `SCS settings
+    <https://www.cvxgrp.org/scs/api/settings.html#settings>`_ documentation for
+    all available settings.
     """
     if isinstance(P, ndarray):
         warn_about_sparse_conversion("P")
@@ -136,13 +149,6 @@ def scs_solve_qp(
     if isinstance(A, ndarray):
         warn_about_sparse_conversion("A")
         A = csc_matrix(A)
-    kwargs.update(
-        {
-            "eps_abs": eps_abs,
-            "eps_rel": eps_rel,
-            "verbose": verbose,
-        }
-    )
     data: Dict[str, Any] = {"P": P, "c": q}
     cone: Dict[str, Any] = {}
     if initvals is not None:
@@ -179,6 +185,7 @@ def scs_solve_qp(
             format="csc",
         )
         data["b"] = np.hstack((data["b"], 1.0, np.zeros(n)))
+    kwargs["verbose"] = verbose
     solution = solve(data, cone, **kwargs)
     status_val = solution["info"]["status_val"]
     if status_val != 1:
