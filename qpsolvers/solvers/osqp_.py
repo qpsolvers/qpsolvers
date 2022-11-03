@@ -43,18 +43,15 @@ from .typing import warn_about_sparse_conversion
 
 def osqp_solve_qp(
     P: Union[ndarray, csc_matrix],
-    q: Union[ndarray, csc_matrix],
+    q: ndarray,
     G: Optional[Union[ndarray, csc_matrix]] = None,
-    h: Optional[Union[ndarray, csc_matrix]] = None,
+    h: Optional[ndarray] = None,
     A: Optional[Union[ndarray, csc_matrix]] = None,
-    b: Optional[Union[ndarray, csc_matrix]] = None,
-    lb: Optional[Union[ndarray, csc_matrix]] = None,
-    ub: Optional[Union[ndarray, csc_matrix]] = None,
-    initvals: Optional[Union[ndarray, csc_matrix]] = None,
+    b: Optional[ndarray] = None,
+    lb: Optional[ndarray] = None,
+    ub: Optional[ndarray] = None,
+    initvals: Optional[ndarray] = None,
     verbose: bool = False,
-    eps_abs: float = 1e-4,
-    eps_rel: float = 1e-4,
-    polish: bool = True,
     **kwargs,
 ) -> Optional[ndarray]:
     """
