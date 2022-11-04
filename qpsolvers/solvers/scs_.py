@@ -167,7 +167,7 @@ def scs_solve_qp(
         data["A"] = G
         data["b"] = h
         cone["l"] = h.shape[0]  # positive cone
-    else:  # no constraint
+    elif lb is None and ub is None:  # no constraint
         x = lsqr(P, -q)[0]
         if norm(P @ x + q) > 1e-9:
             raise ValueError(
@@ -181,10 +181,12 @@ def scs_solve_qp(
         cone["bu"] = ub if ub is not None else np.full((n,), +np.inf)
         zero_row = csc_matrix((1, n))
         data["A"] = spa.vstack(
-            (data["A"], zero_row, -spa.eye(n)),
+            ((data["A"],) if "A" in data else ()) + (zero_row, -spa.eye(n)),
             format="csc",
         )
-        data["b"] = np.hstack((data["b"], 1.0, np.zeros(n)))
+        data["b"] = np.hstack(
+            ((data["b"],) if "b" in data else ()) + (1.0, np.zeros(n))
+        )
     kwargs["verbose"] = verbose
     solution = solve(data, cone, **kwargs)
     status_val = solution["info"]["status_val"]
