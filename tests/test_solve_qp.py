@@ -289,6 +289,9 @@ class TestSolveQP(unittest.TestCase):
             ]
 
             for (i, test_case) in enumerate(cases):
+                if "G" not in test_case and solver == "qpswift":
+                    # QPs without inequality constraints not handled by qpSWIFT
+                    continue
                 test_comp = {
                     k: v.shape if v is not None else "None"
                     for k, v in test_case.items()
@@ -497,6 +500,8 @@ class TestSolveQP(unittest.TestCase):
                 if solver == "scs"
                 else 1e-6
                 if solver in ["cvxopt", "ecos"]
+                else 5e-8
+                if solver == "qpswift"
                 else 1e-8
             )
             eq_tolerance = 5e-10 if solver in ["osqp", "scs"] else 1e-10
@@ -760,21 +765,25 @@ for solver in available_solvers:
         f"test_bounds_{solver}",
         TestSolveQP.get_test_bounds(solver),
     )
-    setattr(
-        TestSolveQP,
-        f"test_no_cons_{solver}",
-        TestSolveQP.get_test_no_cons(solver),
-    )
+    if solver != "qpswift":
+        # QPs without inequality constraints are not handled by qpSWIFT
+        setattr(
+            TestSolveQP,
+            f"test_no_cons_{solver}",
+            TestSolveQP.get_test_no_cons(solver),
+        )
     setattr(
         TestSolveQP,
         f"test_no_eq_{solver}",
         TestSolveQP.get_test_no_eq(solver),
     )
-    setattr(
-        TestSolveQP,
-        f"test_no_ineq_{solver}",
-        TestSolveQP.get_test_no_ineq(solver),
-    )
+    if solver != "qpswift":
+        # QPs without inequality constraints are not handled by qpSWIFT
+        setattr(
+            TestSolveQP,
+            f"test_no_ineq_{solver}",
+            TestSolveQP.get_test_no_ineq(solver),
+        )
     setattr(
         TestSolveQP,
         f"test_one_ineq_{solver}",

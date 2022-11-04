@@ -27,7 +27,7 @@ from qpsolvers.check_problem_constraints import check_problem_constraints
 class TestCheckProblemConstraints(unittest.TestCase):
 
     """
-    Test fixture for `check_problem_constraint`.
+    Test fixture for `check_problem_constraints`.
     """
 
     def setUp(self):

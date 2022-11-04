@@ -21,6 +21,7 @@
 import unittest
 
 from numpy import allclose, array, eye
+
 from qpsolvers.solvers.conversions import linear_from_box_inequalities
 
 

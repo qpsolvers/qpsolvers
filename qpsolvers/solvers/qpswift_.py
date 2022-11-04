@@ -181,9 +181,9 @@ def qpswift_solve_qp(
         else:  # no equality constraint
             result = qpSWIFT.run(q, h, P, G, opts=kwargs)
     else:  # no inequality constraint
-        # See https://qpswift.github.io/index.html#updates
+        # See https://github.com/qpSWIFT/qpSWIFT/issues/2
         raise NotImplementedError(
-            "QP without inequality constraints is still WIP for qpSWIFT"
+            "QPs without inequality constraints are not handled by qpSWIFT"
         )
     exit_flag = result["basicInfo"]["ExitFlag"]
     if exit_flag != 0:
