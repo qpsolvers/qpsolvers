@@ -48,6 +48,78 @@ __status_val_meaning__ = {
 }
 
 
+def __add_box_cone(
+    n: int,
+    lb: Optional[ndarray],
+    ub: Optional[ndarray],
+    cone: Dict[str, Any],
+    data: Dict[str, Any],
+) -> None:
+    """
+    Add box cone to the problem.
+
+    Parameters
+    ----------
+    n :
+        Number of optimization variables.
+    lb :
+        Lower bound constraint vector.
+    ub :
+        Upper bound constraint vector.
+    cone :
+        SCS cone dictionary.
+    data :
+        SCS data dictionary.
+
+    Notes
+    -----
+    See the `SCS Cones <https://www.cvxgrp.org/scs/api/cones.html>`__
+    documentation for details.
+    """
+    cone["bl"] = lb if lb is not None else np.full((n,), -np.inf)
+    cone["bu"] = ub if ub is not None else np.full((n,), +np.inf)
+    zero_row = csc_matrix((1, n))
+    data["A"] = spa.vstack(
+        ((data["A"],) if "A" in data else ()) + (zero_row, -spa.eye(n)),
+        format="csc",
+    )
+    data["b"] = np.hstack(
+        ((data["b"],) if "b" in data else ()) + (1.0, np.zeros(n))
+    )
+
+
+def __solve_unconstrained(
+    P: Union[ndarray, csc_matrix], q: ndarray
+) -> ndarray:
+    """
+    Solve unconstrained QP, warning if the problem is unbounded.
+
+    Parameters
+    ----------
+    P :
+        Primal quadratic cost matrix.
+    q :
+        Primal quadratic cost vector.
+
+    Returns
+    -------
+    :
+        Solution to the QP, if found, otherwise ``None``.
+
+    Raises
+    ------
+    ValueError
+        If the quadratic program is not unbounded below.
+    """
+    x = lsqr(P, -q)[0]
+    if norm(P @ x + q) > 1e-9:
+        raise ValueError(
+            "problem is unbounded below, "
+            "q has component in the nullspace of P"
+        )
+    return x
+
+
 def scs_solve_qp(
     P: Union[ndarray, csc_matrix],
     q: ndarray,
@@ -104,6 +176,11 @@ def scs_solve_qp(
     -------
     :
         Solution to the QP, if found, otherwise ``None``.
+
+    Raises
+    ------
+    ValueError
+        If the quadratic program is not unbounded below.
 
     Notes
     -----
@@ -168,25 +245,10 @@ def scs_solve_qp(
         data["b"] = h
         cone["l"] = h.shape[0]  # positive cone
     elif lb is None and ub is None:  # no constraint
-        x = lsqr(P, -q)[0]
-        if norm(P @ x + q) > 1e-9:
-            raise ValueError(
-                "problem is unbounded below, "
-                "q has component in the nullspace of P"
-            )
-        return x
+        return __solve_unconstrained(P, q)
     if lb is not None or ub is not None:
         n = P.shape[1]
-        cone["bl"] = lb if lb is not None else np.full((n,), -np.inf)
-        cone["bu"] = ub if ub is not None else np.full((n,), +np.inf)
-        zero_row = csc_matrix((1, n))
-        data["A"] = spa.vstack(
-            ((data["A"],) if "A" in data else ()) + (zero_row, -spa.eye(n)),
-            format="csc",
-        )
-        data["b"] = np.hstack(
-            ((data["b"],) if "b" in data else ()) + (1.0, np.zeros(n))
-        )
+        __add_box_cone(n, lb, ub, cone, data)
     kwargs["verbose"] = verbose
     solution = solve(data, cone, **kwargs)
     status_val = solution["info"]["status_val"]
