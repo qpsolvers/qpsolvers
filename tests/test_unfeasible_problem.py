@@ -123,7 +123,3 @@ for solver in available_solvers:
     if solver in dense_solvers:
         setattr(UnfeasibleProblem, 'test_safer_{}'.format(solver),
                 UnfeasibleProblem.get_test_safer(solver))
-
-
-if __name__ == '__main__':
-    unittest.main()

@@ -18,34 +18,34 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-import unittest
-import warnings
-
 import numpy as np
-from qpsolvers import solve_qp
-
-from .problems import get_sd3310_problem
 
 
-class TestQuadprog(unittest.TestCase):
-
+def get_sd3310_problem():
     """
-    Test fixture for the quadprog solver.
+    Get a small dense problem with 3 optimization variables, 3 inequality
+    constraints, 1 equality constraint and 0 box constraint.
+
+    Returns
+    -------
+    P :
+        Symmetric quadratic-cost matrix .
+    q :
+        Quadratic-cost vector.
+    G :
+        Linear inequality matrix.
+    h :
+        Linear inequality vector.
+    A :
+        Linear equality matrix.
+    b :
+        Linear equality vector.
     """
-
-    def setUp(self):
-        """
-        Prepare test fixture.
-        """
-        warnings.simplefilter("ignore", category=UserWarning)
-
-    def test_non_psd_cost(self):
-        P, q, G, h, A, b = get_sd3310_problem()
-        P -= np.eye(3)
-        with self.assertRaises(ValueError):
-            solve_qp(P, q, G, h, A, b, solver="quadprog")
-
-    def test_quadprog_value_error(self):
-        P, q, G, h, A, b = get_sd3310_problem()
-        q = q[1:]  # raise quadprog's "G and a must have the same dimension"
-        self.assertIsNone(solve_qp(P, q, G, h, A, b, solver="quadprog"))
+    M = np.array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
+    P = np.dot(M.T, M)  # this is a positive definite matrix
+    q = np.dot(np.array([3.0, 2.0, 3.0]), M).reshape((3,))
+    G = np.array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
+    h = np.array([3.0, 2.0, -2.0]).reshape((3,))
+    A = np.array([1.0, 1.0, 1.0])
+    b = np.array([1.0])
+    return P, q, G, h, A, b

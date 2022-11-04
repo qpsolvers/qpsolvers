@@ -149,7 +149,3 @@ for solver in available_solvers:
     setattr(
         TestSolveLS, "test_{}".format(solver), TestSolveLS.get_test(solver)
     )
-
-
-if __name__ == "__main__":
-    unittest.main()

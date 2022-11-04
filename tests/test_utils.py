@@ -57,7 +57,3 @@ class TestUtils(unittest.TestCase):
         """
         with self.assertRaises(ValueError):
             print_matrix_vector(self.G, "G", self.h[:-1], "h")
-
-
-if __name__ == "__main__":
-    unittest.main()

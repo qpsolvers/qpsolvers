@@ -821,7 +821,3 @@ for solver in available_solvers:
             f"test_raise_on_unbounded_below_{solver}",
             TestSolveQP.get_test_raise_on_unbounded_below(solver),
         )
-
-
-if __name__ == "__main__":
-    unittest.main()
