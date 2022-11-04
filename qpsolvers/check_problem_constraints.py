@@ -22,11 +22,17 @@
 Utility function to check that a quadratic program is well-defined.
 """
 
-from .typing import Matrix, Vector
+from typing import Optional, Union
+
+import numpy as np
+import scipy.sparse as spa
 
 
 def check_problem_constraints(
-    G: Matrix, h: Vector, A: Matrix, b: Vector
+    G: Optional[Union[np.ndarray, spa.csc_matrix]],
+    h: Optional[np.ndarray],
+    A: Optional[Union[np.ndarray, spa.csc_matrix]],
+    b: Optional[np.ndarray],
 ) -> None:
     """
     Check that problem constraint matrices and vectors are correctly defined.

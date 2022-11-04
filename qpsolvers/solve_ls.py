@@ -22,26 +22,27 @@
 Helper function to solve least squares.
 """
 
-from typing import Optional
+from typing import Optional, Union
 
+import numpy as np
+import scipy.sparse as spa
 from numpy import dot, ndarray
 
 from .solve_qp import solve_qp
-from .typing import Matrix, Vector
 
 
 def solve_ls(
-    R: Matrix,
-    s: Vector,
-    G: Optional[Matrix] = None,
-    h: Optional[Vector] = None,
-    A: Optional[Matrix] = None,
-    b: Optional[Vector] = None,
-    lb: Optional[Vector] = None,
-    ub: Optional[Vector] = None,
-    W: Optional[Matrix] = None,
+    R: Union[np.ndarray, spa.csc_matrix],
+    s: np.ndarray,
+    G: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    h: Optional[np.ndarray] = None,
+    A: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    b: Optional[np.ndarray] = None,
+    lb: Optional[np.ndarray] = None,
+    ub: Optional[np.ndarray] = None,
+    W: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
     solver: Optional[str] = None,
-    initvals: Optional[Vector] = None,
+    initvals: Optional[np.ndarray] = None,
     sym_proj: bool = False,
     verbose: bool = False,
     **kwargs,
@@ -66,9 +67,9 @@ def solve_ls(
     Parameters
     ----------
     R :
-        Matrix factor of the cost function (most solvers require :math:`R^T W
-        R` to be positive definite, which means :math:`R` should have full row
-        rank).
+        Union[np.ndarray, spa.csc_matrix] factor of the cost function (most
+        solvers require :math:`R^T W R` to be positive definite, which means
+        :math:`R` should have full row rank).
     s :
         Vector term of the cost function.
     G :
@@ -109,7 +110,7 @@ def solve_ls(
     """
     if sym_proj:
         R = 0.5 * (R + R.transpose())
-    WR: Matrix = R if W is None else dot(W, R)
+    WR: Union[np.ndarray, spa.csc_matrix] = R if W is None else dot(W, R)
     P = dot(R.transpose(), WR)
     q = -dot(s.transpose(), WR)
     return solve_qp(

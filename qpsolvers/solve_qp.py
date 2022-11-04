@@ -22,31 +22,32 @@
 Main function to solve quadratic programs.
 """
 
-from typing import Optional
+from typing import Optional, Union
 
-from numpy import eye, hstack, ndarray, ones, vstack, zeros
+import numpy as np
+import scipy.sparse as spa
+from numpy import eye, hstack, ones, vstack, zeros
 
 from .check_problem_constraints import check_problem_constraints
 from .exceptions import NoSolverSelected, SolverNotFound
 from .solvers import available_solvers, dense_solvers, solve_function
-from .typing import Matrix, Vector
 
 
 def solve_qp(
-    P: Matrix,
-    q: Vector,
-    G: Optional[Matrix] = None,
-    h: Optional[Vector] = None,
-    A: Optional[Matrix] = None,
-    b: Optional[Vector] = None,
-    lb: Optional[Vector] = None,
-    ub: Optional[Vector] = None,
+    P: Union[np.ndarray, spa.csc_matrix],
+    q: np.ndarray,
+    G: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    h: Optional[np.ndarray] = None,
+    A: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    b: Optional[np.ndarray] = None,
+    lb: Optional[np.ndarray] = None,
+    ub: Optional[np.ndarray] = None,
     solver: Optional[str] = None,
-    initvals: Optional[Vector] = None,
+    initvals: Optional[np.ndarray] = None,
     sym_proj: bool = False,
     verbose: bool = False,
     **kwargs,
-) -> Optional[ndarray]:
+) -> Optional[np.ndarray]:
     """
     Solve a Quadratic Program defined as:
 
@@ -86,7 +87,7 @@ def solve_qp(
         Name of the QP solver, to choose in
         :data:`qpsolvers.available_solvers`. This argument is mandatory.
     initvals :
-        Vector of initial :math:`x` values used to warm-start the solver.
+        Primal candidate vector :math:`x` values used to warm-start the solver.
     sym_proj :
         Set to ``True`` to project the cost matrix :math:`P` to its symmetric
         part. Some solvers assume :math:`P` is symmetric and will return
@@ -136,9 +137,9 @@ def solve_qp(
         )
     if sym_proj:
         P = 0.5 * (P + P.transpose())
-    if isinstance(A, ndarray) and A.ndim == 1:
+    if isinstance(A, np.ndarray) and A.ndim == 1:
         A = A.reshape((1, A.shape[0]))
-    if isinstance(G, ndarray) and G.ndim == 1:
+    if isinstance(G, np.ndarray) and G.ndim == 1:
         G = G.reshape((1, G.shape[0]))
     check_problem_constraints(G, h, A, b)
     kwargs["initvals"] = initvals
@@ -153,16 +154,16 @@ def solve_qp(
 
 
 def solve_safer_qp(
-    P: ndarray,
-    q: ndarray,
-    G: ndarray,
-    h: ndarray,
+    P: np.ndarray,
+    q: np.ndarray,
+    G: np.ndarray,
+    h: np.ndarray,
     sr: float,
     reg: float = 1e-8,
     solver: Optional[str] = None,
-    initvals: Optional[ndarray] = None,
+    initvals: Optional[np.ndarray] = None,
     sym_proj: bool = False,
-) -> Optional[ndarray]:
+) -> Optional[np.ndarray]:
     """
     Solve the "safer" Quadratic Program with repulsive inequality constraints,
     defined as:
@@ -207,7 +208,7 @@ def solve_safer_qp(
     solver :
         Name of the QP solver to use.
     initvals :
-        Vector of initial `x` values used to warm-start the solver.
+        Primal candidate vector `x` values used to warm-start the solver.
     sym_proj :
         Set to `True` when the `P` matrix provided is not symmetric.
 

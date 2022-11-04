@@ -20,14 +20,18 @@
 
 """Utility functions"""
 
-from numpy import ndarray
-from scipy.sparse import csc_matrix
+from typing import Union
 
-from .typing import Matrix, Vector
+import numpy as np
+import scipy.sparse as spa
 
 
 def print_matrix_vector(
-    A: Matrix, A_label: str, b: Vector, b_label: str, column_width: int = 24
+    A: Union[np.ndarray, spa.csc_matrix],
+    A_label: str,
+    b: np.ndarray,
+    b_label: str,
+    column_width: int = 24,
 ) -> None:
     """
     Print a matrix and vector side by side to the terminal.
@@ -35,19 +39,19 @@ def print_matrix_vector(
     Parameters
     ----------
     A :
-        Matrix to print.
+        Union[np.ndarray, spa.csc_matrix] to print.
     A_label :
         Label for A.
     b :
-        Vector to print.
+        np.ndarray to print.
     b_label :
         Label for b.
     column_width :
         Number of characters for the matrix and vector text columns.
     """
-    if isinstance(A, ndarray) and A.ndim == 1:
+    if isinstance(A, np.ndarray) and A.ndim == 1:
         A = A.reshape((1, A.shape[0]))
-    if isinstance(A, csc_matrix):
+    if isinstance(A, spa.csc_matrix):
         A = A.toarray()
     if A.shape[0] != b.shape[0]:
         raise ValueError("matrix and vector need the same first dimension")
