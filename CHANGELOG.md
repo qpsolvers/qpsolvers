@@ -23,8 +23,9 @@ All notable changes to this project will be documented in this file.
 - CVXOPT: improve documentation
 - CVXOPT: solver is now listed as sparse as well
 - ECOS: type annotations allow sparse input matrices
-- SCS: don't override default solver tolerances
+- OSQP: don't override default solver tolerances
 - Remove internal CVXOPT-specific type annotation
+- SCS: don't override default solver tolerances
 - Simplify intermediate internal type annotations
 
 ### Fixed
