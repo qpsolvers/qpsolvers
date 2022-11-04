@@ -20,16 +20,16 @@
 
 """Solver interface for CVXOPT."""
 
-from typing import Dict, Optional, Union
+from typing import Any, Dict, Optional, Union
 
 import cvxopt
-from cvxopt.solvers import options, qp
+from cvxopt.solvers import qp
 from numpy import array, ndarray
 from scipy.sparse import csc_matrix
 
 from .conversions import linear_from_box_inequalities
 
-options["show_progress"] = False  # disable CVXOPT output by default
+cvxopt.solvers.options["show_progress"] = False  # disable verbose output
 
 
 def to_cvxopt(
@@ -176,7 +176,7 @@ def cvxopt_solve_qp(
         G, h = linear_from_box_inequalities(G, h, lb, ub)
 
     # Update solver options if applicable
-    options["show_progress"] = verbose
+    options: Dict[str, Any] = {"show_progress": verbose}
     if maxiters:
         options["maxiters"] = maxiters
     if abstol:
@@ -199,7 +199,12 @@ def cvxopt_solve_qp(
     initvals_dict: Optional[Dict[str, cvxopt.matrix]] = None
     if initvals is not None:
         initvals_dict = {"x": to_cvxopt(initvals)}
+
+    original_options = cvxopt.solvers.options
+    cvxopt.solvers.options = options
     sol = qp(*args, solver=solver, initvals=initvals_dict, **kwargs)
+    cvxopt.solvers.options = original_options
+
     if "optimal" not in sol["status"]:
         return None
     return array(sol["x"]).reshape((q.shape[0],))
