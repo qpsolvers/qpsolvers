@@ -20,54 +20,26 @@
 
 import unittest
 
-import numpy as np
-
 from qpsolvers import solve_qp
+
+from .problems import get_sd3310_problem
 
 try:
     import proxsuite
 
     from qpsolvers import proxqp_solve_qp
 
-    class TestproxQP(unittest.TestCase):
+    class TestProxQP(unittest.TestCase):
 
         """
         Test fixture specific to the ProxQP solver.
         """
 
-        def get_dense_problem(self):
-            """
-            Get problem as a sextuple of values to unpack.
-
-            Returns
-            -------
-            P :
-                Symmetric quadratic-cost matrix .
-            q :
-                Quadratic-cost vector.
-            G :
-                Linear inequality matrix.
-            h :
-                Linear inequality vector.
-            A :
-                Linear equality matrix.
-            b :
-                Linear equality vector.
-            """
-            M = np.array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
-            P = np.dot(M.T, M)  # this is a positive definite matrix
-            q = np.dot(np.array([3.0, 2.0, 3.0]), M).reshape((3,))
-            G = np.array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
-            h = np.array([3.0, 2.0, -2.0]).reshape((3,))
-            A = np.array([1.0, 1.0, 1.0])
-            b = np.array([1.0])
-            return P, q, G, h, A, b
-
         def test_dense_backend(self):
             """
             Try the dense backend.
             """
-            P, q, G, h, A, b = self.get_dense_problem()
+            P, q, G, h, A, b = get_sd3310_problem()
             solve_qp(
                 P,
                 q,
@@ -83,7 +55,7 @@ try:
             """
             Try the sparse backend.
             """
-            P, q, G, h, A, b = self.get_dense_problem()
+            P, q, G, h, A, b = get_sd3310_problem()
             solve_qp(
                 P,
                 q,
@@ -99,7 +71,7 @@ try:
             """
             Exception raised when asking for an invalid backend.
             """
-            P, q, G, h, A, b = self.get_dense_problem()
+            P, q, G, h, A, b = get_sd3310_problem()
             with self.assertRaises(ValueError):
                 solve_qp(
                     P,
@@ -117,7 +89,7 @@ try:
             Raise an exception when two warm-start values are provided at the
             same time.
             """
-            P, q, G, h, A, b = self.get_dense_problem()
+            P, q, G, h, A, b = get_sd3310_problem()
             with self.assertRaises(ValueError):
                 solve_qp(
                     P,
@@ -138,15 +110,11 @@ try:
             of parameters. This won't happen when the function is called by
             `solve_qp`, but it may happen when it is called directly.
             """
-            P, q, G, _, _, _ = self.get_dense_problem()
+            P, q, G, _, _, _ = get_sd3310_problem()
             with self.assertRaises(ValueError):
                 proxqp_solve_qp(P, q, G=G, h=None, lb=q)
 
 
-except ImportError:  # ProxSuite is not installed
+except ImportError:  # ProxSuite not installed
 
     pass
-
-
-if __name__ == "__main__":
-    unittest.main()

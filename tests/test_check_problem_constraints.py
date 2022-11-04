@@ -47,7 +47,3 @@ class TestCheckProblemConstraints(unittest.TestCase):
             check_problem_constraints(self.G, self.h, self.A, None)
         with self.assertRaises(ValueError):
             check_problem_constraints(self.G, self.h, None, self.b)
-
-
-if __name__ == "__main__":
-    unittest.main()

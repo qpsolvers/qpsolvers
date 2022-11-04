@@ -41,8 +41,8 @@ class TestConcatenateBounds(unittest.TestCase):
         G2, h2 = linear_from_box_inequalities(G, h, lb, ub)
         m = G.shape[0] if G is not None else 0
         k = lb.shape[0]
-        self.assertTrue(allclose(G2[m : m + k, :], -eye(k)))
-        self.assertTrue(allclose(h2[m : m + k], -lb))
+        self.assertTrue(allclose(G2[m:m + k,:], -eye(k)))
+        self.assertTrue(allclose(h2[m:m + k], -lb))
         self.assertTrue(allclose(G2[m + k : m + 2 * k, :], eye(k)))
         self.assertTrue(allclose(h2[m + k : m + 2 * k], ub))
 
@@ -52,7 +52,3 @@ class TestConcatenateBounds(unittest.TestCase):
 
     def test_pure_bounds(self):
         self.check_concatenation(None, None, self.lb, self.ub)
-
-
-if __name__ == "__main__":
-    unittest.main()
