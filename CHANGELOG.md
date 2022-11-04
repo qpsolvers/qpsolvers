@@ -11,24 +11,24 @@ All notable changes to this project will be documented in this file.
 - CVXOPT: limit maximum number of iterations
 - CVXOPT: refinement parameter
 - CVXOPT: relative tolerance parameter
-- ECOS: document additional parameters
-- HiGHS: primal feasibility tolerance parameter
-- HiGHS: dual feasibility tolerance parameter
-- Gurobi: time limit parameter
 - Documentation: reference solver papers
+- ECOS: document additional parameters
+- Gurobi: time limit parameter
+- HiGHS: dual feasibility tolerance parameter
+- HiGHS: primal feasibility tolerance parameter
 - HiGHS: time limit parameter
 
 ### Changed
 
+- CVXOPT matrices are not valid types for qpsolvers any more
 - CVXOPT: improve documentation
 - CVXOPT: solver is now listed as sparse as well
 - ECOS: type annotations allow sparse input matrices
 - OSQP: don't override default solver tolerances
 - Remove internal CVXOPT-specific type annotation
+- Restrict matrix types to NumPy arrays and SciPy CSC matrices
 - SCS: don't override default solver tolerances
 - Simplify intermediate internal type annotations
-- CVXOPT matrices are not valid types for qpsolvers any more
-- Restrict matrix types to NumPy arrays and SciPy CSC matrices
 
 ### Fixed
 
