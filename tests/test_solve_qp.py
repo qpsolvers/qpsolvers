@@ -505,7 +505,7 @@ class TestSolveQP(unittest.TestCase):
                 else 1e-8
             )
             eq_tolerance = 5e-10 if solver in ["osqp", "scs"] else 1e-10
-            ineq_tolerance = 1e-7 if solver == "scs" else 1e-8
+            ineq_tolerance = 1e-7 if solver == "scs" else 2e-8 if solver == "qpswift" else 1e-8
             self.assertLess(norm(x - known_solution), sol_tolerance)
             self.assertLess(dot(G, x) - h, ineq_tolerance)
             self.assertLess(max(dot(A, x) - b), eq_tolerance)
