@@ -24,9 +24,6 @@ from typing import Optional, Tuple, Union
 
 import numpy as np
 import scipy.sparse as spa
-from numpy import concatenate, ndarray
-from scipy import sparse
-from scipy.sparse import csc_matrix
 
 
 def concatenate_bound(
@@ -61,11 +58,11 @@ def concatenate_bound(
         G = sign * np.eye(n)
         h = sign * b
     else:  # G is not None and h is not None
-        if isinstance(G, ndarray):
-            G = concatenate((G, sign * np.eye(n)), 0)
-        elif isinstance(G, csc_matrix):
-            G = sparse.vstack([G, sign * sparse.eye(n)], format="csc")
-        h = concatenate((h, sign * b))
+        if isinstance(G, np.ndarray):
+            G = np.concatenate((G, sign * np.eye(n)), 0)
+        elif isinstance(G, spa.csc_matrix):
+            G = spa.vstack([G, sign * spa.eye(n)], format="csc")
+        h = np.concatenate((h, sign * b))
     return (G, h)
 
 
