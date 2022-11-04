@@ -309,7 +309,13 @@ class TestSolveQP(unittest.TestCase):
                 solver_solution = solve_qp_with_test_params(
                     solver=solver, **test_case
                 )
-                sol_tolerance = 2e-3 if solver == "osqp" else 5e-4 if solver == "ecos" else 2e-4
+                sol_tolerance = (
+                    2e-3
+                    if solver == "osqp"
+                    else 5e-4
+                    if solver == "ecos"
+                    else 2e-4
+                )
                 self.assertLess(
                     norm(solver_solution - quadprog_solution),
                     sol_tolerance,
