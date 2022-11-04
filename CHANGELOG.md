@@ -27,6 +27,8 @@ All notable changes to this project will be documented in this file.
 - Remove internal CVXOPT-specific type annotation
 - SCS: don't override default solver tolerances
 - Simplify intermediate internal type annotations
+- CVXOPT matrices are not valid types for qpsolvers any more
+- Restrict matrix types to NumPy arrays and SciPy CSC matrices
 
 ### Fixed
 

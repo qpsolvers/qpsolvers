@@ -20,65 +20,21 @@
 
 """Functions to convert vector bounds into linear inequality constraints."""
 
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Union
 
 import numpy as np
-
+import scipy.sparse as spa
 from numpy import concatenate, ndarray
 from scipy import sparse
 from scipy.sparse import csc_matrix
 
-from .typing import Matrix, Vector
-
-
-try:
-    import cvxopt
-
-    def cvxopt_concatenate(G, sign: float, n: int):
-        """
-        Concatenate the sparse matrix `sign * eye(n)` to a CVXOPT matrix `G`.
-
-        Parameters
-        ----------
-        G :
-            Linear inequality matrix.
-        sign :
-            Sign factor: -1.0 for a lower and +1.0 for an upper bound.
-        n :
-            Dimension of the identity matrix, which in context should also be
-            the number of optimization variables.
-
-        Returns
-        -------
-        G :
-            Updated linear inequality matrix.
-        """
-        return cvxopt.sparse(
-            [
-                G,
-                sign * cvxopt.spmatrix(1.0, range(n), range(n)),
-            ]
-        )
-
-except ImportError:
-
-    def cvxopt_concatenate(G, sign: float, n: int):
-        """
-        This function is not available because CVXOPT is not installed.
-        """
-        raise TypeError(
-            "Inequality matrix G has type cvxopt.spmatrix "
-            "(it is neither an ndarray nor a csc_matrix), "
-            "but CVXOPT is not installed"
-        )
-
 
 def concatenate_bound(
-    G: Optional[Matrix],
-    h: Optional[Vector],
-    b: Vector,
+    G: Optional[Union[np.ndarray, spa.csc_matrix]],
+    h: Optional[np.ndarray],
+    b: np.ndarray,
     sign: float,
-) -> Tuple[Optional[Matrix], Optional[Vector]]:
+) -> Tuple[Optional[Union[np.ndarray, spa.csc_matrix]], Optional[np.ndarray]]:
     """
     Append bound constraint vectors to inequality constraints.
 
@@ -95,7 +51,7 @@ def concatenate_bound(
 
     Returns
     -------
-    G : numpy.ndarray, scipy.sparse.csc_matrix, cvxopt.spmatrix, or None
+    G : numpy.ndarray, scipy.sparse.csc_matrix, or None
         Updated linear inequality matrix.
     h : numpy.ndarray or None
         Updated linear inequality vector.
@@ -109,18 +65,16 @@ def concatenate_bound(
             G = concatenate((G, sign * np.eye(n)), 0)
         elif isinstance(G, csc_matrix):
             G = sparse.vstack([G, sign * sparse.eye(n)], format="csc")
-        else:  # isinstance(G, cvxopt.spmatrix)
-            G = cvxopt_concatenate(G, sign, n)
         h = concatenate((h, sign * b))
     return (G, h)
 
 
 def linear_from_box_inequalities(
-    G: Optional[Matrix],
-    h: Optional[Vector],
-    lb: Optional[Vector],
-    ub: Optional[Vector],
-) -> Tuple[Optional[Matrix], Optional[Vector]]:
+    G: Optional[Union[np.ndarray, spa.csc_matrix]],
+    h: Optional[np.ndarray],
+    lb: Optional[np.ndarray],
+    ub: Optional[np.ndarray],
+) -> Tuple[Optional[Union[np.ndarray, spa.csc_matrix]], Optional[np.ndarray]]:
     """
     Append lower or upper bound constraint vectors to inequality constraints.
 
@@ -137,9 +91,9 @@ def linear_from_box_inequalities(
 
     Returns
     -------
-    G : numpy.ndarray, scipy.sparse.csc_matrix, cvxopt.spmatrix, or None
+    G : np.ndarray, spa.csc_matrix or None
         Updated linear inequality matrix.
-    h : numpy.ndarray or None
+    h : np.ndarray or None
         Updated linear inequality vector.
     """
     if lb is not None:
