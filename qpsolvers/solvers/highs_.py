@@ -52,9 +52,8 @@ from typing import Optional, Union
 import highspy
 import numpy as np
 import scipy.sparse as spa
+
 from .conversions import warn_about_sparse_conversion
-from numpy import ndarray
-from scipy.sparse import csc_matrix
 
 
 def __set_hessian(model: highspy.HighsModel, P: spa.csc_matrix) -> None:
@@ -157,11 +156,11 @@ def __set_rows(
 
 
 def highs_solve_qp(
-    P: Union[ndarray, csc_matrix],
+    P: Union[np.ndarray, spa.csc_matrix],
     q: np.ndarray,
-    G: Optional[Union[ndarray, csc_matrix]] = None,
+    G: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
     h: Optional[np.ndarray] = None,
-    A: Optional[Union[ndarray, csc_matrix]] = None,
+    A: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
     b: Optional[np.ndarray] = None,
     lb: Optional[np.ndarray] = None,
     ub: Optional[np.ndarray] = None,
