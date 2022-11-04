@@ -37,8 +37,10 @@ from numpy import hstack, inf, ndarray, ones
 from osqp import OSQP
 from scipy.sparse import csc_matrix
 
-from .conversions import linear_from_box_inequalities
-from .typing import warn_about_sparse_conversion
+from .conversions import (
+    linear_from_box_inequalities,
+    warn_about_sparse_conversion,
+)
 
 
 def osqp_solve_qp(
