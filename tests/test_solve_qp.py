@@ -228,6 +228,9 @@ class TestSolveQP(unittest.TestCase):
                 {"P": P, "q": q, "G": G[0], "h": h0},
                 {"P": P, "q": q, "A": A, "b": b},
                 {"P": P, "q": q, "A": A[0], "b": b0},
+                {"P": P, "q": q, "lb": lb, "ub": None},
+                {"P": P, "q": q, "lb": None, "ub": ub},
+                {"P": P, "q": q, "lb": lb, "ub": ub},
                 {"P": P, "q": q, "G": G, "h": h, "A": A, "b": b},
                 {"P": P, "q": q, "G": G[0], "h": h0, "A": A, "b": b},
                 {"P": P, "q": q, "G": G, "h": h, "A": A[0], "b": b0},
@@ -306,7 +309,7 @@ class TestSolveQP(unittest.TestCase):
                 solver_solution = solve_qp_with_test_params(
                     solver=solver, **test_case
                 )
-                sol_tolerance = 2e-3 if solver == "osqp" else 2e-4
+                sol_tolerance = 2e-3 if solver == "osqp" else 5e-4 if solver == "ecos" else 2e-4
                 self.assertLess(
                     norm(solver_solution - quadprog_solution),
                     sol_tolerance,
@@ -505,7 +508,13 @@ class TestSolveQP(unittest.TestCase):
                 else 1e-8
             )
             eq_tolerance = 5e-10 if solver in ["osqp", "scs"] else 1e-10
-            ineq_tolerance = 1e-7 if solver == "scs" else 2e-8 if solver == "qpswift" else 1e-8
+            ineq_tolerance = (
+                1e-7
+                if solver == "scs"
+                else 2e-8
+                if solver == "qpswift"
+                else 1e-8
+            )
             self.assertLess(norm(x - known_solution), sol_tolerance)
             self.assertLess(max(dot(G, x) - h), ineq_tolerance)
             self.assertLess(max(dot(A, x) - b), eq_tolerance)
