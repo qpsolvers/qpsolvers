@@ -18,24 +18,22 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-import numpy as np
 import unittest
 import warnings
-
 from typing import Tuple
 
+import numpy as np
 import scipy
-
 from numpy import array, ones
 from numpy.linalg import norm
+from qpsolvers import solve_qp
+from qpsolvers.solvers.conversions import linear_from_box_inequalities
 from scipy.sparse import csc_matrix
 
-from qpsolvers.solvers.conversions import linear_from_box_inequalities
-from qpsolvers import solve_qp
+from .problems import get_sd3310_problem
 
 try:
     import cvxopt
-
     from cvxopt import matrix as dense_matrix
     from qpsolvers.solvers.cvxopt_ import cvxopt_matrix
 
@@ -107,6 +105,27 @@ try:
             self.assertTrue(np.allclose(h2[m : m + n], -lb))
             self.assertTrue(np.allclose(G2[m + n : m + 2 * n, :], np.eye(n)))
             self.assertTrue(np.allclose(h2[m + n : m + 2 * n], ub))
+
+        def test_extra_kwargs(self):
+            """
+            Call CVXOPT with various solver-specific settings.
+            """
+            P, q, G, h, A, b = get_sd3310_problem()
+            x = solve_qp(
+                P,
+                q,
+                G,
+                h,
+                A,
+                b,
+                solver="cvxopt",
+                maxiters=10,
+                abstol=1e-1,
+                reltol=1e-1,
+                feastol=1e-2,
+                refinement=3,
+            )
+            self.assertIsNotNone(x)
 
 
 except ImportError:  # CVXOPT is not installed
