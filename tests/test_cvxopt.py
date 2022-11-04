@@ -35,7 +35,7 @@ from .problems import get_sd3310_problem
 try:
     import cvxopt
     from cvxopt import matrix as dense_matrix
-    from qpsolvers.solvers.cvxopt_ import cvxopt_matrix
+    from qpsolvers.solvers.cvxopt_ import to_cvxopt
 
     class TestCVXOPT(unittest.TestCase):
 
@@ -71,9 +71,9 @@ try:
             for i in range(1, n - 1):
                 M[i, i + 1] = -1
                 M[i, i - 1] = 1
-            P = cvxopt_matrix(csc_matrix(M.dot(M.transpose())))
+            P = to_cvxopt(csc_matrix(M.dot(M.transpose())))
             q = -ones((n,))
-            G = cvxopt_matrix(csc_matrix(-scipy.sparse.eye(n)))
+            G = to_cvxopt(csc_matrix(-scipy.sparse.eye(n)))
             h = -2.0 * ones((n,))
             return P, q, G, h
 
@@ -86,7 +86,7 @@ try:
             self.assertIsNotNone(x)
             known_solution = array([2.0] * 149 + [3.0])
             sol_tolerance = 1e-2  # aouch, not great!
-            h_cvxopt, x_cvxopt = cvxopt_matrix(h), cvxopt_matrix(x)
+            h_cvxopt, x_cvxopt = to_cvxopt(h), to_cvxopt(x)
             self.assertLess(norm(x - known_solution), sol_tolerance)
             self.assertLess(max(G * x_cvxopt - h_cvxopt), 1e-10)
 
