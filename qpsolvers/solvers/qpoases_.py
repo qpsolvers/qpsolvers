@@ -50,6 +50,8 @@ def qpoases_solve_qp(
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
     max_wsr: int = 1000,
+    time_limit: Optional[float] = None,
+    termination_tolerance: Optional[float] = None,
 ) -> Optional[np.ndarray]:
     """
     Solve a Quadratic Program defined as:
@@ -91,6 +93,11 @@ def qpoases_solve_qp(
         Set to `True` to print out extra information.
     max_wsr :
         Maximum number of Working-Set Recalculations given to qpOASES.
+    time_limit :
+        Set a run time limit in seconds.
+    termination_tolerance :
+        Relative termination tolerance to stop homotopy. See `qpOASES User's
+        Manual <https://www.coin-or.org/qpOASES/doc/3.1/manual.pdf>`_.
 
     Returns
     -------
@@ -133,7 +140,11 @@ def qpoases_solve_qp(
             ub_C = b
         else:  # no equality constraint either
             has_constraint = False
+
     __options__.printLevel = PrintLevel.MEDIUM if verbose else PrintLevel.NONE
+    if termination_tolerance is not None:
+        __options__.terminationTolerance = termination_tolerance
+
     if has_constraint:
         qp = QProblem(n, C.shape[0])
         qp.setOptions(__options__)
