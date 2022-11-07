@@ -33,7 +33,7 @@ See the :ref:`installation page <qpoases-install>` for additional instructions
 on installing this solver.
 """
 
-from typing import Optional
+from typing import Any, List, Optional
 
 import numpy as np
 from numpy import array, hstack, ones, vstack, zeros
@@ -167,6 +167,7 @@ def qpoases_solve_qp(
     if termination_tolerance is not None:
         __options__.terminationTolerance = termination_tolerance
 
+    args: List[Any] = []
     if has_constraint:
         qp = QProblem(n, C.shape[0])
         qp.setOptions(__options__)
@@ -174,12 +175,9 @@ def qpoases_solve_qp(
         if time_limit is not None:
             args.append(array([time_limit]))
         return_value = qp.init(*args)
-        if (
-            return_value >= RET_INIT_FAILED
-            and return_value <= RET_INIT_FAILED_REGULARISATION
-        ):
+        if RET_INIT_FAILED <= return_value <= RET_INIT_FAILED_REGULARISATION:
             return None
-        elif return_value == ReturnValue.MAX_NWSR_REACHED:
+        if return_value == ReturnValue.MAX_NWSR_REACHED:
             print(f"qpOASES reached the maximum number of WSR ({max_wsr})")
     else:  # no constraint
         qp = QProblemB(n)
