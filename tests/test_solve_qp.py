@@ -183,7 +183,13 @@ class TestSolveQP(unittest.TestCase):
                 else 1e-8
             )
             eq_tolerance = 1e-10
-            ineq_tolerance = 2e-4 if solver == "scs" else 1e-10
+            ineq_tolerance = (
+                2e-4
+                if solver == "scs"
+                else 2e-10
+                if solver == "proxqp"
+                else 1e-10
+            )
             self.assertLess(norm(x - known_solution), sol_tolerance)
             self.assertLess(norm(x_sp - known_solution), sol_tolerance)
             self.assertLess(max(dot(G, x) - h), ineq_tolerance)
@@ -356,9 +362,11 @@ class TestSolveQP(unittest.TestCase):
                 if solver == "scs"
                 else 1e-6
                 if solver == "ecos"
+                else 5e-8
+                if solver == "proxqp"
                 else 1e-8
             )
-            eq_tolerance = 1e-10
+            eq_tolerance = 2e-10 if solver == "proxqp" else 1e-10
             ineq_tolerance = 1e-10
             self.assertLess(norm(x - known_solution), sol_tolerance)
             self.assertLess(max(dot(G, x) - h), ineq_tolerance)
@@ -560,7 +568,13 @@ class TestSolveQP(unittest.TestCase):
                 if solver in ["ecos", "scs"]
                 else 1e-6
             )
-            ineq_tolerance = 1e-7 if solver == "scs" else 1e-10
+            ineq_tolerance = (
+                1e-7
+                if solver == "scs"
+                else 1e-6
+                if solver == "proxqp"
+                else 1e-10
+            )
             self.assertLess(norm(x - known_solution), sol_tolerance)
             self.assertLess(max(dot(G, x) - h), ineq_tolerance)
 
@@ -724,7 +738,13 @@ class TestSolveQP(unittest.TestCase):
                 else 1e-8
             )
             eq_tolerance = 5e-5 if solver == "osqp" else 1e-10
-            ineq_tolerance = 2e-4 if solver in ["osqp", "scs"] else 1e-10
+            ineq_tolerance = (
+                2e-4
+                if solver in ["osqp", "scs"]
+                else 2e-10
+                if solver == "proxqp"
+                else 1e-10
+            )
             self.assertLess(norm(x - known_solution), sol_tolerance)
             self.assertLess(max(dot(G, x) - h), ineq_tolerance)
             self.assertLess(max(dot(A, x) - b), eq_tolerance)
