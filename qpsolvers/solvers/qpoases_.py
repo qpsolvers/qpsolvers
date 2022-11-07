@@ -161,7 +161,12 @@ def qpoases_solve_qp(
         if time_limit is not None:
             args.append(array([time_limit]))
         return_value = qp.init(*args)
-        if return_value == ReturnValue.MAX_NWSR_REACHED:
+        if (
+            return_value >= RET_INIT_FAILED
+            and return_value <= RET_INIT_FAILED_REGULARISATION
+        ):
+            return None
+        elif return_value == ReturnValue.MAX_NWSR_REACHED:
             print(f"qpOASES reached the maximum number of WSR ({max_wsr})")
     else:  # no constraint
         qp = QProblemB(n)
@@ -172,6 +177,6 @@ def qpoases_solve_qp(
         qp.init(*args)
     x_opt = zeros(n)
     ret = qp.getPrimalSolution(x_opt)
-    if ret != 0:  # 0 == SUCCESSFUL_RETURN code of qpOASES
+    if ret != ReturnValue.SUCCESSFUL_RETURN:
         print(f"qpOASES failed with return code {ret}")
     return x_opt
