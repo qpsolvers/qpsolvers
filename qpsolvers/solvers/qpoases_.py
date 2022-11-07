@@ -157,13 +157,19 @@ def qpoases_solve_qp(
     if has_constraint:
         qp = QProblem(n, C.shape[0])
         qp.setOptions(__options__)
-        return_value = qp.init(P, q, C, lb, ub, lb_C, ub_C, array([max_wsr]))
+        args = [P, q, C, lb, ub, lb_C, ub_C, array([max_wsr])]
+        if time_limit is not None:
+            args.append(array([time_limit]))
+        return_value = qp.init(*args)
         if return_value == ReturnValue.MAX_NWSR_REACHED:
             print(f"qpOASES reached the maximum number of WSR ({max_wsr})")
     else:  # no constraint
         qp = QProblemB(n)
         qp.setOptions(__options__)
-        qp.init(P, q, lb, ub, max_wsr)
+        args = [P, q, lb, ub, max_wsr]
+        if time_limit is not None:
+            args.append(time_limit)
+        qp.init(*args)
     x_opt = zeros(n)
     ret = qp.getPrimalSolution(x_opt)
     if ret != 0:  # 0 == SUCCESSFUL_RETURN code of qpOASES
