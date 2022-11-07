@@ -303,6 +303,7 @@ qpoases_solve_qp: Optional[
             Optional[ndarray],
             bool,
             int,
+            Optional[float],
         ],
         Optional[ndarray],
     ]
