@@ -23,8 +23,8 @@ Solver interface for `ProxQP
 <https://github.com/Simple-Robotics/proxsuite#proxqp>`__.
 
 ProxQP is the QP solver from ProxSuite, a collection of open-source solvers
-rooted in revisited primal-dual proximal algorithms. If you are using ProxQP in
-your work, consider citing the corresponding paper: [Bambade2022]_.
+rooted in revisited primal-dual proximal algorithms. If you use ProxQP in some
+academic work, consider citing the corresponding paper [Bambade2022]_.
 """
 
 from typing import Optional, Union
@@ -197,9 +197,9 @@ def proxqp_solve_qp(
        * - ``eps_abs``
          - Asbolute stopping criterion of the solver (default: 1e-3, note that
            this is a laxer default than other solvers). See *e.g.*
-           [tolprimer]_ for an overview of solver tolerances.
+           [tolerances]_ for an overview of solver tolerances.
        * - ``eps_rel``
-         - Relative stopping criterion of the solver. See *e.g.* [tolprimer]_
+         - Relative stopping criterion of the solver. See *e.g.* [tolerances]_
            for an overview of solver tolerances.
        * - ``mu_eq``
          - Proximal step size wrt equality constraints multiplier.

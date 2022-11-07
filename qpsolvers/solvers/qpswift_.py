@@ -26,10 +26,8 @@ embedded and robotic applications. It employs Primal-Dual Interior Point method
 with Mehrotra Predictor corrector step and Nesterov Todd scaling. For solving
 the linear system of equations, sparse LDL' factorization is used along with
 approximate minimum degree heuristic to minimize fill-in of the factorizations.
-
-If you use qpSWIFT in your research, consider citing the corresponding paper:
-`qpSWIFT: A Real-Time Sparse Quadratic Program Solver for Robotic Applications
-<https://doi.org/10.1109/LRA.2019.2926664>`_.
+If you use qpSWIFT in your research, consider citing the corresponding paper
+[Pandala2019]_.
 """
 
 from typing import Optional
@@ -145,8 +143,8 @@ def qpswift_solve_qp(
        * - MAXITER
          - Maximum number of iterations needed.
        * - ABSTOL
-         - Absolute tolerance on the duality gap. See *e.g.* [tolprimer]_ for a
-           primer on the duality gap and solver tolerances.
+         - Absolute tolerance on the duality gap. See *e.g.* [tolerances]_ for
+           a primer on the duality gap and solver tolerances.
        * - RELTOL
          - Relative tolerance on the residuals :math:`r_x = P x + G^T z + q`
            (dual residual), :math:`r_y = A x - b` (primal residual on equality

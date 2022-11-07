@@ -18,7 +18,12 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""Solver interface for quadprog"""
+"""
+Solver interface for `quadprog <https://github.com/quadprog/quadprog>`__.
+
+quadprog is a C implementation of the Goldfarb-Idnani dual algorithm
+[Goldfarb1983]_. It works best on well-conditioned dense problems.
+"""
 
 from typing import Optional
 from warnings import warn

@@ -50,10 +50,8 @@ ProxQP
 qpOASES
 =======
 
-See the :ref:`installation page <qpoases-install>` for additional instructions
-on installing this solver.
-
-.. autofunction:: qpsolvers.qpoases_solve_qp
+.. automodule:: qpsolvers.solvers.qpoases_
+    :members:
 
 qpSWIFT
 =======
@@ -64,9 +62,11 @@ qpSWIFT
 quadprog
 ========
 
-.. autofunction:: qpsolvers.quadprog_solve_qp
+.. automodule:: qpsolvers.solvers.quadprog_
+    :members:
 
 SCS
 ===
 
-.. autofunction:: qpsolvers.scs_solve_qp
+.. automodule:: qpsolvers.solvers.scs_
+    :members:

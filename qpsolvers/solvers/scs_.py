@@ -18,7 +18,14 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""Solver interface for SCS"""
+"""
+Solver interface for `SCS <https://www.cvxgrp.org/scs/>`_.
+
+SCS (Splitting Conic Solver) is a numerical optimization package for solving
+large-scale convex quadratic cone problems, which is a general class of
+problems that includes quadratic programming. If you use SCS in some academic
+work, consider citing the corresponding paper [ODonoghue2021]_.
+"""
 
 from typing import Any, Dict, Optional, Union
 from warnings import warn
