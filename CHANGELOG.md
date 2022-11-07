@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Added
+
+- qpOASES: termination tolerance parameter
+- qpOASES: time limit parameter
+
+### Fixed
+
+- qpOASES: return failure on ``RET_INIT_FAILED*`` return codes
+
 ## [2.5.0] - 2022/11/04
 
 ### Added
