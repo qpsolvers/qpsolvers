@@ -141,8 +141,9 @@ qpOASES
 
 Check out the `official qpOASES installation page
 <https://projects.coin-or.org/qpOASES/wiki/QpoasesInstallation>`_ for the
-latest release. However, you might run into errors at the ``make python`` step.
-If so, you can check out qpOASES from `this fork
+latest release. However, you might run into errors at the ``make python`` step,
+or undefined symbols when you try to ``import qpoases`` later on. If so, you
+can check out qpOASES from `this fork
 <https://github.com/stephane-caron/qpOASES>`_ and follow these instructions:
 
 .. code:: bash
@@ -150,8 +151,11 @@ If so, you can check out qpOASES from `this fork
     git clone --recursive https://github.com/stephane-caron/qpOASES.git
     cd qpOASES
     make
+    sudo cp bin/libqpOASES.so /usr/local/lib
     cd interfaces/python
-    python setup.py install --user
+    sudo python setup.py install
 
-The `setup.py` script takes the same command-line arguments as `pip`. Remove
-`--user` and run it as root to install the library system-wide.
+The ``setup.py`` script takes the same command-line arguments as ``pip``. As
+such, add the ``--user`` parameter to install the library for your user rather
+than system-wide. You can also move ``libqpOASES.so`` to some other directory
+configured in your ``LD_LIBRARY_PATH``.
