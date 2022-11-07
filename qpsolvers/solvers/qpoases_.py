@@ -32,10 +32,19 @@ from qpoases import PyReturnValue as ReturnValue
 
 from .conversions import linear_from_box_inequalities
 
-
 __infty__ = 1e10
 __options__ = Options()
 __options__.printLevel = PrintLevel.NONE
+
+
+# Return codes not wrapped in qpoases.PyReturnValue
+RET_INIT_FAILED = 33
+RET_INIT_FAILED_TQ = 34
+RET_INIT_FAILED_CHOLESKY = 35
+RET_INIT_FAILED_HOTSTART = 36
+RET_INIT_FAILED_INFEASIBILITY = 37
+RET_INIT_FAILED_UNBOUNDEDNESS = 38
+RET_INIT_FAILED_REGULARISATION = 39
 
 
 def qpoases_solve_qp(
