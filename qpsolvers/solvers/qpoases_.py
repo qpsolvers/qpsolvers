@@ -18,7 +18,20 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""Solver interface for qpOASES"""
+"""
+Solver interface for `qpOASES <https://github.com/coin-or/qpOASES>`__.
+
+qpOASES is an open-source C++ implementation of the online active set strategy,
+which was inspired by observations from the field of parametric quadratic
+programming. It has theoretical features that make it suitable to model
+predictive control. Further numerical modifications have made qpOASES a
+reliable QP solver, even when tackling semi-definite, ill-posed or degenerated
+QP problems. If you are using qpOASES in some academic work, consider citing
+the corresponding paper [Ferreau2014]_.
+
+See the :ref:`installation page <qpoases-install>` for additional instructions
+on installing this solver.
+"""
 
 from typing import Optional
 

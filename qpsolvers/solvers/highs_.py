@@ -21,30 +21,12 @@
 """
 Solver interface for `HiGHS <https://github.com/ERGO-Code/HiGHS>`__.
 
-HiGHS is an open source, high performance serial and parallel solver for large
-scale sparse linear programming (LP), mixed-integer programming (MIP), and
-quadratic programming (QP). It is written mostly in C++11.
-
-HiGHS is freely available under the MIT licence, and can be installed by:
-
-.. code:: console
-
-    pip install highspy
-
-HiGHS is based on the high performance dual revised simplex implementation
-(HSOL) and its parallel variant (PAMI) developed by Qi Huangfu. Features such
-as presolve, crash and advanced basis start have been added by Julian Hall and
-Ivet Galabova. The QP solver and original language interfaces were written by
-Michael Feldmeier. Leona Gottwald wrote the MIP solver. The software
-engineering of HiGHS was developed by Ivet Galabova.
-
-In the absence of a release paper, academic users of HiGHS are kindly requested
-to cite the following article:
-
-    Parallelizing the dual revised simplex method,
-    Q. Huangfu and J. A. J. Hall,
-    Mathematical Programming Computation, 10 (1), 119-142, 2018.
-    DOI: 10.1007/s12532-017-0130-5
+HiGHS is an open source, serial and parallel solver for large scale sparse
+linear programming (LP), mixed-integer programming (MIP), and quadratic
+programming (QP). It is written mostly in C++11 and available under the MIT
+licence. HiGHS's QP solver implements a Nullspace Active Set method. It works
+best on moderately-sized dense problems. If you are using HiGHS in some
+academic work, consider citing the corresponding paper [Huangfu2018]_.
 """
 
 from typing import Optional, Union

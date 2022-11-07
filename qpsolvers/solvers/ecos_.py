@@ -121,7 +121,7 @@ def ecos_solve_qp(
 
     See the `ECOS Python wrapper documentation
     <https://github.com/embotech/ecos-python#calling-ecos-from-python>`_ for
-    more details. You can also check out [tolprimer]_ for a primer on
+    more details. You can also check out [tolerances]_ for a primer on
     primal-dual residuals or the duality gap.
     """
     if initvals is not None:

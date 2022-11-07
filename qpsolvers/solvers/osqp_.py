@@ -25,7 +25,9 @@ The OSQP solver implements an Operator-Splitting method for large-scale convex
 quadratic programming. It is designed for both dense and sparse problems, and
 convexity is the only assumption it makes on problem data (for instance, it
 does not make any rank assumption contrary to :ref:`CVXOPT <CVXOPT rank
-assumptions>` or :ref:`qpSWIFT <qpSWIFT rank assumptions>`).
+assumptions>` or :ref:`qpSWIFT <qpSWIFT rank assumptions>`). If you are using
+OSQP in some academic work, consider citing the corresponding paper
+[Stellato2020]_.
 """
 
 from typing import Optional, Union
@@ -150,7 +152,7 @@ def osqp_solve_qp(
     all available settings..
 
     Lower values for absolute or relative tolerances yield more precise
-    solutions at the cost of computation time. See *e.g.* [tolprimer]_ for an
+    solutions at the cost of computation time. See *e.g.* [tolerances]_ for an
     overview of solver tolerances.
     """
     if isinstance(P, ndarray):
