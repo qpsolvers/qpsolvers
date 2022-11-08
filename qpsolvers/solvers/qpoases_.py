@@ -188,7 +188,5 @@ def qpoases_solve_qp(
         print(f"qpOASES reached the maximum number of WSR ({max_wsr})")
 
     x_opt = zeros(n)
-    ret = qp.getPrimalSolution(x_opt)
-    if ret != ReturnValue.SUCCESSFUL_RETURN:
-        print(f"qpOASES failed with return code {ret}")
+    qp.getPrimalSolution(x_opt)  # can't return RET_QP_NOT_SOLVED at this point
     return x_opt
