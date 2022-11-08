@@ -9,6 +9,10 @@ All notable changes to this project will be documented in this file.
 - qpOASES: termination tolerance parameter
 - qpOASES: time limit parameter
 
+### Changed
+
+- SCS: ``SOLVED_INACCURATE`` is now considered a failure
+
 ### Fixed
 
 - qpOASES: return failure on ``RET_INIT_FAILED*`` return codes
