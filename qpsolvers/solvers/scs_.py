@@ -263,7 +263,5 @@ def scs_solve_qp(
         warn(
             f"SCS returned {status_val}: {__status_val_meaning__[status_val]}"
         )
-        if status_val != 2:
-            # solution is not inaccurate, so the optimization failed
-            return None
+        return None
     return solution["x"]
