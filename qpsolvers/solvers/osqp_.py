@@ -183,7 +183,7 @@ def osqp_solve_qp(
 
     kwargs["verbose"] = verbose
     solver = OSQP()
-    solver.setup(P=P, q=q, A=A_osqp, l=l_osqp, u=l_osqp, **kwargs)
+    solver.setup(P=P, q=q, A=A_osqp, l=l_osqp, u=u_osqp, **kwargs)
     if initvals is not None:
         solver.warm_start(x=initvals)
     res = solver.solve()
