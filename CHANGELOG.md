@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+- qpOASES: forward box inequalities directly
 - qpOASES: return failure on ``RET_INIT_FAILED*`` return codes
 
 ## [2.5.0] - 2022/11/04
