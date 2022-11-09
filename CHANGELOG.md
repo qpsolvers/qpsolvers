@@ -12,11 +12,12 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - OSQP: drop support for older versions without ``osqp.constant``
+- OSQP: streamline stacking of box inequalities
 - SCS: ``SOLVED_INACCURATE`` is now considered a failure
+- qpOASES: forward box inequalities directly
 
 ### Fixed
 
-- qpOASES: forward box inequalities directly
 - qpOASES: return failure on ``RET_INIT_FAILED*`` return codes
 
 ## [2.5.0] - 2022/11/04

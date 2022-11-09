@@ -33,31 +33,28 @@ OSQP in some academic work, consider citing the corresponding paper
 from typing import Optional, Union
 from warnings import warn
 
+import numpy as np
 import osqp
 import scipy.sparse as spa
-from numpy import hstack, inf, ndarray, ones
 from osqp import OSQP
 from scipy.sparse import csc_matrix
 
-from .conversions import (
-    linear_from_box_inequalities,
-    warn_about_sparse_conversion,
-)
+from .conversions import warn_about_sparse_conversion
 
 
 def osqp_solve_qp(
-    P: Union[ndarray, csc_matrix],
-    q: ndarray,
-    G: Optional[Union[ndarray, csc_matrix]] = None,
-    h: Optional[ndarray] = None,
-    A: Optional[Union[ndarray, csc_matrix]] = None,
-    b: Optional[ndarray] = None,
-    lb: Optional[ndarray] = None,
-    ub: Optional[ndarray] = None,
-    initvals: Optional[ndarray] = None,
+    P: Union[np.ndarray, csc_matrix],
+    q: np.ndarray,
+    G: Optional[Union[np.ndarray, csc_matrix]] = None,
+    h: Optional[np.ndarray] = None,
+    A: Optional[Union[np.ndarray, csc_matrix]] = None,
+    b: Optional[np.ndarray] = None,
+    lb: Optional[np.ndarray] = None,
+    ub: Optional[np.ndarray] = None,
+    initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
     **kwargs,
-) -> Optional[ndarray]:
+) -> Optional[np.ndarray]:
     """
     Solve a Quadratic Program defined as:
 
@@ -155,33 +152,38 @@ def osqp_solve_qp(
     solutions at the cost of computation time. See *e.g.* [tolerances]_ for an
     overview of solver tolerances.
     """
-    if isinstance(P, ndarray):
+    if isinstance(P, np.ndarray):
         warn_about_sparse_conversion("P")
         P = csc_matrix(P)
-    if lb is not None or ub is not None:
-        G, h = linear_from_box_inequalities(G, h, lb, ub)
-    solver = OSQP()
-    kwargs["verbose"] = verbose
+    if isinstance(G, np.ndarray):
+        warn_about_sparse_conversion("G")
+        G = csc_matrix(G)
+    if isinstance(A, np.ndarray):
+        warn_about_sparse_conversion("A")
+        A = csc_matrix(A)
+
+    A_osqp = None
+    l_osqp = None
+    u_osqp = None
+    if G is not None and h is not None:
+        A_osqp = G
+        l_osqp = np.full(h.shape, -np.infty)
+        u_osqp = h
     if A is not None and b is not None:
-        if isinstance(A, ndarray):
-            warn_about_sparse_conversion("A")
-            A = csc_matrix(A)
-        if G is not None and h is not None:
-            l_inf = -inf * ones(len(h))
-            qp_A = spa.vstack([G, A], format="csc")
-            qp_l = hstack([l_inf, b])
-            qp_u = hstack([h, b])
-            solver.setup(P=P, q=q, A=qp_A, l=qp_l, u=qp_u, **kwargs)
-        else:  # no inequality constraint
-            solver.setup(P=P, q=q, A=A, l=b, u=b, **kwargs)
-    elif G is not None and h is not None:
-        if isinstance(G, ndarray):
-            warn_about_sparse_conversion("G")
-            G = csc_matrix(G)
-        l_inf = -inf * ones(len(h))
-        solver.setup(P=P, q=q, A=G, l=l_inf, u=h, **kwargs)
-    else:  # no inequality nor equality constraint
-        solver.setup(P=P, q=q, **kwargs)
+        A_osqp = A if A_osqp is None else spa.vstack([A_osqp, A], format="csc")
+        l_osqp = b if l_osqp is None else np.hstack([l_osqp, b])
+        u_osqp = b if u_osqp is None else np.hstack([u_osqp, b])
+    if lb is not None or ub is not None:
+        lb = lb if lb is not None else np.full(q.shape, -np.infty)
+        ub = ub if ub is not None else np.full(q.shape, +np.infty)
+        I = spa.eye(q.shape[0])
+        A_osqp = I if A_osqp is None else spa.vstack([A_osqp, I], format="csc")
+        l_osqp = lb if l_osqp is None else np.hstack([l_osqp, lb])
+        u_osqp = ub if u_osqp is None else np.hstack([u_osqp, ub])
+
+    kwargs["verbose"] = verbose
+    solver = OSQP()
+    solver.setup(P=P, q=q, A=A_osqp, l=l_osqp, u=l_osqp, **kwargs)
     if initvals is not None:
         solver.warm_start(x=initvals)
     res = solver.solve()
