@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- OSQP: drop support for older versions without ``osqp.constant``
 - SCS: ``SOLVED_INACCURATE`` is now considered a failure
 
 ### Fixed
