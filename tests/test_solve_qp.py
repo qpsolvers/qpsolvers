@@ -604,7 +604,7 @@ class TestSolveQP(unittest.TestCase):
                 if solver == "osqp"
                 else 1e-4
                 if solver == "scs"
-                else 5e-6
+                else 2e-5
                 if solver == "proxqp"
                 else 1e-6
                 if solver == "highs"
