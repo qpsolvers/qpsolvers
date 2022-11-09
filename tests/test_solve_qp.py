@@ -651,7 +651,7 @@ class TestSolveQP(unittest.TestCase):
             sol_tolerance = (
                 1e-3
                 if solver == "gurobi"
-                else 5e-5
+                else 1e-3
                 if solver == "osqp"
                 else 5e-6
                 if solver == "proxqp"
