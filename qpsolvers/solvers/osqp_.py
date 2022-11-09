@@ -185,10 +185,7 @@ def osqp_solve_qp(
     if initvals is not None:
         solver.warm_start(x=initvals)
     res = solver.solve()
-    if hasattr(solver, "constant"):
-        success_status = solver.constant("OSQP_SOLVED")
-    else:  # more recent versions of OSQP
-        success_status = osqp.constant("OSQP_SOLVED")
+    success_status = osqp.constant("OSQP_SOLVED")
     if res.info.status_val != success_status:
         warn(f"OSQP exited with status '{res.info.status}'")
         return None
