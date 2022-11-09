@@ -65,7 +65,7 @@ def cvxopt_solve_qp(
     b: Optional[ndarray] = None,
     lb: Optional[ndarray] = None,
     ub: Optional[ndarray] = None,
-    solver: str = None,
+    solver: Optional[str] = None,
     initvals: Optional[ndarray] = None,
     verbose: bool = False,
     maxiters: Optional[int] = None,
