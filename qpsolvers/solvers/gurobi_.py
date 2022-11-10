@@ -106,10 +106,10 @@ def gurobi_solve_qp(
     x = model.addMVar(
         num_vars, lb=-GRB.INFINITY, ub=GRB.INFINITY, vtype=GRB.CONTINUOUS
     )
-    if A is not None:
-        model.addMConstr(A, x, GRB.EQUAL, b)
     if G is not None:
         model.addMConstr(G, x, GRB.LESS_EQUAL, h)
+    if A is not None:
+        model.addMConstr(A, x, GRB.EQUAL, b)
     if lb is not None:
         model.addMConstr(identity, x, GRB.GREATER_EQUAL, lb)
     if ub is not None:
