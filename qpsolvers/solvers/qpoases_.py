@@ -171,9 +171,9 @@ def qpoases_solve_qp(
     else:  # no constraint
         qp = QProblemB(n)
         qp.setOptions(__options__)
-        args = [P, q, lb, ub, max_wsr]
+        args = [P, q, lb, ub, array([max_wsr])]
         if time_limit is not None:
-            args.append(time_limit)
+            args.append(array([time_limit]))
 
     return_value = qp.init(*args)
     if RET_INIT_FAILED <= return_value <= RET_INIT_FAILED_REGULARISATION:
