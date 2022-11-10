@@ -14,15 +14,14 @@ CVXOPT
 ECOS
 ====
 
-.. autofunction:: qpsolvers.ecos_solve_qp
+.. automodule:: qpsolvers.solvers.ecos_
+    :members:
 
 Gurobi
 ======
 
-See the :ref:`installation page <gurobi-install>` for additional instructions
-on installing this solver.
-
-.. autofunction:: qpsolvers.gurobi_solve_qp
+.. automodule:: qpsolvers.solvers.gurobi_
+    :members:
 
 HiGHS
 =====

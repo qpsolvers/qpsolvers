@@ -18,6 +18,8 @@ References
 
 .. [Ferreau2014] `qpOASES: A parametric active-set algorithm for quadratic programming <http://mpc.zib.de/archive/2014/4/Ferreau2014_Article_QpOASESAParametricActive-setAl.pdf>`_, H. J. Ferreau, C. Kirches, A. Potschka, H. G. Bock and M. Diehl. Mathematical Programming Computation, 2014, vol. 6, no 4, p. 327-363.
 
+.. [Domahidi2013] `ECOS: An SOCP solver for embedded systems <https://web.stanford.edu/~boyd/papers/ecos.html>`_, A. Domahidi, E. Chu and S. Boyd. European Control Conference. IEEE, 2013. p. 3071-3076.
+
 .. [Vandenberghe2010] `The CVXOPT linear and quadratic cone program solvers <https://www.seas.ucla.edu/~vandenbe/publications/coneprog.pdf>`_, L. Vandenberghe. 2010.
 
 .. [Goldfarb1983] *A numerically stable dual method for solving strictly convex quadratic programs*. D. Goldfarb and A. Idnani. Mathematical Programming, vol. 27, p. 1-33.
