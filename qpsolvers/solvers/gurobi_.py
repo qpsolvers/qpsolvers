@@ -19,7 +19,12 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""Solver interface for Gurobi."""
+"""
+Solver interface for `Gurobi <https://www.gurobi.com/>`__.
+
+See the :ref:`installation page <gurobi-install>` for additional instructions
+on installing this solver.
+"""
 
 from typing import Optional, Union
 from warnings import warn
