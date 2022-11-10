@@ -146,7 +146,7 @@ def osqp_solve_qp(
 
     Check out the `OSQP settings
     <https://osqp.org/docs/interfaces/solver_settings.html>`_ documentation for
-    all available settings..
+    all available settings.
 
     Lower values for absolute or relative tolerances yield more precise
     solutions at the cost of computation time. See *e.g.* [tolerances]_ for an

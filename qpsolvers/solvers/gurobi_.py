@@ -40,8 +40,7 @@ def gurobi_solve_qp(
     ub: Optional[np.ndarray] = None,
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
-    time_limit: Optional[float] = None,
-    feasibility_tol: Optional[float] = None,
+    **kwargs,
 ) -> Optional[np.ndarray]:
     """
     Solve a Quadratic Program defined as:
@@ -81,11 +80,6 @@ def gurobi_solve_qp(
         Warm-start guess vector (not used).
     verbose :
         Set to `True` to print out extra information.
-    time_limit :
-        Set a run time limit in seconds.
-    feasibility_tol :
-        Primal feasibility tolerance. All constraints should be satisfied up to
-        at most this value.
 
     Returns
     -------
@@ -94,9 +88,32 @@ def gurobi_solve_qp(
 
     Notes
     -----
-        Check out the `Gurobi documentation
-        <https://www.gurobi.com/documentation/>`_ for more information on the
-        solver.
+    Keyword arguments are forwarded to Gurobi as parameters. For instance, we
+    can call ``gurobi_solve_qp(P, q, G, h, u, FeasibilityTol=1e-8,
+    OptimalityTol=1e-8)``. Gurobi settings include the following:
+
+    .. list-table::
+       :widths: 30 70
+       :header-rows: 1
+
+       * - Name
+         - Description
+       * - ``FeasibilityTol``
+         - Primal feasibility tolerance.
+       * - ``OptimalityTol``
+         - Dual feasibility tolerance.
+       * - ``PSDTol``
+         - Positive semi-definite tolerance.
+       * - ``TimeLimit``
+         - Run time limit in seconds, 0 to disable.
+
+    Check out the `Parameter Descriptions
+    <https://www.gurobi.com/documentation/9.5/refman/parameter_descriptions.html>`_
+    documentation for all available Gurobi parameters.
+
+    Lower values for primal or dual tolerances yield more precise solutions at
+    the cost of computation time. See *e.g.* [tolerances]_ for a primer of
+    solver tolerances.
     """
     if initvals is not None:
         warn("Gurobi: warm-start values given but they will be ignored")
@@ -104,10 +121,8 @@ def gurobi_solve_qp(
     model = Model()
     if not verbose:
         model.setParam(GRB.Param.OutputFlag, 0)
-    if time_limit is not None:
-        model.setParam(GRB.Param.TimeLimit, time_limit)
-    if feasibility_tol is not None:
-        model.setParam(GRB.Param.FeasibilityTol, feasibility_tol)
+    for param, value in kwargs.items():
+        model.setParam(param, value)
 
     num_vars = P.shape[0]
     identity = spa.eye(num_vars)

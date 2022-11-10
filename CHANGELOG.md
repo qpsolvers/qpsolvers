@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- Gurobi: feasibility tolerance parameter
+- Gurobi: forward keyword arguments as solver parameters
 - qpOASES: termination tolerance parameter
 - qpOASES: time limit parameter
 
