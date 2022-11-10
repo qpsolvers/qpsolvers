@@ -96,25 +96,28 @@ def gurobi_solve_qp(
     """
     if initvals is not None:
         warn("Gurobi: warm-start values given but they will be ignored")
-    if lb is not None or ub is not None:
-        G, h = linear_from_box_inequalities(G, h, lb, ub)
     model = Model()
     if not verbose:
         model.setParam("OutputFlag", 0)
     if time_limit:
         model.setParam("TimeLimit", time_limit)
     num_vars = P.shape[0]
+    identity = spa.eye(num_vars)
     x = model.addMVar(
         num_vars, lb=-GRB.INFINITY, ub=GRB.INFINITY, vtype=GRB.CONTINUOUS
     )
-    if A is not None:  # include equality constraints
+    if A is not None:
         model.addMConstr(A, x, GRB.EQUAL, b)
-    if G is not None:  # include inequality constraints
+    if G is not None:
         model.addMConstr(G, x, GRB.LESS_EQUAL, h)
+    if lb is not None:
+        model.addMConstr(identity, x, GRB.GREATER_EQUAL, lb)
+    if ub is not None:
+        model.addMConstr(identity, x, GRB.LESS_EQUAL, ub)
     objective = 0.5 * (x @ P @ x) + q @ x
     model.setObjective(objective, sense=GRB.MINIMIZE)
     model.optimize()
     status = model.status
     if status not in (GRB.OPTIMAL, GRB.SUBOPTIMAL):
         return None
-    return array(x.X)
+    return np.array(x.X)
