@@ -25,7 +25,6 @@ from .solve_qp import solve_qp, solve_safer_qp
 from .solvers import (
     available_solvers,
     cvxopt_solve_qp,
-    cvxpy_solve_qp,
     dense_solvers,
     ecos_solve_qp,
     gurobi_solve_qp,
@@ -47,7 +46,6 @@ __all__ = [
     "__version__",
     "available_solvers",
     "cvxopt_solve_qp",
-    "cvxpy_solve_qp",
     "dense_solvers",
     "ecos_solve_qp",
     "gurobi_solve_qp",

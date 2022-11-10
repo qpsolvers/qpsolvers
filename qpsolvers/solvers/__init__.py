@@ -64,38 +64,6 @@ except ImportError:
     pass
 
 
-# CVXPY
-# =====
-
-cvxpy_solve_qp: Optional[
-    Callable[
-        [
-            ndarray,
-            ndarray,
-            Optional[ndarray],
-            Optional[ndarray],
-            Optional[ndarray],
-            Optional[ndarray],
-            Optional[ndarray],
-            Optional[ndarray],
-            Optional[ndarray],
-            Optional[str],
-            bool,
-        ],
-        Optional[ndarray],
-    ]
-] = None
-
-try:
-    from .cvxpy_ import cvxpy_solve_qp
-
-    solve_function["cvxpy"] = cvxpy_solve_qp
-    available_solvers.append("cvxpy")
-    sparse_solvers.append("cvxpy")
-except ImportError:
-    pass
-
-
 # ECOS
 # ====
 
@@ -422,7 +390,6 @@ if not available_solvers:
 __all__ = [
     "available_solvers",
     "cvxopt_solve_qp",
-    "cvxpy_solve_qp",
     "dense_solvers",
     "gurobi_solve_qp",
     "mosek_solve_qp",

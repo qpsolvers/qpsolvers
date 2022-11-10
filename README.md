@@ -116,7 +116,6 @@ On a [dense problem](examples/benchmark_dense_problem.py), the performance of al
 | ecos     | Sparse | 0.27      |
 | cvxopt   | Dense  | 0.44      |
 | gurobi   | Sparse | 1.74      |
-| cvxpy    | Sparse | 5.71      |
 | mosek    | Sparse | 7.17      |
 
 On a [sparse problem](examples/benchmark_sparse_problem.py) with *n = 500* optimization variables, these performances become:
@@ -126,7 +125,6 @@ On a [sparse problem](examples/benchmark_sparse_problem.py) with *n = 500* optim
 | osqp     | Sparse |    1      |
 | qpswift  | Dense  |    2      |
 | scs      | Sparse |    4      |
-| cvxpy    | Sparse |   11      |
 | mosek    | Sparse |   17      |
 | ecos     | Sparse |   33      |
 | cvxopt   | Dense  |   51      |
@@ -145,7 +143,6 @@ On a [model predictive control](examples/model_predictive_control.py) problem fo
 | ecos     | Sparse | 0.69      |
 | scs      | Sparse | 0.76      |
 | cvxopt   | Dense  | 2.75      |
-| cvxpy    | Sparse | 7.02      |
 
 Finally, here is a small benchmark of [random dense problems](examples/benchmark_random_problems.py) (each data point corresponds to an average over 10 runs):
 

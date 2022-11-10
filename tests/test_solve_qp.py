@@ -45,7 +45,7 @@ from qpsolvers.exceptions import NoSolverSelected, SolverNotFound
 behavior_on_unbounded = {
     "raise_value_error": ["cvxopt", "ecos", "quadprog", "scs"],
     "return_crazy_solution": ["qpoases"],
-    "return_none": ["cvxpy", "osqp"],
+    "return_none": ["osqp"],
 }
 
 
