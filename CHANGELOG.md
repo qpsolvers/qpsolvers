@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- HiGHS: forward all keyword arguments as solver options
 - OSQP: drop support for older versions without ``osqp.constant``
 - OSQP: streamline stacking of box inequalities
 - Removed CVXPY which is not a solver
