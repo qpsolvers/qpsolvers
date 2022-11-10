@@ -30,6 +30,7 @@ academic work, consider citing the corresponding paper [Huangfu2018]_.
 """
 
 from typing import Optional, Union
+from warnings import warn
 
 import highspy
 import numpy as np
@@ -148,9 +149,7 @@ def highs_solve_qp(
     ub: Optional[np.ndarray] = None,
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
-    time_limit: Optional[float] = None,
-    primal_feasibility_tolerance: Optional[float] = None,
-    dual_feasibility_tolerance: Optional[float] = None,
+    **kwargs,
 ) -> Optional[np.ndarray]:
     """
     Solve a Quadratic Program defined as:
@@ -190,12 +189,6 @@ def highs_solve_qp(
         Warm-start guess vector for the primal solution.
     verbose :
         Set to `True` to print out extra information.
-    time_limit :
-        Set a run time limit in seconds.
-    primal_feasibility_tolerance:
-        Primal feasibility tolerance.
-    dual_feasibility_tolerance:
-        Dual feasibility tolerance.
 
     Returns
     -------
@@ -204,9 +197,25 @@ def highs_solve_qp(
 
     Notes
     -----
-        Check out the `HiGHS documentation
-        <https://ergo-code.github.io/HiGHS/>`_ for more information on the
-        solver.
+    Keyword arguments are forwarded to HiGHS as options. For instance, we
+    can call ``highs_solve_qp(P, q, G, h, u, primal_feasibility_tolerance=1e-8,
+    dual_feasibility_tolerance=1e-8)``. HiGHS settings include the following:
+
+    .. list-table::
+       :widths: 30 70
+       :header-rows: 1
+
+       * - Name
+         - Description
+       * - ``dual_feasibility_tolerance``
+         - Dual feasibility tolerance.
+       * - ``primal_feasibility_tolerance``
+         - Primal feasibility tolerance.
+       * - ``time_limit``
+         - Run time limit in seconds.
+
+    Check out the `HiGHS documentation <https://ergo-code.github.io/HiGHS/>`_
+    for more information on the solver.
     """
     if isinstance(P, np.ndarray):
         warn_about_sparse_conversion("P")
@@ -218,7 +227,7 @@ def highs_solve_qp(
         warn_about_sparse_conversion("A")
         A = spa.csc_matrix(A)
     if initvals is not None:
-        print(
+        warn(
             "HiGHS: warm-start values are not available for this solver, "
             "see: https://github.com/stephane-caron/qpsolvers/issues/94"
         )
@@ -237,16 +246,8 @@ def highs_solve_qp(
         )
     else:  # not verbose
         solver.setOptionValue("log_to_console", False)
-    if time_limit:
-        solver.setOptionValue("time_limit", time_limit)
-    if primal_feasibility_tolerance:
-        solver.setOptionValue(
-            "primal_feasibility_tolerance", primal_feasibility_tolerance
-        )
-    if dual_feasibility_tolerance:
-        solver.setOptionValue(
-            "dual_feasibility_tolerance", dual_feasibility_tolerance
-        )
+    for option, value in kwargs.items():
+        solver.setOptionValue(option, value)
     solver.passModel(model)
     solver.run()
 
