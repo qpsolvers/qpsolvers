@@ -21,22 +21,20 @@
 
 """Solver interface for Gurobi."""
 
-from typing import Optional
+from typing import Optional, Union
 from warnings import warn
 
 import numpy as np
+import scipy.sparse as spa
 from gurobipy import GRB, Model
-from numpy import array
-
-from .conversions import linear_from_box_inequalities
 
 
 def gurobi_solve_qp(
-    P: np.ndarray,
+    P: Union[np.ndarray, spa.csc_matrix],
     q: np.ndarray,
-    G: Optional[np.ndarray] = None,
+    G: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
     h: Optional[np.ndarray] = None,
-    A: Optional[np.ndarray] = None,
+    A: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
     b: Optional[np.ndarray] = None,
     lb: Optional[np.ndarray] = None,
     ub: Optional[np.ndarray] = None,
