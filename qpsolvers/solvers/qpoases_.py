@@ -164,17 +164,14 @@ def qpoases_solve_qp(
     args: List[Any] = []
     if has_constraint:
         qp = QProblem(n, C.shape[0])
-        qp.setOptions(__options__)
         args = [P, q, C, lb, ub, lb_C, ub_C, array([max_wsr])]
-        if time_limit is not None:
-            args.append(array([time_limit]))
-    else:  # no constraint
+    else:  # at most box constraints
         qp = QProblemB(n)
-        qp.setOptions(__options__)
         args = [P, q, lb, ub, array([max_wsr])]
-        if time_limit is not None:
-            args.append(array([time_limit]))
+    if time_limit is not None:
+        args.append(array([time_limit]))
 
+    qp.setOptions(__options__)
     return_value = qp.init(*args)
     if RET_INIT_FAILED <= return_value <= RET_INIT_FAILED_REGULARISATION:
         return None
