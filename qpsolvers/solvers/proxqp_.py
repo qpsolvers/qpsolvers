@@ -30,8 +30,8 @@ academic work, consider citing the corresponding paper [Bambade2022]_.
 from typing import Optional, Union
 
 import numpy as np
-import proxsuite
 import scipy.sparse as spa
+from proxsuite import proxqp
 
 
 def __combine_inequalities(G, h, lb, ub, n: int, use_csc: bool):
@@ -101,15 +101,11 @@ def __select_backend(backend: Optional[str], use_csc: bool):
         Backend solve function.
     """
     if backend is None:
-        return (
-            proxsuite.proxqp.sparse.solve
-            if use_csc
-            else proxsuite.proxqp.dense.solve
-        )
+        return proxqp.sparse.solve if use_csc else proxqp.dense.solve
     if backend == "dense":
-        return proxsuite.proxqp.dense.solve
+        return proxqp.dense.solve
     if backend == "sparse":
-        return proxsuite.proxqp.sparse.solve
+        return proxqp.sparse.solve
     raise ValueError(f'Unknown ProxQP backend "{backend}')
 
 
@@ -241,6 +237,6 @@ def proxqp_solve_qp(
         verbose=verbose,
         **kwargs,
     )
-    if result.info.status != proxsuite.proxqp.QPSolverOutput.PROXQP_SOLVED:
+    if result.info.status != proxqp.QPSolverOutput.PROXQP_SOLVED:
         return None
     return result.x
