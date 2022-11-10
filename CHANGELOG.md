@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 
 - OSQP: drop support for older versions without ``osqp.constant``
 - OSQP: streamline stacking of box inequalities
+- Removed CVXPY which is not a solver
 - SCS: ``SOLVED_INACCURATE`` is now considered a failure
 - qpOASES: forward box inequalities directly
 

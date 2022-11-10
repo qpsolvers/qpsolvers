@@ -35,7 +35,6 @@ keywords = ["quadratic programming", "solver", "numerical optimization"]
 [project.optional-dependencies]
 all_pypi_solvers = [
     "cvxopt >=1.2.6",
-    "cvxpy >=1.1.11",
     "ecos >=2.0.8",
     "highspy >=1.1.2.dev3",
     "osqp >=0.6.2",
@@ -45,7 +44,6 @@ all_pypi_solvers = [
 ]
 open_source_solvers = [
     "cvxopt >=1.2.6",
-    "cvxpy >=1.1.11",
     "ecos >=2.0.8",
     "osqp >=0.6.2",
     "proxsuite >=0.2.2",
