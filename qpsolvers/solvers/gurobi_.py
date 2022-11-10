@@ -41,6 +41,7 @@ def gurobi_solve_qp(
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
     time_limit: Optional[float] = None,
+    feasibility_tol: Optional[float] = None,
 ) -> Optional[np.ndarray]:
     """
     Solve a Quadratic Program defined as:
@@ -82,6 +83,9 @@ def gurobi_solve_qp(
         Set to `True` to print out extra information.
     time_limit :
         Set a run time limit in seconds.
+    feasibility_tol :
+        Primal feasibility tolerance. All constraints should be satisfied up to
+        at most this value.
 
     Returns
     -------
@@ -96,11 +100,15 @@ def gurobi_solve_qp(
     """
     if initvals is not None:
         warn("Gurobi: warm-start values given but they will be ignored")
+
     model = Model()
     if not verbose:
-        model.setParam("OutputFlag", 0)
-    if time_limit:
-        model.setParam("TimeLimit", time_limit)
+        model.setParam(GRB.Param.OutputFlag, 0)
+    if time_limit is not None:
+        model.setParam(GRB.Param.TimeLimit, time_limit)
+    if feasibility_tol is not None:
+        model.setParam(GRB.Param.FeasibilityTol, feasibility_tol)
+
     num_vars = P.shape[0]
     identity = spa.eye(num_vars)
     x = model.addMVar(
