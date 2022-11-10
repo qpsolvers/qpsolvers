@@ -95,6 +95,14 @@ def solve_qp(
     verbose :
         Set to ``True`` to print out extra information.
 
+    Note
+    ----
+    In quadratic programming, the matrix :math:`P` should be symmetric. Many
+    solvers (including CVXOPT, OSQP and quadprog) leverage this property and
+    may return unintended results when it is not the case. You can set
+    ``sym_proj=True`` to project :math:`P` on its symmetric part, at the cost
+    of a little computation time.
+
     Returns
     -------
     :
@@ -116,19 +124,15 @@ def solve_qp(
     Notes
     -----
     Extra keyword arguments given to this function are forwarded to the
-    underlying solver. For example, OSQP has a setting `eps_abs` which we can
-    provide by ``solve_qp(P, q, G, h, solver='osqp', eps_abs=1e-4)``.
+    underlying solver. For example, we can call OSQP with a custom absolute
+    feasibility tolerance by ``solve_qp(P, q, G, h, solver='osqp',
+    eps_abs=1e-6)``. See the :ref:`Supported solvers <Supported solvers>` page
+    for details on the parameters available to each solver.
 
-    In quadratic programming, the matrix :math:`P` should be symmetric. Many
-    solvers (including CVXOPT, OSQP and quadprog) leverage this property and
-    may return unintended results when it is not the case. You can set
-    ``sym_proj=True`` to project :math:`P` on its symmetric part, at the cost
-    of some computation time.
-
-    We don't guarantee that a ``ValueError`` is raised if the provided problem
-    is non-convex, as some solvers don't check for this. Rather, if the problem
-    is non-convex and the solver fails because of that, then a ``ValueError``
-    will be raised.
+    There is no guarantee that a ``ValueError`` is raised if the provided
+    problem is non-convex, as some solvers don't check for this. Rather, if the
+    problem is non-convex and the solver fails because of that, then a
+    ``ValueError`` will be raised.
     """
     if solver is None:
         raise NoSolverSelected(
