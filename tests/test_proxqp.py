@@ -25,9 +25,7 @@ from qpsolvers import solve_qp
 from .problems import get_sd3310_problem
 
 try:
-    import proxsuite
-
-    from qpsolvers import proxqp_solve_qp
+    from qpsolvers.solvers.proxqp_ import proxqp_solve_qp
 
     class TestProxQP(unittest.TestCase):
 
@@ -101,7 +99,6 @@ try:
                     solver="proxqp",
                     initvals=q,
                     x=q,
-                    avoid_unused_import_warning=proxsuite,
                 )
 
         def test_invalid_inequalities(self):
