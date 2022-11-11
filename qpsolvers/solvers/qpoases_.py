@@ -78,7 +78,8 @@ def __prepare_options(
         Options for qpOASES.
     """
     options = Options()
-    options.printLevel = PrintLevel.MEDIUM if verbose else PrintLevel.NONE
+
+    # Start from pre-defined options
     if predefined_options is None:
         pass
     elif predefined_options == "fast":
@@ -93,8 +94,12 @@ def __prepare_options(
         raise ValueError(
             f"unknown qpOASES pre-defined options {predefined_options}'"
         )
+
+    # Override options with explicit ones
+    options.printLevel = PrintLevel.MEDIUM if verbose else PrintLevel.NONE
     for param, value in kwargs.items():
         setattr(options, param, value)
+
     return options
 
 
