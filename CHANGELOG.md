@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+- qpOASES: non-persistent solver options between calls
 - qpOASES: return failure on ``RET_INIT_FAILED*`` return codes
 
 ## [2.5.0] - 2022/11/04
