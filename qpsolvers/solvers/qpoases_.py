@@ -44,8 +44,6 @@ from qpoases import PyQProblemB as QProblemB
 from qpoases import PyReturnValue as ReturnValue
 
 __infty__ = 1e10
-__options__ = Options()
-__options__.printLevel = PrintLevel.NONE
 
 
 # Return codes not wrapped in qpoases.PyReturnValue
@@ -157,9 +155,10 @@ def qpoases_solve_qp(
         else:  # no equality constraint either
             has_constraint = False
 
-    __options__.printLevel = PrintLevel.MEDIUM if verbose else PrintLevel.NONE
+    options = Options()
+    options.printLevel = PrintLevel.MEDIUM if verbose else PrintLevel.NONE
     if termination_tolerance is not None:
-        __options__.terminationTolerance = termination_tolerance
+        options.terminationTolerance = termination_tolerance
 
     args: List[Any] = []
     if has_constraint:
@@ -171,7 +170,7 @@ def qpoases_solve_qp(
     if time_limit is not None:
         args.append(array([time_limit]))
 
-    qp.setOptions(__options__)
+    qp.setOptions(options)
     return_value = qp.init(*args)
     if RET_INIT_FAILED <= return_value <= RET_INIT_FAILED_REGULARISATION:
         return None
