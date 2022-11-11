@@ -56,6 +56,48 @@ RET_INIT_FAILED_UNBOUNDEDNESS = 38
 RET_INIT_FAILED_REGULARISATION = 39
 
 
+def __prepare_options(
+    verbose: bool,
+    predefined_options: Optional[str],
+    **kwargs,
+) -> Options:
+    """
+    Prepare options for qpOASES.
+
+    Parameters
+    ----------
+    verbose :
+        Set to `True` to print out extra information.
+    predefined_options :
+        Set solver options to one of the pre-defined choices provided by
+        qpOASES: ``["default", "fast", "mpc", "reliable"]``.
+
+    Returns
+    -------
+    :
+        Options for qpOASES.
+    """
+    options = Options()
+    options.printLevel = PrintLevel.MEDIUM if verbose else PrintLevel.NONE
+    if predefined_options is None:
+        pass
+    elif predefined_options == "fast":
+        options.setToFast()
+    elif predefined_options == "default":
+        options.setToDefault()
+    elif predefined_options == "mpc":
+        options.setToMPC()
+    elif predefined_options == "reliable":
+        options.setToReliable()
+    else:
+        raise ValueError(
+            f"unknown qpOASES pre-defined options {predefined_options}'"
+        )
+    for param, value in kwargs.items():
+        setattr(options, param, value)
+    return options
+
+
 def qpoases_solve_qp(
     P: np.ndarray,
     q: np.ndarray,
@@ -69,7 +111,8 @@ def qpoases_solve_qp(
     verbose: bool = False,
     max_wsr: int = 1000,
     time_limit: Optional[float] = None,
-    termination_tolerance: Optional[float] = None,
+    predefined_options: Optional[str] = None,
+    **kwargs,
 ) -> Optional[np.ndarray]:
     """
     Solve a Quadratic Program defined as:
@@ -113,26 +156,54 @@ def qpoases_solve_qp(
         Maximum number of Working-Set Recalculations given to qpOASES.
     time_limit :
         Set a run time limit in seconds.
-    termination_tolerance :
-        Relative termination tolerance to stop homotopy. See `qpOASES User's
-        Manual <https://www.coin-or.org/qpOASES/doc/3.1/manual.pdf>`_.
+    predefined_options :
+        Set solver options to one of the pre-defined choices provided by
+        qpOASES, to pick in ``["default", "fast", "mpc", "reliable"]``.
 
     Returns
     -------
     :
         Solution to the QP, if found, otherwise ``None``.
 
+    Raises
+    ------
+    ValueError :
+        If :param:`predefined_options` is not a valid choice.
+
     Notes
     -----
-    This function relies on some updates from the standard distribution of
-    qpOASES. See the `installation instructions
-    <https://scaron.info/doc/qpsolvers/installation.html#qpoases>`_ for
-    details.
+    This function relies on an update to qpOASES to allow empty bounds (`lb`,
+    `ub`, `lbA` or `ubA`) in Python. This is possible in the C++ API but not by
+    the Python API (as of version 3.2.0). If using them, be sure to update the
+    Cython file (`qpoases.pyx`) in your distribution of qpOASES to convert
+    ``None`` to the null pointer. Check out the `installation instructions
+    <https://scaron.info/doc/qpsolvers/installation.html#qpoases>`_.
 
-    Empty bounds (`lb`, `ub`, `lbA` or `ubA`) are allowed. This is possible in
-    the C++ API but not by the Python API of qpOASES (as of version 3.2.0). If
-    using them, be sure to update the Cython file (`qpoases.pyx`) in your
-    distribution of qpOASES to convert ``None`` to the null pointer.
+    Keyword arguments are forwarded as optionsto qpOASES. For instance, we can
+    call ``qpoases_solve_qp(P, q, G, h, u, terminationTolerance=1e-14)``.
+    qpOASES options include the following:
+
+    .. list-table::
+       :widths: 30 70
+       :header-rows: 1
+
+       * - Name
+         - Description
+       * - ``boundRelaxation``
+         - Initial relaxation of bounds to start homotopy and initial value for
+           far bounds.
+       * - ``epsNum``
+         - Numerator tolerance for ratio tests.
+       * - ``epsDen``
+         - Denominator tolerance for ratio tests.
+       * - ``numRefinementSteps``
+         - Maximum number of iterative refinement steps.
+       * - ``terminationTolerance``
+         - Relative termination tolerance to stop homotopy.
+
+    Check out pages 28 to 30 of `qpOASES User's Manual
+    <https://www.coin-or.org/qpOASES/doc/3.1/manual.pdf>`_. for all available
+    options.
     """
     if initvals is not None:
         print("qpOASES: note that warm-start values ignored by wrapper")
@@ -155,11 +226,6 @@ def qpoases_solve_qp(
         else:  # no equality constraint either
             has_constraint = False
 
-    options = Options()
-    options.printLevel = PrintLevel.MEDIUM if verbose else PrintLevel.NONE
-    if termination_tolerance is not None:
-        options.terminationTolerance = termination_tolerance
-
     args: List[Any] = []
     if has_constraint:
         qp = QProblem(n, C.shape[0])
@@ -170,6 +236,7 @@ def qpoases_solve_qp(
     if time_limit is not None:
         args.append(array([time_limit]))
 
+    options = __prepare_options(verbose, predefined_options, **kwargs)
     qp.setOptions(options)
     return_value = qp.init(*args)
     if RET_INIT_FAILED <= return_value <= RET_INIT_FAILED_REGULARISATION:

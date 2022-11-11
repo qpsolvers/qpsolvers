@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Gurobi: forward keyword arguments as solver parameters
-- qpOASES: termination tolerance parameter
+- qpOASES: pre-defined options parameter
 - qpOASES: time limit parameter
 
 ### Changed
@@ -15,9 +15,10 @@ All notable changes to this project will be documented in this file.
 - HiGHS: forward all keyword arguments as solver options
 - OSQP: drop support for older versions without ``osqp.constant``
 - OSQP: streamline stacking of box inequalities
+- qpOASES: forward all keyword arguments as solver options
+- qpOASES: forward box inequalities directly
 - Removed CVXPY which is not a solver
 - SCS: ``SOLVED_INACCURATE`` is now considered a failure
-- qpOASES: forward box inequalities directly
 
 ### Fixed
 
