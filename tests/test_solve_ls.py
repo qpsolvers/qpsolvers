@@ -25,7 +25,8 @@ Tests for the `solve_lp` function.
 import unittest
 import warnings
 
-from numpy import array, dot
+import numpy as np
+import scipy.sparse as spa
 from numpy.linalg import norm
 
 from qpsolvers import available_solvers, solve_ls
@@ -44,12 +45,15 @@ class TestSolveLS(unittest.TestCase):
         """
         warnings.simplefilter("ignore", category=DeprecationWarning)
         warnings.simplefilter("ignore", category=UserWarning)
-        self.R = array([[1.0, 2.0, 0.0], [2.0, 3.0, 4.0], [0.0, 4.0, 1.0]])
-        self.s = array([3.0, 2.0, 3.0])
-        self.G = array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
-        self.h = array([3.0, 2.0, -2.0]).reshape((3,))
-        self.A = array([1.0, 1.0, 1.0])
-        self.b = array([1.0])
+        self.R = np.array([[1.0, 2.0, 0.0], [2.0, 3.0, 4.0], [0.0, 4.0, 1.0]])
+        self.s = np.array([3.0, 2.0, 3.0])
+        self.G = np.array(
+            [[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]]
+        )
+        self.h = np.array([3.0, 2.0, -2.0]).reshape((3,))
+        self.A = np.array([1.0, 1.0, 1.0])
+        self.b = np.array([1.0])
+        self.known_solution = np.array([2.0 / 3, -1.0 / 3, 2.0 / 3])
 
     def get_problem(self):
         """
@@ -94,7 +98,6 @@ class TestSolveLS(unittest.TestCase):
             x_sp = solve_ls(R, s, G, h, A, b, solver=solver, sym_proj=True)
             self.assertIsNotNone(x)
             self.assertIsNotNone(x_sp)
-            known_solution = array([2.0 / 3, -1.0 / 3, 2.0 / 3])
             sol_tolerance = (
                 5e-3
                 if solver == "osqp"
@@ -106,13 +109,19 @@ class TestSolveLS(unittest.TestCase):
             )
             eq_tolerance = 1e-9
             ineq_tolerance = (
-                1e-3 if solver == "osqp" else 1e-5 if solver == "proxqp" else 2e-7 if solver == "scs" else 1e-9
+                1e-3
+                if solver == "osqp"
+                else 1e-5
+                if solver == "proxqp"
+                else 2e-7
+                if solver == "scs"
+                else 1e-9
             )
-            self.assertLess(norm(x - known_solution), sol_tolerance)
-            self.assertLess(norm(x_sp - known_solution), sol_tolerance)
-            self.assertLess(max(dot(G, x) - h), ineq_tolerance)
-            self.assertLess(max(dot(A, x) - b), eq_tolerance)
-            self.assertLess(min(dot(A, x) - b), eq_tolerance)
+            self.assertLess(norm(x - self.known_solution), sol_tolerance)
+            self.assertLess(norm(x_sp - self.known_solution), sol_tolerance)
+            self.assertLess(max(G.dot(x) - h), ineq_tolerance)
+            self.assertLess(max(A.dot(x) - b), eq_tolerance)
+            self.assertLess(min(A.dot(x) - b), eq_tolerance)
 
         return test
 
