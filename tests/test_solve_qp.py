@@ -221,6 +221,9 @@ class TestSolveQP(unittest.TestCase):
                 {"P": P, "q": q},
                 {"P": P, "q": q, "G": G, "h": h},
                 {"P": P, "q": q, "G": G[0], "h": h0},
+                {"P": P, "q": q, "G": G[0], "h": h0, "lb": lb},
+                {"P": P, "q": q, "G": G[0], "h": h0, "ub": ub},
+                {"P": P, "q": q, "G": G[0], "h": h0, "lb": lb, "ub": ub},
                 {"P": P, "q": q, "A": A, "b": b},
                 {"P": P, "q": q, "A": A[0], "b": b0},
                 {"P": P, "q": q, "lb": lb, "ub": None},
@@ -230,6 +233,15 @@ class TestSolveQP(unittest.TestCase):
                 {"P": P, "q": q, "G": G[0], "h": h0, "A": A, "b": b},
                 {"P": P, "q": q, "G": G, "h": h, "A": A[0], "b": b0},
                 {"P": P, "q": q, "G": G[0], "h": h0, "A": A[0], "b": b0},
+                {
+                    "P": P,
+                    "q": q,
+                    "G": G[0],
+                    "h": h0,
+                    "A": A[0],
+                    "b": b0,
+                    "lb": lb,
+                },
                 {
                     "P": P,
                     "q": q,
@@ -303,6 +315,8 @@ class TestSolveQP(unittest.TestCase):
                 sol_tolerance = (
                     2e-2
                     if solver == "proxqp"
+                    else 1e-3
+                    if solver == "scs"
                     else 2e-3
                     if solver == "osqp"
                     else 5e-4
