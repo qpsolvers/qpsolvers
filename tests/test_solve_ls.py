@@ -240,13 +240,16 @@ for solver in sparse_solvers:
         "test_mixed_sparse_args_{}".format(solver),
         TestSolveLS.get_test_mixed_sparse_args(solver),
     )
-    setattr(
-        TestSolveLS,
-        "test_medium_sparse_problem_{}".format(solver),
-        TestSolveLS.get_test_medium_sparse_problem(solver),
-    )
-    if solver != "scs":
-        # Issue reported in https://github.com/cvxgrp/scs/issues/234
+    if solver != "gurobi":
+        # Gurobi: model too large for size-limited license
+        setattr(
+            TestSolveLS,
+            "test_medium_sparse_problem_{}".format(solver),
+            TestSolveLS.get_test_medium_sparse_problem(solver),
+        )
+    if solver not in ["gurobi", "scs"]:
+        # Gurobi: model too large for size-limited license
+        # SCS: issue reported in https://github.com/cvxgrp/scs/issues/234
         setattr(
             TestSolveLS,
             "test_large_sparse_problem_{}".format(solver),
