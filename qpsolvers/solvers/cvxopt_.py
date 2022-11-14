@@ -18,9 +18,18 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""Solver interface for CVXOPT."""
+"""
+Solver interface for `CVXOPT <https://cvxopt.org/>`__.
 
-from typing import Any, Dict, Optional, Union
+CVXOPT is a free software package for convex optimization in Python. Its main
+purpose is to make the development of software for convex optimization
+applications straightforward by building on Python’s extensive standard library
+and on the strengths of Python as a high-level programming language. If you are
+using CVXOPT in some academic work, consider citing the corresponding report
+[Vandenberghe2010]_.
+"""
+
+from typing import Dict, Optional, Union
 
 import cvxopt
 from cvxopt.solvers import qp
