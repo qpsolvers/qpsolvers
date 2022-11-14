@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - CVXOPT: forward all keyword arguments as solver options
+- Deprecate `solve_safer_qp` and warn about future removal
 - HiGHS: forward all keyword arguments as solver options
 - Least squares example: disable verbose output
 - OSQP: drop support for older versions without ``osqp.constant``
