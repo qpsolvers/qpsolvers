@@ -152,7 +152,7 @@ try:
 
     solve_function["highs"] = highs_solve_qp
     available_solvers.append("highs")
-    dense_solvers.append("highs")
+    sparse_solvers.append("highs")
 except ImportError:
     pass
 
