@@ -2,9 +2,14 @@
 
 ## Basics
 
+### Dense
+
 - [Quadratic programming](quadratic_programming.py)
 - [Least squares](least_squares.py)
 - [Box inequalities](box_inequalities.py)
+
+### Sparse
+
 - [Sparse linear least squares](sparse_least_squares.py)
 
 ## Applications
