@@ -62,6 +62,9 @@ def concatenate_bound(
             G = np.concatenate((G, sign * np.eye(n)), 0)
         elif isinstance(G, (spa.csc_matrix, spa.dia_matrix)):
             G = spa.vstack([G, sign * spa.eye(n)], format="csc")
+        else:  # G is not an instance of a type we know
+            name = type(G).__name__
+            raise TypeError(f"invalid type '{name}' for inequality matrix G")
         h = np.concatenate((h, sign * b))
     return (G, h)
 
