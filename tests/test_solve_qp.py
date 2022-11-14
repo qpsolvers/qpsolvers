@@ -235,7 +235,8 @@ class TestSolveQP(unittest.TestCase):
             ]
 
             for (i, test_case) in enumerate(cases):
-                if "G" not in test_case and solver == "qpswift":
+                no_inequality = "G" not in test_case or test_case["G"] is None
+                if no_inequality and solver == "qpswift":
                     # QPs without inequality constraints not handled by qpSWIFT
                     continue
                 test_comp = {
