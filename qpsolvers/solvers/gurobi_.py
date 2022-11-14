@@ -22,6 +22,11 @@
 """
 Solver interface for `Gurobi <https://www.gurobi.com/>`__.
 
+The Gurobi Optimizer suite ships several solvers for mathematical programming,
+including problems that have linear constraints, bound constraints, integrality
+constraints, cone constraints, or quadratic constraints. It targets modern CPU
+architectures and multi-core processors,
+
 See the :ref:`installation page <gurobi-install>` for additional instructions
 on installing this solver.
 """
