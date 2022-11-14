@@ -40,7 +40,7 @@ from .solvers import (
 )
 from .utils import print_matrix_vector
 
-__version__ = "2.6.0rc5"
+__version__ = "2.6.0rc6"
 
 __all__ = [
     "__version__",
