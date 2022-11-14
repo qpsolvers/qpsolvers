@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 - Least squares example: disable verbose output
 - OSQP: drop support for older versions without ``osqp.constant``
 - OSQP: streamline stacking of box inequalities
+- ProxQP: also consider constraint matrices to select backend
 - qpOASES: forward all keyword arguments as solver options
 - qpOASES: forward box inequalities directly
 - Removed CVXPY which is not a solver
