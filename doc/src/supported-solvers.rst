@@ -33,7 +33,8 @@ HiGHS
 MOSEK
 =====
 
-.. autofunction:: qpsolvers.mosek_solve_qp
+.. automodule:: qpsolvers.solvers.mosek_
+    :members:
 
 OSQP
 ====
