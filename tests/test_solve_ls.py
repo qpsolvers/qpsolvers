@@ -205,6 +205,29 @@ class TestSolveLS(unittest.TestCase):
 
         return test
 
+    @staticmethod
+    def get_test_large_sparse_problem(solver: str):
+        """
+        Get test function for a large sparse problem with a given solver.
+
+        Parameters
+        ----------
+        solver :
+            Name of the solver to test.
+
+        Returns
+        -------
+        :
+            Test function for that solver.
+        """
+
+        def test(self):
+            R, s, G, h, A, b, lb, ub = get_sparse_least_squares(n=15_000)
+            x = solve_ls(R, s, G, h, A, b, solver=solver)
+            self.assertIsNotNone(x)
+
+        return test
+
 
 # Generate test fixtures for each solver
 for solver in available_solvers:
@@ -222,3 +245,10 @@ for solver in sparse_solvers:
         "test_medium_sparse_problem_{}".format(solver),
         TestSolveLS.get_test_medium_sparse_problem(solver),
     )
+    if solver != "scs":
+        # Issue reported in https://github.com/cvxgrp/scs/issues/234
+        setattr(
+            TestSolveLS,
+            "test_large_sparse_problem_{}".format(solver),
+            TestSolveLS.get_test_large_sparse_problem(solver),
+        )
