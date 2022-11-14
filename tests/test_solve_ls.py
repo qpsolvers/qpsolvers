@@ -29,7 +29,7 @@ import numpy as np
 import scipy.sparse as spa
 from numpy.linalg import norm
 
-from qpsolvers import available_solvers, solve_ls
+from qpsolvers import available_solvers, solve_ls, sparse_solvers
 from qpsolvers.exceptions import NoSolverSelected, SolverNotFound
 
 
@@ -182,6 +182,8 @@ for solver in available_solvers:
     setattr(
         TestSolveLS, "test_{}".format(solver), TestSolveLS.get_test(solver)
     )
+
+for solver in sparse_solvers:
     setattr(
         TestSolveLS,
         "test_mixed_sparse_{}".format(solver),
