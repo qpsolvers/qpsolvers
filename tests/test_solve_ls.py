@@ -166,13 +166,17 @@ class TestSolveLS(unittest.TestCase):
             self.assertIsNotNone(x_csc)
 
             R_dia = spa.eye(n)
-            x_dia = solve_ls(
-                R_dia, s, G, h, A, b, solver=solver, sym_proj=True
-            )
+            x_dia = solve_ls(R_dia, s, G, h, A, b, solver=solver)
             self.assertIsNotNone(x_dia)
+
+            x_np_dia = solve_ls(
+                R_dia, s, G, h, A, b, W=np.eye(n), solver=solver
+            )
+            self.assertIsNotNone(x_np_dia)
 
             sol_tolerance = 1e-8
             self.assertLess(norm(x_csc - x_dia), sol_tolerance)
+            self.assertLess(norm(x_csc - x_np_dia), sol_tolerance)
 
         return test
 
