@@ -68,14 +68,14 @@ try:
                 b,
                 solver="qpoases",
                 time_limit=0.1,
-                termination_tolerance=1e-7,
+                terminationTolerance=1e-7,
             )
             solve_qp(
                 P,
                 q,
                 solver="qpoases",
                 time_limit=0.1,
-                termination_tolerance=1e-7,
+                terminationTolerance=1e-7,
             )
 
         def test_unfeasible(self):
