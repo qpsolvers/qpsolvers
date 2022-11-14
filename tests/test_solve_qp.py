@@ -210,92 +210,28 @@ class TestSolveQP(unittest.TestCase):
 
         def test(self):
             P, q, G, h, _, _ = self.get_dense_problem()
-            h0 = array([h[0]])
             A = array([[1.0, 0.0, 0.0], [0.0, 0.4, 0.5]])
             b = array([-0.5, -1.2])
-            b0 = array([b[0]])
             lb = array([-0.5, -2, -0.8])
             ub = array([+1.0, +1.0, +1.0])
 
+            ineq_variants = ((None, None), (G, h), (G[0], array([h[0]])))
+            eq_variants = ((None, None), (A, b), (A[0], array([b[0]])))
+            box_variants = ((None, None), (lb, None), (None, ub), (lb, ub))
             cases = [
-                {"P": P, "q": q},
-                {"P": P, "q": q, "G": G, "h": h},
-                {"P": P, "q": q, "G": G[0], "h": h0},
-                {"P": P, "q": q, "G": G[0], "h": h0, "lb": lb},
-                {"P": P, "q": q, "G": G[0], "h": h0, "ub": ub},
-                {"P": P, "q": q, "G": G[0], "h": h0, "lb": lb, "ub": ub},
-                {"P": P, "q": q, "A": A, "b": b},
-                {"P": P, "q": q, "A": A[0], "b": b0},
-                {"P": P, "q": q, "lb": lb, "ub": None},
-                {"P": P, "q": q, "lb": None, "ub": ub},
-                {"P": P, "q": q, "lb": lb, "ub": ub},
-                {"P": P, "q": q, "G": G, "h": h, "A": A, "b": b},
-                {"P": P, "q": q, "G": G[0], "h": h0, "A": A, "b": b},
-                {"P": P, "q": q, "G": G, "h": h, "A": A[0], "b": b0},
-                {"P": P, "q": q, "G": G[0], "h": h0, "A": A[0], "b": b0},
                 {
                     "P": P,
                     "q": q,
-                    "G": G[0],
-                    "h": h0,
-                    "A": A[0],
-                    "b": b0,
-                    "lb": lb,
-                },
-                {
-                    "P": P,
-                    "q": q,
-                    "G": G,
-                    "h": h,
-                    "A": A,
-                    "b": b,
-                    "lb": lb,
-                    "ub": None,
-                },
-                {
-                    "P": P,
-                    "q": q,
-                    "G": G,
-                    "h": h,
-                    "A": A,
-                    "b": b,
-                    "lb": None,
-                    "ub": ub,
-                },
-                {
-                    "P": P,
-                    "q": q,
-                    "G": G,
-                    "h": h,
-                    "A": A,
-                    "b": b,
-                    "lb": lb,
-                    "ub": ub,
-                },
-                {
-                    "P": P,
-                    "q": q,
-                    "G": G,
-                    "h": h,
-                    "lb": lb,
-                    "ub": None,
-                },
-                {
-                    "P": P,
-                    "q": q,
-                    "G": G,
-                    "h": h,
-                    "lb": None,
-                    "ub": ub,
-                },
-                {
-                    "P": P,
-                    "q": q,
-                    "G": G,
-                    "h": h,
-                    "lb": lb,
-                    "ub": ub,
-                },
+                    "G": G_case,
+                    "h": h_case,
+                    "A": A_case,
+                    "b": b_case,
+                    "lb": lb_case,
+                    "ub": ub_case,
+                }
+                for (G_case, h_case) in ineq_variants
+                for (A_case, b_case) in eq_variants
+                for (lb_case, ub_case) in box_variants
             ]
 
             for (i, test_case) in enumerate(cases):
