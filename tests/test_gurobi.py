@@ -20,25 +20,31 @@
 
 import unittest
 
-from qpsolvers.solvers.gurobi_ import gurobi_solve_qp
-
 from .problems import get_sd3310_problem
 
 
-class TestGurobi(unittest.TestCase):
+try:
+    from qpsolvers.solvers.gurobi_ import gurobi_solve_qp
 
-    """
-    Test fixture for the Gurobi solver.
-    """
+    class TestGurobi(unittest.TestCase):
 
-    def test_gurobi_params(self):
-        P, q, G, h, _, _ = get_sd3310_problem()
-        x = gurobi_solve_qp(
-            P,
-            q,
-            G,
-            h,
-            TimeLimit=0.1,
-            FeasibilityTol=1e-8,
-        )
-        self.assertIsNotNone(x)
+        """
+        Test fixture for the Gurobi solver.
+        """
+
+        def test_gurobi_params(self):
+            P, q, G, h, _, _ = get_sd3310_problem()
+            x = gurobi_solve_qp(
+                P,
+                q,
+                G,
+                h,
+                TimeLimit=0.1,
+                FeasibilityTol=1e-8,
+            )
+            self.assertIsNotNone(x)
+
+
+except ImportError:  # ProxSuite not installed
+
+    pass
