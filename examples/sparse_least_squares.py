@@ -35,7 +35,7 @@ from qpsolvers import solve_ls
 
 n = 150_000
 
-# minimize || x - s ||^2
+# minimize 1/2 || x - s ||^2
 R = spa.eye(n, format="csc")
 s = np.array(range(n), dtype=float)
 
@@ -62,7 +62,11 @@ lb = np.zeros(n)
 
 
 if __name__ == "__main__":
-    solver = "osqp" if "osqp" in qpsolvers.sparse_solvers else random.choice(qpsolvers.sparse_solvers)
+    solver = (
+        "osqp"
+        if "osqp" in qpsolvers.sparse_solvers
+        else random.choice(qpsolvers.sparse_solvers)
+    )
 
     start_time = perf_counter()
     x = solve_ls(
@@ -88,7 +92,7 @@ if __name__ == "__main__":
     print("")
     print(f"Found solution in {duration_ms:.0f} milliseconds with {solver}")
     print("")
-    print(f"- Objective: {np.linalg.norm(x - s):.1f}")
+    print(f"- Objective: {0.5 * (x - s).dot(x - s):.1f}")
     print(f"- G * x <= h: {(G.dot(x) <= h + tol).all()}")
     print(f"- x >= 0: {(x + tol >= 0.0).all()}")
     print(f"- sum(x) = {x.sum():.1f}")
