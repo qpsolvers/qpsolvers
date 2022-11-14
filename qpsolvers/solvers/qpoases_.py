@@ -173,7 +173,7 @@ def qpoases_solve_qp(
     Raises
     ------
     ValueError :
-        If :param:`predefined_options` is not a valid choice.
+        If ``predefined_options`` is not a valid choice.
 
     Notes
     -----
