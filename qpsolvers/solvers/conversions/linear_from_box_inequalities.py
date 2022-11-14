@@ -60,7 +60,7 @@ def concatenate_bound(
     else:  # G is not None and h is not None
         if isinstance(G, np.ndarray):
             G = np.concatenate((G, sign * np.eye(n)), 0)
-        elif isinstance(G, spa.csc_matrix):
+        elif isinstance(G, (spa.csc_matrix, spa.dia_matrix)):
             G = spa.vstack([G, sign * spa.eye(n)], format="csc")
         h = np.concatenate((h, sign * b))
     return (G, h)
