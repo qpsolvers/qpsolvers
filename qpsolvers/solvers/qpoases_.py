@@ -184,7 +184,7 @@ def qpoases_solve_qp(
     ``None`` to the null pointer. Check out the `installation instructions
     <https://scaron.info/doc/qpsolvers/installation.html#qpoases>`_.
 
-    Keyword arguments are forwarded as optionsto qpOASES. For instance, we can
+    Keyword arguments are forwarded as options to qpOASES. For instance, we can
     call ``qpoases_solve_qp(P, q, G, h, u, terminationTolerance=1e-14)``.
     qpOASES options include the following:
 
