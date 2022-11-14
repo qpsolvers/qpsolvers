@@ -9,7 +9,8 @@ Supported solvers
 CVXOPT
 ======
 
-.. autofunction:: qpsolvers.cvxopt_solve_qp
+.. automodule:: qpsolvers.solvers.cvxopt_
+    :members:
 
 ECOS
 ====
