@@ -32,6 +32,8 @@ from numpy.linalg import norm
 from qpsolvers import available_solvers, solve_ls, sparse_solvers
 from qpsolvers.exceptions import NoSolverSelected, SolverNotFound
 
+from .problems import get_sparse_least_squares
+
 
 class TestSolveLS(unittest.TestCase):
 
@@ -142,7 +144,7 @@ class TestSolveLS(unittest.TestCase):
             solve_ls(R, s, G, h, A, b, solver="ideal")
 
     @staticmethod
-    def get_test_mixed_sparse(solver: str):
+    def get_test_mixed_sparse_args(solver: str):
         """
         Get test function for mixed sparse problems with a given solver.
 
@@ -180,16 +182,43 @@ class TestSolveLS(unittest.TestCase):
 
         return test
 
+    @staticmethod
+    def get_test_medium_sparse_problem(solver: str):
+        """
+        Get test function for a large sparse problem with a given solver.
+
+        Parameters
+        ----------
+        solver :
+            Name of the solver to test.
+
+        Returns
+        -------
+        :
+            Test function for that solver.
+        """
+
+        def test(self):
+            R, s, G, h, A, b, lb, ub = get_sparse_least_squares(n=1500)
+            x = solve_ls(R, s, G, h, A, b, solver=solver)
+            self.assertIsNotNone(x)
+
+        return test
+
 
 # Generate test fixtures for each solver
 for solver in available_solvers:
     setattr(
         TestSolveLS, "test_{}".format(solver), TestSolveLS.get_test(solver)
     )
-
 for solver in sparse_solvers:
     setattr(
         TestSolveLS,
-        "test_mixed_sparse_{}".format(solver),
-        TestSolveLS.get_test_mixed_sparse(solver),
+        "test_mixed_sparse_args_{}".format(solver),
+        TestSolveLS.get_test_mixed_sparse_args(solver),
+    )
+    setattr(
+        TestSolveLS,
+        "test_medium_sparse_problem_{}".format(solver),
+        TestSolveLS.get_test_medium_sparse_problem(solver),
     )
