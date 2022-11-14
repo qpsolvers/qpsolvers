@@ -32,17 +32,6 @@ from qpsolvers import available_solvers, solve_ls
 from qpsolvers.exceptions import NoSolverSelected, SolverNotFound
 
 
-def solve_ls_with_test_params(*args, **kwargs):
-    """
-    Call ``solve_lp`` with additional solver parameters
-    """
-    params = {}
-    if kwargs["solver"] == "proxqp":
-        params["eps_abs"] = 1e-9
-    kwargs.update(params)
-    return solve_ls(*args, **kwargs)
-
-
 class TestSolveLS(unittest.TestCase):
 
     """
@@ -101,23 +90,23 @@ class TestSolveLS(unittest.TestCase):
 
         def test(self):
             R, s, G, h, A, b = self.get_problem()
-            x = solve_ls_with_test_params(R, s, G, h, A, b, solver=solver)
-            x_sp = solve_ls_with_test_params(
-                R, s, G, h, A, b, solver=solver, sym_proj=True
-            )
+            x = solve_ls(R, s, G, h, A, b, solver=solver)
+            x_sp = solve_ls(R, s, G, h, A, b, solver=solver, sym_proj=True)
             self.assertIsNotNone(x)
             self.assertIsNotNone(x_sp)
             known_solution = array([2.0 / 3, -1.0 / 3, 2.0 / 3])
             sol_tolerance = (
                 5e-3
                 if solver == "osqp"
+                else 2e-5
+                if solver == "proxqp"
                 else 1e-5
                 if solver == "ecos"
                 else 1e-6
             )
             eq_tolerance = 1e-9
             ineq_tolerance = (
-                1e-3 if solver == "osqp" else 2e-7 if solver == "scs" else 1e-9
+                1e-3 if solver == "osqp" else 1e-5 if solver == "proxqp" else 2e-7 if solver == "scs" else 1e-9
             )
             self.assertLess(norm(x - known_solution), sol_tolerance)
             self.assertLess(norm(x_sp - known_solution), sol_tolerance)
@@ -133,7 +122,7 @@ class TestSolveLS(unittest.TestCase):
         """
         R, s, G, h, A, b = self.get_problem()
         with self.assertRaises(NoSolverSelected):
-            solve_ls_with_test_params(R, s, G, h, A, b, solver=None)
+            solve_ls(R, s, G, h, A, b, solver=None)
 
     def test_solver_not_found(self):
         """
@@ -141,7 +130,7 @@ class TestSolveLS(unittest.TestCase):
         """
         R, s, G, h, A, b = self.get_problem()
         with self.assertRaises(SolverNotFound):
-            solve_ls_with_test_params(R, s, G, h, A, b, solver="ideal")
+            solve_ls(R, s, G, h, A, b, solver="ideal")
 
 
 # Generate test fixtures for each solver
