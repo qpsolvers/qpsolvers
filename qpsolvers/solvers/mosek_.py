@@ -18,28 +18,35 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""Solver interface for MOSEK"""
+"""
+Solver interface for `MOSEK <https://www.mosek.com/>`__.
+
+MOSEK is a solver for linear, mixed-integer linear, quadratic, mixed-integer
+quadratic, quadratically constraint, conic and convex nonlinear mathematical
+optimization problems. Its interior-point method is geared towards large scale
+sparse problems, in particular for linear or conic quadratic programs.
+"""
 
 from typing import Optional, Union
 
 import cvxopt.msk
 import mosek
-from numpy import ndarray
-from scipy.sparse import csc_matrix
+import numpy as np
+import scipy.sparse as spa
 
 from .cvxopt_ import cvxopt_solve_qp
 
 
 def mosek_solve_qp(
-    P: Union[ndarray, csc_matrix],
-    q: ndarray,
-    G: Union[ndarray, csc_matrix],
-    h: ndarray,
-    A: Optional[Union[ndarray, csc_matrix]] = None,
-    b: Optional[ndarray] = None,
-    lb: Optional[ndarray] = None,
-    ub: Optional[ndarray] = None,
-    initvals: Optional[ndarray] = None,
+    P: Union[np.ndarray, spa.csc_matrix],
+    q: np.ndarray,
+    G: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    h: Optional[np.ndarray] = None,
+    A: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    b: Optional[np.ndarray] = None,
+    lb: Optional[np.ndarray] = None,
+    ub: Optional[np.ndarray] = None,
+    initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
