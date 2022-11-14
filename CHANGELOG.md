@@ -23,6 +23,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+- MOSEK: restore CVXOPT options after calling MOSEK
 - qpOASES: non-persistent solver options between calls
 - qpOASES: return failure on ``RET_INIT_FAILED*`` return codes
 

@@ -41,7 +41,8 @@ def mosek_solve_qp(
     ub: Optional[ndarray] = None,
     initvals: Optional[ndarray] = None,
     verbose: bool = False,
-) -> Optional[ndarray]:
+    **kwargs,
+) -> Optional[np.ndarray]:
     """
     Solve a Quadratic Program defined as:
 
@@ -87,5 +88,8 @@ def mosek_solve_qp(
     :
         Solution to the QP, if found, otherwise ``None``.
     """
+    original_options = cvxopt.solvers.options
     cvxopt.solvers.options["mosek"] = {mosek.iparam.log: 1 if verbose else 0}
-    return cvxopt_solve_qp(P, q, G, h, A, b, lb, ub, "mosek", initvals)
+    x = cvxopt_solve_qp(P, q, G, h, A, b, lb, ub, "mosek", initvals, **kwargs)
+    cvxopt.solvers.options = original_options
+    return x
