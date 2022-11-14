@@ -19,9 +19,10 @@
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
 """
-Main function to solve quadratic programs.
+Solve quadratic programs.
 """
 
+import warnings
 from typing import Optional, Union
 
 import numpy as np
@@ -237,6 +238,12 @@ def solve_safer_qp(
     "optimally safe" tension distribution algorithm of Borgstrom et al. (IEEE
     Transactions on Robotics, 2009).
     """
+    warnings.warn(
+        "The `solve_safer_qp` function is deprecated "
+        "and will be removed in qpsolvers v2.7",
+        DeprecationWarning,
+        stacklevel=2,
+    )
     if solver is None:
         raise NoSolverSelected(
             "Set the `solver` keyword argument to one of the "
