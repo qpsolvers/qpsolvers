@@ -32,9 +32,9 @@ using CVXOPT in some academic work, consider citing the corresponding report
 from typing import Dict, Optional, Union
 
 import cvxopt
+import numpy as np
 from cvxopt.solvers import qp
-from numpy import array, ndarray
-from scipy.sparse import csc_matrix
+import scipy.sparse as spa
 
 from .conversions import linear_from_box_inequalities
 
@@ -42,7 +42,7 @@ cvxopt.solvers.options["show_progress"] = False  # disable verbose output
 
 
 def to_cvxopt(
-    M: Union[ndarray, csc_matrix]
+    M: Union[np.ndarray, spa.csc_matrix]
 ) -> Union[cvxopt.matrix, cvxopt.spmatrix]:
     """
     Convert matrix to CVXOPT format.
@@ -57,7 +57,7 @@ def to_cvxopt(
     :
         Matrix in CVXOPT format.
     """
-    if isinstance(M, ndarray):
+    if isinstance(M, np.ndarray):
         return cvxopt.matrix(M)
     coo = M.tocoo()
     return cvxopt.spmatrix(
@@ -66,19 +66,19 @@ def to_cvxopt(
 
 
 def cvxopt_solve_qp(
-    P: Union[ndarray, csc_matrix],
-    q: ndarray,
-    G: Optional[Union[ndarray, csc_matrix]] = None,
-    h: Optional[ndarray] = None,
-    A: Optional[Union[ndarray, csc_matrix]] = None,
-    b: Optional[ndarray] = None,
-    lb: Optional[ndarray] = None,
-    ub: Optional[ndarray] = None,
+    P: Union[np.ndarray, spa.csc_matrix],
+    q: np.ndarray,
+    G: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    h: Optional[np.ndarray] = None,
+    A: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    b: Optional[np.ndarray] = None,
+    lb: Optional[np.ndarray] = None,
+    ub: Optional[np.ndarray] = None,
     solver: Optional[str] = None,
-    initvals: Optional[ndarray] = None,
+    initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
     **kwargs,
-) -> Optional[ndarray]:
+) -> Optional[np.ndarray]:
     """
     Solve a Quadratic Program defined as:
 
@@ -205,4 +205,4 @@ def cvxopt_solve_qp(
 
     if "optimal" not in solution["status"]:
         return None
-    return array(solution["x"]).reshape((q.shape[0],))
+    return np.array(solution["x"]).reshape((q.shape[0],))
