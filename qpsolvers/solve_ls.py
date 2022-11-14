@@ -26,7 +26,6 @@ from typing import Optional, Union
 
 import numpy as np
 import scipy.sparse as spa
-from numpy import dot, ndarray
 
 from .solve_qp import solve_qp
 
@@ -46,7 +45,7 @@ def solve_ls(
     sym_proj: bool = False,
     verbose: bool = False,
     **kwargs,
-) -> Optional[ndarray]:
+) -> Optional[np.ndarray]:
     """
     Solve a constrained weighted linear Least Squares problem defined as:
 
@@ -110,15 +109,11 @@ def solve_ls(
     """
     if sym_proj:
         R = 0.5 * (R + R.transpose())
-    WR: Union[np.ndarray, spa.csc_matrix] = R if W is None else dot(W, R)
-    P = dot(R.transpose(), WR)
+    WR: Union[np.ndarray, spa.csc_matrix] = R if W is None else W @ R
+    P = R.T @ WR
+    q = -(s.T @ WR)
     if not isinstance(P, np.ndarray):
         P = P.tocsc()
-    q = (
-        -np.dot(s.transpose(), WR)
-        if isinstance(WR, np.ndarray)
-        else -spa.csc_matrix.dot(s.transpose(), WR)
-    )
     return solve_qp(
         P,
         q,
