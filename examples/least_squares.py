@@ -40,7 +40,7 @@ x_sol = np.array([0.1299734765610818, -0.0649867382805409, 1.7400530468778364])
 if __name__ == "__main__":
     start_time = perf_counter()
     solver = random.choice(qpsolvers.available_solvers)
-    x = solve_ls(R, s, G, h, solver=solver, verbose=True)
+    x = solve_ls(R, s, G, h, solver=solver, verbose=False)
     end_time = perf_counter()
 
     print("")
