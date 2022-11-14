@@ -26,7 +26,7 @@ quadprog is a C implementation of the Goldfarb-Idnani dual algorithm
 """
 
 from typing import Optional
-from warnings import warn
+import warnings
 
 import numpy as np
 from numpy import hstack, vstack
@@ -105,7 +105,7 @@ def quadprog_solve_qp(
     See the solver documentation for details.
     """
     if initvals is not None and verbose:
-        warn("note that warm-start values ignored by quadprog")
+        warnings.warn("warm-start values are ignored by quadprog")
     if lb is not None or ub is not None:
         G, h = linear_from_box_inequalities(G, h, lb, ub)
     qp_G = P
@@ -134,5 +134,5 @@ def quadprog_solve_qp(
             raise ValueError("matrix P is not positive definite") from e
         if "no solution" in error:
             return None
-        warn(f"quadprog raised a ValueError: {e}")
+        warnings.warn(f"quadprog raised a ValueError: {e}")
         return None

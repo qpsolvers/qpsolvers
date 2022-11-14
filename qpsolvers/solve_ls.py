@@ -19,7 +19,7 @@
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
 """
-Helper function to solve least squares.
+Solve linear least squares.
 """
 
 from typing import Optional, Union

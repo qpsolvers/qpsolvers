@@ -31,7 +31,7 @@ OSQP in some academic work, consider citing the corresponding paper
 """
 
 from typing import Optional, Union
-from warnings import warn
+import warnings
 
 import numpy as np
 import osqp
@@ -189,6 +189,6 @@ def osqp_solve_qp(
     res = solver.solve()
     success_status = osqp.constant("OSQP_SOLVED")
     if res.info.status_val != success_status:
-        warn(f"OSQP exited with status '{res.info.status}'")
+        warnings.warn(f"OSQP exited with status '{res.info.status}'")
         return None
     return res.x
