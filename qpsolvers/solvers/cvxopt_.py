@@ -33,8 +33,8 @@ from typing import Dict, Optional, Union
 
 import cvxopt
 import numpy as np
-from cvxopt.solvers import qp
 import scipy.sparse as spa
+from cvxopt.solvers import qp
 
 from .conversions import linear_from_box_inequalities
 

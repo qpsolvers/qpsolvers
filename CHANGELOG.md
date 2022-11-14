@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Gurobi: forward keyword arguments as solver parameters
+- Handle diagonal matrices when combining linear and box inequalities
 - qpOASES: pre-defined options parameter
 - qpOASES: time limit parameter
 
