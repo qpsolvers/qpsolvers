@@ -141,9 +141,49 @@ class TestSolveLS(unittest.TestCase):
         with self.assertRaises(SolverNotFound):
             solve_ls(R, s, G, h, A, b, solver="ideal")
 
+    @staticmethod
+    def get_test_mixed_sparse(solver: str):
+        """
+        Get test function for mixed sparse problems with a given solver.
+
+        Parameters
+        ----------
+        solver :
+            Name of the solver to test.
+
+        Returns
+        -------
+        :
+            Test function for that solver.
+        """
+
+        def test(self):
+            _, s, G, h, A, b = self.get_problem()
+            n = len(s)
+
+            R_csc = spa.eye(n, format="csc")
+            x_csc = solve_ls(R_csc, s, G, h, A, b, solver=solver)
+            self.assertIsNotNone(x_csc)
+
+            R_dia = spa.eye(n)
+            x_dia = solve_ls(
+                R_dia, s, G, h, A, b, solver=solver, sym_proj=True
+            )
+            self.assertIsNotNone(x_dia)
+
+            sol_tolerance = 1e-8
+            self.assertLess(norm(x_csc - x_dia), sol_tolerance)
+
+        return test
+
 
 # Generate test fixtures for each solver
 for solver in available_solvers:
     setattr(
         TestSolveLS, "test_{}".format(solver), TestSolveLS.get_test(solver)
+    )
+    setattr(
+        TestSolveLS,
+        "test_mixed_sparse_{}".format(solver),
+        TestSolveLS.get_test_mixed_sparse(solver),
     )
