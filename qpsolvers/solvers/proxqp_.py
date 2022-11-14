@@ -74,8 +74,8 @@ def __combine_inequalities(G, h, lb, ub, n: int, use_csc: bool):
             if use_csc
             else np.vstack((G, np.eye(n)))
         )
-        ub = ub if ub is not None else np.full(h.shape, +np.infty)
-        lb = lb if lb is not None else np.full(h.shape, -np.infty)
+        ub = ub if ub is not None else np.full(G.shape[1], +np.infty)
+        lb = lb if lb is not None else np.full(G.shape[1], -np.infty)
         l_prox = np.hstack((np.full(h.shape, -np.infty), lb))
         u_prox = np.hstack((h, ub))
     else:  # G is not None and h is None
