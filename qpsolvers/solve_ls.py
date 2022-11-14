@@ -112,6 +112,8 @@ def solve_ls(
         R = 0.5 * (R + R.transpose())
     WR: Union[np.ndarray, spa.csc_matrix] = R if W is None else dot(W, R)
     P = dot(R.transpose(), WR)
+    if not isinstance(P, np.ndarray):
+        P = P.tocsc()
     q = (
         -np.dot(s.transpose(), WR)
         if isinstance(WR, np.ndarray)
