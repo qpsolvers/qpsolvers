@@ -77,11 +77,7 @@ def cvxopt_solve_qp(
     solver: Optional[str] = None,
     initvals: Optional[ndarray] = None,
     verbose: bool = False,
-    maxiters: Optional[int] = None,
-    abstol: Optional[float] = None,
-    reltol: Optional[float] = None,
-    feastol: Optional[float] = None,
-    refinement: Optional[int] = None,
+    **kwargs,
 ) -> Optional[ndarray]:
     """
     Solve a Quadratic Program defined as:
@@ -130,22 +126,6 @@ def cvxopt_solve_qp(
         Warm-start guess vector.
     verbose :
         Set to `True` to print out extra information.
-    maxiters :
-        Maximum number of iterations.
-    abstol :
-        Absolute tolerance on the duality gap. See [Vandenberghe2010]_ or
-        *e.g.* [tolerances]_ for a primer on the duality gap.
-    reltol :
-        Relative tolerance on the duality gap. See [Vandenberghe2010]_ or
-        *e.g.* [tolerances]_ for a primer on the duality gap.
-    feastol :
-        Tolerance for feasibility conditions, that is, for the primal residual
-        equality and inequality constraints. See *e.g.* [tolerances]_ for a
-        primer on primal-dual residuals.
-    refinement :
-        Number of iterative refinement steps when solving KKT equations
-        (default: ``0`` if the problem has no second-order cone or matrix
-        inequality constraints; ``1`` otherwise).
 
     Returns
     -------
@@ -184,36 +164,24 @@ def cvxopt_solve_qp(
     if lb is not None or ub is not None:
         G, h = linear_from_box_inequalities(G, h, lb, ub)
 
-    # Update solver options if applicable
-    options: Dict[str, Any] = {"show_progress": verbose}
-    if maxiters:
-        options["maxiters"] = maxiters
-    if abstol:
-        options["abstol"] = abstol
-    if reltol:
-        options["reltol"] = reltol
-    if feastol:
-        options["feastol"] = feastol
-    if refinement:
-        options["refinement"] = refinement
-
     args = [to_cvxopt(P), to_cvxopt(q)]
-    kwargs = {"G": None, "h": None, "A": None, "b": None}
+    constraints = {"G": None, "h": None, "A": None, "b": None}
     if G is not None and h is not None:
-        kwargs["G"] = to_cvxopt(G)
-        kwargs["h"] = to_cvxopt(h)
+        constraints["G"] = to_cvxopt(G)
+        constraints["h"] = to_cvxopt(h)
     if A is not None and b is not None:
-        kwargs["A"] = to_cvxopt(A)
-        kwargs["b"] = to_cvxopt(b)
+        constraints["A"] = to_cvxopt(A)
+        constraints["b"] = to_cvxopt(b)
     initvals_dict: Optional[Dict[str, cvxopt.matrix]] = None
     if initvals is not None:
         initvals_dict = {"x": to_cvxopt(initvals)}
 
+    kwargs["show_progress"] = verbose
     original_options = cvxopt.solvers.options
-    cvxopt.solvers.options = options
-    sol = qp(*args, solver=solver, initvals=initvals_dict, **kwargs)
+    cvxopt.solvers.options = kwargs
+    solution = qp(*args, solver=solver, initvals=initvals_dict, **constraints)
     cvxopt.solvers.options = original_options
 
-    if "optimal" not in sol["status"]:
+    if "optimal" not in solution["status"]:
         return None
-    return array(sol["x"]).reshape((q.shape[0],))
+    return array(solution["x"]).reshape((q.shape[0],))
