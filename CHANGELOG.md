@@ -28,6 +28,7 @@ All notable changes to this project will be documented in this file.
 - MOSEK: restore CVXOPT options after calling MOSEK
 - qpOASES: non-persistent solver options between calls
 - qpOASES: return failure on ``RET_INIT_FAILED*`` return codes
+- ProxQP: fix box inequality shapes when combining bounds
 
 ## [2.5.0] - 2022/11/04
 
