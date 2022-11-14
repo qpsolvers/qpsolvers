@@ -28,7 +28,7 @@ work, consider citing the corresponding paper [ODonoghue2021]_.
 """
 
 from typing import Any, Dict, Optional, Union
-from warnings import warn
+import warnings
 
 import numpy as np
 import scipy.sparse as spa
@@ -260,7 +260,7 @@ def scs_solve_qp(
     solution = solve(data, cone, **kwargs)
     status_val = solution["info"]["status_val"]
     if status_val != 1:
-        warn(
+        warnings.warn(
             f"SCS returned {status_val}: {__status_val_meaning__[status_val]}"
         )
         return None

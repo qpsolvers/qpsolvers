@@ -30,8 +30,8 @@ variables. If you are using ECOS in some academic work, consider citing the
 corresponding paper [Domahidi2013]_.
 """
 
+import warnings
 from typing import Optional, Union
-from warnings import warn
 
 import numpy as np
 from ecos import solve
@@ -135,7 +135,7 @@ def ecos_solve_qp(
     primal-dual residuals or the duality gap.
     """
     if initvals is not None:
-        warn("note that warm-start values ignored by this wrapper")
+        warnings.warn("warm-start values are ignored by this wrapper")
     if lb is not None or ub is not None:
         G, h = linear_from_box_inequalities(G, h, lb, ub)
     kwargs.update(
@@ -151,6 +151,6 @@ def ecos_solve_qp(
         solution = solve(c_socp, G_socp, h_socp, dims, **kwargs)
     flag = solution["info"]["exitFlag"]
     if flag != 0:
-        warn(f"ECOS returned exit flag {flag} ({__exit_flag_meaning__[flag]})")
+        warnings.warn(f"ECOS returned exit flag {flag} ({__exit_flag_meaning__[flag]})")
         return None
     return solution["x"][:-1]

@@ -20,8 +20,7 @@
 
 """Types for solve_qp function arguments."""
 
-from warnings import warn
-
+import warnings
 
 def warn_about_sparse_conversion(matrix_name: str) -> None:
     """
@@ -32,7 +31,7 @@ def warn_about_sparse_conversion(matrix_name: str) -> None:
     matrix_name :
         Name of matrix being converted from dense to sparse.
     """
-    warn(
+    warnings.warn(
         f"Converted {matrix_name} to scipy.sparse.csc.csc_matrix\n"
         f"For best performance, build {matrix_name} as a "
         "scipy.sparse.csc_matrix rather than as a numpy.ndarray"

@@ -32,7 +32,7 @@ on installing this solver.
 """
 
 from typing import Optional, Union
-from warnings import warn
+import warnings
 
 import numpy as np
 import scipy.sparse as spa
@@ -126,7 +126,7 @@ def gurobi_solve_qp(
     solver tolerances.
     """
     if initvals is not None:
-        warn("Gurobi: warm-start values given but they will be ignored")
+        warnings.warn("warm-start values are ignored by this wrapper")
 
     model = Model()
     if not verbose:

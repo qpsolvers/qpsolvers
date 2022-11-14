@@ -30,7 +30,7 @@ academic work, consider citing the corresponding paper [Huangfu2018]_.
 """
 
 from typing import Optional, Union
-from warnings import warn
+import warnings
 
 import highspy
 import numpy as np
@@ -227,7 +227,7 @@ def highs_solve_qp(
         warn_about_sparse_conversion("A")
         A = spa.csc_matrix(A)
     if initvals is not None:
-        warn(
+        warnings.warn(
             "HiGHS: warm-start values are not available for this solver, "
             "see: https://github.com/stephane-caron/qpsolvers/issues/94"
         )
