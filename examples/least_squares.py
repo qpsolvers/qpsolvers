@@ -19,7 +19,7 @@
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
 """
-Test the "quadprog" QP solver on a small dense problem.
+Test a random available QP solver on a small least-squares problem.
 """
 
 import random
