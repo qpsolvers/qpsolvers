@@ -156,10 +156,31 @@ def cvxopt_solve_qp(
     CVXOPT only considers the lower entries of `P`, therefore it will use a
     different cost than the one intended if a non-symmetric matrix is provided.
 
-    See the `Algorithm Parameters
+    Keyword arguments are forwarded as options to CVXOPT. For instance, we can
+    call ``cvxopt_solve_qp(P, q, G, h, u, abstol=1e-4, reltol=1e-4)``. CVXOPT
+    options include the following:
+
+    .. list-table::
+       :widths: 30 70
+       :header-rows: 1
+
+       * - Name
+         - Description
+       * - ``abstol``
+         - Absolute tolerance on the duality gap.
+       * - ``reltol``
+         - Relative tolerance on the duality gap.
+       * - ``feastol``
+         - Tolerance on feasibility conditions, that is, on the primal
+           residual.
+       * - ``refinement``
+         - Number of iterative refinement steps when solving KKT equations
+
+    Check out `Algorithm Parameters
     <https://cvxopt.org/userguide/coneprog.html#algorithm-parameters>`_ section
-    of the solver documentation for more details and default values of the
-    solver parameters.
+    of the solver documentation for details and default values of all solver
+    parameters. See also [tolerances]_ for a primer on the duality gap, primal
+    and dual residuals.
     """
     if lb is not None or ub is not None:
         G, h = linear_from_box_inequalities(G, h, lb, ub)
