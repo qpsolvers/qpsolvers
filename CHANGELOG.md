@@ -17,9 +17,9 @@ All notable changes to this project will be documented in this file.
 
 - CVXOPT: forward all keyword arguments as solver options
 - Deprecate `solve_safer_qp` and warn about future removal
+- Example: disable verbose output in least squares example
 - HiGHS: forward all keyword arguments as solver options
-- Least squares example: disable verbose output
-- OSQP: drop support for older versions without ``osqp.constant``
+- OSQP: drop support for versions <= 0.5.0
 - OSQP: streamline stacking of box inequalities
 - ProxQP: also consider constraint matrices to select backend
 - qpOASES: forward all keyword arguments as solver options
@@ -31,9 +31,9 @@ All notable changes to this project will be documented in this file.
 
 - Dot product bug in ``solve_ls`` with sparse matrices
 - MOSEK: restore CVXOPT options after calling MOSEK
+- ProxQP: fix box inequality shapes when combining bounds
 - qpOASES: non-persistent solver options between calls
 - qpOASES: return failure on ``RET_INIT_FAILED*`` return codes
-- ProxQP: fix box inequality shapes when combining bounds
 
 ## [2.5.0] - 2022/11/04
 
