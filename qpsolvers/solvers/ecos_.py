@@ -151,6 +151,8 @@ def ecos_solve_qp(
         solution = solve(c_socp, G_socp, h_socp, dims, **kwargs)
     flag = solution["info"]["exitFlag"]
     if flag != 0:
-        warnings.warn(f"ECOS returned exit flag {flag} ({__exit_flag_meaning__[flag]})")
+        warnings.warn(
+            f"ECOS returned exit flag {flag} ({__exit_flag_meaning__[flag]})"
+        )
         return None
     return solution["x"][:-1]
