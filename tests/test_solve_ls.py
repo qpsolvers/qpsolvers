@@ -247,8 +247,9 @@ for solver in sparse_solvers:
             "test_medium_sparse_problem_{}".format(solver),
             TestSolveLS.get_test_medium_sparse_problem(solver),
         )
-    if solver not in ["gurobi", "scs"]:
+    if solver not in ["gurobi", "highs", "scs"]:
         # Gurobi: model too large for size-limited license
+        # HiGHS: model too large https://github.com/ERGO-Code/HiGHS/issues/992
         # SCS: issue reported in https://github.com/cvxgrp/scs/issues/234
         setattr(
             TestSolveLS,
