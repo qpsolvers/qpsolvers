@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 
 - Continuous integration for macOS
 
+### Changed
+
+- ProxQP: bump minimum supported version to 0.2.9
+
 ## [2.6.0] - 2022/11/14
 
 ### Added
