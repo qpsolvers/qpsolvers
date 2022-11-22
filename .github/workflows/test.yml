@@ -24,7 +24,7 @@ jobs:
             - name: "Checkout sources"
               uses: actions/checkout@v2
 
-            - name: "Set up Python"
+            - name: "Set up Python ${{ matrix.python-version }}"
               uses: actions/setup-python@v2
               with:
                   python-version: "${{ matrix.python-version }}"
@@ -34,7 +34,7 @@ jobs:
                   python -m pip install --upgrade pip
                   python -m pip install black coverage coveralls flake8 flit mccabe mypy numpy pylint pytest tox tox-gh-actions
 
-            - name: "Test with tox"
+            - name: "Test with tox for ${{ matrix.platform }}"
               run: |
                   tox
               env:
