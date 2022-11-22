@@ -8,7 +8,7 @@ on:
     workflow_dispatch:
 
 jobs:
-    build_and_test:
+    test:
         runs-on: ${{ matrix.os }}
 
         env:
