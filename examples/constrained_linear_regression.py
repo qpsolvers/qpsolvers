@@ -19,7 +19,7 @@
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
 """
-Test a random sparse QP solver on a constrained linear regression problem.
+Test a random QP solver on a constrained linear regression problem.
 
 This example originates from:
     https://stackoverflow.com/a/74422084
@@ -53,6 +53,6 @@ b = np.array([1.0])
 lb = np.zeros(3)
 
 if __name__ == "__main__":
-    solver = random.choice(qpsolvers.sparse_solvers)
+    solver = random.choice(qpsolvers.available_solvers)
     x = solve_ls(R, s, A=A, b=b, lb=lb, solver=solver)
     print(f"Found solution {x=}")
