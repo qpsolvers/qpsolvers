@@ -9,7 +9,7 @@ on:
 
 jobs:
     test:
-        name: 'Test ${{ runner.os }} with Python ${{ matrix.python-version }}'
+        name: 'Test ${{ matrix.os }} with Python ${{ matrix.python-version }}'
         runs-on: ${{ matrix.os }}
 
         env:
