@@ -34,11 +34,11 @@ jobs:
                   python -m pip install --upgrade pip
                   python -m pip install black coverage coveralls flake8 flit mccabe mypy numpy pylint pytest tox tox-gh-actions
 
-            - name: "Test with tox for ${{ matrix.platform }}"
+            - name: "Test with tox for ${{ matrix.os }}"
               run: |
                   tox
               env:
-                  PLATFORM: ${{ matrix.platform }}
+                  PLATFORM: ${{ matrix.os }}
 
             - name: "Coveralls"
               env:
