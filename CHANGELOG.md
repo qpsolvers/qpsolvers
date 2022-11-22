@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Added
+
+- Continuous integration for macOS
+
 ## [2.6.0] - 2022/11/14
 
 ### Added
