@@ -9,6 +9,7 @@ on:
 
 jobs:
     test:
+        name: 'Test ${{ runner.os }} with Python ${{ matrix.python-version }}'
         runs-on: ${{ matrix.os }}
 
         env:
@@ -33,9 +34,11 @@ jobs:
                   python -m pip install --upgrade pip
                   python -m pip install black coverage coveralls flake8 flit mccabe mypy numpy pylint pytest tox tox-gh-actions
 
-            - name: "Run tox targets for ${{ matrix.python-version }}"
+            - name: "Test with tox"
               run: |
                   tox
+              env:
+                  PLATFORM: ${{ matrix.platform }}
 
             - name: "Coveralls"
               env:
