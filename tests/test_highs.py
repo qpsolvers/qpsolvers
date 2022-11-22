@@ -21,35 +21,39 @@
 import unittest
 import warnings
 
-from qpsolvers import solve_qp
-
 from .problems import get_sd3310_problem
 
+try:
+    from qpsolvers.solvers.highs_ import highs_solve_qp
 
-class TestHiGHS(unittest.TestCase):
+    class TestHiGHS(unittest.TestCase):
 
-    """
-    Test fixture for the HiGHS solver.
-    """
-
-    def setUp(self):
         """
-        Prepare test fixture.
+        Test fixture for the HiGHS solver.
         """
-        warnings.simplefilter("ignore", category=UserWarning)
 
-    def test_highs_tolerances(self):
-        P, q, G, h, A, b = get_sd3310_problem()
-        x = solve_qp(
-            P,
-            q,
-            G,
-            h,
-            A,
-            b,
-            solver="highs",
-            time_limit=0.1,
-            primal_feasibility_tolerance=1e-1,
-            dual_feasibility_tolerance=1e-1,
-        )
-        self.assertIsNotNone(x)
+        def setUp(self):
+            """
+            Prepare test fixture.
+            """
+            warnings.simplefilter("ignore", category=UserWarning)
+
+        def test_highs_tolerances(self):
+            P, q, G, h, A, b = get_sd3310_problem()
+            x = highs_solve_qp(
+                P,
+                q,
+                G,
+                h,
+                A,
+                b,
+                time_limit=0.1,
+                primal_feasibility_tolerance=1e-1,
+                dual_feasibility_tolerance=1e-1,
+            )
+            self.assertIsNotNone(x)
+
+
+except ImportError:  # HiGHS not installed
+
+    pass
