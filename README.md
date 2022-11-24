@@ -49,18 +49,18 @@ Vector inequalities are taken coordinate by coordinate. For most solvers, the ma
 To solve a quadratic program, build the matrices that define it and call the ``solve_qp`` function:
 
 ```python
-from numpy import array, dot
+import numpy as np
 from qpsolvers import solve_qp
 
-M = array([[1., 2., 0.], [-8., 3., 2.], [0., 1., 1.]])
-P = dot(M.T, M)  # this is a positive definite matrix
-q = dot(array([3., 2., 3.]), M)
-G = array([[1., 2., 1.], [2., 0., 1.], [-1., 2., -1.]])
-h = array([3., 2., -2.])
-A = array([1., 1., 1.])
-b = array([1.])
+M = np.array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
+P = M.T @ M  # this is a positive definite matrix
+q = np.array([3.0, 2.0, 3.0]) @ M
+G = np.array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
+h = np.array([3.0, 2.0, -2.0])
+A = np.array([1.0, 1.0, 1.0])
+b = np.array([1.0])
 
-x = solve_qp(P, q, G, h, A, b, solver="osqp")
+x = solve_qp(P, q, G, h, A, b, solver="proxqp")
 print(f"QP solution: x = {x}")
 ```
 
