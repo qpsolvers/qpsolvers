@@ -25,10 +25,10 @@ from typing import Any, Callable, Dict, Optional, Union
 from numpy import ndarray
 from scipy.sparse import csc_matrix
 
-available_solvers = set()
-dense_solvers = set()
+available_solvers = []
+dense_solvers = []
 solve_function: Dict[str, Any] = {}
-sparse_solvers = set()
+sparse_solvers = []
 
 
 # CVXOPT
@@ -57,9 +57,9 @@ try:
     from .cvxopt_ import cvxopt_solve_qp
 
     solve_function["cvxopt"] = cvxopt_solve_qp
-    available_solvers.add("cvxopt")
-    dense_solvers.add("cvxopt")
-    sparse_solvers.add("cvxopt")
+    available_solvers.append("cvxopt")
+    dense_solvers.append("cvxopt")
+    sparse_solvers.append("cvxopt")
 except ImportError:
     pass
 
@@ -89,8 +89,8 @@ try:
     from .ecos_ import ecos_solve_qp
 
     solve_function["ecos"] = ecos_solve_qp
-    available_solvers.add("ecos")
-    dense_solvers.add("ecos")  # considered dense as it calls cholesky(P)
+    available_solvers.append("ecos")
+    dense_solvers.append("ecos")  # considered dense as it calls cholesky(P)
 except ImportError:
     pass
 
@@ -120,8 +120,8 @@ try:
     from .gurobi_ import gurobi_solve_qp
 
     solve_function["gurobi"] = gurobi_solve_qp
-    available_solvers.add("gurobi")
-    sparse_solvers.add("gurobi")
+    available_solvers.append("gurobi")
+    sparse_solvers.append("gurobi")
 except ImportError:
     pass
 
@@ -151,8 +151,8 @@ try:
     from .highs_ import highs_solve_qp
 
     solve_function["highs"] = highs_solve_qp
-    available_solvers.add("highs")
-    sparse_solvers.add("highs")
+    available_solvers.append("highs")
+    sparse_solvers.append("highs")
 except ImportError:
     pass
 
@@ -182,8 +182,8 @@ try:
     from .mosek_ import mosek_solve_qp
 
     solve_function["mosek"] = mosek_solve_qp
-    available_solvers.add("mosek")
-    sparse_solvers.add("mosek")
+    available_solvers.append("mosek")
+    sparse_solvers.append("mosek")
 except ImportError:
     pass
 
@@ -213,8 +213,8 @@ try:
     from .osqp_ import osqp_solve_qp
 
     solve_function["osqp"] = osqp_solve_qp
-    available_solvers.add("osqp")
-    sparse_solvers.add("osqp")
+    available_solvers.append("osqp")
+    sparse_solvers.append("osqp")
 except ImportError:
     pass
 
@@ -245,9 +245,9 @@ try:
     from .proxqp_ import proxqp_solve_qp
 
     solve_function["proxqp"] = proxqp_solve_qp
-    available_solvers.add("proxqp")
-    dense_solvers.add("proxqp")
-    sparse_solvers.add("proxqp")
+    available_solvers.append("proxqp")
+    dense_solvers.append("proxqp")
+    sparse_solvers.append("proxqp")
 except ImportError:
     pass
 
@@ -279,8 +279,8 @@ try:
     from .qpoases_ import qpoases_solve_qp
 
     solve_function["qpoases"] = qpoases_solve_qp
-    available_solvers.add("qpoases")
-    dense_solvers.add("qpoases")
+    available_solvers.append("qpoases")
+    dense_solvers.append("qpoases")
 except ImportError:
     pass
 
@@ -310,8 +310,8 @@ try:
     from .qpswift_ import qpswift_solve_qp
 
     solve_function["qpswift"] = qpswift_solve_qp
-    available_solvers.add("qpswift")
-    dense_solvers.add("qpswift")
+    available_solvers.append("qpswift")
+    dense_solvers.append("qpswift")
 except ImportError:
     pass
 
@@ -341,8 +341,8 @@ try:
     from .quadprog_ import quadprog_solve_qp
 
     solve_function["quadprog"] = quadprog_solve_qp
-    available_solvers.add("quadprog")
-    dense_solvers.add("quadprog")
+    available_solvers.append("quadprog")
+    dense_solvers.append("quadprog")
 except ImportError:
     pass
 
@@ -372,8 +372,8 @@ try:
     from .scs_ import scs_solve_qp
 
     solve_function["scs"] = scs_solve_qp
-    available_solvers.add("scs")
-    sparse_solvers.add("scs")
+    available_solvers.append("scs")
+    sparse_solvers.append("scs")
 except ImportError:
     pass
 
