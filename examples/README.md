@@ -1,15 +1,12 @@
 # Quadratic programming examples
 
+Examples are roughly sorted from simple to complex.
+
 ## Basics
 
-### Dense
-
-1. [Quadratic programming](01_quadratic_program.py)
-2. [Least squares](02_least_squares.py)
+1. [Quadratic program](01_quadratic_program.py)
+2. [Linear least squares](02_least_squares.py)
 3. [Box inequalities](03_box_inequalities.py)
-
-### Sparse
-
 4. [Sparse linear least squares](04_sparse_least_squares.py)
 
 ## Applications
