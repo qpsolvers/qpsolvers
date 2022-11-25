@@ -18,12 +18,17 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""Utility functions"""
+"""
+Utility functions.
+"""
 
+import random
 from typing import Union
 
 import numpy as np
 import scipy.sparse as spa
+
+from .solvers import available_solvers, dense_solvers, sparse_solvers
 
 
 def print_matrix_vector(
@@ -61,3 +66,26 @@ def print_matrix_vector(
     b_lines = b_string.splitlines()
     for i, A_line in enumerate(A_lines):
         print(A_line.ljust(column_width) + b_lines[i].ljust(column_width))
+
+
+def random_solver(dense: bool = False, sparse: bool = False) -> str:
+    """
+    Return the name of a QP solver picked randomly from available ones.
+
+    Parameters
+    ----------
+    dense :
+        If True, return the name of a dense solver.
+    sparse :
+        If True, return the name of a sparse solver.
+
+    Returns
+    -------
+    :
+        Name of a QP solver.
+    """
+    if dense:
+        return random.choice(dense_solvers)
+    if sparse:
+        return random.choice(sparse_solvers)
+    return random.choice(available_solvers)
