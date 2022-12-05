@@ -7,15 +7,31 @@ Installation
 Linux
 =====
 
-The simplest way to install the package on a recent Debian-based system with
-Python 3 is:
+Conda
+-----
+
+To install the library from `conda-forge <https://conda-forge.org/>`, simply run:
+
+.. code:: bash
+
+    conda install qpsolvers -c conda-forge
+
+PyPI
+----
+
+First, install the pip package manager, for example on a recent Debian-based distribution with Python 3:
 
 .. code:: bash
 
     sudo apt install python3-dev
+
+You can then install the library by:
+
+.. code:: bash
+
     pip3 install qpsolvers
 
-You can add the ``--user`` parameter for a user-only installation.
+Add the ``--user`` parameter for a user-only installation.
 
 Python 2
 --------
@@ -35,13 +51,16 @@ this old version.
 Windows
 =======
 
+Anaconda
+--------
+
 - First, install the `Visual C++ Build Tools <https://visualstudio.microsoft.com/visual-cpp-build-tools/>`_
 - Install your Python environment, for instance `Anaconda <https://docs.anaconda.com/anaconda/install/windows/>`_
-- Open a terminal configured for Python, for instance from the Anaconda Navigator, and run:
+- Install the library from conda-forge, for instance in a terminal opened from the Anaconda Navigator:
 
 .. code:: bash
 
-    pip install qpsolvers
+    conda install qpsolvers -c conda-forge
 
 Microsoft Visual Studio
 -----------------------
