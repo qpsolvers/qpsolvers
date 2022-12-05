@@ -11,17 +11,26 @@ Unified interface to Quadratic Programming (QP) solvers available in Python.
 
 ## Installation
 
-To install both the library and a starter set of free QP solvers:
+### Using PyPI
+
+To install both the library and a starter set of open-source QP solvers:
 
 ```console
 pip install qpsolvers[open_source_solvers]
 ```
 
-To only install the library:
+To install just the library:
 
 ```console
 pip install qpsolvers
 ```
+
+### Using <img src="https://s3.amazonaws.com/conda-dev/conda_logo.svg" height="18">
+
+```console
+conda install qpsolvers -c conda-forge
+```
+
 Check out the documentation for [Python 2](https://scaron.info/doc/qpsolvers/installation.html#python-2) or [Windows](https://scaron.info/doc/qpsolvers/installation.html#windows) instructions.
 
 ## Usage
