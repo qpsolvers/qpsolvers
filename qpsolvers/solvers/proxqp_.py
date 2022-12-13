@@ -142,6 +142,21 @@ def proxqp_solve_qp_dual(
             & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
+    as well as its dual defined by:
+
+    .. math::
+
+        \\begin{split}\\begin{array}{ll}
+        \\mbox{minimize} &
+            -\\frac{1}{2} w^T P w - h^T z - b^T y
+            + lb^T z_{lb} - ub^T z_{ub} \\\\
+        \\mbox{subject to}
+            & G^T z + A^T y - z_{lb} + z_{ub} & = P w \\\\
+            & z & \\geq 0 \\\\
+            & z_{lb} & \\geq 0 \\\\
+            & z_{ub} & \\geq 0
+        \\end{array}\\end{split}
+
     using `ProxQP <https://github.com/Simple-Robotics/proxsuite>`__.
 
     Parameters
