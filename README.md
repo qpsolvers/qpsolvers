@@ -4,7 +4,7 @@
 [![Coverage](https://coveralls.io/repos/github/stephane-caron/qpsolvers/badge.svg?branch=master)](https://coveralls.io/github/stephane-caron/qpsolvers?branch=master)
 [![Documentation](https://img.shields.io/badge/docs-online-brightgreen?style=flat)](https://scaron.info/doc/qpsolvers/)
 [![Downloads/month](https://pepy.tech/badge/qpsolvers/month)](https://pepy.tech/project/qpsolvers)
-[![Conda version](https://anaconda.org/conda-forge/qpsolvers)](https://img.shields.io/conda/vn/conda-forge/qpsolvers.svg)
+[![Conda version](https://img.shields.io/conda/vn/conda-forge/qpsolvers.svg)](https://anaconda.org/conda-forge/qpsolvers)
 [![PyPI version](https://img.shields.io/pypi/v/qpsolvers)](https://pypi.org/project/qpsolvers/)
 
 Unified interface to Quadratic Programming (QP) solvers available in Python.
