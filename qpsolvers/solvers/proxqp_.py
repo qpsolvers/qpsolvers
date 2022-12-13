@@ -134,7 +134,7 @@ def proxqp_solve_qp_dual(
     .. math::
 
         \\begin{split}\\begin{array}{ll}
-        \\mbox{minimize} &
+        \\underset{\\mbox{minimize}}{x} &
             \\frac{1}{2} x^T P x + q^T x \\\\
         \\mbox{subject to}
             & G x \\leq h                \\\\
@@ -147,7 +147,7 @@ def proxqp_solve_qp_dual(
     .. math::
 
         \\begin{split}\\begin{array}{ll}
-        \\mbox{minimize} &
+        \\underset{\\mbox{minimize}}{z, y, z_{box}} &
             -\\frac{1}{2} w^T P w - h^T z - b^T y
             + lb^T z_{lb} - ub^T z_{ub} \\\\
         \\mbox{subject to}
