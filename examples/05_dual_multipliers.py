@@ -51,7 +51,7 @@ if __name__ == "__main__":
     x, z, y, z_box = solve_qp_dual(P, q, G, h, A, b, lb, ub, solver=solver)
     end_time = perf_counter()
 
-    print("== Primal problem ==")
+    print("========================= PRIMAL PROBLEM =========================")
     print("")
     print("    min. 1/2 x^T P x + q^T x")
     print("    s.t.     G x <= h")
@@ -67,7 +67,7 @@ if __name__ == "__main__":
     print_matrix_vector(lb.reshape((3, 1)), "lb", ub, "ub")
     print("")
 
-    print("== Solution ==")
+    print("============================ SOLUTION ============================")
     print("")
     print(f"Found in {1e6 * (end_time - start_time):.0f} [us] with {solver}")
     print("")
