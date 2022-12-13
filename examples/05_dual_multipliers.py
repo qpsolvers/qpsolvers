@@ -27,7 +27,7 @@ from time import perf_counter
 
 import numpy as np
 
-from qpsolvers import available_solvers, print_matrix_vector, solve_qp
+from qpsolvers import available_solvers, print_matrix_vector, solve_qp_dual
 
 M = np.array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
 P = np.dot(M.T, M)  # this is a positive definite matrix
@@ -56,6 +56,8 @@ if __name__ == "__main__":
     print("")
     print_matrix_vector(P, "P", q, "q")
     print("")
+    print_matrix_vector(G, "G", h, "h")
+    print("")
     print_matrix_vector(A, "A", b, "b")
     print("")
     print_matrix_vector(lb.reshape((3, 1)), "lb", ub, "ub")
@@ -70,6 +72,6 @@ if __name__ == "__main__":
     print(f"Dual (A x == b): y = {y}")
     print(f"Dual (lb <= x <= ub): z_box = {z_box}")
     print("")
-    print(f"They should be close to:")
-    print("Primal: x* = {x_sol}")
+    print("They should be close to:")
+    print(f"Primal: x* = {x_sol}")
     print("")
