@@ -243,6 +243,7 @@ proxqp_solve_qp: Optional[
 
 try:
     from .proxqp_ import proxqp_solve_qp
+    from .proxqp_ import proxqp_solve_qp_dual
 
     solve_function["proxqp"] = proxqp_solve_qp
     available_solvers.append("proxqp")
@@ -392,6 +393,8 @@ __all__ = [
     "gurobi_solve_qp",
     "mosek_solve_qp",
     "osqp_solve_qp",
+    "proxqp_solve_qp",
+    "proxqp_solve_qp_dual",
     "qpoases_solve_qp",
     "quadprog_solve_qp",
     "solve_function",
