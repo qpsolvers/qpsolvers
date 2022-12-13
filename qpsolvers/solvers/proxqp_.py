@@ -262,7 +262,7 @@ def proxqp_solve_qp_dual(
         **kwargs,
     )
     if result.info.status != proxqp.QPSolverOutput.PROXQP_SOLVED:
-        return None
+        return (None, None, None, None)
     x = result.x
     y = result.y
     if lb is not None or ub is not None:
