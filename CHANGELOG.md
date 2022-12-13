@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Continuous integration for macOS
+- Example: dual multipliers
 - Problem class with utility metrics on quadratic programs
 - Problem: condition number
 
