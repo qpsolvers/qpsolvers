@@ -22,13 +22,14 @@
 Solve quadratic programs.
 """
 
+import warnings
 from typing import Optional, Union
 
 import numpy as np
 import scipy.sparse as spa
 
-from .check_problem_constraints import check_problem_constraints
 from .exceptions import NoSolverSelected, SolverNotFound
+from .problem import Problem
 from .solvers import available_solvers, solve_function
 
 
@@ -140,15 +141,28 @@ def solve_qp(
         )
     if sym_proj:
         P = 0.5 * (P + P.transpose())
-    if isinstance(A, np.ndarray) and A.ndim == 1:
-        A = A.reshape((1, A.shape[0]))
-    if isinstance(G, np.ndarray) and G.ndim == 1:
-        G = G.reshape((1, G.shape[0]))
-    check_problem_constraints(G, h, A, b)
+        warnings.warn(
+            "The `sym_proj` feature is deprecated "
+            "and will be removed in qpsolvers v2.9",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+    problem = Problem(P, q, G, h, A, b, lb, ub)
+    problem.check_constraints()
     kwargs["initvals"] = initvals
     kwargs["verbose"] = verbose
     try:
-        return solve_function[solver](P, q, G, h, A, b, lb, ub, **kwargs)
+        return solve_function[solver](
+            problem.P,
+            problem.q,
+            problem.G,
+            problem.h,
+            problem.A,
+            problem.b,
+            problem.lb,
+            problem.ub,
+            **kwargs,
+        )
     except KeyError as e:
         raise SolverNotFound(
             f"solver '{solver}' is not in the list "

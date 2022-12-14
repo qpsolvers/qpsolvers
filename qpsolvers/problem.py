@@ -89,6 +89,10 @@ class Problem:
         lb: Optional[np.ndarray] = None,
         ub: Optional[np.ndarray] = None,
     ) -> None:
+        if isinstance(A, np.ndarray) and A.ndim == 1:
+            A = A.reshape((1, A.shape[0]))
+        if isinstance(G, np.ndarray) and G.ndim == 1:
+            G = G.reshape((1, G.shape[0]))
         self.P = P
         self.q = q
         self.G = G
@@ -101,30 +105,20 @@ class Problem:
     def check_constraints(self):
         """
         Check that problem constraints are properly specified.
-        """
-        return check_problem_constraints(self.G, self.h, self.A, self.b)
 
-    def solve(self, solver: str, **kwargs):
+        Raises
+        ------
+        ValueError
+            If the constraints are not properly defined.
         """
-        Solve problem with a given QP solver.
-
-        Parameters
-        ----------
-        solver :
-            Name of the QP solver.
-        """
-        return solve_qp(
-            self.P,
-            self.q,
-            self.G,
-            self.h,
-            self.A,
-            self.b,
-            self.lb,
-            self.ub,
-            solver=solver,
-            **kwargs
-        )
+        if self.G is None and self.h is not None:
+            raise ValueError("incomplete inequality constraint (missing h)")
+        if self.G is not None and self.h is None:
+            raise ValueError("incomplete inequality constraint (missing G)")
+        if self.A is None and self.b is not None:
+            raise ValueError("incomplete equality constraint (missing b)")
+        if self.A is not None and self.b is None:
+            raise ValueError("incomplete equality constraint (missing A)")
 
     def cond(self):
         """
