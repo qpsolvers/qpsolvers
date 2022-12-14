@@ -127,3 +127,62 @@ class Problem:
             solver=solver,
             **kwargs
         )
+
+    def cond(self):
+        """
+        Compute the condition number of the symmetric matrix representing the
+        problem data:
+
+        .. math::
+
+            M =
+            \\begin{bmatrix}
+                P & G^T & A^T \\
+                G & 0   & 0   \\
+                A & 0   & 0
+            \\end{bmatrix}
+
+        Returns
+        -------
+        :
+            Condition number of the problem.
+
+        See also
+        --------
+        Having a low condition number (say, less than 1e10) condition number is
+        strongly tied to the capacity of numerical solvers to solve a problem.
+        This is the motivation for preconditioning, as detailed for instance in
+        Section 5 of [Stellato2020]_.
+        """
+        P, A = self.P, self.A
+        G, _ = linear_from_box_inequalities(self.G, self.h, self.lb, self.ub)
+        if G is None and A is None:
+            M = P
+        elif A is None:  # G is not None
+            M = np.vstack(
+                [
+                    np.hstack([P, G.T]),
+                    np.hstack([G, np.zeros((G.shape[0], G.shape[0]))]),
+                ]
+            )
+        else:  # G is not None and A is not None
+            M = np.vstack(
+                [
+                    np.hstack([P, G.T, A.T]),
+                    np.hstack(
+                        [
+                            G,
+                            np.zeros((G.shape[0], G.shape[0])),
+                            np.zeros((G.shape[0], A.shape[0])),
+                        ]
+                    ),
+                    np.hstack(
+                        [
+                            A,
+                            np.zeros((A.shape[0], G.shape[0])),
+                            np.zeros((A.shape[0], A.shape[0])),
+                        ]
+                    ),
+                ]
+            )
+        return np.linalg.cond(M)
