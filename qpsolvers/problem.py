@@ -46,7 +46,8 @@ class Problem:
                 & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
-    This is a convenience class providing
+    This is a convenience class providing sanity checks and metrics around a
+    given program, for instance its condition number.
 
     Attributes
     ----------
