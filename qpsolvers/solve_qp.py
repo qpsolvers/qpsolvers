@@ -22,14 +22,16 @@
 Solve quadratic programs.
 """
 
-from typing import Optional, Union
 import warnings
+from typing import Optional, Union
 
 import numpy as np
 import scipy.sparse as spa
 
+from .exceptions import NoSolverSelected
 from .problem import Problem
 from .solve_problem import solve_problem
+from .solvers import available_solvers
 
 
 def solve_qp(
@@ -133,6 +135,11 @@ def solve_qp(
     problem is non-convex and the solver fails because of that, then a
     ``ValueError`` will be raised.
     """
+    if solver is None:
+        raise NoSolverSelected(
+            "Set the `solver` keyword argument to one of the "
+            f"available solvers in {available_solvers}"
+        )
     if sym_proj:
         P = 0.5 * (P + P.transpose())
         warnings.warn(
