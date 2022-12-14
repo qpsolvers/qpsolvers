@@ -223,7 +223,8 @@ def quadprog_solve_qp(
     **kwargs,
 ) -> Optional[np.ndarray]:
     """
-    Legacy version of :func:`qpsolvers.solvers.quadprog_.quadprog_solve_qp2`.
+    Variant of :func:`qpsolvers.solvers.quadprog_.quadprog_solve_qp2` returning
+    only the primal solution.
 
     Returns
     -------

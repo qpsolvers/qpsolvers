@@ -27,8 +27,8 @@ rooted in revisited primal-dual proximal algorithms. If you use ProxQP in some
 academic work, consider citing the corresponding paper [Bambade2022]_.
 """
 
-from typing import Optional, Union
 import warnings
+from typing import Optional, Union
 
 import numpy as np
 import scipy.sparse as spa
@@ -145,11 +145,11 @@ def proxqp_solve_qp2(
     .. math::
 
         \\begin{split}\\begin{array}{ll}
-        \\underset{\\mbox{minimize}}{z, y, z_{box}} &
+        \\underset{\\mbox{maximize}}{z, y, z_{box}} &
             -\\frac{1}{2} w^T P w - h^T z - b^T y
             - lb^T z_{box}^- - ub^T z_{box}^+ \\\\
         \\mbox{subject to}
-            & G^T z + A^T y + z_{box} & = P w \\\\
+            & P w + G^T z + A^T y + z_{box} + q & = 0 \\\\
             & z & \\geq 0
         \\end{array}\\end{split}
 

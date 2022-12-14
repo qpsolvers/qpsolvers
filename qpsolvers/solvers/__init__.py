@@ -35,6 +35,25 @@ sparse_solvers = []
 # CVXOPT
 # ======
 
+cvxopt_solve_qp2: Optional[
+    Callable[
+        [
+            Union[ndarray, csc_matrix],
+            ndarray,
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[str],
+            Optional[ndarray],
+            bool,
+        ],
+        Solution,
+    ]
+] = None
+
 cvxopt_solve_qp: Optional[
     Callable[
         [
@@ -55,9 +74,9 @@ cvxopt_solve_qp: Optional[
 ] = None
 
 try:
-    from .cvxopt_ import cvxopt_solve_qp
+    from .cvxopt_ import cvxopt_solve_qp, cvxopt_solve_qp2
 
-    solve_function["cvxopt"] = cvxopt_solve_qp
+    solve_function["cvxopt"] = cvxopt_solve_qp2
     available_solvers.append("cvxopt")
     dense_solvers.append("cvxopt")
     sparse_solvers.append("cvxopt")
