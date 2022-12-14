@@ -102,3 +102,24 @@ class Solution:
         and why this gap will be zero at the optimum.
         """
         raise NotImplementedError()
+
+    def is_optimal(self, eps_abs: float) -> bool:
+        """
+        Check all optimality conditions for the solution.
+
+        Parameters
+        ----------
+        eps_abs :
+            Absolute tolerance for the primal residual, dual residual and
+            duality gap.
+
+        Notes
+        -----
+        See for instance [tolerances]_ for an overview of how we check for
+        optimality.
+        """
+        return (
+            self.primal_residual() < eps_abs
+            and self.dual_residual() < eps_abs
+            and self.duality_gap() < eps_abs
+        )
