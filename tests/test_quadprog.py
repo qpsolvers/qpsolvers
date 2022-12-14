@@ -22,6 +22,7 @@ import unittest
 import warnings
 
 import numpy as np
+
 from qpsolvers import solve_qp
 
 from .problems import get_sd3310_problem
@@ -40,12 +41,14 @@ class TestQuadprog(unittest.TestCase):
         warnings.simplefilter("ignore", category=UserWarning)
 
     def test_non_psd_cost(self):
-        P, q, G, h, A, b = get_sd3310_problem()
+        problem = get_sd3310_problem()
+        P, q, G, h, A, b, _, _ = problem.unpack()
         P -= np.eye(3)
         with self.assertRaises(ValueError):
             solve_qp(P, q, G, h, A, b, solver="quadprog")
 
     def test_quadprog_value_error(self):
-        P, q, G, h, A, b = get_sd3310_problem()
+        problem = get_sd3310_problem()
+        P, q, G, h, A, b, _, _ = problem.unpack()
         q = q[1:]  # raise quadprog's "G and a must have the same dimension"
         self.assertIsNone(solve_qp(P, q, G, h, A, b, solver="quadprog"))

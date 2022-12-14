@@ -32,8 +32,7 @@ class TestProblem(unittest.TestCase):
     """
 
     def setUp(self):
-        P, q, G, h, A, b = get_sd3310_problem()
-        self.problem = Problem(P, q, G, h, A, b)
+        self.problem = get_sd3310_problem()
 
     def test_unpack(self):
         P, q, G, h, A, b, lb, ub = self.problem.unpack()
@@ -47,22 +46,20 @@ class TestProblem(unittest.TestCase):
         self.assertIsNone(ub)
 
     def test_check_inequality_constraints(self):
-        P, q, G, h, A, b = get_sd3310_problem()
+        problem = get_sd3310_problem()
+        P, q, G,h, A, b = problem.unpack()
         with self.assertRaises(ValueError):
-            problem = Problem(P, q, G, None, A, b)
-            problem.check_constraints()
+            Problem(P, q, G, None, A, b).check_constraints()
         with self.assertRaises(ValueError):
-            problem = Problem(P, q, None, h, A, b)
-            problem.check_constraints()
+            Problem(P, q, None, h, A, b).check_constraints()
 
     def test_check_equality_constraints(self):
-        P, q, G, h, A, b = get_sd3310_problem()
+        problem = get_sd3310_problem()
+        P, q, G, h, A, b, _, _ = problem.unpack()
         with self.assertRaises(ValueError):
-            problem = Problem(P, q, G, h, A, None)
-            problem.check_constraints()
+            Problem(P, q, G, h, A, None).check_constraints()
         with self.assertRaises(ValueError):
-            problem = Problem(P, q, G, h, None, b)
-            problem.check_constraints()
+            Problem(P, q, G, h, None, b).check_constraints()
 
     def test_cond(self):
         unconstrained = Problem(self.problem.P, self.problem.q)

@@ -21,26 +21,12 @@
 import numpy as np
 import scipy.sparse as spa
 
+from qpsolvers import Problem
 
-def get_sd3310_problem():
+def get_sd3310_problem() -> Problem:
     """
     Get a small dense problem with 3 optimization variables, 3 inequality
     constraints, 1 equality constraint and 0 box constraint.
-
-    Returns
-    -------
-    P :
-        Symmetric quadratic-cost matrix .
-    q :
-        Quadratic-cost vector.
-    G :
-        Linear inequality matrix.
-    h :
-        Linear inequality vector.
-    A :
-        Linear equality matrix.
-    b :
-        Linear equality vector.
     """
     M = np.array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
     P = np.dot(M.T, M)  # this is a positive definite matrix
@@ -49,7 +35,7 @@ def get_sd3310_problem():
     h = np.array([3.0, 2.0, -2.0]).reshape((3,))
     A = np.array([1.0, 1.0, 1.0])
     b = np.array([1.0])
-    return P, q, G, h, A, b
+    return Problem(P, q, G, h, A, b)
 
 
 def get_sparse_least_squares(n=150_000):

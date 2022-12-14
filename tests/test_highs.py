@@ -39,14 +39,14 @@ try:
             warnings.simplefilter("ignore", category=UserWarning)
 
         def test_highs_tolerances(self):
-            P, q, G, h, A, b = get_sd3310_problem()
+            problem = get_sd3310_problem()
             x = highs_solve_qp(
-                P,
-                q,
-                G,
-                h,
-                A,
-                b,
+                problem.P,
+                problem.q,
+                problem.G,
+                problem.h,
+                problem.A,
+                problem.b,
                 time_limit=0.1,
                 primal_feasibility_tolerance=1e-1,
                 dual_feasibility_tolerance=1e-1,
