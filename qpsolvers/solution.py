@@ -22,11 +22,13 @@
 Output from a QP solver.
 """
 
+from dataclasses import dataclass, field
 from typing import Optional
 
 import numpy as np
 
 
+@dataclass
 class Solution:
 
     """
@@ -49,11 +51,12 @@ class Solution:
         Other outputs, specific to each solver.
     """
 
-    x: Optional[np.ndarray]
-    y: Optional[np.ndarray]
-    z: Optional[np.ndarray]
-    z_box: Optional[np.ndarray]
-    extras: dict
+    x: Optional[np.ndarray] = None
+    y: Optional[np.ndarray] = None
+    z: Optional[np.ndarray] = None
+    z_box: Optional[np.ndarray] = None
+    obj: Optional[float] = None
+    extras: dict = field(default_factory=dict)
 
     @property
     def is_empty(self) -> bool:
