@@ -37,14 +37,14 @@ try:
             """
             Try the dense backend.
             """
-            P, q, G, h, A, b = get_sd3310_problem()
+            problem = get_sd3310_problem()
             solve_qp(
-                P,
-                q,
-                G,
-                h,
-                A,
-                b,
+                problem.P,
+                problem.q,
+                problem.G,
+                problem.h,
+                problem.A,
+                problem.b,
                 solver="proxqp",
                 backend="dense",
             )
@@ -53,14 +53,14 @@ try:
             """
             Try the sparse backend.
             """
-            P, q, G, h, A, b = get_sd3310_problem()
+            problem = get_sd3310_problem()
             solve_qp(
-                P,
-                q,
-                G,
-                h,
-                A,
-                b,
+                problem.P,
+                problem.q,
+                problem.G,
+                problem.h,
+                problem.A,
+                problem.b,
                 solver="proxqp",
                 backend="sparse",
             )
@@ -69,15 +69,15 @@ try:
             """
             Exception raised when asking for an invalid backend.
             """
-            P, q, G, h, A, b = get_sd3310_problem()
+            problem = get_sd3310_problem()
             with self.assertRaises(ValueError):
                 solve_qp(
-                    P,
-                    q,
-                    G,
-                    h,
-                    A,
-                    b,
+                    problem.P,
+                    problem.q,
+                    problem.G,
+                    problem.h,
+                    problem.A,
+                    problem.b,
                     solver="proxqp",
                     backend="invalid",
                 )
@@ -87,18 +87,18 @@ try:
             Raise an exception when two warm-start values are provided at the
             same time.
             """
-            P, q, G, h, A, b = get_sd3310_problem()
+            problem = get_sd3310_problem()
             with self.assertRaises(ValueError):
                 solve_qp(
-                    P,
-                    q,
-                    G,
-                    h,
-                    A,
-                    b,
+                    problem.P,
+                    problem.q,
+                    problem.G,
+                    problem.h,
+                    problem.A,
+                    problem.b,
                     solver="proxqp",
-                    initvals=q,
-                    x=q,
+                    initvals=problem.q,
+                    x=problem.q,
                 )
 
         def test_invalid_inequalities(self):
@@ -107,9 +107,9 @@ try:
             of parameters. This won't happen when the function is called by
             `solve_qp`, but it may happen when it is called directly.
             """
-            P, q, G, _, _, _ = get_sd3310_problem()
+            problem = get_sd3310_problem()
             with self.assertRaises(ValueError):
-                proxqp_solve_qp(P, q, G=G, h=None, lb=q)
+                proxqp_solve_qp(problem.P, problem.q, G=problem.G, h=None, lb=problem.q,)
 
 
 except ImportError:  # ProxSuite not installed

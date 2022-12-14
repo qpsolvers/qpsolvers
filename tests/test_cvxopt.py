@@ -90,14 +90,14 @@ class TestCVXOPT(unittest.TestCase):
         """
         Call CVXOPT with various solver-specific settings.
         """
-        P, q, G, h, A, b = get_sd3310_problem()
+        problem = get_sd3310_problem()
         x = solve_qp(
-            P,
-            q,
-            G,
-            h,
-            A,
-            b,
+            problem.P,
+            problem.q,
+            problem.G,
+            problem.h,
+            problem.A,
+            problem.b,
             solver="cvxopt",
             maxiters=10,
             abstol=1e-1,

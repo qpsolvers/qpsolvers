@@ -42,44 +42,45 @@ try:
             """
             Call the solver with a warm-start guess.
             """
-            P, q, G, h, A, b = get_sd3310_problem()
+            problem = get_sd3310_problem()
             solve_qp(
-                P,
-                q,
-                G,
-                h,
-                A,
-                b,
+                problem.P,
+                problem.q,
+                problem.G,
+                problem.h,
+                problem.A,
+                problem.b,
                 solver="qpoases",
-                initvals=q,
+                initvals=problem.q,
             )
 
         def test_params(self):
             """
             Call the solver with a time limit and other parameters.
             """
-            P, q, G, h, A, b = get_sd3310_problem()
+            problem = get_sd3310_problem()
             solve_qp(
-                P,
-                q,
-                G,
-                h,
-                A,
-                b,
+                problem.P,
+                problem.q,
+                problem.G,
+                problem.h,
+                problem.A,
+                problem.b,
                 solver="qpoases",
                 time_limit=0.1,
                 terminationTolerance=1e-7,
             )
             solve_qp(
-                P,
-                q,
+                problem.P,
+                problem.q,
                 solver="qpoases",
                 time_limit=0.1,
                 terminationTolerance=1e-7,
             )
 
         def test_unfeasible(self):
-            P, q, G, h, A, b = get_sd3310_problem()
+            problem = get_sd3310_problem()
+            P, q, G, h, A, b, _, _ = problem.unpack()
             lb = np.ones(q.shape)
             ub = -np.ones(q.shape)
             x = solve_qp(

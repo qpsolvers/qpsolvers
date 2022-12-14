@@ -33,12 +33,12 @@ try:
         """
 
         def test_gurobi_params(self):
-            P, q, G, h, _, _ = get_sd3310_problem()
+            problem = get_sd3310_problem()
             x = gurobi_solve_qp(
-                P,
-                q,
-                G,
-                h,
+                problem.P,
+                problem.q,
+                problem.G,
+                problem.h,
                 TimeLimit=0.1,
                 FeasibilityTol=1e-8,
             )
