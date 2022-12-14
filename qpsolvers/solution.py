@@ -80,3 +80,14 @@ class Solution:
         and why this residual will be zero at the optimum.
         """
         raise NotImplementedError()
+
+    def dual_residual() -> float:
+        """
+        Compute the dual residual of the solution.
+
+        Notes
+        -----
+        See for instance [tolerances]_ for an overview of optimality conditions
+        and why this residual will be zero at the optimum.
+        """
+        raise NotImplementedError()
