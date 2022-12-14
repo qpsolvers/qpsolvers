@@ -128,10 +128,10 @@ def __solve_unconstrained(problem: Problem) -> Solution:
 
 
 def __ensure_sparse_matrices(
-    P: Optional[Union[ndarray, csc_matrix]],
+    P: Union[ndarray, csc_matrix],
     G: Optional[Union[ndarray, csc_matrix]],
     A: Optional[Union[ndarray, csc_matrix]],
-) -> Tuple[Optional[csc_matrix], Optional[csc_matrix], Optional[csc_matrix]]:
+) -> Tuple[csc_matrix, Optional[csc_matrix], Optional[csc_matrix]]:
     """
     Make sure matrices are sparse.
     """
