@@ -55,10 +55,22 @@ def print_matrix_vector(
         A = A.reshape((1, A.shape[0]))
     if isinstance(A, spa.csc_matrix):
         A = A.toarray()
-    if A.shape[0] != b.shape[0]:
-        raise ValueError("matrix and vector need the same first dimension")
-    A_string = f"{A_label} =\n{A}"
-    b_string = f"{b_label} =\n{b.reshape((A.shape[0], 1))}"
+    if A.shape[0] == b.shape[0]:
+        A_string = f"{A_label} =\n{A}"
+        b_string = f"{b_label} =\n{b.reshape((A.shape[0], 1))}"
+    elif A.shape[0] > b.shape[0]:
+        m = b.shape[0]
+        A_string = f"{A_label} =\n{A[:m]}"
+        b_string = f"{b_label} =\n{b.reshape(m, 1)}"
+        A_string += f"\n{A[m:]}"
+        b_string += "\n " * (A.shape[0] - m)
+    else:  # A.shape[0] < b.shape[0]
+        n = A.shape[0]
+        k = b.shape[0] - n
+        A_string = f"{A_label} =\n{A}"
+        b_string = f"{b_label} =\n{b[:n].reshape(n, 1)}"
+        A_string += "\n " * k
+        b_string += f"\n{b[n:].reshape(k, 1)}"
     A_lines = A_string.splitlines()
     b_lines = b_string.splitlines()
     for i, A_line in enumerate(A_lines):
