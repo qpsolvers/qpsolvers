@@ -123,6 +123,17 @@ except ImportError:
 # Gurobi
 # ======
 
+gurobi_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[ndarray],
+            bool,
+        ],
+        Solution,
+    ]
+] = None
+
 gurobi_solve_qp: Optional[
     Callable[
         [
@@ -142,9 +153,9 @@ gurobi_solve_qp: Optional[
 ] = None
 
 try:
-    from .gurobi_ import gurobi_solve_qp
+    from .gurobi_ import gurobi_solve_qp, gurobi_solve_problem
 
-    solve_function["gurobi"] = gurobi_solve_qp
+    solve_function["gurobi"] = gurobi_solve_problem
     available_solvers.append("gurobi")
     sparse_solvers.append("gurobi")
 except ImportError:
