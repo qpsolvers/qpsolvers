@@ -166,7 +166,7 @@ def cvxopt_solve_problem(
     res = qp(*args, solver=solver, initvals=initvals_dict, **constraints)
     cvxopt.solvers.options = original_options
 
-    solution = Solution()
+    solution = Solution(problem)
     if "optimal" not in res["status"]:
         return solution
     solution.x = np.array(res["x"]).reshape((q.shape[0],))
