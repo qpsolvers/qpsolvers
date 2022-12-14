@@ -149,5 +149,5 @@ def solve_qp(
             stacklevel=2,
         )
     problem = Problem(P, q, G, h, A, b, lb, ub)
-    output = solve_problem(problem, solver, initvals, verbose, **kwargs)
-    return output.x
+    solution = solve_problem(problem, solver, initvals, verbose, **kwargs)
+    return solution.x
