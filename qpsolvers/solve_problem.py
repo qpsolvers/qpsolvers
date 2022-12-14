@@ -22,11 +22,9 @@
 Solve quadratic programs.
 """
 
-import warnings
-from typing import Optional, Union
+from typing import Optional
 
 import numpy as np
-import scipy.sparse as spa
 
 from .exceptions import NoSolverSelected, SolverNotFound
 from .problem import Problem
@@ -34,15 +32,8 @@ from .solution import Solution
 from .solvers import available_solvers, solve_function
 
 
-def solve_qp2(
-    P: Union[np.ndarray, spa.csc_matrix],
-    q: np.ndarray,
-    G: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
-    h: Optional[np.ndarray] = None,
-    A: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
-    b: Optional[np.ndarray] = None,
-    lb: Optional[np.ndarray] = None,
-    ub: Optional[np.ndarray] = None,
+def solve_problem(
+    problem: Problem,
     solver: Optional[str] = None,
     initvals: Optional[np.ndarray] = None,
     sym_proj: bool = False,
@@ -54,30 +45,11 @@ def solve_qp2(
             "Set the `solver` keyword argument to one of the "
             f"available solvers in {available_solvers}"
         )
-    if sym_proj:
-        P = 0.5 * (P + P.transpose())
-        warnings.warn(
-            "The `sym_proj` feature is deprecated "
-            "and will be removed in qpsolvers v2.9",
-            DeprecationWarning,
-            stacklevel=2,
-        )
-    problem = Problem(P, q, G, h, A, b, lb, ub)
     problem.check_constraints()
     kwargs["initvals"] = initvals
     kwargs["verbose"] = verbose
     try:
-        return solve_function[solver](
-            problem.P,
-            problem.q,
-            problem.G,
-            problem.h,
-            problem.A,
-            problem.b,
-            problem.lb,
-            problem.ub,
-            **kwargs,
-        )
+        return solve_function[solver](problem, **kwargs)
     except KeyError as e:
         raise SolverNotFound(
             f"solver '{solver}' is not in the list "

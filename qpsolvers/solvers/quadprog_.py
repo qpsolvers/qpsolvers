@@ -33,56 +33,24 @@ from numpy import hstack, vstack
 from quadprog import solve_qp
 
 from ..conversions import linear_from_box_inequalities
+from ..problem import Problem
 from ..solution import Solution
 
 
-def quadprog_solve_qp2(
-    P: np.ndarray,
-    q: np.ndarray,
-    G: Optional[np.ndarray] = None,
-    h: Optional[np.ndarray] = None,
-    A: Optional[np.ndarray] = None,
-    b: Optional[np.ndarray] = None,
-    lb: Optional[np.ndarray] = None,
-    ub: Optional[np.ndarray] = None,
+def quadprog_solve_problem(
+    problem: Problem,
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
     **kwargs,
 ) -> Solution:
     """
-    Solve a Quadratic Program defined as:
-
-    .. math::
-
-        \\begin{split}\\begin{array}{ll}
-        \\mbox{minimize} &
-            \\frac{1}{2} x^T P x + q^T x \\\\
-        \\mbox{subject to}
-            & G x \\leq h                \\\\
-            & A x = b                    \\\\
-            & lb \\leq x \\leq ub
-        \\end{array}\\end{split}
-
-    using `quadprog <https://pypi.python.org/pypi/quadprog/>`_.
+    Solve a quadratic program using `quadprog
+    <https://pypi.python.org/pypi/quadprog/>`_.
 
     Parameters
     ----------
-    P :
-        Symmetric quadratic-cost matrix.
-    q :
-        Quadratic-cost vector.
-    G :
-        Linear inequality constraint matrix.
-    h :
-        Linear inequality constraint vector.
-    A :
-        Linear equality constraint matrix.
-    b :
-        Linear equality constraint vector.
-    lb :
-        Lower bound constraint vector.
-    ub :
-        Upper bound constraint vector.
+    problem :
+        Quadratic program to solve.
     initvals :
         Warm-start guess vector (not used).
     verbose :
@@ -105,6 +73,7 @@ def quadprog_solve_qp2(
     instance, you can call ``quadprog_solve_qp(P, q, G, h, factorized=True)``.
     See the solver documentation for details.
     """
+    P, q, G, h, A, b, lb, ub = problem.unpack()
     if initvals is not None and verbose:
         warnings.warn("warm-start values are ignored by quadprog")
     if lb is not None or ub is not None:
@@ -223,8 +192,43 @@ def quadprog_solve_qp(
     **kwargs,
 ) -> Optional[np.ndarray]:
     """
-    Variant of :func:`qpsolvers.solvers.quadprog_.quadprog_solve_qp2` returning
-    only the primal solution.
+    Solve a Quadratic Program defined as:
+
+    .. math::
+
+        \\begin{split}\\begin{array}{ll}
+        \\mbox{minimize} &
+            \\frac{1}{2} x^T P x + q^T x \\\\
+        \\mbox{subject to}
+            & G x \\leq h                \\\\
+            & A x = b                    \\\\
+            & lb \\leq x \\leq ub
+        \\end{array}\\end{split}
+
+    using `quadprog <https://pypi.python.org/pypi/quadprog/>`_.
+
+    Parameters
+    ----------
+    P :
+        Symmetric quadratic-cost matrix.
+    q :
+        Quadratic-cost vector.
+    G :
+        Linear inequality constraint matrix.
+    h :
+        Linear inequality constraint vector.
+    A :
+        Linear equality constraint matrix.
+    b :
+        Linear equality constraint vector.
+    lb :
+        Lower bound constraint vector.
+    ub :
+        Upper bound constraint vector.
+    initvals :
+        Warm-start guess vector (not used).
+    verbose :
+        Set to `True` to print out extra information.
 
     Returns
     -------
@@ -237,7 +241,6 @@ def quadprog_solve_qp(
         DeprecationWarning,
         stacklevel=2,
     )
-    solution = quadprog_solve_qp2(
-        P, q, G, h, A, b, lb, ub, initvals, verbose, **kwargs
-    )
+    problem = Problem(P, q, G, h, A, b, lb, ub)
+    solution = quadprog_solve_problem(problem, initvals, verbose, **kwargs)
     return solution.x
