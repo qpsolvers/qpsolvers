@@ -466,6 +466,17 @@ except ImportError:
 # SCS
 # ========
 
+scs_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[ndarray],
+            bool,
+        ],
+        Solution,
+    ]
+] = None
+
 scs_solve_qp: Optional[
     Callable[
         [
@@ -485,9 +496,9 @@ scs_solve_qp: Optional[
 ] = None
 
 try:
-    from .scs_ import scs_solve_qp
+    from .scs_ import scs_solve_problem, scs_solve_qp
 
-    solve_function["scs"] = scs_solve_qp
+    solve_function["scs"] = scs_solve_problem
     available_solvers.append("scs")
     sparse_solvers.append("scs")
 except ImportError:
@@ -514,6 +525,7 @@ __all__ = [
     "qpoases_solve_qp",
     "qpswift_solve_qp",
     "quadprog_solve_qp",
+    "scs_solve_qp",
     "solve_function",
     "sparse_solvers",
 ]
