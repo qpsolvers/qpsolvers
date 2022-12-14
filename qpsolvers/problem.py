@@ -22,7 +22,7 @@
 Model for a quadratic program.
 """
 
-from typing import Optional, Union
+from typing import Optional, Tuple, Union
 
 import numpy as np
 import scipy.sparse as spa
@@ -102,6 +102,32 @@ class Problem:
         self.b = b
         self.lb = lb
         self.ub = ub
+
+    def unpack(
+        self,
+    ) -> Tuple[
+        Union[np.ndarray, spa.csc_matrix],
+        np.ndarray,
+        Optional[Union[np.ndarray, spa.csc_matrix]],
+        Optional[np.ndarray],
+        Optional[Union[np.ndarray, spa.csc_matrix]],
+        Optional[np.ndarray],
+        Optional[np.ndarray],
+        Optional[np.ndarray],
+    ]:
+        """
+        Get problem matrices as a tuple.
+        """
+        return (
+            self.P,
+            self.q,
+            self.G,
+            self.h,
+            self.A,
+            self.b,
+            self.lb,
+            self.ub,
+        )
 
     def check_constraints(self):
         """
