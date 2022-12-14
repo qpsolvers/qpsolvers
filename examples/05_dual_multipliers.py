@@ -44,7 +44,7 @@ b = np.array([1.0])
 lb = -0.5 * np.ones(3)
 ub = 1.0 * np.ones(3)
 
-if False:
+if True:
     G[0, 0] = 4.0
     lb[1] = -0.4
 
@@ -75,14 +75,23 @@ if __name__ == "__main__":
 
     print("============================ SOLUTION ============================")
     print("")
-    print(f"Primal: x = {solution.x}")
-    print(f"Dual (G x <= h): z = {solution.z}")
-    print(f"Dual (A x == b): y = {solution.y}")
-    print(f"Dual (lb <= x <= ub): z_box = {solution.z_box}")
+    print_matrix_vector(
+        solution.x.reshape((3, 1)),
+        "Primal x*",
+        solution.z,
+        "Dual (Gx <= h) z*",
+    )
+    print("")
+    print_matrix_vector(
+        solution.y.reshape((1, 1)),
+        "Dual (Ax == b) y*",
+        solution.z_box.reshape((3, 1)),
+        "Dual (lb <= x <= ub) z_box*",
+    )
     print("")
 
-    print("Optimality checks:")
-    print("")
+    print("=== Optimality  checks ===")
     print(f"- Primal residual: {solution.primal_residual():.1e}")
     print(f"- Dual residual:   {solution.dual_residual():.1e}")
     print(f"- Duality gap:     {solution.duality_gap():.1e}")
+    print("")
