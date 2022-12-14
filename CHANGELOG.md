@@ -22,6 +22,7 @@ All notable changes to this project will be documented in this file.
 - qpSWIFT: return dual multipliers
 - qpSWIFT: return objective value
 - quadprog: return dual multipliers
+- SCS: return dual multipliers
 
 ### Changed
 
