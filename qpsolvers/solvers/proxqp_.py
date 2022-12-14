@@ -289,32 +289,6 @@ def proxqp_solve_qp(
     """
     Legacy version of :func:`qpsolvers.solvers.proxqp_.proxqp_solve_qp2`.
 
-    Parameters
-    ----------
-    P :
-        Positive semidefinite quadratic-cost matrix.
-    q :
-        Quadratic-cost vector.
-    G :
-        Linear inequality constraint matrix.
-    h :
-        Linear inequality constraint vector.
-    A :
-        Linear equality constraint matrix.
-    b :
-        Linear equality constraint vector.
-    lb :
-        Lower bound constraint vector.
-    ub :
-        Upper bound constraint vector.
-    initvals :
-        Warm-start guess vector.
-    backend :
-        ProxQP backend to use in ``[None, "dense", "sparse"]``. If ``None``
-        (default), the backend is selected based on the type of ``P``.
-    verbose :
-        Set to `True` to print out extra information.
-
     Returns
     -------
     :
