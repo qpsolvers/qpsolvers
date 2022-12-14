@@ -30,8 +30,8 @@ import scipy.sparse as spa
 
 from .exceptions import NoSolverSelected, SolverNotFound
 from .problem import Problem
-from .solver_output import SolverOutput
-from .solvers import available_solvers, proxqp_solve_qp_dual, solve_function
+from .solution import Solution
+from .solvers import available_solvers, proxqp_solve_qp2, solve_function
 
 
 def solve_qp2(
@@ -48,7 +48,7 @@ def solve_qp2(
     sym_proj: bool = False,
     verbose: bool = False,
     **kwargs,
-) -> SolverOutput:
+) -> Solution:
     if solver is None:
         raise NoSolverSelected(
             "Set the `solver` keyword argument to one of the "
@@ -67,7 +67,7 @@ def solve_qp2(
     kwargs["initvals"] = initvals
     kwargs["verbose"] = verbose
     assert solver == "proxqp"
-    return proxqp_solve_qp_dual(P, q, G, h, A, b, lb, ub, **kwargs)
+    return proxqp_solve_qp2(P, q, G, h, A, b, lb, ub, **kwargs)
     try:
         return solve_function[solver](
             problem.P,

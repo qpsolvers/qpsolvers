@@ -242,8 +242,7 @@ proxqp_solve_qp: Optional[
 ] = None
 
 try:
-    from .proxqp_ import proxqp_solve_qp
-    from .proxqp_ import proxqp_solve_qp_dual
+    from .proxqp_ import proxqp_solve_qp, proxqp_solve_qp2
 
     solve_function["proxqp"] = proxqp_solve_qp
     available_solvers.append("proxqp")
@@ -394,7 +393,7 @@ __all__ = [
     "mosek_solve_qp",
     "osqp_solve_qp",
     "proxqp_solve_qp",
-    "proxqp_solve_qp_dual",
+    "proxqp_solve_qp2",
     "qpoases_solve_qp",
     "quadprog_solve_qp",
     "solve_function",
