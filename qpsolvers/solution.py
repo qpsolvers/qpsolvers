@@ -100,7 +100,7 @@ class Solution:
         See for instance [tolerances]_ for an overview of optimality conditions
         and why this residual will be zero at the optimum.
         """
-        P, q, G, h, A, b, lb, ub = self.problem.unpack()
+        P, q, G, _, A, _, _, _ = self.problem.unpack()
         Px = P.dot(self.x)
         ATy = A.T.dot(self.y)
         GTz = G.T.dot(self.z)
@@ -116,7 +116,7 @@ class Solution:
         See for instance [tolerances]_ for an overview of optimality conditions
         and why this gap will be zero at the optimum.
         """
-        P, q, G, h, A, b, lb, ub = self.problem.unpack()
+        P, q, _, h, _, b, lb, ub = self.problem.unpack()
         xPx = self.x.T.dot(P.dot(self.x))
         qx = q.dot(self.x)
         hz = h.dot(self.z)
