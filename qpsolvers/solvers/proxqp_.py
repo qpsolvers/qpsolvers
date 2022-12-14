@@ -167,7 +167,7 @@ def proxqp_solve_problem(
     Returns
     -------
     :
-        Solution to the QP, if found, otherwise ``None``.
+        Solution to the QP returned by the solver.
 
     Notes
     -----
@@ -241,9 +241,10 @@ def proxqp_solve_problem(
         verbose=verbose,
         **kwargs,
     )
-    if result.info.status != proxqp.QPSolverOutput.PROXQP_SOLVED:
-        return (None, None, None, None)
     solution = Solution(problem)
+    solution.extras = {"info": result.info}
+    if result.info.status != proxqp.QPSolverOutput.PROXQP_SOLVED:
+        return solution
     solution.x = result.x
     solution.y = result.y
     if lb is not None or ub is not None:
@@ -251,7 +252,6 @@ def proxqp_solve_problem(
         solution.z_box = result.z[-n:]
     else:  # lb is None and ub is None
         solution.z = result.z
-    solution.extras = {"info": result.info}
     return solution
 
 
