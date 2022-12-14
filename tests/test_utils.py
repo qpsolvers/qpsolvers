@@ -25,7 +25,7 @@ import unittest
 import numpy as np
 
 import qpsolvers
-from qpsolvers.utils import print_matrix_vector, random_solver
+from qpsolvers.utils import print_matrix_vector
 
 
 class TestUtils(unittest.TestCase):
@@ -58,14 +58,3 @@ class TestUtils(unittest.TestCase):
         """
         with self.assertRaises(ValueError):
             print_matrix_vector(self.G, "G", self.h[:-1], "h")
-
-    def test_random_solver(self):
-        """
-        Picking a random solver.
-        """
-        dense_solver = random_solver(dense=True)
-        sparse_solver = random_solver(sparse=True)
-        solver = random_solver()
-        self.assertTrue(dense_solver in qpsolvers.dense_solvers)
-        self.assertTrue(sparse_solver in qpsolvers.sparse_solvers)
-        self.assertTrue(solver in qpsolvers.available_solvers)
