@@ -120,13 +120,16 @@ class Solution:
         P, q, _, h, _, b, lb, ub = self.problem.unpack()
         xPx = self.x.T.dot(P.dot(self.x))
         qx = q.dot(self.x)
-        hz = h.dot(self.z)
-        by = b.dot(self.y)
-        z_box_minus = np.minimum(self.z_box, 0.0)
-        z_box_plus = np.maximum(self.z_box, 0.0)
-        return abs(
-            xPx + qx + hz + by + lb.dot(z_box_minus) + ub.dot(z_box_plus)
-        )
+        hz = h.dot(self.z) if h is not None else 0.0
+        by = b.dot(self.y) if b is not None else 0.0
+        lb_z_box = 0.0
+        ub_z_box = 0.0
+        if self.z_box is not None:
+            if lb is not None:
+                lb_z_box = lb.dot(np.minimum(self.z_box, 0.0))
+            if ub is not None:
+                ub_z_box = ub.dot(np.maximum(self.z_box, 0.0))
+        return abs(xPx + qx + hz + by + lb_z_box + ub_z_box)
 
     def is_optimal(self, eps_abs: float) -> bool:
         """
