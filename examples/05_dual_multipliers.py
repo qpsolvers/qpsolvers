@@ -27,7 +27,7 @@ from time import perf_counter
 
 import numpy as np
 
-from qpsolvers import available_solvers, print_matrix_vector, solve_qp_dual
+from qpsolvers import available_solvers, print_matrix_vector, solve_qp2
 
 M = np.array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
 P = np.dot(M.T, M)  # this is a positive definite matrix
@@ -48,7 +48,7 @@ x_sol = np.array([0.41463414566726164, -0.41463414566726164, 1.0])
 if __name__ == "__main__":
     start_time = perf_counter()
     solver = random.choice(available_solvers)
-    x, z, y, z_box = solve_qp_dual(P, q, G, h, A, b, lb, ub, solver=solver)
+    solution = solve_qp2(P, q, G, h, A, b, lb, ub, solver=solver)
     end_time = perf_counter()
 
     print("========================= PRIMAL PROBLEM =========================")
@@ -71,10 +71,10 @@ if __name__ == "__main__":
     print("")
     print(f"Found in {1e6 * (end_time - start_time):.0f} [us] with {solver}")
     print("")
-    print(f"Primal: x = {x}")
-    print(f"Dual (G x <= h): z = {z}")
-    print(f"Dual (A x == b): y = {y}")
-    print(f"Dual (lb <= x <= ub): z_box = {z_box}")
+    print(f"Primal: x = {solution.x}")
+    print(f"Dual (G x <= h): z = {solution.z}")
+    print(f"Dual (A x == b): y = {solution.y}")
+    print(f"Dual (lb <= x <= ub): z_box = {solution.z_box}")
     print("")
     print("They should be close to:")
     print(f"Primal: x* = {x_sol}")
