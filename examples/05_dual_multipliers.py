@@ -28,7 +28,12 @@ from time import perf_counter
 
 import numpy as np
 
-from qpsolvers import available_solvers, print_matrix_vector, solve_problem, Problem
+from qpsolvers import (
+    Problem,
+    available_solvers,
+    print_matrix_vector,
+    solve_problem,
+)
 
 M = np.array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
 P = np.dot(M.T, M)  # this is a positive definite matrix
@@ -81,18 +86,8 @@ if __name__ == "__main__":
     print(f"Dual (lb <= x <= ub): z_box = {solution.z_box}")
     print("")
 
-    dual_feasibility = np.linalg.norm(
-        P.dot(solution.x)
-        + G.T.dot(solution.z)
-        + A.T.dot(solution.y)
-        + solution.z_box
-        + q,
-        np.inf,
-    )
-
-    print("===================== OPTIMALITY CONDITIONS =====================")
+    print("Optimality checks:")
     print("")
-    print("Dual feasibility:")
-    print(
-        f"    || P x + G^T z + A^T y + z_box + q || = {dual_feasibility:.1e}"
-    )
+    print(f"- Primal residual: {solution.primal_residual():.1e}")
+    print(f"- Dual residual:   {solution.dual_residual():.1e}")
+    print(f"- Duality gap:     {solution.duality_gap():.1e}")
