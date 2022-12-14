@@ -100,7 +100,12 @@ class Solution:
         See for instance [tolerances]_ for an overview of optimality conditions
         and why this residual will be zero at the optimum.
         """
-        raise NotImplementedError()
+        P, q, G, h, A, b, lb, ub = self.problem.unpack()
+        Px = P.dot(self.x)
+        ATy = A.T.dot(self.y)
+        GTz = G.T.dot(self.z)
+        z_box = self.z_box
+        return np.linalg.norm(Px + q + GTz + ATy + z_box, np.inf)
 
     def duality_gap(self) -> float:
         """
