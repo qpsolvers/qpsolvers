@@ -21,6 +21,7 @@
 """Quadratic programming solvers in Python with a unified API"""
 
 from .problem import Problem
+from .solution import Solution
 from .solve_ls import solve_ls
 from .solve_qp import solve_qp, solve_qp2
 from .solve_safer_qp import solve_safer_qp
@@ -42,10 +43,11 @@ from .solvers import (
 )
 from .utils import print_matrix_vector
 
-__version__ = "2.6.1rc0"
+__version__ = "2.7.0rc0"
 
 __all__ = [
     "Problem",
+    "Solution",
     "__version__",
     "available_solvers",
     "cvxopt_solve_qp",
