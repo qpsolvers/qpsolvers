@@ -35,12 +35,18 @@ class TestProblem(unittest.TestCase):
         P, q, G, h, A, b = get_sd3310_problem()
         self.problem = Problem(P, q, G, h, A, b)
 
-    def test_cond(self):
-        unconstrained = Problem(self.problem.P, self.problem.q)
-        self.assertAlmostEqual(unconstrained.cond(), 124.257, places=4)
-        self.assertGreater(self.problem.cond(), 200.0)
+    def test_unpack(self):
+        P, q, G, h, A, b, lb, ub = self.problem.unpack()
+        self.assertEqual(P.shape, self.problem.P.shape)
+        self.assertEqual(q.shape, self.problem.q.shape)
+        self.assertEqual(G.shape, self.problem.G.shape)
+        self.assertEqual(h.shape, self.problem.h.shape)
+        self.assertEqual(A.shape, self.problem.A.shape)
+        self.assertEqual(b.shape, self.problem.b.shape)
+        self.assertIsNone(lb)
+        self.assertIsNone(ub)
 
-    def test_partial_inequality(self):
+    def test_check_inequality_constraints(self):
         P, q, G, h, A, b = get_sd3310_problem()
         with self.assertRaises(ValueError):
             problem = Problem(P, q, G, None, A, b)
@@ -49,7 +55,7 @@ class TestProblem(unittest.TestCase):
             problem = Problem(P, q, None, h, A, b)
             problem.check_constraints()
 
-    def test_partial_equality(self):
+    def test_check_equality_constraints(self):
         P, q, G, h, A, b = get_sd3310_problem()
         with self.assertRaises(ValueError):
             problem = Problem(P, q, G, h, A, None)
@@ -57,3 +63,8 @@ class TestProblem(unittest.TestCase):
         with self.assertRaises(ValueError):
             problem = Problem(P, q, G, h, None, b)
             problem.check_constraints()
+
+    def test_cond(self):
+        unconstrained = Problem(self.problem.P, self.problem.q)
+        self.assertAlmostEqual(unconstrained.cond(), 124.257, places=4)
+        self.assertGreater(self.problem.cond(), 200.0)
