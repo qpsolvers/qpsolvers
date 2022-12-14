@@ -151,8 +151,8 @@ def qpswift_solve_problem(
     adv_info = result["advInfo"]
 
     solution = Solution(problem)
-    solution.extras.update(basic_info)
-    solution.extras.update(adv_info)
+    solution.extras["basicInfo"] = basic_info
+    solution.extras["advInfo"] = adv_info
     solution.obj = adv_info["fval"]
     exit_flag = basic_info["ExitFlag"]
     if exit_flag != 0:
