@@ -105,9 +105,9 @@ def quadprog_solve_problem(
             # quadprog writes G the cost matrix that we write P in this package
             raise ValueError("matrix P is not positive definite") from e
         if "no solution" in error:
-            return Solution()
+            return Solution(problem)
         warnings.warn(f"quadprog raised a ValueError: {e}")
-        return Solution()
+        return Solution(problem)
 
     solution = Solution(problem)
     solution.x = x
