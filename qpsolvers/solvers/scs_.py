@@ -97,36 +97,34 @@ def __add_box_cone(
     )
 
 
-def __solve_unconstrained(
-    P: Union[ndarray, csc_matrix], q: ndarray
-) -> ndarray:
+def __solve_unconstrained(problem: Problem) -> Solution:
     """
-    Solve unconstrained QP, warning if the problem is unbounded.
+    Solve an unconstrained quadratic program, warning if it is unbounded.
 
     Parameters
     ----------
-    P :
-        Primal quadratic cost matrix.
-    q :
-        Primal quadratic cost vector.
+    problem :
+        Unconstrained quadratic program.
 
     Returns
     -------
     :
-        Solution to the QP, if found, otherwise ``None``.
+        Solution to the unconstrained QP.
 
     Raises
     ------
     ValueError
         If the quadratic program is not unbounded below.
     """
-    x = lsqr(P, -q)[0]
-    if norm(P @ x + q) > 1e-9:
+    P, q, _, _, _, _, _, _ = problem.unpack()
+    solution = Solution(problem)
+    solution.x = lsqr(P, -q)[0]
+    if norm(P @ solution.x + q) > 1e-9:
         raise ValueError(
             "problem is unbounded below, "
             "q has component in the nullspace of P"
         )
-    return x
+    return solution
 
 
 def __ensure_sparse_matrices(
@@ -235,7 +233,7 @@ def scs_solve_problem(
         data["b"] = h
         cone["l"] = h.shape[0]  # positive cone
     elif lb is None and ub is None:  # no constraint
-        return __solve_unconstrained(P, q)
+        return __solve_unconstrained(problem)
     if lb is not None or ub is not None:
         __add_box_cone(n, lb, ub, cone, data)
     kwargs["verbose"] = verbose
