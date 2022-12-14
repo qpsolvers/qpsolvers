@@ -22,6 +22,7 @@
 Solve linear least squares.
 """
 
+import warnings
 from typing import Optional, Union
 
 import numpy as np
@@ -109,6 +110,12 @@ def solve_ls(
     """
     if sym_proj:
         R = 0.5 * (R + R.transpose())
+        warnings.warn(
+            "The `sym_proj` feature is deprecated "
+            "and will be removed in qpsolvers v2.9",
+            DeprecationWarning,
+            stacklevel=2,
+        )
     WR: Union[np.ndarray, spa.csc_matrix] = R if W is None else W @ R
     P = R.T @ WR
     q = -(s.T @ WR)
