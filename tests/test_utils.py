@@ -24,7 +24,6 @@ import unittest
 
 import numpy as np
 
-import qpsolvers
 from qpsolvers.utils import print_matrix_vector
 
 
@@ -51,10 +50,3 @@ class TestUtils(unittest.TestCase):
         self.assertIn(str(self.G[0][1]), output)
         self.assertIn("ineq_vector =", output)
         self.assertIn(str(self.h[1]), output)
-
-    def test_print_matrix_vector_dimensions(self):
-        """
-        Printing a matrix-vector pair with invalid shape raises a ValueError.
-        """
-        with self.assertRaises(ValueError):
-            print_matrix_vector(self.G, "G", self.h[:-1], "h")
