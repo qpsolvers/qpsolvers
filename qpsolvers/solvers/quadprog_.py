@@ -25,17 +25,18 @@ quadprog is a C implementation of the Goldfarb-Idnani dual algorithm
 [Goldfarb1983]_. It works best on well-conditioned dense problems.
 """
 
-from typing import Optional
 import warnings
+from typing import Optional
 
 import numpy as np
 from numpy import hstack, vstack
 from quadprog import solve_qp
 
 from ..conversions import linear_from_box_inequalities
+from ..solution import Solution
 
 
-def quadprog_solve_qp(
+def quadprog_solve_qp2(
     P: np.ndarray,
     q: np.ndarray,
     G: Optional[np.ndarray] = None,
@@ -47,7 +48,7 @@ def quadprog_solve_qp(
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
     **kwargs,
-) -> Optional[np.ndarray]:
+) -> Solution:
     """
     Solve a Quadratic Program defined as:
 
@@ -126,13 +127,75 @@ def quadprog_solve_qp(
             qp_b = -h
         meq = 0
     try:
-        return solve_qp(qp_G, qp_a, qp_C, qp_b, meq, **kwargs)[0]
+        x, obj, xu, iterations, y, iact = solve_qp(
+            qp_G, qp_a, qp_C, qp_b, meq, **kwargs
+        )
     except ValueError as e:
         error = str(e)
         if "matrix G is not positive definite" in error:
             # quadprog writes G the cost matrix that we write P in this package
             raise ValueError("matrix P is not positive definite") from e
         if "no solution" in error:
-            return None
+            return Solution()
         warnings.warn(f"quadprog raised a ValueError: {e}")
-        return None
+        return Solution()
+
+    n = P.shape[0]
+    m = qp_C.shape[1] - meq
+    solution = Solution()
+    solution.y = -y[:meq]
+    if lb is not None and ub is not None:
+        solution.z_box = -y[-n:] + y[-2 * n : -n]
+        solution.z = y[meq : meq + m - 2 * n]
+    elif lb is not None:  # ub is None
+        solution.z_box = +y[-n:]
+        solution.z = y[meq : meq + m - n]
+    elif ub is not None:  # lb is None
+        solution.z_box = -y[-n:]
+        solution.z = y[meq : meq + m - n]
+    else:  # lb is None and ub is None
+        solution.z = y[meq : meq + m]
+
+    solution = Solution()
+    solution.x = x
+    solution.obj = obj
+
+    solution.extras = {
+        "iact": iact,
+        "iterations": iterations,
+        "xu": xu,
+    }
+    return solution
+
+
+def quadprog_solve_qp(
+    P: np.ndarray,
+    q: np.ndarray,
+    G: Optional[np.ndarray] = None,
+    h: Optional[np.ndarray] = None,
+    A: Optional[np.ndarray] = None,
+    b: Optional[np.ndarray] = None,
+    lb: Optional[np.ndarray] = None,
+    ub: Optional[np.ndarray] = None,
+    initvals: Optional[np.ndarray] = None,
+    verbose: bool = False,
+    **kwargs,
+) -> Optional[np.ndarray]:
+    """
+    Legacy version of :func:`qpsolvers.solvers.quadprog_.quadprog_solve_qp2`.
+
+    Returns
+    -------
+    :
+        Primal solution to the QP, if found, otherwise ``None``.
+    """
+    warnings.warn(
+        "The return type of this function will change "
+        "to qpsolvers.Solution in qpsolvers v3.0",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+    solution = quadprog_solve_qp2(
+        P, q, G, h, A, b, lb, ub, initvals, verbose, **kwargs
+    )
+    return solution.x
