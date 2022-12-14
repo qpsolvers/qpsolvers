@@ -50,7 +50,7 @@ def solve_qp(
     **kwargs,
 ) -> Optional[np.ndarray]:
     """
-    Solve a Quadratic Program defined as:
+    Solve a quadratic program defined as:
 
     .. math::
 
@@ -149,7 +149,5 @@ def solve_qp(
             stacklevel=2,
         )
     problem = Problem(P, q, G, h, A, b, lb, ub)
-    output = solve_problem(
-        problem, solver, initvals, sym_proj, verbose, **kwargs
-    )
+    output = solve_problem(problem, solver, initvals, verbose, **kwargs)
     return output.x
