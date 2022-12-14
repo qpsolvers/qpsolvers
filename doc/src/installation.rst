@@ -10,7 +10,7 @@ Linux
 Conda
 -----
 
-To install the library from `conda-forge <https://conda-forge.org/>`, simply run:
+To install the library from `conda-forge <https://conda-forge.org/>`__, simply run:
 
 .. code:: bash
 
