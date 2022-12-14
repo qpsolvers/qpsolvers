@@ -437,6 +437,7 @@ __all__ = [
     "available_solvers",
     "cvxopt_solve_qp",
     "dense_solvers",
+    "ecos_solve_qp",
     "gurobi_solve_qp",
     "mosek_solve_qp",
     "osqp_solve_qp",
