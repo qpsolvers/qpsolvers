@@ -36,7 +36,7 @@ import highspy
 import numpy as np
 import scipy.sparse as spa
 
-from .conversions import warn_about_sparse_conversion
+from ..conversions import warn_about_sparse_conversion
 
 
 def __set_hessian(model: highspy.HighsModel, P: spa.csc_matrix) -> None:

@@ -35,7 +35,7 @@ from typing import Optional
 import numpy as np
 import qpSWIFT
 
-from .conversions import linear_from_box_inequalities
+from ..conversions import linear_from_box_inequalities
 
 
 def qpswift_solve_qp(

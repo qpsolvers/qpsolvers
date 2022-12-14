@@ -32,7 +32,7 @@ import numpy as np
 from numpy import hstack, vstack
 from quadprog import solve_qp
 
-from .conversions import linear_from_box_inequalities
+from ..conversions import linear_from_box_inequalities
 
 
 def quadprog_solve_qp(
