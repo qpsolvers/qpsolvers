@@ -31,12 +31,137 @@ See the :ref:`installation page <gurobi-install>` for additional instructions
 on installing this solver.
 """
 
-from typing import Optional, Union
 import warnings
+from typing import Optional, Union
 
+import gurobipy
 import numpy as np
 import scipy.sparse as spa
-from gurobipy import GRB, Model
+from gurobipy import GRB
+
+from ..problem import Problem
+from ..solution import Solution
+
+
+def gurobi_solve_problem(
+    problem: Problem,
+    initvals: Optional[np.ndarray] = None,
+    verbose: bool = False,
+    **kwargs,
+) -> Solution:
+    """
+    Solve a Quadratic Program defined as:
+
+    .. math::
+
+        \\begin{split}\\begin{array}{ll}
+        \\mbox{minimize} &
+            \\frac{1}{2} x^T P x + q^T x \\\\
+        \\mbox{subject to}
+            & G x \\leq h                \\\\
+            & A x = b                    \\\\
+            & lb \\leq x \\leq ub
+        \\end{array}\\end{split}
+
+    using `Gurobi <http://www.gurobi.com/>`_.
+
+    Parameters
+    ----------
+    problem :
+        Quadratic program to solve.
+    initvals :
+        Warm-start guess vector (not used).
+    verbose :
+        Set to `True` to print out extra information.
+
+    Returns
+    -------
+    :
+        Solution to the QP, if found, otherwise ``None``.
+
+    Notes
+    -----
+    Keyword arguments are forwarded to Gurobi as parameters. For instance, we
+    can call ``gurobi_solve_qp(P, q, G, h, u, FeasibilityTol=1e-8,
+    OptimalityTol=1e-8)``. Gurobi settings include the following:
+
+    .. list-table::
+       :widths: 30 70
+       :header-rows: 1
+
+       * - Name
+         - Description
+       * - ``FeasibilityTol``
+         - Primal feasibility tolerance.
+       * - ``OptimalityTol``
+         - Dual feasibility tolerance.
+       * - ``PSDTol``
+         - Positive semi-definite tolerance.
+       * - ``TimeLimit``
+         - Run time limit in seconds, 0 to disable.
+
+    Check out the `Parameter Descriptions
+    <https://www.gurobi.com/documentation/9.5/refman/parameter_descriptions.html>`_
+    documentation for all available Gurobi parameters.
+
+    Lower values for primal or dual tolerances yield more precise solutions at
+    the cost of computation time. See *e.g.* [tolerances]_ for a primer of
+    solver tolerances.
+    """
+    if initvals is not None:
+        warnings.warn("warm-start values are ignored by this wrapper")
+
+    model = gurobipy.Model()
+    if not verbose:
+        model.setParam(GRB.Param.OutputFlag, 0)
+    for param, value in kwargs.items():
+        model.setParam(param, value)
+
+    P, q, G, h, A, b, lb, ub = problem.unpack()
+    num_vars = P.shape[0]
+    identity = spa.eye(num_vars)
+    x = model.addMVar(
+        num_vars, lb=-GRB.INFINITY, ub=GRB.INFINITY, vtype=GRB.CONTINUOUS
+    )
+    ineq_constr, eq_constr, lb_constr, ub_constr = None, None, None, None
+    if G is not None:
+        ineq_constr = model.addMConstr(G, x, GRB.LESS_EQUAL, h)
+    if A is not None:
+        eq_constr = model.addMConstr(A, x, GRB.EQUAL, b)
+    if lb is not None:
+        lb_constr = model.addMConstr(identity, x, GRB.GREATER_EQUAL, lb)
+    if ub is not None:
+        ub_constr = model.addMConstr(identity, x, GRB.LESS_EQUAL, ub)
+    objective = 0.5 * (x @ P @ x) + q @ x
+    model.setObjective(objective, sense=GRB.MINIMIZE)
+    model.optimize()
+    status = model.status
+    solution = Solution(problem)
+    if status not in (GRB.OPTIMAL, GRB.SUBOPTIMAL):
+        return solution
+
+    solution.x = x.X
+    __retrieve_dual(solution, ineq_constr, eq_constr, lb_constr, ub_constr)
+    return solution
+
+
+def __retrieve_dual(
+    solution: Solution,
+    ineq_constr: Optional[gurobipy.MConstr],
+    eq_constr: Optional[gurobipy.MConstr],
+    lb_constr: Optional[gurobipy.MConstr],
+    ub_constr: Optional[gurobipy.MConstr],
+) -> None:
+    if ineq_constr is not None:
+        solution.z = ineq_constr.Pi
+    if eq_constr is not None:
+        solution.y = -eq_constr.Pi
+    if lb_constr is not None and ub_constr is not None:
+        solution.z_box = -ub_constr.Pi - lb_constr.Pi
+    elif ub_constr is not None:  # lb_constr is None
+        solution.z_box = -ub_constr.Pi
+    elif lb_constr is not None:  # ub_constr is None
+        solution.z_box = -lb_constr.Pi
 
 
 def gurobi_solve_qp(
@@ -125,32 +250,12 @@ def gurobi_solve_qp(
     the cost of computation time. See *e.g.* [tolerances]_ for a primer of
     solver tolerances.
     """
-    if initvals is not None:
-        warnings.warn("warm-start values are ignored by this wrapper")
-
-    model = Model()
-    if not verbose:
-        model.setParam(GRB.Param.OutputFlag, 0)
-    for param, value in kwargs.items():
-        model.setParam(param, value)
-
-    num_vars = P.shape[0]
-    identity = spa.eye(num_vars)
-    x = model.addMVar(
-        num_vars, lb=-GRB.INFINITY, ub=GRB.INFINITY, vtype=GRB.CONTINUOUS
+    warnings.warn(
+        "The return type of this function will change "
+        "to qpsolvers.Solution in qpsolvers v3.0",
+        DeprecationWarning,
+        stacklevel=2,
     )
-    if G is not None:
-        model.addMConstr(G, x, GRB.LESS_EQUAL, h)
-    if A is not None:
-        model.addMConstr(A, x, GRB.EQUAL, b)
-    if lb is not None:
-        model.addMConstr(identity, x, GRB.GREATER_EQUAL, lb)
-    if ub is not None:
-        model.addMConstr(identity, x, GRB.LESS_EQUAL, ub)
-    objective = 0.5 * (x @ P @ x) + q @ x
-    model.setObjective(objective, sense=GRB.MINIMIZE)
-    model.optimize()
-    status = model.status
-    if status not in (GRB.OPTIMAL, GRB.SUBOPTIMAL):
-        return None
-    return np.array(x.X)
+    problem = Problem(P, q, G, h, A, b, lb, ub)
+    solution = gurobi_solve_problem(problem, initvals, verbose, **kwargs)
+    return solution.x
