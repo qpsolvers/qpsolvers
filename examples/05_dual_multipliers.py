@@ -19,9 +19,10 @@
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
 """
-Test one of the available QP solvers on a small problem with box inequalities.
+Get both primal and dual solutions to a quadratic program.
 """
 
+import argparse
 import random
 from time import perf_counter
 
@@ -46,9 +47,13 @@ if False:
 x_sol = np.array([0.41463414566726164, -0.41463414566726164, 1.0])
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("solver")
+    args = parser.parse_args()
+
     start_time = perf_counter()
     solver = random.choice(available_solvers)
-    solution = solve_qp2(P, q, G, h, A, b, lb, ub, solver=solver)
+    solution = solve_qp2(P, q, G, h, A, b, lb, ub, solver=args.solver)
     end_time = perf_counter()
 
     print("========================= PRIMAL PROBLEM =========================")
