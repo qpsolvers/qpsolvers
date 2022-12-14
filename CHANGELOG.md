@@ -19,6 +19,8 @@ All notable changes to this project will be documented in this file.
 - ProxQP: return dual multipliers
 - qpOASES: return dual multipliers
 - qpOASES: return objective value
+- qpSWIFT: return dual multipliers
+- qpSWIFT: return objective value
 
 ### Changed
 

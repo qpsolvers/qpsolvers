@@ -382,6 +382,17 @@ except ImportError:
 # qpSWIFT
 # =======
 
+qpswift_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[ndarray],
+            bool,
+        ],
+        Solution,
+    ]
+] = None
+
 qpswift_solve_qp: Optional[
     Callable[
         [
@@ -401,9 +412,9 @@ qpswift_solve_qp: Optional[
 ] = None
 
 try:
-    from .qpswift_ import qpswift_solve_qp
+    from .qpswift_ import qpswift_solve_problem, qpswift_solve_qp
 
-    solve_function["qpswift"] = qpswift_solve_qp
+    solve_function["qpswift"] = qpswift_solve_problem
     available_solvers.append("qpswift")
     dense_solvers.append("qpswift")
 except ImportError:
@@ -501,6 +512,7 @@ __all__ = [
     "osqp_solve_qp",
     "proxqp_solve_qp",
     "qpoases_solve_qp",
+    "qpswift_solve_qp",
     "quadprog_solve_qp",
     "solve_function",
     "sparse_solvers",
