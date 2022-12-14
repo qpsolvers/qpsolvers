@@ -26,7 +26,7 @@ from typing import Optional
 
 import numpy as np
 
-from .exceptions import NoSolverSelected, SolverNotFound
+from .exceptions import SolverNotFound
 from .problem import Problem
 from .solution import Solution
 from .solvers import available_solvers, solve_function
@@ -34,7 +34,7 @@ from .solvers import available_solvers, solve_function
 
 def solve_problem(
     problem: Problem,
-    solver: Optional[str] = None,
+    solver: str,
     initvals: Optional[np.ndarray] = None,
     sym_proj: bool = False,
     verbose: bool = False,
