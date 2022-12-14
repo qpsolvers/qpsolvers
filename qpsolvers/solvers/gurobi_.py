@@ -135,11 +135,11 @@ def gurobi_solve_problem(
     objective = 0.5 * (x @ P @ x) + q @ x
     model.setObjective(objective, sense=GRB.MINIMIZE)
     model.optimize()
-    status = model.status
-    solution = Solution(problem)
-    if status not in (GRB.OPTIMAL, GRB.SUBOPTIMAL):
-        return solution
 
+    solution = Solution(problem)
+    solution.extras["status"] = model.status
+    if model.status not in (GRB.OPTIMAL, GRB.SUBOPTIMAL):
+        return solution
     solution.x = x.X
     __retrieve_dual(solution, ineq_constr, eq_constr, lb_constr, ub_constr)
     return solution
