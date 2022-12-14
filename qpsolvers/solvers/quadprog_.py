@@ -109,7 +109,7 @@ def quadprog_solve_problem(
         warnings.warn(f"quadprog raised a ValueError: {e}")
         return Solution()
 
-    solution = Solution()
+    solution = Solution(problem)
     solution.x = x
     solution.obj = obj
 
