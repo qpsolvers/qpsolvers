@@ -27,9 +27,7 @@ from typing import Optional, Union
 import numpy as np
 import scipy.sparse as spa
 
-from .check_problem_constraints import check_problem_constraints
 from .conversions import linear_from_box_inequalities
-from .solve_qp import solve_qp
 
 
 class Problem:
