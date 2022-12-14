@@ -41,18 +41,18 @@ class Solution:
     extras :
         Other outputs, specific to each solver.
     obj :
-        Primal objective at the solution (None if no solution was found).
+        Primal objective at the solution (``None`` if no solution was found).
     x :
-        Primal solution (None if no solution was found).
+        Primal solution (``None`` if no solution was found).
     y :
-        Dual multipliers for equality constraints (None if no solution was
+        Dual multipliers for equality constraints (``None`` if no solution was
         found).
     z :
-        Dual multipliers for linear inequality constraints (None if no solution
-        was found).
+        Dual multipliers for linear inequality constraints (``None`` if no
+        solution was found).
     z_box :
-        Dual multipliers for box inequality constraints (None if no solution
-        was found).
+        Dual multipliers for box inequality constraints (``None`` if no
+        solution was found).
     """
 
     problem: Problem

@@ -124,34 +124,6 @@ def proxqp_solve_problem(
     Solve a Quadratic Program using `ProxQP
     <https://github.com/Simple-Robotics/proxsuite>`__.
 
-    The QP is defined as:
-
-    .. math::
-
-        \\begin{split}\\begin{array}{ll}
-        \\underset{\\mbox{minimize}}{x} &
-            \\frac{1}{2} x^T P x + q^T x \\\\
-        \\mbox{subject to}
-            & G x \\leq h                \\\\
-            & A x = b                    \\\\
-            & lb \\leq x \\leq ub
-        \\end{array}\\end{split}
-
-    so that its (Wolfe) dual is defined by:
-
-    .. math::
-
-        \\begin{split}\\begin{array}{ll}
-        \\underset{\\mbox{maximize}}{z, y, z_{box}} &
-            -\\frac{1}{2} w^T P w - h^T z - b^T y
-            - lb^T z_{box}^- - ub^T z_{box}^+ \\\\
-        \\mbox{subject to}
-            & P w + G^T z + A^T y + z_{box} + q & = 0 \\\\
-            & z & \\geq 0
-        \\end{array}\\end{split}
-
-    Here :math:`v^- = \\min(v, 0)` and :math:`v^+ = \\max(v, 0)`.
-
     Parameters
     ----------
     problem :
