@@ -143,16 +143,34 @@ class Solution:
         """
         Compute the duality gap of the solution.
 
+        Returns
+        -------
+        :
+            Duality gap if it is defined, infinity otherwise.
+
         Notes
         -----
         See for instance [tolerances]_ for an overview of optimality conditions
         and why this gap will be zero at the optimum.
         """
         P, q, _, h, _, b, lb, ub = self.problem.unpack()
+        if self.x is None:
+            return np.inf
         xPx = self.x.T.dot(P.dot(self.x))
         qx = q.dot(self.x)
-        hz = h.dot(self.z) if h is not None else 0.0
-        by = b.dot(self.y) if b is not None else 0.0
+
+        hz = 0.0
+        if h is not None:
+            if self.z is None:
+                return np.int
+            hz = h.dot(self.z)
+
+        by = 0.0
+        if b is not None:
+            if self.y is None:
+                return np.inf
+            by = b.dot(self.y)
+
         lb_z_box = 0.0
         ub_z_box = 0.0
         if self.z_box is not None:
