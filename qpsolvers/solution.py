@@ -74,12 +74,19 @@ class Solution:
         """
         Compute the primal residual of the solution.
 
+        Returns
+        -------
+        :
+            Primal residual if it is defined, infinity otherwise.
+
         Notes
         -----
         See for instance [tolerances]_ for an overview of optimality conditions
         and why this residual will be zero at the optimum.
         """
         _, _, G, h, A, b, lb, ub = self.problem.unpack()
+        if self.x is None:
+            return np.inf
         x = self.x
         return max(
             [
