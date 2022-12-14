@@ -207,6 +207,17 @@ except ImportError:
 # MOSEK
 # =====
 
+mosek_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[ndarray],
+            bool,
+        ],
+        Solution,
+    ]
+] = None
+
 mosek_solve_qp: Optional[
     Callable[
         [
@@ -226,9 +237,9 @@ mosek_solve_qp: Optional[
 ] = None
 
 try:
-    from .mosek_ import mosek_solve_qp
+    from .mosek_ import mosek_solve_problem, mosek_solve_qp
 
-    solve_function["mosek"] = mosek_solve_qp
+    solve_function["mosek"] = mosek_solve_problem
     available_solvers.append("mosek")
     sparse_solvers.append("mosek")
 except ImportError:
