@@ -23,6 +23,7 @@ import scipy.sparse as spa
 
 from qpsolvers import Problem
 
+
 def get_sd3310_problem() -> Problem:
     """
     Get a small dense problem with 3 optimization variables, 3 inequality
