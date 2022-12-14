@@ -6,15 +6,18 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- CVXOPT: return dual multipliers
 - Continuous integration for macOS
+- ECOS: return dual multipliers
 - Example: dual multipliers
 - Problem class with utility metrics on quadratic programs
 - Problem: condition number
+- ProxQP: return dual multipliers
 
 ### Changed
 
-- Code: Move ``solve_safer_qp`` to a separate source file
-- Code: Refactor location of internal conversions submodule
+- Code: move ``solve_safer_qp`` to a separate source file
+- Code: refactor location of internal conversions submodule
 - ProxQP: bump minimum supported version to 0.2.9
 
 ## [2.6.0] - 2022/11/14
