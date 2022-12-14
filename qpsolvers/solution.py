@@ -23,10 +23,11 @@ Output from a QP solver.
 """
 
 from typing import Optional
+
 import numpy as np
 
 
-class SolverOutput:
+class Solution:
 
     """
     Output from a QP solver.
