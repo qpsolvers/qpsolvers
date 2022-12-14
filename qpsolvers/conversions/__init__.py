@@ -23,9 +23,11 @@
 from .linear_from_box_inequalities import linear_from_box_inequalities
 from .socp_from_qp import socp_from_qp
 from .warnings import warn_about_sparse_conversion
+from .split_dual_linear_box import split_dual_linear_box
 
 __all__ = [
     "linear_from_box_inequalities",
     "socp_from_qp",
+    "split_dual_linear_box",
     "warn_about_sparse_conversion",
 ]

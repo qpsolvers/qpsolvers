@@ -37,7 +37,7 @@ import numpy as np
 import scipy.sparse as spa
 from cvxopt.solvers import qp
 
-from ..conversions import linear_from_box_inequalities
+from ..conversions import linear_from_box_inequalities, split_dual_linear_box
 from ..problem import Problem
 from ..solution import Solution
 
@@ -175,17 +175,9 @@ def cvxopt_solve_problem(
     if h is not None:
         z_cvx = np.array(res["z"]).reshape((h.shape[0],))
         n = P.shape[0]
-        if lb is not None and ub is not None:
-            solution.z_box = z_cvx[-n:] - z_cvx[-2 * n : -n]
-            solution.z = z_cvx[: -2 * n]
-        elif ub is not None:  # lb is None
-            solution.z_box = z_cvx[-n:]
-            solution.z = z_cvx[:-n]
-        elif lb is not None:  # ub is None
-            solution.z_box = -z_cvx[-n:]
-            solution.z = z_cvx[:-n]
-        else:  # lb is None and ub is None
-            solution.z = z_cvx
+        z, z_box = split_dual_linear_box(z_cvx, n, lb, ub)
+        solution.z = z
+        solution.z_box = z_box
     solution.obj = res["primal objective"]
     solution.extras = res
     return solution
