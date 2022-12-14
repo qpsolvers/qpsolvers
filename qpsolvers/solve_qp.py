@@ -22,73 +22,12 @@
 Solve quadratic programs.
 """
 
-import warnings
-from typing import Optional, Tuple, Union
+from typing import Optional, Union
 
 import numpy as np
 import scipy.sparse as spa
 
-from .exceptions import NoSolverSelected, SolverNotFound
-from .problem import Problem
-from .solvers import available_solvers, proxqp_solve_qp_dual, solve_function
-
-
-def solve_qp_dual(
-    P: Union[np.ndarray, spa.csc_matrix],
-    q: np.ndarray,
-    G: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
-    h: Optional[np.ndarray] = None,
-    A: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
-    b: Optional[np.ndarray] = None,
-    lb: Optional[np.ndarray] = None,
-    ub: Optional[np.ndarray] = None,
-    solver: Optional[str] = None,
-    initvals: Optional[np.ndarray] = None,
-    sym_proj: bool = False,
-    verbose: bool = False,
-    **kwargs,
-) -> Tuple[
-    Optional[np.ndarray],
-    Optional[np.ndarray],
-    Optional[np.ndarray],
-    Optional[np.ndarray],
-]:
-    if solver is None:
-        raise NoSolverSelected(
-            "Set the `solver` keyword argument to one of the "
-            f"available solvers in {available_solvers}"
-        )
-    if sym_proj:
-        P = 0.5 * (P + P.transpose())
-        warnings.warn(
-            "The `sym_proj` feature is deprecated "
-            "and will be removed in qpsolvers v2.9",
-            DeprecationWarning,
-            stacklevel=2,
-        )
-    problem = Problem(P, q, G, h, A, b, lb, ub)
-    problem.check_constraints()
-    kwargs["initvals"] = initvals
-    kwargs["verbose"] = verbose
-    assert solver == "proxqp"
-    return proxqp_solve_qp_dual(P, q, G, h, A, b, lb, ub, **kwargs)
-    try:
-        return solve_function[solver](
-            problem.P,
-            problem.q,
-            problem.G,
-            problem.h,
-            problem.A,
-            problem.b,
-            problem.lb,
-            problem.ub,
-            **kwargs,
-        )
-    except KeyError as e:
-        raise SolverNotFound(
-            f"solver '{solver}' is not in the list "
-            f"{available_solvers} of available solvers"
-        ) from e
+from .solve_qp2 import solve_qp2
 
 
 def solve_qp(
@@ -192,7 +131,7 @@ def solve_qp(
     problem is non-convex and the solver fails because of that, then a
     ``ValueError`` will be raised.
     """
-    x, _, _, _ = solve_qp_dual(
+    output = solve_qp2(
         P, q, G, h, A, b, lb, ub, solver, initvals, sym_proj, verbose, **kwargs
     )
-    return x
+    return output.x
