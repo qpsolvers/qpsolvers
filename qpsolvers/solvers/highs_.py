@@ -29,14 +29,16 @@ best on moderately-sized dense problems. If you are using HiGHS in some
 academic work, consider citing the corresponding paper [Huangfu2018]_.
 """
 
-from typing import Optional, Union
 import warnings
+from typing import Optional, Union
 
 import highspy
 import numpy as np
 import scipy.sparse as spa
 
 from ..conversions import warn_about_sparse_conversion
+from ..problem import Problem
+from ..solution import Solution
 
 
 def __set_hessian(model: highspy.HighsModel, P: spa.csc_matrix) -> None:
@@ -138,6 +140,105 @@ def __set_rows(
     lp.row_upper_ = np.hstack(row_upper)
 
 
+def highs_solve_problem(
+    problem: Problem,
+    initvals: Optional[np.ndarray] = None,
+    verbose: bool = False,
+    **kwargs,
+) -> Solution:
+    """
+    Solve a quadratic program using `HiGHS
+    <https://github.com/ERGO-Code/HiGHS>`__.
+
+    Parameters
+    ----------
+    problem :
+        Quadratic program to solve.
+    initvals :
+        Warm-start guess vector for the primal solution.
+    verbose :
+        Set to `True` to print out extra information.
+
+    Returns
+    -------
+    :
+        Solution returned by the solver.
+
+    Notes
+    -----
+    Keyword arguments are forwarded to HiGHS as options. For instance, we
+    can call ``highs_solve_qp(P, q, G, h, u, primal_feasibility_tolerance=1e-8,
+    dual_feasibility_tolerance=1e-8)``. HiGHS settings include the following:
+
+    .. list-table::
+       :widths: 30 70
+       :header-rows: 1
+
+       * - Name
+         - Description
+       * - ``dual_feasibility_tolerance``
+         - Dual feasibility tolerance.
+       * - ``primal_feasibility_tolerance``
+         - Primal feasibility tolerance.
+       * - ``time_limit``
+         - Run time limit in seconds.
+
+    Check out the `HiGHS documentation <https://ergo-code.github.io/HiGHS/>`_
+    for more information on the solver.
+    """
+    P, q, G, h, A, b, lb, ub = problem.unpack()
+    if isinstance(P, np.ndarray):
+        warn_about_sparse_conversion("P")
+        P = spa.csc_matrix(P)
+    if isinstance(G, np.ndarray):
+        warn_about_sparse_conversion("G")
+        G = spa.csc_matrix(G)
+    if isinstance(A, np.ndarray):
+        warn_about_sparse_conversion("A")
+        A = spa.csc_matrix(A)
+    if initvals is not None:
+        warnings.warn(
+            "HiGHS: warm-start values are not available for this solver, "
+            "see: https://github.com/stephane-caron/qpsolvers/issues/94"
+        )
+
+    model = highspy.HighsModel()
+    __set_hessian(model, P)
+    __set_columns(model, q, lb, ub)
+    __set_rows(model, G, h, A, b)
+
+    solver = highspy.Highs()
+    if verbose:
+        solver.setOptionValue("log_to_console", True)
+        solver.setOptionValue("log_dev_level", highspy.HighsLogType.kVerbose)
+        solver.setOptionValue(
+            "highs_debug_level", highspy.HighsLogType.kVerbose
+        )
+    else:  # not verbose
+        solver.setOptionValue("log_to_console", False)
+    for option, value in kwargs.items():
+        solver.setOptionValue(option, value)
+    solver.passModel(model)
+    solver.run()
+
+    result = solver.getSolution()
+    model_status = solver.getModelStatus()
+
+    solution = Solution(problem)
+    if model_status != highspy.HighsModelStatus.kOptimal:
+        return solution
+    solution.x = np.array(result.col_value)
+    if G is not None:
+        solution.z = -np.array(result.row_dual[: G.shape[0]])
+        if A is not None:
+            solution.y = -np.array(result.row_dual[G.shape[0] :])
+    elif A is not None:  # G is None
+        solution.y = -np.array(result.row_dual)
+    if lb is not None or ub is not None:
+        solution.z_box = -np.array(result.col_dual)
+    return solution
+
+
 def highs_solve_qp(
     P: Union[np.ndarray, spa.csc_matrix],
     q: np.ndarray,
@@ -217,42 +318,12 @@ def highs_solve_qp(
     Check out the `HiGHS documentation <https://ergo-code.github.io/HiGHS/>`_
     for more information on the solver.
     """
-    if isinstance(P, np.ndarray):
-        warn_about_sparse_conversion("P")
-        P = spa.csc_matrix(P)
-    if isinstance(G, np.ndarray):
-        warn_about_sparse_conversion("G")
-        G = spa.csc_matrix(G)
-    if isinstance(A, np.ndarray):
-        warn_about_sparse_conversion("A")
-        A = spa.csc_matrix(A)
-    if initvals is not None:
-        warnings.warn(
-            "HiGHS: warm-start values are not available for this solver, "
-            "see: https://github.com/stephane-caron/qpsolvers/issues/94"
-        )
-
-    model = highspy.HighsModel()
-    __set_hessian(model, P)
-    __set_columns(model, q, lb, ub)
-    __set_rows(model, G, h, A, b)
-
-    solver = highspy.Highs()
-    if verbose:
-        solver.setOptionValue("log_to_console", True)
-        solver.setOptionValue("log_dev_level", highspy.HighsLogType.kVerbose)
-        solver.setOptionValue(
-            "highs_debug_level", highspy.HighsLogType.kVerbose
-        )
-    else:  # not verbose
-        solver.setOptionValue("log_to_console", False)
-    for option, value in kwargs.items():
-        solver.setOptionValue(option, value)
-    solver.passModel(model)
-    solver.run()
-
-    solution = solver.getSolution()
-    model_status = solver.getModelStatus()
-    if model_status != highspy.HighsModelStatus.kOptimal:
-        return None
-    return np.array(solution.col_value)
+    warnings.warn(
+        "The return type of this function will change "
+        "to qpsolvers.Solution in qpsolvers v3.0",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+    problem = Problem(P, q, G, h, A, b, lb, ub)
+    solution = highs_solve_problem(problem, initvals, verbose, **kwargs)
+    return solution.x

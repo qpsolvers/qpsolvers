@@ -111,7 +111,7 @@ ecos_solve_qp: Optional[
 ] = None
 
 try:
-    from .ecos_ import ecos_solve_qp, ecos_solve_problem
+    from .ecos_ import ecos_solve_problem, ecos_solve_qp
 
     solve_function["ecos"] = ecos_solve_problem
     available_solvers.append("ecos")
@@ -153,7 +153,7 @@ gurobi_solve_qp: Optional[
 ] = None
 
 try:
-    from .gurobi_ import gurobi_solve_qp, gurobi_solve_problem
+    from .gurobi_ import gurobi_solve_problem, gurobi_solve_qp
 
     solve_function["gurobi"] = gurobi_solve_problem
     available_solvers.append("gurobi")
@@ -164,6 +164,17 @@ except ImportError:
 
 # HiGHS
 # =====
+
+highs_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[ndarray],
+            bool,
+        ],
+        Solution,
+    ]
+] = None
 
 highs_solve_qp: Optional[
     Callable[
@@ -184,9 +195,9 @@ highs_solve_qp: Optional[
 ] = None
 
 try:
-    from .highs_ import highs_solve_qp
+    from .highs_ import highs_solve_problem, highs_solve_qp
 
-    solve_function["highs"] = highs_solve_qp
+    solve_function["highs"] = highs_solve_problem
     available_solvers.append("highs")
     sparse_solvers.append("highs")
 except ImportError:
@@ -397,7 +408,7 @@ quadprog_solve_problem: Optional[
 ] = None
 
 try:
-    from .quadprog_ import quadprog_solve_qp, quadprog_solve_problem
+    from .quadprog_ import quadprog_solve_problem, quadprog_solve_qp
 
     solve_function["quadprog"] = quadprog_solve_problem
     available_solvers.append("quadprog")
@@ -450,6 +461,7 @@ __all__ = [
     "dense_solvers",
     "ecos_solve_qp",
     "gurobi_solve_qp",
+    "highs_solve_qp",
     "mosek_solve_qp",
     "osqp_solve_qp",
     "proxqp_solve_qp",
