@@ -22,8 +22,13 @@ import unittest
 import warnings
 
 from numpy import array, dot
-from qpsolvers import available_solvers, dense_solvers
-from qpsolvers import solve_qp, solve_safer_qp
+
+from qpsolvers import (
+    available_solvers,
+    dense_solvers,
+    solve_qp,
+    solve_safer_qp,
+)
 
 
 class UnfeasibleProblem(unittest.TestCase):
@@ -37,7 +42,7 @@ class UnfeasibleProblem(unittest.TestCase):
         """
         Prepare test fixture.
         """
-        warnings.simplefilter('ignore', category=UserWarning)
+        warnings.simplefilter("ignore", category=UserWarning)
 
     def get_dense_problem(self):
         """
@@ -58,13 +63,13 @@ class UnfeasibleProblem(unittest.TestCase):
         b :
             Linear equality vector.
         """
-        M = array([[1., 2., 0.], [-8., 3., 2.], [0., 1., 1.]])
+        M = array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
         P = dot(M.T, M)  # this is a positive definite matrix
-        q = dot(array([3., 2., 3.]), M).reshape((3,))
-        G = array([[1., 1., 1.], [2., 0., 1.], [-1., 2., -1.]])
-        h = array([3., 2., -2.]).reshape((3,))
-        A = array([1., 1., 1.])
-        b = array([42.])
+        q = dot(array([3.0, 2.0, 3.0]), M).reshape((3,))
+        G = array([[1.0, 1.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
+        h = array([3.0, 2.0, -2.0]).reshape((3,))
+        A = array([1.0, 1.0, 1.0])
+        b = array([42.0])
         return P, q, G, h, A, b
 
     @staticmethod
@@ -82,10 +87,12 @@ class UnfeasibleProblem(unittest.TestCase):
         test : function
             Test function for that solver.
         """
+
         def test(self):
             P, q, G, h, A, b = self.get_dense_problem()
             x = solve_qp(P, q, G, h, A, b, solver=solver)
             self.assertIsNone(x)
+
         return test
 
     @staticmethod
@@ -103,12 +110,14 @@ class UnfeasibleProblem(unittest.TestCase):
         test : function
             Test function for that solver.
         """
+
         def test(self):
             P, q, G, h, _, _ = self.get_dense_problem()
             G[0] = 0
-            h[0] = -10000.
+            h[0] = -10000.0
             x = solve_safer_qp(P, q, G, h, sr=1e-2, solver=solver)
             self.assertIsNone(x)
+
         return test
 
 
@@ -118,8 +127,14 @@ for solver in available_solvers:
         # Unfortunately qpOASES returns an invalid solution in the face of this
         # problem being unfeasible. Skipping it.
         continue
-    setattr(UnfeasibleProblem, 'test_{}'.format(solver),
-            UnfeasibleProblem.get_test(solver))
+    setattr(
+        UnfeasibleProblem,
+        "test_{}".format(solver),
+        UnfeasibleProblem.get_test(solver),
+    )
     if solver in dense_solvers:
-        setattr(UnfeasibleProblem, 'test_safer_{}'.format(solver),
-                UnfeasibleProblem.get_test_safer(solver))
+        setattr(
+            UnfeasibleProblem,
+            "test_safer_{}".format(solver),
+            UnfeasibleProblem.get_test_safer(solver),
+        )
