@@ -22,16 +22,14 @@
 Solve quadratic programs.
 """
 
-import warnings
 from typing import Optional, Union
 
 import numpy as np
 import scipy.sparse as spa
-from numpy import eye, hstack, ones, vstack, zeros
 
 from .check_problem_constraints import check_problem_constraints
 from .exceptions import NoSolverSelected, SolverNotFound
-from .solvers import available_solvers, dense_solvers, solve_function
+from .solvers import available_solvers, solve_function
 
 
 def solve_qp(
@@ -156,122 +154,3 @@ def solve_qp(
             f"solver '{solver}' is not in the list "
             f"{available_solvers} of available solvers"
         ) from e
-
-
-def solve_safer_qp(
-    P: np.ndarray,
-    q: np.ndarray,
-    G: np.ndarray,
-    h: np.ndarray,
-    sr: float,
-    reg: float = 1e-8,
-    solver: Optional[str] = None,
-    initvals: Optional[np.ndarray] = None,
-    sym_proj: bool = False,
-) -> Optional[np.ndarray]:
-    """
-    Solve the "safer" Quadratic Program with repulsive inequality constraints,
-    defined as:
-
-    .. math::
-
-        \\begin{split}\\begin{array}{ll}
-            \\mbox{minimize} &
-                \\frac{1}{2} x^T P x + q^T x +
-                \\frac{1}{2} \\mathit{reg} \\|s\\|^2 - \\mathit{sr} \\1^T s
-                \\\\
-            \\mbox{subject to}
-                & G x \\leq h
-        \\end{array}\\end{split}
-
-    Slack variables `s` (i.e. distance to inequality constraints) are added to
-    the vector of optimization variables and included in the cost function.
-    This pushes the solution of this "safer" QP is further inside the
-    linear constraint region.
-
-    Parameters
-    ----------
-    P :
-        Symmetric quadratic-cost matrix.
-    q :
-        Quadratic-cost vector.
-    G :
-        Linear inequality matrix.
-    h :
-        Linear inequality vector.
-    sr :
-        This is the "slack repulsion" parameter that makes inequality
-        constraints repulsive. In practice it weighs the linear term on slack
-        variables in the augmented cost function. Higher values bring the
-        solution further inside the constraint region but override the
-        minimization of the original objective.
-    reg :
-        Regularization term that weighs squared slack variables in the cost
-        function. Increase this parameter in case of numerical instability, and
-        otherwise set it as small as possible compared, so that the squared
-        slack cost is as small as possible compared to the regular cost.
-    solver :
-        Name of the QP solver to use.
-    initvals :
-        Primal candidate vector `x` values used to warm-start the solver.
-    sym_proj :
-        Set to `True` when the `P` matrix provided is not symmetric.
-
-    Returns
-    -------
-    :
-        Optimal solution to the relaxed QP, if found, otherwise ``None``.
-
-    Raises
-    ------
-    ValueError
-        If the quadratic program is not feasible.
-
-    Note
-    ----
-    This is a legacy function.
-
-    Notes
-    -----
-    This method can be found in the Inverse Kinematics resolution of Nozawa et
-    al. (Humanoids 2016). It also appears in earlier works such as the
-    "optimally safe" tension distribution algorithm of Borgstrom et al. (IEEE
-    Transactions on Robotics, 2009).
-    """
-    warnings.warn(
-        "The `solve_safer_qp` function is deprecated "
-        "and will be removed in qpsolvers v2.7",
-        DeprecationWarning,
-        stacklevel=2,
-    )
-    if solver is None:
-        raise NoSolverSelected(
-            "Set the `solver` keyword argument to one of the "
-            f"available dense solvers in {dense_solvers}"
-        )
-    if solver not in dense_solvers:
-        raise NotImplementedError(
-            "This function is only available for dense solvers"
-        )
-    n, m = P.shape[0], G.shape[0]
-    E, Z = eye(m), zeros((m, n))
-    P2 = vstack([hstack([P, Z.T]), hstack([Z, reg * eye(m)])])
-    q2 = hstack([q, -sr * ones(m)])
-    G2 = hstack([Z, E])
-    h2 = zeros(m)
-    A2 = hstack([G, -E])
-    b2 = h
-    x = solve_qp(
-        P2,
-        q2,
-        G2,
-        h2,
-        A2,
-        b2,
-        solver=solver,
-        initvals=initvals,
-        sym_proj=sym_proj,
-    )
-    if x is None:
-        return None
-    return x[:n]

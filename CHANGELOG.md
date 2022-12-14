@@ -10,8 +10,9 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- Code: Move ``solve_safer_qp`` to a separate source file
+- Code: Refactor location of internal conversions submodule
 - ProxQP: bump minimum supported version to 0.2.9
-- Refactor location of internal conversions submodule
 
 ## [2.6.0] - 2022/11/14
 
