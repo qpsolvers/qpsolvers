@@ -84,10 +84,10 @@ class Solution:
         return max(
             [
                 0.0,
-                np.max(G.dot(x) - h),
-                np.linalg.norm(A.dot(x) - b, np.inf),
-                np.max(lb - x),
-                np.max(x - ub),
+                np.max(G.dot(x) - h) if G is not None else 0.0,
+                np.linalg.norm(A.dot(x) - b, np.inf) if A is not None else 0.0,
+                np.max(lb - x) if lb is not None else 0.0,
+                np.max(x - ub) if ub is not None else 0.0,
             ]
         )
 
