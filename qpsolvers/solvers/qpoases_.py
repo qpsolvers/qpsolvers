@@ -233,6 +233,7 @@ def qpoases_solve_problem(
         solution.z = -z_opt[n : n + m]
     if A is not None:
         solution.y = -z_opt[n + m : n + m + A.shape[0]]
+    solution.obj = qp.getObjVal()
     return solution
 
 

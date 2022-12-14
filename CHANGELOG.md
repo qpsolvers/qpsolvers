@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 - Problem: condition number
 - ProxQP: return dual multipliers
 - qpOASES: return dual multipliers
+- qpOASES: return objective value
 
 ### Changed
 
