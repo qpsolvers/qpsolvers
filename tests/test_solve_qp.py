@@ -689,7 +689,7 @@ class TestSolveQP(unittest.TestCase):
                 if solver == "proxqp"
                 else 1e-8
             )
-            eq_tolerance = 5e-5 if solver == "osqp" else 1e-10
+            eq_tolerance = 1e-4 if solver == "osqp" else 1e-10
             ineq_tolerance = (
                 2e-4
                 if solver in ["osqp", "scs"]
