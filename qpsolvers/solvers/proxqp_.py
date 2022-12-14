@@ -259,14 +259,16 @@ def proxqp_solve_qp2(
     )
     if result.info.status != proxqp.QPSolverOutput.PROXQP_SOLVED:
         return (None, None, None, None)
-    x = result.x
-    y = result.y
+    solution = Solution()
+    solution.x = result.x
+    solution.y = result.y
     if lb is not None or ub is not None:
-        z = result.z[:-n]
-        z_box = result.z[-n:]
+        solution.z = result.z[:-n]
+        solution.z_box = result.z[-n:]
     else:  # lb is None and ub is None
-        z = result.z
-    return (x, z, y, z_box)
+        solution.z = result.z
+    solution.extras = {"info": result.info}
+    return solution
 
 
 def proxqp_solve_qp(
@@ -381,7 +383,7 @@ def proxqp_solve_qp(
     This list is not exhaustive. Check out the `solver documentation
     <https://simple-robotics.github.io/proxsuite/>`__ for details.
     """
-    x, _, _, _ = proxqp_solve_qp_dual(
+    solution = proxqp_solve_qp2(
         P, q, G, h, A, b, lb, ub, initvals, verbose, backend, **kwargs
     )
-    return x
+    return solution.x
