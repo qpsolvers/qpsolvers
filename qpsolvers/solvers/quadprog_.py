@@ -150,9 +150,9 @@ def __convert_dual_multipliers(
     meq :
         Number of equality constraints.
     lb :
-        Lower-bound vector for box inequalities, if any.
+        Lower bound vector for box inequalities, if any.
     ub :
-        Upper-bound vector for box inequalities, if any.
+        Upper bound vector for box inequalities, if any.
 
     Returns
     -------
