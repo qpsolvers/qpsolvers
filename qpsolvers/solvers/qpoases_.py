@@ -33,6 +33,7 @@ See the :ref:`installation page <qpoases-install>` for additional instructions
 on installing this solver.
 """
 
+import warnings
 from typing import Any, List, Optional
 
 import numpy as np
@@ -42,6 +43,9 @@ from qpoases import PyPrintLevel as PrintLevel
 from qpoases import PyQProblem as QProblem
 from qpoases import PyQProblemB as QProblemB
 from qpoases import PyReturnValue as ReturnValue
+
+from ..problem import Problem
+from ..solution import Solution
 
 __infty__ = 1e10
 
@@ -101,6 +105,128 @@ def __prepare_options(
         setattr(options, param, value)
 
     return options
+
+
+def qpoases_solve_problem(
+    problem: Problem,
+    initvals: Optional[np.ndarray] = None,
+    verbose: bool = False,
+    max_wsr: int = 1000,
+    time_limit: Optional[float] = None,
+    predefined_options: Optional[str] = None,
+    **kwargs,
+) -> Solution:
+    """
+    Solve a quadratic program using `qpOASES
+    <https://github.com/coin-or/qpOASES>`__.
+
+    Parameters
+    ----------
+    problem :
+        Quadratic program to solve.
+    initvals :
+        Warm-start guess vector.
+    verbose :
+        Set to `True` to print out extra information.
+    max_wsr :
+        Maximum number of Working-Set Recalculations given to qpOASES.
+    time_limit :
+        Set a run time limit in seconds.
+    predefined_options :
+        Set solver options to one of the pre-defined choices provided by
+        qpOASES, to pick in ``["default", "fast", "mpc", "reliable"]``.
+
+    Returns
+    -------
+    :
+        Solution to the QP, if found, otherwise ``None``.
+
+    Raises
+    ------
+    ValueError :
+        If ``predefined_options`` is not a valid choice.
+
+    Notes
+    -----
+    This function relies on an update to qpOASES to allow empty bounds (`lb`,
+    `ub`, `lbA` or `ubA`) in Python. This is possible in the C++ API but not by
+    the Python API (as of version 3.2.0). If using them, be sure to update the
+    Cython file (`qpoases.pyx`) in your distribution of qpOASES to convert
+    ``None`` to the null pointer. Check out the `installation instructions
+    <https://scaron.info/doc/qpsolvers/installation.html#qpoases>`_.
+
+    Keyword arguments are forwarded as options to qpOASES. For instance, we can
+    call ``qpoases_solve_qp(P, q, G, h, u, terminationTolerance=1e-14)``.
+    qpOASES options include the following:
+
+    .. list-table::
+       :widths: 30 70
+       :header-rows: 1
+
+       * - Name
+         - Description
+       * - ``boundRelaxation``
+         - Initial relaxation of bounds to start homotopy and initial value for
+           far bounds.
+       * - ``epsNum``
+         - Numerator tolerance for ratio tests.
+       * - ``epsDen``
+         - Denominator tolerance for ratio tests.
+       * - ``numRefinementSteps``
+         - Maximum number of iterative refinement steps.
+       * - ``terminationTolerance``
+         - Relative termination tolerance to stop homotopy.
+
+    Check out pages 28 to 30 of `qpOASES User's Manual
+    <https://www.coin-or.org/qpOASES/doc/3.1/manual.pdf>`_. for all available
+    options.
+    """
+    if initvals is not None:
+        print("qpOASES: note that warm-start values ignored by wrapper")
+    P, q, G, h, A, b, lb, ub = problem.unpack()
+    n = P.shape[0]
+    lb_C: Optional[np.ndarray] = None
+    has_row_constraints = True
+    if G is not None and h is not None:
+        if A is not None and b is not None:
+            C = vstack([G, A, A])
+            lb_C = hstack([-__infty__ * ones(h.shape[0]), b, b])
+            ub_C = hstack([h, b, b])
+        else:  # no equality constraint
+            C = G
+            ub_C = h
+    else:  # no inequality constraint
+        if A is not None and b is not None:
+            C = A
+            lb_C = b
+            ub_C = b
+        else:  # no equality constraint either
+            has_row_constraints = False
+
+    args: List[Any] = []
+    if has_row_constraints:
+        qp = QProblem(n, C.shape[0])
+        args = [P, q, C, lb, ub, lb_C, ub_C, array([max_wsr])]
+    else:  # at most box constraints
+        qp = QProblemB(n)
+        args = [P, q, lb, ub, array([max_wsr])]
+    if time_limit is not None:
+        args.append(array([time_limit]))
+
+    options = __prepare_options(verbose, predefined_options, **kwargs)
+    qp.setOptions(options)
+    return_value = qp.init(*args)
+    if RET_INIT_FAILED <= return_value <= RET_INIT_FAILED_REGULARISATION:
+        return None
+    if return_value == ReturnValue.MAX_NWSR_REACHED:
+        print(f"qpOASES reached the maximum number of WSR ({max_wsr})")
+
+    x_opt = zeros(n)
+    qp.getPrimalSolution(x_opt)  # can't return RET_QP_NOT_SOLVED at this point
+    import IPython
+
+    IPython.embed()
+    return x_opt
 
 
 def qpoases_solve_qp(
@@ -210,45 +336,20 @@ def qpoases_solve_qp(
     <https://www.coin-or.org/qpOASES/doc/3.1/manual.pdf>`_. for all available
     options.
     """
-    if initvals is not None:
-        print("qpOASES: note that warm-start values ignored by wrapper")
-    n = P.shape[0]
-    lb_C: Optional[np.ndarray] = None
-    has_constraint = True
-    if G is not None and h is not None:
-        if A is not None and b is not None:
-            C = vstack([G, A, A])
-            lb_C = hstack([-__infty__ * ones(h.shape[0]), b, b])
-            ub_C = hstack([h, b, b])
-        else:  # no equality constraint
-            C = G
-            ub_C = h
-    else:  # no inequality constraint
-        if A is not None and b is not None:
-            C = A
-            lb_C = b
-            ub_C = b
-        else:  # no equality constraint either
-            has_constraint = False
-
-    args: List[Any] = []
-    if has_constraint:
-        qp = QProblem(n, C.shape[0])
-        args = [P, q, C, lb, ub, lb_C, ub_C, array([max_wsr])]
-    else:  # at most box constraints
-        qp = QProblemB(n)
-        args = [P, q, lb, ub, array([max_wsr])]
-    if time_limit is not None:
-        args.append(array([time_limit]))
-
-    options = __prepare_options(verbose, predefined_options, **kwargs)
-    qp.setOptions(options)
-    return_value = qp.init(*args)
-    if RET_INIT_FAILED <= return_value <= RET_INIT_FAILED_REGULARISATION:
-        return None
-    if return_value == ReturnValue.MAX_NWSR_REACHED:
-        print(f"qpOASES reached the maximum number of WSR ({max_wsr})")
-
-    x_opt = zeros(n)
-    qp.getPrimalSolution(x_opt)  # can't return RET_QP_NOT_SOLVED at this point
-    return x_opt
+    warnings.warn(
+        "The return type of this function will change "
+        "to qpsolvers.Solution in qpsolvers v3.0",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+    problem = Problem(P, q, G, h, A, b, lb, ub)
+    solution = qpoases_solve_problem(
+        problem,
+        initvals,
+        verbose,
+        max_wsr,
+        time_limit,
+        predefined_options,
+        **kwargs,
+    )
+    return solution.x

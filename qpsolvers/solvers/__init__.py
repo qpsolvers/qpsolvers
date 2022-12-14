@@ -336,6 +336,19 @@ except ImportError:
 # qpOASES
 # =======
 
+qpoases_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[ndarray],
+            bool,
+            int,
+            Optional[float],
+        ],
+        Solution,
+    ]
+] = None
+
 qpoases_solve_qp: Optional[
     Callable[
         [
@@ -357,9 +370,9 @@ qpoases_solve_qp: Optional[
 ] = None
 
 try:
-    from .qpoases_ import qpoases_solve_qp
+    from .qpoases_ import qpoases_solve_problem, qpoases_solve_qp
 
-    solve_function["qpoases"] = qpoases_solve_qp
+    solve_function["qpoases"] = qpoases_solve_problem
     available_solvers.append("qpoases")
     dense_solvers.append("qpoases")
 except ImportError:
