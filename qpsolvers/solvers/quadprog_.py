@@ -26,7 +26,7 @@ quadprog is a C implementation of the Goldfarb-Idnani dual algorithm
 """
 
 import warnings
-from typing import Optional
+from typing import Optional, Tuple
 
 import numpy as np
 from numpy import hstack, vstack
@@ -140,25 +140,16 @@ def quadprog_solve_qp2(
         warnings.warn(f"quadprog raised a ValueError: {e}")
         return Solution()
 
-    n = P.shape[0]
-    m = qp_C.shape[1] - meq
-    solution = Solution()
-    solution.y = -y[:meq]
-    if lb is not None and ub is not None:
-        solution.z_box = -y[-n:] + y[-2 * n : -n]
-        solution.z = y[meq : meq + m - 2 * n]
-    elif lb is not None:  # ub is None
-        solution.z_box = +y[-n:]
-        solution.z = y[meq : meq + m - n]
-    elif ub is not None:  # lb is None
-        solution.z_box = -y[-n:]
-        solution.z = y[meq : meq + m - n]
-    else:  # lb is None and ub is None
-        solution.z = y[meq : meq + m]
-
     solution = Solution()
     solution.x = x
     solution.obj = obj
+
+    n = P.shape[0]
+    m = qp_C.shape[1] - meq
+    z, ys, z_box = __convert_dual_multipliers(y, n, m, meq, lb, ub)
+    solution.y = ys
+    solution.z = z
+    solution.z_box = z_box
 
     solution.extras = {
         "iact": iact,
@@ -166,6 +157,56 @@ def quadprog_solve_qp2(
         "xu": xu,
     }
     return solution
+
+
+def __convert_dual_multipliers(
+    y: np.ndarray,
+    n: int,
+    m: int,
+    meq: int,
+    lb: Optional[np.ndarray],
+    ub: Optional[np.ndarray],
+) -> Tuple[Optional[np.ndarray], Optional[np.ndarray], Optional[np.ndarray]]:
+    """
+    Convert dual multipliers from quadprog to qpsolvers QP formulation.
+
+    Parameters
+    ----------
+    y :
+        Dual multipliers from quadprog.
+    n :
+        Number of optimization variables.
+    m :
+        Total number of (in)equality constraints.
+    meq :
+        Number of equality constraints.
+    lb :
+        Lower-bound vector for box inequalities, if any.
+    ub :
+        Upper-bound vector for box inequalities, if any.
+
+    Returns
+    -------
+    :
+        Tuple of dual multipliers :code:`z, ys, z_box` corresponding
+        respectively to linear inequalities, linear equalities, and box
+        inequalities.
+    """
+    z, ys, z_box = None, None, None
+    if meq > 0:
+        ys = y[:meq]
+    if lb is not None and ub is not None:
+        z_box = y[-n:] - y[-2 * n : -n]
+        z = y[meq : meq + m - 2 * n]
+    elif lb is not None:  # ub is None
+        z_box = -y[-n:]
+        z = y[meq : meq + m - n]
+    elif ub is not None:  # lb is None
+        z_box = +y[-n:]
+        z = y[meq : meq + m - n]
+    else:  # lb is None and ub is None
+        z = y[meq : meq + m]
+    return z, ys, z_box
 
 
 def quadprog_solve_qp(
