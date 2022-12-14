@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - Example: dual multipliers
 - Gurobi: return dual multipliers
 - HiGHS: return dual multipliers
+- MOSEK: return dual multipliers
 - Problem class with utility metrics on quadratic programs
 - Problem: condition number
 - ProxQP: return dual multipliers
