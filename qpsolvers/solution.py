@@ -69,3 +69,14 @@ class Solution:
         True if the solution is empty.
         """
         return self.x is None
+
+    def primal_residual() -> float:
+        """
+        Compute the primal residual of the solution.
+
+        Notes
+        -----
+        See for instance [tolerances]_ for an overview of optimality conditions
+        and why this residual will be zero at the optimum.
+        """
+        raise NotImplementedError()
