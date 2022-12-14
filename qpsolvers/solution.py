@@ -36,6 +36,10 @@ class Solution:
 
     Attributes
     ----------
+    extras :
+        Other outputs, specific to each solver.
+    obj :
+        Objective value at the solution (None if no solution was found).
     x :
         Primal solution (None if no solution was found).
     y :
@@ -47,16 +51,14 @@ class Solution:
     z_box :
         Dual multipliers for box inequality constraints (None if no solution
         was found).
-    extra :
-        Other outputs, specific to each solver.
     """
 
+    extras: dict = field(default_factory=dict)
+    obj: Optional[float] = None
     x: Optional[np.ndarray] = None
     y: Optional[np.ndarray] = None
     z: Optional[np.ndarray] = None
     z_box: Optional[np.ndarray] = None
-    obj: Optional[float] = None
-    extras: dict = field(default_factory=dict)
 
     @property
     def is_empty(self) -> bool:
