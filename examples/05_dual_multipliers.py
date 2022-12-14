@@ -24,7 +24,6 @@ Get both primal and dual solutions to a quadratic program.
 
 import argparse
 import random
-from time import perf_counter
 
 import numpy as np
 
@@ -54,11 +53,9 @@ if __name__ == "__main__":
     parser.add_argument("solver")
     args = parser.parse_args()
 
-    start_time = perf_counter()
     solver = random.choice(available_solvers)
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = solve_problem(problem, solver=args.solver)
-    end_time = perf_counter()
 
     print("========================= PRIMAL PROBLEM =========================")
     print("")
@@ -77,8 +74,6 @@ if __name__ == "__main__":
     print("")
 
     print("============================ SOLUTION ============================")
-    print("")
-    print(f"Found in {1e6 * (end_time - start_time):.0f} [us] with {solver}")
     print("")
     print(f"Primal: x = {solution.x}")
     print(f"Dual (G x <= h): z = {solution.z}")
