@@ -54,3 +54,10 @@ class Solution:
     z: Optional[np.ndarray]
     z_box: Optional[np.ndarray]
     extras: dict
+
+    @property
+    def is_empty(self) -> bool:
+        """
+        True if the solution is empty.
+        """
+        return self.x is None
