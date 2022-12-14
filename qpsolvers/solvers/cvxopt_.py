@@ -44,7 +44,7 @@ from ..solution import Solution
 cvxopt.solvers.options["show_progress"] = False  # disable verbose output
 
 
-def to_cvxopt(
+def __to_cvxopt(
     M: Union[np.ndarray, spa.csc_matrix]
 ) -> Union[cvxopt.matrix, cvxopt.spmatrix]:
     """
@@ -148,17 +148,17 @@ def cvxopt_solve_problem(
     if lb is not None or ub is not None:
         G, h = linear_from_box_inequalities(G, h, lb, ub)
 
-    args = [to_cvxopt(P), to_cvxopt(q)]
+    args = [__to_cvxopt(P), __to_cvxopt(q)]
     constraints = {"G": None, "h": None, "A": None, "b": None}
     if G is not None and h is not None:
-        constraints["G"] = to_cvxopt(G)
-        constraints["h"] = to_cvxopt(h)
+        constraints["G"] = __to_cvxopt(G)
+        constraints["h"] = __to_cvxopt(h)
     if A is not None and b is not None:
-        constraints["A"] = to_cvxopt(A)
-        constraints["b"] = to_cvxopt(b)
+        constraints["A"] = __to_cvxopt(A)
+        constraints["b"] = __to_cvxopt(b)
     initvals_dict: Optional[Dict[str, cvxopt.matrix]] = None
     if initvals is not None:
-        initvals_dict = {"x": to_cvxopt(initvals)}
+        initvals_dict = {"x": __to_cvxopt(initvals)}
 
     kwargs["show_progress"] = verbose
     original_options = cvxopt.solvers.options
