@@ -6,13 +6,14 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- CVXOPT: return dual multipliers
 - Continuous integration for macOS
+- CVXOPT: return dual multipliers
 - ECOS: return dual multipliers
 - Example: dual multipliers
 - Gurobi: return dual multipliers
 - HiGHS: return dual multipliers
 - MOSEK: return dual multipliers
+- OSQP: return dual multipliers
 - Problem class with utility metrics on quadratic programs
 - Problem: condition number
 - ProxQP: return dual multipliers
