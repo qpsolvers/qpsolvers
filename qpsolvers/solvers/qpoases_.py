@@ -219,7 +219,8 @@ def qpoases_solve_problem(
     if RET_INIT_FAILED <= return_value <= RET_INIT_FAILED_REGULARISATION:
         return solution
     if return_value == ReturnValue.MAX_NWSR_REACHED:
-        print(f"qpOASES reached the maximum number of WSR ({max_wsr})")
+        warnings.warn(f"qpOASES reached the maximum number of WSR ({max_wsr})")
+        return solution
     x_opt = np.empty((n,))
     z_opt = np.empty((n + C.shape[0],))
     qp.getPrimalSolution(x_opt)  # can't return RET_QP_NOT_SOLVED at this point
