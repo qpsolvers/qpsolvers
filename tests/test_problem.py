@@ -47,7 +47,7 @@ class TestProblem(unittest.TestCase):
 
     def test_check_inequality_constraints(self):
         problem = get_sd3310_problem()
-        P, q, G,h, A, b = problem.unpack()
+        P, q, G, h, A, b, _, _ = problem.unpack()
         with self.assertRaises(ValueError):
             Problem(P, q, G, None, A, b).check_constraints()
         with self.assertRaises(ValueError):
