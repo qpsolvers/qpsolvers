@@ -21,7 +21,8 @@
 """Quadratic programming solvers in Python with a unified API"""
 
 from .solve_ls import solve_ls
-from .solve_qp import solve_qp, solve_safer_qp
+from .solve_qp import solve_qp
+from .solve_safer_qp import solve_safer_qp
 from .solvers import (
     available_solvers,
     cvxopt_solve_qp,
