@@ -38,7 +38,7 @@ from scipy.sparse import csc_matrix
 from scipy.sparse.linalg import lsqr
 from scs import solve
 
-from .conversions import warn_about_sparse_conversion
+from ..conversions import warn_about_sparse_conversion
 
 # See https://www.cvxgrp.org/scs/api/exit_flags.html#exit-flags
 __status_val_meaning__ = {

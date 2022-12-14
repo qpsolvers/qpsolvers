@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - ProxQP: bump minimum supported version to 0.2.9
+- Refactor location of internal conversions submodule
 
 ## [2.6.0] - 2022/11/14
 
@@ -126,7 +127,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Add `lb` and `ub` arguments to all `<solver>_solve_qp` functions
-- Internal ``qpsolvers.solvers.conversions`` submodule
+- Internal ``conversions`` submodule
 
 ### Changed
 

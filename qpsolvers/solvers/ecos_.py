@@ -37,7 +37,7 @@ import numpy as np
 from ecos import solve
 from scipy import sparse as spa
 
-from .conversions import linear_from_box_inequalities, socp_from_qp
+from ..conversions import linear_from_box_inequalities, socp_from_qp
 
 __exit_flag_meaning__ = {
     0: "OPTIMAL",

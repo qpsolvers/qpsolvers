@@ -21,11 +21,10 @@
 import unittest
 
 from numpy import allclose, array, eye
+from qpsolvers.conversions import linear_from_box_inequalities
 
-from qpsolvers.solvers.conversions import linear_from_box_inequalities
 
-
-class TestConcatenateBounds(unittest.TestCase):
+class TestConversions(unittest.TestCase):
 
     """
     Test fixture for box to linear inequality conversion.
@@ -37,18 +36,18 @@ class TestConcatenateBounds(unittest.TestCase):
         self.lb = array([-1.0, -1.0, -1.0])
         self.ub = array([1.0, 1.0, 1.0])
 
-    def check_concatenation(self, G, h, lb, ub):
+    def __test_linear_from_box_inequalities(self, G, h, lb, ub):
         G2, h2 = linear_from_box_inequalities(G, h, lb, ub)
         m = G.shape[0] if G is not None else 0
         k = lb.shape[0]
-        self.assertTrue(allclose(G2[m:m + k,:], -eye(k)))
-        self.assertTrue(allclose(h2[m:m + k], -lb))
+        self.assertTrue(allclose(G2[m : m + k, :], -eye(k)))
+        self.assertTrue(allclose(h2[m : m + k], -lb))
         self.assertTrue(allclose(G2[m + k : m + 2 * k, :], eye(k)))
         self.assertTrue(allclose(h2[m + k : m + 2 * k], ub))
 
     def test_concatenate_bounds(self):
         G, h, lb, ub = self.G, self.h, self.lb, self.ub
-        self.check_concatenation(G, h, lb, ub)
+        self.__test_linear_from_box_inequalities(G, h, lb, ub)
 
     def test_pure_bounds(self):
-        self.check_concatenation(None, None, self.lb, self.ub)
+        self.__test_linear_from_box_inequalities(None, None, self.lb, self.ub)

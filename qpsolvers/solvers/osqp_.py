@@ -39,7 +39,7 @@ import scipy.sparse as spa
 from osqp import OSQP
 from scipy.sparse import csc_matrix
 
-from .conversions import warn_about_sparse_conversion
+from ..conversions import warn_about_sparse_conversion
 
 
 def osqp_solve_qp(

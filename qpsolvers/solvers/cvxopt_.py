@@ -36,7 +36,7 @@ import numpy as np
 import scipy.sparse as spa
 from cvxopt.solvers import qp
 
-from .conversions import linear_from_box_inequalities
+from ..conversions import linear_from_box_inequalities
 
 cvxopt.solvers.options["show_progress"] = False  # disable verbose output
 
