@@ -25,11 +25,12 @@ from typing import Any, Callable, Dict, Optional, Union
 from numpy import ndarray
 from scipy.sparse import csc_matrix
 
+from ..solution import Solution
+
 available_solvers = []
 dense_solvers = []
 solve_function: Dict[str, Any] = {}
 sparse_solvers = []
-
 
 # CVXOPT
 # ======
@@ -241,10 +242,29 @@ proxqp_solve_qp: Optional[
     ]
 ] = None
 
+proxqp_solve_qp2: Optional[
+    Callable[
+        [
+            Union[ndarray, csc_matrix],
+            Union[ndarray, csc_matrix],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            bool,
+            Optional[str],
+        ],
+        Solution,
+    ]
+] = None
+
 try:
     from .proxqp_ import proxqp_solve_qp, proxqp_solve_qp2
 
-    solve_function["proxqp"] = proxqp_solve_qp
+    solve_function["proxqp"] = proxqp_solve_qp2
     available_solvers.append("proxqp")
     dense_solvers.append("proxqp")
     sparse_solvers.append("proxqp")
@@ -337,10 +357,28 @@ quadprog_solve_qp: Optional[
     ]
 ] = None
 
-try:
-    from .quadprog_ import quadprog_solve_qp
+quadprog_solve_qp2: Optional[
+    Callable[
+        [
+            ndarray,
+            ndarray,
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            bool,
+        ],
+        Solution,
+    ]
+] = None
 
-    solve_function["quadprog"] = quadprog_solve_qp
+try:
+    from .quadprog_ import quadprog_solve_qp, quadprog_solve_qp2
+
+    solve_function["quadprog"] = quadprog_solve_qp2
     available_solvers.append("quadprog")
     dense_solvers.append("quadprog")
 except ImportError:
@@ -393,7 +431,6 @@ __all__ = [
     "mosek_solve_qp",
     "osqp_solve_qp",
     "proxqp_solve_qp",
-    "proxqp_solve_qp2",
     "qpoases_solve_qp",
     "quadprog_solve_qp",
     "solve_function",

@@ -31,7 +31,7 @@ import scipy.sparse as spa
 from .exceptions import NoSolverSelected, SolverNotFound
 from .problem import Problem
 from .solution import Solution
-from .solvers import available_solvers, proxqp_solve_qp2, solve_function
+from .solvers import available_solvers, solve_function
 
 
 def solve_qp2(
@@ -66,8 +66,6 @@ def solve_qp2(
     problem.check_constraints()
     kwargs["initvals"] = initvals
     kwargs["verbose"] = verbose
-    assert solver == "proxqp"
-    return proxqp_solve_qp2(P, q, G, h, A, b, lb, ub, **kwargs)
     try:
         return solve_function[solver](
             problem.P,
