@@ -154,7 +154,8 @@ def ecos_solve_problem(
         warnings.warn(
             f"ECOS returned exit flag {flag} ({__exit_flag_meaning__[flag]})"
         )
-        return None
+        return Solution(problem)
+
     solution = Solution(problem)
     solution.x = result["x"][:-1]
     if A is not None:
