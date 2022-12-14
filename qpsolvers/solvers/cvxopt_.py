@@ -38,6 +38,7 @@ import scipy.sparse as spa
 from cvxopt.solvers import qp
 
 from ..conversions import linear_from_box_inequalities
+from ..problem import Problem
 from ..solution import Solution
 
 cvxopt.solvers.options["show_progress"] = False  # disable verbose output
@@ -67,61 +68,20 @@ def to_cvxopt(
     )
 
 
-def cvxopt_solve_qp2(
-    P: Union[np.ndarray, spa.csc_matrix],
-    q: np.ndarray,
-    G: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
-    h: Optional[np.ndarray] = None,
-    A: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
-    b: Optional[np.ndarray] = None,
-    lb: Optional[np.ndarray] = None,
-    ub: Optional[np.ndarray] = None,
+def cvxopt_solve_problem(
+    problem: Problem,
     solver: Optional[str] = None,
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
     **kwargs,
 ) -> Solution:
     """
-    Solve a Quadratic Program defined as:
-
-    .. math::
-
-        \\begin{split}\\begin{array}{ll}
-        \\mbox{minimize} &
-            \\frac{1}{2} x^T P x + q^T x \\\\
-        \\mbox{subject to}
-            & G x \\leq h                \\\\
-            & A x = b                    \\\\
-            & lb \\leq x \\leq ub
-        \\end{array}\\end{split}
-
-    using `CVXOPT <http://cvxopt.org/>`_.
+    Solve a quadratic program using `CVXOPT <http://cvxopt.org/>`_.
 
     Parameters
     ----------
-    P :
-        Symmetric quadratic-cost matrix. Together with :math:`A` and :math:`G`,
-        it should satisfy :math:`\\mathrm{rank}([P\\ A^T\\ G^T]) = n`, see the
-        rank assumptions below.
-    q :
-        Quadratic-cost vector.
-    G :
-        Linear inequality matrix. Together with :math:`P` and :math:`A`, it
-        should satisfy :math:`\\mathrm{rank}([P\\ A^T\\ G^T]) = n`, see the
-        rank assumptions below.
-    h :
-        Linear inequality vector.
-    A :
-        Linear equality constraint matrix. It needs to be full row rank, and
-        together with :math:`P` and :math:`G` satisfy
-        :math:`\\mathrm{rank}([P\\ A^T\\ G^T]) = n`. See the rank assumptions
-        below.
-    b :
-        Linear equality constraint vector.
-    lb :
-        Lower bound constraint vector.
-    ub :
-        Upper bound constraint vector.
+    problem :
+        Quadratic program to solve.
     solver :
         Set to 'mosek' to run MOSEK rather than CVXOPT.
     initvals :
@@ -184,6 +144,7 @@ def cvxopt_solve_qp2(
     parameters. See also [tolerances]_ for a primer on the duality gap, primal
     and dual residuals.
     """
+    P, q, G, h, A, b, lb, ub = problem.unpack()
     if lb is not None or ub is not None:
         G, h = linear_from_box_inequalities(G, h, lb, ub)
 
@@ -245,8 +206,52 @@ def cvxopt_solve_qp(
     **kwargs,
 ) -> Optional[np.ndarray]:
     """
-    Variant of :func:`qpsolvers.solvers.cvxopt_.quadprog_solve_qp2` returning
-    only the primal solution.
+    Solve a Quadratic Program defined as:
+
+    .. math::
+
+        \\begin{split}\\begin{array}{ll}
+        \\mbox{minimize} &
+            \\frac{1}{2} x^T P x + q^T x \\\\
+        \\mbox{subject to}
+            & G x \\leq h                \\\\
+            & A x = b                    \\\\
+            & lb \\leq x \\leq ub
+        \\end{array}\\end{split}
+
+    using `CVXOPT <http://cvxopt.org/>`_.
+
+    Parameters
+    ----------
+    P :
+        Symmetric quadratic-cost matrix. Together with :math:`A` and :math:`G`,
+        it should satisfy :math:`\\mathrm{rank}([P\\ A^T\\ G^T]) = n`, see the
+        rank assumptions below.
+    q :
+        Quadratic-cost vector.
+    G :
+        Linear inequality matrix. Together with :math:`P` and :math:`A`, it
+        should satisfy :math:`\\mathrm{rank}([P\\ A^T\\ G^T]) = n`, see the
+        rank assumptions below.
+    h :
+        Linear inequality vector.
+    A :
+        Linear equality constraint matrix. It needs to be full row rank, and
+        together with :math:`P` and :math:`G` satisfy
+        :math:`\\mathrm{rank}([P\\ A^T\\ G^T]) = n`. See the rank assumptions
+        below.
+    b :
+        Linear equality constraint vector.
+    lb :
+        Lower bound constraint vector.
+    ub :
+        Upper bound constraint vector.
+    solver :
+        Set to 'mosek' to run MOSEK rather than CVXOPT.
+    initvals :
+        Warm-start guess vector.
+    verbose :
+        Set to `True` to print out extra information.
 
     Returns
     -------
@@ -259,7 +264,6 @@ def cvxopt_solve_qp(
         DeprecationWarning,
         stacklevel=2,
     )
-    solution = cvxopt_solve_qp2(
-        P, q, G, h, A, b, lb, ub, initvals, verbose, **kwargs
-    )
+    problem = Problem(P, q, G, h, A, b, lb, ub)
+    solution = cvxopt_solve_problem(problem, initvals, verbose, **kwargs)
     return solution.x

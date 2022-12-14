@@ -121,7 +121,10 @@ def proxqp_solve_problem(
     **kwargs,
 ) -> Solution:
     """
-    Solve a Quadratic Program defined as:
+    Solve a Quadratic Program using `ProxQP
+    <https://github.com/Simple-Robotics/proxsuite>`__.
+
+    The QP is defined as:
 
     .. math::
 
@@ -134,7 +137,7 @@ def proxqp_solve_problem(
             & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
-    as well as its dual defined by:
+    so that its (Wolfe) dual is defined by:
 
     .. math::
 
@@ -147,27 +150,12 @@ def proxqp_solve_problem(
             & z & \\geq 0
         \\end{array}\\end{split}
 
-    using `ProxQP <https://github.com/Simple-Robotics/proxsuite>`__. Here
-    :math:`v^- = \\min(v, 0)` and :math:`v^+ = \\max(v, 0)`.
+    Here :math:`v^- = \\min(v, 0)` and :math:`v^+ = \\max(v, 0)`.
 
     Parameters
     ----------
-    P :
-        Positive semidefinite quadratic-cost matrix.
-    q :
-        Quadratic-cost vector.
-    G :
-        Linear inequality constraint matrix.
-    h :
-        Linear inequality constraint vector.
-    A :
-        Linear equality constraint matrix.
-    b :
-        Linear equality constraint vector.
-    lb :
-        Lower bound constraint vector.
-    ub :
-        Upper bound constraint vector.
+    problem :
+        Quadratic program to solve.
     initvals :
         Warm-start guess vector.
     backend :
@@ -282,7 +270,46 @@ def proxqp_solve_qp(
     **kwargs,
 ) -> Optional[np.ndarray]:
     """
-    Legacy version of :func:`qpsolvers.solvers.proxqp_.proxqp_solve_qp2`.
+    Solve a Quadratic Program defined as:
+
+    .. math::
+
+        \\begin{split}\\begin{array}{ll}
+        \\underset{\\mbox{minimize}}{x} &
+            \\frac{1}{2} x^T P x + q^T x \\\\
+        \\mbox{subject to}
+            & G x \\leq h                \\\\
+            & A x = b                    \\\\
+            & lb \\leq x \\leq ub
+        \\end{array}\\end{split}
+
+    using `ProxQP <https://github.com/Simple-Robotics/proxsuite>`__.
+
+    Parameters
+    ----------
+    P :
+        Positive semidefinite quadratic-cost matrix.
+    q :
+        Quadratic-cost vector.
+    G :
+        Linear inequality constraint matrix.
+    h :
+        Linear inequality constraint vector.
+    A :
+        Linear equality constraint matrix.
+    b :
+        Linear equality constraint vector.
+    lb :
+        Lower bound constraint vector.
+    ub :
+        Upper bound constraint vector.
+    initvals :
+        Warm-start guess vector.
+    backend :
+        ProxQP backend to use in ``[None, "dense", "sparse"]``. If ``None``
+        (default), the backend is selected based on the type of ``P``.
+    verbose :
+        Set to `True` to print out extra information.
 
     Returns
     -------

@@ -28,7 +28,7 @@ from time import perf_counter
 
 import numpy as np
 
-from qpsolvers import available_solvers, print_matrix_vector, solve_qp2
+from qpsolvers import available_solvers, print_matrix_vector, solve_problem, Problem
 
 M = np.array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
 P = np.dot(M.T, M)  # this is a positive definite matrix
@@ -51,7 +51,8 @@ if __name__ == "__main__":
 
     start_time = perf_counter()
     solver = random.choice(available_solvers)
-    solution = solve_qp2(P, q, G, h, A, b, lb, ub, solver=args.solver)
+    problem = Problem(P, q, G, h, A, b, lb, ub)
+    solution = solve_problem(problem, solver=args.solver)
     end_time = perf_counter()
 
     print("========================= PRIMAL PROBLEM =========================")

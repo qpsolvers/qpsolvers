@@ -23,7 +23,7 @@
 from .problem import Problem
 from .solution import Solution
 from .solve_ls import solve_ls
-from .solve_qp import solve_qp, solve_qp2
+from .solve_qp import solve_qp, solve_problem
 from .solve_safer_qp import solve_safer_qp
 from .solvers import (
     available_solvers,
@@ -64,8 +64,8 @@ __all__ = [
     "quadprog_solve_qp",
     "scs_solve_qp",
     "solve_ls",
+    "solve_problem",
     "solve_qp",
-    "solve_qp2",
     "solve_safer_qp",
     "sparse_solvers",
 ]

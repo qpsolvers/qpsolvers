@@ -23,11 +23,13 @@ Solve quadratic programs.
 """
 
 from typing import Optional, Union
+import warnings
 
 import numpy as np
 import scipy.sparse as spa
 
-from .solve_qp2 import solve_qp2
+from .problem import Problem
+from .solve_problem import solve_problem
 
 
 def solve_qp(
@@ -131,7 +133,16 @@ def solve_qp(
     problem is non-convex and the solver fails because of that, then a
     ``ValueError`` will be raised.
     """
-    output = solve_qp2(
-        P, q, G, h, A, b, lb, ub, solver, initvals, sym_proj, verbose, **kwargs
+    if sym_proj:
+        P = 0.5 * (P + P.transpose())
+        warnings.warn(
+            "The `sym_proj` feature is deprecated "
+            "and will be removed in qpsolvers v2.9",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+    problem = Problem(P, q, G, h, A, b, lb, ub)
+    output = solve_problem(
+        problem, solver, initvals, sym_proj, verbose, **kwargs
     )
     return output.x

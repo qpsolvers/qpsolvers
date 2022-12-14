@@ -30,7 +30,7 @@ import numpy as np
 from .problem import Problem
 
 
-@dataclass
+@dataclass(frozen=False)
 class Solution:
 
     """
@@ -55,13 +55,13 @@ class Solution:
         was found).
     """
 
+    problem: Problem
     extras: dict = field(default_factory=dict)
     obj: Optional[float] = None
     x: Optional[np.ndarray] = None
     y: Optional[np.ndarray] = None
     z: Optional[np.ndarray] = None
     z_box: Optional[np.ndarray] = None
-    problem: Problem
 
     @property
     def is_empty(self) -> bool:
