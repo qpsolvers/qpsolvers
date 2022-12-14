@@ -34,6 +34,7 @@ import numpy as np
 import scipy.sparse as spa
 from proxsuite import proxqp
 
+from ..problem import Problem
 from ..solution import Solution
 
 
@@ -112,15 +113,8 @@ def __select_backend(backend: Optional[str], use_csc: bool):
     raise ValueError(f'Unknown ProxQP backend "{backend}')
 
 
-def proxqp_solve_qp2(
-    P: Union[np.ndarray, spa.csc_matrix],
-    q: Union[np.ndarray, spa.csc_matrix],
-    G: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
-    h: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
-    A: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
-    b: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
-    lb: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
-    ub: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+def proxqp_solve_problem(
+    problem: Problem,
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
     backend: Optional[str] = None,
@@ -239,6 +233,7 @@ def proxqp_solve_qp2(
                 "Warm-start value specified in both `initvals` and `x` kwargs"
             )
         kwargs["x"] = initvals
+    P, q, G, h, A, b, lb, ub = problem.unpack()
     n: int = q.shape[0]
     use_csc: bool = (
         not isinstance(P, np.ndarray)
@@ -260,7 +255,7 @@ def proxqp_solve_qp2(
     )
     if result.info.status != proxqp.QPSolverOutput.PROXQP_SOLVED:
         return (None, None, None, None)
-    solution = Solution()
+    solution = Solution(problem)
     solution.x = result.x
     solution.y = result.y
     if lb is not None or ub is not None:
@@ -300,7 +295,8 @@ def proxqp_solve_qp(
         DeprecationWarning,
         stacklevel=2,
     )
-    solution = proxqp_solve_qp2(
-        P, q, G, h, A, b, lb, ub, initvals, verbose, backend, **kwargs
+    problem = Problem(P, q, G, h, A, b, lb, ub)
+    solution = proxqp_solve_problem(
+        problem, initvals, verbose, backend, **kwargs
     )
     return solution.x

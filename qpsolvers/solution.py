@@ -27,6 +27,8 @@ from typing import Optional
 
 import numpy as np
 
+from .problem import Problem
+
 
 @dataclass
 class Solution:
@@ -59,6 +61,7 @@ class Solution:
     y: Optional[np.ndarray] = None
     z: Optional[np.ndarray] = None
     z_box: Optional[np.ndarray] = None
+    problem: Problem
 
     @property
     def is_empty(self) -> bool:
