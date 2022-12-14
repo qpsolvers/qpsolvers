@@ -189,9 +189,9 @@ def qpoases_solve_problem(
     has_row_constraints = True
     if G is not None and h is not None:
         if A is not None and b is not None:
-            C = vstack([G, A, A])
-            lb_C = hstack([-__infty__ * ones(h.shape[0]), b, b])
-            ub_C = hstack([h, b, b])
+            C = vstack([G, A])
+            lb_C = hstack([-__infty__ * ones(h.shape[0]), b])
+            ub_C = hstack([h, b])
         else:  # no equality constraint
             C = G
             ub_C = h

@@ -24,6 +24,10 @@ All notable changes to this project will be documented in this file.
 - Code: refactor location of internal conversions submodule
 - ProxQP: bump minimum supported version to 0.2.9
 
+### Fixed
+
+- qpOASES: eliminate redundant equality constraints
+
 ## [2.6.0] - 2022/11/14
 
 ### Added
