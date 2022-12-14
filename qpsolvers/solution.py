@@ -91,3 +91,14 @@ class Solution:
         and why this residual will be zero at the optimum.
         """
         raise NotImplementedError()
+
+    def duality_gap() -> float:
+        """
+        Compute the duality gap of the solution.
+
+        Notes
+        -----
+        See for instance [tolerances]_ for an overview of optimality conditions
+        and why this gap will be zero at the optimum.
+        """
+        raise NotImplementedError()
