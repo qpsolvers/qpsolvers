@@ -265,5 +265,5 @@ def cvxopt_solve_qp(
         stacklevel=2,
     )
     problem = Problem(P, q, G, h, A, b, lb, ub)
-    solution = cvxopt_solve_problem(problem, initvals, verbose, **kwargs)
+    solution = cvxopt_solve_problem(problem, solver, initvals, verbose, **kwargs)
     return solution.x
