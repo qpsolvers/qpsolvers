@@ -29,6 +29,7 @@ using CVXOPT in some academic work, consider citing the corresponding report
 [Vandenberghe2010]_.
 """
 
+import warnings
 from typing import Dict, Optional, Union
 
 import cvxopt
@@ -37,6 +38,7 @@ import scipy.sparse as spa
 from cvxopt.solvers import qp
 
 from ..conversions import linear_from_box_inequalities
+from ..solution import Solution
 
 cvxopt.solvers.options["show_progress"] = False  # disable verbose output
 
@@ -65,7 +67,7 @@ def to_cvxopt(
     )
 
 
-def cvxopt_solve_qp(
+def cvxopt_solve_qp2(
     P: Union[np.ndarray, spa.csc_matrix],
     q: np.ndarray,
     G: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
@@ -78,7 +80,7 @@ def cvxopt_solve_qp(
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
     **kwargs,
-) -> Optional[np.ndarray]:
+) -> Solution:
     """
     Solve a Quadratic Program defined as:
 
@@ -200,9 +202,64 @@ def cvxopt_solve_qp(
     kwargs["show_progress"] = verbose
     original_options = cvxopt.solvers.options
     cvxopt.solvers.options = kwargs
-    solution = qp(*args, solver=solver, initvals=initvals_dict, **constraints)
+    res = qp(*args, solver=solver, initvals=initvals_dict, **constraints)
     cvxopt.solvers.options = original_options
 
-    if "optimal" not in solution["status"]:
-        return None
-    return np.array(solution["x"]).reshape((q.shape[0],))
+    solution = Solution()
+    if "optimal" not in res["status"]:
+        return solution
+    solution.x = np.array(res["x"]).reshape((q.shape[0],))
+    if b is not None:
+        solution.y = np.array(res["y"]).reshape((b.shape[0],))
+    if h is not None:
+        z_cvx = np.array(res["z"]).reshape((h.shape[0],))
+        n = P.shape[0]
+        if lb is not None and ub is not None:
+            solution.z_box = z_cvx[-n:] - z_cvx[-2 * n : -n]
+            solution.z = z_cvx[: -2 * n]
+        elif ub is not None:  # lb is None
+            solution.z_box = z_cvx[-n:]
+            solution.z = z_cvx[:-n]
+        elif lb is not None:  # ub is None
+            solution.z_box = -z_cvx[-n:]
+            solution.z = z_cvx[:-n]
+        else:  # lb is None and ub is None
+            solution.z = z_cvx
+    solution.obj = res["primal objective"]
+    solution.extras = res
+    return solution
+
+
+def cvxopt_solve_qp(
+    P: Union[np.ndarray, spa.csc_matrix],
+    q: np.ndarray,
+    G: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    h: Optional[np.ndarray] = None,
+    A: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    b: Optional[np.ndarray] = None,
+    lb: Optional[np.ndarray] = None,
+    ub: Optional[np.ndarray] = None,
+    solver: Optional[str] = None,
+    initvals: Optional[np.ndarray] = None,
+    verbose: bool = False,
+    **kwargs,
+) -> Optional[np.ndarray]:
+    """
+    Variant of :func:`qpsolvers.solvers.cvxopt_.quadprog_solve_qp2` returning
+    only the primal solution.
+
+    Returns
+    -------
+    :
+        Primal solution to the QP, if found, otherwise ``None``.
+    """
+    warnings.warn(
+        "The return type of this function will change "
+        "to qpsolvers.Solution in qpsolvers v3.0",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+    solution = cvxopt_solve_qp2(
+        P, q, G, h, A, b, lb, ub, initvals, verbose, **kwargs
+    )
+    return solution.x
