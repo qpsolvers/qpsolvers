@@ -26,6 +26,7 @@ and comments related to this commit on GitHub.)
 """
 
 from .qpsolvers import (
+    Problem,
     __version__,
     available_solvers,
     cvxopt_solve_qp,
@@ -48,6 +49,7 @@ from .qpsolvers import (
 )
 
 __all__ = [
+    "Problem",
     "__version__",
     "available_solvers",
     "cvxopt_solve_qp",
