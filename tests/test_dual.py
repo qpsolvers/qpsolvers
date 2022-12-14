@@ -25,8 +25,9 @@ Tests both primal and dual solutions to a set of problems.
 import unittest
 import warnings
 
-from qpsolvers import available_solvers, solve_problem
 from numpy.linalg import norm
+
+from qpsolvers import available_solvers, solve_problem
 
 from .solved_problems import get_qpsut01
 
@@ -85,5 +86,5 @@ for solver in available_solvers:
     setattr(
         TestDualMultipliers,
         f"test_qpsut01_{solver}",
-        TestDualMultipliers.get_test_01(solver),
+        TestDualMultipliers.get_test_qpsut01(solver),
     )
