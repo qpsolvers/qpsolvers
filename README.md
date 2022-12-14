@@ -52,7 +52,7 @@ $$
 
 Vector inequalities are taken coordinate by coordinate. For most solvers, the matrix $P$ should be [positive definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix).
 
-📢 With v2.5, tolerances for OSQP and SCS have been reverted to the solvers' defaults. For the previous setting, pass the additional keyword arguments ``eps_abs=1e-4``, ``eps_rel=1e-4`` to OSQP or ``eps_abs=1e-7``, ``eps_rel=1e-7`` to SCS. Changes to the API are reported in the [Announcements](https://github.com/stephane-caron/qpsolvers/discussions/categories/announcements).
+📢 **New with v2.7:** get dual multipliers at the solution using the [`solve_problem`](https://scaron.info/doc/qpsolvers/quadratic-programming.html#qpsolvers.solve_problem) function.
 
 ## Example
 
