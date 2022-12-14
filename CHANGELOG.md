@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 - Problem class with utility metrics on quadratic programs
 - Problem: condition number
 - ProxQP: return dual multipliers
+- qpOASES: return dual multipliers
 
 ### Changed
 

@@ -37,7 +37,7 @@ import warnings
 from typing import Any, List, Optional
 
 import numpy as np
-from numpy import array, hstack, ones, vstack, zeros
+from numpy import array, hstack, ones, vstack
 from qpoases import PyOptions as Options
 from qpoases import PyPrintLevel as PrintLevel
 from qpoases import PyQProblem as QProblem
@@ -186,7 +186,7 @@ def qpoases_solve_problem(
     P, q, G, h, A, b, lb, ub = problem.unpack()
     n = P.shape[0]
     lb_C: Optional[np.ndarray] = None
-    has_row_constraints = True
+    C = np.array([])
     if G is not None and h is not None:
         if A is not None and b is not None:
             C = vstack([G, A])
@@ -200,11 +200,9 @@ def qpoases_solve_problem(
             C = A
             lb_C = b
             ub_C = b
-        else:  # no equality constraint either
-            has_row_constraints = False
 
     args: List[Any] = []
-    if has_row_constraints:
+    if C.shape[0] > 0:
         qp = QProblem(n, C.shape[0])
         args = [P, q, C, lb, ub, lb_C, ub_C, array([max_wsr])]
     else:  # at most box constraints
@@ -216,17 +214,25 @@ def qpoases_solve_problem(
     options = __prepare_options(verbose, predefined_options, **kwargs)
     qp.setOptions(options)
     return_value = qp.init(*args)
+
+    solution = Solution(problem)
     if RET_INIT_FAILED <= return_value <= RET_INIT_FAILED_REGULARISATION:
-        return None
+        return solution
     if return_value == ReturnValue.MAX_NWSR_REACHED:
         print(f"qpOASES reached the maximum number of WSR ({max_wsr})")
-
-    x_opt = zeros(n)
+    x_opt = np.empty((n,))
+    z_opt = np.empty((n + C.shape[0],))
     qp.getPrimalSolution(x_opt)  # can't return RET_QP_NOT_SOLVED at this point
-    import IPython
-
-    IPython.embed()
-    return x_opt
+    qp.getDualSolution(z_opt)
+    solution.x = x_opt
+    m = G.shape[0] if G is not None else 0
+    if lb is not None or ub is not None:
+        solution.z_box = -z_opt[:n]
+    if G is not None:
+        solution.z = -z_opt[n : n + m]
+    if A is not None:
+        solution.y = -z_opt[n + m : n + m + A.shape[0]]
+    return solution
 
 
 def qpoases_solve_qp(
