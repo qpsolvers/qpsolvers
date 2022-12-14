@@ -37,16 +37,13 @@ from qpsolvers import (
 M = np.array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
 P = np.dot(M.T, M)  # this is a positive definite matrix
 q = np.dot(np.array([3.0, 2.0, 3.0]), M)
-G = np.array([[5.0, 2.0, 0.0], [-1.0, 2.0, -1.0]])
+G = np.array([[4.0, 2.0, 0.0], [-1.0, 2.0, -1.0]])
 h = np.array([1.0, -2.0])
 A = np.array([1.0, 1.0, 1.0]).reshape((1, 3))
 b = np.array([1.0])
-lb = -0.5 * np.ones(3)
-ub = 1.0 * np.ones(3)
+lb = np.array([-0.5, -0.4, -0.5])
+ub = np.array([1.0, 1.0, 1.0])
 
-if True:
-    G[0, 0] = 4.0
-    lb[1] = -0.4
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
