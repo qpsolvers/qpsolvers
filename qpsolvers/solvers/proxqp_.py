@@ -33,6 +33,8 @@ import numpy as np
 import scipy.sparse as spa
 from proxsuite import proxqp
 
+from ..solution import Solution
+
 
 def __combine_inequalities(G, h, lb, ub, n: int, use_csc: bool):
     """
@@ -109,7 +111,7 @@ def __select_backend(backend: Optional[str], use_csc: bool):
     raise ValueError(f'Unknown ProxQP backend "{backend}')
 
 
-def proxqp_solve_qp_dual(
+def proxqp_solve_qp2(
     P: Union[np.ndarray, spa.csc_matrix],
     q: Union[np.ndarray, spa.csc_matrix],
     G: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
@@ -122,12 +124,7 @@ def proxqp_solve_qp_dual(
     verbose: bool = False,
     backend: Optional[str] = None,
     **kwargs,
-) -> Tuple[
-    Optional[np.ndarray],
-    Optional[np.ndarray],
-    Optional[np.ndarray],
-    Optional[np.ndarray],
-]:
+) -> Solution:
     """
     Solve a Quadratic Program defined as:
 
