@@ -39,7 +39,7 @@ class Solution:
     extras :
         Other outputs, specific to each solver.
     obj :
-        Objective value at the solution (None if no solution was found).
+        Primal objective at the solution (None if no solution was found).
     x :
         Primal solution (None if no solution was found).
     y :

@@ -35,7 +35,7 @@ P = np.dot(M.T, M)  # this is a positive definite matrix
 q = np.dot(np.array([3.0, 2.0, 3.0]), M)
 G = np.array([[5.0, 2.0, 0.0], [-1.0, 2.0, -1.0]])
 h = np.array([1.0, -2.0])
-A = np.array([1.0, 1.0, 1.0])
+A = np.array([1.0, 1.0, 1.0]).reshape((1, 3))
 b = np.array([1.0])
 lb = -0.5 * np.ones(3)
 ub = 1.0 * np.ones(3)
@@ -43,8 +43,6 @@ ub = 1.0 * np.ones(3)
 if False:
     G[0, 0] = 4.0
     lb[1] = -0.4
-
-x_sol = np.array([0.41463414566726164, -0.41463414566726164, 1.0])
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -81,6 +79,19 @@ if __name__ == "__main__":
     print(f"Dual (A x == b): y = {solution.y}")
     print(f"Dual (lb <= x <= ub): z_box = {solution.z_box}")
     print("")
-    print("They should be close to:")
-    print(f"Primal: x* = {x_sol}")
+
+    dual_feasibility = np.linalg.norm(
+        P.dot(solution.x)
+        + G.T.dot(solution.z)
+        + A.T.dot(solution.y)
+        + solution.z_box
+        + q,
+        np.inf,
+    )
+
+    print("===================== OPTIMALITY CONDITIONS =====================")
     print("")
+    print("Dual feasibility:")
+    print(
+        f"    || P x + G^T z + A^T y + z_box + q || = {dual_feasibility:.1e}"
+    )
