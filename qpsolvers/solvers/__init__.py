@@ -249,6 +249,17 @@ except ImportError:
 # OSQP
 # ====
 
+osqp_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[ndarray],
+            bool,
+        ],
+        Solution,
+    ]
+] = None
+
 osqp_solve_qp: Optional[
     Callable[
         [
@@ -268,9 +279,9 @@ osqp_solve_qp: Optional[
 ] = None
 
 try:
-    from .osqp_ import osqp_solve_qp
+    from .osqp_ import osqp_solve_problem, osqp_solve_qp
 
-    solve_function["osqp"] = osqp_solve_qp
+    solve_function["osqp"] = osqp_solve_problem
     available_solvers.append("osqp")
     sparse_solvers.append("osqp")
 except ImportError:
