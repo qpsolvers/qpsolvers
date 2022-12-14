@@ -81,6 +81,17 @@ except ImportError:
 # ECOS
 # ====
 
+ecos_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[ndarray],
+            bool,
+        ],
+        Solution,
+    ]
+] = None
+
 ecos_solve_qp: Optional[
     Callable[
         [
@@ -100,9 +111,9 @@ ecos_solve_qp: Optional[
 ] = None
 
 try:
-    from .ecos_ import ecos_solve_qp
+    from .ecos_ import ecos_solve_qp, ecos_solve_problem
 
-    solve_function["ecos"] = ecos_solve_qp
+    solve_function["ecos"] = ecos_solve_problem
     available_solvers.append("ecos")
     dense_solvers.append("ecos")  # considered dense as it calls cholesky(P)
 except ImportError:
