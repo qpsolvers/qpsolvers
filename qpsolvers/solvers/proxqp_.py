@@ -27,7 +27,8 @@ rooted in revisited primal-dual proximal algorithms. If you use ProxQP in some
 academic work, consider citing the corresponding paper [Bambade2022]_.
 """
 
-from typing import Optional, Tuple, Union
+from typing import Optional, Union
+import warnings
 
 import numpy as np
 import scipy.sparse as spa
@@ -284,27 +285,9 @@ def proxqp_solve_qp(
     verbose: bool = False,
     backend: Optional[str] = None,
     **kwargs,
-) -> Tuple[
-    Optional[np.ndarray],
-    Optional[np.ndarray],
-    Optional[np.ndarray],
-    Optional[np.ndarray],
-]:
+) -> Optional[np.ndarray]:
     """
-    Solve a Quadratic Program defined as:
-
-    .. math::
-
-        \\begin{split}\\begin{array}{ll}
-        \\mbox{minimize} &
-            \\frac{1}{2} x^T P x + q^T x \\\\
-        \\mbox{subject to}
-            & G x \\leq h                \\\\
-            & A x = b                    \\\\
-            & lb \\leq x \\leq ub
-        \\end{array}\\end{split}
-
-    using `ProxQP <https://github.com/Simple-Robotics/proxsuite>`__.
+    Legacy version of :func:`qpsolvers.solvers.proxqp_.proxqp_solve_qp2`.
 
     Parameters
     ----------
@@ -335,54 +318,14 @@ def proxqp_solve_qp(
     Returns
     -------
     :
-        Solution to the QP, if found, otherwise ``None``.
-
-    Notes
-    -----
-    All other keyword arguments are forwarded as options to ProxQP. For
-    instance, you can call ``proxqp_solve_qp(P, q, G, h, eps_abs=1e-6)``.
-    For a quick overview, the solver accepts the following settings:
-
-    .. list-table::
-       :widths: 30 70
-       :header-rows: 1
-
-       * - Name
-         - Effect
-       * - ``x``
-         - Warm start value for the primal variable.
-       * - ``y``
-         - Warm start value for the dual Lagrange multiplier for equality
-           constraints.
-       * - ``z``
-         - Warm start value for the dual Lagrange multiplier for inequality
-           constraints.
-       * - ``eps_abs``
-         - Asbolute stopping criterion of the solver (default: 1e-3, note that
-           this is a laxer default than other solvers). See *e.g.*
-           [tolerances]_ for an overview of solver tolerances.
-       * - ``eps_rel``
-         - Relative stopping criterion of the solver. See *e.g.* [tolerances]_
-           for an overview of solver tolerances.
-       * - ``mu_eq``
-         - Proximal step size wrt equality constraints multiplier.
-       * - ``mu_in``
-         - Proximal step size wrt inequality constraints multiplier.
-       * - ``rho``
-         - Proximal step size wrt primal variable.
-       * - ``compute_preconditioner``
-         - If ``True`` (default), the preconditioner will be derived.
-       * - ``compute_timings``
-         - If ``True`` (default), timings will be computed by the solver (setup
-           time, solving time, and run time = setup time + solving time).
-       * - ``max_iter``
-         - Maximal number of authorized outer iterations.
-       * - ``initial_guess``
-         - Sets the initial guess option for initilizing x, y and z.
-
-    This list is not exhaustive. Check out the `solver documentation
-    <https://simple-robotics.github.io/proxsuite/>`__ for details.
+        Primal solution to the QP, if found, otherwise ``None``.
     """
+    warnings.warn(
+        "The return type of this function will change "
+        "to qpsolvers.Solution in qpsolvers v3.0",
+        DeprecationWarning,
+        stacklevel=2,
+    )
     solution = proxqp_solve_qp2(
         P, q, G, h, A, b, lb, ub, initvals, verbose, backend, **kwargs
     )
