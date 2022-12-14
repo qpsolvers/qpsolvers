@@ -50,20 +50,7 @@ def gurobi_solve_problem(
     **kwargs,
 ) -> Solution:
     """
-    Solve a Quadratic Program defined as:
-
-    .. math::
-
-        \\begin{split}\\begin{array}{ll}
-        \\mbox{minimize} &
-            \\frac{1}{2} x^T P x + q^T x \\\\
-        \\mbox{subject to}
-            & G x \\leq h                \\\\
-            & A x = b                    \\\\
-            & lb \\leq x \\leq ub
-        \\end{array}\\end{split}
-
-    using `Gurobi <http://www.gurobi.com/>`_.
+    Solve a quadratic program using `Gurobi <http://www.gurobi.com/>`_.
 
     Parameters
     ----------
@@ -77,7 +64,7 @@ def gurobi_solve_problem(
     Returns
     -------
     :
-        Solution to the QP, if found, otherwise ``None``.
+        Solution returned by the solver.
 
     Notes
     -----
