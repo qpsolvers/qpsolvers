@@ -116,7 +116,16 @@ class Solution:
         See for instance [tolerances]_ for an overview of optimality conditions
         and why this gap will be zero at the optimum.
         """
-        raise NotImplementedError()
+        P, q, G, h, A, b, lb, ub = self.problem.unpack()
+        xPx = self.x.T.dot(P.dot(self.x))
+        qx = q.dot(self.x)
+        hz = h.dot(self.z)
+        by = b.dot(self.y)
+        z_box_minus = np.minimum(self.z_box, 0.0)
+        z_box_plus = np.maximum(self.z_box, 0.0)
+        return abs(
+            xPx + qx + hz + by + lb.dot(z_box_minus) + ub.dot(z_box_plus)
+        )
 
     def is_optimal(self, eps_abs: float) -> bool:
         """
