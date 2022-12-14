@@ -70,7 +70,7 @@ class Solution:
         """
         return self.x is None
 
-    def primal_residual() -> float:
+    def primal_residual(self) -> float:
         """
         Compute the primal residual of the solution.
 
@@ -81,7 +81,7 @@ class Solution:
         """
         raise NotImplementedError()
 
-    def dual_residual() -> float:
+    def dual_residual(self) -> float:
         """
         Compute the dual residual of the solution.
 
@@ -92,7 +92,7 @@ class Solution:
         """
         raise NotImplementedError()
 
-    def duality_gap() -> float:
+    def duality_gap(self) -> float:
         """
         Compute the duality gap of the solution.
 
