@@ -79,7 +79,17 @@ class Solution:
         See for instance [tolerances]_ for an overview of optimality conditions
         and why this residual will be zero at the optimum.
         """
-        raise NotImplementedError()
+        _, _, G, h, A, b, lb, ub = self.problem.unpack()
+        x = self.x
+        return max(
+            [
+                0.0,
+                np.max(G.dot(x) - h),
+                np.linalg.norm(A.dot(x) - b, np.inf),
+                np.max(lb - x),
+                np.max(x - ub),
+            ]
+        )
 
     def dual_residual(self) -> float:
         """
