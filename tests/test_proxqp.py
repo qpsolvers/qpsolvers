@@ -20,8 +20,6 @@
 
 import unittest
 
-from qpsolvers import solve_qp
-
 from .problems import get_sd3310_problem
 
 try:
@@ -38,14 +36,13 @@ try:
             Try the dense backend.
             """
             problem = get_sd3310_problem()
-            solve_qp(
+            proxqp_solve_qp(
                 problem.P,
                 problem.q,
                 problem.G,
                 problem.h,
                 problem.A,
                 problem.b,
-                solver="proxqp",
                 backend="dense",
             )
 
@@ -54,14 +51,13 @@ try:
             Try the sparse backend.
             """
             problem = get_sd3310_problem()
-            solve_qp(
+            proxqp_solve_qp(
                 problem.P,
                 problem.q,
                 problem.G,
                 problem.h,
                 problem.A,
                 problem.b,
-                solver="proxqp",
                 backend="sparse",
             )
 
@@ -71,14 +67,13 @@ try:
             """
             problem = get_sd3310_problem()
             with self.assertRaises(ValueError):
-                solve_qp(
+                proxqp_solve_qp(
                     problem.P,
                     problem.q,
                     problem.G,
                     problem.h,
                     problem.A,
                     problem.b,
-                    solver="proxqp",
                     backend="invalid",
                 )
 
@@ -89,14 +84,13 @@ try:
             """
             problem = get_sd3310_problem()
             with self.assertRaises(ValueError):
-                solve_qp(
+                proxqp_solve_qp(
                     problem.P,
                     problem.q,
                     problem.G,
                     problem.h,
                     problem.A,
                     problem.b,
-                    solver="proxqp",
                     initvals=problem.q,
                     x=problem.q,
                 )
@@ -104,12 +98,18 @@ try:
         def test_invalid_inequalities(self):
             """
             Raise an exception in an implementation-dependent inconsistent set
-            of parameters. This won't happen when the function is called by
-            `solve_qp`, but it may happen when it is called directly.
+            of parameters. This may happen when :func:`proxqp_solve_qp` it is
+            called directly.
             """
             problem = get_sd3310_problem()
             with self.assertRaises(ValueError):
-                proxqp_solve_qp(problem.P, problem.q, G=problem.G, h=None, lb=problem.q,)
+                proxqp_solve_qp(
+                    problem.P,
+                    problem.q,
+                    G=problem.G,
+                    h=None,
+                    lb=problem.q,
+                )
 
 
 except ImportError:  # ProxSuite not installed
