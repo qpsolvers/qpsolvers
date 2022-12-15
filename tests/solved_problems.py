@@ -48,3 +48,41 @@ def get_qpsut01() -> Solution:
     solution.y = np.array([-5.8])
     solution.z_box = np.array([0.0, -1.8, 3.0])
     return solution
+
+def get_qpsut02() -> Solution:
+    """
+    Get QPSUT02 problem and its solution.
+    """
+    M = np.array(
+        [
+            [1.0, -2.0, 0.0, 8.0],
+            [-6.0, 3.0, 1.0, 4.0],
+            [-2.0, 1.0, 0.0, 1.0],
+            [9.0, 9.0, 5.0, 3.0],
+        ]
+    )
+    P = np.dot(M.T, M)  # this is a positive definite matrix
+    q = np.dot(np.array([-3.0, 2.0, 0.0, 9.0]), M)
+    G = np.array(
+        [
+            [4.0, 7.0, 0.0, -2.0],
+        ]
+    )
+    h = np.array([30.0])
+    A = np.array(
+        [
+            [1.0, 1.0, 1.0, 1.0],
+            [1.0, -1.0, -1.0, 1.0],
+        ]
+    )
+    b = np.array([10.0, 0.0])
+    lb = np.array([-2.0, -1.0, -3.0, 1.0])
+    ub = np.array([4.0, 2.0, 6.0, 10.0])
+    problem = Problem(P, q, G, h, A, b, lb, ub)
+
+    solution = Solution(problem)
+    solution.x = np.array([1.36597938, -1.0, 6.0, 3.63402062])
+    solution.z = np.array([0.0])
+    solution.y = np.array([-377.60314303, -62.75251185])  # YMMV
+    solution.z_box = np.array([0.0, -138.9585918, 37.53106937, 0.0])  # YMMV
+    return solution
