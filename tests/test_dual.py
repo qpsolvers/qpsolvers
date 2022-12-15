@@ -23,13 +23,12 @@ Tests both primal and dual solutions to a set of problems.
 """
 
 import unittest
-import warnings
 
 from numpy.linalg import norm
 
 from qpsolvers import available_solvers, solve_problem
 
-from .solved_problems import get_qpsut01
+from .solved_problems import get_qpsut01, get_qpsut02
 
 
 class TestDualMultipliers(unittest.TestCase):
@@ -44,13 +43,6 @@ class TestDualMultipliers(unittest.TestCase):
     corresponding test function ``test_{foo}_{solver}`` is then added to the
     fixture below the class definition.
     """
-
-    def setUp(self):
-        """
-        Prepare test fixture.
-        """
-        warnings.simplefilter("ignore", category=DeprecationWarning)
-        warnings.simplefilter("ignore", category=UserWarning)
 
     @staticmethod
     def get_test_qpsut01(solver):
@@ -84,9 +76,40 @@ class TestDualMultipliers(unittest.TestCase):
                 else 1e-7
             )
             self.assertLess(norm(solution.x - ref_solution.x), eps_abs)
+            # NB: in general the dual solution is not unique (that's why the
+            # other tests check residuals). This test only works because the
+            # dual solution is unique in this particular problem.
             self.assertLess(norm(solution.y - ref_solution.y), eps_abs)
             self.assertLess(norm(solution.z - ref_solution.z), eps_abs)
             self.assertLess(norm(solution.z_box - ref_solution.z_box), eps_abs)
+
+        return test
+
+    @staticmethod
+    def get_test_qpsut02(solver):
+        """
+        Get test function for a given solver.
+
+        Parameters
+        ----------
+        solver : string
+            Name of the solver to test.
+
+        Returns
+        -------
+        test : function
+            Test function for that solver.
+        """
+
+        def test(self):
+            ref_solution = get_qpsut02()
+            problem = ref_solution.problem
+            solution = solve_problem(problem, solver=solver)
+            eps_abs = 1e-8
+            self.assertLess(norm(solution.x - ref_solution.x), eps_abs)
+            self.assertLess(solution.primal_residual(), eps_abs)
+            self.assertLess(solution.dual_residual(), eps_abs)
+            self.assertLess(solution.duality_gap(), eps_abs)
 
         return test
 
@@ -97,4 +120,9 @@ for solver in available_solvers:
         TestDualMultipliers,
         f"test_qpsut01_{solver}",
         TestDualMultipliers.get_test_qpsut01(solver),
+    )
+    setattr(
+        TestDualMultipliers,
+        f"test_qpsut02_{solver}",
+        TestDualMultipliers.get_test_qpsut02(solver),
     )
