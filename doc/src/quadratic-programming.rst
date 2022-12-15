@@ -119,6 +119,7 @@ Problem
 The :class:`.Problem` class is simply a placeholder for the matrices and vectors that define a quadratic program:
 
 .. autoclass:: qpsolvers.problem.Problem
+   :members:
 
 Solution
 --------
@@ -126,3 +127,4 @@ Solution
 The :class:`.Solution` class describes the solution found by a solver to a given problem:
 
 .. autoclass:: qpsolvers.solution.Solution
+   :members:
