@@ -46,8 +46,8 @@ class Problem:
                 & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
-    This is a convenience class providing sanity checks and metrics around a
-    given program, for instance its condition number.
+    This class provides sanity checks and metrics such as the condition number
+    of a problem.
 
     Attributes
     ----------
@@ -117,6 +117,11 @@ class Problem:
     ]:
         """
         Get problem matrices as a tuple.
+
+        Returns
+        -------
+        :
+            Tuple ``(P, q, G, h, A, b, lb, ub)`` of problem matrices.
         """
         return (
             self.P,
@@ -156,8 +161,8 @@ class Problem:
 
             M =
             \\begin{bmatrix}
-                P & G^T & A^T \\
-                G & 0   & 0   \\
+                P & G^T & A^T \\\\
+                G & 0   & 0   \\\\
                 A & 0   & 0
             \\end{bmatrix}
 
@@ -166,8 +171,8 @@ class Problem:
         :
             Condition number of the problem.
 
-        See also
-        --------
+        Notes
+        -----
         Having a low condition number (say, less than 1e10) condition number is
         strongly tied to the capacity of numerical solvers to solve a problem.
         This is the motivation for preconditioning, as detailed for instance in

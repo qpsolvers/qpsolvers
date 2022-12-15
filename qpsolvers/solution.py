@@ -34,22 +34,26 @@ from .problem import Problem
 class Solution:
 
     """
-    Output from a QP solver.
+    Solution provided by a QP solver to a given problem.
 
     Attributes
     ----------
-    extras :
-        Other outputs, specific to each solver.
+    problem :
+        Quadratic program the solution corresponds to.
+
     obj :
         Value of the primal objective at the solution (``None`` if no solution
         was found).
+
     x :
         Solution vector of the primal quadratic program (``None`` if no
         solution was found).
+
     y :
         Dual multipliers for equality constraints (``None`` if no solution was
         found). The dimension of :math:`y` is equal to the number of equality
         constraints. The values :math:`y_i` can be either positive or negative.
+
     z :
         Dual multipliers for linear inequality constraints (``None`` if no
         solution was found). The dimension of :math:`z` is equal to the number
@@ -72,6 +76,9 @@ class Solution:
           are active and :math:`lb_i < x_i < ub_i`.
         - If :math:`z_{box,i} > 0`, then the upper bound :math:`x_i = ub_i` is
           active at the solution.
+
+    extras :
+        Other outputs, specific to each solver.
     """
 
     problem: Problem
