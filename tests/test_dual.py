@@ -109,13 +109,11 @@ class TestDualMultipliers(unittest.TestCase):
                 5e-2
                 if solver == "ecos"
                 else 5e-4
-                if solver in "scs"
+                if solver in ["proxqp", "scs"]
                 else 1e-4
                 if solver == "cvxopt"
                 else 1e-5
                 if solver in ["highs", "osqp"]
-                else 2e-6
-                if solver == "proxqp"
                 else 1e-7
                 if solver == "gurobi"
                 else 1e-8
