@@ -23,7 +23,7 @@
 from .problem import Problem
 from .solution import Solution
 from .solve_ls import solve_ls
-from .solve_qp import solve_qp, solve_problem
+from .solve_qp import solve_problem, solve_qp
 from .solve_safer_qp import solve_safer_qp
 from .solvers import (
     available_solvers,

@@ -27,8 +27,8 @@ optimization problems. Its interior-point method is geared towards large scale
 sparse problems, in particular for linear or conic quadratic programs.
 """
 
-from typing import Optional, Union
 import warnings
+from typing import Optional, Union
 
 import cvxopt.msk
 import mosek

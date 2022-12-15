@@ -23,8 +23,7 @@
 from typing import Any, Dict, Optional, Tuple
 
 from numpy import hstack, ndarray, sqrt, vstack, zeros
-from numpy.linalg import cholesky
-from numpy.linalg import LinAlgError
+from numpy.linalg import LinAlgError, cholesky
 from scipy.sparse import csc_matrix
 
 
