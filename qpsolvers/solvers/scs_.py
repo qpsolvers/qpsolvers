@@ -33,9 +33,7 @@ from typing import Any, Dict, Optional, Tuple, Union
 import numpy as np
 import scipy.sparse as spa
 from numpy import ndarray
-from numpy.linalg import norm
 from scipy.sparse import csc_matrix
-from scipy.sparse.linalg import lsqr
 from scs import solve
 
 from ..conversions import warn_about_sparse_conversion
@@ -118,10 +116,11 @@ def __solve_unconstrained(problem: Problem) -> Solution:
     """
     P, q, _, _, _, _, _, _ = problem.unpack()
     solution = Solution(problem)
-    solution.x = lsqr(P, -q)[0]
-    if norm(P @ solution.x + q) > 1e-9:
+    solution.x = spa.linalg.lsqr(P, -q)[0]
+    cost_check = np.linalg.norm(P @ solution.x + q)
+    if cost_check > 1e-9:
         raise ValueError(
-            "problem is unbounded below, "
+            f"problem is unbounded below ({cost_check=}), "
             "q has component in the nullspace of P"
         )
     return solution
