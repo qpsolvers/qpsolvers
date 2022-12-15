@@ -102,7 +102,10 @@ class Solution:
 
         .. math::
 
-            r_p := \\max(\\| A x - b \\|_\\infty, [G x - h]_+),
+            r_p := \\max(\\| A x - b \\|_\\infty, [G x - h]^+,
+            [lb - x]^+, [x - ub]^+)
+
+        were :math:`v^- = \\min(v, 0)` and :math:`v^+ = \\max(v, 0)`.
 
         Returns
         -------
@@ -134,7 +137,7 @@ class Solution:
 
         .. math::
 
-            r_d := \\| P x + q + A^T y + G^T z \\|_\\infty
+            r_d := \\| P x + q + A^T y + G^T z + z_{box} \\|_\\infty
 
         Returns
         -------
@@ -179,7 +182,10 @@ class Solution:
 
         .. math::
 
-            r_g := | x^T P x + q^T x + b^T y + h^T z |
+            r_g := | x^T P x + q^T x + b^T y + h^T z +
+            lb^T z_{box}^- + ub^T z_{box}^+ |
+
+        were :math:`v^- = \\min(v, 0)` and :math:`v^+ = \\max(v, 0)`.
 
         Returns
         -------
