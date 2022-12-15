@@ -51,6 +51,17 @@ See the ``examples/`` folder in the repository for more use cases. For a more
 general introduction you can also check out this post on `quadratic programming
 in Python <https://scaron.info/blog/quadratic-programming-in-python.html>`_.
 
+Problem class
+=============
+
+Alternatively, we can define the matrices and vectors using the :class:`.Problem` class:
+
+.. autoclass:: qpsolvers.problem.Problem
+   :members:
+
+The solve function corresponding to :class:`.Problem` is :func:`.solve_problem`
+rather than :func:`.solve_qp`.
+
 Dual multipliers
 ================
 
@@ -110,23 +121,13 @@ introduction to dual multipliers you can also check out this post on
 `optimality conditions and numerical tolerances in QP solvers
 <https://scaron.info/blog/optimality-conditions-and-numerical-tolerances-in-qp-solvers.html>`_.
 
-Problem class
-=============
-
-The :class:`.Problem` class is simply a placeholder for the matrices and vectors that define a quadratic program:
-
-.. autoclass:: qpsolvers.problem.Problem
-   :members:
-
 Optimality of a solution
 ========================
 
-The :class:`.Solution` class describes the solution found by a solver to a given problem:
-
-.. autoclass:: qpsolvers.solution.Solution
-   :members:
-
-We can for instance check
+The :class:`.Solution` class describes the solution found by a solver to a
+given problem. It is linked to the corresponding :class:`.Problem`, which it
+can use for instance to check residuals. We can for instance check the
+optimality of the solution returned by a solver with:
 
 .. code::
 
@@ -160,4 +161,7 @@ This example prints:
     - Duality gap: 0.0e+00
 
 You can check out [tolerances]_ for an overview of optimality conditions and
-why the residuals of an optimal solution will all be close to zero.
+why a solution is optimal if and only if these three residuals are zero.
+
+.. autoclass:: qpsolvers.solution.Solution
+   :members:
