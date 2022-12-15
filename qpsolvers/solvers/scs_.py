@@ -119,7 +119,7 @@ def __solve_unconstrained(problem: Problem) -> Solution:
     solution = Solution(problem)
     solution.x = lsqr(P, -q)[0]
     cost_check = np.linalg.norm(P @ solution.x + q)
-    if cost_check > 1e-9:
+    if cost_check > 1e-8:
         raise ValueError(
             f"problem is unbounded below (cost_check={cost_check:.1e}), "
             "q has component in the nullspace of P"
