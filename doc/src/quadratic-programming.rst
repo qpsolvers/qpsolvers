@@ -6,8 +6,8 @@
 Quadratic programming
 *********************
 
-Primal solution
-===============
+Primal problem
+==============
 
 A quadratic program is defined in standard form as:
 
@@ -118,10 +118,13 @@ The :class:`.Problem` class is simply a placeholder for the matrices and vectors
 .. autoclass:: qpsolvers.problem.Problem
    :members:
 
-Solution class
-==============
+Optimality conditions
+=====================
 
 The :class:`.Solution` class describes the solution found by a solver to a given problem:
 
 .. autoclass:: qpsolvers.solution.Solution
    :members:
+
+See for instance [tolerances]_ for an overview of optimality conditions and why
+the residuals of an optimal solution will all be close to zero.

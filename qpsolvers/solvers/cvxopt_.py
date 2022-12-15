@@ -216,11 +216,11 @@ def cvxopt_solve_qp(
     Parameters
     ----------
     P :
-        Symmetric quadratic-cost matrix. Together with :math:`A` and :math:`G`,
-        it should satisfy :math:`\\mathrm{rank}([P\\ A^T\\ G^T]) = n`, see the
-        rank assumptions below.
+        Symmetric cost matrix. Together with :math:`A` and :math:`G`, it should
+        satisfy :math:`\\mathrm{rank}([P\\ A^T\\ G^T]) = n`, see the rank
+        assumptions below.
     q :
-        Quadratic-cost vector.
+        Cost vector.
     G :
         Linear inequality matrix. Together with :math:`P` and :math:`A`, it
         should satisfy :math:`\\mathrm{rank}([P\\ A^T\\ G^T]) = n`, see the
