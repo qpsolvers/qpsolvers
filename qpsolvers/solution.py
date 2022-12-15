@@ -85,18 +85,22 @@ class Solution:
     @property
     def is_empty(self) -> bool:
         """
-        True if the solution is empty.
+        Check whether the solution is empty.
         """
         return self.x is None
 
     def primal_residual(self) -> float:
         """
-        Compute the primal residual of the solution.
+        Compute the primal residual of the solution:
+
+        .. math::
+
+            r_p := \\max(\\| A x_k - b \\|_\\infty, [G x_k - h]_+),
 
         Returns
         -------
         :
-            Primal residual if it is defined, infinity otherwise.
+            Primal residual if it is defined, ``np.inf`` otherwise.
 
         Notes
         -----
@@ -119,12 +123,16 @@ class Solution:
 
     def dual_residual(self) -> float:
         """
-        Compute the dual residual of the solution.
+        Compute the dual residual of the solution:
+
+        .. math::
+
+            r_d := \\| P x_k + q + A^T y_k + G^T z_k \\|_\\infty
 
         Returns
         -------
         :
-            Dual residual if it is defined, infinity otherwise.
+            Dual residual if it is defined, ``np.inf`` otherwise.
 
         Notes
         -----
@@ -160,12 +168,16 @@ class Solution:
 
     def duality_gap(self) -> float:
         """
-        Compute the duality gap of the solution.
+        Compute the duality gap of the solution:
+
+        .. math::
+
+            r_g := | x_k^T P x_k + q^T x_k + b^T y_k + h^T z_k |
 
         Returns
         -------
         :
-            Duality gap if it is defined, infinity otherwise.
+            Duality gap if it is defined, ``np.inf`` otherwise.
 
         Notes
         -----
@@ -201,7 +213,7 @@ class Solution:
 
     def is_optimal(self, eps_abs: float) -> bool:
         """
-        Check all optimality conditions for the solution.
+        Check whether the solution is indeed optimal.
 
         Parameters
         ----------
@@ -211,8 +223,8 @@ class Solution:
 
         Notes
         -----
-        See for instance [tolerances]_ for an overview of how we check for
-        optimality.
+        See for instance [tolerances]_ for an overview of optimality conditions
+        in quadratic programming.
         """
         return (
             self.primal_residual() < eps_abs

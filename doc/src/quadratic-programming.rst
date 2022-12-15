@@ -110,19 +110,16 @@ introduction to dual multipliers you can also check out this post on
 `optimality conditions and numerical tolerances in QP solvers
 <https://scaron.info/blog/optimality-conditions-and-numerical-tolerances-in-qp-solvers.html>`_.
 
-Problems and solutions
-======================
-
-Problem
--------
+Problem class
+=============
 
 The :class:`.Problem` class is simply a placeholder for the matrices and vectors that define a quadratic program:
 
 .. autoclass:: qpsolvers.problem.Problem
    :members:
 
-Solution
---------
+Solution class
+==============
 
 The :class:`.Solution` class describes the solution found by a solver to a given problem:
 
