@@ -34,4 +34,5 @@ class TestMOSEK(unittest.TestCase):
     def test_problem(self):
         problem = get_sd3310_problem()
         P, q, G, h, A, b, lb, ub = problem.unpack()
-        self.assertIsNotNone(mosek_solve_qp(P, q, G, h, A, b, lb, ub))
+        if mosek_solve_qp is not None:
+            self.assertIsNotNone(mosek_solve_qp(P, q, G, h, A, b, lb, ub))
