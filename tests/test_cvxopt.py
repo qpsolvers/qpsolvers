@@ -29,7 +29,7 @@ from numpy import array, ones
 from numpy.linalg import norm
 from scipy.sparse import csc_matrix
 
-from qpsolvers import solve_qp
+from qpsolvers.solvers import cvxopt_solve_qp
 
 from .problems import get_sd3310_problem
 
@@ -79,7 +79,7 @@ class TestCVXOPT(unittest.TestCase):
         Test CVXOPT on a sparse problem.
         """
         P, q, G, h = self.get_sparse_problem()
-        x = solve_qp(P, q, G, h, solver="cvxopt")
+        x = cvxopt_solve_qp(P, q, G, h)
         self.assertIsNotNone(x)
         known_solution = array([2.0] * 149 + [3.0])
         sol_tolerance = 1e-2  # aouch, not great!
@@ -91,14 +91,13 @@ class TestCVXOPT(unittest.TestCase):
         Call CVXOPT with various solver-specific settings.
         """
         problem = get_sd3310_problem()
-        x = solve_qp(
+        x = cvxopt_solve_qp(
             problem.P,
             problem.q,
             problem.G,
             problem.h,
             problem.A,
             problem.b,
-            solver="cvxopt",
             maxiters=10,
             abstol=1e-1,
             reltol=1e-1,
