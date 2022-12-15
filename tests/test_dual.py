@@ -105,7 +105,19 @@ class TestDualMultipliers(unittest.TestCase):
             ref_solution = get_qpsut02()
             problem = ref_solution.problem
             solution = solve_problem(problem, solver=solver)
-            eps_abs = 1e-8
+            eps_abs = (
+                5e-2
+                if solver == "ecos"
+                else 5e-4
+                if solver in "scs"
+                else 1e-4
+                if solver == "cvxopt"
+                else 1e-5
+                if solver in ["highs", "osqp"]
+                else 1e-7
+                if solver == "gurobi"
+                else 1e-8
+            )
             self.assertLess(norm(solution.x - ref_solution.x), eps_abs)
             self.assertLess(solution.primal_residual(), eps_abs)
             self.assertLess(solution.dual_residual(), eps_abs)
