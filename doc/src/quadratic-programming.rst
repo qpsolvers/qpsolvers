@@ -118,13 +118,46 @@ The :class:`.Problem` class is simply a placeholder for the matrices and vectors
 .. autoclass:: qpsolvers.problem.Problem
    :members:
 
-Optimality conditions
-=====================
+Optimality of a solution
+========================
 
 The :class:`.Solution` class describes the solution found by a solver to a given problem:
 
 .. autoclass:: qpsolvers.solution.Solution
    :members:
 
-See for instance [tolerances]_ for an overview of optimality conditions and why
-the residuals of an optimal solution will all be close to zero.
+We can for instance check
+
+.. code::
+
+    import numpy as np
+    from qpsolvers import Problem, solve_problem
+
+    M = np.array([[1., 2., 0.], [-8., 3., 2.], [0., 1., 1.]])
+    P = M.T.dot(M)  # quick way to build a symmetric matrix
+    q = np.array([3., 2., 3.]).dot(M).reshape((3,))
+    G = np.array([[1., 2., 1.], [2., 0., 1.], [-1., 2., -1.]])
+    h = np.array([3., 2., -2.]).reshape((3,))
+    A = np.array([1., 1., 1.])
+    b = np.array([1.])
+    lb = -0.6 * np.ones(3)
+    ub = +0.7 * np.ones(3)
+    problem = Problem(P, q, G, h, A, b, lb, ub)
+
+    solution = solve_problem(problem, solver="quadprog")
+    print(f"- Solution is{'' if solution.is_optimal(1e-8) else ' NOT'} optimal")
+    print(f"- Primal residual: {solution.primal_residual():.1e}")
+    print(f"- Dual residual: {solution.dual_residual():.1e}")
+    print(f"- Duality gap: {solution.duality_gap():.1e}")
+
+This example prints:
+
+.. code::
+
+    - Solution is optimal
+    - Primal residual: 1.1e-16
+    - Dual residual: 1.4e-14
+    - Duality gap: 0.0e+00
+
+You can check out [tolerances]_ for an overview of optimality conditions and
+why the residuals of an optimal solution will all be close to zero.
