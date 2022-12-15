@@ -1,6 +1,6 @@
 # QP Solvers for Python
 
-[![Build](https://img.shields.io/github/workflow/status/stephane-caron/qpsolvers/test.yml?branch=master)](https://github.com/stephane-caron/qpsolvers/actions)
+[![Build](https://img.shields.io/github/actions/workflow/status/stephane-caron/qpsolvers/test.yml?branch=master)](https://github.com/stephane-caron/qpsolvers/actions)
 [![Coverage](https://coveralls.io/repos/github/stephane-caron/qpsolvers/badge.svg?branch=master)](https://coveralls.io/github/stephane-caron/qpsolvers?branch=master)
 [![Documentation](https://img.shields.io/badge/docs-online-brightgreen?style=flat)](https://scaron.info/doc/qpsolvers/)
 [![Downloads/month](https://pepy.tech/badge/qpsolvers/month)](https://pepy.tech/project/qpsolvers)
