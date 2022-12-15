@@ -45,13 +45,13 @@ class TestDualMultipliers(unittest.TestCase):
     """
 
     @staticmethod
-    def get_test_qpsut01(solver):
+    def get_test_qpsut01(solver: str):
         """
         Get test function for a given solver.
 
         Parameters
         ----------
-        solver : string
+        solver :
             Name of the solver to test.
 
         Returns
@@ -86,13 +86,13 @@ class TestDualMultipliers(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_qpsut02(solver):
+    def get_test_qpsut02(solver: str):
         """
         Get test function for a given solver.
 
         Parameters
         ----------
-        solver : string
+        solver :
             Name of the solver to test.
 
         Returns
