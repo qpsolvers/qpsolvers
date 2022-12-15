@@ -34,6 +34,7 @@ import numpy as np
 import scipy.sparse as spa
 from numpy import ndarray
 from scipy.sparse import csc_matrix
+from scipy.sparse.linalg import lsqr
 from scs import solve
 
 from ..conversions import warn_about_sparse_conversion
@@ -116,7 +117,7 @@ def __solve_unconstrained(problem: Problem) -> Solution:
     """
     P, q, _, _, _, _, _, _ = problem.unpack()
     solution = Solution(problem)
-    solution.x = spa.linalg.lsqr(P, -q)[0]
+    solution.x = lsqr(P, -q)[0]
     cost_check = np.linalg.norm(P @ solution.x + q)
     if cost_check > 1e-9:
         raise ValueError(
