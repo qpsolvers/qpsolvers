@@ -97,9 +97,10 @@ y^*, z_\mathit{box}^*)`, build a :class:`.Problem` and call the
     b = np.array([1.])
     lb = -0.6 * np.ones(3)
     ub = +0.7 * np.ones(3)
-    problem = Problem(P, q, G, h, A, b, lb, ub)
 
+    problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = solve_problem(problem, solver="proxqp")
+
     print(f"Primal: x = {solution.x}")
     print(f"Dual (Gx <= h): z = {solution.z}")
     print(f"Dual (Ax == b): y = {solution.y}")
@@ -129,7 +130,7 @@ given problem. It is linked to the corresponding :class:`.Problem`, which it
 can use for instance to check residuals. We can for instance check the
 optimality of the solution returned by a solver with:
 
-.. code::
+.. code:: python
 
     import numpy as np
     from qpsolvers import Problem, solve_problem
@@ -143,9 +144,10 @@ optimality of the solution returned by a solver with:
     b = np.array([1.])
     lb = -0.6 * np.ones(3)
     ub = +0.7 * np.ones(3)
-    problem = Problem(P, q, G, h, A, b, lb, ub)
 
+    problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = solve_problem(problem, solver="quadprog")
+
     print(f"- Solution is{'' if solution.is_optimal(1e-8) else ' NOT'} optimal")
     print(f"- Primal residual: {solution.primal_residual():.1e}")
     print(f"- Dual residual: {solution.dual_residual():.1e}")
