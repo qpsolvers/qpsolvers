@@ -34,4 +34,5 @@ class TestQpSwift(unittest.TestCase):
     def test_problem(self):
         problem = get_sd3310_problem()
         P, q, G, h, A, b, lb, ub = problem.unpack()
-        self.assertIsNotNone(qpswift_solve_qp(P, q, G, h, A, b, lb, ub))
+        if qpswift_solve_qp is not None:
+            self.assertIsNotNone(qpswift_solve_qp(P, q, G, h, A, b, lb, ub))
