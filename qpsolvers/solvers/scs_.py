@@ -107,7 +107,7 @@ def __solve_unconstrained(problem: Problem) -> Solution:
     Returns
     -------
     :
-        Solution to the unconstrained QP.
+        Solution to the unconstrained QP, if it is bounded.
 
     Raises
     ------
