@@ -41,12 +41,17 @@ class TestUtils(unittest.TestCase):
         """
         Printing a matrix-vector pair outputs the proper labels.
         """
-        stdout_capture = io.StringIO()
-        sys.stdout = stdout_capture
-        print_matrix_vector(self.G, "ineq_matrix", self.h, "ineq_vector")
-        sys.stdout = sys.__stdout__
-        output = stdout_capture.getvalue()
-        self.assertIn("ineq_matrix =", output)
-        self.assertIn(str(self.G[0][1]), output)
-        self.assertIn("ineq_vector =", output)
-        self.assertIn(str(self.h[1]), output)
+        def run_test(G, h):
+            stdout_capture = io.StringIO()
+            sys.stdout = stdout_capture
+            print_matrix_vector(G, "ineq_matrix", h, "ineq_vector")
+            sys.stdout = sys.__stdout__
+            output = stdout_capture.getvalue()
+            self.assertIn("ineq_matrix =", output)
+            self.assertIn(str(G[0][1]), output)
+            self.assertIn("ineq_vector =", output)
+            self.assertIn(str(h[1]), output)
+
+        run_test(self.G, self.h)
+        run_test(self.G, self.h[:-1])
+        run_test(self.G[:-1], self.h)
