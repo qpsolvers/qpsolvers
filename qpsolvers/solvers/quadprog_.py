@@ -210,9 +210,9 @@ def quadprog_solve_qp(
     Parameters
     ----------
     P :
-        Symmetric quadratic-cost matrix.
+        Symmetric cost matrix.
     q :
-        Quadratic-cost vector.
+        Cost vector.
     G :
         Linear inequality constraint matrix.
     h :

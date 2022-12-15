@@ -55,9 +55,9 @@ class TestCVXOPT(unittest.TestCase):
         Returns
         -------
         P :
-            Symmetric quadratic-cost matrix .
+            Symmetric cost matrix.
         q :
-            Quadratic-cost vector.
+            Cost vector.
         G :
             Linear inequality matrix.
         h :

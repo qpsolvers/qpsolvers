@@ -50,7 +50,7 @@ def __set_hessian(model: highspy.HighsModel, P: spa.csc_matrix) -> None:
     model :
         HiGHS model.
     P :
-        Positive semidefinite quadratic-cost matrix.
+        Positive semidefinite cost matrix.
     """
     model.hessian_.dim_ = P.shape[0]
     model.hessian_.start_ = P.indptr
@@ -75,7 +75,7 @@ def __set_columns(
     model :
         HiGHS model.
     q :
-        Quadratic-cost vector.
+        Cost vector.
     lb :
         Lower bound constraint vector.
     ub :
@@ -271,9 +271,9 @@ def highs_solve_qp(
     Parameters
     ----------
     P :
-        Positive semidefinite quadratic-cost matrix.
+        Positive semidefinite cost matrix.
     q :
-        Quadratic-cost vector.
+        Cost vector.
     G :
         Linear inequality constraint matrix.
     h :

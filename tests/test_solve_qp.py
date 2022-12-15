@@ -74,9 +74,9 @@ class TestSolveQP(unittest.TestCase):
         Returns
         -------
         P : numpy.ndarray
-            Symmetric quadratic-cost matrix .
+            Symmetric cost matrix .
         q : numpy.ndarray
-            Quadratic-cost vector.
+            Cost vector.
         G : numpy.ndarray
             Linear inequality matrix.
         h : numpy.ndarray
@@ -102,9 +102,9 @@ class TestSolveQP(unittest.TestCase):
         Returns
         -------
         P : scipy.sparse.csc_matrix
-            Symmetric quadratic-cost matrix .
+            Symmetric cost matrix.
         q : numpy.ndarray
-            Quadratic-cost vector.
+            Cost vector.
         G : scipy.sparse.csc_matrix
             Linear inequality matrix.
         h : numpy.ndarray

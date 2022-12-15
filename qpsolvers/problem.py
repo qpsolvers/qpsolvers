@@ -52,10 +52,10 @@ class Problem:
     Attributes
     ----------
     P :
-        Symmetric quadratic-cost matrix (most solvers require it to be definite
+        Symmetric cost matrix (most solvers require it to be definite
         as well).
     q :
-        Quadratic-cost vector.
+        Cost vector.
     G :
         Linear inequality matrix.
     h :

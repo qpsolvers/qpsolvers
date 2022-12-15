@@ -260,9 +260,9 @@ def proxqp_solve_qp(
     Parameters
     ----------
     P :
-        Positive semidefinite quadratic-cost matrix.
+        Positive semidefinite cost matrix.
     q :
-        Quadratic-cost vector.
+        Cost vector.
     G :
         Linear inequality constraint matrix.
     h :
