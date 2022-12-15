@@ -102,7 +102,7 @@ class Solution:
 
         .. math::
 
-            r_p := \\max(\\| A x_k - b \\|_\\infty, [G x_k - h]_+),
+            r_p := \\max(\\| A x - b \\|_\\infty, [G x - h]_+),
 
         Returns
         -------
@@ -134,7 +134,7 @@ class Solution:
 
         .. math::
 
-            r_d := \\| P x_k + q + A^T y_k + G^T z_k \\|_\\infty
+            r_d := \\| P x + q + A^T y + G^T z \\|_\\infty
 
         Returns
         -------
@@ -179,7 +179,7 @@ class Solution:
 
         .. math::
 
-            r_g := | x_k^T P x_k + q^T x_k + b^T y_k + h^T z_k |
+            r_g := | x^T P x + q^T x + b^T y + h^T z |
 
         Returns
         -------
