@@ -23,7 +23,7 @@ import warnings
 
 import numpy as np
 
-from qpsolvers import solve_qp
+from qpsolvers.solvers import quadprog_solve_qp
 
 from .problems import get_sd3310_problem
 
@@ -45,10 +45,10 @@ class TestQuadprog(unittest.TestCase):
         P, q, G, h, A, b, _, _ = problem.unpack()
         P -= np.eye(3)
         with self.assertRaises(ValueError):
-            solve_qp(P, q, G, h, A, b, solver="quadprog")
+            quadprog_solve_qp(P, q, G, h, A, b)
 
     def test_quadprog_value_error(self):
         problem = get_sd3310_problem()
         P, q, G, h, A, b, _, _ = problem.unpack()
         q = q[1:]  # raise quadprog's "G and a must have the same dimension"
-        self.assertIsNone(solve_qp(P, q, G, h, A, b, solver="quadprog"))
+        self.assertIsNone(quadprog_solve_qp(P, q, G, h, A, b))
