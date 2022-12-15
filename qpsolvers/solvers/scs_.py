@@ -120,7 +120,7 @@ def __solve_unconstrained(problem: Problem) -> Solution:
     cost_check = np.linalg.norm(P @ solution.x + q)
     if cost_check > 1e-9:
         raise ValueError(
-            f"problem is unbounded below ({cost_check=}), "
+            f"problem is unbounded below (cost_check={cost_check}), "
             "q has component in the nullspace of P"
         )
     return solution
