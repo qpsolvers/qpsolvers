@@ -22,7 +22,7 @@ import unittest
 
 import numpy as np
 
-from qpsolvers import solve_qp
+from qpsolvers.solvers import qpoases_solve_qp
 
 from .problems import get_sd3310_problem
 
@@ -43,14 +43,13 @@ try:
             Call the solver with a warm-start guess.
             """
             problem = get_sd3310_problem()
-            solve_qp(
+            qpoases_solve_qp(
                 problem.P,
                 problem.q,
                 problem.G,
                 problem.h,
                 problem.A,
                 problem.b,
-                solver="qpoases",
                 initvals=problem.q,
             )
 
@@ -59,21 +58,19 @@ try:
             Call the solver with a time limit and other parameters.
             """
             problem = get_sd3310_problem()
-            solve_qp(
+            qpoases_solve_qp(
                 problem.P,
                 problem.q,
                 problem.G,
                 problem.h,
                 problem.A,
                 problem.b,
-                solver="qpoases",
                 time_limit=0.1,
                 terminationTolerance=1e-7,
             )
-            solve_qp(
+            qpoases_solve_qp(
                 problem.P,
                 problem.q,
-                solver="qpoases",
                 time_limit=0.1,
                 terminationTolerance=1e-7,
             )
@@ -81,18 +78,17 @@ try:
         def test_unfeasible(self):
             problem = get_sd3310_problem()
             P, q, G, h, A, b, _, _ = problem.unpack()
-            lb = np.ones(q.shape)
-            ub = -np.ones(q.shape)
-            x = solve_qp(
-                P,
-                q,
-                G,
-                h,
-                A,
-                b,
-                lb,
-                ub,
-                solver="qpoases",
+            custom_lb = np.ones(q.shape)
+            custom_ub = -np.ones(q.shape)
+            x = qpoases_solve_qp(
+                problem.P,
+                problem.q,
+                problem.G,
+                problem.h,
+                problem.A,
+                problem.b,
+                custom_lb,
+                custom_ub,
             )
             self.assertIsNone(x)
 
