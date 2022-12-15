@@ -74,7 +74,7 @@ x = solve_qp(P, q, G, h, A, b, solver="proxqp")
 print(f"QP solution: x = {x}")
 ```
 
-This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``.
+This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``. It is also possible to [get dual multipliers](https://scaron.info/doc/qpsolvers/quadratic-programming.html#dual-multipliers) at the solution.
 
 ## Solvers
 
