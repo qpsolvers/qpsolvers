@@ -70,11 +70,11 @@ The dual of the quadratic program defined above can be written as:
 .. math::
 
     \begin{split}\begin{array}{ll}
-    \underset{z, y, z_{\mathit{box}}}{\mbox{maximize}} &
-        -\frac{1}{2} w^T P w - h^T z - b^T y
+    \underset{x, z, y, z_{\mathit{box}}}{\mbox{maximize}} &
+        -\frac{1}{2} x^T P x - h^T z - b^T y
         - lb^T z_{\mathit{box}}^- - ub^T z_{\mathit{box}}^+ \\
     \mbox{subject to}
-        & P w + G^T z + A^T y + z_{\mathit{box}} + q = 0 \\
+        & P x + G^T z + A^T y + z_{\mathit{box}} + q = 0 \\
         & z \geq 0
     \end{array}\end{split}
 
