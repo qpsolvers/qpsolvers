@@ -40,7 +40,7 @@ The library provides a one-stop shop [`solve_qp`](https://scaron.info/doc/qpsolv
 $$
 \begin{split}
 \begin{array}{ll}
-\mbox{minimize}
+\underset{x}{\mbox{minimize}}
     & \frac{1}{2} x^T P x + q^T x \\
 \mbox{subject to}
     & G x \leq h \\
@@ -50,7 +50,7 @@ $$
 \end{split}
 $$
 
-Vector inequalities are taken coordinate by coordinate. For most solvers, the matrix $P$ should be [positive definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix).
+Vector inequalities apply coordinate by coordinate. The function returns the solution $x^\*$ found by the solver, or ``None`` in case of failure/unfeasible problem. For most solvers, the matrix $P$ should be [positive definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix).
 
 📢 **New with v2.7:** get dual multipliers at the solution using the [`solve_problem`](https://scaron.info/doc/qpsolvers/quadratic-programming.html#qpsolvers.solve_problem) function.
 
