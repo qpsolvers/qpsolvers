@@ -201,11 +201,11 @@ def osqp_solve_qp(
     .. math::
 
         \\begin{split}\\begin{array}{ll}
-        \\mbox{minimize} &
-            \\frac{1}{2} x^T P x + q^T x \\\\
-        \\mbox{subject to}
-            & G x \\leq h                \\\\
-            & A x = b
+            \\underset{x}{\\mbox{minimize}} &
+                \\frac{1}{2} x^T P x + q^T x \\\\
+            \\mbox{subject to}
+                & G x \\leq h                \\\\
+                & A x = b
         \\end{array}\\end{split}
 
     using `OSQP <https://github.com/oxfordcontrol/osqp>`_.

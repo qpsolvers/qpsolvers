@@ -52,12 +52,12 @@ def mosek_solve_problem(
     .. math::
 
         \\begin{split}\\begin{array}{ll}
-        \\mbox{minimize} &
-            \\frac{1}{2} x^T P x + q^T x \\\\
-        \\mbox{subject to}
-            & G x \\leq h                \\\\
-            & A x = b                    \\\\
-            & lb \\leq x \\leq ub
+            \\underset{x}{\\mbox{minimize}} &
+                \\frac{1}{2} x^T P x + q^T x \\\\
+            \\mbox{subject to}
+                & G x \\leq h                \\\\
+                & A x = b                    \\\\
+                & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
     using the `MOSEK interface from CVXOPT
@@ -117,12 +117,12 @@ def mosek_solve_qp(
     .. math::
 
         \\begin{split}\\begin{array}{ll}
-        \\mbox{minimize} &
-            \\frac{1}{2} x^T P x + q^T x \\\\
-        \\mbox{subject to}
-            & G x \\leq h                \\\\
-            & A x = b                    \\\\
-            & lb \\leq x \\leq ub
+            \\underset{x}{\\mbox{minimize}} &
+                \\frac{1}{2} x^T P x + q^T x \\\\
+            \\mbox{subject to}
+                & G x \\leq h                \\\\
+                & A x = b                    \\\\
+                & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
     using the `MOSEK interface from CVXOPT

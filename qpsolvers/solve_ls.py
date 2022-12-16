@@ -53,7 +53,7 @@ def solve_ls(
     .. math::
 
         \\begin{split}\\begin{array}{ll}
-            \\mbox{minimize} &
+            \\underset{x}{\\mbox{minimize}} &
                 \\frac12 \\| R x - s \\|^2_W
                 = \\frac12 (R x - s)^T W (R x - s) \\\\
             \\mbox{subject to}

@@ -36,8 +36,10 @@ def socp_from_qp(
     .. math::
 
         \\begin{split}\\begin{array}{ll}
-        \\mbox{minimize} & \\frac{1}{2} x^T P x + q^T x \\\\
-        \\mbox{subject to} & G x \\leq h
+            \\underset{x}{\\mbox{minimize}} &
+                \\frac{1}{2} x^T P x + q^T x \\\\
+            \\mbox{subject to}
+                & G x \\leq h
         \\end{array}\\end{split}
 
     to an equivalent Second-Order Cone Program:
@@ -45,8 +47,10 @@ def socp_from_qp(
     .. math::
 
         \\begin{split}\\begin{array}{ll}
-        \\mbox{minimize} & c^T_s y \\\\
-        \\mbox{subject to} & G_s y \\leq_{\\cal K} h_s
+            \\underset{x}{\\mbox{minimize}} &
+                c^T_s y \\\\
+            \\mbox{subject to}
+                & G_s y \\leq_{\\cal K} h_s
         \\end{array}\\end{split}
 
     This function is adapted from ``ecosqp.m`` in the `ecos-matlab

@@ -55,7 +55,7 @@ def solve_qp(
     .. math::
 
         \\begin{split}\\begin{array}{ll}
-            \\mbox{minimize} &
+            \\underset{x}{\\mbox{minimize}} &
                 \\frac{1}{2} x^T P x + q^T x \\\\
             \\mbox{subject to}
                 & G x \\leq h                \\\\

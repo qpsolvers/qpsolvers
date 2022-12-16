@@ -50,7 +50,7 @@ def solve_safer_qp(
     .. math::
 
         \\begin{split}\\begin{array}{ll}
-            \\mbox{minimize} &
+            \\underset{x}{\\mbox{minimize}} &
                 \\frac{1}{2} x^T P x + q^T x +
                 \\frac{1}{2} \\mathit{reg} \\|s\\|^2 - \\mathit{sr} \\1^T s
                 \\\\
