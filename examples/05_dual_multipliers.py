@@ -22,7 +22,6 @@
 Get both primal and dual solutions to a quadratic program.
 """
 
-import argparse
 import random
 
 import numpy as np
@@ -46,13 +45,9 @@ ub = np.array([1.0, 1.0, 1.0])
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("solver")
-    args = parser.parse_args()
-
     solver = random.choice(available_solvers)
     problem = Problem(P, q, G, h, A, b, lb, ub)
-    solution = solve_problem(problem, solver=args.solver)
+    solution = solve_problem(problem, solver)
 
     print("========================= PRIMAL PROBLEM =========================")
     print("")
