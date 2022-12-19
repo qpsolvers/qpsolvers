@@ -6,7 +6,6 @@
 MANIFEST
 build/
 dist/
-examples/marosmeszaros.tar.gz
 examples/qpsolvers
 gurobi.log
 htmlcov/
