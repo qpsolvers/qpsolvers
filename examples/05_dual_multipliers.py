@@ -67,6 +67,8 @@ if __name__ == "__main__":
 
     print("============================ SOLUTION ============================")
     print("")
+    print(f"Found with solver=\"{solver}\"")
+    print("")
     print_matrix_vector(
         solution.x.reshape((3, 1)),
         "Primal x*",
