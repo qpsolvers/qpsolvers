@@ -96,6 +96,27 @@ class Solution:
         """
         return self.x is None
 
+    def is_optimal(self, eps_abs: float) -> bool:
+        """
+        Check whether the solution is indeed optimal.
+
+        Parameters
+        ----------
+        eps_abs :
+            Absolute tolerance for the primal residual, dual residual and
+            duality gap.
+
+        Notes
+        -----
+        See for instance [tolerances]_ for an overview of optimality conditions
+        in quadratic programming.
+        """
+        return (
+            self.primal_residual() < eps_abs
+            and self.dual_residual() < eps_abs
+            and self.duality_gap() < eps_abs
+        )
+
     def primal_residual(self) -> float:
         """
         Compute the primal residual of the solution:
@@ -227,24 +248,3 @@ class Solution:
                 z_box_pos = np.maximum(self.z_box, 0.0)
                 ub_z_box = ub[finite].dot(z_box_pos[finite])
         return abs(xPx + qx + hz + by + lb_z_box + ub_z_box)
-
-    def is_optimal(self, eps_abs: float) -> bool:
-        """
-        Check whether the solution is indeed optimal.
-
-        Parameters
-        ----------
-        eps_abs :
-            Absolute tolerance for the primal residual, dual residual and
-            duality gap.
-
-        Notes
-        -----
-        See for instance [tolerances]_ for an overview of optimality conditions
-        in quadratic programming.
-        """
-        return (
-            self.primal_residual() < eps_abs
-            and self.dual_residual() < eps_abs
-            and self.duality_gap() < eps_abs
-        )
