@@ -47,9 +47,14 @@ from ..solution import Solution
 
 __exit_flag_meaning__ = {
     0: "OPTIMAL",
-    1: "PRIMAL INFEASIBLE",
-    2: "DUAL INFEASIBLE",
-    -1: "MAXIT REACHED",
+    1: "PINF: found certificate of primal infeasibility",
+    2: "DING: found certificate of dual infeasibility",
+    10: "INACC_OFFSET: inaccurate results",
+    -1: "MAXIT: maximum number of iterations reached",
+    -2: "NUMERICS: search direction is unreliable",
+    -3: "OUTCONE: primal or dual variables got outside of cone",
+    -4: "SIGINT: solver interrupted",
+    -7: "FATAL: unknown solver problem",
 }
 
 
@@ -151,8 +156,9 @@ def ecos_solve_problem(
         result = solve(c_socp, G_socp, h_socp, dims, **kwargs)
     flag = result["info"]["exitFlag"]
     if flag != 0:
+        meaning = __exit_flag_meaning__.get(flag, "unknown exit flag")
         warnings.warn(
-            f"ECOS returned exit flag {flag} ({__exit_flag_meaning__[flag]})"
+            f"ECOS returned exit flag {flag} ({meaning})"
         )
         return Solution(problem)
 
