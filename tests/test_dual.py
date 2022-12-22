@@ -28,7 +28,7 @@ from numpy.linalg import norm
 
 from qpsolvers import available_solvers, solve_problem
 
-from .solved_problems import get_qpsut01, get_qpsut02
+from .solved_problems import get_qpsut01, get_qpsut02, get_qpsut03
 
 
 class TestDualMultipliers(unittest.TestCase):
@@ -125,6 +125,30 @@ class TestDualMultipliers(unittest.TestCase):
 
         return test
 
+    @staticmethod
+    def get_test_qpsut03(solver: str):
+        """
+        Get test function for a given solver.
+
+        Parameters
+        ----------
+        solver :
+            Name of the solver to test.
+
+        Returns
+        -------
+        test : function
+            Test function for that solver.
+        """
+
+        def test(self):
+            ref_solution = get_qpsut03()
+            problem = ref_solution.problem
+            solution = solve_problem(problem, solver=solver)
+            self.assertIsNone(solution.duality_gap())
+
+        return test
+
 
 # Generate test fixtures for each solver
 for solver in available_solvers:
@@ -137,4 +161,9 @@ for solver in available_solvers:
         TestDualMultipliers,
         f"test_qpsut02_{solver}",
         TestDualMultipliers.get_test_qpsut02(solver),
+    )
+    setattr(
+        TestDualMultipliers,
+        f"test_qpsut03_{solver}",
+        TestDualMultipliers.get_test_qpsut03(solver),
     )
