@@ -36,6 +36,9 @@ def split_dual_linear_box(
     Separate linear and box multipliers from a stacked vector of
     inequality-constraint dual variables.
 
+    This function assumes linear and box inequalities were combined using
+    :func:`qpsolvers.conversions.linear_from_box_inequalities`.
+
     Parameters
     ----------
     z_stacked :
@@ -53,14 +56,19 @@ def split_dual_linear_box(
     """
     z, z_box = None, None
     if lb is not None and ub is not None:
-        z_box = z_stacked[-n:] - z_stacked[-2 * n : -n]
-        z = z_stacked[: -2 * n]
+        n_lb = lb.shape[0]
+        n_ub = ub.shape[0]
+        n_box = n_lb + n_ub
+        z_box = z_stacked[-n_ub:] - z_stacked[-n_box:-n_ub]
+        z = z_stacked[:-n_box]
     elif ub is not None:  # lb is None
-        z_box = z_stacked[-n:]
-        z = z_stacked[:-n]
+        n_ub = ub.shape[0]
+        z_box = z_stacked[-n_ub:]
+        z = z_stacked[:-n_ub]
     elif lb is not None:  # ub is None
-        z_box = -z_stacked[-n:]
-        z = z_stacked[:-n]
+        n_lb = lb.shape[0]
+        z_box = -z_stacked[-n_lb:]
+        z = z_stacked[:-n_lb]
     else:  # lb is None and ub is None
         z = z_stacked
     return z, z_box
