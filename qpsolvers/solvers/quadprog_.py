@@ -32,7 +32,7 @@ import numpy as np
 from numpy import hstack, vstack
 from quadprog import solve_qp
 
-from ..conversions import linear_from_box_inequalities
+from ..conversions import linear_from_box_inequalities, split_dual_linear_box
 from ..problem import Problem
 from ..solution import Solution
 
@@ -164,17 +164,7 @@ def __convert_dual_multipliers(
     z, ys, z_box = None, None, None
     if meq > 0:
         ys = y[:meq]
-    if lb is not None and ub is not None:
-        z_box = y[-n:] - y[-2 * n : -n]
-        z = y[meq : meq + m - 2 * n]
-    elif lb is not None:  # ub is None
-        z_box = -y[-n:]
-        z = y[meq : meq + m - n]
-    elif ub is not None:  # lb is None
-        z_box = +y[-n:]
-        z = y[meq : meq + m - n]
-    else:  # lb is None and ub is None
-        z = y[meq : meq + m]
+    z, z_box = split_dual_linear_box(y[meq:], lb, ub)
     return z, ys, z_box
 
 
