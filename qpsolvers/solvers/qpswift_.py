@@ -158,7 +158,7 @@ def qpswift_solve_problem(
     solution.x = result["sol"]
     if A is not None:
         solution.y = adv_info["y"]
-    z, z_box = split_dual_linear_box(adv_info["z"], P.shape[0], lb, ub)
+    z, z_box = split_dual_linear_box(adv_info["z"], lb, ub)
     solution.z = z
     solution.z_box = z_box
     return solution
