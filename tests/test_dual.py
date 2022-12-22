@@ -23,6 +23,7 @@ Tests both primal and dual solutions to a set of problems.
 """
 
 import unittest
+import math
 
 from numpy.linalg import norm
 
@@ -128,7 +129,7 @@ class TestDualMultipliers(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_qpsut03(solver: str):
+    def get_test_duality_gap(solver: str):
         """
         Get test function for a given solver.
 
@@ -147,7 +148,7 @@ class TestDualMultipliers(unittest.TestCase):
             ref_solution = get_qpsut03()
             problem = ref_solution.problem
             solution = solve_problem(problem, solver=solver)
-            self.assertIsNone(solution.duality_gap())
+            self.assertFalse(math.isnan(solution.duality_gap()))
 
         return test
 
@@ -166,6 +167,6 @@ for solver in available_solvers:
     )
     setattr(
         TestDualMultipliers,
-        f"test_qpsut03_{solver}",
-        TestDualMultipliers.get_test_qpsut03(solver),
+        f"test_duality_gap_{solver}",
+        TestDualMultipliers.get_test_duality_gap(solver),
     )
