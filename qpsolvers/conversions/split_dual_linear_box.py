@@ -29,20 +29,17 @@ import numpy as np
 
 def split_dual_linear_box(
     z_stacked: np.ndarray,
-    n: int,
     lb: Optional[np.ndarray],
     ub: Optional[np.ndarray],
 ) -> Tuple[Optional[np.ndarray], Optional[np.ndarray]]:
     """
-    Separate linear and box multipliers from a stacked vector of dual
-    variables.
+    Separate linear and box multipliers from a stacked vector of
+    inequality-constraint dual variables.
 
     Parameters
     ----------
     z_stacked :
         Stacked vector of dual multipliers.
-    n :
-        Number of optimization variables.
     lb :
         Lower bound constraint vector.
     ub :
