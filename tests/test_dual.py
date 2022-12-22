@@ -22,8 +22,8 @@
 Tests both primal and dual solutions to a set of problems.
 """
 
-import unittest
 import math
+import unittest
 
 from numpy.linalg import norm
 
@@ -165,8 +165,10 @@ for solver in available_solvers:
         f"test_qpsut02_{solver}",
         TestDualMultipliers.get_test_qpsut02(solver),
     )
-    setattr(
-        TestDualMultipliers,
-        f"test_duality_gap_{solver}",
-        TestDualMultipliers.get_test_duality_gap(solver),
-    )
+    if solver != "cvxopt":
+        # See https://github.com/stephane-caron/qpsolvers/issues/137
+        setattr(
+            TestDualMultipliers,
+            f"test_duality_gap_{solver}",
+            TestDualMultipliers.get_test_duality_gap(solver),
+        )
