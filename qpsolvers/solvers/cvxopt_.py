@@ -174,8 +174,7 @@ def cvxopt_solve_problem(
         solution.y = np.array(res["y"]).reshape((b.shape[0],))
     if h is not None:
         z_cvx = np.array(res["z"]).reshape((h.shape[0],))
-        n = P.shape[0]
-        z, z_box = split_dual_linear_box(z_cvx, n, lb, ub)
+        z, z_box = split_dual_linear_box(z_cvx, lb, ub)
         solution.z = z
         solution.z_box = z_box
     solution.obj = res["primal objective"]

@@ -167,9 +167,8 @@ def ecos_solve_problem(
     if A is not None:
         solution.y = result["y"]
     if G is not None:
-        n = P.shape[0]
         z_ecos = result["z"][: G.shape[0]]
-        z, z_box = split_dual_linear_box(z_ecos, n, lb, ub)
+        z, z_box = split_dual_linear_box(z_ecos, lb, ub)
         solution.z = z
         solution.z_box = z_box
     solution.extras = result["info"]
