@@ -157,9 +157,7 @@ def ecos_solve_problem(
     flag = result["info"]["exitFlag"]
     if flag != 0:
         meaning = __exit_flag_meaning__.get(flag, "unknown exit flag")
-        warnings.warn(
-            f"ECOS returned exit flag {flag} ({meaning})"
-        )
+        warnings.warn(f"ECOS returned exit flag {flag} ({meaning})")
         return Solution(problem)
 
     solution = Solution(problem)
