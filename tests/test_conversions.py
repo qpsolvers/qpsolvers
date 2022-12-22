@@ -31,24 +31,47 @@ class TestConversions(unittest.TestCase):
     Test fixture for box to linear inequality conversion.
     """
 
-    def setUp(self):
-        self.G = array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
-        self.h = array([3.0, 2.0, -2.0]).reshape((3,))
-        self.lb = array([-1.0, -1.0, -1.0])
-        self.ub = array([1.0, 1.0, 1.0])
-
     def __test_linear_from_box_inequalities(self, G, h, lb, ub):
         G2, h2 = linear_from_box_inequalities(G, h, lb, ub)
         m = G.shape[0] if G is not None else 0
         k = lb.shape[0]
-        self.assertTrue(allclose(G2[m : m + k, :], -eye(k)))
-        self.assertTrue(allclose(h2[m : m + k], -lb))
-        self.assertTrue(allclose(G2[m + k : m + 2 * k, :], eye(k)))
-        self.assertTrue(allclose(h2[m + k : m + 2 * k], ub))
+        self.assertTrue(np.allclose(G2[m : m + k, :], -np.eye(k)))
+        self.assertTrue(np.allclose(h2[m : m + k], -lb))
+        self.assertTrue(np.allclose(G2[m + k : m + 2 * k, :], np.eye(k)))
+        self.assertTrue(np.allclose(h2[m + k : m + 2 * k], ub))
 
     def test_concatenate_bounds(self):
-        G, h, lb, ub = self.G, self.h, self.lb, self.ub
+        G = np.array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
+        h = np.array([3.0, 2.0, -2.0]).reshape((3,))
+        lb = np.array([-1.0, -1.0, -1.0])
+        ub = np.array([1.0, 1.0, 1.0])
         self.__test_linear_from_box_inequalities(G, h, lb, ub)
 
     def test_pure_bounds(self):
-        self.__test_linear_from_box_inequalities(None, None, self.lb, self.ub)
+        lb = np.array([-1.0, -1.0, -1.0])
+        ub = np.array([1.0, 1.0, 1.0])
+        self.__test_linear_from_box_inequalities(None, None, lb, ub)
+
+    def test_skip_infinite_bounds(self):
+        """
+        Check that infinite box bounds are skipped by the conversion.
+        """
+        G = np.array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
+        h = np.array([3.0, 2.0, -2.0]).reshape((3,))
+        lb = np.array([-np.inf, -np.inf, -np.inf])
+        ub = np.array([np.inf, np.inf, np.inf])
+        G2, h2 = linear_from_box_inequalities(G, h, lb, ub)
+        self.assertTrue(np.allclose(G2, G))
+        self.assertTrue(np.allclose(h2, h))
+
+    def test_skip_partial_infinite_bounds(self):
+        """
+        Check that all values in the combined constraint vector are finite,
+        even if some input box bounds are infinite.
+        """
+        G = np.array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
+        h = np.array([3.0, 2.0, -2.0]).reshape((3,))
+        lb = np.array([-1.0, -np.inf, -1.0])
+        ub = np.array([np.inf, 1.0, 1.0])
+        G2, h2 = linear_from_box_inequalities(G, h, lb, ub)
+        self.assertTrue(np.isfinite(h2).all())
