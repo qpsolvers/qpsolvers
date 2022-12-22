@@ -49,6 +49,7 @@ def get_qpsut01() -> Solution:
     solution.z_box = np.array([0.0, -1.8, 3.0])
     return solution
 
+
 def get_qpsut02() -> Solution:
     """
     Get QPSUT02 problem and its solution.
@@ -85,4 +86,38 @@ def get_qpsut02() -> Solution:
     solution.z = np.array([0.0])
     solution.y = np.array([-377.60314303, -62.75251185])  # YMMV
     solution.z_box = np.array([0.0, -138.9585918, 37.53106937, 0.0])  # YMMV
+    return solution
+
+
+def get_qpsut03() -> Solution:
+    """
+    Get QPSUT03 problem and its solution.
+
+    Notes:
+        This problem has partial box bounds, that is, -infinity on some lower
+        bounds and +infinity on some upper bounds.
+    """
+    M = np.array(
+        [
+            [1.0, -2.0, 0.0, 8.0],
+            [-6.0, 3.0, 1.0, 4.0],
+            [-2.0, 1.0, 0.0, 1.0],
+            [9.0, 9.0, 5.0, 3.0],
+        ]
+    )
+    P = np.dot(M.T, M)  # this is a positive definite matrix
+    q = np.dot(np.array([-3.0, 2.0, 0.0, 9.0]), M)
+    G = None
+    h = None
+    A = None
+    b = None
+    lb = np.array([-np.inf, -0.4, -np.inf, -1.0])
+    ub = np.array([np.inf, np.inf, 0.5, 1.0])
+    problem = Problem(P, q, G, h, A, b, lb, ub)
+
+    solution = Solution(problem)
+    solution.x = np.array([0.4, -0.4, 1.0])
+    solution.z = np.array([0.0, 0.0])
+    solution.y = np.array([-5.8])
+    solution.z_box = np.array([0.0, -1.8, 3.0])
     return solution
