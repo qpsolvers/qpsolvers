@@ -63,6 +63,12 @@ The process to add AwesomeQP to *qpsolvers* goes as follows:
 10. Log the new solver as an addition in the changelog
 11. Update the benchmark: run the scripts ``examples/benchmark_*.py`` and update the corresponding tables and plot in the README
 
+Problem conversions
+===================
+
+.. automodule:: qpsolvers.conversions
+    :members:
+
 Testing locally
 ===============
 
