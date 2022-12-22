@@ -114,6 +114,8 @@ class TestDualMultipliers(unittest.TestCase):
                 if solver == "cvxopt"
                 else 1e-5
                 if solver in ["highs", "osqp"]
+                else 5e-7
+                if solver == "qpswift"
                 else 1e-7
                 if solver == "gurobi"
                 else 1e-8
