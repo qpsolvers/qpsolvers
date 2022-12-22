@@ -6,7 +6,16 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- Document probolem conversion functions in developer notes
 - ECOS: handle more exit flags
+
+### Changed
+
+- quadprog: use internal ``split_dual_linear_box`` conversion function
+
+### Fixed
+
+- Solution: duality gap computation under infinite box bounds
 
 ## [2.7.0] - 2022/12/15
 
