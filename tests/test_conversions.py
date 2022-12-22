@@ -20,7 +20,8 @@
 
 import unittest
 
-from numpy import allclose, array, eye
+import numpy as np
+
 from qpsolvers.conversions import linear_from_box_inequalities
 
 
