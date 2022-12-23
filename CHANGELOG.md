@@ -52,6 +52,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - All functions throw only qpsolvers-owned exceptions
+- CVXOPT: rethrow ValueError exceptions as either ProblemError or SolverError
 
 ## [2.7.2] - 2023/01/02
 
