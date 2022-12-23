@@ -23,6 +23,8 @@
 import unittest
 import warnings
 
+from qpsolvers.exceptions import ParamError, ProblemError
+
 from .problems import get_sd3310_problem
 
 try:
@@ -60,7 +62,7 @@ try:
         def test_invalid_backend(self):
             """Exception raised when asking for an invalid backend."""
             problem = get_sd3310_problem()
-            with self.assertRaises(ValueError):
+            with self.assertRaises(ParamError):
                 proxqp_solve_qp(
                     problem.P,
                     problem.q,
@@ -74,7 +76,7 @@ try:
         def test_double_warm_start(self):
             """Exception when two warm-start values are provided."""
             problem = get_sd3310_problem()
-            with self.assertRaises(ValueError):
+            with self.assertRaises(ParamError):
                 proxqp_solve_qp(
                     problem.P,
                     problem.q,
@@ -94,7 +96,7 @@ try:
             called directly.
             """
             problem = get_sd3310_problem()
-            with self.assertRaises(ValueError):
+            with self.assertRaises(ProblemError):
                 proxqp_solve_qp(
                     problem.P,
                     problem.q,
