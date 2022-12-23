@@ -146,10 +146,6 @@ def __convert_dual_multipliers(
     ----------
     y :
         Dual multipliers from quadprog.
-    n :
-        Number of optimization variables.
-    m :
-        Number of (in)equality constraints.
     meq :
         Number of equality constraints.
     lb :
