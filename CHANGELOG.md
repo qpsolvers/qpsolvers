@@ -45,6 +45,13 @@ All notable changes to this project will be documented in this file.
 - qpOASES: fix missing lower bound when there is no equality constraint
 - qpOASES: handle infinite bounds
 - qpOASES: segmentation fault with conda feedstock
+- ParamError exception for incorrect solver parameters
+- ProblemError exception for malformed quadratic programs
+- SolverError exception for solver failures
+
+### Changed
+
+- All functions throw only qpsolvers-owned exceptions
 
 ## [2.7.2] - 2023/01/02
 
