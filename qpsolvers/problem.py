@@ -209,17 +209,17 @@ class Problem:
 
         Raises
         ------
-        ValueError
+        ProblemError
             If the constraints are not properly defined.
         """
         if self.G is None and self.h is not None:
-            raise ValueError("incomplete inequality constraint (missing h)")
+            raise ProblemError("incomplete inequality constraint (missing h)")
         if self.G is not None and self.h is None:
-            raise ValueError("incomplete inequality constraint (missing G)")
+            raise ProblemError("incomplete inequality constraint (missing G)")
         if self.A is None and self.b is not None:
-            raise ValueError("incomplete equality constraint (missing b)")
+            raise ProblemError("incomplete equality constraint (missing b)")
         if self.A is not None and self.b is None:
-            raise ValueError("incomplete equality constraint (missing A)")
+            raise ProblemError("incomplete equality constraint (missing A)")
 
     def cond(self):
         r"""Condition number of the problem matrix.

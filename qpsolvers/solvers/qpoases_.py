@@ -43,7 +43,7 @@ from qpoases import PyQProblem as QProblem
 from qpoases import PyQProblemB as QProblemB
 from qpoases import PyReturnValue as ReturnValue
 
-from ..exceptions import ProblemError
+from ..exceptions import ParamError, ProblemError
 from ..problem import Problem
 from ..solution import Solution
 
@@ -93,6 +93,11 @@ def __prepare_options(
     -------
     :
         Options for qpOASES.
+
+    Raises
+    ------
+    ParamError
+        If predefined options are not a valid choice for qpOASES.
     """
     options = Options()
 
@@ -108,7 +113,7 @@ def __prepare_options(
     elif predefined_options == "reliable":
         options.setToReliable()
     else:
-        raise ValueError(
+        raise ParamError(
             f"unknown qpOASES pre-defined options {predefined_options}'"
         )
 
