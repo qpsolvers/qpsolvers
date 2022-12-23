@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- Document probolem conversion functions in developer notes
+- Document problem conversion functions in developer notes
 - ECOS: handle more exit flags
 
 ### Changed
