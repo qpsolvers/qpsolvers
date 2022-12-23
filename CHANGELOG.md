@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Added
+
+- ECOS: handle two more exit flags
+
 ## [2.7.1] - 2022/12/23
 
 ### Added
