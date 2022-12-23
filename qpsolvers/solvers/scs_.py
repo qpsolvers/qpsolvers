@@ -37,6 +37,7 @@ from scipy.sparse.linalg import lsqr
 from scs import solve
 
 from ..conversions import ensure_sparse_matrices
+from ..exceptions import ProblemError
 from ..problem import Problem
 from ..solution import Solution
 
@@ -117,7 +118,7 @@ def __solve_unconstrained(problem: Problem) -> Solution:
     solution.x = lsqr(P, -q)[0]
     cost_check = np.linalg.norm(P @ solution.x + q)
     if cost_check > 1e-8:
-        raise ValueError(
+        raise ProblemError(
             f"problem is unbounded below (cost_check={cost_check:.1e}), "
             "q has component in the nullspace of P"
         )

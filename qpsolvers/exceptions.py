@@ -18,7 +18,14 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""Exceptions."""
+"""
+Exceptions.
+
+We catch all solver exceptions and re-throw them in a qpsolvers-owned exception
+to avoid abstraction leakage. See this `design decision
+<https://github.com/getparthenon/parthenon/wiki/Design-Decision:-Throw-Custom-Exceptions>`__
+for more details on the rationale behind this choice.
+"""
 
 
 class QPError(Exception):
@@ -29,9 +36,19 @@ class NoSolverSelected(QPError):
     """Exception raised when the `solver` keyword argument is not set."""
 
 
+class ParamError(QPError):
+
+    """Exception raised when solver parameters are incorrect."""
+
+
 class ProblemError(QPError):
     """Exception raised when a quadratic program is malformed."""
 
 
 class SolverNotFound(QPError):
     """Exception raised when a requested solver is not found."""
+
+
+class SolverError(Exception):
+
+    """Exception raised when a solver failed."""
