@@ -51,7 +51,7 @@ from .solvers import (
 )
 from .utils import print_matrix_vector
 
-__version__ = "2.8.1"
+__version__ = "3.0.0rc0"
 
 __all__ = [
     "NoSolverSelected",
