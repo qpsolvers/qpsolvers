@@ -48,17 +48,17 @@ class TestProblem(unittest.TestCase):
     def test_check_inequality_constraints(self):
         problem = get_sd3310_problem()
         P, q, G, h, A, b, _, _ = problem.unpack()
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ProblemError):
             Problem(P, q, G, None, A, b).check_constraints()
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ProblemError):
             Problem(P, q, None, h, A, b).check_constraints()
 
     def test_check_equality_constraints(self):
         problem = get_sd3310_problem()
         P, q, G, h, A, b, _, _ = problem.unpack()
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ProblemError):
             Problem(P, q, G, h, A, None).check_constraints()
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ProblemError):
             Problem(P, q, G, h, None, b).check_constraints()
 
     def test_cond(self):
