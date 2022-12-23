@@ -29,8 +29,14 @@ from numpy import array, dot, ones, random
 from numpy.linalg import norm
 from scipy.sparse import csc_matrix
 
-from qpsolvers import available_solvers, solve_qp, sparse_solvers
-from qpsolvers.exceptions import NoSolverSelected, SolverNotFound
+from qpsolvers import (
+    NoSolverSelected,
+    ProblemError,
+    SolverNotFound,
+    available_solvers,
+    solve_qp,
+    sparse_solvers,
+)
 
 from .problems import get_qpmad_demo_problem
 
@@ -678,7 +684,7 @@ class TestSolveQP(unittest.TestCase):
             P = dot(v.reshape(4, 1), v.reshape(1, 4))
             q = array([-1.0, -2, 0, 3e-4])
             # q is in the nullspace of P, so the problem is unbounded below
-            with self.assertRaises(ValueError):
+            with self.assertRaises(ProblemError):
                 solve_qp(P, q, solver=solver)
 
         return test

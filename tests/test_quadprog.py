@@ -28,6 +28,8 @@ import scipy.sparse as spa
 
 from qpsolvers import ProblemError
 
+from qpsolvers.exceptions import ProblemError
+
 from .problems import get_sd3310_problem
 
 try:
@@ -44,7 +46,7 @@ try:
             problem = get_sd3310_problem()
             P, q, G, h, A, b, _, _ = problem.unpack()
             P -= np.eye(3)
-            with self.assertRaises(ValueError):
+            with self.assertRaises(ProblemError):
                 quadprog_solve_qp(P, q, G, h, A, b)
 
         def test_quadprog_value_error(self):
