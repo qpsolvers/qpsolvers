@@ -36,6 +36,7 @@ import scipy.sparse as spa
 from cvxopt.solvers import qp
 
 from ..conversions import linear_from_box_inequalities, split_dual_linear_box
+from ..exceptions import ProblemError, SolverError
 from ..problem import Problem
 from ..solution import Solution
 
@@ -91,6 +92,14 @@ def cvxopt_solve_problem(
     -------
     :
         Solution to the QP, if found, otherwise ``None``.
+
+    Raises
+    ------
+    ProblemError
+        If the CVXOPT rank assumption is not satisfied.
+
+    SolverError
+        If CVXOPT failed with an error.
 
     Note
     ----
@@ -163,7 +172,13 @@ def cvxopt_solve_problem(
     kwargs["show_progress"] = verbose
     original_options = cvxopt.solvers.options
     cvxopt.solvers.options = kwargs
-    res = qp(*args, solver=solver, initvals=initvals_dict, **constraints)
+    try:
+        res = qp(*args, solver=solver, initvals=initvals_dict, **constraints)
+    except ValueError as exception:
+        error = str(exception)
+        if "Rank(A)" in error:
+            raise ProblemError(error) from exception
+        raise SolverError(error) from exception
     cvxopt.solvers.options = original_options
 
     solution = Solution(problem)
@@ -249,6 +264,14 @@ def cvxopt_solve_qp(
     -------
     :
         Primal solution to the QP, if found, otherwise ``None``.
+
+    Raises
+    ------
+    ProblemError
+        If the CVXOPT rank assumption is not satisfied.
+
+    SolverError
+        If CVXOPT failed with an error.
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = cvxopt_solve_problem(
