@@ -109,13 +109,19 @@ def solve_qp(
     NoSolverSelected
         If the ``solver`` keyword argument is not set.
 
-    SolverNotFound
-        If the requested solver is not in :data:`qpsolvers.available_solvers`.
+    ParamError
+        If any solver parameter is incorrect.
 
-    ValueError
+    ProblemError
         If the problem is not correctly defined. For instance, if the solver
         requires a definite cost matrix but the provided matrix :math:`P` is
         not.
+
+    SolverError
+        If the solver failed during its execution.
+
+    SolverNotFound
+        If the requested solver is not in :data:`qpsolvers.available_solvers`.
 
     Notes
     -----
