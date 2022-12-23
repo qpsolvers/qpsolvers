@@ -62,8 +62,9 @@ def quadprog_solve_problem(
     Raises
     ------
     ProblemError :
-        If the problem is ill-formed in some way, for instance if some matrices
-        are not dense.
+        If the cost matrix of the quadratic program if not positive definite,
+        or if the problem is ill-formed in some way, for instance if some
+        matrices are not dense.
 
     Note
     ----
@@ -110,8 +111,8 @@ def quadprog_solve_problem(
         error_message = str(error)
         if "matrix G is not positive definite" in error_message:
             # quadprog writes G the cost matrix that we write P in this package
-            raise ValueError("matrix P is not positive definite") from error
-        if "no solution" in error_message:
+            raise ProblemError("matrix P is not positive definite") from error
+        if "no solution" in error:
             return Solution(problem)
         warnings.warn(f"quadprog raised a ValueError: {error_message}")
         return Solution(problem)

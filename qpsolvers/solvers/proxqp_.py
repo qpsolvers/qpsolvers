@@ -33,6 +33,7 @@ import numpy as np
 import scipy.sparse as spa
 from proxsuite import proxqp
 
+from ..exceptions import ParamError, ProblemError
 from ..problem import Problem
 from ..solution import Solution
 
@@ -59,6 +60,11 @@ def __combine_inequalities(G, h, lb, ub, n: int, use_csc: bool):
     -------
     :
         Linear inequality matrices :math:`C`, :math:`l` and :math:`u`.
+
+    Raises
+    ------
+    ProblemError
+        If the inequality matrix and vector are not consistent.
     """
     if lb is None and ub is None:
         C_prox = G
@@ -81,7 +87,7 @@ def __combine_inequalities(G, h, lb, ub, n: int, use_csc: bool):
         l_prox = np.hstack((np.full(h.shape, -np.infty), lb))
         u_prox = np.hstack((h, ub))
     else:  # G is not None and h is None
-        raise ValueError("Inconsistent inequalities: G is set but h is None")
+        raise ProblemError("Inconsistent inequalities: G is set but h is None")
     return C_prox, u_prox, l_prox
 
 
@@ -100,6 +106,11 @@ def __select_backend(backend: Optional[str], use_csc: bool):
     -------
     :
         Backend solve function.
+
+    Raises
+    ------
+    ParamError
+        If the required backend is not a valid ProxQP backend.
     """
     if backend is None:
         return proxqp.sparse.solve if use_csc else proxqp.dense.solve
@@ -107,7 +118,7 @@ def __select_backend(backend: Optional[str], use_csc: bool):
         return proxqp.dense.solve
     if backend == "sparse":
         return proxqp.sparse.solve
-    raise ValueError(f'Unknown ProxQP backend "{backend}')
+    raise ParamError(f'Unknown ProxQP backend "{backend}')
 
 
 def proxqp_solve_problem(
@@ -135,6 +146,12 @@ def proxqp_solve_problem(
     -------
     :
         Solution to the QP returned by the solver.
+
+    Raises
+    ------
+    ParamError
+        If a warm-start value is given both in `initvals` and the `x` keyword
+        argument.
 
     Notes
     -----
@@ -184,7 +201,7 @@ def proxqp_solve_problem(
     """
     if initvals is not None:
         if "x" in kwargs:
-            raise ValueError(
+            raise ParamError(
                 "Warm-start value specified in both `initvals` and `x` kwargs"
             )
         kwargs["x"] = initvals
