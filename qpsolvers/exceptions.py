@@ -19,7 +19,7 @@
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
 """
-Exceptions.
+Exceptions from qpsolvers.
 
 We catch all solver exceptions and re-throw them in a qpsolvers-owned exception
 to avoid abstraction leakage. See this `design decision
