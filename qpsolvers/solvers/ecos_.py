@@ -50,6 +50,8 @@ __exit_flag_meaning__ = {
     1: "PINF: found certificate of primal infeasibility",
     2: "DING: found certificate of dual infeasibility",
     10: "INACC_OFFSET: inaccurate results",
+    11: "PINF_INACC: found inaccurate certificate of primal infeasibility",
+    12: "DING_INACC: found inaccurate certificate of dual infeasibility",
     -1: "MAXIT: maximum number of iterations reached",
     -2: "NUMERICS: search direction is unreliable",
     -3: "OUTCONE: primal or dual variables got outside of cone",
