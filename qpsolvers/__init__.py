@@ -20,7 +20,14 @@
 
 """Quadratic programming solvers in Python with a unified API."""
 
-from .exceptions import ProblemError
+from .exceptions import (
+    NoSolverSelected,
+    ParamError,
+    ProblemError,
+    QPError,
+    SolverError,
+    SolverNotFound,
+)
 from .problem import Problem
 from .solution import Solution
 from .solve_ls import solve_ls
@@ -47,9 +54,14 @@ from .utils import print_matrix_vector
 __version__ = "2.8.1"
 
 __all__ = [
+    "NoSolverSelected",
+    "ParamError",
     "Problem",
     "ProblemError",
+    "QPError",
     "Solution",
+    "SolverError",
+    "SolverNotFound",
     "__version__",
     "available_solvers",
     "cvxopt_solve_qp",
