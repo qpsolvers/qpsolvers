@@ -23,6 +23,8 @@ import warnings
 
 import numpy as np
 
+from qpsolvers import ProblemError
+
 from .problems import get_sd3310_problem
 
 try:
@@ -40,7 +42,7 @@ try:
             problem = get_sd3310_problem()
             P, q, _, _, _, _, _, _ = problem.unpack()
             P -= np.eye(3)  # make problem unbounded
-            with self.assertRaises(ValueError):
+            with self.assertRaises(ProblemError):
                 scs_solve_qp(P, q)
 
 
