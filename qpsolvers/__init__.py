@@ -43,7 +43,7 @@ from .solvers import (
 )
 from .utils import print_matrix_vector
 
-__version__ = "2.7.1rc0"
+__version__ = "2.7.1"
 
 __all__ = [
     "Problem",
