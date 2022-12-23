@@ -27,8 +27,6 @@ import numpy as np
 import scipy
 from numpy import array, dot, ones, random
 from numpy.linalg import norm
-from scipy.sparse import csc_matrix
-
 from qpsolvers import (
     NoSolverSelected,
     ProblemError,
@@ -37,6 +35,7 @@ from qpsolvers import (
     solve_qp,
     sparse_solvers,
 )
+from scipy.sparse import csc_matrix
 
 from .problems import get_qpmad_demo_problem
 
@@ -44,7 +43,7 @@ from .problems import get_qpmad_demo_problem
 # achieved by some solvers. Here are the behaviors observed as of March 2022.
 # Unit tests only cover solvers that raise successfully:
 behavior_on_unbounded = {
-    "raise_value_error": ["cvxopt", "ecos", "quadprog", "scs"],
+    "raise": ["cvxopt", "ecos", "quadprog", "scs"],
     "return_crazy_solution": ["qpoases"],
     "return_none": ["osqp"],
 }
@@ -807,7 +806,7 @@ for solver in available_solvers:
         f"test_warmstart_{solver}",
         TestSolveQP.get_test_warmstart(solver),
     )
-    if solver in behavior_on_unbounded["raise_value_error"]:
+    if solver in behavior_on_unbounded["raise"]:
         setattr(
             TestSolveQP,
             f"test_raise_on_unbounded_below_{solver}",
