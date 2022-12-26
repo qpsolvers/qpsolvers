@@ -35,6 +35,10 @@ jobs:
                   python -m pip install --upgrade pip
                   python -m pip install coveralls tox tox-gh-actions
 
+            - name: "Log tox version"
+              run: |
+                  tox --version
+
             - name: "Test with tox for ${{ matrix.os }}"
               run: |
                   tox
