@@ -22,7 +22,6 @@ import unittest
 
 from .problems import get_sd3310_problem
 
-
 try:
     from qpsolvers.solvers.gurobi_ import gurobi_solve_qp
 
@@ -45,6 +44,6 @@ try:
             self.assertIsNotNone(x)
 
 
-except ImportError:  # ProxSuite not installed
+except ImportError:  # solver not installed
 
     pass

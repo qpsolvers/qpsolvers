@@ -20,19 +20,23 @@
 
 import unittest
 
-from qpsolvers.solvers import mosek_solve_qp
-
 from .problems import get_sd3310_problem
 
+try:
+    from qpsolvers.solvers.mosek_ import mosek_solve_qp
 
-class TestMOSEK(unittest.TestCase):
+    class TestMOSEK(unittest.TestCase):
 
-    """
-    Tests specific to MOSEK.
-    """
+        """
+        Tests specific to MOSEK.
+        """
 
-    def test_problem(self):
-        problem = get_sd3310_problem()
-        P, q, G, h, A, b, lb, ub = problem.unpack()
-        if mosek_solve_qp is not None:
+        def test_problem(self):
+            problem = get_sd3310_problem()
+            P, q, G, h, A, b, lb, ub = problem.unpack()
             self.assertIsNotNone(mosek_solve_qp(P, q, G, h, A, b, lb, ub))
+
+
+except ImportError:  # solver not installed
+
+    pass

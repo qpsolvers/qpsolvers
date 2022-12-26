@@ -23,32 +23,37 @@ import warnings
 
 import numpy as np
 
-from qpsolvers.solvers import quadprog_solve_qp
-
 from .problems import get_sd3310_problem
 
+try:
+    from qpsolvers.solvers.quadprog_ import quadprog_solve_qp
 
-class TestQuadprog(unittest.TestCase):
+    class TestQuadprog(unittest.TestCase):
 
-    """
-    Test fixture for the quadprog solver.
-    """
-
-    def setUp(self):
         """
-        Prepare test fixture.
+        Test fixture for the quadprog solver.
         """
-        warnings.simplefilter("ignore", category=UserWarning)
 
-    def test_non_psd_cost(self):
-        problem = get_sd3310_problem()
-        P, q, G, h, A, b, _, _ = problem.unpack()
-        P -= np.eye(3)
-        with self.assertRaises(ValueError):
-            quadprog_solve_qp(P, q, G, h, A, b)
+        def setUp(self):
+            """
+            Prepare test fixture.
+            """
+            warnings.simplefilter("ignore", category=UserWarning)
 
-    def test_quadprog_value_error(self):
-        problem = get_sd3310_problem()
-        P, q, G, h, A, b, _, _ = problem.unpack()
-        q = q[1:]  # raise quadprog's "G and a must have the same dimension"
-        self.assertIsNone(quadprog_solve_qp(P, q, G, h, A, b))
+        def test_non_psd_cost(self):
+            problem = get_sd3310_problem()
+            P, q, G, h, A, b, _, _ = problem.unpack()
+            P -= np.eye(3)
+            with self.assertRaises(ValueError):
+                quadprog_solve_qp(P, q, G, h, A, b)
+
+        def test_quadprog_value_error(self):
+            problem = get_sd3310_problem()
+            P, q, G, h, A, b, _, _ = problem.unpack()
+            q = q[1:]  # raise "G and a must have the same dimension"
+            self.assertIsNone(quadprog_solve_qp(P, q, G, h, A, b))
+
+
+except ImportError:  # solver not installed
+
+    pass

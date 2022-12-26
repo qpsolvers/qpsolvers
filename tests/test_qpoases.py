@@ -22,21 +22,16 @@ import unittest
 
 import numpy as np
 
-from qpsolvers.solvers import qpoases_solve_qp
-
 from .problems import get_sd3310_problem
 
 try:
-    import qpoases
+    from qpsolvers.solvers.qpoases_ import qpoases_solve_qp
 
     class TestQpOASES(unittest.TestCase):
 
         """
         Test fixture specific to the qpOASES solver.
         """
-
-        def setUp(self):
-            self.assertTrue(hasattr(qpoases, "PyQProblem"))
 
         def test_initvals(self):
             """
@@ -93,6 +88,6 @@ try:
             self.assertIsNone(x)
 
 
-except ImportError:  # qpOASES not installed
+except ImportError:  # solver not installed
 
     pass

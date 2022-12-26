@@ -20,19 +20,26 @@
 
 import unittest
 
-from qpsolvers.solvers import qpswift_solve_qp
-
 from .problems import get_sd3310_problem
 
+try:
+    from qpsolvers.solvers.qpswift_ import qpswift_solve_qp
 
-class TestQpSwift(unittest.TestCase):
+    class TestQpSwift(unittest.TestCase):
 
-    """
-    Tests specific to qpSWIFT.
-    """
+        """
+        Tests specific to qpSWIFT.
+        """
 
-    def test_problem(self):
-        problem = get_sd3310_problem()
-        P, q, G, h, A, b, lb, ub = problem.unpack()
-        if qpswift_solve_qp is not None:
-            self.assertIsNotNone(qpswift_solve_qp(P, q, G, h, A, b, lb, ub))
+        def test_problem(self):
+            problem = get_sd3310_problem()
+            P, q, G, h, A, b, lb, ub = problem.unpack()
+            if qpswift_solve_qp is not None:
+                self.assertIsNotNone(
+                    qpswift_solve_qp(P, q, G, h, A, b, lb, ub)
+                )
+
+
+except ImportError:  # solver not installed
+
+    pass

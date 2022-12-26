@@ -54,6 +54,6 @@ try:
             self.assertIsNotNone(x)
 
 
-except ImportError:  # HiGHS not installed
+except ImportError:  # solver not installed
 
     pass
