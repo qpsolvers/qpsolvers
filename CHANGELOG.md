@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Changed
+
+- Install open source solvers with wheels by default
+- Remove ``solve_safer_qp``
+- Remove ``sym_proj`` parameter
+
 ## [2.7.4] - 2023/01/31
 
 ### Fixed
@@ -20,11 +28,6 @@ All notable changes to this project will be documented in this file.
 - qpOASES: fix missing lower bound when there is no equality constraint
 - qpOASES: handle infinite bounds
 - qpOASES: segmentation fault with conda feedstock
-
-### Changed
-
-- Remove ``solve_safer_qp``
-- Remove ``sym_proj`` parameter
 
 ## [2.7.2] - 2023/01/02
 
