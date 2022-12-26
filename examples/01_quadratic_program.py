@@ -23,7 +23,6 @@ Test the "quadprog" QP solver on a small dense problem.
 """
 
 import random
-import sys
 from time import perf_counter
 
 import numpy as np
@@ -41,13 +40,6 @@ b = np.array([1.0])
 x_sol = np.array([0.3076923111580727, -0.6923076888419274, 1.3846153776838548])
 
 if __name__ == "__main__":
-    if not available_solvers:
-        print(
-            "No QP solver found, you can install some by e.g. running "
-            "``pip install qpsolvers[open_source_solvers]``"
-        )
-        sys.exit(-1)
-
     start_time = perf_counter()
     solver = random.choice(available_solvers)
     x = solve_qp(P, q, G, h, A, b, solver=solver)
