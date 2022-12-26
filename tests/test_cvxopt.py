@@ -22,7 +22,6 @@ import unittest
 import warnings
 from typing import Tuple
 
-import cvxopt
 import numpy as np
 import scipy
 from numpy import array, ones
@@ -32,6 +31,8 @@ from scipy.sparse import csc_matrix
 from .problems import get_sd3310_problem
 
 try:
+    import cvxopt
+
     from qpsolvers.solvers.cvxopt_ import cvxopt_solve_qp
 
     class TestCVXOPT(unittest.TestCase):
