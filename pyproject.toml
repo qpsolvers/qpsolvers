@@ -40,7 +40,7 @@ all_pypi_solvers = [
     "osqp >=0.6.2",
     "proxsuite >=0.2.9",
     "quadprog >=0.1.11",
-    "scs >=3.0.1",
+    "scs >=3.2.0",
 ]
 open_source_solvers = [
     "cvxopt >=1.2.6",
