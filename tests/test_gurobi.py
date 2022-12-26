@@ -19,6 +19,7 @@
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
 import unittest
+import warnings
 
 from .problems import get_sd3310_problem
 
@@ -45,5 +46,4 @@ try:
 
 
 except ImportError:  # solver not installed
-
-    pass
+    warnings.warn("Skipping Gurobi tests as the solver is not installed")

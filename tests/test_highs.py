@@ -55,5 +55,4 @@ try:
 
 
 except ImportError:  # solver not installed
-
-    pass
+    warnings.warn("Skipping HiGHS tests as the solver is not installed")
