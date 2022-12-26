@@ -39,7 +39,7 @@ jobs:
 
             - name: "Test with tox for ${{ matrix.os }}"
               run: |
-                  tox
+                  tox -rvv
               env:
                   PLATFORM: ${{ matrix.os }}
 
