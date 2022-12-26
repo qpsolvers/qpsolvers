@@ -19,6 +19,7 @@
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
 import unittest
+import warnings
 
 import numpy as np
 
@@ -47,5 +48,4 @@ try:
 
 
 except ImportError:  # solver not installed
-
-    pass
+    warnings.warn("Skipping SCS tests as the solver is not installed")

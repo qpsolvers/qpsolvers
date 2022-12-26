@@ -109,5 +109,4 @@ try:
 
 
 except ImportError:  # solver not installed
-
-    pass
+    warnings.warn("Skipping CVXOPT tests as the solver is not installed")
