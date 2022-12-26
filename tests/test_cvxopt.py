@@ -23,10 +23,9 @@ import warnings
 from typing import Tuple
 
 import numpy as np
-import scipy
+import scipy.sparse as spa
 from numpy import array, ones
 from numpy.linalg import norm
-from scipy.sparse import csc_matrix
 
 from .problems import get_sd3310_problem
 
@@ -65,13 +64,13 @@ try:
                 Linear inequality vector.
             """
             n = 150
-            M = scipy.sparse.lil_matrix(scipy.sparse.eye(n))
+            M = spa.lil_matrix(spa.eye(n))
             for i in range(1, n - 1):
                 M[i, i + 1] = -1
                 M[i, i - 1] = 1
-            P = csc_matrix(M.dot(M.transpose()))
+            P = spa.csc_matrix(M.dot(M.transpose()))
             q = -ones((n,))
-            G = csc_matrix(-scipy.sparse.eye(n))
+            G = spa.csc_matrix(-spa.eye(n))
             h = -2.0 * ones((n,))
             return P, q, G, h
 
