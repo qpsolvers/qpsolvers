@@ -27,13 +27,19 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Mathematics",
 ]
 dependencies = [
-    "numpy >= 1.15.4",
+    "cvxopt >=1.2.6",
+    "ecos >=2.0.8",
+    "numpy >=1.15.4",
+    "osqp >=0.6.2",
+    "proxsuite >=0.2.9",
+    "quadprog >=0.1.11",
     "scipy >=1.2.0",
+    "scs >=3.2.0",
 ]
 keywords = ["quadratic programming", "solver", "numerical optimization"]
 
 [project.optional-dependencies]
-all_pypi_solvers = [
+open_source_solvers = [
     "cvxopt >=1.2.6",
     "ecos >=2.0.8",
     "highspy >=1.1.2.dev3",
@@ -41,16 +47,6 @@ all_pypi_solvers = [
     "proxsuite >=0.2.9",
     "quadprog >=0.1.11",
     "scs >=3.2.0",
-]
-open_source_solvers = [
-    "cvxopt >=1.2.6",
-    "ecos >=2.0.8",
-    "osqp >=0.6.2",
-    "proxsuite >=0.2.9",
-    "scs >=3.2.0",
-]
-quadprog = [
-    "quadprog >=0.1.11",
 ]
 
 [project.urls]
