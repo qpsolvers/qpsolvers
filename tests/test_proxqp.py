@@ -112,6 +112,6 @@ try:
                 )
 
 
-except ImportError:  # ProxSuite not installed
+except ImportError:  # solver not installed
 
     pass

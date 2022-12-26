@@ -20,18 +20,23 @@
 
 import unittest
 
-from qpsolvers.solvers import osqp_solve_qp
-
 from .problems import get_sd3310_problem
 
+try:
+    from qpsolvers.solvers.osqp_ import osqp_solve_qp
 
-class TestOSQP(unittest.TestCase):
+    class TestOSQP(unittest.TestCase):
 
-    """
-    Tests specific to OSQP.
-    """
+        """
+        Tests specific to OSQP.
+        """
 
-    def test_problem(self):
-        problem = get_sd3310_problem()
-        P, q, G, h, A, b, lb, ub = problem.unpack()
-        self.assertIsNotNone(osqp_solve_qp(P, q, G, h, A, b, lb, ub))
+        def test_problem(self):
+            problem = get_sd3310_problem()
+            P, q, G, h, A, b, lb, ub = problem.unpack()
+            self.assertIsNotNone(osqp_solve_qp(P, q, G, h, A, b, lb, ub))
+
+
+except ImportError:  # solver not installed
+
+    pass

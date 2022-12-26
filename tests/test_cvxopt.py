@@ -29,79 +29,84 @@ from numpy import array, ones
 from numpy.linalg import norm
 from scipy.sparse import csc_matrix
 
-from qpsolvers.solvers import cvxopt_solve_qp
-
 from .problems import get_sd3310_problem
 
+try:
+    from qpsolvers.solvers.cvxopt_ import cvxopt_solve_qp
 
-class TestCVXOPT(unittest.TestCase):
+    class TestCVXOPT(unittest.TestCase):
 
-    """
-    Test fixture for the CVXOPT solver.
-    """
+        """
+        Test fixture for the CVXOPT solver.
+        """
 
-    def setUp(self):
-        """
-        Prepare test fixture.
-        """
-        warnings.simplefilter("ignore", category=UserWarning)
+        def setUp(self):
+            """
+            Prepare test fixture.
+            """
+            warnings.simplefilter("ignore", category=UserWarning)
 
-    def get_sparse_problem(
-        self,
-    ) -> Tuple[cvxopt.matrix, np.ndarray, cvxopt.matrix, np.ndarray]:
-        """
-        Get sparse problem as a quadruplet of values to unpack.
+        def get_sparse_problem(
+            self,
+        ) -> Tuple[cvxopt.matrix, np.ndarray, cvxopt.matrix, np.ndarray]:
+            """
+            Get sparse problem as a quadruplet of values to unpack.
 
-        Returns
-        -------
-        P :
-            Symmetric cost matrix.
-        q :
-            Cost vector.
-        G :
-            Linear inequality matrix.
-        h :
-            Linear inequality vector.
-        """
-        n = 150
-        M = scipy.sparse.lil_matrix(scipy.sparse.eye(n))
-        for i in range(1, n - 1):
-            M[i, i + 1] = -1
-            M[i, i - 1] = 1
-        P = csc_matrix(M.dot(M.transpose()))
-        q = -ones((n,))
-        G = csc_matrix(-scipy.sparse.eye(n))
-        h = -2.0 * ones((n,))
-        return P, q, G, h
+            Returns
+            -------
+            P :
+                Symmetric cost matrix.
+            q :
+                Cost vector.
+            G :
+                Linear inequality matrix.
+            h :
+                Linear inequality vector.
+            """
+            n = 150
+            M = scipy.sparse.lil_matrix(scipy.sparse.eye(n))
+            for i in range(1, n - 1):
+                M[i, i + 1] = -1
+                M[i, i - 1] = 1
+            P = csc_matrix(M.dot(M.transpose()))
+            q = -ones((n,))
+            G = csc_matrix(-scipy.sparse.eye(n))
+            h = -2.0 * ones((n,))
+            return P, q, G, h
 
-    def test_sparse(self):
-        """
-        Test CVXOPT on a sparse problem.
-        """
-        P, q, G, h = self.get_sparse_problem()
-        x = cvxopt_solve_qp(P, q, G, h)
-        self.assertIsNotNone(x)
-        known_solution = array([2.0] * 149 + [3.0])
-        sol_tolerance = 1e-2  # aouch, not great!
-        self.assertLess(norm(x - known_solution), sol_tolerance)
-        self.assertLess(max(G.dot(x) - h), 1e-10)
+        def test_sparse(self):
+            """
+            Test CVXOPT on a sparse problem.
+            """
+            P, q, G, h = self.get_sparse_problem()
+            x = cvxopt_solve_qp(P, q, G, h)
+            self.assertIsNotNone(x)
+            known_solution = array([2.0] * 149 + [3.0])
+            sol_tolerance = 1e-2  # aouch, not great!
+            self.assertLess(norm(x - known_solution), sol_tolerance)
+            self.assertLess(max(G.dot(x) - h), 1e-10)
 
-    def test_extra_kwargs(self):
-        """
-        Call CVXOPT with various solver-specific settings.
-        """
-        problem = get_sd3310_problem()
-        x = cvxopt_solve_qp(
-            problem.P,
-            problem.q,
-            problem.G,
-            problem.h,
-            problem.A,
-            problem.b,
-            maxiters=10,
-            abstol=1e-1,
-            reltol=1e-1,
-            feastol=1e-2,
-            refinement=3,
-        )
-        self.assertIsNotNone(x)
+        def test_extra_kwargs(self):
+            """
+            Call CVXOPT with various solver-specific settings.
+            """
+            problem = get_sd3310_problem()
+            x = cvxopt_solve_qp(
+                problem.P,
+                problem.q,
+                problem.G,
+                problem.h,
+                problem.A,
+                problem.b,
+                maxiters=10,
+                abstol=1e-1,
+                reltol=1e-1,
+                feastol=1e-2,
+                refinement=3,
+            )
+            self.assertIsNotNone(x)
+
+
+except ImportError:  # solver not installed
+
+    pass

@@ -22,25 +22,30 @@ import unittest
 
 import numpy as np
 
-from qpsolvers.solvers import scs_solve_qp
-
 from .problems import get_sd3310_problem
 
+try:
+    from qpsolvers.solvers.scs_ import scs_solve_qp
 
-class TestSCS(unittest.TestCase):
+    class TestSCS(unittest.TestCase):
 
-    """
-    Tests specific to SCS.
-    """
+        """
+        Tests specific to SCS.
+        """
 
-    def test_problem(self):
-        problem = get_sd3310_problem()
-        P, q, G, h, A, b, lb, ub = problem.unpack()
-        self.assertIsNotNone(scs_solve_qp(P, q, G, h, A, b, lb, ub))
+        def test_problem(self):
+            problem = get_sd3310_problem()
+            P, q, G, h, A, b, lb, ub = problem.unpack()
+            self.assertIsNotNone(scs_solve_qp(P, q, G, h, A, b, lb, ub))
 
-    def test_unbounded_below(self):
-        problem = get_sd3310_problem()
-        P, q, _, _, _, _, _, _ = problem.unpack()
-        P -= np.eye(3)  # make problem unbounded
-        with self.assertRaises(ValueError):
-            scs_solve_qp(P, q)
+        def test_unbounded_below(self):
+            problem = get_sd3310_problem()
+            P, q, _, _, _, _, _, _ = problem.unpack()
+            P -= np.eye(3)  # make problem unbounded
+            with self.assertRaises(ValueError):
+                scs_solve_qp(P, q)
+
+
+except ImportError:  # solver not installed
+
+    pass

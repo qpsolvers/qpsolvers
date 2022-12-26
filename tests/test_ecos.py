@@ -20,18 +20,23 @@
 
 import unittest
 
-from qpsolvers.solvers import ecos_solve_qp
-
 from .problems import get_sd3310_problem
 
+try:
+    from qpsolvers.solvers.ecos_ import ecos_solve_qp
 
-class TestECOS(unittest.TestCase):
+    class TestECOS(unittest.TestCase):
 
-    """
-    Tests specific to ECOS.
-    """
+        """
+        Tests specific to ECOS.
+        """
 
-    def test_problem(self):
-        problem = get_sd3310_problem()
-        P, q, G, h, A, b, lb, ub = problem.unpack()
-        self.assertIsNotNone(ecos_solve_qp(P, q, G, h, A, b, lb, ub))
+        def test_problem(self):
+            problem = get_sd3310_problem()
+            P, q, G, h, A, b, lb, ub = problem.unpack()
+            self.assertIsNotNone(ecos_solve_qp(P, q, G, h, A, b, lb, ub))
+
+
+except ImportError:  # solver not installed
+
+    pass
