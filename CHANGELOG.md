@@ -15,7 +15,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
-- SCS: require version 3.2 or posterior
+- SCS: require at least version 3.2
 - Solution: duality gap computation under infinite box bounds
 
 ## [2.7.0] - 2022/12/15
