@@ -37,6 +37,7 @@ import numpy as np
 import qpSWIFT
 
 from ..conversions import linear_from_box_inequalities, split_dual_linear_box
+from ..exceptions import ProblemError
 from ..problem import Problem
 from ..solution import Solution
 
@@ -123,6 +124,11 @@ def qpswift_solve_problem(
     have zero rows in your input matrices, as it can `make the solver
     numerically unstable <https://github.com/qpSWIFT/qpSWIFT/issues/3>`_.
     """
+    if problem.has_sparse:
+        raise ProblemError(
+            "problem has sparse matrices "
+            "but qpSWIFT only works with dense ones"
+        )
     if initvals is not None:
         print("qpSWIFT: warm-start values are ignored by wrapper")
     P, q, G, h, A, b, lb, ub = problem.unpack()

@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - Property to check if a Problem has sparse matrices
 - QPError base class for exceptions
 - SolverError exception
+- qpSWIFT: check that input Problem uses dense matrices
 
 ## [2.7.1] - 2022/12/23
 
