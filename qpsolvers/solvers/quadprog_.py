@@ -33,6 +33,7 @@ from numpy import hstack, vstack
 from quadprog import solve_qp
 
 from ..conversions import linear_from_box_inequalities, split_dual_linear_box
+from ..exceptions import ProblemError
 from ..problem import Problem
 from ..solution import Solution
 
