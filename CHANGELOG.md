@@ -7,6 +7,10 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - ECOS: handle two more exit flags
+- ParamError exception
+- ProblemError exception
+- QPError base class for exceptions
+- SolverError exception
 
 ## [2.7.1] - 2022/12/23
 

@@ -21,11 +21,31 @@
 """Exceptions."""
 
 
-class NoSolverSelected(Exception):
+class QPError(Exception):
+
+    """Base class for qpsolvers exceptions."""
+
+
+class NoSolverSelected(QPError):
 
     """Exception raised when the `solver` keyword argument is not set."""
 
 
-class SolverNotFound(Exception):
+class ParamError(QPError):
+
+    """Exception raised when solver parameters are incorrect."""
+
+
+class ProblemError(QPError):
+
+    """Exception raised when a quadratic program is malformed."""
+
+
+class SolverNotFound(QPError):
 
     """Exception raised when a requested solver is not found."""
+
+
+class SolverError(QPError):
+
+    """Exception raised when a solver failed."""
