@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - QPError base class for exceptions
 - SolverError exception
 - qpSWIFT: check that input Problem uses dense matrices
+- quadprog: check that input Problem uses dense matrices
 
 ## [2.7.1] - 2022/12/23
 
