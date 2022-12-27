@@ -74,11 +74,16 @@ def quadprog_solve_problem(
     instance, you can call ``quadprog_solve_qp(P, q, G, h, factorized=True)``.
     See the solver documentation for details.
     """
+    if problem.has_sparse:
+        raise ProblemError(
+            "problem has sparse matrices "
+            "but quadprog only works with dense ones"
+        )
     P, q, G, h, A, b, lb, ub = problem.unpack()
     if initvals is not None and verbose:
         warnings.warn("warm-start values are ignored by quadprog")
     if lb is not None or ub is not None:
-        G, h = linear_from_box_inequalities(G, h, lb, ub)
+        G, h = linear_from_box_inequalities(G, h, lb, ub, use_sparse=False)
     qp_G = P
     qp_a = -q
     qp_C: Optional[np.ndarray] = None
