@@ -103,6 +103,24 @@ class Problem:
         self.lb = lb
         self.ub = ub
 
+    @property
+    def has_sparse(self) -> bool:
+        """
+        Check whether the problem has sparse matrices.
+
+        Returns
+        -------
+        :
+            True if at least one of the :math:`P`, :math:`G` or :math:`A`
+            matrices is sparse.
+        """
+        sparse_types = (spa.csc_matrix, spa.dia_matrix)
+        return (
+            isinstance(self.P, sparse_types)
+            or isinstance(self.G, sparse_types)
+            or isinstance(self.A, sparse_types)
+        )
+
     def unpack(
         self,
     ) -> Tuple[
