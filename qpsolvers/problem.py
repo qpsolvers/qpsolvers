@@ -22,6 +22,7 @@
 Model for a quadratic program.
 """
 
+import warnings
 from typing import Optional, Tuple, Union
 
 import numpy as np
@@ -196,8 +197,12 @@ class Problem:
         This is the motivation for preconditioning, as detailed for instance in
         Section 5 of [Stellato2020]_.
         """
+        if self.has_sparse:
+            warnings.warn("The cond() function is for dense problems")
         P, A = self.P, self.A
-        G, _ = linear_from_box_inequalities(self.G, self.h, self.lb, self.ub)
+        G, _ = linear_from_box_inequalities(
+            self.G, self.h, self.lb, self.ub, use_sparse=False
+        )
         if G is None and A is None:
             M = P
         elif A is None:  # G is not None
