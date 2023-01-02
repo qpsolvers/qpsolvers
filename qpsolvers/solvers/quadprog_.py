@@ -125,9 +125,7 @@ def quadprog_solve_problem(
     solution.x = x
     solution.obj = obj
 
-    n = P.shape[0]
-    m = qp_C.shape[1] - meq if qp_C is not None else 0
-    z, ys, z_box = __convert_dual_multipliers(y, n, m, meq, lb, ub)
+    z, ys, z_box = __convert_dual_multipliers(y, meq, lb, ub)
     solution.y = ys
     solution.z = z
     solution.z_box = z_box
@@ -142,8 +140,6 @@ def quadprog_solve_problem(
 
 def __convert_dual_multipliers(
     y: np.ndarray,
-    n: int,
-    m: int,
     meq: int,
     lb: Optional[np.ndarray],
     ub: Optional[np.ndarray],
