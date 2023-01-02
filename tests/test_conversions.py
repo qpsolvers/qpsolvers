@@ -21,6 +21,7 @@
 import unittest
 
 import numpy as np
+import scipy.sparse as spa
 
 from qpsolvers.conversions import linear_from_box_inequalities
 
@@ -77,3 +78,16 @@ class TestConversions(unittest.TestCase):
         G2, h2 = linear_from_box_inequalities(G, h, lb, ub)
         if False:  # TODO(scaron): update behavior
             self.assertTrue(np.isfinite(h2).all())
+
+    def test_sparse_conversion(self):
+        """
+        Box concatenation on a sparse problem without linear inequality
+        constraints yields a sparse problem.
+        """
+        n = 1000
+        lb = np.full((n,), -1.0)
+        ub = np.full((n,), +1.0)
+        G, h = linear_from_box_inequalities(
+            None, None, lb, ub, use_sparse=True
+        )
+        self.assertTrue(isinstance(G, spa.csc_matrix))
