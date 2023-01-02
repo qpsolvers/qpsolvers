@@ -39,8 +39,3 @@ class ProblemError(QPError):
 class SolverNotFound(QPError):
 
     """Exception raised when a requested solver is not found."""
-
-
-class SolverError(QPError):
-
-    """Exception raised when a solver failed."""
