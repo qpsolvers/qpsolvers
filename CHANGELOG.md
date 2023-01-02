@@ -16,6 +16,10 @@ All notable changes to this project will be documented in this file.
 - qpSWIFT: raise a ProblemError when matrices are not dense
 - quadprog: raise a ProblemError when matrices are not dense
 
+### Changed
+
+- Add `use_sparse` argument to internal linear-from-box conversion
+
 ## [2.7.1] - 2022/12/23
 
 ### Added

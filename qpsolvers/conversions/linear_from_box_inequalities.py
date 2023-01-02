@@ -31,6 +31,7 @@ def concatenate_bound(
     h: Optional[np.ndarray],
     b: np.ndarray,
     sign: float,
+    use_sparse: bool,
 ) -> Tuple[Optional[Union[np.ndarray, spa.csc_matrix]], Optional[np.ndarray]]:
     """
     Append bound constraint vectors to inequality constraints.
@@ -41,10 +42,12 @@ def concatenate_bound(
         Linear inequality matrix.
     h :
         Linear inequality vector.
-    b:
+    b :
         Bound constraint vector.
-    sign:
+    sign :
         Sign factor: -1.0 for a lower and +1.0 for an upper bound.
+    use_sparse :
+        Use sparse matrices if true, dense matrices otherwise.
 
     Returns
     -------
@@ -55,7 +58,7 @@ def concatenate_bound(
     """
     n = len(b)  # == number of optimization variables
     if G is None or h is None:
-        G = sign * np.eye(n)
+        G = sign * (spa.eye(n, format="csc") if use_sparse else np.eye(n))
         h = sign * b
     else:  # G is not None and h is not None
         if isinstance(G, np.ndarray):
@@ -74,6 +77,7 @@ def linear_from_box_inequalities(
     h: Optional[np.ndarray],
     lb: Optional[np.ndarray],
     ub: Optional[np.ndarray],
+    use_sparse: bool,
 ) -> Tuple[Optional[Union[np.ndarray, spa.csc_matrix]], Optional[np.ndarray]]:
     """
     Append lower or upper bound constraint vectors to inequality constraints.
@@ -88,6 +92,8 @@ def linear_from_box_inequalities(
         Lower bound constraint vector.
     ub :
         Upper bound constraint vector.
+    use_sparse :
+        Use sparse matrices if true, dense matrices otherwise.
 
     Returns
     -------
@@ -97,7 +103,7 @@ def linear_from_box_inequalities(
         Updated linear inequality vector.
     """
     if lb is not None:
-        G, h = concatenate_bound(G, h, lb, -1.0)
+        G, h = concatenate_bound(G, h, lb, -1.0, use_sparse)
     if ub is not None:
-        G, h = concatenate_bound(G, h, ub, +1.0)
+        G, h = concatenate_bound(G, h, ub, +1.0, use_sparse)
     return (G, h)
