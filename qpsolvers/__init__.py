@@ -20,6 +20,7 @@
 
 """Quadratic programming solvers in Python with a unified API"""
 
+from .exceptions import ProblemError
 from .problem import Problem
 from .solution import Solution
 from .solve_ls import solve_ls
@@ -47,6 +48,7 @@ __version__ = "2.7.2rc0"
 
 __all__ = [
     "Problem",
+    "ProblemError",
     "Solution",
     "__version__",
     "available_solvers",
