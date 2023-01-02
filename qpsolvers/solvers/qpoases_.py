@@ -144,6 +144,9 @@ def qpoases_solve_problem(
 
     Raises
     ------
+    ProblemError :
+        If the problem is ill-formed in some way, for instance if some matrices
+        are not dense.
     ValueError :
         If ``predefined_options`` is not a valid choice.
 
@@ -313,6 +316,9 @@ def qpoases_solve_qp(
 
     Raises
     ------
+    ProblemError :
+        If the problem is ill-formed in some way, for instance if some matrices
+        are not dense.
     ValueError :
         If ``predefined_options`` is not a valid choice.
 
