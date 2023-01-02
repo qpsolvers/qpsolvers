@@ -33,7 +33,7 @@ class TestConversions(unittest.TestCase):
     """
 
     def __test_linear_from_box_inequalities(self, G, h, lb, ub):
-        G2, h2 = linear_from_box_inequalities(G, h, lb, ub)
+        G2, h2 = linear_from_box_inequalities(G, h, lb, ub, use_sparse=False)
         m = G.shape[0] if G is not None else 0
         k = lb.shape[0]
         self.assertTrue(np.allclose(G2[m : m + k, :], -np.eye(k)))
@@ -61,7 +61,7 @@ class TestConversions(unittest.TestCase):
         h = np.array([3.0, 2.0, -2.0]).reshape((3,))
         lb = np.array([-np.inf, -np.inf, -np.inf])
         ub = np.array([np.inf, np.inf, np.inf])
-        G2, h2 = linear_from_box_inequalities(G, h, lb, ub)
+        G2, h2 = linear_from_box_inequalities(G, h, lb, ub, use_sparse=False)
         if False:  # TODO(scaron): update behavior
             self.assertTrue(np.allclose(G2, G))
             self.assertTrue(np.allclose(h2, h))
@@ -75,7 +75,7 @@ class TestConversions(unittest.TestCase):
         h = np.array([3.0, 2.0, -2.0]).reshape((3,))
         lb = np.array([-1.0, -np.inf, -1.0])
         ub = np.array([np.inf, 1.0, 1.0])
-        G2, h2 = linear_from_box_inequalities(G, h, lb, ub)
+        G2, h2 = linear_from_box_inequalities(G, h, lb, ub, use_sparse=False)
         if False:  # TODO(scaron): update behavior
             self.assertTrue(np.isfinite(h2).all())
 
