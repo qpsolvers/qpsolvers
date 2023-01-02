@@ -7,7 +7,6 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - ECOS: handle two more exit flags
-- ParamError exception
 - ProblemError exception
 - Property to check if a Problem has sparse matrices
 - QPError base class for exceptions

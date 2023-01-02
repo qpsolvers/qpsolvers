@@ -31,11 +31,6 @@ class NoSolverSelected(QPError):
     """Exception raised when the `solver` keyword argument is not set."""
 
 
-class ParamError(QPError):
-
-    """Exception raised when solver parameters are incorrect."""
-
-
 class ProblemError(QPError):
 
     """Exception raised when a quadratic program is malformed."""
