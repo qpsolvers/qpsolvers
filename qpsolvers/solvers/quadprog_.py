@@ -64,7 +64,7 @@ def quadprog_solve_problem(
 
     Raises
     ------
-    ProblemError
+    ProblemError :
         If the problem is ill-formed in some way, for instance if some matrices
         are not dense.
 
@@ -172,6 +172,12 @@ def __convert_dual_multipliers(
         Tuple of dual multipliers :code:`z, ys, z_box` corresponding
         respectively to linear inequalities, linear equalities, and box
         inequalities.
+
+    Raises
+    ------
+    ProblemError :
+        If the problem is ill-formed in some way, for instance if some matrices
+        are not dense.
     """
     z, ys, z_box = None, None, None
     if meq > 0:
