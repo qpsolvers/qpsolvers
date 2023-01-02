@@ -70,6 +70,12 @@ def qpswift_solve_problem(
     :
         Solution returned by the solver.
 
+    Raises
+    ------
+    ProblemError :
+        If the problem is ill-formed in some way, for instance if some matrices
+        are not dense or the problem has no inequality constraint.
+
     Note
     ----
     **Rank assumptions:** qpSWIFT requires the QP matrices to satisfy the
@@ -141,16 +147,21 @@ def qpswift_solve_problem(
             "VERBOSE": 1 if verbose else 0,
         }
     )
-    if G is not None and h is not None:
-        if A is not None and b is not None:
-            result = qpSWIFT.run(q, h, P, G, A, b, kwargs)
-        else:  # no equality constraint
-            result = qpSWIFT.run(q, h, P, G, opts=kwargs)
-    else:  # no inequality constraint
-        # See https://github.com/qpSWIFT/qpSWIFT/issues/2
-        raise NotImplementedError(
-            "QPs without inequality constraints are not handled by qpSWIFT"
-        )
+
+    try:
+        if G is not None and h is not None:
+            if A is not None and b is not None:
+                result = qpSWIFT.run(q, h, P, G, A, b, kwargs)
+            else:  # no equality constraint
+                result = qpSWIFT.run(q, h, P, G, opts=kwargs)
+        else:  # no inequality constraint
+            # See https://github.com/qpSWIFT/qpSWIFT/issues/2
+            raise ProblemError("problem has no inequality constraint")
+    except TypeError as error:
+        if problem.has_sparse:
+            raise ProblemError("problem has sparse matrices") from error
+        raise ProblemError(str(error)) from error
+
     basic_info = result["basicInfo"]
     adv_info = result["advInfo"]
 
@@ -237,6 +248,12 @@ def qpswift_solve_qp(
     -------
     :
         Solution to the QP, if found, otherwise ``None``.
+
+    Raises
+    ------
+    ProblemError :
+        If the problem is ill-formed in some way, for instance if some matrices
+        are not dense or the problem has no inequality constraint.
 
     Note
     ----
