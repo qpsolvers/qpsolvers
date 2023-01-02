@@ -44,6 +44,7 @@ from qpoases import PyQProblem as QProblem
 from qpoases import PyQProblemB as QProblemB
 from qpoases import PyReturnValue as ReturnValue
 
+from ..exceptions import ProblemError
 from ..problem import Problem
 from ..solution import Solution
 
@@ -213,7 +214,13 @@ def qpoases_solve_problem(
 
     options = __prepare_options(verbose, predefined_options, **kwargs)
     qp.setOptions(options)
-    return_value = qp.init(*args)
+
+    try:
+        return_value = qp.init(*args)
+    except TypeError as error:
+        if problem.has_sparse:
+            raise ProblemError("problem has sparse matrices") from error
+        raise ProblemError(str(error)) from error
 
     solution = Solution(problem)
     if RET_INIT_FAILED <= return_value <= RET_INIT_FAILED_REGULARISATION:
