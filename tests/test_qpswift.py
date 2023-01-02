@@ -21,6 +21,10 @@
 import unittest
 import warnings
 
+import scipy.sparse as spa
+
+from qpsolvers import ProblemError
+
 from .problems import get_sd3310_problem
 
 try:
@@ -35,10 +39,14 @@ try:
         def test_problem(self):
             problem = get_sd3310_problem()
             P, q, G, h, A, b, lb, ub = problem.unpack()
-            if qpswift_solve_qp is not None:
-                self.assertIsNotNone(
-                    qpswift_solve_qp(P, q, G, h, A, b, lb, ub)
-                )
+            self.assertIsNotNone(qpswift_solve_qp(P, q, G, h, A, b, lb, ub))
+
+        def test_not_sparse(self):
+            problem = get_sd3310_problem()
+            P, q, G, h, A, b, lb, ub = problem.unpack()
+            P = spa.csc_matrix(P)
+            with self.assertRaises(ProblemError):
+                qpswift_solve_qp(P, q, G, h, A, b, lb, ub)
 
 
 except ImportError:  # solver not installed
