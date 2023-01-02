@@ -146,7 +146,9 @@ def cvxopt_solve_problem(
     """
     P, q, G, h, A, b, lb, ub = problem.unpack()
     if lb is not None or ub is not None:
-        G, h = linear_from_box_inequalities(G, h, lb, ub)
+        G, h = linear_from_box_inequalities(
+            G, h, lb, ub, use_sparse=problem.has_sparse
+        )
 
     args = [__to_cvxopt(P), __to_cvxopt(q)]
     constraints = {"G": None, "h": None, "A": None, "b": None}

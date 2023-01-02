@@ -144,7 +144,9 @@ def ecos_solve_problem(
         warnings.warn("warm-start values are ignored by this wrapper")
     P, q, G, h, A, b, lb, ub = problem.unpack()
     if lb is not None or ub is not None:
-        G, h = linear_from_box_inequalities(G, h, lb, ub)
+        G, h = linear_from_box_inequalities(
+            G, h, lb, ub, use_sparse=problem.has_sparse
+        )
     kwargs.update(
         {
             "verbose": verbose,

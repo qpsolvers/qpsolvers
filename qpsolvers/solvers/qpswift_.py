@@ -139,7 +139,7 @@ def qpswift_solve_problem(
         print("qpSWIFT: warm-start values are ignored by wrapper")
     P, q, G, h, A, b, lb, ub = problem.unpack()
     if lb is not None or ub is not None:
-        G, h = linear_from_box_inequalities(G, h, lb, ub)
+        G, h = linear_from_box_inequalities(G, h, lb, ub, use_sparse=False)
     result: dict = {}
     kwargs.update(
         {
