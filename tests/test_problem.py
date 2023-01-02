@@ -20,6 +20,8 @@
 
 import unittest
 
+import scipy.sparse as spa
+
 from qpsolvers import Problem
 
 from .problems import get_sd3310_problem
@@ -62,6 +64,18 @@ class TestProblem(unittest.TestCase):
             Problem(P, q, G, h, None, b).check_constraints()
 
     def test_cond(self):
+        self.assertGreater(self.problem.cond(), 200.0)
+
+    def test_cond_unconstrained(self):
         unconstrained = Problem(self.problem.P, self.problem.q)
         self.assertAlmostEqual(unconstrained.cond(), 124.257, places=4)
-        self.assertGreater(self.problem.cond(), 200.0)
+
+    def test_cond_no_equality(self):
+        no_equality = Problem(
+            self.problem.P, self.problem.q, self.problem.G, self.problem.h
+        )
+        self.assertGreater(no_equality.cond(), 200.0)
+
+    def test_cond_sparse(self):
+        sparse = Problem(spa.csc_matrix(self.problem.P), self.problem.q)
+        self.assertAlmostEqual(sparse.cond(), 124.257, places=4)
