@@ -34,7 +34,7 @@ on installing this solver.
 """
 
 import warnings
-from typing import Any, List, Optional
+from typing import Any, List, Optional, Tuple
 
 import numpy as np
 from numpy import array, hstack, ones, vstack
@@ -106,6 +106,49 @@ def __prepare_options(
         setattr(options, param, value)
 
     return options
+
+
+def __convert_inequalities(
+    G: Optional[np.ndarray] = None,
+    h: Optional[np.ndarray] = None,
+    A: Optional[np.ndarray] = None,
+    b: Optional[np.ndarray] = None,
+) -> Tuple[np.ndarray, Optional[np.ndarray], np.ndarray]:
+    """
+    Convert linear constraints to qpOASES format.
+
+    Parameters
+    ----------
+    G :
+        Linear inequality constraint matrix.
+    h :
+        Linear inequality constraint vector.
+    A :
+        Linear equality constraint matrix.
+    b :
+        Linear equality constraint vector.
+
+    Returns
+    -------
+    :
+        Tuple ``(C, lb_C, ub_C)`` for qpOASES.
+    """
+    lb_C: Optional[np.ndarray] = None
+    C = np.array([])
+    if G is not None and h is not None:
+        if A is not None and b is not None:
+            C = vstack([G, A])
+            lb_C = hstack([-__infty__ * ones(h.shape[0]), b])
+            ub_C = hstack([h, b])
+        else:  # no equality constraint
+            C = G
+            ub_C = h
+    else:  # no inequality constraint
+        if A is not None and b is not None:
+            C = A
+            lb_C = b
+            ub_C = b
+    return C, lb_C, ub_C
 
 
 def qpoases_solve_problem(
@@ -189,21 +232,7 @@ def qpoases_solve_problem(
         print("qpOASES: note that warm-start values ignored by wrapper")
     P, q, G, h, A, b, lb, ub = problem.unpack()
     n = P.shape[0]
-    lb_C: Optional[np.ndarray] = None
-    C = np.array([])
-    if G is not None and h is not None:
-        if A is not None and b is not None:
-            C = vstack([G, A])
-            lb_C = hstack([-__infty__ * ones(h.shape[0]), b])
-            ub_C = hstack([h, b])
-        else:  # no equality constraint
-            C = G
-            ub_C = h
-    else:  # no inequality constraint
-        if A is not None and b is not None:
-            C = A
-            lb_C = b
-            ub_C = b
+    C, lb_C, ub_C = __convert_inequalities(G, h, A, b)
 
     args: List[Any] = []
     if C.shape[0] > 0:
