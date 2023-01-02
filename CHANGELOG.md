@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 - qpOASES: raise a ProblemError when matrices are not dense
 - qpSWIFT: raise a ProblemError when matrices are not dense
 - quadprog: raise a ProblemError when matrices are not dense
+- Warn when trying to compute the condition number of a sparse problem
 
 ### Changed
 
