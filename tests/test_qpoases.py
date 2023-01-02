@@ -22,6 +22,9 @@ import unittest
 import warnings
 
 import numpy as np
+import scipy.sparse as spa
+
+from qpsolvers import ProblemError
 
 from .problems import get_sd3310_problem
 
@@ -87,6 +90,20 @@ try:
                 custom_ub,
             )
             self.assertIsNone(x)
+
+        def test_not_sparse(self):
+            """
+            Raise a ProblemError on sparse problems.
+            """
+            problem = get_sd3310_problem()
+            problem.P = spa.csc_matrix(problem.P)
+            with self.assertRaises(ProblemError):
+                qpoases_solve_qp(
+                    problem.P,
+                    problem.q,
+                    problem.G,
+                    problem.h,
+                )
 
 
 except ImportError:  # solver not installed
