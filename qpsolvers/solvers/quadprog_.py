@@ -108,9 +108,7 @@ def quadprog_solve_problem(
             qp_G, qp_a, qp_C, qp_b, meq, **kwargs
         )
     except TypeError as error:
-        if problem.has_sparse:
-            raise ProblemError("problem has sparse matrices") from error
-        raise ProblemError(str(error)) from error
+        raise ProblemError("problem has sparse matrices") from error
     except ValueError as error:
         error_message = str(error)
         if "matrix G is not positive definite" in error_message:
