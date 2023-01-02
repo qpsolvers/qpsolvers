@@ -62,6 +62,12 @@ def quadprog_solve_problem(
     :
         Solution to the QP, if found, otherwise ``None``.
 
+    Raises
+    ------
+    ProblemError
+        If the problem is ill-formed in some way, for instance if some matrices
+        are not dense.
+
     Note
     ----
     The quadprog solver only considers the lower entries of :math:`P`,
@@ -74,11 +80,6 @@ def quadprog_solve_problem(
     instance, you can call ``quadprog_solve_qp(P, q, G, h, factorized=True)``.
     See the solver documentation for details.
     """
-    if problem.has_sparse:
-        raise ProblemError(
-            "problem has sparse matrices "
-            "but quadprog only works with dense ones"
-        )
     P, q, G, h, A, b, lb, ub = problem.unpack()
     if initvals is not None and verbose:
         warnings.warn("warm-start values are ignored by quadprog")
@@ -101,18 +102,23 @@ def quadprog_solve_problem(
             qp_C = -G.T
             qp_b = -h
         meq = 0
+
     try:
         x, obj, xu, iterations, y, iact = solve_qp(
             qp_G, qp_a, qp_C, qp_b, meq, **kwargs
         )
-    except ValueError as e:
-        error = str(e)
-        if "matrix G is not positive definite" in error:
+    except TypeError as error:
+        if problem.has_sparse:
+            raise ProblemError("problem has sparse matrices") from error
+        raise ProblemError(str(error)) from error
+    except ValueError as error:
+        error_message = str(error)
+        if "matrix G is not positive definite" in error_message:
             # quadprog writes G the cost matrix that we write P in this package
-            raise ValueError("matrix P is not positive definite") from e
-        if "no solution" in error:
+            raise ValueError("matrix P is not positive definite") from error
+        if "no solution" in error_message:
             return Solution(problem)
-        warnings.warn(f"quadprog raised a ValueError: {e}")
+        warnings.warn(f"quadprog raised a ValueError: {error_message}")
         return Solution(problem)
 
     solution = Solution(problem)
