@@ -14,11 +14,11 @@ All notable changes to this project will be documented in this file.
 - qpOASES: raise a ProblemError when matrices are not dense
 - qpSWIFT: raise a ProblemError when matrices are not dense
 - quadprog: raise a ProblemError when matrices are not dense
-- Warn when trying to compute the condition number of a sparse problem
 
 ### Changed
 
 - Add `use_sparse` argument to internal linear-from-box conversion
+- Restrict condition number calculation to dense problems for now
 
 ## [2.7.1] - 2022/12/23
 
