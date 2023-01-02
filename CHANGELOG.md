@@ -10,7 +10,6 @@ All notable changes to this project will be documented in this file.
 - ProblemError exception
 - Property to check if a Problem has sparse matrices
 - QPError base class for exceptions
-- SolverError exception
 - qpOASES: raise a ProblemError when matrices are not dense
 - qpSWIFT: raise a ProblemError when matrices are not dense
 - quadprog: raise a ProblemError when matrices are not dense
