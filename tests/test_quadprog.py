@@ -22,6 +22,9 @@ import unittest
 import warnings
 
 import numpy as np
+import scipy.sparse as spa
+
+from qpsolvers import ProblemError
 
 from .problems import get_sd3310_problem
 
@@ -52,6 +55,16 @@ try:
             P, q, G, h, A, b, _, _ = problem.unpack()
             q = q[1:]  # raise "G and a must have the same dimension"
             self.assertIsNone(quadprog_solve_qp(P, q, G, h, A, b))
+
+        def test_not_sparse(self):
+            """
+            Raise a ProblemError on sparse problems.
+            """
+            problem = get_sd3310_problem()
+            P, q, G, h, A, b, _, _ = problem.unpack()
+            P = spa.csc_matrix(P)
+            with self.assertRaises(ProblemError):
+                quadprog_solve_qp(P, q, G, h, A, b)
 
 
 except ImportError:  # solver not installed
