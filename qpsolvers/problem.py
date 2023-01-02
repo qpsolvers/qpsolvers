@@ -22,13 +22,13 @@
 Model for a quadratic program.
 """
 
-import warnings
 from typing import Optional, Tuple, Union
 
 import numpy as np
 import scipy.sparse as spa
 
 from .conversions import linear_from_box_inequalities
+from .exceptions import ProblemError
 
 
 class Problem:
@@ -190,6 +190,11 @@ class Problem:
         :
             Condition number of the problem.
 
+        Raises
+        ------
+        ProblemError :
+            If the problem is sparse.
+
         Notes
         -----
         Having a low condition number (say, less than 1e10) condition number is
@@ -198,7 +203,7 @@ class Problem:
         Section 5 of [Stellato2020]_.
         """
         if self.has_sparse:
-            warnings.warn("The cond() function is for dense problems")
+            raise ProblemError("This function is for dense problems only")
         P, A = self.P, self.A
         G, _ = linear_from_box_inequalities(
             self.G, self.h, self.lb, self.ub, use_sparse=False

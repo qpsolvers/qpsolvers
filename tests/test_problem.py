@@ -22,7 +22,7 @@ import unittest
 
 import scipy.sparse as spa
 
-from qpsolvers import Problem
+from qpsolvers import Problem, ProblemError
 
 from .problems import get_sd3310_problem
 
@@ -78,4 +78,5 @@ class TestProblem(unittest.TestCase):
 
     def test_cond_sparse(self):
         sparse = Problem(spa.csc_matrix(self.problem.P), self.problem.q)
-        self.assertAlmostEqual(sparse.cond(), 124.257, places=4)
+        with self.assertRaises(ProblemError):
+            sparse.cond()
