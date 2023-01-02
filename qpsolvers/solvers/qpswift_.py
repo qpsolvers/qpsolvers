@@ -130,11 +130,6 @@ def qpswift_solve_problem(
     have zero rows in your input matrices, as it can `make the solver
     numerically unstable <https://github.com/qpSWIFT/qpSWIFT/issues/3>`_.
     """
-    if problem.has_sparse:
-        raise ProblemError(
-            "problem has sparse matrices "
-            "but qpSWIFT only works with dense ones"
-        )
     if initvals is not None:
         print("qpSWIFT: warm-start values are ignored by wrapper")
     P, q, G, h, A, b, lb, ub = problem.unpack()
@@ -158,9 +153,7 @@ def qpswift_solve_problem(
             # See https://github.com/qpSWIFT/qpSWIFT/issues/2
             raise ProblemError("problem has no inequality constraint")
     except TypeError as error:
-        if problem.has_sparse:
-            raise ProblemError("problem has sparse matrices") from error
-        raise ProblemError(str(error)) from error
+        raise ProblemError("problem has sparse matrices") from error
 
     basic_info = result["basicInfo"]
     adv_info = result["advInfo"]

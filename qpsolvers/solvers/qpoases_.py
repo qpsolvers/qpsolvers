@@ -250,9 +250,7 @@ def qpoases_solve_problem(
     try:
         return_value = qp.init(*args)
     except TypeError as error:
-        if problem.has_sparse:
-            raise ProblemError("problem has sparse matrices") from error
-        raise ProblemError(str(error)) from error
+        raise ProblemError("problem has sparse matrices") from error
 
     solution = Solution(problem)
     if RET_INIT_FAILED <= return_value <= RET_INIT_FAILED_REGULARISATION:
