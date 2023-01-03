@@ -31,6 +31,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - Remove ``solve_safer_qp``
+- Remove ``sym_proj`` parameter
 
 ## [2.7.2] - 2023/01/02
 
