@@ -112,7 +112,7 @@ def solve_ls(
         R = 0.5 * (R + R.transpose())
         warnings.warn(
             "The `sym_proj` feature is deprecated "
-            "and will be removed in qpsolvers v2.9",
+            "and will be removed in qpsolvers v3.0",
             DeprecationWarning,
             stacklevel=2,
         )
