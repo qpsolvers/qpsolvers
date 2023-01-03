@@ -37,7 +37,7 @@ import warnings
 from typing import Any, List, Optional, Tuple
 
 import numpy as np
-from numpy import array, hstack, ones, vstack
+from numpy import array, hstack, vstack
 from qpoases import PyOptions as Options
 from qpoases import PyPrintLevel as PrintLevel
 from qpoases import PyQProblem as QProblem
@@ -138,7 +138,7 @@ def __convert_inequalities(
     if G is not None and h is not None:
         if A is not None and b is not None:
             C = vstack([G, A])
-            lb_C = hstack([-__infty__ * ones(h.shape[0]), b])
+            lb_C = hstack([np.full(h.shape, -__infty__), b])
             ub_C = hstack([h, b])
         else:  # no equality constraint
             C = G
