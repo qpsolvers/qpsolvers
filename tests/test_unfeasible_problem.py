@@ -23,12 +23,7 @@ import warnings
 
 from numpy import array, dot
 
-from qpsolvers import (
-    available_solvers,
-    dense_solvers,
-    solve_qp,
-    solve_safer_qp,
-)
+from qpsolvers import available_solvers, dense_solvers, solve_qp
 
 
 class UnfeasibleProblem(unittest.TestCase):
@@ -91,31 +86,6 @@ class UnfeasibleProblem(unittest.TestCase):
         def test(self):
             P, q, G, h, A, b = self.get_dense_problem()
             x = solve_qp(P, q, G, h, A, b, solver=solver)
-            self.assertIsNone(x)
-
-        return test
-
-    @staticmethod
-    def get_test_safer(solver):
-        """
-        Closure of test function for a given solver.
-
-        Parameters
-        ----------
-        solver : string
-            Name of the solver to test.
-
-        Returns
-        -------
-        test : function
-            Test function for that solver.
-        """
-
-        def test(self):
-            P, q, G, h, _, _ = self.get_dense_problem()
-            G[0] = 0
-            h[0] = -10000.0
-            x = solve_safer_qp(P, q, G, h, sr=1e-2, solver=solver)
             self.assertIsNone(x)
 
         return test
