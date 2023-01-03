@@ -141,7 +141,7 @@ class TestSolveQP(unittest.TestCase):
         def test(self):
             P, q, G, h, A, b = self.get_dense_problem()
             x = solve_qp(P, q, G, h, A, b, solver=solver)
-            x_sp = solve_qp(P, q, G, h, A, b, solver=solver, sym_proj=True)
+            x_sp = solve_qp(P, q, G, h, A, b, solver=solver)
             self.assertIsNotNone(x)
             self.assertIsNotNone(x_sp)
             known_solution = array([0.30769231, -0.69230769, 1.38461538])
