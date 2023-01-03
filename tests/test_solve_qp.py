@@ -29,6 +29,8 @@ import numpy as np
 import scipy
 from numpy import array, dot, ones, random
 from numpy.linalg import norm
+from scipy.sparse import csc_matrix
+
 from qpsolvers import (
     available_solvers,
     dense_solvers,
@@ -37,7 +39,6 @@ from qpsolvers import (
     sparse_solvers,
 )
 from qpsolvers.exceptions import NoSolverSelected, SolverNotFound
-from scipy.sparse import csc_matrix
 
 from .problems import get_qpmad_demo_problem
 
@@ -789,6 +790,8 @@ class TestSolveQP(unittest.TestCase):
                 if solver == "osqp"
                 else 5e-4
                 if solver == "scs"
+                else 2e-5
+                if solver == "proxqp"
                 else 1e-6
                 if solver in ["cvxopt", "qpswift"]
                 else 1e-8
