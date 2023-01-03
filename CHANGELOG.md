@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Added
+
+- qpOASES: return number of WSR in solution extra info
+
+### Fixed
+
+- qpOASES: segmentation fault with conda feedstock
+
 ## [2.7.2] - 2023/01/02
 
 ### Added

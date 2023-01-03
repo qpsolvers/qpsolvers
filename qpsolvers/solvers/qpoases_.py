@@ -239,12 +239,13 @@ def qpoases_solve_problem(
     C, lb_C, ub_C = __convert_inequalities(G, h, A, b)
 
     args: List[Any] = []
+    n_wsr = np.array([max_wsr])
     if C.shape[0] > 0:
         qp = QProblem(n, C.shape[0])
-        args = [P, q, C, lb, ub, lb_C, ub_C, array([max_wsr])]
+        args = [P, q, C, lb, ub, lb_C, ub_C, n_wsr]
     else:  # at most box constraints
         qp = QProblemB(n)
-        args = [P, q, lb, ub, array([max_wsr])]
+        args = [P, q, lb, ub, n_wsr]
     if time_limit is not None:
         args.append(array([time_limit]))
 
@@ -262,6 +263,7 @@ def qpoases_solve_problem(
     if return_value == ReturnValue.MAX_NWSR_REACHED:
         warnings.warn(f"qpOASES reached the maximum number of WSR ({max_wsr})")
         return solution
+
     x_opt = np.empty((n,))
     z_opt = np.empty((n + C.shape[0],))
     qp.getPrimalSolution(x_opt)  # can't return RET_QP_NOT_SOLVED at this point
@@ -275,6 +277,9 @@ def qpoases_solve_problem(
     if A is not None:
         solution.y = -z_opt[n + m : n + m + A.shape[0]]
     solution.obj = qp.getObjVal()
+    solution.extras = {
+        "nWSR": n_wsr[0],
+    }
     return solution
 
 
