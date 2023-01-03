@@ -384,12 +384,6 @@ def qpoases_solve_qp(
     <https://www.coin-or.org/qpOASES/doc/3.1/manual.pdf>`_. for all available
     options.
     """
-    warnings.warn(
-        "The return type of this function will change "
-        "to qpsolvers.Solution in qpsolvers v3.0",
-        DeprecationWarning,
-        stacklevel=2,
-    )
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = qpoases_solve_problem(
         problem,

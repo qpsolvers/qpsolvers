@@ -318,12 +318,6 @@ def highs_solve_qp(
     Check out the `HiGHS documentation <https://ergo-code.github.io/HiGHS/>`_
     for more information on the solver.
     """
-    warnings.warn(
-        "The return type of this function will change "
-        "to qpsolvers.Solution in qpsolvers v3.0",
-        DeprecationWarning,
-        stacklevel=2,
-    )
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = highs_solve_problem(problem, initvals, verbose, **kwargs)
     return solution.x

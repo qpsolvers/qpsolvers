@@ -29,7 +29,6 @@ using CVXOPT in some academic work, consider citing the corresponding report
 [Vandenberghe2010]_.
 """
 
-import warnings
 from typing import Dict, Optional, Union
 
 import cvxopt
@@ -251,12 +250,6 @@ def cvxopt_solve_qp(
     :
         Primal solution to the QP, if found, otherwise ``None``.
     """
-    warnings.warn(
-        "The return type of this function will change "
-        "to qpsolvers.Solution in qpsolvers v3.0",
-        DeprecationWarning,
-        stacklevel=2,
-    )
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = cvxopt_solve_problem(
         problem, solver, initvals, verbose, **kwargs

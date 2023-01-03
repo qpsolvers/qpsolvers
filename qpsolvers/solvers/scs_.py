@@ -355,12 +355,6 @@ def scs_solve_qp(
     <https://www.cvxgrp.org/scs/api/settings.html#settings>`_ documentation for
     all available settings.
     """
-    warnings.warn(
-        "The return type of this function will change "
-        "to qpsolvers.Solution in qpsolvers v3.0",
-        DeprecationWarning,
-        stacklevel=2,
-    )
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = scs_solve_problem(problem, initvals, verbose, **kwargs)
     return solution.x

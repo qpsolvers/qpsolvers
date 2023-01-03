@@ -27,7 +27,6 @@ optimization problems. Its interior-point method is geared towards large scale
 sparse problems, in particular for linear or conic quadratic programs.
 """
 
-import warnings
 from typing import Optional, Union
 
 import cvxopt.msk
@@ -156,12 +155,6 @@ def mosek_solve_qp(
     :
         Solution to the QP, if found, otherwise ``None``.
     """
-    warnings.warn(
-        "The return type of this function will change "
-        "to qpsolvers.Solution in qpsolvers v3.0",
-        DeprecationWarning,
-        stacklevel=2,
-    )
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = mosek_solve_problem(problem, initvals, verbose, **kwargs)
     return solution.x

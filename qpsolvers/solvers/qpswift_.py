@@ -30,7 +30,6 @@ If you use qpSWIFT in your research, consider citing the corresponding paper
 [Pandala2019]_.
 """
 
-import warnings
 from typing import Optional
 
 import numpy as np
@@ -304,12 +303,6 @@ def qpswift_solve_qp(
     have zero rows in your input matrices, as it can `make the solver
     numerically unstable <https://github.com/qpSWIFT/qpSWIFT/issues/3>`_.
     """
-    warnings.warn(
-        "The return type of this function will change "
-        "to qpsolvers.Solution in qpsolvers v3.0",
-        DeprecationWarning,
-        stacklevel=2,
-    )
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = qpswift_solve_problem(problem, initvals, verbose, **kwargs)
     return solution.x

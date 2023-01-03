@@ -27,7 +27,6 @@ rooted in revisited primal-dual proximal algorithms. If you use ProxQP in some
 academic work, consider citing the corresponding paper [Bambade2022]_.
 """
 
-import warnings
 from typing import Optional, Union
 
 import numpy as np
@@ -288,12 +287,6 @@ def proxqp_solve_qp(
     :
         Primal solution to the QP, if found, otherwise ``None``.
     """
-    warnings.warn(
-        "The return type of this function will change "
-        "to qpsolvers.Solution in qpsolvers v3.0",
-        DeprecationWarning,
-        stacklevel=2,
-    )
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = proxqp_solve_problem(
         problem, initvals, verbose, backend, **kwargs

@@ -264,12 +264,6 @@ def ecos_solve_qp(
     more details. You can also check out [tolerances]_ for a primer on
     primal-dual residuals or the duality gap.
     """
-    warnings.warn(
-        "The return type of this function will change "
-        "to qpsolvers.Solution in qpsolvers v3.0",
-        DeprecationWarning,
-        stacklevel=2,
-    )
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = ecos_solve_problem(problem, initvals, verbose, **kwargs)
     return solution.x
