@@ -52,9 +52,6 @@ open_source_solvers = [
 quadprog = [
     "quadprog >=0.1.11",
 ]
-quadprog-wheel = [
-    "quadprog-wheel >=0.1.11",
-]
 
 [project.urls]
 Documentation = "https://scaron.info/doc/qpsolvers/"

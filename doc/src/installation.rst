@@ -141,19 +141,13 @@ instructions <https://github.com/ERGO-Code/HiGHS#python>`__ from the README.
 quadprog
 --------
 
-If you have a C compiler, you can install the quadprog solver from source:
+You can install the quadprog solver from PyPI:
 
 .. code:: bash
 
     pip install quadprog
 
-If this command returns a `build error
-<https://github.com/quadprog/quadprog/issues/15>`__, you can install the solver
-from pre-built wheels instead:
-
-.. code:: bash
-
-    pip install quadprog-wheel
+This package comes with wheels to avoid recompiling the solver from source.
 
 qpOASES
 -------
