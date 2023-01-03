@@ -48,9 +48,6 @@ from ..exceptions import ProblemError
 from ..problem import Problem
 from ..solution import Solution
 
-__infty__ = 1e10
-
-
 # Return codes not wrapped in qpoases.PyReturnValue
 RET_INIT_FAILED = 33
 RET_INIT_FAILED_TQ = 34
@@ -139,7 +136,7 @@ def __convert_inequalities(
     if G is not None and h is not None:
         if A is not None and b is not None:
             C = vstack([G, A])
-            lb_C = hstack([np.full(h.shape, -__infty__), b])
+            lb_C = hstack([np.full(h.shape, -np.inf), b])
             ub_C = hstack([h, b])
         else:  # no equality constraint
             C = G
@@ -234,8 +231,8 @@ def qpoases_solve_problem(
     P, q, G, h, A, b, lb, ub = problem.unpack()
 
     n = P.shape[0]
-    lb = np.full((n,), -__infty__) if lb is None else lb
-    ub = np.full((n,), +__infty__) if ub is None else ub
+    lb = np.full((n,), -np.inf) if lb is None else lb
+    ub = np.full((n,), +np.inf) if ub is None else ub
     C, lb_C, ub_C = __convert_inequalities(G, h, A, b)
 
     args: List[Any] = []
