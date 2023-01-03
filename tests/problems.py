@@ -78,3 +78,63 @@ def get_sparse_least_squares(n=150_000):
     ub = None
 
     return R, s, G, h, A, b, lb, ub
+
+
+def get_qpmad_demo_problem():
+    """
+    Problem from qpmad's `demo.cpp
+    <https://github.com/asherikov/qpmad/blob/5e4038f15d85a2a396bb062599f9d7a06d0b0764/test/dependency/demo.cpp>`__.
+    """
+    P = np.eye(20)
+    q = np.ones((20,))
+    G = np.vstack([np.ones((1, 20)), -np.ones((1, 20))])
+    h = np.hstack([1.5, 1.5])
+    lb = np.array(
+        [
+            1.0,
+            2.0,
+            3.0,
+            4.0,
+            -5.0,
+            -5.0,
+            -5.0,
+            -5.0,
+            -5.0,
+            -5.0,
+            -5.0,
+            -5.0,
+            -5.0,
+            -5.0,
+            -5.0,
+            -5.0,
+            -5.0,
+            -5.0,
+            -5.0,
+            -5.0,
+        ]
+    )
+    ub = np.array(
+        [
+            1.0,
+            2.0,
+            3.0,
+            4.0,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+        ]
+    )
+    return Problem(P, q, G, h, lb=lb, ub=ub)
