@@ -22,7 +22,6 @@
 Solve linear least squares.
 """
 
-import warnings
 from typing import Optional, Union
 
 import numpy as np
@@ -43,7 +42,6 @@ def solve_ls(
     W: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
     solver: Optional[str] = None,
     initvals: Optional[np.ndarray] = None,
-    sym_proj: bool = False,
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
@@ -92,8 +90,6 @@ def solve_ls(
         :data:`qpsolvers.available_solvers`. This argument is mandatory.
     initvals :
         Vector of initial `x` values used to warm-start the solver.
-    sym_proj :
-        Set to `True` when the `R` matrix provided is not symmetric.
     verbose :
         Set to `True` to print out extra information.
 
@@ -102,20 +98,23 @@ def solve_ls(
     :
         Optimal solution if found, otherwise ``None``.
 
+    Note
+    ----
+    In least squares, the matrix :math:`R` should be symmetric. Many
+    solvers (including CVXOPT, OSQP and quadprog) leverage this property and
+    may return unintended results when it is not the case. You can set
+    project :math:`R` on its symmetric part by:
+
+    .. code:: python
+
+        R = 0.5 * (R + R.transpose())
+
     Notes
     -----
     Extra keyword arguments given to this function are forwarded to the
     underlying solvers. For example, OSQP has a setting `eps_abs` which we can
     provide by ``solve_ls(R, s, G, h, solver='osqp', eps_abs=1e-4)``.
     """
-    if sym_proj:
-        R = 0.5 * (R + R.transpose())
-        warnings.warn(
-            "The `sym_proj` feature is deprecated "
-            "and will be removed in qpsolvers v3.0",
-            DeprecationWarning,
-            stacklevel=2,
-        )
     WR: Union[np.ndarray, spa.csc_matrix] = R if W is None else W @ R
     P = R.T @ WR
     q = -(s.T @ WR)
@@ -132,7 +131,6 @@ def solve_ls(
         ub,
         solver=solver,
         initvals=initvals,
-        sym_proj=False,
         verbose=verbose,
         **kwargs,
     )

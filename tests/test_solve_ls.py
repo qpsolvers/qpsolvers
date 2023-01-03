@@ -97,7 +97,7 @@ class TestSolveLS(unittest.TestCase):
         def test(self):
             R, s, G, h, A, b = self.get_problem()
             x = solve_ls(R, s, G, h, A, b, solver=solver)
-            x_sp = solve_ls(R, s, G, h, A, b, solver=solver, sym_proj=True)
+            x_sp = solve_ls(R, s, G, h, A, b, solver=solver)
             self.assertIsNotNone(x)
             self.assertIsNotNone(x_sp)
             sol_tolerance = (
