@@ -114,7 +114,7 @@ def solve_safer_qp(
     """
     warnings.warn(
         "The `solve_safer_qp` function is deprecated "
-        "and will be removed in qpsolvers v2.7",
+        "and will be removed in qpsolvers v3.0",
         DeprecationWarning,
         stacklevel=2,
     )
