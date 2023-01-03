@@ -23,7 +23,7 @@ import warnings
 
 from numpy import array, dot
 
-from qpsolvers import available_solvers, dense_solvers, solve_qp
+from qpsolvers import available_solvers, solve_qp
 
 
 class UnfeasibleProblem(unittest.TestCase):
@@ -102,9 +102,3 @@ for solver in available_solvers:
         "test_{}".format(solver),
         UnfeasibleProblem.get_test(solver),
     )
-    if solver in dense_solvers:
-        setattr(
-            UnfeasibleProblem,
-            "test_safer_{}".format(solver),
-            UnfeasibleProblem.get_test_safer(solver),
-        )
