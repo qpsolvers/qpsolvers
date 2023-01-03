@@ -29,13 +29,7 @@ from numpy import array, dot, ones, random
 from numpy.linalg import norm
 from scipy.sparse import csc_matrix
 
-from qpsolvers import (
-    available_solvers,
-    dense_solvers,
-    solve_qp,
-    solve_safer_qp,
-    sparse_solvers,
-)
+from qpsolvers import available_solvers, solve_qp, sparse_solvers
 from qpsolvers.exceptions import NoSolverSelected, SolverNotFound
 
 from .problems import get_qpmad_demo_problem
@@ -474,49 +468,6 @@ class TestSolveQP(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_safer(solver):
-        """Get test function for a given solver.
-
-        Parameters
-        ----------
-        solver : string
-            Name of the solver to test.
-
-        Returns
-        -------
-        test : function
-            Test function for that solver.
-        """
-
-        def test(self):
-            P, q, G, h, _, _ = self.get_dense_problem()
-            if solver not in dense_solvers:
-                with self.assertRaises(NotImplementedError):
-                    solve_safer_qp(P, q, G, h, sr=1e-4, solver=solver)
-                return
-            x = solve_safer_qp(P, q, G, h, sr=1e-4, solver=solver)
-            self.assertIsNotNone(x)
-            known_solution = array([-0.49021915, -1.57749935, -0.66477954])
-            sol_tolerance = (
-                2e-3
-                if solver == "proxqp"  # test params not applied
-                else 1e-4
-                if solver in ["ecos", "scs"]
-                else 1e-6
-            )
-            ineq_tolerance = (
-                1e-7
-                if solver == "scs"
-                else 1e-6
-                if solver == "proxqp"
-                else 1e-10
-            )
-            self.assertLess(norm(x - known_solution), sol_tolerance)
-            self.assertLess(max(dot(G, x) - h), ineq_tolerance)
-
-        return test
-
-    @staticmethod
     def get_test_sparse(solver):
         """Get test function for a given solver.
 
@@ -828,11 +779,6 @@ for solver in available_solvers:
         TestSolveQP,
         f"test_one_ineq_{solver}",
         TestSolveQP.get_test_one_ineq(solver),
-    )
-    setattr(
-        TestSolveQP,
-        f"test_safer_{solver}",
-        TestSolveQP.get_test_safer(solver),
     )
     if solver in sparse_solvers:
         setattr(
