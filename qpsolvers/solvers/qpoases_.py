@@ -232,7 +232,10 @@ def qpoases_solve_problem(
     if initvals is not None:
         print("qpOASES: note that warm-start values ignored by wrapper")
     P, q, G, h, A, b, lb, ub = problem.unpack()
+
     n = P.shape[0]
+    lb = np.full((n,), -__infty__) if lb is None else lb
+    ub = np.full((n,), +__infty__) if ub is None else ub
     C, lb_C, ub_C = __convert_inequalities(G, h, A, b)
 
     args: List[Any] = []
