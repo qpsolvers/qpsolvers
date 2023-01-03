@@ -133,8 +133,9 @@ def __convert_inequalities(
     :
         Tuple ``(C, lb_C, ub_C)`` for qpOASES.
     """
+    C: np.ndarray = np.array([])
     lb_C: Optional[np.ndarray] = None
-    C = np.array([])
+    ub_C: np.ndarray = np.array([])
     if G is not None and h is not None:
         if A is not None and b is not None:
             C = vstack([G, A])
