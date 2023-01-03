@@ -20,7 +20,6 @@
 
 """Solve quadratic programs."""
 
-import warnings
 from typing import Optional, Union
 
 import numpy as np
@@ -43,7 +42,6 @@ def solve_qp(
     ub: Optional[np.ndarray] = None,
     solver: Optional[str] = None,
     initvals: Optional[np.ndarray] = None,
-    sym_proj: bool = False,
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
@@ -87,10 +85,6 @@ def solve_qp(
         :data:`qpsolvers.available_solvers`. This argument is mandatory.
     initvals :
         Primal candidate vector :math:`x` values used to warm-start the solver.
-    sym_proj :
-        Set to ``True`` to project the cost matrix :math:`P` to its symmetric
-        part. Some solvers assume :math:`P` is symmetric and will return
-        unintended results if it is not the case.
     verbose :
         Set to ``True`` to print out extra information.
 
@@ -99,8 +93,11 @@ def solve_qp(
     In quadratic programming, the matrix :math:`P` should be symmetric. Many
     solvers (including CVXOPT, OSQP and quadprog) leverage this property and
     may return unintended results when it is not the case. You can set
-    ``sym_proj=True`` to project :math:`P` on its symmetric part, at the cost
-    of a little computation time.
+    project :math:`P` on its symmetric part by:
+
+    .. code:: python
+
+        P = 0.5 * (P + P.transpose())
 
     Returns
     -------
@@ -137,14 +134,6 @@ def solve_qp(
         raise NoSolverSelected(
             "Set the `solver` keyword argument to one of the "
             f"available solvers in {available_solvers}"
-        )
-    if sym_proj:
-        P = 0.5 * (P + P.transpose())
-        warnings.warn(
-            "The `sym_proj` feature is deprecated "
-            "and will be removed in qpsolvers v3.0",
-            DeprecationWarning,
-            stacklevel=2,
         )
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = solve_problem(problem, solver, initvals, verbose, **kwargs)
