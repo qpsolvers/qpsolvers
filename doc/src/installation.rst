@@ -152,23 +152,12 @@ This package comes with wheels to avoid recompiling the solver from source.
 qpOASES
 -------
 
-Check out the `official qpOASES installation page
-<https://projects.coin-or.org/qpOASES/wiki/QpoasesInstallation>`_ for the
-latest release. However, you might run into errors at the ``make python`` step,
-or undefined symbols when you try to ``import qpoases`` later on. If so, you
-can check out qpOASES from `this fork
-<https://github.com/stephane-caron/qpOASES>`_ and follow these instructions:
+The simplest way to install qpOASES is via conda-forge:
 
 .. code:: bash
 
-    git clone --recursive https://github.com/stephane-caron/qpOASES.git
-    cd qpOASES
-    make
-    sudo cp bin/libqpOASES.so /usr/local/lib
-    cd interfaces/python
-    sudo python setup.py install
+    conda install qpoases -c conda-forge
 
-The ``setup.py`` script takes the same command-line arguments as ``pip``. As
-such, add the ``--user`` parameter to install the library for your user rather
-than system-wide. You can also move ``libqpOASES.so`` to some other directory
-configured in your ``LD_LIBRARY_PATH``.
+You can also check out the `official qpOASES installation page
+<https://projects.coin-or.org/qpOASES/wiki/QpoasesInstallation>`_ for the
+latest release.
