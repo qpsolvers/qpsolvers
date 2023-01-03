@@ -45,7 +45,6 @@ from .qpsolvers import (
     scs_solve_qp,
     solve_ls,
     solve_qp,
-    solve_safer_qp,
     sparse_solvers,
 )
 
@@ -69,6 +68,5 @@ __all__ = [
     "scs_solve_qp",
     "solve_ls",
     "solve_qp",
-    "solve_safer_qp",
     "sparse_solvers",
 ]
