@@ -25,11 +25,10 @@ Tests for the main `solve_qp` function.
 import unittest
 import warnings
 
+import numpy as np
 import scipy
 from numpy import array, dot, ones, random
 from numpy.linalg import norm
-from scipy.sparse import csc_matrix
-
 from qpsolvers import (
     available_solvers,
     dense_solvers,
@@ -38,6 +37,9 @@ from qpsolvers import (
     sparse_solvers,
 )
 from qpsolvers.exceptions import NoSolverSelected, SolverNotFound
+from scipy.sparse import csc_matrix
+
+from .problems import get_qpmad_demo_problem
 
 # Raising a ValueError when the problem is unbounded below is desired but not
 # achieved by some solvers. Here are the behaviors observed as of March 2022.
@@ -738,6 +740,64 @@ class TestSolveQP(unittest.TestCase):
 
         return test
 
+    @staticmethod
+    def get_test_qpmad_demo(solver):
+        """
+        Get test function for a given solver.
+
+        Parameters
+        ----------
+        solver : string
+            Name of the solver to test.
+
+        Returns
+        -------
+        test : function
+            Test function for that solver.
+        """
+
+        def test(self):
+            problem = get_qpmad_demo_problem()
+            P, q, G, h, _, _, lb, ub = problem.unpack()
+            x = solve_qp(P, q, G, h, lb=lb, ub=ub, solver=solver)
+            known_solution = array(
+                [
+                    1.0,
+                    2.0,
+                    3.0,
+                    4.0,
+                    -0.71875,
+                    -0.71875,
+                    -0.71875,
+                    -0.71875,
+                    -0.71875,
+                    -0.71875,
+                    -0.71875,
+                    -0.71875,
+                    -0.71875,
+                    -0.71875,
+                    -0.71875,
+                    -0.71875,
+                    -0.71875,
+                    -0.71875,
+                    -0.71875,
+                    -0.71875,
+                ]
+            )
+            sol_tolerance = (
+                2e-3
+                if solver == "osqp"
+                else 5e-4
+                if solver == "scs"
+                else 1e-6
+                if solver in ["cvxopt", "qpswift"]
+                else 1e-8
+            )
+            self.assertIsNotNone(x)
+            self.assertLess(np.linalg.norm(x - known_solution), sol_tolerance)
+
+        return test
+
 
 # Generate test fixtures for each solver
 for solver in available_solvers:
@@ -808,3 +868,8 @@ for solver in available_solvers:
             f"test_raise_on_unbounded_below_{solver}",
             TestSolveQP.get_test_raise_on_unbounded_below(solver),
         )
+    setattr(
+        TestSolveQP,
+        f"test_qpmad_demo_{solver}",
+        TestSolveQP.get_test_qpmad_demo(solver),
+    )

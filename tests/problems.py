@@ -20,7 +20,6 @@
 
 import numpy as np
 import scipy.sparse as spa
-
 from qpsolvers import Problem
 
 
