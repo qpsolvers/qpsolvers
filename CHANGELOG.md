@@ -28,6 +28,10 @@ All notable changes to this project will be documented in this file.
 - qpOASES: handle infinite bounds
 - qpOASES: segmentation fault with conda feedstock
 
+### Changed
+
+- Remove ``solve_safer_qp``
+
 ## [2.7.2] - 2023/01/02
 
 ### Added
