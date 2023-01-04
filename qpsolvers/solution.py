@@ -227,7 +227,7 @@ class Solution:
         hz = 0.0
         if h is not None:
             if self.z is None:
-                return np.int
+                return np.inf
             hz = h.dot(self.z)
 
         by = 0.0
