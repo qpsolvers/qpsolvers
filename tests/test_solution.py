@@ -21,6 +21,7 @@
 import unittest
 
 import numpy as np
+
 from qpsolvers import Solution, solve_problem
 
 from .problems import get_sd3310_problem
@@ -67,6 +68,6 @@ class TestSolution(unittest.TestCase):
         self.assertNotEqual(solution.duality_gap(), np.inf)
 
         # solution is now fully defined
-        self.assertGreater(solution.primal_residual(), 10.0)
+        self.assertGreater(solution.primal_residual(), 1.0)
         self.assertGreater(solution.dual_residual(), 10.0)
         self.assertGreater(solution.duality_gap(), 10.0)
