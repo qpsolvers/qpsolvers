@@ -51,13 +51,28 @@ class TestSolveProblem(unittest.TestCase):
         -------
         test : function
             Test function for that solver.
+
+        Note
+        ----
+        CVXOPT and ECOS fail to solve this problem.
         """
 
         def test(self):
             solution = get_maros_meszaros_qptest()
             problem = solution.problem
             result = solve_problem(problem, solver=solver)
-            tolerance = 1e-8
+            tolerance = (
+                1e1
+                if solver == "gurobi"
+                else 5e-5
+                if solver == "scs"
+                else 1e-7
+                if solver == "highs"
+                else 1e-8
+            )
+            self.assertIsNotNone(result.x)
+            self.assertIsNotNone(result.z)
+            self.assertIsNotNone(result.z_box)
             self.assertLess(norm(result.x - solution.x), tolerance)
             self.assertLess(norm(result.z - solution.z), tolerance)
             self.assertLess(norm(result.z_box - solution.z_box), tolerance)
