@@ -166,12 +166,6 @@ def __convert_inequalities(
             C = A
             lb_C = b
             ub_C = b
-    # qpOASES requires large bounds instead of infinite float values
-    # See https://github.com/coin-or/qpOASES/issues/126
-    if lb_C is not None:
-        lb_C = np.nan_to_num(lb_C, posinf=__infty__, neginf=-__infty__)
-    if ub_C is not None:
-        ub_C = np.nan_to_num(ub_C, posinf=__infty__, neginf=-__infty__)
     return C, lb_C, ub_C
 
 
@@ -260,6 +254,10 @@ def qpoases_solve_problem(
     lb = np.full((n,), -np.inf) if lb is None else lb
     ub = np.full((n,), +np.inf) if ub is None else ub
     C, lb_C, ub_C = __convert_inequalities(G, h, A, b)
+    lb_C = __clamp_infinities(lb_C)
+    ub_C = __clamp_infinities(ub_C)
+    lb = __clamp_infinities(lb)
+    ub = __clamp_infinities(ub)
 
     args: List[Any] = []
     n_wsr = np.array([max_wsr])
