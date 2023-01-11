@@ -48,6 +48,10 @@ from ..exceptions import ProblemError
 from ..problem import Problem
 from ..solution import Solution
 
+# See qpOASES/include/Constants.hpp
+__infty__ = 1.0e20
+
+
 # Return codes not wrapped in qpoases.PyReturnValue
 RET_INIT_FAILED = 33
 RET_INIT_FAILED_TQ = 34
