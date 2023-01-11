@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+- qpOASES: handle infinite bounds
 - qpOASES: segmentation fault with conda feedstock
 
 ## [2.7.2] - 2023/01/02
