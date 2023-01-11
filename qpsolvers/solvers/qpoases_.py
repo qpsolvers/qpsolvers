@@ -62,6 +62,20 @@ RET_INIT_FAILED_UNBOUNDEDNESS = 38
 RET_INIT_FAILED_REGULARISATION = 39
 
 
+def __clamp_infinities(v: Optional[np.ndarray]):
+    """
+    Replace infinite values in an array by big finite ones.
+
+    Note
+    ----
+    qpOASES requires large bounds instead of infinite float values. See the
+    following issue: https://github.com/coin-or/qpOASES/issues/126
+    """
+    if v is not None:
+        v = np.nan_to_num(v, posinf=__infty__, neginf=-__infty__)
+    return v
+
+
 def __prepare_options(
     verbose: bool,
     predefined_options: Optional[str],
