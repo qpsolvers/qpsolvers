@@ -121,3 +121,22 @@ def get_qpsut03() -> Solution:
     solution.y = np.array([-5.8])
     solution.z_box = np.array([0.0, -1.8, 3.0])
     return solution
+
+
+def get_maros_meszaros_qptest():
+    """
+    Get QPTEST problem from the Maros-Meszaros test set.
+    """
+    P = np.array([[8.0, 2.0], [2.0, 10.0]])
+    q = np.array([1.5, -2.0])
+    G = np.array([[-1.0, 2.0], [-2.0, -1.0]])
+    h = np.array([6.0, -2.0])
+    lb = np.array([0.0, 0.0])
+    ub = np.array([20.0, np.inf])
+    problem = Problem(P, q, G, h, lb=lb, ub=ub)
+
+    solution = Solution(problem)
+    solution.x = np.array([0.7625, 0.475])
+    solution.z = np.array([0.0, 4.275])
+    solution.z_box = np.array([0.0, 0.0])
+    return solution
