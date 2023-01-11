@@ -159,6 +159,7 @@ def __convert_inequalities(
             ub_C = hstack([h, b])
         else:  # no equality constraint
             C = G
+            lb_C = h_neginf
             ub_C = h
     else:  # no inequality constraint
         if A is not None and b is not None:
