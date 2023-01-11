@@ -150,6 +150,12 @@ def __convert_inequalities(
             C = A
             lb_C = b
             ub_C = b
+    # qpOASES requires large bounds instead of infinite float values
+    # See https://github.com/coin-or/qpOASES/issues/126
+    if lb_C is not None:
+        lb_C = np.nan_to_num(lb_C, posinf=__infty__, neginf=-__infty__)
+    if ub_C is not None:
+        ub_C = np.nan_to_num(ub_C, posinf=__infty__, neginf=-__infty__)
     return C, lb_C, ub_C
 
 
