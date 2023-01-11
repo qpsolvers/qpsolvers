@@ -152,9 +152,10 @@ def __convert_inequalities(
     lb_C: Optional[np.ndarray] = None
     ub_C: np.ndarray = np.array([])
     if G is not None and h is not None:
+        h_neginf = np.full(h.shape, -__infty__)
         if A is not None and b is not None:
             C = vstack([G, A])
-            lb_C = hstack([np.full(h.shape, -np.inf), b])
+            lb_C = hstack([h_neginf, b])
             ub_C = hstack([h, b])
         else:  # no equality constraint
             C = G
