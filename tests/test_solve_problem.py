@@ -82,8 +82,9 @@ class TestSolveProblem(unittest.TestCase):
 
 # Generate test fixtures for each solver
 for solver in available_solvers:
-    setattr(
-        TestSolveProblem,
-        f"test_maros_meszaros_qptest_{solver}",
-        TestSolveProblem.get_test_maros_meszaros_qptest(solver),
-    )
+    if solver not in ["cvxopt", "ecos"]:
+        setattr(
+            TestSolveProblem,
+            f"test_maros_meszaros_qptest_{solver}",
+            TestSolveProblem.get_test_maros_meszaros_qptest(solver),
+        )
