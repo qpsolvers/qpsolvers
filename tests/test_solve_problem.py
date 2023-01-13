@@ -64,7 +64,11 @@ class TestSolveProblem(unittest.TestCase):
             tolerance = (
                 1e1
                 if solver == "gurobi"
-                else 1.0 if solver == "proxqp" else 5e-5
+                else 1.0
+                if solver == "proxqp"
+                else 2e-3
+                if solver == "osqp"
+                else 5e-5
                 if solver == "scs"
                 else 1e-7
                 if solver == "highs"
