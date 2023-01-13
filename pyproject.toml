@@ -62,6 +62,14 @@ Changelog = "https://github.com/stephane-caron/qpsolvers/blob/master/CHANGELOG.m
 [tool.black]
 line-length = 79
 
-[tool.isort]
-profile = "black"
-line_length = 79
+[tool.ruff]
+line-length = 79
+select = [
+    # pyflakes
+    "F",
+    # pycodestyle
+    "E",
+    "W",
+    # isort
+    "I001"
+]
