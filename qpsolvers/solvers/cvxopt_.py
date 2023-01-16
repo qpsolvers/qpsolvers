@@ -41,6 +41,7 @@ from ..problem import Problem
 from ..solution import Solution
 
 cvxopt.solvers.options["show_progress"] = False  # disable verbose output
+__infty__ = 1e10  # 1e20 tends to yield division-by-zero errors
 
 
 def __to_cvxopt(
