@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+- CVXOPT: fix domain errors when some bounds are infinite
 - qpOASES: fix missing lower bound when there is no equality constraint
 - qpOASES: handle infinite bounds
 - qpOASES: segmentation fault with conda feedstock
