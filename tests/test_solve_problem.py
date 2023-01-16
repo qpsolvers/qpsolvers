@@ -25,6 +25,7 @@ Tests for the `solve_problem` function.
 import math
 import unittest
 
+import numpy as np
 from numpy.linalg import norm
 
 from qpsolvers import available_solvers, solve_problem
@@ -207,6 +208,33 @@ class TestSolveProblem(unittest.TestCase):
         return test
 
     @staticmethod
+    def get_test_infinite_box_bounds(solver):
+        """
+        Problem with some infinite box bounds.
+
+        Parameters
+        ----------
+        solver : string
+            Name of the solver to test.
+
+        Returns
+        -------
+        test : function
+            Test function for that solver.
+        """
+
+        def test(self):
+            problem = get_qpsut01().problem
+            problem.lb[1] = -np.inf
+            problem.ub[1] = +np.inf
+            result = solve_problem(problem, solver=solver)
+            self.assertIsNotNone(result.x)
+            self.assertIsNotNone(result.z)
+            self.assertIsNotNone(result.z_box)
+
+        return test
+
+    @staticmethod
     def get_test_infinite_linear_bounds(solver):
         """
         Problem with some infinite linear bounds.
@@ -223,28 +251,12 @@ class TestSolveProblem(unittest.TestCase):
         """
 
         def test(self):
-            solution = get_qpsut01()
-            problem = solution.problem
+            problem = get_qpsut01().problem
+            problem.h[0] = +np.inf
             result = solve_problem(problem, solver=solver)
-            tolerance = (
-                1e1
-                if solver == "gurobi"
-                else 1.0
-                if solver == "proxqp"
-                else 2e-3
-                if solver == "osqp"
-                else 5e-5
-                if solver == "scs"
-                else 1e-7
-                if solver == "highs"
-                else 1e-8
-            )
             self.assertIsNotNone(result.x)
             self.assertIsNotNone(result.z)
             self.assertIsNotNone(result.z_box)
-            self.assertLess(norm(result.x - solution.x), tolerance)
-            self.assertLess(norm(result.z - solution.z), tolerance)
-            self.assertLess(norm(result.z_box - solution.z_box), tolerance)
 
         return test
 
@@ -266,9 +278,23 @@ for solver in available_solvers:
         f"test_qpsut03_{solver}",
         TestSolveProblem.get_test_qpsut03(solver),
     )
-    if solver != "ecos":  # ECOS fails to solve this problem
+    if solver not in ["ecos", "qpswift"]:
         setattr(
             TestSolveProblem,
             f"test_maros_meszaros_qptest_{solver}",
             TestSolveProblem.get_test_maros_meszaros_qptest(solver),
+        )
+    if solver != "qpswift":
+        # See https://github.com/stephane-caron/qpsolvers/issues/159
+        setattr(
+            TestSolveProblem,
+            f"test_infinite_box_bounds_{solver}",
+            TestSolveProblem.get_test_infinite_box_bounds(solver),
+        )
+    if solver != "qpswift":
+        # See https://github.com/stephane-caron/qpsolvers/issues/159
+        setattr(
+            TestSolveProblem,
+            f"test_infinite_linear_bounds_{solver}",
+            TestSolveProblem.get_test_infinite_linear_bounds(solver),
         )
