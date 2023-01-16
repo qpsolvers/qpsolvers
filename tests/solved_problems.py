@@ -20,6 +20,8 @@
 
 """
 Reference problems with their solutions.
+
+The prefix "QPSUT" stands for "qpsolvers unit test".
 """
 
 import numpy as np
