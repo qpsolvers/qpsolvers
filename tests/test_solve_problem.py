@@ -286,8 +286,9 @@ for solver in available_solvers:
             f"test_maros_meszaros_qptest_{solver}",
             TestSolveProblem.get_test_maros_meszaros_qptest(solver),
         )
-    if solver != "qpswift":
+    if solver not in ["ecos", "qpswift"]:
         # See https://github.com/stephane-caron/qpsolvers/issues/159
+        # See https://github.com/stephane-caron/qpsolvers/issues/160
         setattr(
             TestSolveProblem,
             f"test_infinite_box_bounds_{solver}",
