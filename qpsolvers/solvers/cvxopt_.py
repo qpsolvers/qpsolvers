@@ -61,7 +61,8 @@ def __to_cvxopt(
         Matrix in CVXOPT format.
     """
     if isinstance(M, np.ndarray):
-        return cvxopt.matrix(M)
+        M_noinf = np.nan_to_num(M, posinf=__infty__, neginf=-__infty__)
+        return cvxopt.matrix(M_noinf)
     coo = M.tocoo()
     return cvxopt.spmatrix(
         coo.data.tolist(), coo.row.tolist(), coo.col.tolist(), size=M.shape
