@@ -293,7 +293,7 @@ for solver in available_solvers:
             f"test_infinite_box_bounds_{solver}",
             TestSolveProblem.get_test_infinite_box_bounds(solver),
         )
-    if solver in ["ecos", "qpswift"]:
+    if solver not in ["ecos", "qpswift"]:
         # See https://github.com/stephane-caron/qpsolvers/issues/159
         # See https://github.com/stephane-caron/qpsolvers/issues/160
         setattr(
