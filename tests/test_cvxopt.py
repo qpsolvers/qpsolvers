@@ -28,11 +28,12 @@ from numpy import array, ones
 from numpy.linalg import norm
 
 from .problems import get_sd3310_problem
+from .solved_problems import get_qpsut01
 
 try:
     import cvxopt
 
-    from qpsolvers.solvers.cvxopt_ import cvxopt_solve_qp
+    from qpsolvers.solvers.cvxopt_ import cvxopt_solve_problem, cvxopt_solve_qp
 
     class TestCVXOPT(unittest.TestCase):
 
@@ -104,6 +105,27 @@ try:
                 feastol=1e-2,
                 refinement=3,
             )
+            self.assertIsNotNone(x)
+
+        def test_infinite_linear_bounds(self):
+            """
+            Check that CVXOPT does not yield a domain error when some linear
+            bounds are infinite.
+            """
+            problem = get_qpsut01().problem
+            problem.h[1] = +np.inf
+            x = cvxopt_solve_problem(problem)
+            self.assertIsNotNone(x)
+
+        def test_infinite_box_bounds(self):
+            """
+            Check that CVXOPT does not yield a domain error when some box
+            bounds are infinite.
+            """
+            problem = get_qpsut01().problem
+            problem.lb[1] = -np.inf
+            problem.ub[1] = +np.inf
+            x = cvxopt_solve_problem(problem)
             self.assertIsNotNone(x)
 
 
