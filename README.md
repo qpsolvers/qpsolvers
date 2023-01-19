@@ -9,6 +9,8 @@
 
 Unified interface to Quadratic Programming (QP) solvers available in Python.
 
+Next major version: *qpsolvers v3* is coming out [on February 28, 2023](https://github.com/stephane-caron/qpsolvers/discussions/147).
+
 ## Installation
 
 ### Using PyPI
