@@ -18,9 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Convert stacked dual multipliers into linear and box multipliers.
-"""
+"""Convert stacked dual multipliers into linear and box multipliers."""
 
 from typing import Optional, Tuple
 
@@ -32,9 +30,7 @@ def split_dual_linear_box(
     lb: Optional[np.ndarray],
     ub: Optional[np.ndarray],
 ) -> Tuple[Optional[np.ndarray], Optional[np.ndarray]]:
-    """
-    Separate linear and box multipliers from a stacked vector of
-    inequality-constraint dual variables.
+    """Separate linear and box multipliers from a stacked dual vector.
 
     This function assumes linear and box inequalities were combined using
     :func:`qpsolvers.conversions.linear_from_box_inequalities`.

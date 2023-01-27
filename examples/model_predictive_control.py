@@ -18,8 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Test the "quadprog" QP solver on a model predictive control problem.
+"""Test the "quadprog" QP solver on a model predictive control problem.
 
 The problem is to balance a humanoid robot walking on a flat horizontal floor.
 See the following post for context:
@@ -27,9 +26,9 @@ See the following post for context:
     https://scaron.info/robot-locomotion/prototyping-a-walking-pattern-generator.html
 """
 
+import random
 from dataclasses import dataclass
 from typing import Optional
-import random
 
 import numpy as np
 import pylab

@@ -71,5 +71,14 @@ select = [
     "E",
     "W",
     # isort
-    "I001"
+    "I001",
+    # pydocstyle
+    "D"
 ]
+ignore = [
+    "D401",  # good for methods but not for class docstrings
+    "D405",  # British-style section names are also "proper"!
+]
+
+[tool.ruff.pydocstyle]
+convention = "numpy"

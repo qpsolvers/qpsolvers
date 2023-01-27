@@ -18,9 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Test one of the available QP solvers on a small problem with box inequalities.
-"""
+"""Test an available QP solvers on a small problem with box inequalities."""
 
 import random
 from time import perf_counter

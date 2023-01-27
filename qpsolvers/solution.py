@@ -18,9 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Output from a QP solver.
-"""
+"""Output from a QP solver."""
 
 from dataclasses import dataclass, field
 from typing import Optional
@@ -32,9 +30,7 @@ from .problem import Problem
 
 @dataclass(frozen=False)
 class Solution:
-
-    """
-    Solution provided by a QP solver to a given problem.
+    """Solution provided by a QP solver to a given problem.
 
     Attributes
     ----------
@@ -91,14 +87,11 @@ class Solution:
 
     @property
     def is_empty(self) -> bool:
-        """
-        Check whether the solution is empty.
-        """
+        """Check whether the solution is empty."""
         return self.x is None
 
     def is_optimal(self, eps_abs: float) -> bool:
-        """
-        Check whether the solution is indeed optimal.
+        """Check whether the solution is indeed optimal.
 
         Parameters
         ----------
@@ -118,8 +111,7 @@ class Solution:
         )
 
     def primal_residual(self) -> float:
-        """
-        Compute the primal residual of the solution:
+        """Compute the primal residual of the solution:
 
         .. math::
 
@@ -153,8 +145,7 @@ class Solution:
         )
 
     def dual_residual(self) -> float:
-        """
-        Compute the dual residual of the solution:
+        """Compute the dual residual of the solution:
 
         .. math::
 

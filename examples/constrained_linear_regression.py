@@ -18,8 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Test a random QP solver on a constrained linear regression problem.
+"""Test a random QP solver on a constrained linear regression problem.
 
 This example originates from:
     https://stackoverflow.com/a/74422084

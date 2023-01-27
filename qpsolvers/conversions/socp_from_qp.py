@@ -30,8 +30,7 @@ from scipy.sparse import csc_matrix
 def socp_from_qp(
     P: ndarray, q: ndarray, G: Optional[ndarray], h: Optional[ndarray]
 ) -> Tuple[ndarray, ndarray, ndarray, Dict[str, Any]]:
-    """
-    Convert the Quadratic Program defined by:
+    """Convert the Quadratic Program defined by:
 
     .. math::
 

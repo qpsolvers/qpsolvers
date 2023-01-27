@@ -24,8 +24,7 @@ import warnings
 
 
 def warn_about_sparse_conversion(matrix_name: str) -> None:
-    """
-    Warn about conversion from dense to sparse matrix.
+    """Warn about conversion from dense to sparse matrix.
 
     Parameters
     ----------

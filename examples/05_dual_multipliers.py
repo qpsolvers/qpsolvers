@@ -18,9 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Get both primal and dual solutions to a quadratic program.
-"""
+"""Get both primal and dual solutions to a quadratic program."""
 
 import random
 

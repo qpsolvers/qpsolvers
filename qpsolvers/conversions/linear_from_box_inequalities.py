@@ -33,8 +33,7 @@ def concatenate_bound(
     sign: float,
     use_sparse: bool,
 ) -> Tuple[Optional[Union[np.ndarray, spa.csc_matrix]], Optional[np.ndarray]]:
-    """
-    Append bound constraint vectors to inequality constraints.
+    """Append bound constraint vectors to inequality constraints.
 
     Parameters
     ----------
@@ -79,8 +78,7 @@ def linear_from_box_inequalities(
     ub: Optional[np.ndarray],
     use_sparse: bool,
 ) -> Tuple[Optional[Union[np.ndarray, spa.csc_matrix]], Optional[np.ndarray]]:
-    """
-    Append lower or upper bound constraint vectors to inequality constraints.
+    """Append lower or upper bound vectors to inequality constraints.
 
     Parameters
     ----------

@@ -18,9 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Model for a quadratic program.
-"""
+"""Model for a quadratic program."""
 
 from typing import Optional, Tuple, TypeVar, Union
 
@@ -34,9 +32,7 @@ VectorType = TypeVar("VectorType")
 
 
 class Problem:
-
-    """
-    Model for a quadratic program defined as:
+    """Model for a quadratic program defined as:
 
     .. math::
 
@@ -161,8 +157,7 @@ class Problem:
 
     @property
     def has_sparse(self) -> bool:
-        """
-        Check whether the problem has sparse matrices.
+        """Check whether the problem has sparse matrices.
 
         Returns
         -------
@@ -189,8 +184,7 @@ class Problem:
         Optional[np.ndarray],
         Optional[np.ndarray],
     ]:
-        """
-        Get problem matrices as a tuple.
+        """Get problem matrices as a tuple.
 
         Returns
         -------
@@ -209,8 +203,7 @@ class Problem:
         )
 
     def check_constraints(self):
-        """
-        Check that problem constraints are properly specified.
+        """Check that problem constraints are properly specified.
 
         Raises
         ------
@@ -227,7 +220,8 @@ class Problem:
             raise ValueError("incomplete equality constraint (missing A)")
 
     def cond(self):
-        """
+        """Condition number of the problem matrix.
+
         Compute the condition number of the symmetric matrix representing the
         problem data:
 
