@@ -31,10 +31,7 @@ try:
     from qpsolvers.solvers.qpswift_ import qpswift_solve_qp
 
     class TestQpSwift(unittest.TestCase):
-
-        """
-        Tests specific to qpSWIFT.
-        """
+        """Tests specific to qpSWIFT."""
 
         def test_problem(self):
             problem = get_sd3310_problem()

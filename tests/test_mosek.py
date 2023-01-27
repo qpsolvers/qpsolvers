@@ -27,10 +27,7 @@ try:
     from qpsolvers.solvers.mosek_ import mosek_solve_qp
 
     class TestMOSEK(unittest.TestCase):
-
-        """
-        Tests specific to MOSEK.
-        """
+        """Tests specific to MOSEK."""
 
         def test_problem(self):
             problem = get_sd3310_problem()

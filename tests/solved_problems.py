@@ -29,9 +29,7 @@ from qpsolvers import Problem, Solution
 
 
 def get_qpsut01() -> Solution:
-    """
-    Get QPSUT01 problem and its solution.
-    """
+    """Get QPSUT01 problem and its solution."""
     M = np.array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
     P = np.dot(M.T, M)  # this is a positive definite matrix
     q = np.dot(np.array([3.0, 2.0, 3.0]), M)
@@ -52,9 +50,7 @@ def get_qpsut01() -> Solution:
 
 
 def get_qpsut02() -> Solution:
-    """
-    Get QPSUT02 problem and its solution.
-    """
+    """Get QPSUT02 problem and its solution."""
     M = np.array(
         [
             [1.0, -2.0, 0.0, 8.0],
@@ -91,12 +87,12 @@ def get_qpsut02() -> Solution:
 
 
 def get_qpsut03() -> Solution:
-    """
-    Get QPSUT03 problem and its solution.
+    """Get QPSUT03 problem and its solution.
 
-    Notes:
-        This problem has partial box bounds, that is, -infinity on some lower
-        bounds and +infinity on some upper bounds.
+    Notes
+    -----
+    This problem has partial box bounds, that is, -infinity on some lower
+    bounds and +infinity on some upper bounds.
     """
     M = np.array(
         [
@@ -125,9 +121,7 @@ def get_qpsut03() -> Solution:
 
 
 def get_maros_meszaros_qptest():
-    """
-    Get QPTEST problem from the Maros-Meszaros test set.
-    """
+    """Get QPTEST problem from the Maros-Meszaros test set."""
     P = np.array([[8.0, 2.0], [2.0, 10.0]])
     q = np.array([1.5, -2.0])
     G = np.array([[-1.0, 2.0], [-2.0, -1.0]])

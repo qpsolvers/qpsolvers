@@ -32,15 +32,10 @@ try:
     from qpsolvers.solvers.quadprog_ import quadprog_solve_qp
 
     class TestQuadprog(unittest.TestCase):
-
-        """
-        Test fixture for the quadprog solver.
-        """
+        """Test fixture for the quadprog solver."""
 
         def setUp(self):
-            """
-            Prepare test fixture.
-            """
+            """Prepare test fixture."""
             warnings.simplefilter("ignore", category=UserWarning)
 
         def test_non_psd_cost(self):
@@ -57,9 +52,7 @@ try:
             self.assertIsNone(quadprog_solve_qp(P, q, G, h, A, b))
 
         def test_not_sparse(self):
-            """
-            Raise a ProblemError on sparse problems.
-            """
+            """Raise a ProblemError on sparse problems."""
             problem = get_sd3310_problem()
             P, q, G, h, A, b, _, _ = problem.unpack()
             P = spa.csc_matrix(P)

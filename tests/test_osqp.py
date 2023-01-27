@@ -27,10 +27,7 @@ try:
     from qpsolvers.solvers.osqp_ import osqp_solve_qp
 
     class TestOSQP(unittest.TestCase):
-
-        """
-        Tests specific to OSQP.
-        """
+        """Tests specific to OSQP."""
 
         def test_problem(self):
             problem = get_sd3310_problem()

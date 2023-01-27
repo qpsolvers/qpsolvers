@@ -18,9 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Tests for the `solve_problem` function.
-"""
+"""Tests for the `solve_problem` function."""
 
 import math
 import unittest
@@ -41,10 +39,7 @@ from .solved_problems import (
 
 
 class TestSolveProblem(unittest.TestCase):
-
-    """
-    Test fixture for primal and dual solutions of a variety of quadratic
-    programs.
+    """Test fixture for primal and dual solutions of a variety of problems.
 
     Notes
     -----
@@ -56,8 +51,7 @@ class TestSolveProblem(unittest.TestCase):
 
     @staticmethod
     def get_test_qpsut01(solver: str):
-        """
-        Get test function for a given solver.
+        """Get test function for a given solver.
 
         Parameters
         ----------
@@ -97,8 +91,7 @@ class TestSolveProblem(unittest.TestCase):
 
     @staticmethod
     def get_test_qpsut02(solver: str):
-        """
-        Get test function for a given solver.
+        """Get test function for a given solver.
 
         Parameters
         ----------
@@ -139,8 +132,7 @@ class TestSolveProblem(unittest.TestCase):
 
     @staticmethod
     def get_test_qpsut03(solver: str):
-        """
-        Get test function for a given solver.
+        """Get test function for a given solver.
 
         Parameters
         ----------
@@ -216,8 +208,7 @@ class TestSolveProblem(unittest.TestCase):
 
     @staticmethod
     def get_test_maros_meszaros_qptest(solver):
-        """
-        Get test function for the QPTEST problem.
+        """Get test function for the QPTEST problem.
 
         Parameters
         ----------
@@ -264,8 +255,7 @@ class TestSolveProblem(unittest.TestCase):
 
     @staticmethod
     def get_test_infinite_box_bounds(solver):
-        """
-        Problem with some infinite box bounds.
+        """Problem with some infinite box bounds.
 
         Parameters
         ----------
@@ -291,8 +281,7 @@ class TestSolveProblem(unittest.TestCase):
 
     @staticmethod
     def get_test_infinite_linear_bounds(solver):
-        """
-        Problem with some infinite linear bounds.
+        """Problem with some infinite linear bounds.
 
         Parameters
         ----------

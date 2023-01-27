@@ -29,10 +29,7 @@ from .problems import get_sd3310_problem
 
 
 class TestProblem(unittest.TestCase):
-
-    """
-    Test fixture for problems.
-    """
+    """Test fixture for problems."""
 
     def setUp(self):
         self.problem = get_sd3310_problem()

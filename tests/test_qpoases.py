@@ -32,15 +32,10 @@ try:
     from qpsolvers.solvers.qpoases_ import qpoases_solve_qp
 
     class TestQpOASES(unittest.TestCase):
-
-        """
-        Test fixture specific to the qpOASES solver.
-        """
+        """Test fixture specific to the qpOASES solver."""
 
         def test_initvals(self):
-            """
-            Call the solver with a warm-start guess.
-            """
+            """Call the solver with a warm-start guess."""
             problem = get_sd3310_problem()
             qpoases_solve_qp(
                 problem.P,
@@ -53,9 +48,7 @@ try:
             )
 
         def test_params(self):
-            """
-            Call the solver with a time limit and other parameters.
-            """
+            """Call the solver with a time limit and other parameters."""
             problem = get_sd3310_problem()
             qpoases_solve_qp(
                 problem.P,
@@ -92,9 +85,7 @@ try:
             self.assertIsNone(x)
 
         def test_not_sparse(self):
-            """
-            Raise a ProblemError on sparse problems.
-            """
+            """Raise a ProblemError on sparse problems."""
             problem = get_sd3310_problem()
             problem.P = spa.csc_matrix(problem.P)
             with self.assertRaises(ProblemError):

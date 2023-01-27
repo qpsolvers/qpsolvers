@@ -27,15 +27,10 @@ try:
     from qpsolvers.solvers.proxqp_ import proxqp_solve_qp
 
     class TestProxQP(unittest.TestCase):
-
-        """
-        Test fixture specific to the ProxQP solver.
-        """
+        """Test fixture specific to the ProxQP solver."""
 
         def test_dense_backend(self):
-            """
-            Try the dense backend.
-            """
+            """Try the dense backend."""
             problem = get_sd3310_problem()
             proxqp_solve_qp(
                 problem.P,
@@ -48,9 +43,7 @@ try:
             )
 
         def test_sparse_backend(self):
-            """
-            Try the sparse backend.
-            """
+            """Try the sparse backend."""
             problem = get_sd3310_problem()
             proxqp_solve_qp(
                 problem.P,
@@ -63,9 +56,7 @@ try:
             )
 
         def test_invalid_backend(self):
-            """
-            Exception raised when asking for an invalid backend.
-            """
+            """Exception raised when asking for an invalid backend."""
             problem = get_sd3310_problem()
             with self.assertRaises(ValueError):
                 proxqp_solve_qp(
@@ -79,10 +70,7 @@ try:
                 )
 
         def test_double_warm_start(self):
-            """
-            Raise an exception when two warm-start values are provided at the
-            same time.
-            """
+            """Exception when two warm-start values are provided."""
             problem = get_sd3310_problem()
             with self.assertRaises(ValueError):
                 proxqp_solve_qp(
@@ -97,7 +85,8 @@ try:
                 )
 
         def test_invalid_inequalities(self):
-            """
+            """Check for inconsistent parameters.
+
             Raise an exception in an implementation-dependent inconsistent set
             of parameters. This may happen when :func:`proxqp_solve_qp` it is
             called directly.
