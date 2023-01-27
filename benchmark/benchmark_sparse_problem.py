@@ -18,21 +18,17 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Test all available QP solvers on a sparse quadratic program.
-"""
+"""Test all available QP solvers on a sparse quadratic program."""
+
+from os.path import basename
 
 import numpy as np
 import scipy.sparse
-
 from IPython import get_ipython
 from numpy.linalg import norm
-from os.path import basename
 from scipy.sparse import csc_matrix
 
-from qpsolvers import dense_solvers, sparse_solvers
-from qpsolvers import solve_qp
-
+from qpsolvers import dense_solvers, solve_qp, sparse_solvers
 
 n = 500
 M = scipy.sparse.lil_matrix(scipy.sparse.eye(n))

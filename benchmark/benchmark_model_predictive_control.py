@@ -18,17 +18,17 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Test all available QP solvers on a model predictive control problem.
-"""
+"""Test all available QP solvers on a model predictive control problem."""
 
-from IPython import get_ipython
 from os.path import basename
 
-from qpsolvers import dense_solvers, sparse_solvers
+from IPython import get_ipython
+from model_predictive_control import (
+    HumanoidModelPredictiveControl,
+    HumanoidSteppingProblem,
+)
 
-from model_predictive_control import HumanoidSteppingProblem
-from model_predictive_control import HumanoidModelPredictiveControl
+from qpsolvers import dense_solvers, sparse_solvers
 
 problem = HumanoidSteppingProblem()
 mpc = HumanoidModelPredictiveControl(problem)

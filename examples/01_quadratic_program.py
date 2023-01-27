@@ -18,9 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Test the "quadprog" QP solver on a small dense problem.
-"""
+"""Test the "quadprog" QP solver on a small dense problem."""
 
 import random
 from time import perf_counter

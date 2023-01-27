@@ -18,7 +18,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
+"""Helper to use repository as a submodule.
+
 This file allows the whole repository to act as a Python module when e.g.
 included as a git submodule inside a project. It incurs redundant bookkeeping
 but some users find it useful. (See 4b128db662cfedbe366b8387a59cd18e36c643a3

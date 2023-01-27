@@ -18,9 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Test a random available QP solver on a small least-squares problem.
-"""
+"""Test a random available QP solver on a small least-squares problem."""
 
 import random
 from time import perf_counter

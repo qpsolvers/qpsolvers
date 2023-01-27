@@ -18,8 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Test a random sparse QP solver on a sparse least-squares problem.
+"""Test a random sparse QP solver on a sparse least-squares problem.
 
 See also: https://stackoverflow.com/a/74415546/3721564
 """

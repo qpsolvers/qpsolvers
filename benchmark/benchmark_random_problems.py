@@ -18,9 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Test all available QP solvers on random quadratic programs.
-"""
+"""Test all available QP solvers on random quadratic programs."""
 
 import sys
 
@@ -30,13 +28,13 @@ except ImportError:
     print("This example requires IPython, try installing ipython3")
     sys.exit(-1)
 
-from numpy import dot, linspace, ones, random
 from os.path import basename
-from scipy.linalg import toeplitz
 from timeit import timeit
 
-from qpsolvers import available_solvers, solve_qp
+from numpy import dot, linspace, ones, random
+from scipy.linalg import toeplitz
 
+from qpsolvers import available_solvers, solve_qp
 
 nb_iter = 10
 sizes = [10, 20, 50, 100, 200, 500, 1000, 2000]
@@ -54,8 +52,18 @@ def solve_random_qp(n, solver):
 
 def plot_results(perfs):
     try:
-        from pylab import clf, get_cmap, grid, ion, legend, plot
-        from pylab import xlabel, xscale, ylabel, yscale
+        from pylab import (
+            clf,
+            get_cmap,
+            grid,
+            ion,
+            legend,
+            plot,
+            xlabel,
+            xscale,
+            ylabel,
+            yscale,
+        )
     except ImportError:
         print("Cannot plot results, try installing python3-matplotlib")
         print("Results are stored in the global `perfs` dictionary")
