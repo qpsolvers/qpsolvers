@@ -18,9 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Solve quadratic programs.
-"""
+"""Solve quadratic programs."""
 
 from typing import Optional
 
@@ -39,8 +37,7 @@ def solve_problem(
     verbose: bool = False,
     **kwargs,
 ) -> Solution:
-    """
-    Solve a quadratic program using a given solver.
+    """Solve a quadratic program using a given solver.
 
     Parameters
     ----------

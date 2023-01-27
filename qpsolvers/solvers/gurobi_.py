@@ -19,8 +19,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Solver interface for `Gurobi <https://www.gurobi.com/>`__.
+"""Solver interface for `Gurobi <https://www.gurobi.com/>`__.
 
 The Gurobi Optimizer suite ships several solvers for mathematical programming,
 including problems that have linear constraints, bound constraints, integrality
@@ -49,8 +48,7 @@ def gurobi_solve_problem(
     verbose: bool = False,
     **kwargs,
 ) -> Solution:
-    """
-    Solve a quadratic program using `Gurobi <http://www.gurobi.com/>`_.
+    """Solve a quadratic program using `Gurobi <http://www.gurobi.com/>`_.
 
     Parameters
     ----------
@@ -164,8 +162,9 @@ def gurobi_solve_qp(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    """
-    Solve a Quadratic Program defined as:
+    """Solve a Quadratic Program using Gurobi.
+
+    The quadratic program is defined as:
 
     .. math::
 
@@ -178,7 +177,7 @@ def gurobi_solve_qp(
                 & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
-    using `Gurobi <http://www.gurobi.com/>`_.
+    It is solved using `Gurobi <http://www.gurobi.com/>`_.
 
     Parameters
     ----------

@@ -189,8 +189,7 @@ class Solution:
         return p  # type: ignore
 
     def duality_gap(self) -> float:
-        """
-        Compute the duality gap of the solution:
+        """Compute the duality gap of the solution:
 
         .. math::
 

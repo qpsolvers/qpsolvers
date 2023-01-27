@@ -18,8 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Solver interface for `CVXOPT <https://cvxopt.org/>`__.
+"""Solver interface for `CVXOPT <https://cvxopt.org/>`__.
 
 CVXOPT is a free software package for convex optimization in Python. Its main
 purpose is to make the development of software for convex optimization
@@ -47,8 +46,7 @@ __infty__ = 1e10  # 1e20 tends to yield division-by-zero errors
 def __to_cvxopt(
     M: Union[np.ndarray, spa.csc_matrix]
 ) -> Union[cvxopt.matrix, cvxopt.spmatrix]:
-    """
-    Convert matrix to CVXOPT format.
+    """Convert matrix to CVXOPT format.
 
     Parameters
     ----------
@@ -76,8 +74,7 @@ def cvxopt_solve_problem(
     verbose: bool = False,
     **kwargs,
 ) -> Solution:
-    """
-    Solve a quadratic program using `CVXOPT <http://cvxopt.org/>`_.
+    """Solve a quadratic program using `CVXOPT <http://cvxopt.org/>`_.
 
     Parameters
     ----------
@@ -199,8 +196,9 @@ def cvxopt_solve_qp(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    """
-    Solve a Quadratic Program defined as:
+    """Solve a Quadratic Program using CVXOPT.
+
+    The quadratic program is defined as:
 
     .. math::
 
@@ -213,7 +211,7 @@ def cvxopt_solve_qp(
                 & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
-    using `CVXOPT <http://cvxopt.org/>`_.
+    It is solved using `CVXOPT <http://cvxopt.org/>`_.
 
     Parameters
     ----------

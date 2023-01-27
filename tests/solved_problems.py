@@ -18,8 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Reference problems with their solutions.
+"""Reference problems with their solutions.
 
 The prefix "QPSUT" stands for "qpsolvers unit test".
 """

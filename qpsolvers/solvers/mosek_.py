@@ -18,8 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Solver interface for `MOSEK <https://www.mosek.com/>`__.
+"""Solver interface for `MOSEK <https://www.mosek.com/>`__.
 
 MOSEK is a solver for linear, mixed-integer linear, quadratic, mixed-integer
 quadratic, quadratically constraint, conic and convex nonlinear mathematical
@@ -45,8 +44,9 @@ def mosek_solve_problem(
     verbose: bool = False,
     **kwargs,
 ) -> Solution:
-    """
-    Solve a Quadratic Program defined as:
+    """Solve a Quadratic Program using MOSEK.
+
+    The quadratic program is defined as:
 
     .. math::
 
@@ -59,7 +59,7 @@ def mosek_solve_problem(
                 & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
-    using the `MOSEK interface from CVXOPT
+    It is solved using the `MOSEK interface from CVXOPT
     <https://cvxopt.org/userguide/coneprog.html#optional-solvers>`_.
 
     Parameters
@@ -110,8 +110,9 @@ def mosek_solve_qp(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    """
-    Solve a Quadratic Program defined as:
+    """Solve a Quadratic Program using MOSEK.
+
+    The quadratic program is defined as:
 
     .. math::
 
@@ -124,7 +125,7 @@ def mosek_solve_qp(
                 & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
-    using the `MOSEK interface from CVXOPT
+    It is solved using the `MOSEK interface from CVXOPT
     <https://cvxopt.org/userguide/coneprog.html#optional-solvers>`_.
 
     Parameters
