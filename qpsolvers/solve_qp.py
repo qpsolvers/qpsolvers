@@ -18,9 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Solve quadratic programs.
-"""
+"""Solve quadratic programs."""
 
 import warnings
 from typing import Optional, Union
@@ -49,8 +47,7 @@ def solve_qp(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    """
-    Solve a quadratic program defined as:
+    """Solve a quadratic program defined as:
 
     .. math::
 

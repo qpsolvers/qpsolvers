@@ -18,8 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Solver interface for `HiGHS <https://github.com/ERGO-Code/HiGHS>`__.
+"""Solver interface for `HiGHS <https://github.com/ERGO-Code/HiGHS>`__.
 
 HiGHS is an open source, serial and parallel solver for large scale sparse
 linear programming (LP), mixed-integer programming (MIP), and quadratic
@@ -42,8 +41,7 @@ from ..solution import Solution
 
 
 def __set_hessian(model: highspy.HighsModel, P: spa.csc_matrix) -> None:
-    """
-    Set Hessian :math:`Q` of the cost :math:`(1/2) x^T Q x + c^T x`.
+    """Set Hessian :math:`Q` of the cost :math:`(1/2) x^T Q x + c^T x`.
 
     Parameters
     ----------
@@ -64,8 +62,9 @@ def __set_columns(
     lb: Optional[np.ndarray] = None,
     ub: Optional[np.ndarray] = None,
 ) -> None:
-    """
-    Set columns of the model, that is:
+    """Set columns of the model
+
+    Columns consist of:
 
     - Linear part :math:`c` of the cost :math:`(1/2) x^T Q x + c^T x`
     - Box inequalities :math:`l \\leq x \\leq u``
@@ -96,8 +95,7 @@ def __set_rows(
     A: Optional[spa.csc_matrix] = None,
     b: Optional[np.ndarray] = None,
 ) -> None:
-    """
-    Set rows :math:`L \\leq A x \\leq U`` of the model.
+    """Set rows :math:`L \\leq A x \\leq U`` of the model.
 
     Parameters
     ----------
@@ -146,8 +144,7 @@ def highs_solve_problem(
     verbose: bool = False,
     **kwargs,
 ) -> Solution:
-    """
-    Solve a quadratic program using `HiGHS
+    """Solve a quadratic program using `HiGHS
     <https://github.com/ERGO-Code/HiGHS>`__.
 
     Parameters
@@ -252,8 +249,9 @@ def highs_solve_qp(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    """
-    Solve a Quadratic Program defined as:
+    """Solve a Quadratic Program using HiGHS.
+
+    The quadratic program is defined as:
 
     .. math::
 
@@ -266,7 +264,7 @@ def highs_solve_qp(
                 & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
-    using `HiGHS <https://github.com/ERGO-Code/HiGHS>`__.
+    It is solved using `HiGHS <https://github.com/ERGO-Code/HiGHS>`__.
 
     Parameters
     ----------

@@ -18,8 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Solver interface for `ECOS <https://github.com/embotech/ecos>`__.
+"""Solver interface for `ECOS <https://github.com/embotech/ecos>`__.
 
 ECOS is an interior-point solver for convex second-order cone programs (SOCPs).
 designed specifically for embedded applications. ECOS is written in low
@@ -66,8 +65,9 @@ def ecos_solve_problem(
     verbose: bool = False,
     **kwargs,
 ) -> Solution:
-    """
-    Solve a Quadratic Program defined as:
+    """Solve a Quadratic Program using ECOS.
+
+    The quadratic program is defined as:
 
     .. math::
 
@@ -190,8 +190,9 @@ def ecos_solve_qp(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    """
-    Solve a Quadratic Program defined as:
+    """Solve a Quadratic Program using ECOS.
+
+    The quadratic program is defined as:
 
     .. math::
 
@@ -203,7 +204,7 @@ def ecos_solve_qp(
                 & A x = b
         \\end{array}\\end{split}
 
-    using `ECOS <https://github.com/embotech/ecos>`_.
+    It is solved using `ECOS <https://github.com/embotech/ecos>`_.
 
     Parameters
     ----------

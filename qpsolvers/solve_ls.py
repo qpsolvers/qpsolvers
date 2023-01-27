@@ -18,9 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Solve linear least squares.
-"""
+"""Solve linear least squares."""
 
 import warnings
 from typing import Optional, Union
@@ -47,8 +45,9 @@ def solve_ls(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    """
-    Solve a constrained weighted linear Least Squares problem defined as:
+    """Solve a constrained weighted linear Least Squares problem.
+
+    The linear least squares is defined as:
 
     .. math::
 
