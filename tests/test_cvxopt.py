@@ -36,22 +36,16 @@ try:
     from qpsolvers.solvers.cvxopt_ import cvxopt_solve_problem, cvxopt_solve_qp
 
     class TestCVXOPT(unittest.TestCase):
-
-        """
-        Test fixture for the CVXOPT solver.
-        """
+        """Test fixture for the CVXOPT solver."""
 
         def setUp(self):
-            """
-            Prepare test fixture.
-            """
+            """Prepare test fixture."""
             warnings.simplefilter("ignore", category=UserWarning)
 
         def get_sparse_problem(
             self,
         ) -> Tuple[cvxopt.matrix, np.ndarray, cvxopt.matrix, np.ndarray]:
-            """
-            Get sparse problem as a quadruplet of values to unpack.
+            """Get sparse problem as a quadruplet of values to unpack.
 
             Returns
             -------
@@ -76,9 +70,7 @@ try:
             return P, q, G, h
 
         def test_sparse(self):
-            """
-            Test CVXOPT on a sparse problem.
-            """
+            """Test CVXOPT on a sparse problem."""
             P, q, G, h = self.get_sparse_problem()
             x = cvxopt_solve_qp(P, q, G, h)
             self.assertIsNotNone(x)
@@ -88,9 +80,7 @@ try:
             self.assertLess(max(G.dot(x) - h), 1e-10)
 
         def test_extra_kwargs(self):
-            """
-            Call CVXOPT with various solver-specific settings.
-            """
+            """Call CVXOPT with various solver-specific settings."""
             problem = get_sd3310_problem()
             x = cvxopt_solve_qp(
                 problem.P,
@@ -108,20 +98,14 @@ try:
             self.assertIsNotNone(x)
 
         def test_infinite_linear_bounds(self):
-            """
-            Check that CVXOPT does not yield a domain error when some linear
-            bounds are infinite.
-            """
+            """CVXOPT does not yield a domain error on infinite bounds."""
             problem = get_qpsut01().problem
             problem.h[1] = +np.inf
             x = cvxopt_solve_problem(problem)
             self.assertIsNotNone(x)
 
         def test_infinite_box_bounds(self):
-            """
-            Check that CVXOPT does not yield a domain error when some box
-            bounds are infinite.
-            """
+            """CVXOPT does not yield a domain error infinite box bounds."""
             problem = get_qpsut01().problem
             problem.lb[1] = -np.inf
             problem.ub[1] = +np.inf

@@ -27,10 +27,7 @@ try:
     from qpsolvers.solvers.gurobi_ import gurobi_solve_qp
 
     class TestGurobi(unittest.TestCase):
-
-        """
-        Test fixture for the Gurobi solver.
-        """
+        """Test fixture for the Gurobi solver."""
 
         def test_gurobi_params(self):
             problem = get_sd3310_problem()

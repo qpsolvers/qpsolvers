@@ -29,10 +29,7 @@ try:
     from qpsolvers.solvers.scs_ import scs_solve_qp
 
     class TestSCS(unittest.TestCase):
-
-        """
-        Tests specific to SCS.
-        """
+        """Tests specific to SCS."""
 
         def test_problem(self):
             problem = get_sd3310_problem()

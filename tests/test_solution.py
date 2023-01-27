@@ -28,10 +28,7 @@ from .problems import get_sd3310_problem
 
 
 class TestSolution(unittest.TestCase):
-
-    """
-    Test fixture for solutions.
-    """
+    """Test fixture for solutions."""
 
     def test_empty(self):
         solution = Solution(get_sd3310_problem())

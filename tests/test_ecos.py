@@ -27,10 +27,7 @@ try:
     from qpsolvers.solvers.ecos_ import ecos_solve_qp
 
     class TestECOS(unittest.TestCase):
-
-        """
-        Tests specific to ECOS.
-        """
+        """Tests specific to ECOS."""
 
         def test_problem(self):
             problem = get_sd3310_problem()

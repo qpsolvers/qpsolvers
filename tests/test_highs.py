@@ -27,15 +27,10 @@ try:
     from qpsolvers.solvers.highs_ import highs_solve_qp
 
     class TestHiGHS(unittest.TestCase):
-
-        """
-        Test fixture for the HiGHS solver.
-        """
+        """Test fixture for the HiGHS solver."""
 
         def setUp(self):
-            """
-            Prepare test fixture.
-            """
+            """Prepare test fixture."""
             warnings.simplefilter("ignore", category=UserWarning)
 
         def test_highs_tolerances(self):

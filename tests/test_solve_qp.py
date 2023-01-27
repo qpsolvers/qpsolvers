@@ -18,9 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Tests for the `solve_qp` function.
-"""
+"""Tests for the `solve_qp` function."""
 
 import unittest
 import warnings
@@ -54,8 +52,7 @@ behavior_on_unbounded = {
 
 class TestSolveQP(unittest.TestCase):
 
-    """
-    Test fixture for a variety of quadratic programs.
+    """Test fixture for a variety of quadratic programs.
 
     Solver-specific tests are implemented in static methods called
     ``get_test_{foo}`` that return the test function for a given solver. The
@@ -64,15 +61,12 @@ class TestSolveQP(unittest.TestCase):
     """
 
     def setUp(self):
-        """
-        Prepare test fixture.
-        """
+        """Prepare test fixture."""
         warnings.simplefilter("ignore", category=DeprecationWarning)
         warnings.simplefilter("ignore", category=UserWarning)
 
     def get_dense_problem(self):
-        """
-        Get dense problem as a sextuple of values to unpack.
+        """Get dense problem as a sextuple of values to unpack.
 
         Returns
         -------
@@ -99,8 +93,7 @@ class TestSolveQP(unittest.TestCase):
         return P, q, G, h, A, b
 
     def get_sparse_problem(self):
-        """
-        Get sparse problem as a quadruplet of values to unpack.
+        """Get sparse problem as a quadruplet of values to unpack.
 
         Returns
         -------
@@ -125,25 +118,20 @@ class TestSolveQP(unittest.TestCase):
         return P, q, G, h
 
     def test_no_solver_selected(self):
-        """
-        Check that NoSolverSelected is raised when applicable.
-        """
+        """Check that NoSolverSelected is raised when applicable."""
         P, q, G, h, A, b = self.get_dense_problem()
         with self.assertRaises(NoSolverSelected):
             solve_qp(P, q, G, h, A, b, solver=None)
 
     def test_solver_not_found(self):
-        """
-        Check that SolverNotFound is raised when the solver does not exist.
-        """
+        """SolverNotFound is raised when the solver does not exist."""
         P, q, G, h, A, b = self.get_dense_problem()
         with self.assertRaises(SolverNotFound):
             solve_qp(P, q, G, h, A, b, solver="ideal")
 
     @staticmethod
     def get_test(solver):
-        """
-        Get test function for a given solver.
+        """Get test function for a given solver.
 
         Parameters
         ----------
@@ -192,8 +180,7 @@ class TestSolveQP(unittest.TestCase):
 
     @staticmethod
     def get_test_all_shapes(solver):
-        """
-        Get test function for a given solver. This variant tries all possible
+        """Get test function for a given solver. This variant tries all possible
         shapes for matrix and vector parameters.
 
         Parameters
@@ -273,8 +260,7 @@ class TestSolveQP(unittest.TestCase):
 
     @staticmethod
     def get_test_bounds(solver):
-        """
-        Get test function for a given solver. This variant adds vector bounds.
+        """Get test function for a given solver. This variant adds vector bounds.
 
         Parameters
         ----------
@@ -316,9 +302,9 @@ class TestSolveQP(unittest.TestCase):
 
     @staticmethod
     def get_test_no_cons(solver):
-        """
-        Get test function for a given solver. In this variant, there is
-        no equality nor inequality constraint.
+        """Get test function for a given solver.
+
+        In this variant, there is no equality nor inequality constraint.
 
         Parameters
         ----------
@@ -349,9 +335,9 @@ class TestSolveQP(unittest.TestCase):
 
     @staticmethod
     def get_test_no_eq(solver):
-        """
-        Get test function for a given solver. In this variant, there is
-        no equality constraint.
+        """Get test function for a given solver.
+
+        In this variant, there is no equality constraint.
 
         Parameters
         ----------

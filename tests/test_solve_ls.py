@@ -18,9 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Tests for the `solve_lp` function.
-"""
+"""Tests for the `solve_lp` function."""
 
 import unittest
 import warnings
@@ -36,15 +34,8 @@ from .problems import get_sparse_least_squares
 
 
 class TestSolveLS(unittest.TestCase):
-
-    """
-    Test fixture for the README example problem.
-    """
-
     def setUp(self):
-        """
-        Prepare test fixture.
-        """
+        """Prepare test fixture."""
         warnings.simplefilter("ignore", category=DeprecationWarning)
         warnings.simplefilter("ignore", category=UserWarning)
         self.R = np.array([[1.0, 2.0, 0.0], [2.0, 3.0, 4.0], [0.0, 4.0, 1.0]])
@@ -58,8 +49,7 @@ class TestSolveLS(unittest.TestCase):
         self.known_solution = np.array([2.0 / 3, -1.0 / 3, 2.0 / 3])
 
     def get_problem(self):
-        """
-        Get problem as a sextuple of values to unpack.
+        """Get problem as a sextuple of values to unpack.
 
         Returns
         -------
@@ -80,8 +70,7 @@ class TestSolveLS(unittest.TestCase):
 
     @staticmethod
     def get_test(solver: str):
-        """
-        Get test function for a given solver.
+        """Get test function for a given solver.
 
         Parameters
         ----------
@@ -128,25 +117,20 @@ class TestSolveLS(unittest.TestCase):
         return test
 
     def test_no_solver_selected(self):
-        """
-        Check that NoSolverSelected is raised when applicable.
-        """
+        """Check that NoSolverSelected is raised when applicable."""
         R, s, G, h, A, b = self.get_problem()
         with self.assertRaises(NoSolverSelected):
             solve_ls(R, s, G, h, A, b, solver=None)
 
     def test_solver_not_found(self):
-        """
-        Check that SolverNotFound is raised when the solver does not exist.
-        """
+        """SolverNotFound is raised when the solver does not exist."""
         R, s, G, h, A, b = self.get_problem()
         with self.assertRaises(SolverNotFound):
             solve_ls(R, s, G, h, A, b, solver="ideal")
 
     @staticmethod
     def get_test_mixed_sparse_args(solver: str):
-        """
-        Get test function for mixed sparse problems with a given solver.
+        """Get test function for mixed sparse problems with a given solver.
 
         Parameters
         ----------
@@ -184,8 +168,7 @@ class TestSolveLS(unittest.TestCase):
 
     @staticmethod
     def get_test_medium_sparse_problem(solver: str):
-        """
-        Get test function for a large sparse problem with a given solver.
+        """Get test function for a large sparse problem with a given solver.
 
         Parameters
         ----------
@@ -207,8 +190,7 @@ class TestSolveLS(unittest.TestCase):
 
     @staticmethod
     def get_test_large_sparse_problem(solver: str):
-        """
-        Get test function for a large sparse problem with a given solver.
+        """Get test function for a large sparse problem with a given solver.
 
         Parameters
         ----------

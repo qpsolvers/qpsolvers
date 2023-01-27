@@ -27,10 +27,7 @@ from qpsolvers.conversions import linear_from_box_inequalities
 
 
 class TestConversions(unittest.TestCase):
-
-    """
-    Test fixture for box to linear inequality conversion.
-    """
+    """Test fixture for box to linear inequality conversion."""
 
     def __test_linear_from_box_inequalities(self, G, h, lb, ub):
         G2, h2 = linear_from_box_inequalities(G, h, lb, ub, use_sparse=False)
