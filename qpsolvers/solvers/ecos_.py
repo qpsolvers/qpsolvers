@@ -141,11 +141,7 @@ def ecos_solve_problem(
         G, h = linear_from_box_inequalities(
             G, h, lb, ub, use_sparse=problem.has_sparse
         )
-    kwargs.update(
-        {
-            "verbose": verbose,
-        }
-    )
+    kwargs.update({"verbose": verbose})
     c_socp, G_socp, h_socp, dims = socp_from_qp(P, q, G, h)
     if A is not None:
         A_socp = spa.hstack([A, spa.csc_matrix((A.shape[0], 1))], format="csc")
