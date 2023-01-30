@@ -95,9 +95,11 @@ def ecos_solve_problem(
     Raises
     ------
     ProblemError :
-        If the problem is ill-formed in some way, for instance if the cost
-        matrix is not positive definite, or inequality constraints contain
-        infinite values that the solver doesn't handle.
+        If inequality constraints contain infinite values that the solver
+        doesn't handle.
+
+    ValueError :
+        If the cost matrix is not positive definite.
 
     Notes
     -----
