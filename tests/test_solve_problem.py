@@ -20,7 +20,6 @@
 
 """Unit tests for the `solve_problem` function."""
 
-import math
 import unittest
 
 import numpy as np
@@ -156,7 +155,7 @@ class TestSolveProblem(unittest.TestCase):
                 if solver == "mosek"
                 else 7,
             )
-            self.assertFalse(math.isnan(solution.duality_gap()))
+            self.assertFalse(np.isfinite(solution.duality_gap()))
 
         return test
 
