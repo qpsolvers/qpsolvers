@@ -153,7 +153,7 @@ def ecos_solve_problem(
     solution.extras = result["info"]
     solution.found = flag == 0
     if not solution.found:
-        if flag == -1 and h is not None and not np.isfinite(h).all():
+        if h is not None and not np.isfinite(h).all():
             raise ProblemError(
                 "ECOS does not handle infinite values in inequality vectors, "
                 "try clipping them to a finite value suitable to your problem"
