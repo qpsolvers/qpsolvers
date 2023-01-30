@@ -323,7 +323,7 @@ for solver in available_solvers:
         TestSolveProblem.get_test_qpsut02(solver),
     )
     if solver not in ["ecos", "qpswift"]:
-        # ECOS: https://github.com/qpsolvers/qpsolvers/issues/160
+        # ECOS does not handle infinite bounds
         # qpSWIFT: https://github.com/qpsolvers/qpsolvers/issues/159
         setattr(
             TestSolveProblem,
