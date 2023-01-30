@@ -26,6 +26,8 @@ from numpy import hstack, ndarray, sqrt, vstack, zeros
 from numpy.linalg import LinAlgError, cholesky
 from scipy.sparse import csc_matrix
 
+from ..exceptions import ProblemError
+
 
 def socp_from_qp(
     P: ndarray, q: ndarray, G: Optional[ndarray], h: Optional[ndarray]
@@ -79,6 +81,11 @@ def socp_from_qp(
     dims : dict
         Dimension dictionary used by SOCP solvers, where ``dims["l"]`` is the
         number of inequality constraints.
+
+    Raises
+    ------
+    ProblemError :
+        If the cost matrix is not positive definite.
     """
     n = P.shape[1]  # dimension of QP variable
     c_socp = hstack([zeros(n), 1])  # new SOCP variable stacked as [x, t]
@@ -87,7 +94,7 @@ def socp_from_qp(
     except LinAlgError as e:
         error = str(e)
         if "not positive definite" in error:
-            raise ValueError("matrix P is not positive definite") from e
+            raise ProblemError("matrix P is not positive definite") from e
         raise e  # other linear algebraic error
 
     scale = 1.0 / sqrt(2)
