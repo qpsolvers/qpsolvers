@@ -155,7 +155,7 @@ class TestSolveProblem(unittest.TestCase):
                 if solver == "mosek"
                 else 7,
             )
-            self.assertFalse(np.isfinite(solution.duality_gap()))
+            self.assertTrue(np.isfinite(solution.duality_gap()))
 
         return test
 
