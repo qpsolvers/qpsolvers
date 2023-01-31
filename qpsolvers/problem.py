@@ -106,7 +106,8 @@ class Problem:
 
     @staticmethod
     def __check_vector(
-        v: Optional[np.ndarray], name: str,
+        v: Optional[np.ndarray],
+        name: str,
     ) -> Optional[np.ndarray]:
         """
         Ensure a problem vector has proper shape.
