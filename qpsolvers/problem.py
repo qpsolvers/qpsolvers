@@ -22,13 +22,15 @@
 Model for a quadratic program.
 """
 
-from typing import Optional, Tuple, Union
+from typing import Optional, Tuple, TypeVar, Union
 
 import numpy as np
 import scipy.sparse as spa
 
 from .conversions import linear_from_box_inequalities
 from .exceptions import ProblemError
+
+VectorType = TypeVar("VectorType")
 
 
 class Problem:
@@ -82,8 +84,7 @@ class Problem:
 
     @staticmethod
     def __check_matrix(
-        M: Optional[Union[np.ndarray, spa.csc_matrix]],
-        name: str,
+        M: Optional[Union[np.ndarray, spa.csc_matrix]]
     ) -> Optional[Union[np.ndarray, spa.csc_matrix]]:
         """
         Ensure a problem matrix has proper shape.
@@ -105,10 +106,7 @@ class Problem:
         return M
 
     @staticmethod
-    def __check_vector(
-        v: Optional[np.ndarray],
-        name: str,
-    ) -> Optional[np.ndarray]:
+    def __check_vector(v: VectorType, name: str) -> VectorType:
         """
         Ensure a problem vector has proper shape.
 
@@ -144,11 +142,11 @@ class Problem:
         lb: Optional[np.ndarray] = None,
         ub: Optional[np.ndarray] = None,
     ) -> None:
-        P = Problem.__check_matrix(P, "P")
+        P = Problem.__check_matrix(P)
         q = Problem.__check_vector(q, "q")
-        G = Problem.__check_matrix(G, "G")
+        G = Problem.__check_matrix(G)
         h = Problem.__check_vector(h, "h")
-        A = Problem.__check_matrix(A, "A")
+        A = Problem.__check_matrix(A)
         b = Problem.__check_vector(b, "b")
         lb = Problem.__check_vector(lb, "lb")
         ub = Problem.__check_vector(ub, "ub")
