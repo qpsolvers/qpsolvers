@@ -142,3 +142,23 @@ def get_maros_meszaros_qptest():
     solution.z = np.array([0.0, 4.275])
     solution.z_box = np.array([0.0, 0.0])
     return solution
+
+
+def get_qpsut04() -> Solution:
+    """
+    Get QPSUT04 problem and its solution.
+    """
+    n = 3
+    P = np.eye(n)
+    q = 0.01 * np.ones(shape=(n, 1))  # non-flat vector
+    G = np.eye(n)
+    h = np.ones(shape=(n,))
+    A = np.ones(shape=(n,))
+    b = np.ones(shape=(1,))
+    problem = Problem(P, q, G, h, A, b)
+
+    solution = Solution(problem)
+    solution.x = 1. / 3.0 * np.ones(n)
+    solution.y = np.array([1.0 / 3.0 + 0.01])
+    solution.z = np.zeros(n)
+    return solution
