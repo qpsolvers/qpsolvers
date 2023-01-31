@@ -80,6 +80,58 @@ class Problem:
     lb: Optional[np.ndarray] = None
     ub: Optional[np.ndarray] = None
 
+    @staticmethod
+    def __check_matrix(
+        M: Optional[Union[np.ndarray, spa.csc_matrix]],
+        name: str,
+    ) -> Optional[Union[np.ndarray, spa.csc_matrix]]:
+        """
+        Ensure a problem matrix has proper shape.
+
+        Parameters
+        ----------
+        M :
+            Problem matrix.
+        name :
+            Matrix name.
+
+        Returns
+        -------
+        :
+            Same matrix with proper shape.
+        """
+        if isinstance(M, np.ndarray) and M.ndim == 1:
+            M = M.reshape((1, M.shape[0]))
+        return M
+
+    @staticmethod
+    def __check_vector(
+        v: Optional[np.ndarray], name: str,
+    ) -> Optional[np.ndarray]:
+        """
+        Ensure a problem vector has proper shape.
+
+        Parameters
+        ----------
+        M :
+            Problem matrix.
+        name :
+            Matrix name.
+
+        Returns
+        -------
+        :
+            Same matrix with proper shape.
+        """
+        if v is None or v.ndim <= 1:
+            return v
+        if v.shape[0] != 1 and v.shape[1] != 1 or v.ndim > 2:
+            raise ProblemError(
+                f"vector '{name}' should be flat "
+                f"and cannot be flattened as its shape is {v.shape}"
+            )
+        return v.flatten()
+
     def __init__(
         self,
         P: Union[np.ndarray, spa.csc_matrix],
@@ -91,10 +143,14 @@ class Problem:
         lb: Optional[np.ndarray] = None,
         ub: Optional[np.ndarray] = None,
     ) -> None:
-        if isinstance(A, np.ndarray) and A.ndim == 1:
-            A = A.reshape((1, A.shape[0]))
-        if isinstance(G, np.ndarray) and G.ndim == 1:
-            G = G.reshape((1, G.shape[0]))
+        P = Problem.__check_matrix(P, "P")
+        q = Problem.__check_vector(q, "q")
+        G = Problem.__check_matrix(G, "G")
+        h = Problem.__check_vector(h, "h")
+        A = Problem.__check_matrix(A, "A")
+        b = Problem.__check_vector(b, "b")
+        lb = Problem.__check_vector(lb, "lb")
+        ub = Problem.__check_vector(ub, "ub")
         self.P = P
         self.q = q
         self.G = G
