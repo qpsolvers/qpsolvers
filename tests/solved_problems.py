@@ -158,7 +158,20 @@ def get_qpsut04() -> Solution:
     problem = Problem(P, q, G, h, A, b)
 
     solution = Solution(problem)
-    solution.x = 1. / 3.0 * np.ones(n)
+    solution.x = 1.0 / 3.0 * np.ones(n)
     solution.y = np.array([1.0 / 3.0 + 0.01])
     solution.z = np.zeros(n)
+    return solution
+
+
+def get_qpsut05() -> Solution:
+    """
+    Get QPSUT05 problem and its solution.
+    """
+    P = np.array([2.0])
+    q = np.array([-2.0])
+    problem = Problem(P, q)
+
+    solution = Solution(problem)
+    solution.x = np.array([1.0])
     return solution
