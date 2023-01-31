@@ -26,8 +26,6 @@ from numpy import hstack, ndarray, sqrt, vstack, zeros
 from numpy.linalg import LinAlgError, cholesky
 from scipy.sparse import csc_matrix
 
-from ..exceptions import ProblemError
-
 
 def socp_from_qp(
     P: ndarray, q: ndarray, G: Optional[ndarray], h: Optional[ndarray]
@@ -84,7 +82,7 @@ def socp_from_qp(
 
     Raises
     ------
-    ProblemError :
+    ValueError :
         If the cost matrix is not positive definite.
     """
     n = P.shape[1]  # dimension of QP variable
@@ -94,7 +92,7 @@ def socp_from_qp(
     except LinAlgError as e:
         error = str(e)
         if "not positive definite" in error:
-            raise ProblemError("matrix P is not positive definite") from e
+            raise ValueError("matrix P is not positive definite") from e
         raise e  # other linear algebraic error
 
     scale = 1.0 / sqrt(2)

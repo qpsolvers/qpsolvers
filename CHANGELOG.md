@@ -4,10 +4,6 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-### Changed
-
-- ECOS: raise a ProblemError if the cost matrix is not positive definite
-
 ### Fixed
 
 - Check vector shapes in problem constructor
