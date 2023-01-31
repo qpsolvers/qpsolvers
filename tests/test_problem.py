@@ -20,6 +20,7 @@
 
 import unittest
 
+import numpy as np
 import scipy.sparse as spa
 
 from qpsolvers import Problem, ProblemError
@@ -80,3 +81,14 @@ class TestProblem(unittest.TestCase):
         sparse = Problem(spa.csc_matrix(self.problem.P), self.problem.q)
         with self.assertRaises(ProblemError):
             sparse.cond()
+
+    def test_check_vector_shapes(self):
+        Problem(np.eye(3), np.ones(shape=(3, 1)))
+        Problem(np.eye(3), np.ones(shape=(1, 3)))
+        Problem(np.eye(3), np.ones(shape=(3,)))
+        with self.assertRaises(ProblemError):
+            Problem(np.eye(3), np.ones(shape=(3, 2)))
+        with self.assertRaises(ProblemError):
+            Problem(np.eye(3), np.ones(shape=(3, 1, 1)))
+        with self.assertRaises(ProblemError):
+            Problem(np.eye(3), np.ones(shape=(1, 3, 1)))
