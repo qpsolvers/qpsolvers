@@ -36,6 +36,7 @@ from .solved_problems import (
     get_qpsut02,
     get_qpsut03,
     get_qpsut04,
+    get_qpsut05,
 )
 
 
@@ -188,6 +189,32 @@ class TestSolveProblem(unittest.TestCase):
         return test
 
     @staticmethod
+    def get_test_qpsut05(solver: str):
+        """
+        Get test function for the QPSUT04 problem.
+
+        Parameters
+        ----------
+        solver :
+            Name of the solver to test.
+
+        Returns
+        -------
+        test : function
+            Test function for that solver.
+        """
+
+        def test(self):
+            ref_solution = get_qpsut05()
+            problem = ref_solution.problem
+            solution = solve_problem(problem, solver=solver)
+            eps_abs = 2e-5 if solver == "ecos" else 1e-6
+            self.assertLess(norm(solution.x - ref_solution.x), eps_abs)
+            self.assertTrue(np.isfinite(solution.duality_gap()))
+
+        return test
+
+    @staticmethod
     def get_test_maros_meszaros_qptest(solver):
         """
         Get test function for the QPTEST problem.
@@ -311,6 +338,13 @@ for solver in available_solvers:
         f"test_qpsut04_{solver}",
         TestSolveProblem.get_test_qpsut04(solver),
     )
+    if solver not in ["osqp", "qpswift"]:
+        # OSQP: see https://github.com/osqp/osqp-python/issues/104
+        setattr(
+            TestSolveProblem,
+            f"test_qpsut05_{solver}",
+            TestSolveProblem.get_test_qpsut05(solver),
+        )
     if solver not in ["ecos", "qpswift"]:
         # See https://github.com/stephane-caron/qpsolvers/issues/159
         # See https://github.com/stephane-caron/qpsolvers/issues/160

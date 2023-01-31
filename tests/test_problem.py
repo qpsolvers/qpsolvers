@@ -82,6 +82,10 @@ class TestProblem(unittest.TestCase):
         with self.assertRaises(ProblemError):
             sparse.cond()
 
+    def test_check_matrix_shapes(self):
+        Problem(np.eye(1), np.ones(1))
+        Problem(np.array([1.0]), np.ones(1))
+
     def test_check_vector_shapes(self):
         Problem(np.eye(3), np.ones(shape=(3, 1)))
         Problem(np.eye(3), np.ones(shape=(1, 3)))
