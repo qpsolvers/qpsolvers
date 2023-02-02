@@ -62,12 +62,12 @@ def __set_columns(
     lb: Optional[np.ndarray] = None,
     ub: Optional[np.ndarray] = None,
 ) -> None:
-    """Set columns of the model
+    r"""Set columns of the model.
 
     Columns consist of:
 
     - Linear part :math:`c` of the cost :math:`(1/2) x^T Q x + c^T x`
-    - Box inequalities :math:`l \\leq x \\leq u``
+    - Box inequalities :math:`l \leq x \leq u``
 
     Parameters
     ----------
@@ -95,7 +95,7 @@ def __set_rows(
     A: Optional[spa.csc_matrix] = None,
     b: Optional[np.ndarray] = None,
 ) -> None:
-    """Set rows :math:`L \\leq A x \\leq U`` of the model.
+    r"""Set rows :math:`L \leq A x \leq U`` of the model.
 
     Parameters
     ----------
@@ -248,20 +248,20 @@ def highs_solve_qp(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    """Solve a quadratic program using HiGHS.
+    r"""Solve a quadratic program using HiGHS.
 
     The quadratic program is defined as:
 
     .. math::
 
-        \\begin{split}\\begin{array}{ll}
-            \\underset{x}{\\mbox{minimize}} &
-                \\frac{1}{2} x^T P x + q^T x \\\\
-            \\mbox{subject to}
-                & G x \\leq h                \\\\
-                & A x = b                    \\\\
-                & lb \\leq x \\leq ub
-        \\end{array}\\end{split}
+        \begin{split}\begin{array}{ll}
+            \underset{x}{\mbox{minimize}} &
+                \frac{1}{2} x^T P x + q^T x \\
+            \mbox{subject to}
+                & G x \leq h                \\
+                & A x = b                   \\
+                & lb \leq x \leq ub
+        \end{array}\end{split}
 
     It is solved using `HiGHS <https://github.com/ERGO-Code/HiGHS>`__.
 
