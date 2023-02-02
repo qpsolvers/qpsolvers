@@ -37,7 +37,7 @@ def solve_problem(
     verbose: bool = False,
     **kwargs,
 ) -> Solution:
-    """Solve a quadratic program using a given solver.
+    r"""Solve a quadratic program using a given solver.
 
     Parameters
     ----------
@@ -56,7 +56,7 @@ def solve_problem(
     solvers (including CVXOPT, OSQP and quadprog) assume this is the case and
     may return unintended results when the provided matrix is not. Thus, make
     sure you matrix is indeed symmetric before calling this function, for
-    instance by projecting it on its symmetric part :math:`S = \\frac{1}{2} (P
+    instance by projecting it on its symmetric part :math:`S = \frac{1}{2} (P
     + P^T)`.
 
     Returns

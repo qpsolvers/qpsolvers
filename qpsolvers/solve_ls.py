@@ -45,21 +45,21 @@ def solve_ls(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    """Solve a constrained weighted linear Least Squares problem.
+    r"""Solve a constrained weighted linear Least Squares problem.
 
     The linear least squares is defined as:
 
     .. math::
 
-        \\begin{split}\\begin{array}{ll}
-            \\underset{x}{\\mbox{minimize}} &
-                \\frac12 \\| R x - s \\|^2_W
-                = \\frac12 (R x - s)^T W (R x - s) \\\\
-            \\mbox{subject to}
-                & G x \\leq h                \\\\
-                & A x = b                    \\\\
-                & lb \\leq x \\leq ub
-        \\end{array}\\end{split}
+        \begin{split}\begin{array}{ll}
+            \underset{x}{\mbox{minimize}} &
+                \frac12 \| R x - s \|^2_W
+                = \frac12 (R x - s)^T W (R x - s) \\
+            \mbox{subject to}
+                & G x \leq h          \\
+                & A x = b             \\
+                & lb \leq x \leq ub
+        \end{array}\end{split}
 
     using the QP solver selected by the ``solver`` keyword argument.
 

@@ -41,20 +41,20 @@ def solve_safer_qp(
     initvals: Optional[np.ndarray] = None,
     sym_proj: bool = False,
 ) -> Optional[np.ndarray]:
-    """Solve the "safer" Quadratic Program with repulsive constraints,
+    r"""Solve a "safer" Quadratic Program with repulsive constraints.
 
     This problem is defined by:
 
     .. math::
 
-        \\begin{split}\\begin{array}{ll}
-            \\underset{x}{\\mbox{minimize}} &
-                \\frac{1}{2} x^T P x + q^T x +
-                \\frac{1}{2} \\mathit{reg} \\|s\\|^2 - \\mathit{sr} \\1^T s
-                \\\\
-            \\mbox{subject to}
-                & G x \\leq h
-        \\end{array}\\end{split}
+        \begin{split}\begin{array}{ll}
+            \underset{x}{\mbox{minimize}} &
+                \frac{1}{2} x^T P x + q^T x +
+                \frac{1}{2} \mathit{reg} \|s\|^2 - \mathit{sr} \1^T s
+                \\
+            \mbox{subject to}
+                & G x \leq h
+        \end{array}\end{split}
 
     Slack variables `s` (i.e. distance to inequality constraints) are added to
     the vector of optimization variables and included in the cost function.

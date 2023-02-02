@@ -74,7 +74,7 @@ def cvxopt_solve_problem(
     verbose: bool = False,
     **kwargs,
 ) -> Solution:
-    """Solve a quadratic program using CVXOPT.
+    r"""Solve a quadratic program using CVXOPT.
 
     Parameters
     ----------
@@ -100,11 +100,11 @@ def cvxopt_solve_problem(
 
     .. math::
 
-        \\begin{split}\\begin{array}{cc}
-        \\mathrm{rank}(A) = p
+        \begin{split}\begin{array}{cc}
+        \mathrm{rank}(A) = p
         &
-        \\mathrm{rank}([P\\ A^T\\ G^T]) = n
-        \\end{array}\\end{split}
+        \mathrm{rank}([P\ A^T\ G^T]) = n
+        \end{array}\end{split}
 
     where :math:`p` is the number of rows of :math:`A` and :math:`n` is the
     number of optimization variables. See the "Rank assumptions" paragraph in
@@ -196,20 +196,20 @@ def cvxopt_solve_qp(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    """Solve a quadratic program using CVXOPT.
+    r"""Solve a quadratic program using CVXOPT.
 
     The quadratic program is defined as:
 
     .. math::
 
-        \\begin{split}\\begin{array}{ll}
-            \\underset{x}{\\mbox{minimize}} &
-                \\frac{1}{2} x^T P x + q^T x \\\\
-            \\mbox{subject to}
-                & G x \\leq h                \\\\
-                & A x = b                    \\\\
-                & lb \\leq x \\leq ub
-        \\end{array}\\end{split}
+        \begin{split}\begin{array}{ll}
+            \underset{x}{\mbox{minimize}} &
+                \frac{1}{2} x^T P x + q^T x \\
+            \mbox{subject to}
+                & G x \leq h                \\
+                & A x = b                   \\
+                & lb \leq x \leq ub
+        \end{array}\end{split}
 
     It is solved using `CVXOPT <http://cvxopt.org/>`__.
 
@@ -217,20 +217,20 @@ def cvxopt_solve_qp(
     ----------
     P :
         Symmetric cost matrix. Together with :math:`A` and :math:`G`, it should
-        satisfy :math:`\\mathrm{rank}([P\\ A^T\\ G^T]) = n`, see the rank
+        satisfy :math:`\mathrm{rank}([P\ A^T\ G^T]) = n`, see the rank
         assumptions below.
     q :
         Cost vector.
     G :
         Linear inequality matrix. Together with :math:`P` and :math:`A`, it
-        should satisfy :math:`\\mathrm{rank}([P\\ A^T\\ G^T]) = n`, see the
+        should satisfy :math:`\mathrm{rank}([P\ A^T\ G^T]) = n`, see the
         rank assumptions below.
     h :
         Linear inequality vector.
     A :
         Linear equality constraint matrix. It needs to be full row rank, and
         together with :math:`P` and :math:`G` satisfy
-        :math:`\\mathrm{rank}([P\\ A^T\\ G^T]) = n`. See the rank assumptions
+        :math:`\mathrm{rank}([P\ A^T\ G^T]) = n`. See the rank assumptions
         below.
     b :
         Linear equality constraint vector.
