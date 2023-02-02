@@ -28,19 +28,14 @@ from qpsolvers.utils import print_matrix_vector
 
 
 class TestUtils(unittest.TestCase):
-
-    """
-    Test fixture for utility functions.
-    """
+    """Test fixture for utility functions."""
 
     def setUp(self):
         self.G = np.array([[1.3, 2.1], [2.6, 0.3], [2.2, -1.6]])
         self.h = np.array([3.4, 1.8, -2.7]).reshape((3,))
 
     def test_print_matrix_vector(self):
-        """
-        Printing a matrix-vector pair outputs the proper labels.
-        """
+        """Printing a matrix-vector pair outputs the proper labels."""
         def run_test(G, h):
             stdout_capture = io.StringIO()
             sys.stdout = stdout_capture

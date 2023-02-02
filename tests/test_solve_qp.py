@@ -180,8 +180,10 @@ class TestSolveQP(unittest.TestCase):
 
     @staticmethod
     def get_test_all_shapes(solver):
-        """Get test function for a given solver. This variant tries all possible
-        shapes for matrix and vector parameters.
+        """Get test function for a given solver.
+
+        This variant tries all possible shapes for matrix and vector
+        parameters.
 
         Parameters
         ----------
@@ -260,7 +262,9 @@ class TestSolveQP(unittest.TestCase):
 
     @staticmethod
     def get_test_bounds(solver):
-        """Get test function for a given solver. This variant adds vector bounds.
+        """Get test function for a given solver.
+
+        This variant adds vector bounds.
 
         Parameters
         ----------
@@ -378,9 +382,9 @@ class TestSolveQP(unittest.TestCase):
 
     @staticmethod
     def get_test_no_ineq(solver):
-        """
-        Get test function for a given solver. In this variant, there is
-        no inequality constraint.
+        """Get test function for a given solver.
+
+        In this variant, there is no inequality constraint.
 
         Parameters
         ----------
@@ -418,9 +422,9 @@ class TestSolveQP(unittest.TestCase):
 
     @staticmethod
     def get_test_one_ineq(solver):
-        """
-        Get test function for a given solver. In this variant, there is
-        only one inequality constraint.
+        """Get test function for a given solver.
+
+        In this variant, there is only one inequality constraint.
 
         Parameters
         ----------
@@ -471,8 +475,7 @@ class TestSolveQP(unittest.TestCase):
 
     @staticmethod
     def get_test_safer(solver):
-        """
-        Get test function for a given solver.
+        """Get test function for a given solver.
 
         Parameters
         ----------
@@ -515,9 +518,9 @@ class TestSolveQP(unittest.TestCase):
 
     @staticmethod
     def get_test_sparse(solver):
-        """
-        Get test function for a given solver. This variant tests a sparse
-        problem.
+        """Get test function for a given solver.
+
+        This variant tests a sparse problem.
 
         Parameters
         ----------
@@ -566,9 +569,10 @@ class TestSolveQP(unittest.TestCase):
 
     @staticmethod
     def get_test_sparse_bounds(solver):
-        """
-        Get test function for a given solver. This variant tests a sparse
-        problem with additional vector lower and upper bounds.
+        """Get test function for a given solver.
+
+        This variant tests a sparse problem with additional vector lower and
+        upper bounds.
 
         Parameters
         ----------
@@ -607,9 +611,10 @@ class TestSolveQP(unittest.TestCase):
 
     @staticmethod
     def get_test_sparse_unfeasible(solver):
-        """
-        Get test function for a given solver. This variant tests an unfeasible
-        sparse problem with additional vector lower and upper bounds.
+        """Get test function for a given solver.
+
+        This variant tests an unfeasible sparse problem with additional vector
+        lower and upper bounds.
 
         Parameters
         ----------
@@ -637,8 +642,9 @@ class TestSolveQP(unittest.TestCase):
 
     @staticmethod
     def get_test_warmstart(solver):
-        """
-        Get test function for a given solver. This variant warm starts.
+        """Get test function for a given solver.
+
+        This variant warm starts.
 
         Parameters
         ----------
@@ -695,8 +701,7 @@ class TestSolveQP(unittest.TestCase):
 
     @staticmethod
     def get_test_raise_on_unbounded_below(solver):
-        """
-        Check that a ValueError is raised when the problem is unbounded below.
+        """ValueError is raised when the problem is unbounded below.
 
         Parameters
         ----------
@@ -729,8 +734,7 @@ class TestSolveQP(unittest.TestCase):
 
     @staticmethod
     def get_test_qpmad_demo(solver):
-        """
-        Get test function for a given solver.
+        """Get test function for a given solver.
 
         Parameters
         ----------
