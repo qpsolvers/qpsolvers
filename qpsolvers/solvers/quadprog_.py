@@ -18,8 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Solver interface for `quadprog <https://github.com/quadprog/quadprog>`__.
+"""Solver interface for `quadprog <https://github.com/quadprog/quadprog>`__.
 
 quadprog is a C implementation of the Goldfarb-Idnani dual algorithm
 [Goldfarb1983]_. It works best on well-conditioned dense problems.
@@ -44,9 +43,7 @@ def quadprog_solve_problem(
     verbose: bool = False,
     **kwargs,
 ) -> Solution:
-    """
-    Solve a quadratic program using `quadprog
-    <https://pypi.python.org/pypi/quadprog/>`_.
+    """Solve a quadratic program using quadprog.
 
     Parameters
     ----------
@@ -142,8 +139,7 @@ def __convert_dual_multipliers(
     lb: Optional[np.ndarray],
     ub: Optional[np.ndarray],
 ) -> Tuple[Optional[np.ndarray], Optional[np.ndarray], Optional[np.ndarray]]:
-    """
-    Convert dual multipliers from quadprog to qpsolvers QP formulation.
+    """Convert dual multipliers from quadprog to qpsolvers QP formulation.
 
     Parameters
     ----------
@@ -193,8 +189,9 @@ def quadprog_solve_qp(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    """
-    Solve a Quadratic Program defined as:
+    """Solve a quadratic program using quadprog.
+
+    The quadratic program is defined as:
 
     .. math::
 
@@ -207,7 +204,7 @@ def quadprog_solve_qp(
                 & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
-    using `quadprog <https://pypi.python.org/pypi/quadprog/>`_.
+    It is solved using `quadprog <https://pypi.python.org/pypi/quadprog/>`__.
 
     Parameters
     ----------

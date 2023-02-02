@@ -44,23 +44,7 @@ def mosek_solve_problem(
     verbose: bool = False,
     **kwargs,
 ) -> Solution:
-    """Solve a Quadratic Program using MOSEK.
-
-    The quadratic program is defined as:
-
-    .. math::
-
-        \\begin{split}\\begin{array}{ll}
-            \\underset{x}{\\mbox{minimize}} &
-                \\frac{1}{2} x^T P x + q^T x \\\\
-            \\mbox{subject to}
-                & G x \\leq h                \\\\
-                & A x = b                    \\\\
-                & lb \\leq x \\leq ub
-        \\end{array}\\end{split}
-
-    It is solved using the `MOSEK interface from CVXOPT
-    <https://cvxopt.org/userguide/coneprog.html#optional-solvers>`_.
+    """Solve a quadratic program using MOSEK.
 
     Parameters
     ----------
@@ -110,7 +94,7 @@ def mosek_solve_qp(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    """Solve a Quadratic Program using MOSEK.
+    """Solve a quadratic program using MOSEK.
 
     The quadratic program is defined as:
 

@@ -18,8 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Solver interface for `SCS <https://www.cvxgrp.org/scs/>`__.
+"""Solver interface for `SCS <https://www.cvxgrp.org/scs/>`__.
 
 SCS (Splitting Conic Solver) is a numerical optimization package for solving
 large-scale convex quadratic cone problems, which is a general class of
@@ -63,8 +62,7 @@ def __add_box_cone(
     cone: Dict[str, Any],
     data: Dict[str, Any],
 ) -> None:
-    """
-    Add box cone to the problem.
+    """Add box cone to the problem.
 
     Parameters
     ----------
@@ -97,8 +95,7 @@ def __add_box_cone(
 
 
 def __solve_unconstrained(problem: Problem) -> Solution:
-    """
-    Solve an unconstrained quadratic program, warning if it is unbounded.
+    """Solve an unconstrained quadratic program, warning if it is unbounded.
 
     Parameters
     ----------
@@ -132,9 +129,7 @@ def __ensure_sparse_matrices(
     G: Optional[Union[ndarray, csc_matrix]],
     A: Optional[Union[ndarray, csc_matrix]],
 ) -> Tuple[csc_matrix, Optional[csc_matrix], Optional[csc_matrix]]:
-    """
-    Make sure matrices are sparse.
-    """
+    """Make sure matrices are sparse."""
     if isinstance(P, ndarray):
         warn_about_sparse_conversion("P")
         P = csc_matrix(P)
@@ -153,8 +148,7 @@ def scs_solve_problem(
     verbose: bool = False,
     **kwargs,
 ) -> Solution:
-    """
-    Solve a quadratic program using `SCS <https://github.com/cvxgrp/scs>`__.
+    """Solve a quadratic program using SCS.
 
     Parameters
     ----------
@@ -271,8 +265,9 @@ def scs_solve_qp(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[ndarray]:
-    """
-    Solve a Quadratic Program defined as:
+    """Solve a quadratic program using SCS.
+
+    The quadratic program is defined as:
 
     .. math::
 
@@ -285,7 +280,7 @@ def scs_solve_qp(
                 & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
-    using `SCS <https://github.com/cvxgrp/scs>`__.
+    It is solved using `SCS <https://github.com/cvxgrp/scs>`__.
 
     Parameters
     ----------

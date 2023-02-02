@@ -32,18 +32,20 @@ VectorType = TypeVar("VectorType")
 
 
 class Problem:
-    """Model for a quadratic program defined as:
+    r"""Data structure describing a quadratic program.
+
+    The quadratic program is defined as:
 
     .. math::
 
-        \\begin{split}\\begin{array}{ll}
-            \\underset{x}{\\mbox{minimize}} &
-                \\frac{1}{2} x^T P x + q^T x \\\\
-            \\mbox{subject to}
-                & G x \\leq h                \\\\
-                & A x = b                    \\\\
-                & lb \\leq x \\leq ub
-        \\end{array}\\end{split}
+        \begin{split}\begin{array}{ll}
+            \underset{x}{\mbox{minimize}} &
+                \frac{1}{2} x^T P x + q^T x \\
+            \mbox{subject to}
+                & G x \leq h                \\
+                & A x = b                    \\
+                & lb \leq x \leq ub
+        \end{array}\end{split}
 
     This class provides sanity checks and metrics such as the condition number
     of a problem.
@@ -220,7 +222,7 @@ class Problem:
             raise ValueError("incomplete equality constraint (missing A)")
 
     def cond(self):
-        """Condition number of the problem matrix.
+        r"""Condition number of the problem matrix.
 
         Compute the condition number of the symmetric matrix representing the
         problem data:
@@ -228,11 +230,11 @@ class Problem:
         .. math::
 
             M =
-            \\begin{bmatrix}
-                P & G^T & A^T \\\\
-                G & 0   & 0   \\\\
+            \begin{bmatrix}
+                P & G^T & A^T \\
+                G & 0   & 0   \\
                 A & 0   & 0
-            \\end{bmatrix}
+            \end{bmatrix}
 
         Returns
         -------

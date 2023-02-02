@@ -22,20 +22,16 @@
 
 
 class QPError(Exception):
-
     """Base class for qpsolvers exceptions."""
 
 
 class NoSolverSelected(QPError):
-
     """Exception raised when the `solver` keyword argument is not set."""
 
 
 class ProblemError(QPError):
-
     """Exception raised when a quadratic program is malformed."""
 
 
 class SolverNotFound(QPError):
-
     """Exception raised when a requested solver is not found."""

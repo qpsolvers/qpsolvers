@@ -18,9 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Solver interface for `ProxQP
-<https://github.com/Simple-Robotics/proxsuite#proxqp>`__.
+"""Interface for `ProxQP <https://github.com/Simple-Robotics/proxsuite>`__.
 
 ProxQP is the QP solver from ProxSuite, a collection of open-source solvers
 rooted in revisited primal-dual proximal algorithms. If you use ProxQP in some
@@ -38,8 +36,7 @@ from ..solution import Solution
 
 
 def __combine_inequalities(G, h, lb, ub, n: int, use_csc: bool):
-    """
-    Combine linear and box inequalities for ProxQP.
+    """Combine linear and box inequalities for ProxQP.
 
     Parameters
     ----------
@@ -87,8 +84,7 @@ def __combine_inequalities(G, h, lb, ub, n: int, use_csc: bool):
 
 
 def __select_backend(backend: Optional[str], use_csc: bool):
-    """
-    Select backend function for ProxQP.
+    """Select backend function for ProxQP.
 
     Parameters
     ----------
@@ -119,9 +115,7 @@ def proxqp_solve_problem(
     backend: Optional[str] = None,
     **kwargs,
 ) -> Solution:
-    """
-    Solve a Quadratic Program using `ProxQP
-    <https://github.com/Simple-Robotics/proxsuite>`__.
+    """Solve a quadratic program using ProxQP.
 
     Parameters
     ----------
@@ -240,8 +234,9 @@ def proxqp_solve_qp(
     backend: Optional[str] = None,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    """
-    Solve a Quadratic Program defined as:
+    """Solve a quadratic program using ProxQP.
+
+    The quadratic program is defined as:
 
     .. math::
 
@@ -254,7 +249,8 @@ def proxqp_solve_qp(
             & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
-    using `ProxQP <https://github.com/Simple-Robotics/proxsuite>`__.
+    It is solved using `ProxQP
+    <https://github.com/Simple-Robotics/proxsuite#proxqp>`__.
 
     Parameters
     ----------

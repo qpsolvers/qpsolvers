@@ -30,27 +30,29 @@ from scipy.sparse import csc_matrix
 def socp_from_qp(
     P: ndarray, q: ndarray, G: Optional[ndarray], h: Optional[ndarray]
 ) -> Tuple[ndarray, ndarray, ndarray, Dict[str, Any]]:
-    """Convert the Quadratic Program defined by:
+    r"""Convert a quadratic program to a second-order cone program.
+
+    The quadratic program is defined by:
 
     .. math::
 
-        \\begin{split}\\begin{array}{ll}
-            \\underset{x}{\\mbox{minimize}} &
-                \\frac{1}{2} x^T P x + q^T x \\\\
-            \\mbox{subject to}
-                & G x \\leq h
-        \\end{array}\\end{split}
+        \begin{split}\begin{array}{ll}
+            \underset{x}{\mbox{minimize}} &
+                \frac{1}{2} x^T P x + q^T x \\
+            \mbox{subject to}
+                & G x \leq h
+        \end{array}\end{split}
 
-    to an equivalent Second-Order Cone Program:
+    The equivalent second-order cone program is:
 
     .. math::
 
-        \\begin{split}\\begin{array}{ll}
-            \\underset{x}{\\mbox{minimize}} &
-                c^T_s y \\\\
-            \\mbox{subject to}
-                & G_s y \\leq_{\\cal K} h_s
-        \\end{array}\\end{split}
+        \begin{split}\begin{array}{ll}
+            \underset{x}{\mbox{minimize}} &
+                c^T_s y \\
+            \mbox{subject to}
+                & G_s y \leq_{\cal K} h_s
+        \end{array}\end{split}
 
     This function is adapted from ``ecosqp.m`` in the `ecos-matlab
     <https://github.com/embotech/ecos-matlab/>`_ repository. See the
