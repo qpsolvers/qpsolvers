@@ -18,8 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Solver interface for `qpOASES <https://github.com/coin-or/qpOASES>`__.
+"""Solver interface for `qpOASES <https://github.com/coin-or/qpOASES>`__.
 
 qpOASES is an open-source C++ implementation of the online active set strategy,
 which was inspired by observations from the field of parametric quadratic
@@ -63,8 +62,7 @@ RET_INIT_FAILED_REGULARISATION = 39
 
 
 def __clamp_infinities(v: Optional[np.ndarray]):
-    """
-    Replace infinite values in an array by big finite ones.
+    """Replace infinite values in an array by big finite ones.
 
     Note
     ----
@@ -81,8 +79,7 @@ def __prepare_options(
     predefined_options: Optional[str],
     **kwargs,
 ) -> Options:
-    """
-    Prepare options for qpOASES.
+    """Prepare options for qpOASES.
 
     Parameters
     ----------
@@ -129,8 +126,7 @@ def __convert_inequalities(
     A: Optional[np.ndarray] = None,
     b: Optional[np.ndarray] = None,
 ) -> Tuple[np.ndarray, Optional[np.ndarray], np.ndarray]:
-    """
-    Convert linear constraints to qpOASES format.
+    """Convert linear constraints to qpOASES format.
 
     Parameters
     ----------
@@ -178,9 +174,7 @@ def qpoases_solve_problem(
     predefined_options: Optional[str] = None,
     **kwargs,
 ) -> Solution:
-    """
-    Solve a quadratic program using `qpOASES
-    <https://github.com/coin-or/qpOASES>`__.
+    """Solve a quadratic program using qpOASES.
 
     Parameters
     ----------
@@ -320,8 +314,9 @@ def qpoases_solve_qp(
     predefined_options: Optional[str] = None,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    """
-    Solve a Quadratic Program defined as:
+    """Solve a quadratic program using qpOASES.
+
+    The quadratic program is defined as:
 
     .. math::
 
@@ -334,7 +329,7 @@ def qpoases_solve_qp(
                 & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
-    using `qpOASES <https://github.com/coin-or/qpOASES>`__.
+    It is solved using `qpOASES <https://github.com/coin-or/qpOASES>`__.
 
     Parameters
     ----------

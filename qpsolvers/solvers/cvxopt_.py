@@ -74,7 +74,7 @@ def cvxopt_solve_problem(
     verbose: bool = False,
     **kwargs,
 ) -> Solution:
-    """Solve a quadratic program using `CVXOPT <http://cvxopt.org/>`_.
+    """Solve a quadratic program using CVXOPT.
 
     Parameters
     ----------
@@ -196,7 +196,7 @@ def cvxopt_solve_qp(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    """Solve a Quadratic Program using CVXOPT.
+    """Solve a quadratic program using CVXOPT.
 
     The quadratic program is defined as:
 
@@ -211,7 +211,7 @@ def cvxopt_solve_qp(
                 & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
-    It is solved using `CVXOPT <http://cvxopt.org/>`_.
+    It is solved using `CVXOPT <http://cvxopt.org/>`__.
 
     Parameters
     ----------

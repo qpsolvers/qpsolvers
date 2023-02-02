@@ -48,7 +48,7 @@ def gurobi_solve_problem(
     verbose: bool = False,
     **kwargs,
 ) -> Solution:
-    """Solve a quadratic program using `Gurobi <http://www.gurobi.com/>`_.
+    """Solve a quadratic program using Gurobi.
 
     Parameters
     ----------
@@ -162,7 +162,7 @@ def gurobi_solve_qp(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    """Solve a Quadratic Program using Gurobi.
+    """Solve a quadratic program using Gurobi.
 
     The quadratic program is defined as:
 
@@ -177,7 +177,7 @@ def gurobi_solve_qp(
                 & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
-    It is solved using `Gurobi <http://www.gurobi.com/>`_.
+    It is solved using `Gurobi <http://www.gurobi.com/>`__.
 
     Parameters
     ----------

@@ -144,8 +144,7 @@ def highs_solve_problem(
     verbose: bool = False,
     **kwargs,
 ) -> Solution:
-    """Solve a quadratic program using `HiGHS
-    <https://github.com/ERGO-Code/HiGHS>`__.
+    """Solve a quadratic program using HiGHS.
 
     Parameters
     ----------
@@ -249,7 +248,7 @@ def highs_solve_qp(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    """Solve a Quadratic Program using HiGHS.
+    """Solve a quadratic program using HiGHS.
 
     The quadratic program is defined as:
 

@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""Quadratic programming solvers in Python with a unified API"""
+"""Quadratic programming solvers in Python with a unified API."""
 
 from .exceptions import ProblemError
 from .problem import Problem

@@ -47,7 +47,9 @@ def solve_qp(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    """Solve a quadratic program defined as:
+    """Solve a quadratic program.
+
+    The quadratic program is defined as:
 
     .. math::
 

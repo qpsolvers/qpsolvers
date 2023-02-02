@@ -18,8 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Solver interface for `qpSWIFT <https://github.com/qpSWIFT/qpSWIFT>`__.
+"""Solver interface for `qpSWIFT <https://github.com/qpSWIFT/qpSWIFT>`__.
 
 qpSWIFT is a light-weight sparse Quadratic Programming solver targeted for
 embedded and robotic applications. It employs Primal-Dual Interior Point method
@@ -47,9 +46,7 @@ def qpswift_solve_problem(
     verbose: bool = False,
     **kwargs,
 ) -> Solution:
-    """
-    Solve a quadratic program using `qpSWIFT
-    <https://github.com/qpSWIFT/qpSWIFT>`__.
+    """Solve a quadratic program using qpSWIFT.
 
     Note
     ----
@@ -186,8 +183,9 @@ def qpswift_solve_qp(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    """
-    Solve a Quadratic Program defined as:
+    """Solve a quadratic program using qpSWIFT.
+
+    The quadratic program is defined as:
 
     .. math::
 
@@ -200,7 +198,7 @@ def qpswift_solve_qp(
                 & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
-    using `qpSWIFT <https://github.com/qpSWIFT/qpSWIFT>`__.
+    It is solved using `qpSWIFT <https://github.com/qpSWIFT/qpSWIFT>`__.
 
     Note
     ----

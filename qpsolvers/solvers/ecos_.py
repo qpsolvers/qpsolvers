@@ -65,21 +65,7 @@ def ecos_solve_problem(
     verbose: bool = False,
     **kwargs,
 ) -> Solution:
-    """Solve a Quadratic Program using ECOS.
-
-    The quadratic program is defined as:
-
-    .. math::
-
-        \\begin{split}\\begin{array}{ll}
-            \\underset{x}{\\mbox{minimize}} &
-                \\frac{1}{2} x^T P x + q^T x \\\\
-            \\mbox{subject to}
-                & G x \\leq h                \\\\
-                & A x = b
-        \\end{array}\\end{split}
-
-    using `ECOS <https://github.com/embotech/ecos>`_.
+    """Solve a quadratic program using ECOS.
 
     Parameters
     ----------
@@ -190,7 +176,7 @@ def ecos_solve_qp(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    """Solve a Quadratic Program using ECOS.
+    """Solve a quadratic program using ECOS.
 
     The quadratic program is defined as:
 
@@ -204,7 +190,7 @@ def ecos_solve_qp(
                 & A x = b
         \\end{array}\\end{split}
 
-    It is solved using `ECOS <https://github.com/embotech/ecos>`_.
+    It is solved using `ECOS <https://github.com/embotech/ecos>`__.
 
     Parameters
     ----------

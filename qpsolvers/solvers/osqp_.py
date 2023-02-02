@@ -18,8 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Solver interface for `OSQP <https://osqp.org/>`__.
+"""Solver interface for `OSQP <https://osqp.org/>`__.
 
 The OSQP solver implements an Operator-Splitting method for large-scale convex
 quadratic programming. It is designed for both dense and sparse problems, and
@@ -50,9 +49,7 @@ def osqp_solve_problem(
     verbose: bool = False,
     **kwargs,
 ) -> Solution:
-    """
-    Solve a quadratic program using `OSQP
-    <https://github.com/oxfordcontrol/osqp>`__.
+    """Solve a quadratic program using OSQP.
 
     Parameters
     ----------
@@ -195,8 +192,9 @@ def osqp_solve_qp(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    """
-    Solve a Quadratic Program defined as:
+    """Solve a quadratic program using OSQP.
+
+    The quadratic program is defined as:
 
     .. math::
 
@@ -205,10 +203,11 @@ def osqp_solve_qp(
                 \\frac{1}{2} x^T P x + q^T x \\\\
             \\mbox{subject to}
                 & G x \\leq h                \\\\
-                & A x = b
+                & A x = b                    \\\\
+                & lb \\leq x \\leq ub
         \\end{array}\\end{split}
 
-    using `OSQP <https://github.com/oxfordcontrol/osqp>`_.
+    It is solved using `OSQP <https://github.com/oxfordcontrol/osqp>`__.
 
     Parameters
     ----------

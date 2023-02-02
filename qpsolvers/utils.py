@@ -18,9 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Utility functions.
-"""
+"""Utility functions."""
 
 from typing import Union
 
@@ -35,8 +33,7 @@ def print_matrix_vector(
     b_label: str,
     column_width: int = 24,
 ) -> None:
-    """
-    Print a matrix and vector side by side to the terminal.
+    """Print a matrix and vector side by side to the terminal.
 
     Parameters
     ----------

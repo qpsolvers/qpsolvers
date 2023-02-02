@@ -18,9 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Solve quadratic programs.
-"""
+"""Solve quadratic programs."""
 
 import warnings
 from typing import Optional
@@ -43,9 +41,9 @@ def solve_safer_qp(
     initvals: Optional[np.ndarray] = None,
     sym_proj: bool = False,
 ) -> Optional[np.ndarray]:
-    """
-    Solve the "safer" Quadratic Program with repulsive inequality constraints,
-    defined as:
+    """Solve the "safer" Quadratic Program with repulsive constraints,
+
+    This problem is defined by:
 
     .. math::
 
