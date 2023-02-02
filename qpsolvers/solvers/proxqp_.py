@@ -18,7 +18,9 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""Interface for `ProxQP <https://github.com/Simple-Robotics/proxsuite>`__.
+"""Solver interface for `ProxQP`_.
+
+.. _ProxQP: https://github.com/Simple-Robotics/proxsuite#proxqp
 
 ProxQP is the QP solver from ProxSuite, a collection of open-source solvers
 rooted in revisited primal-dual proximal algorithms. If you use ProxQP in some
