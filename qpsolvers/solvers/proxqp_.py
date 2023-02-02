@@ -234,20 +234,20 @@ def proxqp_solve_qp(
     backend: Optional[str] = None,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    """Solve a quadratic program using ProxQP.
+    r"""Solve a quadratic program using ProxQP.
 
     The quadratic program is defined as:
 
     .. math::
 
-        \\begin{split}\\begin{array}{ll}
-        \\underset{\\mbox{minimize}}{x} &
-            \\frac{1}{2} x^T P x + q^T x \\\\
-        \\mbox{subject to}
-            & G x \\leq h                \\\\
-            & A x = b                    \\\\
-            & lb \\leq x \\leq ub
-        \\end{array}\\end{split}
+        \begin{split}\begin{array}{ll}
+        \underset{\mbox{minimize}}{x} &
+            \frac{1}{2} x^T P x + q^T x \\
+        \mbox{subject to}
+            & G x \leq h                \\
+            & A x = b                   \\
+            & lb \leq x \leq ub
+        \end{array}\end{split}
 
     It is solved using `ProxQP
     <https://github.com/Simple-Robotics/proxsuite#proxqp>`__.
