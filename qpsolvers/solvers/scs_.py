@@ -265,20 +265,20 @@ def scs_solve_qp(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[ndarray]:
-    """Solve a quadratic program using SCS.
+    r"""Solve a quadratic program using SCS.
 
     The quadratic program is defined as:
 
     .. math::
 
-        \\begin{split}\\begin{array}{ll}
-            \\underset{x}{\\mbox{minimize}} &
-                \\frac{1}{2} x^T P x + q^T x \\\\
-            \\mbox{subject to}
-                & G x \\leq h                \\\\
-                & A x = b                    \\\\
-                & lb \\leq x \\leq ub
-        \\end{array}\\end{split}
+        \begin{split}\begin{array}{ll}
+            \underset{x}{\mbox{minimize}} &
+                \frac{1}{2} x^T P x + q^T x \\
+            \mbox{subject to}
+                & G x \leq h                \\
+                & A x = b                   \\
+                & lb \leq x \leq ub
+        \end{array}\end{split}
 
     It is solved using `SCS <https://github.com/cvxgrp/scs>`__.
 

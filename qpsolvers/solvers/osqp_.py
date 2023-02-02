@@ -192,20 +192,20 @@ def osqp_solve_qp(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    """Solve a quadratic program using OSQP.
+    r"""Solve a quadratic program using OSQP.
 
     The quadratic program is defined as:
 
     .. math::
 
-        \\begin{split}\\begin{array}{ll}
-            \\underset{x}{\\mbox{minimize}} &
-                \\frac{1}{2} x^T P x + q^T x \\\\
-            \\mbox{subject to}
-                & G x \\leq h                \\\\
-                & A x = b                    \\\\
-                & lb \\leq x \\leq ub
-        \\end{array}\\end{split}
+        \begin{split}\begin{array}{ll}
+            \underset{x}{\mbox{minimize}} &
+                \frac{1}{2} x^T P x + q^T x \\
+            \mbox{subject to}
+                & G x \leq h                \\
+                & A x = b                   \\
+                & lb \leq x \leq ub
+        \end{array}\end{split}
 
     It is solved using `OSQP <https://github.com/oxfordcontrol/osqp>`__.
 
