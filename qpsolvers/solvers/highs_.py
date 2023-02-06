@@ -35,7 +35,7 @@ import highspy
 import numpy as np
 import scipy.sparse as spa
 
-from ..conversions import warn_about_sparse_conversion
+from ..conversions import ensure_sparse_matrices
 from ..problem import Problem
 from ..solution import Solution
 
@@ -183,15 +183,7 @@ def highs_solve_problem(
     for more information on the solver.
     """
     P, q, G, h, A, b, lb, ub = problem.unpack()
-    if isinstance(P, np.ndarray):
-        warn_about_sparse_conversion("P")
-        P = spa.csc_matrix(P)
-    if isinstance(G, np.ndarray):
-        warn_about_sparse_conversion("G")
-        G = spa.csc_matrix(G)
-    if isinstance(A, np.ndarray):
-        warn_about_sparse_conversion("A")
-        A = spa.csc_matrix(A)
+    P, G, A = ensure_sparse_matrices(P, G, A)
     if initvals is not None:
         warnings.warn(
             "HiGHS: warm-start values are not available for this solver, "
