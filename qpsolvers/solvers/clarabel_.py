@@ -107,7 +107,9 @@ def clarabel_solve_problem(
     for key, value in kwargs.items():
         settings.__setattr__(key, value)
 
-    solver = clarabel.DefaultSolver(P, q, A, b, cones, settings)
+    A_stack = spa.vstack(A_list, format="csc")
+    b_stack = np.concatenate(b_list)
+    solver = clarabel.DefaultSolver(P, q, A_stack, b_stack, cones, settings)
     result = solver.solve()
 
     solution = Solution(problem)
