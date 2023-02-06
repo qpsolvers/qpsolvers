@@ -20,10 +20,10 @@
 
 """Convert problems from and to standard QP form."""
 
+from .ensure_sparse_matrices import ensure_sparse_matrices
 from .linear_from_box_inequalities import linear_from_box_inequalities
 from .socp_from_qp import socp_from_qp
 from .split_dual_linear_box import split_dual_linear_box
-from .ensure_sparse_matrices import ensure_sparse_matrices
 
 __all__ = [
     "linear_from_box_inequalities",
