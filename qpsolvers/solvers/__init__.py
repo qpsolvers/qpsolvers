@@ -33,6 +33,48 @@ dense_solvers = []
 solve_function: Dict[str, Any] = {}
 sparse_solvers = []
 
+# Clarabel.rs
+# ===========
+
+clarabel_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[ndarray],
+            bool,
+        ],
+        Solution,
+    ]
+] = None
+
+clarabel_solve_qp: Optional[
+    Callable[
+        [
+            Union[ndarray, csc_matrix],
+            ndarray,
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            bool,
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
+try:
+    from .clarabel_ import clarabel_solve_problem, clarabel_solve_qp
+
+    solve_function["clarabel"] = clarabel_solve_problem
+    available_solvers.append("clarabel")
+    sparse_solvers.append("clarabel")
+except ImportError:
+    pass
+
+
 # CVXOPT
 # ======
 
@@ -514,6 +556,7 @@ if not available_solvers:
 
 __all__ = [
     "available_solvers",
+    "clarabel_solve_qp",
     "cvxopt_solve_qp",
     "dense_solvers",
     "ecos_solve_qp",
