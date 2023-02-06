@@ -117,7 +117,10 @@ def clarabel_solve_problem(
         "status": result.status,
         "solve_time": result.solve_time,
     }
-    if result.status != clarabel.SolverStatus.Solved:
+
+    # Disabled for now
+    # See https://github.com/oxfordcontrol/Clarabel.rs/issues/10
+    if False and result.status != clarabel.SolverStatus.Solved:
         warnings.warn(f"Clarabel.rs terminated with status {result.status}")
         return solution
 
