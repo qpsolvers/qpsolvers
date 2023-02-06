@@ -104,7 +104,8 @@ def clarabel_solve_problem(
 
     settings = clarabel.DefaultSettings()
     settings.verbose = verbose
-    settings.__dict__.update(kwargs)
+    for key, value in kwargs.items():
+        settings.__setattr__(key, value)
 
     solver = clarabel.DefaultSolver(P, q, A, b, cones, settings)
     result = solver.solve()
