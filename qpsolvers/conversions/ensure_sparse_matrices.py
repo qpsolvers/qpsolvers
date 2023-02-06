@@ -18,12 +18,16 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""Types for solve_qp function arguments."""
+"""Model for a quadratic program."""
 
 import warnings
+from typing import Optional, Tuple, Union
+
+import numpy as np
+import scipy.sparse as spa
 
 
-def warn_about_sparse_conversion(matrix_name: str) -> None:
+def __warn_about_sparse_conversion(matrix_name: str) -> None:
     """Warn about conversion from dense to sparse matrix.
 
     Parameters
@@ -38,6 +42,35 @@ def warn_about_sparse_conversion(matrix_name: str) -> None:
     )
 
 
-__all__ = [
-    "warn_about_sparse_conversion",
-]
+def ensure_sparse_matrices(
+    P: Union[np.ndarray, spa.csc_matrix],
+    G: Optional[Union[np.ndarray, spa.csc_matrix]],
+    A: Optional[Union[np.ndarray, spa.csc_matrix]],
+) -> Tuple[spa.csc_matrix, Optional[spa.csc_matrix], Optional[spa.csc_matrix]]:
+    """
+    Make sure problem matrices are sparse.
+
+    Parameters
+    ----------
+    P :
+        Cost matrix.
+    G :
+        Inequality constraint matrix, if any.
+    A :
+        Equality constraint matrix, if any.
+
+    Returns
+    -------
+    :
+        Tuple of all three matrices as sparse matrices.
+    """
+    if isinstance(P, np.ndarray):
+        __warn_about_sparse_conversion("P")
+        P = spa.csc_matrix(P)
+    if isinstance(G, np.ndarray):
+        __warn_about_sparse_conversion("G")
+        G = spa.csc_matrix(G)
+    if isinstance(A, np.ndarray):
+        __warn_about_sparse_conversion("A")
+        A = spa.csc_matrix(A)
+    return P, G, A

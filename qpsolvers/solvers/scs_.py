@@ -27,7 +27,7 @@ work, consider citing the corresponding paper [ODonoghue2021]_.
 """
 
 import warnings
-from typing import Any, Dict, Optional, Tuple, Union
+from typing import Any, Dict, Optional, Union
 
 import numpy as np
 import scipy.sparse as spa
@@ -36,7 +36,7 @@ from scipy.sparse import csc_matrix
 from scipy.sparse.linalg import lsqr
 from scs import solve
 
-from ..conversions import warn_about_sparse_conversion
+from ..conversions import ensure_sparse_matrices
 from ..problem import Problem
 from ..solution import Solution
 
@@ -124,24 +124,6 @@ def __solve_unconstrained(problem: Problem) -> Solution:
     return solution
 
 
-def __ensure_sparse_matrices(
-    P: Union[ndarray, csc_matrix],
-    G: Optional[Union[ndarray, csc_matrix]],
-    A: Optional[Union[ndarray, csc_matrix]],
-) -> Tuple[csc_matrix, Optional[csc_matrix], Optional[csc_matrix]]:
-    """Make sure matrices are sparse."""
-    if isinstance(P, ndarray):
-        warn_about_sparse_conversion("P")
-        P = csc_matrix(P)
-    if isinstance(G, ndarray):
-        warn_about_sparse_conversion("G")
-        G = csc_matrix(G)
-    if isinstance(A, ndarray):
-        warn_about_sparse_conversion("A")
-        A = csc_matrix(A)
-    return P, G, A
-
-
 def scs_solve_problem(
     problem: Problem,
     initvals: Optional[ndarray] = None,
@@ -205,7 +187,7 @@ def scs_solve_problem(
     all available settings.
     """
     P, q, G, h, A, b, lb, ub = problem.unpack()
-    P, G, A = __ensure_sparse_matrices(P, G, A)
+    P, G, A = ensure_sparse_matrices(P, G, A)
     n = P.shape[0]
 
     data: Dict[str, Any] = {"P": P, "c": q}

@@ -38,7 +38,7 @@ import scipy.sparse as spa
 from osqp import OSQP
 from scipy.sparse import csc_matrix
 
-from ..conversions import warn_about_sparse_conversion
+from ..conversions import ensure_sparse_matrices
 from ..problem import Problem
 from ..solution import Solution
 
@@ -120,15 +120,7 @@ def osqp_solve_problem(
     overview of solver tolerances.
     """
     P, q, G, h, A, b, lb, ub = problem.unpack()
-    if isinstance(P, np.ndarray):
-        warn_about_sparse_conversion("P")
-        P = csc_matrix(P)
-    if isinstance(G, np.ndarray):
-        warn_about_sparse_conversion("G")
-        G = csc_matrix(G)
-    if isinstance(A, np.ndarray):
-        warn_about_sparse_conversion("A")
-        A = csc_matrix(A)
+    P, G, A = ensure_sparse_matrices(P, G, A)
 
     A_osqp = None
     l_osqp = None
