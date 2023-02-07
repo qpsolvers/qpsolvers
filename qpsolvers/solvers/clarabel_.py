@@ -70,8 +70,8 @@ def clarabel_solve_problem(
     Notes
     -----
     Keyword arguments are forwarded as options to Clarabel.rs. For instance, we
-    can call ``clarabel_solve_qp(P, q, G, h, u, ...........)``.
-    Clarabel options include the following:
+    can call ``clarabel_solve_qp(P, q, G, h, u, tol_feas=1e-6)``. Clarabel
+    options include the following:
 
     .. list-table::
        :widths: 30 70
@@ -83,9 +83,20 @@ def clarabel_solve_problem(
          - Maximum number of iterations.
        * - ``time_limit``
          - Time limit for solve run in seconds (can be fractional).
+       * - ``tol_gap_abs``
+         - absolute duality-gap tolerance
+       * - ``tol_gap_rel``
+         - relative duality-gap tolerance
+       * - ``tol_feas``
+         - feasibility check tolerance (primal and dual)
 
-    Check out the `Rust API reference
-    <https://docs.rs/clarabel/latest/clarabel/>`_ for details.
+    Check out the `API reference
+    <https://oxfordcontrol.github.io/ClarabelDocs/stable/api_settings/#Clarabel.Settings>`_
+    for details.
+
+    Lower values for absolute or relative tolerances yield more precise
+    solutions at the cost of computation time. See *e.g.* [tolerances]_ for an
+    overview of solver tolerances.
     """
     P, q, G, h, A, b, lb, ub = problem.unpack()
     P, G, A = ensure_sparse_matrices(P, G, A)
