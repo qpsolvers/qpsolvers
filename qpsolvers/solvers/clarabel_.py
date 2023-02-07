@@ -124,12 +124,12 @@ def clarabel_solve_problem(
         warnings.warn(f"Clarabel.rs terminated with status {result.status}")
         return solution
 
-    solution.x = result.x
+    solution.x = np.array(result.x)
     meq = A.shape[0] if A is not None else 0
     if meq > 0:
         solution.y = result.z[:meq]
     if G is not None:
-        z, z_box = split_dual_linear_box(result.z[meq:], lb, ub)
+        z, z_box = split_dual_linear_box(np.array(result.z[meq:]), lb, ub)
         solution.z = z
         solution.z_box = z_box
     return solution
