@@ -115,6 +115,7 @@ def clarabel_solve_problem(
     result = solver.solve()
 
     solution = Solution(problem)
+    solution.obj = result.obj_val
     solution.extras = {
         "status": result.status,
         "solve_time": result.solve_time,
