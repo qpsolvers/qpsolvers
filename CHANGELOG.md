@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Added
+
+- New solver: [Clarabel](https://github.com/oxfordcontrol/Clarabel.rs)
+
 ### Changed
 
 - Move documentation to [GitHub Pages](https://qpsolvers.github.io/qpsolvers/)
