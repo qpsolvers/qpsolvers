@@ -79,6 +79,8 @@ def clarabel_solve_problem(
 
        * - Name
          - Description
+       * - ``max_iter``
+         - Maximum number of iterations.
        * - ``time_limit``
          - Time limit for solve run in seconds (can be fractional).
 
