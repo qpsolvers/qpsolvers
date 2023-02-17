@@ -55,9 +55,9 @@ quadprog = [
 
 [project.urls]
 Documentation = "https://scaron.info/doc/qpsolvers/"
-Source = "https://github.com/stephane-caron/qpsolvers"
-Tracker = "https://github.com/stephane-caron/qpsolvers/issues"
-Changelog = "https://github.com/stephane-caron/qpsolvers/blob/master/CHANGELOG.md"
+Source = "https://github.com/qpsolvers/qpsolvers"
+Tracker = "https://github.com/qpsolvers/qpsolvers/issues"
+Changelog = "https://github.com/qpsolvers/qpsolvers/blob/master/CHANGELOG.md"
 
 [tool.black]
 line-length = 79
