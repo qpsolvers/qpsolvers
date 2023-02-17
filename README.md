@@ -1,7 +1,7 @@
 # QP Solvers for Python
 
-[![Build](https://img.shields.io/github/actions/workflow/status/stephane-caron/qpsolvers/test.yml?branch=master)](https://github.com/stephane-caron/qpsolvers/actions)
-[![Coverage](https://coveralls.io/repos/github/stephane-caron/qpsolvers/badge.svg?branch=master)](https://coveralls.io/github/stephane-caron/qpsolvers?branch=master)
+[![Build](https://img.shields.io/github/actions/workflow/status/qpsolvers/qpsolvers/test.yml?branch=master)](https://github.com/qpsolvers/qpsolvers/actions)
+[![Coverage](https://coveralls.io/repos/github/qpsolvers/qpsolvers/badge.svg?branch=master)](https://coveralls.io/github/qpsolvers/qpsolvers?branch=master)
 [![Documentation](https://img.shields.io/badge/docs-online-brightgreen?style=flat)](https://scaron.info/doc/qpsolvers/)
 [![Downloads/month](https://pepy.tech/badge/qpsolvers/month)](https://pepy.tech/project/qpsolvers)
 [![Conda version](https://img.shields.io/conda/vn/conda-forge/qpsolvers.svg)](https://anaconda.org/conda-forge/qpsolvers)
@@ -9,7 +9,7 @@
 
 Unified interface to Quadratic Programming (QP) solvers available in Python.
 
-[qpsolvers v3](https://github.com/stephane-caron/qpsolvers/discussions/147) is coming out on February 28, 2023.
+[qpsolvers v3](https://github.com/qpsolvers/qpsolvers/discussions/147) is coming out on February 28, 2023.
 
 ## Installation
 
@@ -108,10 +108,10 @@ Matrix arguments are NumPy arrays for dense solvers and SciPy Compressed Sparse 
   - Unfortunately most available QP solvers are designed for convex problems.
   - If your cost matrix *P* is semi-definite rather than definite, try OSQP.
   - If your problem has concave components, go for a nonlinear solver such as [IPOPT](https://pypi.org/project/ipopt/) *e.g.* using [CasADi](https://web.casadi.org/).
-- *I get the following [build error on Windows](https://github.com/stephane-caron/qpsolvers/issues/28) when running `pip install qpsolvers`.*
+- *I get the following [build error on Windows](https://github.com/qpsolvers/qpsolvers/issues/28) when running `pip install qpsolvers`.*
   - You will need to install the [Visual C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) to build all package dependencies.
 - *Can I help?*
-  - Absolutely! The first step is to install the library and use it. Report any bug in the [issue tracker](https://github.com/stephane-caron/qpsolvers/issues).
+  - Absolutely! The first step is to install the library and use it. Report any bug in the [issue tracker](https://github.com/qpsolvers/qpsolvers/issues).
   - If you're a developer looking to hack on open source, check out the [contribution guidelines](CONTRIBUTING.md) for suggestions.
 
 ## Benchmark
