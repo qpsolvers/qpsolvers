@@ -1,4 +1,4 @@
-:github_url: https://github.com/stephane-caron/qpsolvers/tree/master/doc/src/quadratic-programming.rst
+:github_url: https://github.com/qpsolvers/qpsolvers/tree/master/doc/src/quadratic-programming.rst
 
 .. _Quadratic programming:
 

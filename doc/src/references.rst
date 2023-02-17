@@ -1,4 +1,4 @@
-:github_url: https://github.com/stephane-caron/qpsolvers/tree/master/doc/src/references.rst
+:github_url: https://github.com/qpsolvers/qpsolvers/tree/master/doc/src/references.rst
 
 **********
 References

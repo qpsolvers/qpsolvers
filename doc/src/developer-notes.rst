@@ -1,4 +1,4 @@
-:github_url: https://github.com/stephane-caron/qpsolvers/tree/master/doc/src/developer-notes.rst
+:github_url: https://github.com/qpsolvers/qpsolvers/tree/master/doc/src/developer-notes.rst
 
 ***************
 Developer notes

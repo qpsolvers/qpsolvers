@@ -1,4 +1,4 @@
-:github_url: https://github.com/stephane-caron/qpsolvers/tree/master/doc/src/installation.rst
+:github_url: https://github.com/qpsolvers/qpsolvers/tree/master/doc/src/installation.rst
 
 ************
 Installation
@@ -45,7 +45,7 @@ If you have an older system with Python 2, for instance Ubuntu 16.04, try:
 
 Python 2 is not supported any more, but this may still work. Note that
 vulnerabilities `have been discovered
-<https://github.com/stephane-caron/qpsolvers/pull/49>`_ in the dependencies of
+<https://github.com/qpsolvers/qpsolvers/pull/49>`_ in the dependencies of
 this old version.
 
 Windows
@@ -79,7 +79,7 @@ Microsoft Visual Studio
     - A window pops up asking for administrator privileges: grant them
     - Check the text messages in the "Output" pane at the bottom of the window
 - Go to the main code tab (it should be your project name followed by the ".py" extension)
-- Copy the `example code <https://github.com/stephane-caron/qpsolvers#example>`_ from the README and paste it there
+- Copy the `example code <https://github.com/qpsolvers/qpsolvers#example>`_ from the README and paste it there
 - Click on the "Run" icon in the toolbar to execute this program
 
 At this point a ``python.exe`` window should open with the following output:
