@@ -335,25 +335,25 @@ for solver in available_solvers:
             TestSolveProblem.get_test_qpsut05(solver),
         )
     if solver not in ["ecos", "qpswift"]:
-        # See https://github.com/stephane-caron/qpsolvers/issues/159
-        # See https://github.com/stephane-caron/qpsolvers/issues/160
+        # See https://github.com/qpsolvers/qpsolvers/issues/159
+        # See https://github.com/qpsolvers/qpsolvers/issues/160
         setattr(
             TestSolveProblem,
             f"test_maros_meszaros_qptest_{solver}",
             TestSolveProblem.get_test_maros_meszaros_qptest(solver),
         )
     if solver not in ["ecos", "qpswift"]:
-        # See https://github.com/stephane-caron/qpsolvers/issues/159
-        # See https://github.com/stephane-caron/qpsolvers/issues/160
+        # See https://github.com/qpsolvers/qpsolvers/issues/159
+        # See https://github.com/qpsolvers/qpsolvers/issues/160
         setattr(
             TestSolveProblem,
             f"test_infinite_box_bounds_{solver}",
             TestSolveProblem.get_test_infinite_box_bounds(solver),
         )
     if solver not in ["ecos", "qpswift", "scs"]:
-        # See https://github.com/stephane-caron/qpsolvers/issues/159
-        # See https://github.com/stephane-caron/qpsolvers/issues/160
-        # See https://github.com/stephane-caron/qpsolvers/issues/161
+        # See https://github.com/qpsolvers/qpsolvers/issues/159
+        # See https://github.com/qpsolvers/qpsolvers/issues/160
+        # See https://github.com/qpsolvers/qpsolvers/issues/161
         setattr(
             TestSolveProblem,
             f"test_infinite_linear_bounds_{solver}",

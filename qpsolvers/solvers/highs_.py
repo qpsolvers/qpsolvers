@@ -187,7 +187,7 @@ def highs_solve_problem(
     if initvals is not None:
         warnings.warn(
             "HiGHS: warm-start values are not available for this solver, "
-            "see: https://github.com/stephane-caron/qpsolvers/issues/94"
+            "see: https://github.com/qpsolvers/qpsolvers/issues/94"
         )
 
     model = highspy.HighsModel()
