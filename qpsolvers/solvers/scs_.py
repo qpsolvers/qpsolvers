@@ -116,6 +116,7 @@ def __solve_unconstrained(problem: Problem) -> Solution:
     P, q, _, _, _, _, _, _ = problem.unpack()
     solution = Solution(problem)
     solution.x = lsqr(P, -q)[0]
+    solution.found = True
     cost_check = np.linalg.norm(P @ solution.x + q)
     if cost_check > 1e-8:
         raise ProblemError(
