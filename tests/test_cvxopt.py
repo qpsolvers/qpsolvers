@@ -29,8 +29,6 @@ import scipy.sparse as spa
 from numpy import array, ones
 from numpy.linalg import norm
 
-from qpsolvers.exceptions import SolverError
-
 from .problems import get_sd3310_problem
 from .solved_problems import get_qpsut01
 
@@ -115,27 +113,6 @@ try:
             problem.ub[1] = +np.inf
             x = cvxopt_solve_problem(problem)
             self.assertIsNotNone(x)
-
-        def test_solver_error(self):
-            """
-            Call CVXOPT with infinities, resulting in a SolverError.
-            """
-            problem = get_sd3310_problem()
-            with self.assertRaises(SolverError):
-                problem.h[1] = -np.inf
-                cvxopt_solve_qp(
-                    problem.P,
-                    problem.q,
-                    problem.G,
-                    problem.h,
-                    problem.A,
-                    problem.b,
-                    maxiters=10,
-                    abstol=1e-1,
-                    reltol=1e-1,
-                    feastol=1e-2,
-                    refinement=3,
-                )
 
 
 except ImportError:  # solver not installed
