@@ -43,23 +43,20 @@ class Solution:
         Quadratic program the solution corresponds to.
 
     obj :
-        Value of the primal objective at the solution (``None`` if no solution
-        was found).
+        Value of the primal objective at the solution.
 
     x :
-        Solution vector of the primal quadratic program (``None`` if no
-        solution was found).
+        Solution vector for the primal quadratic program.
 
     y :
-        Dual multipliers for equality constraints (``None`` if no solution was
-        found). The dimension of :math:`y` is equal to the number of equality
-        constraints. The values :math:`y_i` can be either positive or negative.
+        Dual multipliers for equality constraints. The dimension of :math:`y`
+        is equal to the number of equality constraints. The values :math:`y_i`
+        can be either positive or negative.
 
     z :
-        Dual multipliers for linear inequality constraints (``None`` if no
-        solution was found). The dimension of :math:`z` is equal to the number
-        of inequalities. The value :math:`z_i` for inequality :math:`i` is
-        always positive.
+        Dual multipliers for linear inequality constraints. The dimension of
+        :math:`z` is equal to the number of inequalities. The value :math:`z_i`
+        for inequality :math:`i` is always positive.
 
         - If :math:`z_i > 0`, the inequality is active at the solution:
           :math:`G_i x = h_i`.
@@ -67,9 +64,8 @@ class Solution:
           :math:`G_i x < h_i`.
 
     z_box :
-        Dual multipliers for box inequality constraints (``None`` if no
-        solution was found). The sign of :math:`z_{box,i}` depends on the
-        active bound:
+        Dual multipliers for box inequality constraints. The sign of
+        :math:`z_{box,i}` depends on the active bound:
 
         - If :math:`z_{box,i} < 0`, then the lower bound :math:`lb_i = x_i` is
           active at the solution.
