@@ -145,12 +145,11 @@ def ecos_solve_problem(
     else:
         result = solve(c_socp, G_socp, h_socp, dims, **kwargs)
     flag = result["info"]["exitFlag"]
+    solution = Solution(problem)
+    solution.found = flag == 0
     if flag != 0:
         meaning = __exit_flag_meaning__.get(flag, "unknown exit flag")
         warnings.warn(f"ECOS returned exit flag {flag} ({meaning})")
-        return Solution(problem)
-
-    solution = Solution(problem)
     solution.x = result["x"][:-1]
     if A is not None:
         solution.y = result["y"]
@@ -253,4 +252,6 @@ def ecos_solve_qp(
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = ecos_solve_problem(problem, initvals, verbose, **kwargs)
+    if not solution.found:
+        return None
     return solution.x
