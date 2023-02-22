@@ -159,7 +159,6 @@ def clarabel_solve_qp(
     b: Optional[np.ndarray] = None,
     lb: Optional[np.ndarray] = None,
     ub: Optional[np.ndarray] = None,
-    solver: Optional[str] = None,
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
     **kwargs,
