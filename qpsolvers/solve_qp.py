@@ -143,4 +143,4 @@ def solve_qp(
         )
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = solve_problem(problem, solver, initvals, verbose, **kwargs)
-    return solution.x
+    return solution.x if solution.found else None

@@ -39,7 +39,7 @@ class UnfeasibleProblem(unittest.TestCase):
         """
         warnings.simplefilter("ignore", category=UserWarning)
 
-    def get_dense_problem(self):
+    def get_unfeasible_problem(self):
         """
         Get problem as a sextuple of values to unpack.
 
@@ -84,7 +84,7 @@ class UnfeasibleProblem(unittest.TestCase):
         """
 
         def test(self):
-            P, q, G, h, A, b = self.get_dense_problem()
+            P, q, G, h, A, b = self.get_unfeasible_problem()
             x = solve_qp(P, q, G, h, A, b, solver=solver)
             self.assertIsNone(x)
 
