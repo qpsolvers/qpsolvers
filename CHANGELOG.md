@@ -28,6 +28,7 @@ All notable changes to this project will be documented in this file.
 
 - All functions throw only qpsolvers-owned exceptions
 - CVXOPT: rethrow ``ValueError`` as either ``ProblemError`` or ``SolverError``
+- Checking ``Solution.is_empty`` becomes ``not Solution.found``
 - Install open source solvers with wheels by default
 - Move documentation to [GitHub Pages](https://qpsolvers.github.io/qpsolvers/)
 - Remove Python 2 installation instructions
