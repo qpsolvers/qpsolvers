@@ -37,7 +37,6 @@ class NoSolverSelected(QPError):
 
 
 class ParamError(QPError):
-
     """Exception raised when solver parameters are incorrect."""
 
 
@@ -50,5 +49,4 @@ class SolverNotFound(QPError):
 
 
 class SolverError(QPError):
-
     """Exception raised when a solver failed."""
