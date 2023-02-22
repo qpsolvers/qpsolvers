@@ -219,11 +219,11 @@ def scs_solve_problem(
     solution = Solution(problem)
     solution.extras = result["info"]
     status_val = result["info"]["status_val"]
+    solution.found = status_val == 1
     if status_val != 1:
         warnings.warn(
             f"SCS returned {status_val}: {__status_val_meaning__[status_val]}"
         )
-        return solution
     solution.x = result["x"]
     meq = A.shape[0] if A is not None else 0
     if A is not None:
@@ -335,4 +335,4 @@ def scs_solve_qp(
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = scs_solve_problem(problem, initvals, verbose, **kwargs)
-    return solution.x
+    return solution.x if solution.found else None
