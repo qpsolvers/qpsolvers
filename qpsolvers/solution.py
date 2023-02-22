@@ -82,14 +82,15 @@ class Solution:
         - If :math:`z_{box,i} > 0`, then the upper bound :math:`x_i = ub_i` is
           active at the solution.
 
-    Notes:
-        The best way to check if the QP solver assessed it found a solution is
-        ``Solution.found``. Interfaces capture as much return information from
-        solver return values as possible, therefore other attributes (for
-        example ``Solution.x``) can have values even when ``Solution.found ==
-        False``. One such instance is when a solver reaches a maximum number of
-        iterations before convergence: depending on the use case, the
-        intermediate current ``x`` might still be of interest.
+    Notes
+    -----
+    The best way to check if the QP solver assessed it found a solution is
+    ``Solution.found``. Interfaces capture as much return information from
+    solver return values as possible, therefore other attributes (for example
+    ``Solution.x``) can have values even when ``Solution.found == False``. One
+    such instance is when a solver reaches a maximum number of iterations
+    before convergence: depending on the use case, the intermediate current
+    ``x`` might still be of interest.
     """
 
     problem: Problem
