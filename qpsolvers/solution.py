@@ -82,9 +82,9 @@ class Solution:
         Other outputs, specific to each solver.
     """
 
-    found: Optional[bool] = None
     problem: Problem
     extras: dict = field(default_factory=dict)
+    found: Optional[bool] = None
     obj: Optional[float] = None
     x: Optional[np.ndarray] = None
     y: Optional[np.ndarray] = None
