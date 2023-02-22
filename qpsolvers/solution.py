@@ -34,6 +34,11 @@ class Solution:
 
     Attributes
     ----------
+    found :
+        Did the solver find a solution? This value can be ``True`` if the
+        solver returned a solution, ``False`` if it detected a failure case
+        (for instance an unfeasible problem) or ``None`` otherwise.
+
     problem :
         Quadratic program the solution corresponds to.
 
@@ -77,6 +82,7 @@ class Solution:
         Other outputs, specific to each solver.
     """
 
+    found: Optional[bool] = None
     problem: Problem
     extras: dict = field(default_factory=dict)
     obj: Optional[float] = None
