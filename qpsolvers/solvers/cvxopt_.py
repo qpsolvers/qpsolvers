@@ -182,8 +182,7 @@ def cvxopt_solve_problem(
     cvxopt.solvers.options = original_options
 
     solution = Solution(problem)
-    if "optimal" not in res["status"]:
-        return solution
+    solution.found = "optimal" in res["status"]
     solution.x = np.array(res["x"]).reshape((q.shape[0],))
     if b is not None:
         solution.y = np.array(res["y"]).reshape((b.shape[0],))
@@ -277,4 +276,6 @@ def cvxopt_solve_qp(
     solution = cvxopt_solve_problem(
         problem, solver, initvals, verbose, **kwargs
     )
+    if not solution.found:
+        return None
     return solution.x
