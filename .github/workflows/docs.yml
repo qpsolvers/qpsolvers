@@ -18,7 +18,7 @@ jobs:
                   pip install furo qpsolvers sphinx sphinx-autodoc-typehints sphinx-mathjax-offline
             - name: Sphinx build
               run: |
-                  sphinx-build doc _build
+                  sphinx-build doc _build -W
             - name: Deploy
               uses: peaceiris/actions-gh-pages@v3
               if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
