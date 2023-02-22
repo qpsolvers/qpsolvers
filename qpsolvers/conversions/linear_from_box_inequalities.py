@@ -25,6 +25,8 @@ from typing import Optional, Tuple, Union
 import numpy as np
 import scipy.sparse as spa
 
+from ..exceptions import ProblemError
+
 
 def concatenate_bound(
     G: Optional[Union[np.ndarray, spa.csc_matrix]],
@@ -66,7 +68,9 @@ def concatenate_bound(
             G = spa.vstack([G, sign * spa.eye(n)], format="csc")
         else:  # G is not an instance of a type we know
             name = type(G).__name__
-            raise TypeError(f"invalid type '{name}' for inequality matrix G")
+            raise ProblemError(
+                f"invalid type '{name}' for inequality matrix G"
+            )
         h = np.concatenate((h, sign * b))
     return (G, h)
 
