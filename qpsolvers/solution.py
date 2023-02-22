@@ -30,10 +30,13 @@ from .problem import Problem
 
 @dataclass(frozen=False)
 class Solution:
-    """Solution provided by a QP solver to a given problem.
+    """Solution returned by a QP solver for a given problem.
 
     Attributes
     ----------
+    extras :
+        Other outputs, specific to each solver.
+
     found :
         Did the solver find a solution? This value can be ``True`` if the
         solver returned a solution, ``False`` if it detected a failure case
@@ -79,8 +82,14 @@ class Solution:
         - If :math:`z_{box,i} > 0`, then the upper bound :math:`x_i = ub_i` is
           active at the solution.
 
-    extras :
-        Other outputs, specific to each solver.
+    Notes:
+        The best way to check if the QP solver assessed it found a solution is
+        ``Solution.found``. Interfaces capture as much return information from
+        solver return values as possible, therefore other attributes (for
+        example ``Solution.x``) can have values even when ``Solution.found ==
+        False``. One such instance is when a solver reaches a maximum number of
+        iterations before convergence: depending on the use case, the
+        intermediate current ``x`` might still be of interest.
     """
 
     problem: Problem
