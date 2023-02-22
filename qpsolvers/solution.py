@@ -87,11 +87,6 @@ class Solution:
     z: Optional[np.ndarray] = None
     z_box: Optional[np.ndarray] = None
 
-    @property
-    def is_empty(self) -> bool:
-        """Check whether the solution is empty."""
-        return self.x is None
-
     def is_optimal(self, eps_abs: float) -> bool:
         """Check whether the solution is indeed optimal.
 

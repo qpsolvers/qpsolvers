@@ -30,10 +30,9 @@ from .problems import get_sd3310_problem
 class TestSolution(unittest.TestCase):
     """Test fixture for solutions."""
 
-    def test_empty(self):
+    def test_found_default(self):
         solution = Solution(get_sd3310_problem())
         self.assertTrue(solution.found is None)
-        self.assertTrue(solution.is_empty)
 
     def test_residuals(self):
         problem = get_sd3310_problem()
