@@ -278,11 +278,12 @@ def qpoases_solve_problem(
         raise ProblemError("problem has sparse matrices") from error
 
     solution = Solution(problem)
+    solution.found = True
     if RET_INIT_FAILED <= return_value <= RET_INIT_FAILED_REGULARISATION:
-        return solution
+        solution.found = False
     if return_value == ReturnValue.MAX_NWSR_REACHED:
         warnings.warn(f"qpOASES reached the maximum number of WSR ({max_wsr})")
-        return solution
+        solution.found = False
 
     x_opt = np.empty((n,))
     z_opt = np.empty((n + C.shape[0],))
@@ -424,4 +425,4 @@ def qpoases_solve_qp(
         predefined_options,
         **kwargs,
     )
-    return solution.x
+    return solution.x if solution.found else None
