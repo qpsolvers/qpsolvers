@@ -123,8 +123,7 @@ def gurobi_solve_problem(
 
     solution = Solution(problem)
     solution.extras["status"] = model.status
-    if model.status not in (GRB.OPTIMAL, GRB.SUBOPTIMAL):
-        return solution
+    solution.found = model.status in (GRB.OPTIMAL, GRB.SUBOPTIMAL)
     solution.x = x.X
     __retrieve_dual(solution, ineq_constr, eq_constr, lb_constr, ub_constr)
     return solution
@@ -238,4 +237,4 @@ def gurobi_solve_qp(
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = gurobi_solve_problem(problem, initvals, verbose, **kwargs)
-    return solution.x
+    return solution.x if solution.found else None
