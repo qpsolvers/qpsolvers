@@ -19,8 +19,15 @@ All notable changes to this project will be documented in this file.
 
 - New solver: [Clarabel](https://github.com/oxfordcontrol/Clarabel.rs)
 
+### Added
+
+- Exception ``ParamError`` for incorrect solver parameters
+- Exception ``SolverError`` for solver failures
+
 ### Changed
 
+- All functions throw only qpsolvers-owned exceptions
+- CVXOPT: rethrow ``ValueError`` as either ``ProblemError`` or ``SolverError``
 - Install open source solvers with wheels by default
 - Move documentation to [GitHub Pages](https://qpsolvers.github.io/qpsolvers/)
 - Remove Python 2 installation instructions
@@ -45,23 +52,15 @@ All notable changes to this project will be documented in this file.
 - qpOASES: fix missing lower bound when there is no equality constraint
 - qpOASES: handle infinite bounds
 - qpOASES: segmentation fault with conda feedstock
-- ParamError exception for incorrect solver parameters
-- ProblemError exception for malformed quadratic programs
-- SolverError exception for solver failures
-
-### Changed
-
-- All functions throw only qpsolvers-owned exceptions
-- CVXOPT: rethrow ValueError exceptions as either ProblemError or SolverError
 
 ## [2.7.2] - 2023/01/02
 
 ### Added
 
 - ECOS: handle two more exit flags
-- ProblemError exception
+- Exception ``ProblemError`` for problem formulation errors
+- Exception ``QPError`` as a base class for exceptions
 - Property to check if a Problem has sparse matrices
-- QPError base class for exceptions
 - qpOASES: raise a ProblemError when matrices are not dense
 - qpSWIFT: raise a ProblemError when matrices are not dense
 - quadprog: raise a ProblemError when matrices are not dense
