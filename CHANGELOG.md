@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 
 - All functions throw only qpsolvers-owned exceptions
 - CVXOPT: rethrow ``ValueError`` as either ``ProblemError`` or ``SolverError``
+- Checking ``Solution.is_empty`` becomes ``not Solution.found``
 - Install open source solvers with wheels by default
 - Remove ``solve_safer_qp``
 - Remove ``sym_proj`` parameter
