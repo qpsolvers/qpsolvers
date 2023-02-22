@@ -227,8 +227,7 @@ def proxqp_solve_problem(
     )
     solution = Solution(problem)
     solution.extras = {"info": result.info}
-    if result.info.status != proxqp.QPSolverOutput.PROXQP_SOLVED:
-        return solution
+    solution.found = result.info.status == proxqp.QPSolverOutput.PROXQP_SOLVED
     solution.x = result.x
     solution.y = result.y
     if lb is not None or ub is not None:
@@ -306,4 +305,4 @@ def proxqp_solve_qp(
     solution = proxqp_solve_problem(
         problem, initvals, verbose, backend, **kwargs
     )
-    return solution.x
+    return solution.x if solution.found else None
