@@ -23,7 +23,7 @@ jobs:
               with:
                   cache-downloads: true
                   cache-env: true
-                  environment-file: tox.ini
+                  environment-file: doc/environment.yml
                   environment-name: qpsolvers
 
             - name: Install dependencies
