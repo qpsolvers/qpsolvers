@@ -23,7 +23,7 @@ jobs:
               with:
                   cache-downloads: true
                   cache-env: true
-                  environment-file: conda/env.yaml
+                  environment-file: .github/workflows/conda/env.yaml
 
             - name: Install dependencies
               run: |
