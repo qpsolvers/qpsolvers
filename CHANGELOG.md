@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Changed
+
+- Remove Python 2 installation instructions
+
 ## [2.7.4] - 2023/01/31
 
 ### Fixed
@@ -108,7 +114,7 @@ All notable changes to this project will be documented in this file.
 - ProxQP: also consider constraint matrices to select backend
 - qpOASES: forward all keyword arguments as solver options
 - qpOASES: forward box inequalities directly
-- Removed CVXPY which is not a solver
+- Remove CVXPY which is not a solver
 - SCS: ``SOLVED_INACCURATE`` is now considered a failure
 
 ### Fixed
