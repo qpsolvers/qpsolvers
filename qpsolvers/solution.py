@@ -37,31 +37,26 @@ class Solution:
     extras :
         Other outputs, specific to each solver.
 
-    found :
-        Did the solver find a solution? This value can be ``True`` if the
-        solver returned a solution, ``False`` if it detected a failure case
-        (for instance an unfeasible problem) or ``None`` otherwise.
-
     problem :
         Quadratic program the solution corresponds to.
 
     obj :
-        Value of the primal objective at the solution (can be ``None`` if no
-        solution was found).
+        Value of the primal objective at the solution (``None`` if no solution
+        was found).
 
     x :
-        Solution vector for the primal quadratic program (can be ``None`` if no
+        Solution vector for the primal quadratic program (``None`` if no
         solution was found).
 
     y :
-        Dual multipliers for equality constraints (can be ``None`` if no
-        solution was found, or if there is no equality constraint). The
-        dimension of :math:`y` is equal to the number of equality constraints.
-        The values :math:`y_i` can be either positive or negative.
+        Dual multipliers for equality constraints (``None`` if no solution was
+        found, or if there is no equality constraint). The dimension of
+        :math:`y` is equal to the number of equality constraints. The values
+        :math:`y_i` can be either positive or negative.
 
     z :
-        Dual multipliers for linear inequality constraints (can be ``None`` if
-        no solution was found, or if there is no inequality constraint). The
+        Dual multipliers for linear inequality constraints (``None`` if no
+        solution was found, or if there is no inequality constraint). The
         dimension of :math:`z` is equal to the number of inequalities. The
         value :math:`z_i` for inequality :math:`i` is always positive.
 
@@ -71,7 +66,7 @@ class Solution:
           :math:`G_i x < h_i`.
 
     z_box :
-        Dual multipliers for box inequality constraints (can be ``None`` if no
+        Dual multipliers for box inequality constraints (``None`` if no
         solution was found, or if there is no box inequality). The sign of
         :math:`z_{box,i}` depends on the active bound:
 
@@ -81,26 +76,19 @@ class Solution:
           are active and :math:`lb_i < x_i < ub_i`.
         - If :math:`z_{box,i} > 0`, then the upper bound :math:`x_i = ub_i` is
           active at the solution.
-
-    Notes
-    -----
-    The best way to check if the QP solver assessed it found a solution is
-    ``Solution.found``. Interfaces capture as much return information from
-    solver return values as possible, therefore other attributes (for example
-    ``Solution.x``) can have values even when ``Solution.found == False``. One
-    such instance is when a solver reaches a maximum number of iterations
-    before convergence: depending on the use case, the intermediate current
-    ``x`` might still be of interest.
     """
 
     problem: Problem
     extras: dict = field(default_factory=dict)
-    found: Optional[bool] = None
     obj: Optional[float] = None
     x: Optional[np.ndarray] = None
     y: Optional[np.ndarray] = None
     z: Optional[np.ndarray] = None
     z_box: Optional[np.ndarray] = None
+
+    def found(self) -> bool:
+        """Did the solver find a solution?"""
+        return self.x is not None
 
     def is_optimal(self, eps_abs: float) -> bool:
         """Check whether the solution is indeed optimal.
