@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- Move documentation to [GitHub Pages](https://qpsolvers.github.io/qpsolvers/)
 - Remove Python 2 installation instructions
 
 ## [2.7.4] - 2023/01/31
