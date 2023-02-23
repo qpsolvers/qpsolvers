@@ -16,7 +16,8 @@ jobs:
     docs:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - name: Checkout Git repository
+              uses: actions/checkout@v3
 
             - name: Install Conda environment with Micromamba
               uses: mamba-org/provision-with-micromamba@main
@@ -26,9 +27,9 @@ jobs:
                   environment-file: doc/environment.yml
                   environment-name: qpsolvers
 
-            - name: Install dependencies
+            - name: Install PyPI dependencies
               run: |
-                  pip install furo sphinx sphinx-autodoc-typehints sphinx-mathjax-offline
+                  pip install furo highspy sphinx sphinx-autodoc-typehints sphinx-mathjax-offline
 
             - name: Build documentation
               run: |
