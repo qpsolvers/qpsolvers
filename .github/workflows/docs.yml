@@ -31,6 +31,17 @@ jobs:
               run: |
                   pip install furo highspy sphinx sphinx-autodoc-typehints sphinx-mathjax-offline
 
+            - name: Checkout qpSWIFT
+              uses: actions/checkout@v3
+              with:
+                  repository: qpSWIFT/qpSWIFT
+                  path: qpSWIFT
+
+            - name: Build qpSWIFT
+              run: |
+                  cd qpSWIFT/python
+                  python setup.py install
+
             - name: Build documentation
               run: |
                   sphinx-build doc _build -W
