@@ -151,9 +151,14 @@ def osqp_solve_problem(
     success_status = osqp.constant("OSQP_SOLVED")
 
     solution = Solution(problem)
-    solution.found = res.info.status_val == success_status
-    if not solution.found:
+    solution.extras = {
+        "dual_inf_cert": res.dual_inf_cert,
+        "info": res.info,
+        "prim_inf_cert": res.prim_inf_cert,
+    }
+    if res.info.status_val != success_status:
         warnings.warn(f"OSQP exited with status '{res.info.status}'")
+        return solution
     solution.x = res.x
     m = G.shape[0] if G is not None else 0
     meq = A.shape[0] if A is not None else 0
@@ -163,11 +168,6 @@ def osqp_solve_problem(
         solution.y = res.y[m : m + meq]
     if lb is not None or ub is not None:
         solution.z_box = res.y[m + meq :]
-    solution.extras = {
-        "dual_inf_cert": res.dual_inf_cert,
-        "info": res.info,
-        "prim_inf_cert": res.prim_inf_cert,
-    }
     return solution
 
 
@@ -285,4 +285,4 @@ def osqp_solve_qp(
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = osqp_solve_problem(problem, initvals, verbose, **kwargs)
-    return solution.x if solution.found else None
+    return solution.x
