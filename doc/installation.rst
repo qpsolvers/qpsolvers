@@ -29,7 +29,7 @@ You can then install the library by:
 
 .. code:: bash
 
-    pip3 install qpsolvers
+    pip install qpsolvers
 
 Add the ``--user`` parameter for a user-only installation.
 
@@ -85,7 +85,7 @@ Package Index <https://pypi.org/>`_, run the ``pip`` command as follows:
 
 .. code:: bash
 
-    pip3 install "qpsolvers[open_source_solvers]"
+    pip install "qpsolvers[open_source_solvers]"
 
 This may take a while.
 
