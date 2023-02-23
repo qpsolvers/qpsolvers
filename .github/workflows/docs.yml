@@ -7,12 +7,24 @@ on:
         branches: [ master ]
     workflow_dispatch:
 
+defaults:
+    run:
+        # See https://github.com/mamba-org/provision-with-micromamba#important
+        shell: bash -l {0}
+
 jobs:
     docs:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
-            - uses: actions/setup-python@v2
+            - uses: actions/checkout@v3
+
+            - name: Install Conda environment with Micromamba
+              uses: mamba-org/provision-with-micromamba@main
+              with:
+                  cache-downloads: true
+                  cache-env: true
+                  environment-file: conda/env.yaml
+
             - name: Install dependencies
               run: |
                   pip install furo qpsolvers sphinx sphinx-autodoc-typehints sphinx-mathjax-offline
