@@ -23,16 +23,18 @@ jobs:
               with:
                   cache-downloads: true
                   cache-env: true
-                  environment-file: ../.github/workflows/conda/env.yaml
+                  environment-file: tox.ini
                   environment-name: qpsolvers
 
             - name: Install dependencies
               run: |
                   pip install furo sphinx sphinx-autodoc-typehints sphinx-mathjax-offline
-            - name: Sphinx build
+
+            - name: Build documentation
               run: |
                   sphinx-build doc _build -W
-            - name: Deploy
+
+            - name: Deploy to GitHub Pages
               uses: peaceiris/actions-gh-pages@v3
               if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
               with:
