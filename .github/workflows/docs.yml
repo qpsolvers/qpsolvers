@@ -23,7 +23,8 @@ jobs:
               with:
                   cache-downloads: true
                   cache-env: true
-                  environment-file: .github/workflows/conda/env.yaml
+                  environment-file: ../.github/workflows/conda/env.yaml
+                  environment-name: qpsolvers
 
             - name: Install dependencies
               run: |
