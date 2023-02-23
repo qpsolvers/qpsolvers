@@ -155,11 +155,14 @@ def qpswift_solve_problem(
     adv_info = result["advInfo"]
 
     solution = Solution(problem)
-    solution.extras["basicInfo"] = basic_info
-    solution.extras["advInfo"] = adv_info
+    solution.extras = {
+        "basicInfo": basic_info,
+        "advInfo": adv_info,
+    }
     solution.obj = adv_info["fval"]
     exit_flag = basic_info["ExitFlag"]
-    solution.found = exit_flag == 0
+    if exit_flag != 0:
+        return solution
     solution.x = result["sol"]
     if A is not None:
         solution.y = adv_info["y"]
@@ -302,4 +305,4 @@ def qpswift_solve_qp(
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = qpswift_solve_problem(problem, initvals, verbose, **kwargs)
-    return solution.x if solution.found else None
+    return solution.x

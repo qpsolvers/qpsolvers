@@ -32,7 +32,7 @@ class TestSolution(unittest.TestCase):
 
     def test_found_default(self):
         solution = Solution(get_sd3310_problem())
-        self.assertTrue(solution.found is None)
+        self.assertFalse(solution.found)
 
     def test_residuals(self):
         problem = get_sd3310_problem()

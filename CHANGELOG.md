@@ -8,7 +8,6 @@ All notable changes to this project will be documented in this file.
 
 - Exception ``ParamError`` for incorrect solver parameters
 - Exception ``SolverError`` for solver failures
-- New attribute ``Solution.found``
 
 ### Changed
 

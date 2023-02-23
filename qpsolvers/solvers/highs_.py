@@ -213,7 +213,8 @@ def highs_solve_problem(
     model_status = solver.getModelStatus()
 
     solution = Solution(problem)
-    solution.found = model_status == highspy.HighsModelStatus.kOptimal
+    if model_status != highspy.HighsModelStatus.kOptimal:
+        return solution
     solution.x = np.array(result.col_value)
     if G is not None:
         solution.z = -np.array(result.row_dual[: G.shape[0]])
@@ -308,4 +309,4 @@ def highs_solve_qp(
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = highs_solve_problem(problem, initvals, verbose, **kwargs)
-    return solution.x if solution.found else None
+    return solution.x

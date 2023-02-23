@@ -116,7 +116,6 @@ def __solve_unconstrained(problem: Problem) -> Solution:
     P, q, _, _, _, _, _, _ = problem.unpack()
     solution = Solution(problem)
     solution.x = lsqr(P, -q)[0]
-    solution.found = True
     cost_check = np.linalg.norm(P @ solution.x + q)
     if cost_check > 1e-8:
         raise ProblemError(
@@ -220,11 +219,11 @@ def scs_solve_problem(
     solution = Solution(problem)
     solution.extras = result["info"]
     status_val = result["info"]["status_val"]
-    solution.found = status_val == 1
     if status_val != 1:
         warnings.warn(
             f"SCS returned {status_val}: {__status_val_meaning__[status_val]}"
         )
+        return solution
     solution.x = result["x"]
     meq = A.shape[0] if A is not None else 0
     if A is not None:
@@ -336,4 +335,4 @@ def scs_solve_qp(
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = scs_solve_problem(problem, initvals, verbose, **kwargs)
-    return solution.x if solution.found else None
+    return solution.x

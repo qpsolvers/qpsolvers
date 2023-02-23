@@ -146,10 +146,11 @@ def ecos_solve_problem(
         result = solve(c_socp, G_socp, h_socp, dims, **kwargs)
     flag = result["info"]["exitFlag"]
     solution = Solution(problem)
-    solution.found = flag == 0
+    solution.extras = result["info"]
     if flag != 0:
         meaning = __exit_flag_meaning__.get(flag, "unknown exit flag")
         warnings.warn(f"ECOS returned exit flag {flag} ({meaning})")
+        return solution
     solution.x = result["x"][:-1]
     if A is not None:
         solution.y = result["y"]
@@ -158,7 +159,6 @@ def ecos_solve_problem(
         z, z_box = split_dual_linear_box(z_ecos, lb, ub)
         solution.z = z
         solution.z_box = z_box
-    solution.extras = result["info"]
     return solution
 
 
@@ -252,4 +252,4 @@ def ecos_solve_qp(
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = ecos_solve_problem(problem, initvals, verbose, **kwargs)
-    return solution.x if solution.found else None
+    return solution.x
