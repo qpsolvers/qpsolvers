@@ -8,9 +8,7 @@ qpsolvers
 
 Unified interface to Quadratic Programming (QP) solvers available in Python.
 
-The library provides a one-stop shop :func:`.solve_qp` function with a
-``solver`` keyword argument to select the backend solver. It solves
-:ref:`convex quadratic programs <Quadratic programming>` in standard form:
+The library provides a one-stop shop :func:`.solve_qp` function with a ``solver`` keyword argument to select the backend solver. It solves :ref:`convex quadratic programs <Quadratic programming>` in standard form:
 
 .. math::
 

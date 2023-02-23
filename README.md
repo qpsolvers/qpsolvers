@@ -33,11 +33,11 @@ pip install qpsolvers
 conda install qpsolvers -c conda-forge
 ```
 
-Check out the documentation for [Python 2](https://scaron.info/doc/qpsolvers/installation.html#python-2) or [Windows](https://scaron.info/doc/qpsolvers/installation.html#windows) instructions.
+Check out the documentation for [Windows](https://qpsolvers.github.io/qpsolvers/installation.html#windows) instructions.
 
 ## Usage
 
-The library provides a one-stop shop [`solve_qp`](https://scaron.info/doc/qpsolvers/quadratic-programming.html#qpsolvers.solve_qp) function with a ``solver`` keyword argument to select the backend solver. It solves convex quadratic programs in standard form:
+The library provides a one-stop shop [`solve_qp`](https://qpsolvers.github.io/qpsolvers/quadratic-programming.html#qpsolvers.solve_qp) function with a ``solver`` keyword argument to select the backend solver. It solves convex quadratic programs in standard form:
 
 $$
 \begin{split}
@@ -54,7 +54,7 @@ $$
 
 Vector inequalities apply coordinate by coordinate. The function returns the solution $x^\*$ found by the solver, or ``None`` in case of failure/unfeasible problem. For most solvers, the matrix $P$ should be [positive definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix).
 
-📢 **New with v2.7:** get dual multipliers at the solution using the [`solve_problem`](https://scaron.info/doc/qpsolvers/quadratic-programming.html#qpsolvers.solve_problem) function.
+📢 **New with v2.7:** get dual multipliers at the solution using the [`solve_problem`](https://qpsolvers.github.io/qpsolvers/quadratic-programming.html#qpsolvers.solve_problem) function.
 
 ## Example
 
@@ -76,7 +76,7 @@ x = solve_qp(P, q, G, h, A, b, solver="proxqp")
 print(f"QP solution: x = {x}")
 ```
 
-This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``. It is also possible to get dual multipliers at the solution, as shown in [this example](https://scaron.info/doc/qpsolvers/quadratic-programming.html#dual-multipliers).
+This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``. It is also possible to get dual multipliers at the solution, as shown in [this example](https://qpsolvers.github.io/qpsolvers/quadratic-programming.html#dual-multipliers).
 
 ## Solvers
 
@@ -101,9 +101,9 @@ Matrix arguments are NumPy arrays for dense solvers and SciPy Compressed Sparse 
 - *Can I print the list of solvers available on my machine?*
   - Absolutely: ``print(qpsolvers.available_solvers)``
 - *Is it possible to solve a least squares rather than a quadratic program?*
-  - Yes, there is also a [`solve_ls`](https://scaron.info/doc/qpsolvers/least-squares.html#qpsolvers.solve_ls) function.
+  - Yes, there is also a [`solve_ls`](https://qpsolvers.github.io/qpsolvers/least-squares.html#qpsolvers.solve_ls) function.
 - *I have a squared norm in my cost function, how can I apply a QP solver to my problem?*
-  - You can [cast squared norms to QP matrices](https://scaron.info/blog/conversion-from-least-squares-to-quadratic-programming.html) and feed the result to [`solve_qp`](https://scaron.info/doc/qpsolvers/quadratic-programming.html#qpsolvers.solve_qp).
+  - You can [cast squared norms to QP matrices](https://scaron.info/blog/conversion-from-least-squares-to-quadratic-programming.html) and feed the result to [`solve_qp`](https://qpsolvers.github.io/qpsolvers/quadratic-programming.html#qpsolvers.solve_qp).
 - *I have a non-convex quadratic program. Is there a solver I can use?*
   - Unfortunately most available QP solvers are designed for convex problems.
   - If your cost matrix *P* is semi-definite rather than definite, try OSQP.
@@ -112,7 +112,7 @@ Matrix arguments are NumPy arrays for dense solvers and SciPy Compressed Sparse 
   - You will need to install the [Visual C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) to build all package dependencies.
 - *Can I help?*
   - Absolutely! The first step is to install the library and use it. Report any bug in the [issue tracker](https://github.com/qpsolvers/qpsolvers/issues).
-  - If you're a developer looking to hack on open source, check out the [contribution guidelines](CONTRIBUTING.md) for suggestions.
+  - If you're a developer looking to hack on open source, check out the [contribution guidelines](https://github.com/qpsolvers/qpsolvers/blob/master/CONTRIBUTING.md) for suggestions.
 
 ## Benchmark
 
