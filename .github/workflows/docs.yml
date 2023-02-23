@@ -27,7 +27,7 @@ jobs:
 
             - name: Install dependencies
               run: |
-                  pip install furo qpsolvers sphinx sphinx-autodoc-typehints sphinx-mathjax-offline
+                  pip install furo sphinx sphinx-autodoc-typehints sphinx-mathjax-offline
             - name: Sphinx build
               run: |
                   sphinx-build doc _build -W
