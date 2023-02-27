@@ -108,7 +108,7 @@ Matrix arguments are NumPy arrays for dense solvers and SciPy Compressed Sparse 
 - *I have a non-convex quadratic program. Is there a solver I can use?*
   - Unfortunately most available QP solvers are designed for convex problems (i.e. problems for which `P` is positive semidefinite). That's in a way expected, as solving non-convex QP problems is NP hard.
   - CPLEX has methods for solving non-convex quadratic problems to either local or global optimality. Notice that [finding global solutions](https://www.gurobi.com/wp-content/uploads/2020-01-14_Non-Convex-Quadratic-Optimization-in-Gurobi-9.0-Webinar.pdf?x58432) can be significantly slower than [finding local solutions](https://link.springer.com/chapter/10.1007/978-1-4613-0263-6_8).
-  - Gurobi supports global solution of non-convex quadratic problems.
+  - Gurobi can find [global solutions to non-convex quadratic problems](https://www.gurobi.com/wp-content/uploads/2020-01-14_Non-Convex-Quadratic-Optimization-in-Gurobi-9.0-Webinar.pdf).
   - For a free non-convex solver, you can try the popular nonlinear solver [IPOPT](https://pypi.org/project/ipopt/) *e.g.* using [CasADi](https://web.casadi.org/).
   - A list of (convex/non-convex) quadratic programming software (not necessarily in Python) was compiled by [Nick Gould and Phillip Toint](https://www.numerical.rl.ac.uk/people/nimg/qp/qp.html).
 - *I get the following [build error on Windows](https://github.com/qpsolvers/qpsolvers/issues/28) when running `pip install qpsolvers`.*
