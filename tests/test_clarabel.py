@@ -18,6 +18,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
+"""Unit tests for Clarabel."""
+
 import unittest
 import warnings
 
@@ -40,6 +42,18 @@ try:
             self.assertEqual(status, clarabel.SolverStatus.MaxTime)
             # See https://github.com/oxfordcontrol/Clarabel.rs/issues/10
             self.assertFalse(status != clarabel.SolverStatus.MaxTime)
+
+        def test_status(self):
+            """Check that result status is consistent with its string repr.
+
+            Context: https://github.com/oxfordcontrol/Clarabel.rs/issues/10
+            """
+            problem = get_qpsut01().problem
+            solution = clarabel_solve_problem(problem)
+            status = solution.extras["status"]
+            check_1 = str(status) != "Solved"
+            check_2 = status != clarabel.SolverStatus.Solved
+            self.assertEqual(check_1, check_2)
 
 
 except ImportError:  # solver not installed
