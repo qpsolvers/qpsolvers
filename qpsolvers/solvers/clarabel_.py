@@ -98,6 +98,8 @@ def clarabel_solve_problem(
     solutions at the cost of computation time. See *e.g.* [tolerances]_ for an
     overview of solver tolerances.
     """
+    if initvals is not None and verbose:
+        warnings.warn("Clarabel: warm-start values are ignored")
     P, q, G, h, A, b, lb, ub = problem.unpack()
     P, G, A = ensure_sparse_matrices(P, G, A)
     if lb is not None or ub is not None:

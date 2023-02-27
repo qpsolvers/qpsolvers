@@ -29,6 +29,7 @@ If you use qpSWIFT in your research, consider citing the corresponding paper
 [Pandala2019]_.
 """
 
+import warnings
 from typing import Optional
 
 import numpy as np
@@ -127,7 +128,7 @@ def qpswift_solve_problem(
     numerically unstable <https://github.com/qpSWIFT/qpSWIFT/issues/3>`_.
     """
     if initvals is not None:
-        print("qpSWIFT: warm-start values are ignored by wrapper")
+        warnings.warn("qpSWIFT: warm-start values are ignored")
     P, q, G, h, A, b, lb, ub = problem.unpack()
     if lb is not None or ub is not None:
         G, h = linear_from_box_inequalities(G, h, lb, ub, use_sparse=False)

@@ -241,7 +241,7 @@ def qpoases_solve_problem(
     options.
     """
     if initvals is not None:
-        print("qpOASES: note that warm-start values ignored by wrapper")
+        warnings.warn("qpOASES: warm-start values are ignored")
     P, q, G, h, A, b, lb, ub = problem.unpack()
 
     n = P.shape[0]
