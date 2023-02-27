@@ -52,7 +52,7 @@ $$
 \end{split}
 $$
 
-Vector inequalities apply coordinate by coordinate. The function returns the solution $x^\*$ found by the solver, or ``None`` in case of failure/unfeasible problem. For all the solvers, the matrix $P$ should be [positive  semi-definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix) which implies a convex problem. For some solvers the more strict of condition of `positive definitiness` is required.
+Vector inequalities apply coordinate by coordinate. The function returns the solution $x^\*$ found by the solver, or ``None`` in case of failure/unfeasible problem. For all the solvers, the matrix $P$ should be [positive  semi-definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix) which implies a convex problem. For some solvers the more strict of condition of positive definiteness is required.
 
 📢 **New with v2.7:** get dual multipliers at the solution using the [`solve_problem`](https://qpsolvers.github.io/qpsolvers/quadratic-programming.html#qpsolvers.solve_problem) function.
 
