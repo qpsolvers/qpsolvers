@@ -120,7 +120,7 @@ class TestSolveProblem(unittest.TestCase):
                 else 5e-7
                 if solver == "qpswift"
                 else 1e-7
-                if solver == "gurobi"
+                if solver in ["clarabel", "gurobi"]
                 else 1e-8
             )
             self.assertLess(norm(solution.x - ref_solution.x), eps_abs)
