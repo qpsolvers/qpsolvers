@@ -87,7 +87,7 @@ class Solution:
     z_box: Optional[np.ndarray] = None
 
     def found(self) -> bool:
-        """Did the solver find a solution?"""
+        """Check whether the solver found a solution."""
         return self.x is not None
 
     def is_optimal(self, eps_abs: float) -> bool:
