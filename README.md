@@ -52,7 +52,7 @@ $$
 \end{split}
 $$
 
-Vector inequalities apply coordinate by coordinate. The function returns the solution $x^\*$ found by the solver, or ``None`` in case of failure/unfeasible problem. For most solvers, the matrix $P$ should be [positive definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix).
+Vector inequalities apply coordinate by coordinate. The function returns the solution $x^\*$ found by the solver, or ``None`` in case of failure/unfeasible problem. For all the solvers, the matrix $P$ should be [positive  semi-definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix) which implies a convex problem. For some solvers the more strict of condition of `positive definitiness` is required.
 
 📢 **New with v2.7:** get dual multipliers at the solution using the [`solve_problem`](https://qpsolvers.github.io/qpsolvers/quadratic-programming.html#qpsolvers.solve_problem) function.
 
@@ -106,7 +106,7 @@ Matrix arguments are NumPy arrays for dense solvers and SciPy Compressed Sparse 
 - *I have a squared norm in my cost function, how can I apply a QP solver to my problem?*
   - You can [cast squared norms to QP matrices](https://scaron.info/blog/conversion-from-least-squares-to-quadratic-programming.html) and feed the result to [`solve_qp`](https://qpsolvers.github.io/qpsolvers/quadratic-programming.html#qpsolvers.solve_qp).
 - *I have a non-convex quadratic program. Is there a solver I can use?*
-  - Unfortunately most available QP solvers are designed for convex problems.
+  - Unfortunately most available QP solvers are designed for convex problems (i.e. problems for which `P` is positive semidefinite). That's in a way expected, as solving non-convex QP problems is NP hard.
   - CPLEX has methods for solving non-convex quadratic problems to either local or global optimality. Notice that [finding global solutions](https://www.gurobi.com/wp-content/uploads/2020-01-14_Non-Convex-Quadratic-Optimization-in-Gurobi-9.0-Webinar.pdf?x58432) can be significantly slower than [finding local solutions](https://link.springer.com/chapter/10.1007/978-1-4613-0263-6_8).
   - Gurobi supports global solution of non-convex quadratic problems.
   - For a free non-convex solver, you can try the popular nonlinear solver [IPOPT](https://pypi.org/project/ipopt/) *e.g.* using [CasADi](https://web.casadi.org/).
