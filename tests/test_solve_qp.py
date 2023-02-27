@@ -544,7 +544,7 @@ class TestSolveQP(unittest.TestCase):
                 else 1e-3
                 if solver == "gurobi"
                 else 5e-4
-                if solver == "osqp"
+                if solver in ["clarabel", "osqp"]
                 else 1e-4
                 if solver == "scs"
                 else 2e-5
