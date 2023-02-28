@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Fixed
+
+- README: correct and improve FAQ on non-convex problems (thanks to @nrontsis)
+
 ## [2.8.0] - 2023/02/27
 
 ### Added
