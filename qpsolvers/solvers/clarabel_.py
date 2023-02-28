@@ -43,6 +43,7 @@ from ..conversions import (
 )
 from ..problem import Problem
 from ..solution import Solution
+from ..solve_unconstrained import solve_unconstrained
 
 
 def clarabel_solve_problem(
@@ -116,6 +117,8 @@ def clarabel_solve_problem(
         A_list.append(G)
         b_list.append(h)
         cones.append(clarabel.NonnegativeConeT(h.shape[0]))
+    if not A_list:
+        return solve_unconstrained(problem)
 
     settings = clarabel.DefaultSettings()
     settings.verbose = verbose
