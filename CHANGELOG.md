@@ -4,8 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Changed
+
+- Expose ``solve_unconstrained`` function from main module
+
 ### Fixed
 
+- Clarabel: handle unconstrained problems
 - README: correct and improve FAQ on non-convex problems (thanks to @nrontsis)
 
 ## [2.8.0] - 2023/02/27
