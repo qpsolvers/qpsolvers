@@ -86,6 +86,7 @@ class Solution:
     z: Optional[np.ndarray] = None
     z_box: Optional[np.ndarray] = None
 
+    @property
     def found(self) -> bool:
         """Check whether the solver found a solution."""
         return self.x is not None
