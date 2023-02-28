@@ -9,8 +9,6 @@
 
 Unified interface to Quadratic Programming (QP) solvers available in Python.
 
-**Upcoming:** [qpsolvers v3](https://github.com/qpsolvers/qpsolvers/discussions/147) will be released on February 28, 2023.
-
 ## Installation
 
 ### Using PyPI
@@ -46,7 +44,7 @@ $$
 
 Vector inequalities apply coordinate by coordinate. The function returns the solution $x^\*$ found by the solver, or ``None`` in case of failure/unfeasible problem. All solvers require the problem to be convex, meaning the matrix $P$ should be [positive semi-definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix). Some solvers further require the problem to be strictly convex, meaning $P$ should be positive definite.
 
-📢 **New with v2.7:** get dual multipliers at the solution using the [`solve_problem`](https://qpsolvers.github.io/qpsolvers/quadratic-programming.html#qpsolvers.solve_problem) function.
+**Dual multipliers:** alternatively, the [`solve_problem`](https://qpsolvers.github.io/qpsolvers/quadratic-programming.html#qpsolvers.solve_problem) function returns a more complete solution object containing both the primal solution and its corresponding dual multipliers.
 
 ## Example
 
