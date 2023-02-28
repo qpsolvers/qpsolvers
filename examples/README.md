@@ -4,14 +4,14 @@ Examples are roughly sorted from simple to complex.
 
 ## Basics
 
-1. [Quadratic program](01_quadratic_program.py)
-2. [Linear least squares](02_least_squares.py)
-3. [Box inequalities](03_box_inequalities.py)
-4. [Sparse linear least squares](04_sparse_least_squares.py)
+1. [Quadratic program](quadratic_program.py)
+2. [Linear least squares](least_squares.py)
+3. [Box inequalities](box_inequalities.py)
+4. [Sparse linear least squares](sparse_least_squares.py)
 
 ## Advanced
 
-5. [Dual multipliers](05_dual_multipliers.py)
+5. [Dual multipliers](dual_multipliers.py)
 
 ## Applications
 
