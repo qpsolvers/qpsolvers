@@ -7,7 +7,7 @@
 [![Conda version](https://img.shields.io/conda/vn/conda-forge/qpsolvers.svg)](https://anaconda.org/conda-forge/qpsolvers)
 [![PyPI version](https://img.shields.io/pypi/v/qpsolvers)](https://pypi.org/project/qpsolvers/)
 
-Unified interface to Quadratic Programming (QP) solvers available in Python.
+Unified interface to convex Quadratic Programming (QP) solvers available in Python.
 
 ## Installation
 

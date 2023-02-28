@@ -2,11 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [2.8.1] - 2023/02/28
-
-### Changed
-
-- Expose ``solve_unconstrained`` function from main module
+## [3.0.0] - 2023/02/28
 
 ### Added
 
@@ -21,6 +17,12 @@ All notable changes to this project will be documented in this file.
 - Install open source solvers with wheels by default
 - Remove ``solve_safer_qp``
 - Remove ``sym_proj`` parameter
+
+## [2.8.1] - 2023/02/28
+
+### Changed
+
+- Expose ``solve_unconstrained`` function from main module
 
 ### Fixed
 
