@@ -334,7 +334,8 @@ for solver in available_solvers:
             f"test_qpsut05_{solver}",
             TestSolveProblem.get_test_qpsut05(solver),
         )
-    if solver not in ["ecos", "qpswift"]:
+    if solver not in ["clarabel", "ecos", "qpswift"]:
+        # clarabel: https://github.com/oxfordcontrol/Clarabel.rs/issues/14
         # See https://github.com/qpsolvers/qpsolvers/issues/159
         # See https://github.com/qpsolvers/qpsolvers/issues/160
         setattr(
@@ -342,7 +343,8 @@ for solver in available_solvers:
             f"test_maros_meszaros_qptest_{solver}",
             TestSolveProblem.get_test_maros_meszaros_qptest(solver),
         )
-    if solver not in ["ecos", "qpswift"]:
+    if solver not in ["clarabel", "ecos", "qpswift"]:
+        # clarabel: https://github.com/oxfordcontrol/Clarabel.rs/issues/14
         # See https://github.com/qpsolvers/qpsolvers/issues/159
         # See https://github.com/qpsolvers/qpsolvers/issues/160
         setattr(
@@ -350,7 +352,8 @@ for solver in available_solvers:
             f"test_infinite_box_bounds_{solver}",
             TestSolveProblem.get_test_infinite_box_bounds(solver),
         )
-    if solver not in ["ecos", "qpswift", "scs"]:
+    if solver not in ["clarabel", "ecos", "qpswift", "scs"]:
+        # clarabel: https://github.com/oxfordcontrol/Clarabel.rs/issues/14
         # See https://github.com/qpsolvers/qpsolvers/issues/159
         # See https://github.com/qpsolvers/qpsolvers/issues/160
         # See https://github.com/qpsolvers/qpsolvers/issues/161
