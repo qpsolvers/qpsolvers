@@ -27,7 +27,7 @@ from .problem import Problem
 from .solution import Solution
 
 
-def solve_unconstrained_problem(problem: Problem) -> Solution:
+def solve_unconstrained(problem: Problem) -> Solution:
     """Solve an unconstrained quadratic program.
 
     Parameters
