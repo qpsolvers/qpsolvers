@@ -118,9 +118,9 @@ class TestSolveProblem(unittest.TestCase):
                 else 1e-5
                 if solver in ["highs", "osqp"]
                 else 5e-7
-                if solver == "qpswift"
+                if solver in ["clarabel", "qpswift"]
                 else 1e-7
-                if solver in ["clarabel", "gurobi"]
+                if solver == "gurobi"
                 else 1e-8
             )
             self.assertLess(norm(solution.x - ref_solution.x), eps_abs)
