@@ -26,6 +26,7 @@ from .solution import Solution
 from .solve_ls import solve_ls
 from .solve_qp import solve_problem, solve_qp
 from .solve_safer_qp import solve_safer_qp
+from .solve_unconstrained import solve_unconstrained
 from .solvers import (
     available_solvers,
     cvxopt_solve_qp,
@@ -69,5 +70,6 @@ __all__ = [
     "solve_problem",
     "solve_qp",
     "solve_safer_qp",
+    "solve_unconstrained",
     "sparse_solvers",
 ]
