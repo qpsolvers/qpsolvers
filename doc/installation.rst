@@ -1,4 +1,4 @@
-:github_url: https://github.com/qpsolvers/qpsolvers/tree/master/doc/src/installation.rst
+:github_url: https://github.com/qpsolvers/qpsolvers/tree/master/doc/installation.rst
 
 ************
 Installation

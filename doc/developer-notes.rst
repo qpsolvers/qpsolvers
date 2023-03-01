@@ -1,4 +1,4 @@
-:github_url: https://github.com/qpsolvers/qpsolvers/tree/master/doc/src/developer-notes.rst
+:github_url: https://github.com/qpsolvers/qpsolvers/tree/master/doc/developer-notes.rst
 
 ***************
 Developer notes
