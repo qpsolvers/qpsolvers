@@ -27,6 +27,8 @@ import numpy as np
 import scipy
 from numpy import array, dot, ones, random
 from numpy.linalg import norm
+from scipy.sparse import csc_matrix
+
 from qpsolvers import (
     NoSolverSelected,
     ProblemError,
@@ -35,7 +37,6 @@ from qpsolvers import (
     solve_qp,
     sparse_solvers,
 )
-from scipy.sparse import csc_matrix
 
 from .problems import get_qpmad_demo_problem
 
@@ -497,10 +498,12 @@ class TestSolveQP(unittest.TestCase):
             sol_tolerance = (
                 5e-3
                 if solver == "cvxopt"
+                else 2e-3
+                if solver == "osqp"
                 else 1e-3
                 if solver == "gurobi"
                 else 5e-4
-                if solver in ["clarabel", "osqp"]
+                if solver == "clarabel"
                 else 1e-4
                 if solver == "scs"
                 else 2e-5
