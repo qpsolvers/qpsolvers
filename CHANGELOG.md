@@ -2,7 +2,38 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## [3.0.0] - 2023/02/28
+
+### Added
+
+- Exception ``ParamError`` for incorrect solver parameters
+- Exception ``SolverError`` for solver failures
+
+### Changed
+
+- All functions throw only qpsolvers-owned exceptions
+- CVXOPT: rethrow ``ValueError`` as either ``ProblemError`` or ``SolverError``
+- Checking ``Solution.is_empty`` becomes ``not Solution.found``
+- Install open source solvers with wheels by default
+- Remove ``solve_safer_qp``
+- Remove ``sym_proj`` parameter
+
+## [2.8.1] - 2023/02/28
+
+### Changed
+
+- Expose ``solve_unconstrained`` function from main module
+
+### Fixed
+
+- Clarabel: handle unconstrained problems
+- README: correct and improve FAQ on non-convex problems (thanks to @nrontsis)
+
+## [2.8.0] - 2023/02/27
+
+### Added
+
+- New solver: [Clarabel](https://github.com/oxfordcontrol/Clarabel.rs)
 
 ### Added
 

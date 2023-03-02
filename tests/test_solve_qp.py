@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""Tests for the `solve_qp` function."""
+"""Unit tests for the `solve_qp` function."""
 
 import unittest
 import warnings
@@ -27,6 +27,8 @@ import numpy as np
 import scipy
 from numpy import array, dot, ones, random
 from numpy.linalg import norm
+from scipy.sparse import csc_matrix
+
 from qpsolvers import (
     NoSolverSelected,
     ProblemError,
@@ -35,7 +37,6 @@ from qpsolvers import (
     solve_qp,
     sparse_solvers,
 )
-from scipy.sparse import csc_matrix
 
 from .problems import get_qpmad_demo_problem
 
@@ -497,10 +498,12 @@ class TestSolveQP(unittest.TestCase):
             sol_tolerance = (
                 5e-3
                 if solver == "cvxopt"
+                else 2e-3
+                if solver == "osqp"
                 else 1e-3
                 if solver == "gurobi"
                 else 5e-4
-                if solver == "osqp"
+                if solver == "clarabel"
                 else 1e-4
                 if solver == "scs"
                 else 2e-5

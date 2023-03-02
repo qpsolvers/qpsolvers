@@ -33,13 +33,12 @@ import numpy as np
 import scipy.sparse as spa
 from numpy import ndarray
 from scipy.sparse import csc_matrix
-from scipy.sparse.linalg import lsqr
 from scs import solve
 
 from ..conversions import ensure_sparse_matrices
-from ..exceptions import ProblemError
 from ..problem import Problem
 from ..solution import Solution
+from ..solve_unconstrained import solve_unconstrained
 
 # See https://www.cvxgrp.org/scs/api/exit_flags.html#exit-flags
 __status_val_meaning__ = {
@@ -93,36 +92,6 @@ def __add_box_cone(
     data["b"] = np.hstack(
         ((data["b"],) if "b" in data else ()) + (1.0, np.zeros(n))
     )
-
-
-def __solve_unconstrained(problem: Problem) -> Solution:
-    """Solve an unconstrained quadratic program, warning if it is unbounded.
-
-    Parameters
-    ----------
-    problem :
-        Unconstrained quadratic program.
-
-    Returns
-    -------
-    :
-        Solution to the unconstrained QP, if it is bounded.
-
-    Raises
-    ------
-    ValueError
-        If the quadratic program is not unbounded below.
-    """
-    P, q, _, _, _, _, _, _ = problem.unpack()
-    solution = Solution(problem)
-    solution.x = lsqr(P, -q)[0]
-    cost_check = np.linalg.norm(P @ solution.x + q)
-    if cost_check > 1e-8:
-        raise ProblemError(
-            f"problem is unbounded below (cost_check={cost_check:.1e}), "
-            "q has component in the nullspace of P"
-        )
-    return solution
 
 
 def scs_solve_problem(
@@ -210,7 +179,7 @@ def scs_solve_problem(
         data["b"] = h
         cone["l"] = h.shape[0]  # positive cone
     elif lb is None and ub is None:  # no constraint
-        return __solve_unconstrained(problem)
+        return solve_unconstrained(problem)
     if lb is not None or ub is not None:
         __add_box_cone(n, lb, ub, cone, data)
     kwargs["verbose"] = verbose

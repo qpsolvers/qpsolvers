@@ -1,4 +1,4 @@
-:github_url: https://github.com/qpsolvers/qpsolvers/tree/master/doc/src/least-squares.rst
+:github_url: https://github.com/qpsolvers/qpsolvers/tree/master/doc/least-squares.rst
 
 .. _Least squares:
 

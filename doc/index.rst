@@ -1,4 +1,4 @@
-:github_url: https://github.com/qpsolvers/qpsolvers/tree/master/doc/src/index.rst
+:github_url: https://github.com/qpsolvers/qpsolvers/tree/master/doc/index.rst
 
 .. title:: Table of Contents
 

@@ -32,6 +32,7 @@ from .problem import Problem
 from .solution import Solution
 from .solve_ls import solve_ls
 from .solve_qp import solve_problem, solve_qp
+from .solve_unconstrained import solve_unconstrained
 from .solvers import (
     available_solvers,
     cvxopt_solve_qp,
@@ -40,7 +41,6 @@ from .solvers import (
     gurobi_solve_qp,
     highs_solve_qp,
     mosek_solve_qp,
-    nppro_solve_qp,
     osqp_solve_qp,
     proxqp_solve_qp,
     qpoases_solve_qp,
@@ -51,7 +51,7 @@ from .solvers import (
 )
 from .utils import print_matrix_vector
 
-__version__ = "3.0.0rc0"
+__version__ = "3.0.0"
 
 __all__ = [
     "NoSolverSelected",
@@ -70,7 +70,6 @@ __all__ = [
     "gurobi_solve_qp",
     "highs_solve_qp",
     "mosek_solve_qp",
-    "nppro_solve_qp",
     "osqp_solve_qp",
     "print_matrix_vector",
     "proxqp_solve_qp",
@@ -81,5 +80,6 @@ __all__ = [
     "solve_ls",
     "solve_problem",
     "solve_qp",
+    "solve_unconstrained",
     "sparse_solvers",
 ]

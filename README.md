@@ -7,9 +7,7 @@
 [![Conda version](https://img.shields.io/conda/vn/conda-forge/qpsolvers.svg)](https://anaconda.org/conda-forge/qpsolvers)
 [![PyPI version](https://img.shields.io/pypi/v/qpsolvers)](https://pypi.org/project/qpsolvers/)
 
-Unified interface to Quadratic Programming (QP) solvers available in Python.
-
-**Upcoming:** [qpsolvers v3](https://github.com/qpsolvers/qpsolvers/discussions/147) will be released on February 28, 2023.
+Unified interface to convex Quadratic Programming (QP) solvers available in Python.
 
 ## Installation
 
@@ -44,9 +42,9 @@ $$
 \end{split}
 $$
 
-Vector inequalities apply coordinate by coordinate. The function returns the solution $x^\*$ found by the solver, or ``None`` in case of failure/unfeasible problem. For most solvers, the matrix $P$ should be [positive definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix).
+Vector inequalities apply coordinate by coordinate. The function returns the solution $x^\*$ found by the solver, or ``None`` in case of failure/unfeasible problem. All solvers require the problem to be convex, meaning the matrix $P$ should be [positive semi-definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix). Some solvers further require the problem to be strictly convex, meaning $P$ should be positive definite.
 
-📢 **New with v2.7:** get dual multipliers at the solution using the [`solve_problem`](https://qpsolvers.github.io/qpsolvers/quadratic-programming.html#qpsolvers.solve_problem) function.
+**Dual multipliers:** alternatively, the [`solve_problem`](https://qpsolvers.github.io/qpsolvers/quadratic-programming.html#qpsolvers.solve_problem) function returns a more complete solution object containing both the primal solution and its corresponding dual multipliers.
 
 ## Example
 
@@ -74,6 +72,7 @@ This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``. It
 
 | Solver | Keyword | Algorithm | API | License | Warm-start |
 | ------ | ------- | --------- | --- | ------- |------------|
+| [Clarabel](https://github.com/oxfordcontrol/Clarabel.rs) | ``clarabel`` | Interior point | Dense | Apache-2.0 | ✖️ |
 | [CVXOPT](http://cvxopt.org/) | ``cvxopt`` | Interior point | Dense | GPL-3.0 | ✔️ |
 | [ECOS](https://web.stanford.edu/~boyd/papers/ecos.html) | ``ecos`` | Interior point | Sparse | GPL-3.0 | ✖️ |
 | [Gurobi](https://www.gurobi.com/) | ``gurobi`` | Interior point | Sparse | Commercial | ✖️ |
@@ -98,9 +97,11 @@ Matrix arguments are NumPy arrays for dense solvers and SciPy Compressed Sparse 
 - *I have a squared norm in my cost function, how can I apply a QP solver to my problem?*
   - You can [cast squared norms to QP matrices](https://scaron.info/blog/conversion-from-least-squares-to-quadratic-programming.html) and feed the result to [`solve_qp`](https://qpsolvers.github.io/qpsolvers/quadratic-programming.html#qpsolvers.solve_qp).
 - *I have a non-convex quadratic program. Is there a solver I can use?*
-  - Unfortunately most available QP solvers are designed for convex problems.
-  - If your cost matrix *P* is semi-definite rather than definite, try OSQP.
-  - If your problem has concave components, go for a nonlinear solver such as [IPOPT](https://pypi.org/project/ipopt/) *e.g.* using [CasADi](https://web.casadi.org/).
+  - Unfortunately most available QP solvers are designed for convex problems (i.e. problems for which `P` is positive semidefinite). That's in a way expected, as solving non-convex QP problems is NP hard.
+  - CPLEX has methods for solving non-convex quadratic problems to [either local or global optimality](https://www.ibm.com/docs/fr/icos/22.1.0?topic=qp-distinguishing-between-convex-nonconvex-qps). Notice that finding global solutions can be significantly slower than [finding local solutions](https://link.springer.com/chapter/10.1007/978-1-4613-0263-6_8).
+  - Gurobi can find [global solutions to non-convex quadratic problems](https://www.gurobi.com/wp-content/uploads/2020-01-14_Non-Convex-Quadratic-Optimization-in-Gurobi-9.0-Webinar.pdf).
+  - For a free non-convex solver, you can try the popular nonlinear solver [IPOPT](https://pypi.org/project/ipopt/) *e.g.* using [CasADi](https://web.casadi.org/).
+  - A list of (convex/non-convex) quadratic programming software (not necessarily in Python) was compiled by [Nick Gould and Phillip Toint](https://www.numerical.rl.ac.uk/people/nimg/qp/qp.html).
 - *I get the following [build error on Windows](https://github.com/qpsolvers/qpsolvers/issues/28) when running `pip install qpsolvers`.*
   - You will need to install the [Visual C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) to build all package dependencies.
 - *Can I help?*

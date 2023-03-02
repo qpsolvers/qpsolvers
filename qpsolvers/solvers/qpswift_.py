@@ -29,6 +29,7 @@ If you use qpSWIFT in your research, consider citing the corresponding paper
 [Pandala2019]_.
 """
 
+import warnings
 from typing import Optional
 
 import numpy as np
@@ -104,17 +105,17 @@ def qpswift_solve_problem(
 
        * - Name
          - Effect
-       * - MAXITER
+       * - ``MAXITER``
          - Maximum number of iterations needed.
-       * - ABSTOL
+       * - ``ABSTOL``
          - Absolute tolerance on the duality gap. See *e.g.* [tolerances]_ for
            a primer on the duality gap and solver tolerances.
-       * - RELTOL
+       * - ``RELTOL``
          - Relative tolerance on the residuals :math:`r_x = P x + G^T z + q`
            (dual residual), :math:`r_y = A x - b` (primal residual on equality
            constraints) and :math:`r_z = h - G x - s` (primal residual on
            inequality constraints). See equation (21) in [Pandala2019]_.
-       * - SIGMA
+       * - ``SIGMA``
          - Maximum centering allowed.
 
     If a verbose output shows that the maximum number of iterations is reached,
@@ -127,7 +128,7 @@ def qpswift_solve_problem(
     numerically unstable <https://github.com/qpSWIFT/qpSWIFT/issues/3>`_.
     """
     if initvals is not None:
-        print("qpSWIFT: warm-start values are ignored by wrapper")
+        warnings.warn("qpSWIFT: warm-start values are ignored")
     P, q, G, h, A, b, lb, ub = problem.unpack()
     if lb is not None or ub is not None:
         G, h = linear_from_box_inequalities(G, h, lb, ub, use_sparse=False)
