@@ -20,9 +20,8 @@
 
 """Solver interface for `NPPro`__.
 
-The NPPro solver implements a Newton Projection with Proportioning method for convex
-quadratic programming. Currently, it is designed for dense problems only, and
-convexity is the only assumption it makes on problem data.
+The NPPro solver implements an enhanced Newton Projection with Proportioning method for
+strictly convex quadratic programming. Currently, it is designed for dense problems only.
 """
 
 import warnings
@@ -57,13 +56,29 @@ def nppro_solve_problem(
     :
         Solution returned by the solver.
 
-    Raises
-    ------
-
     Notes
     -----
+    All other keyword arguments are forwarded as options to NPPro. For
+    instance, you can call ``nppro_solve_qp(P, q, G, h, MaxIter=15)``.
+    For a quick overview, the solver accepts the following settings:
 
-    """
+    .. list-table::
+       :widths: 30 70
+       :header-rows: 1
+
+       * - Name
+         - Effect
+       * - ``MaxIter``
+         - Maximum number of iterations.
+       * - ``SkipPreprocessing``
+         - Skip preprocessing phase or not.
+       * - ``SkipPhaseOne``
+         - Skip feasible starting point finding or not.
+       * - ``InfVal``
+         - Values are assumed to be infinite above this threshold.
+       * - ``HessianUpdates``
+         - Enable Hessian updates or not.
+     """
     P, q, G, h, A, b, lb, ub = problem.unpack()
 
     n = P.shape[0]
@@ -92,12 +107,31 @@ def nppro_solve_problem(
     # Create solver object
     solver = nppro.CreateSolver(n, m)
 
+    # Default options
+    MaxIter = 100
+    SkipPreprocessing = False
+    SkipPhaseOne = False
+    InfVal = 1e16
+    HessianUpdates = True
+
+    # Use options from input if provided
+    if "MaxIter" in kwargs:
+        MaxIter = kwargs["MaxIter"]
+    if "SkipPreprocessing" in kwargs:
+        SkipPreprocessing = kwargs["SkipPreprocessing"]
+    if "SkipPhaseOne" in kwargs:
+        SkipPhaseOne = kwargs["SkipPhaseOne"]
+    if "InfVal" in kwargs:
+        InfVal = kwargs["InfVal"]
+    if "HessianUpdates" in kwargs:
+        HessianUpdates = kwargs["HessianUpdates"]
+
     # Set options
-    solver.setOption_MaxIter(100);
-    solver.setOption_SkipPreprocessing(False);
-    solver.setOption_SkipPhaseOne(False);
-    solver.setOption_InfVal(1e16);
-    solver.setOption_HessianUpdates(True);
+    solver.setOption_MaxIter(MaxIter)
+    solver.setOption_SkipPreprocessing(SkipPreprocessing)
+    solver.setOption_SkipPhaseOne(SkipPhaseOne)
+    solver.setOption_InfVal(InfVal)
+    solver.setOption_HessianUpdates(HessianUpdates)
 
     x0 = np.full(q.shape, 0)
     if initvals is not None:
@@ -125,11 +159,11 @@ def nppro_solve_problem(
         return solution
     solution.x = x
     if G is not None:
-        solution.z = np.full(h.shape, 0) # not available yet
+        solution.z = None # not available yet
     if A is not None:
-        solution.y = np.full(b.shape, 0) # not available yet
+        solution.y = None # not available yet
     if lb is not None or ub is not None:
-        solution.z_box = np.full(q.shape, 0) # not available yet
+        solution.z_box = None # not available yet
     solution.extras = {
         "cost": fval,
         "iter": iter_,
@@ -165,12 +199,12 @@ def nppro_solve_qp(
                 & lb \leq x \leq ub
         \end{array}\end{split}
 
-    It is solved using `NPPro`__.
+    It is solved using NPPro.
 
     Parameters
     ----------
     P :
-        Symmetric cost matrix.
+        Positive definite cost matrix.
     q :
         Cost vector.
     G :
@@ -195,12 +229,9 @@ def nppro_solve_qp(
     :
         Solution to the QP, if found, otherwise ``None``.
 
-    Raises
-    ------
-
     Notes
     -----
-
+    See the Notes section in :func:`nppro_solve_problem`.
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = nppro_solve_problem(problem, initvals, verbose, **kwargs)

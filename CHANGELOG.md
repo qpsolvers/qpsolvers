@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Added
+
+- New solver: NPPro
+
 ## [3.0.0] - 2023/02/28
 
 ### Added
@@ -34,9 +40,6 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - New solver: [Clarabel](https://github.com/oxfordcontrol/Clarabel.rs)
-
-### Added
-
 - Exception ``ParamError`` for incorrect solver parameters
 - Exception ``SolverError`` for solver failures
 
