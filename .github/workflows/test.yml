@@ -58,7 +58,7 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
-                  coveralls --service=github
+                  coveralls --service=github --rcfile=pyproject.toml
 
     test:
         name: "Test ${{ matrix.os }} with python-${{ matrix.python-version }}"
