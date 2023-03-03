@@ -38,7 +38,6 @@ from ..solution import Solution
 def nppro_solve_problem(
     problem: Problem,
     initvals: Optional[np.ndarray] = None,
-    verbose: bool = False,
     **kwargs,
 ) -> Solution:
     """Solve a quadratic program using NPPro.
@@ -49,8 +48,6 @@ def nppro_solve_problem(
         Quadratic program to solve.
     initvals :
         Warm-start guess vector.
-    verbose :
-        Set to `True` to print out extra information.
 
     Returns
     -------
@@ -170,7 +167,6 @@ def nppro_solve_qp(
     lb: Optional[np.ndarray] = None,
     ub: Optional[np.ndarray] = None,
     initvals: Optional[np.ndarray] = None,
-    verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
     r"""Solve a quadratic program using NPPro.
@@ -210,8 +206,6 @@ def nppro_solve_qp(
         Upper bound constraint vector.
     initvals :
         Warm-start guess vector.
-    verbose :
-        Set to `True` to print out extra information.
 
     Returns
     -------
@@ -223,5 +217,5 @@ def nppro_solve_qp(
     See the Notes section in :func:`nppro_solve_problem`.
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)
-    solution = nppro_solve_problem(problem, initvals, verbose, **kwargs)
+    solution = nppro_solve_problem(problem, initvals, **kwargs)
     return solution.x
