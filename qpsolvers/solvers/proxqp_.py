@@ -213,8 +213,8 @@ def proxqp_solve_problem(
         or (A is not None and not isinstance(A, np.ndarray))
     )
     C_prox, u_prox, l_prox = __combine_inequalities(G, h, lb, ub, n, use_csc)
-    solve_function = __select_backend(backend, use_csc)
-    result = solve_function(
+    solve = __select_backend(backend, use_csc)
+    result = solve(
         P,
         q,
         A,
