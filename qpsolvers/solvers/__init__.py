@@ -322,7 +322,7 @@ nppro_solve_qp: Optional[
 
 try:
     from .nppro_ import nppro_solve_problem, nppro_solve_qp
-    
+
     solve_function["nppro"] = nppro_solve_problem
     available_solvers.append("nppro")
     dense_solvers.append("nppro")

@@ -108,31 +108,19 @@ def nppro_solve_problem(
     # Create solver object
     solver = nppro.CreateSolver(n, m)
 
-    # Default options
-    MaxIter = 100
-    SkipPreprocessing = False
-    SkipPhaseOne = False
-    InfVal = 1e16
-    HessianUpdates = True
-
-    # Use options from input if provided
-    if "MaxIter" in kwargs:
-        MaxIter = kwargs["MaxIter"]
-    if "SkipPreprocessing" in kwargs:
-        SkipPreprocessing = kwargs["SkipPreprocessing"]
-    if "SkipPhaseOne" in kwargs:
-        SkipPhaseOne = kwargs["SkipPhaseOne"]
-    if "InfVal" in kwargs:
-        InfVal = kwargs["InfVal"]
-    if "HessianUpdates" in kwargs:
-        HessianUpdates = kwargs["HessianUpdates"]
+    # Use options from input if provided, defaults otherwise
+    max_iter = kwargs.get("MaxIter", 100)
+    skip_preprocessing = kwargs.get("SkipPreprocessing", False)
+    skip_phase_one = kwargs.get("SkipPhaseOne", False)
+    inf_val = kwargs.get("InfVal", 1e16)
+    hessian_updates = kwargs.get("HessianUpdates", True)
 
     # Set options
-    solver.setOption_MaxIter(MaxIter)
-    solver.setOption_SkipPreprocessing(SkipPreprocessing)
-    solver.setOption_SkipPhaseOne(SkipPhaseOne)
-    solver.setOption_InfVal(InfVal)
-    solver.setOption_HessianUpdates(HessianUpdates)
+    solver.setOption_MaxIter(max_iter)
+    solver.setOption_SkipPreprocessing(skip_preprocessing)
+    solver.setOption_SkipPhaseOne(skip_phase_one)
+    solver.setOption_InfVal(inf_val)
+    solver.setOption_HessianUpdates(hessian_updates)
 
     x0 = np.full(q.shape, 0)
     if initvals is not None:
