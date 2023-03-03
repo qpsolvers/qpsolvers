@@ -40,7 +40,6 @@ from .solvers import (
     ecos_solve_qp,
     gurobi_solve_qp,
     highs_solve_qp,
-    mosek_solve_qp,
     osqp_solve_qp,
     proxqp_solve_qp,
     qpoases_solve_qp,
@@ -49,6 +48,7 @@ from .solvers import (
     scs_solve_qp,
     sparse_solvers,
 )
+from .unsupported import mosek_solve_qp, nppro_solve_qp
 from .utils import print_matrix_vector
 
 __version__ = "3.0.0"
@@ -70,6 +70,7 @@ __all__ = [
     "gurobi_solve_qp",
     "highs_solve_qp",
     "mosek_solve_qp",
+    "nppro_solve_qp",
     "osqp_solve_qp",
     "print_matrix_vector",
     "proxqp_solve_qp",
