@@ -32,18 +32,6 @@ HiGHS
 .. automodule:: qpsolvers.solvers.highs_
     :members:
 
-MOSEK
-=====
-
-.. automodule:: qpsolvers.solvers.mosek_
-    :members:
-
-NPPro
-=====
-
-.. automodule:: qpsolvers.solvers.nppro_
-    :members:
-
 OSQP
 ====
 
