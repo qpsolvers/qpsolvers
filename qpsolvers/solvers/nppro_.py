@@ -20,15 +20,16 @@
 
 """Solver interface for `NPPro`__.
 
-The NPPro solver implements an enhanced Newton Projection with Proportioning method for
-strictly convex quadratic programming. Currently, it is designed for dense problems only.
+The NPPro solver implements an enhanced Newton Projection with Proportioning
+method for strictly convex quadratic programming. Currently, it is designed for
+dense problems only.
 """
 
 import warnings
-from typing import Optional, Union
+from typing import Optional
 
-import numpy as np
 import nppro
+import numpy as np
 
 from ..problem import Problem
 from ..solution import Solution
@@ -78,7 +79,7 @@ def nppro_solve_problem(
          - Values are assumed to be infinite above this threshold.
        * - ``HessianUpdates``
          - Enable Hessian updates or not.
-     """
+    """
     P, q, G, h, A, b, lb, ub = problem.unpack()
 
     n = P.shape[0]
@@ -138,14 +139,14 @@ def nppro_solve_problem(
         x0 = initvals
 
     # Conversion to datatype supported by the solver's C++ interface
-    P = np.asarray(P, order='C', dtype=np.float64)
-    q = np.asarray(q, order='C', dtype=np.float64)
-    A_ = np.asarray(A_, order='C', dtype=np.float64)
-    l_ = np.asarray(l_, order='C', dtype=np.float64)
-    u_ = np.asarray(u_, order='C', dtype=np.float64)
-    lb_ = np.asarray(lb_, order='C', dtype=np.float64)
-    ub_ = np.asarray(ub_, order='C', dtype=np.float64)
-    x0 = np.asarray(x0, order='C', dtype=np.float64)
+    P = np.asarray(P, order="C", dtype=np.float64)
+    q = np.asarray(q, order="C", dtype=np.float64)
+    A_ = np.asarray(A_, order="C", dtype=np.float64)
+    l_ = np.asarray(l_, order="C", dtype=np.float64)
+    u_ = np.asarray(u_, order="C", dtype=np.float64)
+    lb_ = np.asarray(lb_, order="C", dtype=np.float64)
+    ub_ = np.asarray(ub_, order="C", dtype=np.float64)
+    x0 = np.asarray(x0, order="C", dtype=np.float64)
 
     # Call solver
     x, fval, exitflag, iter_ = solver.solve(P, q, A_, l_, u_, lb_, ub_, x0)
@@ -159,11 +160,11 @@ def nppro_solve_problem(
         return solution
     solution.x = x
     if G is not None:
-        solution.z = None # not available yet
+        solution.z = None  # not available yet
     if A is not None:
-        solution.y = None # not available yet
+        solution.y = None  # not available yet
     if lb is not None or ub is not None:
-        solution.z_box = None # not available yet
+        solution.z_box = None  # not available yet
     solution.extras = {
         "cost": fval,
         "iter": iter_,
