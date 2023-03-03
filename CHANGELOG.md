@@ -11,6 +11,8 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - Documentation: separate support and unsupported solver lists
+- Exclude unsupported solvers from code coverage report
+- Moved unsupported solvers to a separate submodule
 
 ## [3.0.0] - 2023/02/28
 
