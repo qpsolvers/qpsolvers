@@ -24,8 +24,7 @@ jobs:
             - name: "Install dependencies"
               run: |
                   python -m pip install --upgrade pip
-                  # tox version: https://github.com/tox-dev/tox/issues/2778
-                  python -m pip install tox==3.28.0
+                  python -m pip install tox
 
             - name: "Test with tox for ${{ matrix.os }}"
               run: |
@@ -49,8 +48,7 @@ jobs:
             - name: "Install dependencies"
               run: |
                   python -m pip install --upgrade pip
-                  # tox version: https://github.com/tox-dev/tox/issues/2778
-                  python -m pip install coveralls tox==3.28.0
+                  python -m pip install coveralls tox
 
             - name: "Check code coverage"
               run: |
@@ -83,8 +81,7 @@ jobs:
             - name: "Install dependencies"
               run: |
                   python -m pip install --upgrade pip
-                  # tox version: https://github.com/tox-dev/tox/issues/2778
-                  python -m pip install tox==3.28.0 tox-gh-actions
+                  python -m pip install tox tox-gh-actions
 
             - name: "Test with tox for ${{ matrix.os }}"
               run: |
