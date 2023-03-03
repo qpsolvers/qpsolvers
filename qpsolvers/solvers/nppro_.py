@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""Solver interface for `NPPro`__.
+"""Solver interface for NPPro.
 
 The NPPro solver implements an enhanced Newton Projection with Proportioning
 method for strictly convex quadratic programming. Currently, it is designed for
