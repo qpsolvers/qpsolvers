@@ -7,11 +7,11 @@ Unsupported solvers will be made available if they are detected on your system, 
 MOSEK
 =====
 
-.. automodule:: qpsolvers.solvers.mosek_
+.. automodule:: qpsolvers.unsupported.mosek_
     :members:
 
 NPPro
 =====
 
-.. automodule:: qpsolvers.solvers.nppro_
+.. automodule:: qpsolvers.unsupported.nppro_
     :members:
