@@ -24,10 +24,10 @@ from typing import Optional
 
 import numpy as np
 
+from ._internals import available_solvers, solve_function
 from .exceptions import SolverNotFound
 from .problem import Problem
 from .solution import Solution
-from .solvers import available_solvers, solve_function
 
 
 def solve_problem(

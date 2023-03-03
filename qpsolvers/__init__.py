@@ -20,6 +20,7 @@
 
 """Quadratic programming solvers in Python with a unified API."""
 
+from ._internals import available_solvers
 from .exceptions import (
     NoSolverSelected,
     ParamError,
@@ -34,7 +35,6 @@ from .solve_ls import solve_ls
 from .solve_qp import solve_problem, solve_qp
 from .solve_unconstrained import solve_unconstrained
 from .solvers import (
-    available_solvers,
     cvxopt_solve_qp,
     dense_solvers,
     ecos_solve_qp,
