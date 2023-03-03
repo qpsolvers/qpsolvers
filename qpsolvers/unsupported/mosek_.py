@@ -35,7 +35,7 @@ import scipy.sparse as spa
 
 from ..problem import Problem
 from ..solution import Solution
-from ..solvers import cvxopt_solve_problem
+from ..solvers.cvxopt_ import cvxopt_solve_problem
 
 
 def mosek_solve_problem(
