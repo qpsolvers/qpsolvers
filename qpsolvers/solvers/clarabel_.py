@@ -123,7 +123,7 @@ def clarabel_solve_problem(
     settings = clarabel.DefaultSettings()
     settings.verbose = verbose
     for key, value in kwargs.items():
-        settings.__setattr__(key, value)
+        setattr(settings, key, value)
 
     A_stack = spa.vstack(A_list, format="csc")
     b_stack = np.concatenate(b_list)
