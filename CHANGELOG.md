@@ -12,7 +12,8 @@ All notable changes to this project will be documented in this file.
 
 - Documentation: separate support and unsupported solver lists
 - Exclude unsupported solvers from code coverage report
-- Moved unsupported solvers to a separate submodule
+- Move unsupported solvers to a separate submodule
+- Remove CVXOPT from dependencies (reason: no arm64 wheel)
 
 ## [3.0.0] - 2023/02/28
 
