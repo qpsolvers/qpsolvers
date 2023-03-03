@@ -57,6 +57,10 @@ Changelog = "https://github.com/qpsolvers/qpsolvers/blob/master/CHANGELOG.md"
 [tool.black]
 line-length = 79
 
+[tool.coverage]
+report.include = ["qpsolvers/*"]
+report.omit = ["qpsolvers/unsupported/*"]
+
 [tool.ruff]
 line-length = 79
 select = [
