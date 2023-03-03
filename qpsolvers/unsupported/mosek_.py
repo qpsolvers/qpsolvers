@@ -26,9 +26,6 @@ optimization problems. Its interior-point method is geared towards large scale
 sparse problems, in particular for linear or conic quadratic programs.
 """
 
-# Unsupported solver ⇒ no code coverage.
-# pragma: no cover
-
 from typing import Optional, Union
 
 import cvxopt.msk
@@ -38,7 +35,7 @@ import scipy.sparse as spa
 
 from ..problem import Problem
 from ..solution import Solution
-from .cvxopt_ import cvxopt_solve_problem
+from ..solvers import cvxopt_solve_problem
 
 
 def mosek_solve_problem(
