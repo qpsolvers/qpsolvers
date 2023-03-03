@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 
 - New solver: NPPro
 
+### Changed
+
+- Documentation: separate support and unsupported solver lists
+
 ## [3.0.0] - 2023/02/28
 
 ### Added

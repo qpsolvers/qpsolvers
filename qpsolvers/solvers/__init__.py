@@ -296,7 +296,6 @@ nppro_solve_problem: Optional[
         [
             Problem,
             Optional[ndarray],
-            bool,
         ],
         Solution,
     ]
@@ -314,7 +313,6 @@ nppro_solve_qp: Optional[
             Optional[ndarray],
             Optional[ndarray],
             Optional[ndarray],
-            bool,
         ],
         Optional[ndarray],
     ]
