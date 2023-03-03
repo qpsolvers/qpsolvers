@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2016-2022 Stéphane Caron and the qpsolvers contributors.
+# Copyright (C) 2016-2023 Stéphane Caron and the qpsolvers contributors.
 #
 # This file is part of qpsolvers.
 #

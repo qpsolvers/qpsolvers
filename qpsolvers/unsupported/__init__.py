@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2016-2022 Stéphane Caron and the qpsolvers contributors.
+# Copyright (C) 2016-2023 Stéphane Caron and the qpsolvers contributors.
 #
 # This file is part of qpsolvers.
 #
@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""Import available QP solvers."""
+"""Import unsupported QP solvers."""
 
 from typing import Any, Callable, Dict, Optional, Union
 
@@ -114,6 +114,7 @@ try:
     dense_solvers.append("nppro")
 except ImportError:
     pass
+
 
 __all__ = [
     "available_solvers",
