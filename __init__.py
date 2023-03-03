@@ -37,6 +37,7 @@ from .qpsolvers import (
     gurobi_solve_qp,
     highs_solve_qp,
     mosek_solve_qp,
+    nppro_solve_qp
     osqp_solve_qp,
     print_matrix_vector,
     proxqp_solve_qp,
@@ -60,6 +61,7 @@ __all__ = [
     "gurobi_solve_qp",
     "highs_solve_qp",
     "mosek_solve_qp",
+    "nppro_solve_qp",
     "osqp_solve_qp",
     "print_matrix_vector",
     "proxqp_solve_qp",

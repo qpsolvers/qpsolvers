@@ -4,6 +4,7 @@
 .ropeproject
 .tox
 MANIFEST
+_build/
 build/
 dist/
 examples/qpsolvers

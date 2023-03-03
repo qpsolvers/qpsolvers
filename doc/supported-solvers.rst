@@ -40,6 +40,12 @@ MOSEK
 .. automodule:: qpsolvers.solvers.mosek_
     :members:
 
+NPPro
+=====
+
+.. automodule:: qpsolvers.solvers.nppro_
+    :members:
+
 OSQP
 ====
 

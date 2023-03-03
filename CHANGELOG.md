@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Added
+
+- New solver: NPPro
+
 ## [3.0.0] - 2023/02/28
 
 ### Added
