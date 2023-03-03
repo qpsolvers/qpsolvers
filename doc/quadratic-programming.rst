@@ -1,5 +1,3 @@
-:github_url: https://github.com/qpsolvers/qpsolvers/tree/master/doc/quadratic-programming.rst
-
 .. _Quadratic programming:
 
 *********************
