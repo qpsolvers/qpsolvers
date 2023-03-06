@@ -49,7 +49,7 @@ open_source_solvers = [
 ]
 
 [project.urls]
-Documentation = "https://scaron.info/doc/qpsolvers/"
+Documentation = "https://qpsolvers.github.io/qpsolvers/"
 Source = "https://github.com/qpsolvers/qpsolvers"
 Tracker = "https://github.com/qpsolvers/qpsolvers/issues"
 Changelog = "https://github.com/qpsolvers/qpsolvers/blob/master/CHANGELOG.md"
