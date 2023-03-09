@@ -37,6 +37,7 @@ keywords = ["quadratic programming", "solver", "numerical optimization"]
 
 [project.optional-dependencies]
 open_source_solvers = [
+    "clarabel >=0.4.1",
     "cvxopt >=1.2.6",
     "ecos >=2.0.8",
     "highspy >=1.1.2.dev3",
