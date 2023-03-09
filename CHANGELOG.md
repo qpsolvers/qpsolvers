@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Fixed
+
+- Clarabel: upstream handling of infinite values in inequalities
+
 ## [3.1.0] - 2023/03/07
 
 ### Added
