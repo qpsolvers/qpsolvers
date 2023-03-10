@@ -41,6 +41,7 @@ def solve_ls(
     solver: Optional[str] = None,
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
+    sparse_conversion: Optional[bool] = None,
     **kwargs,
 ) -> Optional[np.ndarray]:
     r"""Solve a constrained weighted linear Least Squares problem.
@@ -91,6 +92,9 @@ def solve_ls(
         Vector of initial `x` values used to warm-start the solver.
     verbose :
         Set to `True` to print out extra information.
+    sparse_conversion :
+        Set to `True` to use a sparse conversion strategy and to `False` to use
+        a dense strategy.
 
     Returns
     -------
