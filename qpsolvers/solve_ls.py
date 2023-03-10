@@ -103,6 +103,10 @@ def solve_ls(
 
     Note
     ----
+    [TODO(scaron): detail conversion strategies.]
+
+    Note
+    ----
     In least squares, the matrix :math:`R` should be symmetric. Many
     solvers (including CVXOPT, OSQP and quadprog) leverage this property and
     may return unintended results when it is not the case. You can set
