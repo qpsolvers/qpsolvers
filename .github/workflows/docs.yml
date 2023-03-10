@@ -39,7 +39,7 @@ jobs:
                   repository: qpSWIFT/qpSWIFT
                   path: qpSWIFT
 
-            - name: Build qpSWIFT
+            - name: Install qpSWIFT
               run: |
                   cd qpSWIFT/python
                   python setup.py install
