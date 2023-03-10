@@ -18,10 +18,10 @@ jobs:
         permissions:
             contents: write
         steps:
-            - name: Checkout Git repository
+            - name: "Checkout Git repository"
               uses: actions/checkout@v3
 
-            - name: Install Conda environment with Micromamba
+            - name: "Install Conda environment with Micromamba"
               uses: mamba-org/provision-with-micromamba@main
               with:
                   cache-downloads: true
@@ -29,26 +29,26 @@ jobs:
                   environment-file: doc/environment.yml
                   environment-name: qpsolvers
 
-            - name: Install PyPI dependencies
+            - name: "Install PyPI dependencies"
               run: |
                   pip install furo highspy sphinx sphinx-autodoc-typehints sphinx-mathjax-offline
 
-            - name: Checkout qpSWIFT
+            - name: "Checkout qpSWIFT"
               uses: actions/checkout@v3
               with:
                   repository: qpSWIFT/qpSWIFT
                   path: qpSWIFT
 
-            - name: Install qpSWIFT
+            - name: "Install qpSWIFT"
               run: |
                   cd qpSWIFT/python
                   python setup.py install
 
-            - name: Build documentation
+            - name: "Build documentation"
               run: |
                   sphinx-build doc _build -W
 
-            - name: Deploy to GitHub Pages
+            - name: "Deploy to GitHub Pages"
               uses: peaceiris/actions-gh-pages@v3
               if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
               with:
