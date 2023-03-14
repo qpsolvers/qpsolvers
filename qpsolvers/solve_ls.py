@@ -77,8 +77,43 @@ def __solve_sparse_ls(
     solver: Optional[str] = None,
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
+    **kwargs,
 ) -> Optional[np.ndarray]:
-    pass
+    m, n = R.shape
+    eye_m = spa.eye(m, format="csc")
+    P = spa.block_diag([spa.csc_matrix((n, n)), eye_m if W is None else W])
+    q = np.zeros(n + m)
+    if G is not None:
+        G = spa.hstack([G, spa.csc_matrix((G.shape[0], m))], format="csc")
+    if A is not None:
+        A = spa.hstack([A, spa.csc_matrix((A.shape[0], m))], format="csc")
+    A_new = spa.hstack([R, -eye_m], format="csc")
+    b_new = s
+    if A is None:
+        A = A_new
+        b = b_new
+    else:  # A is not None
+        A = spa.vstack([A, A_new], format="csc")
+        b = np.hstack([b, b_new])
+    if lb is not None:
+        lb = np.hstack([lb, np.full((m,), -np.inf)])
+    if ub is not None:
+        ub = np.hstack([ub, np.full((m,), np.inf)])
+    xy = solve_qp(
+        P,
+        q,
+        G,
+        h,
+        A,
+        b,
+        lb,
+        ub,
+        solver=solver,
+        initvals=initvals,
+        verbose=verbose,
+        **kwargs,
+    )
+    return xy[-m:] if xy is not None else None
 
 
 def solve_ls(
