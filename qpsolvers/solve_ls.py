@@ -182,16 +182,13 @@ def solve_ls(
         Set to `True` to print out extra information.
     sparse_conversion :
         Set to `True` to use a sparse conversion strategy and to `False` to use
-        a dense strategy.
+        a dense strategy. By default, the conversion strategy to follow is
+        determine by the sparsity of :math:`R`. See Notes below.
 
     Returns
     -------
     :
         Optimal solution if found, otherwise ``None``.
-
-    Note
-    ----
-    [TODO(scaron): detail conversion strategies.]
 
     Note
     ----
@@ -206,6 +203,13 @@ def solve_ls(
 
     Notes
     -----
+    This function implements two conversion strategies: one for dense problems
+    and one for sparse problems. The conversion strategy to follow can be
+    selected via the ``sparse_conversion`` argument. The sparse strategy will
+    likely perform better on sparse problems, although this may not always be
+    the case (for instance, it may perform worse if :math:`R` has many more
+    rows than columns).
+
     Extra keyword arguments given to this function are forwarded to the
     underlying solvers. For example, OSQP has a setting `eps_abs` which we can
     provide by ``solve_ls(R, s, G, h, solver='osqp', eps_abs=1e-4)``.
