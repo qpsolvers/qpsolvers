@@ -28,6 +28,59 @@ import scipy.sparse as spa
 from .solve_qp import solve_qp
 
 
+def __solve_dense_ls(
+    R: Union[np.ndarray, spa.csc_matrix],
+    s: np.ndarray,
+    G: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    h: Optional[np.ndarray] = None,
+    A: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    b: Optional[np.ndarray] = None,
+    lb: Optional[np.ndarray] = None,
+    ub: Optional[np.ndarray] = None,
+    W: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    solver: Optional[str] = None,
+    initvals: Optional[np.ndarray] = None,
+    verbose: bool = False,
+    **kwargs,
+) -> Optional[np.ndarray]:
+    WR: Union[np.ndarray, spa.csc_matrix] = R if W is None else W @ R
+    P = R.T @ WR
+    q = -(s.T @ WR)
+    if not isinstance(P, np.ndarray):
+        P = P.tocsc()
+    return solve_qp(
+        P,
+        q,
+        G,
+        h,
+        A,
+        b,
+        lb,
+        ub,
+        solver=solver,
+        initvals=initvals,
+        verbose=verbose,
+        **kwargs,
+    )
+
+
+def __solve_sparse_ls(
+    R: Union[np.ndarray, spa.csc_matrix],
+    s: np.ndarray,
+    G: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    h: Optional[np.ndarray] = None,
+    A: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    b: Optional[np.ndarray] = None,
+    lb: Optional[np.ndarray] = None,
+    ub: Optional[np.ndarray] = None,
+    W: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    solver: Optional[str] = None,
+    initvals: Optional[np.ndarray] = None,
+    verbose: bool = False,
+) -> Optional[np.ndarray]:
+    pass
+
+
 def solve_ls(
     R: Union[np.ndarray, spa.csc_matrix],
     s: np.ndarray,
@@ -122,22 +175,14 @@ def solve_ls(
     underlying solvers. For example, OSQP has a setting `eps_abs` which we can
     provide by ``solve_ls(R, s, G, h, solver='osqp', eps_abs=1e-4)``.
     """
-    WR: Union[np.ndarray, spa.csc_matrix] = R if W is None else W @ R
-    P = R.T @ WR
-    q = -(s.T @ WR)
-    if not isinstance(P, np.ndarray):
-        P = P.tocsc()
-    return solve_qp(
-        P,
-        q,
-        G,
-        h,
-        A,
-        b,
-        lb,
-        ub,
-        solver=solver,
-        initvals=initvals,
-        verbose=verbose,
-        **kwargs,
-    )
+    if sparse_conversion is None:
+        sparse_conversion = isinstance(R, np.ndarray)
+    sparse_conversion = False
+    if sparse_conversion:
+        return __solve_sparse_ls(
+            R, s, G, h, A, b, lb, ub, W, solver, initvals, verbose, **kwargs
+        )
+    else:  # dense conversion
+        return __solve_dense_ls(
+            R, s, G, h, A, b, lb, ub, W, solver, initvals, verbose, **kwargs
+        )
