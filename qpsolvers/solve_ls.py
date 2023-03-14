@@ -176,8 +176,7 @@ def solve_ls(
     provide by ``solve_ls(R, s, G, h, solver='osqp', eps_abs=1e-4)``.
     """
     if sparse_conversion is None:
-        sparse_conversion = isinstance(R, np.ndarray)
-    sparse_conversion = False
+        sparse_conversion = not isinstance(R, np.ndarray)
     if sparse_conversion:
         return __solve_sparse_ls(
             R, s, G, h, A, b, lb, ub, W, solver, initvals, verbose, **kwargs
