@@ -25,6 +25,7 @@ from typing import Optional, Union
 import numpy as np
 import scipy.sparse as spa
 
+from .problem import Problem
 from .solve_qp import solve_qp
 
 
@@ -85,6 +86,7 @@ def __solve_sparse_ls(
         [spa.csc_matrix((n, n)), eye_m if W is None else W], format="csc"
     )
     q = np.zeros(n + m)
+    P, q, G, h, A, b, lb, ub = Problem(P, q, G, h, A, b, lb, ub).unpack()
     if G is not None:
         G = spa.hstack([G, spa.csc_matrix((G.shape[0], m))], format="csc")
     if A is not None:
