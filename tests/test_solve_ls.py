@@ -29,8 +29,7 @@ from numpy.linalg import norm
 
 from qpsolvers import available_solvers, solve_ls, sparse_solvers
 from qpsolvers.exceptions import NoSolverSelected, SolverNotFound
-
-from .problems import get_sparse_least_squares
+from qpsolvers.problems import get_sparse_least_squares
 
 
 class TestSolveLS(unittest.TestCase):
@@ -38,18 +37,9 @@ class TestSolveLS(unittest.TestCase):
         """Prepare test fixture."""
         warnings.simplefilter("ignore", category=DeprecationWarning)
         warnings.simplefilter("ignore", category=UserWarning)
-        self.R = np.array([[1.0, 2.0, 0.0], [2.0, 3.0, 4.0], [0.0, 4.0, 1.0]])
-        self.s = np.array([3.0, 2.0, 3.0])
-        self.G = np.array(
-            [[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]]
-        )
-        self.h = np.array([3.0, 2.0, -2.0]).reshape((3,))
-        self.A = np.array([1.0, 1.0, 1.0])
-        self.b = np.array([1.0])
-        self.known_solution = np.array([2.0 / 3, -1.0 / 3, 2.0 / 3])
 
-    def get_problem(self):
-        """Get problem as a sextuple of values to unpack.
+    def get_problem_and_solution(self):
+        """Get least-squares problem and its primal solution.
 
         Returns
         -------
@@ -65,8 +55,17 @@ class TestSolveLS(unittest.TestCase):
             Linear equality matrix.
         b :
             Linear equality vector.
+        solution :
+            Known solution.
         """
-        return self.R, self.s, self.G, self.h, self.A, self.b
+        R = np.array([[1.0, 2.0, 0.0], [2.0, 3.0, 4.0], [0.0, 4.0, 1.0]])
+        s = np.array([3.0, 2.0, 3.0])
+        G = np.array([[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]])
+        h = np.array([3.0, 2.0, -2.0]).reshape((3,))
+        A = np.array([1.0, 1.0, 1.0])
+        b = np.array([1.0])
+        solution = np.array([2.0 / 3, -1.0 / 3, 2.0 / 3])
+        return R, s, G, h, A, b, solution
 
     @staticmethod
     def get_test(solver: str):
@@ -84,9 +83,13 @@ class TestSolveLS(unittest.TestCase):
         """
 
         def test(self):
-            R, s, G, h, A, b = self.get_problem()
-            x = solve_ls(R, s, G, h, A, b, solver=solver)
-            x_sp = solve_ls(R, s, G, h, A, b, solver=solver)
+            R, s, G, h, A, b, solution = self.get_problem_and_solution()
+            x = solve_ls(
+                R, s, G, h, A, b, solver=solver, sparse_conversion=False
+            )
+            x_sp = solve_ls(
+                R, s, G, h, A, b, solver=solver, sparse_conversion=False
+            )
             self.assertIsNotNone(x)
             self.assertIsNotNone(x_sp)
             sol_tolerance = (
@@ -108,8 +111,8 @@ class TestSolveLS(unittest.TestCase):
                 if solver == "scs"
                 else 1e-9
             )
-            self.assertLess(norm(x - self.known_solution), sol_tolerance)
-            self.assertLess(norm(x_sp - self.known_solution), sol_tolerance)
+            self.assertLess(norm(x - solution), sol_tolerance)
+            self.assertLess(norm(x_sp - solution), sol_tolerance)
             self.assertLess(max(G.dot(x) - h), ineq_tolerance)
             self.assertLess(max(A.dot(x) - b), eq_tolerance)
             self.assertLess(min(A.dot(x) - b), eq_tolerance)
@@ -118,13 +121,13 @@ class TestSolveLS(unittest.TestCase):
 
     def test_no_solver_selected(self):
         """Check that NoSolverSelected is raised when applicable."""
-        R, s, G, h, A, b = self.get_problem()
+        R, s, G, h, A, b, _ = self.get_problem_and_solution()
         with self.assertRaises(NoSolverSelected):
             solve_ls(R, s, G, h, A, b, solver=None)
 
     def test_solver_not_found(self):
         """SolverNotFound is raised when the solver does not exist."""
-        R, s, G, h, A, b = self.get_problem()
+        R, s, G, h, A, b, _ = self.get_problem_and_solution()
         with self.assertRaises(SolverNotFound):
             solve_ls(R, s, G, h, A, b, solver="ideal")
 
@@ -144,7 +147,7 @@ class TestSolveLS(unittest.TestCase):
         """
 
         def test(self):
-            _, s, G, h, A, b = self.get_problem()
+            _, s, G, h, A, b, _ = self.get_problem_and_solution()
             n = len(s)
 
             R_csc = spa.eye(n, format="csc")
@@ -167,13 +170,15 @@ class TestSolveLS(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_medium_sparse_problem(solver: str):
+    def get_test_medium_sparse(solver: str, sparse_conversion: bool):
         """Get test function for a large sparse problem with a given solver.
 
         Parameters
         ----------
         solver :
             Name of the solver to test.
+        sparse_conversion :
+            Conversion strategy boolean.
 
         Returns
         -------
@@ -183,13 +188,22 @@ class TestSolveLS(unittest.TestCase):
 
         def test(self):
             R, s, G, h, A, b, lb, ub = get_sparse_least_squares(n=1500)
-            x = solve_ls(R, s, G, h, A, b, solver=solver)
+            x = solve_ls(
+                R,
+                s,
+                G,
+                h,
+                A,
+                b,
+                solver=solver,
+                sparse_conversion=sparse_conversion,
+            )
             self.assertIsNotNone(x)
 
         return test
 
     @staticmethod
-    def get_test_large_sparse_problem(solver: str):
+    def get_test_large_sparse(solver: str, sparse_conversion: bool):
         """Get test function for a large sparse problem with a given solver.
 
         Parameters
@@ -205,7 +219,16 @@ class TestSolveLS(unittest.TestCase):
 
         def test(self):
             R, s, G, h, A, b, lb, ub = get_sparse_least_squares(n=15_000)
-            x = solve_ls(R, s, G, h, A, b, solver=solver)
+            x = solve_ls(
+                R,
+                s,
+                G,
+                h,
+                A,
+                b,
+                solver=solver,
+                sparse_conversion=sparse_conversion,
+            )
             self.assertIsNotNone(x)
 
         return test
@@ -226,8 +249,15 @@ for solver in sparse_solvers:
         # Gurobi: model too large for size-limited license
         setattr(
             TestSolveLS,
-            "test_medium_sparse_problem_{}".format(solver),
-            TestSolveLS.get_test_medium_sparse_problem(solver),
+            "test_medium_sparse_dense_conversion_{}".format(solver),
+            TestSolveLS.get_test_medium_sparse(
+                solver, sparse_conversion=False
+            ),
+        )
+        setattr(
+            TestSolveLS,
+            "test_medium_sparse_sparse_conversion_{}".format(solver),
+            TestSolveLS.get_test_medium_sparse(solver, sparse_conversion=True),
         )
     if solver not in ["gurobi", "highs", "scs"]:
         # Gurobi: model too large for size-limited license
@@ -235,6 +265,13 @@ for solver in sparse_solvers:
         # SCS: issue reported in https://github.com/cvxgrp/scs/issues/234
         setattr(
             TestSolveLS,
-            "test_large_sparse_problem_{}".format(solver),
-            TestSolveLS.get_test_large_sparse_problem(solver),
+            "test_large_sparse_problem_dense_conversion_{}".format(solver),
+            TestSolveLS.get_test_large_sparse(solver, sparse_conversion=False),
         )
+        if solver != "cvxopt":
+            # CVXOPT: too slow
+            setattr(
+                TestSolveLS,
+                "test_large_sparse_problem_sparse_conversion_{}".format(solver),
+                TestSolveLS.get_test_large_sparse(solver, sparse_conversion=True),
+            )
