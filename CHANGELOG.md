@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 
 - Clarabel: upstream handling of infinite values in inequalities
+- CVXOPT: option passing
 
 ## [3.1.0] - 2023/03/07
 
