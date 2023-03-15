@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Added
+
+- Start ``problems`` submodule to collect sample test problems
+
 ### Fixed
 
 - Clarabel: upstream handling of infinite values in inequalities
