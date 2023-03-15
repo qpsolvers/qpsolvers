@@ -78,6 +78,7 @@ if __name__ == "__main__":
         lb,
         solver=solver,
         verbose=False,
+        sparse_conversion=True,
     )
     end_time = perf_counter()
     duration_ms = 1e3 * (end_time - start_time)
