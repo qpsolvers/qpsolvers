@@ -40,8 +40,7 @@ from ..exceptions import ProblemError, SolverError
 from ..problem import Problem
 from ..solution import Solution
 
-cvxopt.solvers.options["show_progress"] = False  # disable verbose output
-__infty__ = 1e10  # 1e20 tends to yield division-by-zero errors
+cvxopt.solvers.options["show_progress"] = False  # disable default verbosity
 
 
 def __to_cvxopt(
@@ -60,6 +59,7 @@ def __to_cvxopt(
         Matrix in CVXOPT format.
     """
     if isinstance(M, np.ndarray):
+        __infty__ = 1e10  # 1e20 tends to yield division-by-zero errors
         M_noinf = np.nan_to_num(M, posinf=__infty__, neginf=-__infty__)
         return cvxopt.matrix(M_noinf)
     coo = M.tocoo()
@@ -168,18 +168,21 @@ def cvxopt_solve_problem(
     initvals_dict: Optional[Dict[str, cvxopt.matrix]] = None
     if initvals is not None:
         initvals_dict = {"x": __to_cvxopt(initvals)}
-
     kwargs["show_progress"] = verbose
-    original_options = cvxopt.solvers.options
-    cvxopt.solvers.options = kwargs
+
     try:
-        res = qp(*args, solver=solver, initvals=initvals_dict, **constraints)
+        res = qp(
+            *args,
+            solver=solver,
+            initvals=initvals_dict,
+            options=kwargs,
+            **constraints,
+        )
     except ValueError as exception:
         error = str(exception)
         if "Rank(A)" in error:
             raise ProblemError(error) from exception
         raise SolverError(error) from exception
-    cvxopt.solvers.options = original_options
 
     solution = Solution(problem)
     solution.extras = res
