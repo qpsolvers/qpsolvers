@@ -137,13 +137,15 @@ def cvxopt_solve_problem(
          - Description
        * - ``abstol``
          - Absolute tolerance on the duality gap.
-       * - ``reltol``
-         - Relative tolerance on the duality gap.
        * - ``feastol``
          - Tolerance on feasibility conditions, that is, on the primal
            residual.
+       * - ``maxiters``
+         - Maximum number of iterations.
        * - ``refinement``
          - Number of iterative refinement steps when solving KKT equations
+       * - ``reltol``
+         - Relative tolerance on the duality gap.
 
     Check out `Algorithm Parameters
     <https://cvxopt.org/userguide/coneprog.html#algorithm-parameters>`_ section
