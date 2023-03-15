@@ -254,11 +254,15 @@ for solver in sparse_solvers:
                 solver, sparse_conversion=False
             ),
         )
-        setattr(
-            TestSolveLS,
-            "test_medium_sparse_sparse_conversion_{}".format(solver),
-            TestSolveLS.get_test_medium_sparse(solver, sparse_conversion=True),
-        )
+        if solver != "cvxopt":
+            # CVXOPT: sparse conversion breaks rank assumption
+            setattr(
+                TestSolveLS,
+                "test_medium_sparse_sparse_conversion_{}".format(solver),
+                TestSolveLS.get_test_medium_sparse(
+                    solver, sparse_conversion=True
+                ),
+            )
     if solver not in ["gurobi", "highs", "scs"]:
         # Gurobi: model too large for size-limited license
         # HiGHS: model too large https://github.com/ERGO-Code/HiGHS/issues/992
@@ -269,9 +273,13 @@ for solver in sparse_solvers:
             TestSolveLS.get_test_large_sparse(solver, sparse_conversion=False),
         )
         if solver != "cvxopt":
-            # CVXOPT: too slow
+            # CVXOPT: sparse conversion breaks rank assumption
             setattr(
                 TestSolveLS,
-                "test_large_sparse_problem_sparse_conversion_{}".format(solver),
-                TestSolveLS.get_test_large_sparse(solver, sparse_conversion=True),
+                "test_large_sparse_problem_sparse_conversion_{}".format(
+                    solver
+                ),
+                TestSolveLS.get_test_large_sparse(
+                    solver, sparse_conversion=True
+                ),
             )
