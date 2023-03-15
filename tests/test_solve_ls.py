@@ -151,15 +151,27 @@ class TestSolveLS(unittest.TestCase):
             n = len(s)
 
             R_csc = spa.eye(n, format="csc")
-            x_csc = solve_ls(R_csc, s, G, h, A, b, solver=solver)
+            x_csc = solve_ls(
+                R_csc, s, G, h, A, b, solver=solver, sparse_conversion=False
+            )
             self.assertIsNotNone(x_csc)
 
             R_dia = spa.eye(n)
-            x_dia = solve_ls(R_dia, s, G, h, A, b, solver=solver)
+            x_dia = solve_ls(
+                R_dia, s, G, h, A, b, solver=solver, sparse_conversion=False
+            )
             self.assertIsNotNone(x_dia)
 
             x_np_dia = solve_ls(
-                R_dia, s, G, h, A, b, W=np.eye(n), solver=solver
+                R_dia,
+                s,
+                G,
+                h,
+                A,
+                b,
+                W=np.eye(n),
+                solver=solver,
+                sparse_conversion=False,
             )
             self.assertIsNotNone(x_np_dia)
 
