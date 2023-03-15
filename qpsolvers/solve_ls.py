@@ -89,13 +89,13 @@ def __solve_sparse_ls(
         G = spa.hstack([G, spa.csc_matrix((G.shape[0], m))], format="csc")
     if A is not None:
         A = spa.hstack([A, spa.csc_matrix((A.shape[0], m))], format="csc")
-    A_new = spa.hstack([R, -eye_m], format="csc")
-    if A is None:
-        A = A_new
-        b = s
-    else:  # A is not None
-        A = spa.vstack([A, A_new], format="csc")
+    Rx_minus_y = spa.hstack([R, -eye_m], format="csc")
+    if A is not None and b is not None:  # help mypy
+        A = spa.vstack([A, Rx_minus_y], format="csc")
         b = np.hstack([b, s])
+    else:  # no input equality constraint
+        A = Rx_minus_y
+        b = s
     if lb is not None:
         lb = np.hstack([lb, np.full((m,), -np.inf)])
     if ub is not None:
