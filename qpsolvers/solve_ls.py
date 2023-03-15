@@ -223,7 +223,6 @@ def solve_ls(
         return __solve_sparse_ls(
             R, s, G, h, A, b, lb, ub, W, solver, initvals, verbose, **kwargs
         )
-    else:  # dense conversion
-        return __solve_dense_ls(
-            R, s, G, h, A, b, lb, ub, W, solver, initvals, verbose, **kwargs
-        )
+    return __solve_dense_ls(
+        R, s, G, h, A, b, lb, ub, W, solver, initvals, verbose, **kwargs
+    )
