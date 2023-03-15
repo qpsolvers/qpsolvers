@@ -72,7 +72,7 @@ This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``. It
 
 | Solver | Keyword | Algorithm | API | License | Warm-start |
 | ------ | ------- | --------- | --- | ------- |------------|
-| [Clarabel](https://github.com/oxfordcontrol/Clarabel.rs) | ``clarabel`` | Interior point | Dense | Apache-2.0 | ✖️ |
+| [Clarabel](https://github.com/oxfordcontrol/Clarabel.rs) | ``clarabel`` | Interior point | Sparse | Apache-2.0 | ✖️ |
 | [CVXOPT](http://cvxopt.org/) | ``cvxopt`` | Interior point | Dense | GPL-3.0 | ✔️ |
 | [ECOS](https://web.stanford.edu/~boyd/papers/ecos.html) | ``ecos`` | Interior point | Sparse | GPL-3.0 | ✖️ |
 | [Gurobi](https://www.gurobi.com/) | ``gurobi`` | Interior point | Sparse | Commercial | ✖️ |
