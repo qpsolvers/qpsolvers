@@ -114,7 +114,7 @@ def __solve_sparse_ls(
         verbose=verbose,
         **kwargs,
     )
-    return xy[-m:] if xy is not None else None
+    return xy[:n] if xy is not None else None
 
 
 def solve_ls(
