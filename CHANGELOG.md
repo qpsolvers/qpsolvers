@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- Sparse strategy to convert LS problems to QP (thanks to @bodono)
 - Start ``problems`` submodule to collect sample test problems
 
 ### Fixed
