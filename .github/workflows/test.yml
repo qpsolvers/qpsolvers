@@ -94,6 +94,7 @@ jobs:
               run: |
                   cd qpSWIFT/python
                   python setup.py install
+              if: ${{ matrix.python-version == '3.8' }}
 
             - name: "Test with tox for ${{ matrix.os }}"
               run: |
