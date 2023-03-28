@@ -83,19 +83,6 @@ jobs:
                   python -m pip install --upgrade pip
                   python -m pip install numpy tox tox-gh-actions
 
-            - name: "Checkout qpSWIFT"
-              uses: actions/checkout@v3
-              with:
-                  repository: qpSWIFT/qpSWIFT
-                  path: qpSWIFT
-              if: ${{ matrix.python-version == '3.8' }}
-
-            - name: "Install qpSWIFT"
-              run: |
-                  cd qpSWIFT/python
-                  python setup.py install
-              if: ${{ matrix.python-version == '3.8' }}
-
             - name: "Test with tox for ${{ matrix.os }}"
               run: |
                   tox
