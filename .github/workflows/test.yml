@@ -88,6 +88,7 @@ jobs:
               with:
                   repository: qpSWIFT/qpSWIFT
                   path: qpSWIFT
+              if: ${{ matrix.python-version == '3.8' }}
 
             - name: "Install qpSWIFT"
               run: |
