@@ -124,7 +124,7 @@ def gurobi_solve_problem(
     solution = Solution(problem)
     solution.extras["status"] = model.status
     solution.found = model.status in (GRB.OPTIMAL, GRB.SUBOPTIMAL)
-    solution.x = x.X
+    solution.x = x.X if solution.found else None
     __retrieve_dual(solution, ineq_constr, eq_constr, lb_constr, ub_constr)
     return solution
 
@@ -136,16 +136,16 @@ def __retrieve_dual(
     lb_constr: Optional[gurobipy.MConstr],
     ub_constr: Optional[gurobipy.MConstr],
 ) -> None:
-    if ineq_constr is not None:
-        solution.z = ineq_constr.Pi
-    if eq_constr is not None:
-        solution.y = -eq_constr.Pi
+    solution.z = ineq_constr.Pi if ineq_constr is not None else np.empty((0,))
+    solution.y = -eq_constr.Pi if eq_constr is not None else np.empty((0,))
     if lb_constr is not None and ub_constr is not None:
         solution.z_box = -ub_constr.Pi - lb_constr.Pi
     elif ub_constr is not None:  # lb_constr is None
         solution.z_box = -ub_constr.Pi
     elif lb_constr is not None:  # ub_constr is None
         solution.z_box = -lb_constr.Pi
+    else:  # lb_constr is None and ub_constr is None
+        solution.z_box = np.empty((0,))
 
 
 def gurobi_solve_qp(
