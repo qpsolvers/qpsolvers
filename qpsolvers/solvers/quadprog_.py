@@ -107,6 +107,19 @@ def quadprog_solve_problem(
             qp_G, qp_a, qp_C, qp_b, meq, **kwargs
         )
         solution.found = True
+        solution.x = x
+        solution.obj = obj
+
+        z, ys, z_box = __convert_dual_multipliers(y, meq, lb, ub)
+        solution.y = ys
+        solution.z = z
+        solution.z_box = z_box
+
+        solution.extras = {
+            "iact": iact,
+            "iterations": iterations,
+            "xu": xu,
+        }
     except TypeError as error:
         raise ProblemError("problem has sparse matrices") from error
     except ValueError as error:
@@ -118,19 +131,6 @@ def quadprog_solve_problem(
         if "no solution" not in error_message:
             warnings.warn(f"quadprog raised a ValueError: {error_message}")
 
-    solution.x = x
-    solution.obj = obj
-
-    z, ys, z_box = __convert_dual_multipliers(y, meq, lb, ub)
-    solution.y = ys
-    solution.z = z
-    solution.z_box = z_box
-
-    solution.extras = {
-        "iact": iact,
-        "iterations": iterations,
-        "xu": xu,
-    }
     return solution
 
 
