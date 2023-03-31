@@ -23,7 +23,7 @@
 import unittest
 import warnings
 
-from .solved_problems import get_qpsut01
+from qpsolvers.problems import get_qpsut01
 
 try:
     import clarabel
@@ -35,8 +35,7 @@ try:
 
         def test_time_limit(self):
             """Call Clarabel.rs with an infeasibly low time limit."""
-            ref_solution = get_qpsut01()
-            problem = ref_solution.problem
+            problem, ref_solution = get_qpsut01()
             solution = clarabel_solve_problem(problem, time_limit=1e-10)
             status = solution.extras["status"]
             self.assertEqual(status, clarabel.SolverStatus.MaxTime)
@@ -48,13 +47,12 @@ try:
 
             Context: https://github.com/oxfordcontrol/Clarabel.rs/issues/10
             """
-            problem = get_qpsut01().problem
+            problem, _ = get_qpsut01()
             solution = clarabel_solve_problem(problem)
             status = solution.extras["status"]
             check_1 = str(status) != "Solved"
             check_2 = status != clarabel.SolverStatus.Solved
             self.assertEqual(check_1, check_2)
-
 
 except ImportError:  # solver not installed
     warnings.warn("Skipping Clarabel.rs tests as the solver is not installed")

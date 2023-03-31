@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Added
+
+- New sample problems in ``qpsolvers.problems``
+
 ### Changed
 
 - Dual multipliers are empty arrays rather than None when no constraint
