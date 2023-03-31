@@ -162,12 +162,13 @@ def osqp_solve_problem(
     solution.x = res.x
     m = G.shape[0] if G is not None else 0
     meq = A.shape[0] if A is not None else 0
-    if G is not None:
-        solution.z = res.y[:m]
-    if A is not None:
-        solution.y = res.y[m : m + meq]
-    if lb is not None or ub is not None:
-        solution.z_box = res.y[m + meq :]
+    solution.z = res.y[:m] if G is not None else np.empty((0,))
+    solution.y = res.y[m : m + meq] if A is not None else np.empty((0,))
+    solution.z_box = (
+        res.y[m + meq :]
+        if lb is not None or ub is not None
+        else np.empty((0,))
+    )
     return solution
 
 
