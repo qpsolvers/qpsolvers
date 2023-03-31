@@ -282,4 +282,4 @@ def cvxopt_solve_qp(
     solution = cvxopt_solve_problem(
         problem, solver, initvals, verbose, **kwargs
     )
-    return solution.x
+    return solution.x if solution.found else None

@@ -424,4 +424,4 @@ def qpoases_solve_qp(
         predefined_options,
         **kwargs,
     )
-    return solution.x
+    return solution.x if solution.found else None

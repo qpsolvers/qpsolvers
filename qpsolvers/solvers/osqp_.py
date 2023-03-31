@@ -285,4 +285,4 @@ def osqp_solve_qp(
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = osqp_solve_problem(problem, initvals, verbose, **kwargs)
-    return solution.x
+    return solution.x if solution.found else None

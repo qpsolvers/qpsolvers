@@ -306,4 +306,4 @@ def proxqp_solve_qp(
     solution = proxqp_solve_problem(
         problem, initvals, verbose, backend, **kwargs
     )
-    return solution.x
+    return solution.x if solution.found else None
