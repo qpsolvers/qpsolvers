@@ -27,14 +27,13 @@ import numpy as np
 from numpy.linalg import norm
 
 from qpsolvers import available_solvers, solve_problem
-
-from .solved_problems import (
-    get_maros_meszaros_qptest,
+from qpsolvers.problems import (
     get_qpsut01,
     get_qpsut02,
     get_qpsut03,
     get_qpsut04,
     get_qpsut05,
+    get_qptest,
 )
 
 
@@ -65,8 +64,7 @@ class TestSolveProblem(unittest.TestCase):
         """
 
         def test(self):
-            ref_solution = get_qpsut01()
-            problem = ref_solution.problem
+            problem, ref_solution = get_qpsut01()
             solution = solve_problem(problem, solver=solver)
             eps_abs = (
                 5e-1
@@ -105,8 +103,7 @@ class TestSolveProblem(unittest.TestCase):
         """
 
         def test(self):
-            ref_solution = get_qpsut02()
-            problem = ref_solution.problem
+            problem, ref_solution = get_qpsut02()
             solution = solve_problem(problem, solver=solver)
             eps_abs = (
                 5e-2
@@ -146,8 +143,7 @@ class TestSolveProblem(unittest.TestCase):
         """
 
         def test(self):
-            ref_solution = get_qpsut03()
-            problem = ref_solution.problem
+            problem, ref_solution = get_qpsut03()
             solution = solve_problem(problem, solver=solver)
             self.assertEqual(solution.y.shape, (0,))
             self.assertEqual(solution.z.shape, (0,))
@@ -173,8 +169,7 @@ class TestSolveProblem(unittest.TestCase):
         """
 
         def test(self):
-            ref_solution = get_qpsut04()
-            problem = ref_solution.problem
+            problem, ref_solution = get_qpsut04()
             solution = solve_problem(problem, solver=solver)
             eps_abs = 2e-4 if solver == "osqp" else 1e-6
             self.assertLess(norm(solution.x - ref_solution.x), eps_abs)
@@ -200,8 +195,7 @@ class TestSolveProblem(unittest.TestCase):
         """
 
         def test(self):
-            ref_solution = get_qpsut05()
-            problem = ref_solution.problem
+            problem, ref_solution = get_qpsut05()
             solution = solve_problem(problem, solver=solver)
             eps_abs = 2e-5 if solver == "ecos" else 1e-6
             self.assertLess(norm(solution.x - ref_solution.x), eps_abs)
@@ -229,8 +223,7 @@ class TestSolveProblem(unittest.TestCase):
         """
 
         def test(self):
-            solution = get_maros_meszaros_qptest()
-            problem = solution.problem
+            problem, solution = get_qptest()
             result = solve_problem(problem, solver=solver)
             tolerance = (
                 1e1
@@ -274,7 +267,7 @@ class TestSolveProblem(unittest.TestCase):
         """
 
         def test(self):
-            problem = get_qpsut01().problem
+            problem, _ = get_qpsut01()
             problem.lb[1] = -np.inf
             problem.ub[1] = +np.inf
             result = solve_problem(problem, solver=solver)
@@ -300,7 +293,7 @@ class TestSolveProblem(unittest.TestCase):
         """
 
         def test(self):
-            problem = get_qpsut01().problem
+            problem, _ = get_qpsut01()
             problem.h[0] = +np.inf
             result = solve_problem(problem, solver=solver)
             self.assertIsNotNone(result.x)

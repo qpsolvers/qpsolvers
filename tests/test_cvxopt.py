@@ -30,7 +30,7 @@ from numpy import array, ones
 from numpy.linalg import norm
 
 from .problems import get_sd3310_problem
-from .solved_problems import get_qpsut01
+from qpsolvers.problems import get_qpsut01
 
 try:
     import cvxopt
@@ -101,14 +101,14 @@ try:
 
         def test_infinite_linear_bounds(self):
             """CVXOPT does not yield a domain error on infinite bounds."""
-            problem = get_qpsut01().problem
+            problem, _ = get_qpsut01()
             problem.h[1] = +np.inf
             x = cvxopt_solve_problem(problem)
             self.assertIsNotNone(x)
 
         def test_infinite_box_bounds(self):
             """CVXOPT does not yield a domain error infinite box bounds."""
-            problem = get_qpsut01().problem
+            problem, _ = get_qpsut01()
             problem.lb[1] = -np.inf
             problem.ub[1] = +np.inf
             x = cvxopt_solve_problem(problem)
