@@ -162,8 +162,7 @@ def qpswift_solve_problem(
     }
     solution.obj = adv_info["fval"]
     exit_flag = basic_info["ExitFlag"]
-    if exit_flag != 0:
-        return solution
+    solution.found = exit_flag == 0
     solution.x = result["sol"]
     if A is not None:
         solution.y = adv_info["y"]
