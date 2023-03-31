@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Changed
+
+- Dual multipliers are empty arrays rather than None when no constraint
+
 ### Fixed
 
 - Unit test on actual solution to QPSUT03 problem
