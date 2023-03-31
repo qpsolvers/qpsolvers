@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Fixed
+
+- Unit test on actual solution to QPSUT03 problem
+
 ## [3.2.0] - 2023/03/29
 
 ### Added
