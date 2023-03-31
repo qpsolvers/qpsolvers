@@ -281,11 +281,12 @@ def qpoases_solve_problem(
     solution.extras = {
         "nWSR": n_wsr[0],
     }
+    solution.found = True
     if RET_INIT_FAILED <= return_value <= RET_INIT_FAILED_REGULARISATION:
-        return solution
+        solution.found = False
     if return_value == ReturnValue.MAX_NWSR_REACHED:
         warnings.warn(f"qpOASES reached the maximum number of WSR ({max_wsr})")
-        return solution
+        solution.found = False
 
     x_opt = np.empty((n,))
     z_opt = np.empty((n + C.shape[0],))
