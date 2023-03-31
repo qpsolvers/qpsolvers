@@ -55,4 +55,5 @@ def solve_unconstrained(problem: Problem) -> Solution:
             f"problem is unbounded below (cost_check={cost_check:.1e}), "
             "q has component in the nullspace of P"
         )
+    solution.found = True
     return solution
