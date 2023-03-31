@@ -70,7 +70,7 @@ def get_sparse_least_squares(n):
     return R, s, G, h, A, b, lb, ub
 
 
-def get_qpsut01() -> Solution:
+def get_qpsut01() -> Tuple[Problem, Solution]:
     """Get QPSUT01 problem and its solution.
 
     Returns
@@ -97,7 +97,7 @@ def get_qpsut01() -> Solution:
     return problem, solution
 
 
-def get_qpsut02() -> Solution:
+def get_qpsut02() -> Tuple[Problem, Solution]:
     """Get QPSUT02 problem and its solution.
 
     Returns
@@ -179,7 +179,7 @@ def get_qpsut03() -> Tuple[Problem, Solution]:
     return problem, solution
 
 
-def get_qpsut04() -> Solution:
+def get_qpsut04() -> Tuple[Problem, Solution]:
     """Get QPSUT04 problem and its solution.
 
     Returns
@@ -203,7 +203,7 @@ def get_qpsut04() -> Solution:
     return problem, solution
 
 
-def get_qpsut05() -> Solution:
+def get_qpsut05() -> Tuple[Problem, Solution]:
     """Get QPSUT05 problem and its solution.
 
     Returns
