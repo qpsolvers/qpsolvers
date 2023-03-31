@@ -144,12 +144,14 @@ def clarabel_solve_problem(
 
     solution.x = np.array(result.x)
     meq = A.shape[0] if A is not None else 0
-    if meq > 0:
-        solution.y = result.z[:meq]
+    solution.y = result.z[:meq] if meq > 0 else np.empty((0,))
     if G is not None:
         z, z_box = split_dual_linear_box(np.array(result.z[meq:]), lb, ub)
         solution.z = z
         solution.z_box = z_box
+    else:  # G is None
+        solution.z = np.empty((0,))
+        solution.z_box = np.empty((0,))
     return solution
 
 
