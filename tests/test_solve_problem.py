@@ -204,7 +204,7 @@ class TestSolveProblem(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_maros_meszaros_qptest(solver):
+    def get_test_qptest(solver):
         """Get test function for the QPTEST problem.
 
         Parameters
@@ -315,8 +315,9 @@ for solver in available_solvers:
         f"test_qpsut02_{solver}",
         TestSolveProblem.get_test_qpsut02(solver),
     )
-    if solver not in ["ecos"]:
+    if solver not in ["ecos", "qpswift"]:
         # ECOS: https://github.com/qpsolvers/qpsolvers/issues/160
+        # qpSWIFT: https://github.com/qpsolvers/qpsolvers/issues/159
         setattr(
             TestSolveProblem,
             f"test_qpsut03_{solver}",
@@ -339,8 +340,8 @@ for solver in available_solvers:
         # qpSWIFT: https://github.com/qpsolvers/qpsolvers/issues/159
         setattr(
             TestSolveProblem,
-            f"test_maros_meszaros_qptest_{solver}",
-            TestSolveProblem.get_test_maros_meszaros_qptest(solver),
+            f"test_qptest_{solver}",
+            TestSolveProblem.get_test_qptest(solver),
         )
     if solver not in ["ecos", "qpswift"]:
         # See https://github.com/qpsolvers/qpsolvers/issues/159
