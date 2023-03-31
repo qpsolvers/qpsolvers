@@ -101,6 +101,7 @@ def quadprog_solve_problem(
             qp_b = -h
         meq = 0
 
+    solution = Solution(problem)
     try:
         x, obj, xu, iterations, y, iact = solve_qp(
             qp_G, qp_a, qp_C, qp_b, meq, **kwargs
@@ -108,17 +109,14 @@ def quadprog_solve_problem(
     except TypeError as error:
         raise ProblemError("problem has sparse matrices") from error
     except ValueError as error:
+        solution.found = False
         error_message = str(error)
         if "matrix G is not positive definite" in error_message:
             # quadprog writes G the cost matrix that we write P in this package
             raise ProblemError("matrix P is not positive definite") from error
-        no_solution = Solution(problem)
-        if "no solution" in error_message:
-            return no_solution
-        warnings.warn(f"quadprog raised a ValueError: {error_message}")
-        return no_solution
+        if "no solution" not in error_message:
+            warnings.warn(f"quadprog raised a ValueError: {error_message}")
 
-    solution = Solution(problem)
     solution.x = x
     solution.obj = obj
 
