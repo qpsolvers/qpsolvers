@@ -124,8 +124,9 @@ def gurobi_solve_problem(
     solution = Solution(problem)
     solution.extras["status"] = model.status
     solution.found = model.status in (GRB.OPTIMAL, GRB.SUBOPTIMAL)
-    solution.x = x.X if solution.found else None
-    __retrieve_dual(solution, ineq_constr, eq_constr, lb_constr, ub_constr)
+    if solution.found:
+        solution.x = x.X
+        __retrieve_dual(solution, ineq_constr, eq_constr, lb_constr, ub_constr)
     return solution
 
 
