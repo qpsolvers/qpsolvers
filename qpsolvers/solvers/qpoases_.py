@@ -293,14 +293,15 @@ def qpoases_solve_problem(
     qp.getPrimalSolution(x_opt)  # can't return RET_QP_NOT_SOLVED at this point
     qp.getDualSolution(z_opt)
     solution.x = x_opt
-    m = G.shape[0] if G is not None else 0
-    if lb is not None or ub is not None:
-        solution.z_box = -z_opt[:n]
-    if G is not None:
-        solution.z = -z_opt[n : n + m]
-    if A is not None:
-        solution.y = -z_opt[n + m : n + m + A.shape[0]]
     solution.obj = qp.getObjVal()
+    m = G.shape[0] if G is not None else 0
+    solution.y = (
+        -z_opt[n + m : n + m + A.shape[0]] if A is not None else np.empty((0,))
+    )
+    solution.z = -z_opt[n : n + m] if G is not None else np.empty((0,))
+    solution.z_box = (
+        -z_opt[:n] if lb is not None or ub is not None else np.empty((0,))
+    )
     return solution
 
 
