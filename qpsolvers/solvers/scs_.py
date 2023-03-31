@@ -195,12 +195,13 @@ def scs_solve_problem(
         )
     solution.x = result["x"]
     meq = A.shape[0] if A is not None else 0
-    if A is not None:
-        solution.y = result["y"][:meq]
-    if G is not None:
-        solution.z = result["y"][meq : meq + G.shape[0]]
-    if lb is not None or ub is not None:
-        solution.z_box = -result["y"][-n:]
+    solution.y = result["y"][:meq] if A is not None else np.empty((0,))
+    solution.z = (
+        result["y"][meq : meq + G.shape[0]]
+        if G is not None
+        else np.empty((0,))
+    )
+    solution.z_box = -result["y"][-n:] if lb is not None or ub is not None else np.empty((0,))
     return solution
 
 
