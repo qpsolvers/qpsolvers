@@ -138,18 +138,15 @@ def nppro_solve_problem(
 
     # Store solution
     solution = Solution(problem)
-    if exitflag != 0 or np.isnan(x).any():
+    solution.found = exitflag == 0 and not np.isnan(x).any()
+    if not solution.found:
         # The second condition typically handle positive semi-definite cases
         # that are not catched by the solver yet
         warnings.warn(f"NPPro exited with status {exitflag}")
-        return solution
     solution.x = x
-    if G is not None:
-        solution.z = None  # not available yet
-    if A is not None:
-        solution.y = None  # not available yet
-    if lb is not None or ub is not None:
-        solution.z_box = None  # not available yet
+    solution.z = None  # not available yet
+    solution.y = None  # not available yet
+    solution.z_box = None  # not available yet
     solution.extras = {
         "cost": fval,
         "iter": iter_,
@@ -218,4 +215,4 @@ def nppro_solve_qp(
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = nppro_solve_problem(problem, initvals, **kwargs)
-    return solution.x
+    return solution.x if solution.found else None
