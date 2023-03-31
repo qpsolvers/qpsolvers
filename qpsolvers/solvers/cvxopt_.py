@@ -190,13 +190,19 @@ def cvxopt_solve_problem(
     solution.extras = res
     solution.found = "optimal" in res["status"]
     solution.x = np.array(res["x"]).reshape((q.shape[0],))
-    if b is not None:
-        solution.y = np.array(res["y"]).reshape((b.shape[0],))
+    solution.y = (
+        np.array(res["y"]).reshape((b.shape[0],))
+        if b is not None
+        else np.empty((0,))
+    )
     if h is not None:
         z_cvx = np.array(res["z"]).reshape((h.shape[0],))
         z, z_box = split_dual_linear_box(z_cvx, lb, ub)
         solution.z = z
         solution.z_box = z_box
+    else:  # h is None
+        solution.z = np.empty((0,))
+        solution.z_box = np.empty((0,))
     solution.obj = res["primal objective"]
     return solution
 
