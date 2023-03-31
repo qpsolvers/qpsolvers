@@ -322,11 +322,13 @@ for solver in available_solvers:
         f"test_qpsut02_{solver}",
         TestSolveProblem.get_test_qpsut02(solver),
     )
-    setattr(
-        TestSolveProblem,
-        f"test_qpsut03_{solver}",
-        TestSolveProblem.get_test_qpsut03(solver),
-    )
+    if solver not in ["ecos"]:
+        # ECOS: https://github.com/qpsolvers/qpsolvers/issues/160
+        setattr(
+            TestSolveProblem,
+            f"test_qpsut03_{solver}",
+            TestSolveProblem.get_test_qpsut03(solver),
+        )
     setattr(
         TestSolveProblem,
         f"test_qpsut04_{solver}",
@@ -340,8 +342,8 @@ for solver in available_solvers:
             TestSolveProblem.get_test_qpsut05(solver),
         )
     if solver not in ["ecos", "qpswift"]:
-        # See https://github.com/qpsolvers/qpsolvers/issues/159
-        # See https://github.com/qpsolvers/qpsolvers/issues/160
+        # ECOS: https://github.com/qpsolvers/qpsolvers/issues/160
+        # qpSWIFT: https://github.com/qpsolvers/qpsolvers/issues/159
         setattr(
             TestSolveProblem,
             f"test_maros_meszaros_qptest_{solver}",
