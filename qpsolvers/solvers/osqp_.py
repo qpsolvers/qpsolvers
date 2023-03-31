@@ -156,9 +156,9 @@ def osqp_solve_problem(
         "info": res.info,
         "prim_inf_cert": res.prim_inf_cert,
     }
-    if res.info.status_val != success_status:
+    solution.found = res.info.status_val == success_status
+    if not solution.found:
         warnings.warn(f"OSQP exited with status '{res.info.status}'")
-        return solution
     solution.x = res.x
     m = G.shape[0] if G is not None else 0
     meq = A.shape[0] if A is not None else 0
