@@ -149,6 +149,9 @@ class TestSolveProblem(unittest.TestCase):
             ref_solution = get_qpsut03()
             problem = ref_solution.problem
             solution = solve_problem(problem, solver=solver)
+            self.assertIsNone(solution.y)
+            self.assertIsNone(solution.z)
+            self.assertAlmostEqual(np.linalg.norm(solution.z_box), 0.0)
             self.assertFalse(math.isnan(solution.duality_gap()))
 
         return test
