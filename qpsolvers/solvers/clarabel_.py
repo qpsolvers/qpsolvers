@@ -138,7 +138,7 @@ def clarabel_solve_problem(
         "solve_time": result.solve_time,
     }
 
-    solution.found = result.status != clarabel.SolverStatus.Solved
+    solution.found = result.status == clarabel.SolverStatus.Solved
     if not solution.found:
         warnings.warn(f"Clarabel.rs terminated with status {result.status}")
 
