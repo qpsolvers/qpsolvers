@@ -217,12 +217,17 @@ def highs_solve_problem(
     solution.x = np.array(result.col_value)
     if G is not None:
         solution.z = -np.array(result.row_dual[: G.shape[0]])
-        if A is not None:
-            solution.y = -np.array(result.row_dual[G.shape[0] :])
-    elif A is not None:  # G is None
-        solution.y = -np.array(result.row_dual)
-    if lb is not None or ub is not None:
-        solution.z_box = -np.array(result.col_dual)
+        solution.y = (
+            -np.array(result.row_dual[G.shape[0] :])
+            if A is not None
+            else np.empty((0,))
+        )
+    else:  # G is None
+        solution.z = np.empty((0,))
+        solution.y = (
+            -np.array(result.row_dual) if A is not None else np.empty((0,))
+        )
+    solution.z_box = -np.array(result.col_dual) if lb is not None or ub is not None else np.empty((0,))
     return solution
 
 
