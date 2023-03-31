@@ -106,6 +106,7 @@ def quadprog_solve_problem(
         x, obj, xu, iterations, y, iact = solve_qp(
             qp_G, qp_a, qp_C, qp_b, meq, **kwargs
         )
+        solution.found = True
     except TypeError as error:
         raise ProblemError("problem has sparse matrices") from error
     except ValueError as error:
