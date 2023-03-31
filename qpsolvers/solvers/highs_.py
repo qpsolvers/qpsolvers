@@ -227,7 +227,11 @@ def highs_solve_problem(
         solution.y = (
             -np.array(result.row_dual) if A is not None else np.empty((0,))
         )
-    solution.z_box = -np.array(result.col_dual) if lb is not None or ub is not None else np.empty((0,))
+    solution.z_box = (
+        -np.array(result.col_dual)
+        if lb is not None or ub is not None
+        else np.empty((0,))
+    )
     return solution
 
 
