@@ -113,10 +113,10 @@ def get_qpsut03() -> Solution:
     problem = Problem(P, q, G, h, A, b, lb, ub)
 
     solution = Solution(problem)
-    solution.x = np.array([0.4, -0.4, 1.0])
-    solution.z = np.array([0.0, 0.0])
-    solution.y = np.array([-5.8])
-    solution.z_box = np.array([0.0, -1.8, 3.0])
+    solution.x = np.array([0.18143455,  0.00843864, -2.35442995,  0.35443034])
+    solution.z = np.array([])
+    solution.y = np.array([])
+    solution.z_box = np.array([0.0, 0., 0., 0.])
     return solution
 
 
