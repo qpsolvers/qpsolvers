@@ -147,10 +147,10 @@ def ecos_solve_problem(
     flag = result["info"]["exitFlag"]
     solution = Solution(problem)
     solution.extras = result["info"]
-    if flag != 0:
+    solution.found = flag == 0
+    if not solution.found:
         meaning = __exit_flag_meaning__.get(flag, "unknown exit flag")
         warnings.warn(f"ECOS returned exit flag {flag} ({meaning})")
-        return solution
     solution.x = result["x"][:-1]
     if A is not None:
         solution.y = result["y"]
