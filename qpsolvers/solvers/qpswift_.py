@@ -306,4 +306,4 @@ def qpswift_solve_qp(
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = qpswift_solve_problem(problem, initvals, verbose, **kwargs)
-    return solution.x
+    return solution.x if solution.found else None
