@@ -37,6 +37,11 @@ class Solution:
     extras :
         Other outputs, specific to each solver.
 
+    found :
+        True if the solution was found successfully by a solver, False if the
+        solver did not find a solution or detected an unfeasible problem,
+        ``None`` if no solver was run.
+
     problem :
         Quadratic program the solution corresponds to.
 
@@ -80,16 +85,12 @@ class Solution:
 
     problem: Problem
     extras: dict = field(default_factory=dict)
+    found: Optional[bool] = None
     obj: Optional[float] = None
     x: Optional[np.ndarray] = None
     y: Optional[np.ndarray] = None
     z: Optional[np.ndarray] = None
     z_box: Optional[np.ndarray] = None
-
-    @property
-    def found(self) -> bool:
-        """Check whether the solver found a solution."""
-        return self.x is not None
 
     def is_optimal(self, eps_abs: float) -> bool:
         """Check whether the solution is indeed optimal.
