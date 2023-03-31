@@ -25,7 +25,7 @@ quadprog is a C implementation of the Goldfarb-Idnani dual algorithm
 """
 
 import warnings
-from typing import Optional, Tuple
+from typing import Optional
 
 import numpy as np
 from numpy import hstack, vstack
@@ -110,8 +110,8 @@ def quadprog_solve_problem(
         solution.x = x
         solution.obj = obj
 
-        z, ys, z_box = __convert_dual_multipliers(y, meq, lb, ub)
-        solution.y = ys
+        z, z_box = split_dual_linear_box(y[meq:], lb, ub)
+        solution.y = y[:meq] if meq > 0 else np.empty((0,))
         solution.z = z
         solution.z_box = z_box
 
@@ -132,45 +132,6 @@ def quadprog_solve_problem(
             warnings.warn(f"quadprog raised a ValueError: {error_message}")
 
     return solution
-
-
-def __convert_dual_multipliers(
-    y: np.ndarray,
-    meq: int,
-    lb: Optional[np.ndarray],
-    ub: Optional[np.ndarray],
-) -> Tuple[Optional[np.ndarray], Optional[np.ndarray], Optional[np.ndarray]]:
-    """Convert dual multipliers from quadprog to qpsolvers QP formulation.
-
-    Parameters
-    ----------
-    y :
-        Dual multipliers from quadprog.
-    meq :
-        Number of equality constraints.
-    lb :
-        Lower bound vector for box inequalities, if any.
-    ub :
-        Upper bound vector for box inequalities, if any.
-
-    Returns
-    -------
-    :
-        Tuple of dual multipliers :code:`z, ys, z_box` corresponding
-        respectively to linear inequalities, linear equalities, and box
-        inequalities.
-
-    Raises
-    ------
-    ProblemError :
-        If the problem is ill-formed in some way, for instance if some matrices
-        are not dense.
-    """
-    z, ys, z_box = None, None, None
-    if meq > 0:
-        ys = y[:meq]
-    z, z_box = split_dual_linear_box(y[meq:], lb, ub)
-    return z, ys, z_box
 
 
 def quadprog_solve_qp(
