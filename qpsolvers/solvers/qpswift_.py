@@ -164,8 +164,7 @@ def qpswift_solve_problem(
     exit_flag = basic_info["ExitFlag"]
     solution.found = exit_flag == 0
     solution.x = result["sol"]
-    if A is not None:
-        solution.y = adv_info["y"]
+    solution.y = adv_info["y"] if A is not None else np.empty((0,))
     z, z_box = split_dual_linear_box(adv_info["z"], lb, ub)
     solution.z = z
     solution.z_box = z_box
