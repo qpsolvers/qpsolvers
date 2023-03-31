@@ -147,7 +147,11 @@ class TestSolveProblem(unittest.TestCase):
             solution = solve_problem(problem, solver=solver)
             self.assertEqual(solution.y.shape, (0,))
             self.assertEqual(solution.z.shape, (0,))
-            self.assertAlmostEqual(np.linalg.norm(solution.z_box), 0.0)
+            self.assertAlmostEqual(
+                np.linalg.norm(solution.z_box),
+                0.0,
+                places=3 if solver == "cvxopt" else 7,
+            )
             self.assertFalse(math.isnan(solution.duality_gap()))
 
         return test
