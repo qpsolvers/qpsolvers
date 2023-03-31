@@ -201,7 +201,11 @@ def scs_solve_problem(
         if G is not None
         else np.empty((0,))
     )
-    solution.z_box = -result["y"][-n:] if lb is not None or ub is not None else np.empty((0,))
+    solution.z_box = (
+        -result["y"][-n:]
+        if lb is not None or ub is not None
+        else np.empty((0,))
+    )
     return solution
 
 
