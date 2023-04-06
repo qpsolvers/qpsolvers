@@ -14,6 +14,12 @@ CVXOPT
 .. automodule:: qpsolvers.solvers.cvxopt_
     :members:
 
+DAQP
+======
+
+.. automodule:: qpsolvers.solvers.daqp_
+    :members:
+
 ECOS
 ====
 

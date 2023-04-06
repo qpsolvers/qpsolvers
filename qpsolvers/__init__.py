@@ -37,6 +37,7 @@ from .solve_unconstrained import solve_unconstrained
 from .solvers import (
     cvxopt_solve_qp,
     dense_solvers,
+    daqp_solve_qp,
     ecos_solve_qp,
     gurobi_solve_qp,
     highs_solve_qp,
