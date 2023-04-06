@@ -74,7 +74,7 @@ This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``. It
 | ------ | ------- | --------- | --- | ------- |------------|
 | [Clarabel](https://github.com/oxfordcontrol/Clarabel.rs) | ``clarabel`` | Interior point | Sparse | Apache-2.0 | ✖️ |
 | [CVXOPT](http://cvxopt.org/) | ``cvxopt`` | Interior point | Dense | GPL-3.0 | ✔️ |
-| [DAQP](http://darnstrom.github.io/darnstrom) | ``daqp`` | Active set | Dense | MIT | ✔️ |
+| [DAQP](http://darnstrom.github.io/darnstrom) | ``daqp`` | Active set | Dense | MIT | ✖️ |
 | [ECOS](https://web.stanford.edu/~boyd/papers/ecos.html) | ``ecos`` | Interior point | Sparse | GPL-3.0 | ✖️ |
 | [Gurobi](https://www.gurobi.com/) | ``gurobi`` | Interior point | Sparse | Commercial | ✖️ |
 | [HiGHS](https://highs.dev/) | ``highs`` | Active set | Sparse | MIT | ✖️ |
