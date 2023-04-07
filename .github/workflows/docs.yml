@@ -29,10 +29,6 @@ jobs:
                   environment-file: doc/environment.yml
                   environment-name: qpsolvers
 
-            - name: "Install PyPI dependencies"
-              run: |
-                  pip install daqp furo highspy sphinx sphinx-autodoc-typehints sphinx-mathjax-offline
-
             - name: "Checkout qpSWIFT"
               uses: actions/checkout@v3
               with:
