@@ -21,3 +21,5 @@ References
 .. [Vandenberghe2010] `The CVXOPT linear and quadratic cone program solvers <https://www.seas.ucla.edu/~vandenbe/publications/coneprog.pdf>`_, L. Vandenberghe. 2010.
 
 .. [Goldfarb1983] *A numerically stable dual method for solving strictly convex quadratic programs*. D. Goldfarb and A. Idnani. Mathematical Programming, vol. 27, p. 1-33.
+
+.. [Arnstrom2022] `A dual active-set solver for embedded quadratic programming using recursive LDL updates <https://doi.org/10.1109/TAC.2022.3176430>`_, D. Arnström, A. Bemporad and D. Axehill. IEEE Transactions on Automatic Control, 2022, 67, no. 8 p. 4362-4369.
