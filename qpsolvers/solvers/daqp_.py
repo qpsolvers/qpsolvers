@@ -60,6 +60,26 @@ def daqp_solve_problem(
 
     Notes
     -----
+    Keyword arguments are forwarded to DAQP. For instance, we can call
+    ``daqp_solve_qp(P, q, G, h, u, primal_tol=1e-6, iter_limit=1000)``. DAQP settings
+    include the following:
+
+    .. list-table::
+       :widths: 30 70
+       :header-rows: 1
+
+       * - Name
+         - Description
+       * - ``iter_limit``
+         - Maximum number of iterations.
+       * - ``primal_tol``
+         - Primal feasibility tolerance.
+       * - ``dual_tol``
+         - Dual feasibility tolerance.
+
+    Check out the `DAQP settings
+    <https://darnstrom.github.io/daqp/parameters>`_ documentation for
+    all available settings.
     """
     H, f, G, h, A, b, lb, ub = problem.unpack()
 
@@ -84,6 +104,10 @@ def daqp_solve_problem(
             Atot = G
             bupper = h
         meq = 0
+    if bupper is None:
+        # Unconstrained  case
+        bupper = np.zeros(1)
+        Atot = np.zeros((1, f.size))
     mineq = bupper.size - meq
     blower = np.full(bupper.shape, -1e30)
     # Box constraints
@@ -104,7 +128,9 @@ def daqp_solve_problem(
     sense = np.zeros(bupper.shape, dtype=c_int)
     sense[ms + mineq :] = 5
 
-    x, obj, exitflag, info = daqp.solve(H, f, Atot, bupper, blower, sense)
+    x, obj, exitflag, info = daqp.solve(
+        H, f, Atot, bupper, blower, sense, **kwargs
+    )
 
     solution = Solution(problem)
     if exitflag > 0:
@@ -173,7 +199,30 @@ def daqp_solve_qp(
     Returns
     -------
     :
-        Primal solution to the QP, if found, otherwise ``None``.
+        Solution to the QP, if found, otherwise ``None``.
+
+    Notes
+    -----
+    Keyword arguments are forwarded to DAQP. For instance, we can call
+    ``daqp_solve_qp(P, q, G, h, u, primal_tol=1e-6, iter_limit=1000)``. DAQP settings
+    include the following:
+
+    .. list-table::
+       :widths: 30 70
+       :header-rows: 1
+
+       * - Name
+         - Description
+       * - ``iter_limit``
+         - Maximum number of iterations.
+       * - ``primal_tol``
+         - Primal feasibility tolerance.
+       * - ``dual_tol``
+         - Dual feasibility tolerance.
+
+    Check out the `DAQP settings
+    <https://darnstrom.github.io/daqp/parameters>`_ documentation for
+    all available settings.
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = daqp_solve_problem(problem, initvals, verbose, **kwargs)
