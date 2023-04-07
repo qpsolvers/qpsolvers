@@ -20,23 +20,22 @@
 
 """Solver interface for `DAQP <https://github.com/darnstrom/daqp>`__.
 
-DAQP is a dual active-set algorithm implemented in C implementation. 
-[Arnstrom22]_. It works best small/medium scale dense problems.
+DAQP is a dual active-set algorithm implemented in C [Arnstrom22]_.
+It has been developed to solve small/medium scale dense problems.
 """
 
 import warnings
 from typing import Optional, Tuple
 
 import numpy as np
-from numpy import linalg as LA 
 from numpy import hstack, vstack
 import daqp
 
-from ..conversions import linear_from_box_inequalities, split_dual_linear_box
 from ..exceptions import ProblemError
 from ..problem import Problem
 from ..solution import Solution
-from ctypes import c_int 
+from ctypes import c_int
+
 
 def daqp_solve_problem(
     problem: Problem,
@@ -44,7 +43,7 @@ def daqp_solve_problem(
     verbose: bool = False,
     **kwargs,
 ) -> Solution:
-    """Solve a quadratic program using daqp.
+    """Solve a quadratic program using DAQP.
 
     Parameters
     ----------
@@ -65,7 +64,7 @@ def daqp_solve_problem(
     H, f, G, h, A, b, lb, ub = problem.unpack()
 
     if initvals is not None and verbose:
-        warnings.warn("warm-start values are ignored by daqp")
+        warnings.warn("warm-start values are ignored by DAQP")
 
     Atot: Optional[np.ndarray] = None
     bupper: Optional[np.ndarray] = None
@@ -77,47 +76,46 @@ def daqp_solve_problem(
             Atot = vstack([G, A])
             bupper = hstack([h, b])
         else:
-            Atot = A 
+            Atot = A
             bupper = b
         meq = A.shape[0]
     else:  # no equality constraint
         if G is not None and h is not None:
-            Atot = G 
-            bupper  = h
+            Atot = G
+            bupper = h
         meq = 0
-    mineq = bupper.size-meq
-    blower = np.full(bupper.shape,-1e30)
+    mineq = bupper.size - meq
+    blower = np.full(bupper.shape, -1e30)
     # Box constraints
     if ub is not None:
-        bupper = hstack([ub,bupper])
+        bupper = hstack([ub, bupper])
         ms = ub.size
         if lb is not None:
-            blower = hstack([lb,blower])
+            blower = hstack([lb, blower])
         else:
-            blower = hstack([np.full(ms,-1e30),blower])
-    else: #  No upper
+            blower = hstack([np.full(ms, -1e30), blower])
+    else:  #  No upper
         if lb is not None:
             ms = lb.size
-            blower = hstack([lb,blower])
-            bupper= hstack([np.full(ms,1e30),bupper])
+            blower = hstack([lb, blower])
+            bupper = hstack([np.full(ms, 1e30), bupper])
         else:
             ms = 0
     sense = np.zeros(bupper.shape, dtype=c_int)
-    sense[ms+mineq:] = 5
+    sense[ms + mineq :] = 5
 
-    x,obj,exitflag,info = daqp.solve(H,f,Atot,bupper,blower,sense)
+    x, obj, exitflag, info = daqp.solve(H, f, Atot, bupper, blower, sense)
 
     solution = Solution(problem)
-    if(exitflag > 0):
+    if exitflag > 0:
         solution.x = x
         solution.obj = obj
 
-        solution.z_box = info['lam'][:ms]  
-        solution.z = info['lam'][ms:ms+mineq] 
-        solution.y = info['lam'][ms+mineq:] 
-        #solution.extras = {
-        #}
+        solution.z_box = info["lam"][:ms]
+        solution.z = info["lam"][ms : ms + mineq]
+        solution.y = info["lam"][ms + mineq :]
     return solution
+
 
 def daqp_solve_qp(
     P: np.ndarray,
@@ -132,7 +130,7 @@ def daqp_solve_qp(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    r"""Solve a quadratic program using daqp.
+    r"""Solve a quadratic program using DAQP.
 
     The quadratic program is defined as:
 
@@ -147,7 +145,7 @@ def daqp_solve_qp(
                 & lb \leq x \leq ub
         \end{array}\end{split}
 
-    It is solved using `daqp <https://pypi.python.org/pypi/daqp/>`__.
+    It is solved using `DAQP <https://pypi.python.org/pypi/daqp/>`__.
 
     Parameters
     ----------
