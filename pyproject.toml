@@ -27,6 +27,7 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Mathematics",
 ]
 dependencies = [
+    "daqp >=0.4.1",
     "ecos >=2.0.8",
     "numpy >=1.15.4",
     "osqp >=0.6.2",
