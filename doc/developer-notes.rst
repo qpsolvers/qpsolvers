@@ -58,8 +58,10 @@ The process to add AwesomeQP to *qpsolvers* goes as follows:
 7. Import ``awesomeqp_solve_qp`` from the convenience ``__init__.py`` at the root of the repository, and add it to ``__all__``
 8. Add the solver to ``doc/src/supported-solvers.rst``
 9. Add the solver to the *Solvers* section of the README
-10. Log the new solver as an addition in the changelog
-11. Update the benchmark: run the scripts ``examples/benchmark_*.py`` and update the corresponding tables and plot in the README
+10. Assuming AwesomeQP is distributed on `PyPI <https://pypi.org/>`__, add it to the ``testenv`` and ``testenv:coverage`` environments in ``tox.ini`` for unit testing
+11. Assuming AwesomeQP is distributed on `PyPI <https://pypi.org/>`__, add it to the ``pip install`` line in the documentation workflow ``.github/workflows/docs.yml``
+12. Log the new solver as an addition in the changelog
+13. Update the benchmark: run the scripts ``examples/benchmark_*.py`` and update the corresponding tables and plot in the README
 
 Problem conversions
 ===================
