@@ -7,10 +7,13 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - New sample problems in ``qpsolvers.problems``
+- New solver: [DAQP](https://darnstrom.github.io/daqp/)
 
 ### Changed
 
 - Dual multipliers are empty arrays rather than None when no constraint
+- Store solver results even when solution is not found
+- Use ``Solution.found`` as success signal rather than ``Solution.x is None``
 
 ### Fixed
 
