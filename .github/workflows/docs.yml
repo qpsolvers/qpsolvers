@@ -31,7 +31,7 @@ jobs:
 
             - name: "Install PyPI dependencies"
               run: |
-                  pip install furo highspy sphinx sphinx-autodoc-typehints sphinx-mathjax-offline
+                  pip install daqp furo highspy sphinx sphinx-autodoc-typehints sphinx-mathjax-offline
 
             - name: "Checkout qpSWIFT"
               uses: actions/checkout@v3

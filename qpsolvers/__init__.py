@@ -36,6 +36,7 @@ from .solve_qp import solve_problem, solve_qp
 from .solve_unconstrained import solve_unconstrained
 from .solvers import (
     cvxopt_solve_qp,
+    daqp_solve_qp,
     dense_solvers,
     ecos_solve_qp,
     gurobi_solve_qp,
@@ -65,6 +66,7 @@ __all__ = [
     "__version__",
     "available_solvers",
     "cvxopt_solve_qp",
+    "daqp_solve_qp",
     "dense_solvers",
     "ecos_solve_qp",
     "gurobi_solve_qp",

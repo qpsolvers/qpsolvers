@@ -120,6 +120,48 @@ except ImportError:
     pass
 
 
+# DAQP
+# ========
+
+daqp_solve_qp: Optional[
+    Callable[
+        [
+            ndarray,
+            ndarray,
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            bool,
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
+daqp_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[ndarray],
+            bool,
+        ],
+        Solution,
+    ]
+] = None
+
+try:
+    from .daqp_ import daqp_solve_problem, daqp_solve_qp
+
+    solve_function["daqp"] = daqp_solve_problem
+    available_solvers.append("daqp")
+    dense_solvers.append("daqp")
+except ImportError:
+    pass
+
+
 # ECOS
 # ====
 
@@ -516,6 +558,7 @@ __all__ = [
     "available_solvers",
     "clarabel_solve_qp",
     "cvxopt_solve_qp",
+    "daqp_solve_qp",
     "dense_solvers",
     "ecos_solve_qp",
     "gurobi_solve_qp",
