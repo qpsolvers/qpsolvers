@@ -20,7 +20,7 @@
 
 """Solver interface for `DAQP <https://github.com/darnstrom/daqp>`__.
 
-DAQP is a dual active-set algorithm implemented in C [Arnstrom22]_.
+DAQP is a dual active-set algorithm implemented in C [Arnstrom2022]_.
 It has been developed to solve small/medium scale dense problems.
 """
 
