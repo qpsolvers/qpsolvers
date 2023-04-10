@@ -134,6 +134,7 @@ def daqp_solve_problem(
     )
 
     solution = Solution(problem)
+    solution.found = exitflag > 0
     if exitflag > 0:
         solution.x = x
         solution.obj = obj
@@ -227,4 +228,4 @@ def daqp_solve_qp(
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = daqp_solve_problem(problem, initvals, verbose, **kwargs)
-    return solution.x
+    return solution.x if solution.found else None
