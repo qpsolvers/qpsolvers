@@ -25,16 +25,15 @@ It has been developed to solve small/medium scale dense problems.
 """
 
 import warnings
-from typing import Optional, Tuple
+from ctypes import c_int
+from typing import Optional
 
+import daqp
 import numpy as np
 from numpy import hstack, vstack
-import daqp
 
-from ..exceptions import ProblemError
 from ..problem import Problem
 from ..solution import Solution
-from ctypes import c_int
 
 
 def daqp_solve_problem(
@@ -53,6 +52,7 @@ def daqp_solve_problem(
         Warm-start guess vector (not used).
     verbose :
         Set to `True` to print out extra information.
+
     Returns
     -------
     :
@@ -61,8 +61,8 @@ def daqp_solve_problem(
     Notes
     -----
     Keyword arguments are forwarded to DAQP. For instance, we can call
-    ``daqp_solve_qp(P, q, G, h, u, primal_tol=1e-6, iter_limit=1000)``. DAQP settings
-    include the following:
+    ``daqp_solve_qp(P, q, G, h, u, primal_tol=1e-6, iter_limit=1000)``. DAQP
+    settings include the following:
 
     .. list-table::
        :widths: 30 70
@@ -118,7 +118,7 @@ def daqp_solve_problem(
             blower = hstack([lb, blower])
         else:
             blower = hstack([np.full(ms, -1e30), blower])
-    else:  #  No upper
+    else:  # No upper
         if lb is not None:
             ms = lb.size
             blower = hstack([lb, blower])
@@ -204,8 +204,8 @@ def daqp_solve_qp(
     Notes
     -----
     Keyword arguments are forwarded to DAQP. For instance, we can call
-    ``daqp_solve_qp(P, q, G, h, u, primal_tol=1e-6, iter_limit=1000)``. DAQP settings
-    include the following:
+    ``daqp_solve_qp(P, q, G, h, u, primal_tol=1e-6, iter_limit=1000)``. DAQP
+    settings include the following:
 
     .. list-table::
        :widths: 30 70

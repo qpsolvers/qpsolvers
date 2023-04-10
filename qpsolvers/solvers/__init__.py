@@ -558,6 +558,7 @@ __all__ = [
     "available_solvers",
     "clarabel_solve_qp",
     "cvxopt_solve_qp",
+    "daqp_solve_qp",
     "dense_solvers",
     "ecos_solve_qp",
     "gurobi_solve_qp",
