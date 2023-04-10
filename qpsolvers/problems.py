@@ -90,6 +90,7 @@ def get_qpsut01() -> Tuple[Problem, Solution]:
     problem = Problem(P, q, G, h, A, b, lb, ub)
 
     solution = Solution(problem)
+    solution.found = True
     solution.x = np.array([0.4, -0.4, 1.0])
     solution.z = np.array([0.0, 0.0])
     solution.y = np.array([-5.8])
@@ -133,6 +134,7 @@ def get_qpsut02() -> Tuple[Problem, Solution]:
     problem = Problem(P, q, G, h, A, b, lb, ub)
 
     solution = Solution(problem)
+    solution.found = True
     solution.x = np.array([1.36597938, -1.0, 6.0, 3.63402062])
     solution.z = np.array([0.0])
     solution.y = np.array([-377.60314303, -62.75251185])  # YMMV
@@ -172,6 +174,7 @@ def get_qpsut03() -> Tuple[Problem, Solution]:
     problem = Problem(P, q, G, h, A, b, lb, ub)
 
     solution = Solution(problem)
+    solution.found = True
     solution.x = np.array([0.18143455, 0.00843864, -2.35442995, 0.35443034])
     solution.z = np.array([])
     solution.y = np.array([])
@@ -197,6 +200,7 @@ def get_qpsut04() -> Tuple[Problem, Solution]:
     problem = Problem(P, q, G, h, A, b)
 
     solution = Solution(problem)
+    solution.found = True
     solution.x = 1.0 / 3.0 * np.ones(n)
     solution.y = np.array([1.0 / 3.0 + 0.01])
     solution.z = np.zeros(n)
@@ -216,6 +220,7 @@ def get_qpsut05() -> Tuple[Problem, Solution]:
     problem = Problem(P, q)
 
     solution = Solution(problem)
+    solution.found = True
     solution.x = np.array([1.0])
     return problem, solution
 
@@ -237,6 +242,7 @@ def get_qptest():
     problem = Problem(P, q, G, h, lb=lb, ub=ub)
 
     solution = Solution(problem)
+    solution.found = True
     solution.x = np.array([0.7625, 0.475])
     solution.z = np.array([0.0, 4.275])
     solution.z_box = np.array([0.0, 0.0])
