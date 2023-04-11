@@ -104,10 +104,11 @@ def daqp_solve_problem(
             Atot = G
             bupper = h
         meq = 0
+
     if bupper is None:
-        # Unconstrained  case
-        bupper = np.zeros(1)
-        Atot = np.zeros((1, f.size))
+        bupper = np.zeros((0,))
+        Atot = np.zeros((0, f.size))
+
     mineq = bupper.size - meq
     blower = np.full(bupper.shape, -1e30)
     # Box constraints
