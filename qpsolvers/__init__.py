@@ -52,7 +52,7 @@ from .solvers import (
 from .unsupported import mosek_solve_qp, nppro_solve_qp
 from .utils import print_matrix_vector
 
-__version__ = "3.2.0"
+__version__ = "3.3.0"
 
 __all__ = [
     "NoSolverSelected",
