@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.3.1] - 2023/04/12
+
+### Fixed
+
+- DAQP: Update to 0.5.1 to fix installation of arm64 wheels
+
 ## [3.3.0] - 2023/04/11
 
 ### Added
