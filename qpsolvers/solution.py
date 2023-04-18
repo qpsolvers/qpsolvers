@@ -135,7 +135,7 @@ class Solution:
         and why this residual will be zero at the optimum.
         """
         _, _, G, h, A, b, lb, ub = self.problem.unpack()
-        if not self.found:
+        if not self.found or self.x is None:
             return np.inf
         x = self.x
         return max(
@@ -168,7 +168,7 @@ class Solution:
         and why this residual will be zero at the optimum.
         """
         P, q, G, _, A, _, lb, ub = self.problem.unpack()
-        if not self.found:
+        if not self.found or self.x is None:
             return np.inf
         zeros = np.zeros(self.x.shape)
         Px = P.dot(self.x)
@@ -217,7 +217,7 @@ class Solution:
         and why this gap will be zero at the optimum.
         """
         P, q, _, h, _, b, lb, ub = self.problem.unpack()
-        if not self.found:
+        if not self.found or self.x is None:
             return np.inf
         xPx = self.x.T.dot(P.dot(self.x))
         qx = q.dot(self.x)
