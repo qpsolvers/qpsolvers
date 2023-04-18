@@ -53,6 +53,13 @@ class TestSolution(unittest.TestCase):
         self.assertEqual(solution.dual_residual(), np.inf)
         self.assertEqual(solution.duality_gap(), np.inf)
 
+        # solution was not found
+        solution.found = False
+        self.assertEqual(solution.primal_residual(), np.inf)
+        self.assertEqual(solution.dual_residual(), np.inf)
+        self.assertEqual(solution.duality_gap(), np.inf)
+
+        solution.found = True
         solution.x = np.array([1.0, 2.0, 3.0])
         self.assertNotEqual(solution.primal_residual(), np.inf)
         self.assertEqual(solution.dual_residual(), np.inf)
