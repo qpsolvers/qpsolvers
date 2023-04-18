@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Fixed
+
+- Residual and duality gap computations when solution is not found
+
 ## [3.3.1] - 2023/04/12
 
 ### Fixed
