@@ -160,3 +160,19 @@ Note that performances of QP solvers largely depend on the problem solved. For i
 # Contributing
 
 We welcome contributions, see [Contributing](https://github.com/qpsolvers/qpsolvers/blob/master/CONTRIBUTING.md) for details.
+
+# Citing qpsolvers
+
+If you are using *qpsolvers* in your work, we encourage you to cite it using the following entry, and put a star on this repository.
+
+```bibtex
+@software{qpsolvers,
+    author = {Caron, St\'{e}phane and Arnström, Daniel and Bonagiri, Suraj Dechaume, Antoine and Flowers, Nikolai and Ishikawa, Takumaand and Kenefake, Dustin and Mazzamuto, Giacomo and Meoli, Donato and O'Donoghue, Brendan and Oppenheimer, Adam A. and Pandala, Abhishek and Quiroz Omaña, Juan José and Rontsis, Nikitas and Shah, Paarth and St-Jean, Samuel and Vitucci, Nicola and Wolfers, Soeren},
+    title = {qpsolvers},
+    url = {https://github.com/qpsolvers/qpsolvers},
+    version = {3.3.1},
+    date = {2023-04-12},
+}
+```
+
+We are looking forward to hearing about your use cases! Please share them in [Show and tell](https://github.com/qpsolvers/qpsolvers/discussions/categories/show-and-tell).
