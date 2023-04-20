@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 
 - Residual and duality gap computations when solution is not found
+- Update OSQP version to 0.6.2.post9 for testing
 
 ## [3.3.1] - 2023/04/12
 
