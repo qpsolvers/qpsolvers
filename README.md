@@ -167,7 +167,7 @@ If you are using *qpsolvers* in your work, we encourage you to cite it using the
 
 ```bibtex
 @software{qpsolvers,
-    author = {Caron, St\'{e}phane and Arnström, Daniel and Bonagiri, Suraj Dechaume, Antoine and Flowers, Nikolai and Ishikawa, Takumaand and Kenefake, Dustin and Mazzamuto, Giacomo and Meoli, Donato and O'Donoghue, Brendan and Oppenheimer, Adam A. and Pandala, Abhishek and Quiroz Omaña, Juan José and Rontsis, Nikitas and Shah, Paarth and St-Jean, Samuel and Vitucci, Nicola and Wolfers, Soeren},
+    author = {Caron, St\'{e}phane and Arnström, Daniel and Bonagiri, Suraj and Dechaume, Antoine and Flowers, Nikolai and Ishikawa, Takumaand and Kenefake, Dustin and Mazzamuto, Giacomo and Meoli, Donato and O'Donoghue, Brendan and Oppenheimer, Adam A. and Pandala, Abhishek and Quiroz Omaña, Juan José and Rontsis, Nikitas and Shah, Paarth and St-Jean, Samuel and Vitucci, Nicola and Wolfers, Soeren},
     title = {qpsolvers},
     url = {https://github.com/qpsolvers/qpsolvers},
     version = {3.3.1},
