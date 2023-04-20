@@ -157,12 +157,12 @@ Finally, here is a small benchmark of [random dense problems](examples/benchmark
 
 Note that performances of QP solvers largely depend on the problem solved. For instance, MOSEK performs an [automatic conversion to Second-Order Cone Programming (SOCP)](https://docs.mosek.com/8.1/pythonapi/prob-def-quadratic.html) which the documentation advises bypassing for better performance. Similarly, ECOS reformulates [from QP to SOCP](qpsolvers/solvers/conversions/socp_from_qp.py) and [works best on small problems](https://web.stanford.edu/%7Eboyd/papers/ecos.html).
 
-# Citing qpsolvers
-
-If you find this project useful, please consider giving it a :star: and a citation :books: (check out the ``Cite this repository`` button on GitHub).
-
 # Contributing
 
 We welcome contributions, see [Contributing](https://github.com/qpsolvers/qpsolvers/blob/master/CONTRIBUTING.md) for details.
 
 We are also looking forward to hearing about your use cases! Please share them in [Show and tell](https://github.com/qpsolvers/qpsolvers/discussions/categories/show-and-tell).
+
+# Citing qpsolvers
+
+If you find this project useful, please consider giving it a :star: and a citation :books: (check out the ``Cite this repository`` button on GitHub).
