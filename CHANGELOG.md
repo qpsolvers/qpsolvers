@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Changed
+
+- Converted THANKS file to [CFF](https://citation-file-format.github.io/)
+
 ### Fixed
 
 - Residual and duality gap computations when solution is not found
