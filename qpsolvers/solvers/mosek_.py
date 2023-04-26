@@ -28,8 +28,6 @@ sparse problems, in particular for linear or conic quadratic programs.
 
 from typing import Optional, Union
 
-import cvxopt.msk
-import mosek
 import numpy as np
 import scipy.sparse as spa
 
@@ -74,10 +72,8 @@ def mosek_solve_problem(
     :
         Solution to the QP, if found, otherwise ``None``.
     """
-    original_options = cvxopt.solvers.options
-    cvxopt.solvers.options["mosek"] = {mosek.iparam.log: 1 if verbose else 0}
+    kwargs["mosek"] = {"MSK_IPAR_LOG": 1 if verbose else 0}
     solution = cvxopt_solve_problem(problem, "mosek", initvals, **kwargs)
-    cvxopt.solvers.options = original_options
     return solution
 
 
