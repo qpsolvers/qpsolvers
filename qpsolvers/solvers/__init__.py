@@ -20,7 +20,7 @@
 
 """Import available QP solvers."""
 
-from typing import Any, Callable, Dict, Optional, Union
+from typing import Any, Callable, Dict, List, Optional, Union
 
 from numpy import ndarray
 from scipy.sparse import csc_matrix
@@ -28,10 +28,10 @@ from scipy.sparse import csc_matrix
 from ..problem import Problem
 from ..solution import Solution
 
-available_solvers = []
-dense_solvers = []
+available_solvers: List[str] = []
+dense_solvers: List[str] = []
 solve_function: Dict[str, Any] = {}
-sparse_solvers = []
+sparse_solvers: List[str] = []
 
 # Clarabel.rs
 # ===========
