@@ -72,7 +72,7 @@ def mosek_solve_problem(
     :
         Solution to the QP, if found, otherwise ``None``.
     """
-    kwargs["mosek"] = {"MSK_IPAR_LOG": 1 if verbose else 0}
+    kwargs["mosek"] = {"iparam.log": 1 if verbose else 0}
     solution = cvxopt_solve_problem(problem, "mosek", initvals, **kwargs)
     return solution
 
