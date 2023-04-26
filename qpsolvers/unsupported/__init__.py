@@ -20,10 +20,9 @@
 
 """Import unsupported QP solvers."""
 
-from typing import Any, Callable, Dict, Optional, Union
+from typing import Any, Callable, Dict, Optional
 
 from numpy import ndarray
-from scipy.sparse import csc_matrix
 
 from ..problem import Problem
 from ..solution import Solution
@@ -32,48 +31,6 @@ available_solvers = []
 dense_solvers = []
 solve_function: Dict[str, Any] = {}
 sparse_solvers = []
-
-
-# MOSEK
-# =====
-
-mosek_solve_problem: Optional[
-    Callable[
-        [
-            Problem,
-            Optional[ndarray],
-            bool,
-        ],
-        Solution,
-    ]
-] = None
-
-mosek_solve_qp: Optional[
-    Callable[
-        [
-            Union[ndarray, csc_matrix],
-            ndarray,
-            Union[ndarray, csc_matrix],
-            ndarray,
-            Optional[Union[ndarray, csc_matrix]],
-            Optional[ndarray],
-            Optional[ndarray],
-            Optional[ndarray],
-            Optional[ndarray],
-            bool,
-        ],
-        Optional[ndarray],
-    ]
-] = None
-
-try:
-    from .mosek_ import mosek_solve_problem, mosek_solve_qp
-
-    solve_function["mosek"] = mosek_solve_problem
-    available_solvers.append("mosek")
-    sparse_solvers.append("mosek")
-except ImportError:
-    pass
 
 
 # NPPro
@@ -118,7 +75,6 @@ except ImportError:
 
 __all__ = [
     "available_solvers",
-    "mosek_solve_qp",
     "nppro_solve_qp",
     "solve_function",
 ]
