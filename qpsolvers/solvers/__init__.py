@@ -288,6 +288,48 @@ except ImportError:
     pass
 
 
+# MOSEK
+# =====
+
+mosek_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[ndarray],
+            bool,
+        ],
+        Solution,
+    ]
+] = None
+
+mosek_solve_qp: Optional[
+    Callable[
+        [
+            Union[ndarray, csc_matrix],
+            ndarray,
+            Union[ndarray, csc_matrix],
+            ndarray,
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            bool,
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
+try:
+    from .mosek_ import mosek_solve_problem, mosek_solve_qp
+
+    solve_function["mosek"] = mosek_solve_problem
+    available_solvers.append("mosek")
+    sparse_solvers.append("mosek")
+except ImportError:
+    pass
+
+
 # OSQP
 # ====
 
@@ -563,6 +605,7 @@ __all__ = [
     "ecos_solve_qp",
     "gurobi_solve_qp",
     "highs_solve_qp",
+    "mosek_solve_qp",
     "osqp_solve_qp",
     "proxqp_solve_qp",
     "qpoases_solve_qp",
