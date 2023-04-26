@@ -41,7 +41,7 @@ HiGHS
 MOSEK
 =====
 
-.. automodule:: qpsolvers.unsupported.mosek_
+.. automodule:: qpsolvers.solvers.mosek_
     :members:
 
 OSQP
