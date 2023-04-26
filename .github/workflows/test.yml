@@ -30,6 +30,7 @@ jobs:
               run: |
                   tox -e lint
               env:
+                  MOSEKLM_LICENSE_FILE: ${{ secrets.MSK_LICENSE }}
                   PLATFORM: ubuntu-latest
 
     coverage:
@@ -57,6 +58,7 @@ jobs:
             - name: "Coveralls"
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  MOSEKLM_LICENSE_FILE: ${{ secrets.MSK_LICENSE }}
               run: |
                   coveralls --service=github --rcfile=pyproject.toml
 
@@ -84,7 +86,8 @@ jobs:
                   python -m pip install tox tox-gh-actions
 
             - name: "Test with tox for ${{ matrix.os }}"
+              env:
+                  MOSEKLM_LICENSE_FILE: ${{ secrets.MSK_LICENSE }}
+                  PLATFORM: ${{ matrix.os }}
               run: |
                   tox
-              env:
-                  PLATFORM: ${{ matrix.os }}
