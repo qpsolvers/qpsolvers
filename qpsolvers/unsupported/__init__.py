@@ -20,17 +20,17 @@
 
 """Import unsupported QP solvers."""
 
-from typing import Any, Callable, Dict, Optional
+from typing import Any, Callable, Dict, List, Optional
 
 from numpy import ndarray
 
 from ..problem import Problem
 from ..solution import Solution
 
-available_solvers = []
-dense_solvers = []
+available_solvers: List[str] = []
+dense_solvers: List[str] = []
 solve_function: Dict[str, Any] = {}
-sparse_solvers = []
+sparse_solvers: List[str] = []
 
 
 # NPPro
