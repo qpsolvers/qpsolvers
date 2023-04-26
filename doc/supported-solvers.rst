@@ -38,6 +38,12 @@ HiGHS
 .. automodule:: qpsolvers.solvers.highs_
     :members:
 
+MOSEK
+=====
+
+.. automodule:: qpsolvers.unsupported.mosek_
+    :members:
+
 OSQP
 ====
 
