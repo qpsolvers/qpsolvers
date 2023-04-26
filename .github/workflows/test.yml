@@ -52,13 +52,14 @@ jobs:
                   python -m pip install coveralls tox
 
             - name: "Check code coverage"
+              env:
+                  MOSEKLM_LICENSE_FILE: ${{ secrets.MSK_LICENSE }}
               run: |
                   tox -e coverage
 
             - name: "Coveralls"
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  MOSEKLM_LICENSE_FILE: ${{ secrets.MSK_LICENSE }}
               run: |
                   coveralls --service=github --rcfile=pyproject.toml
 
