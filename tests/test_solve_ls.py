@@ -258,8 +258,9 @@ for solver in sparse_solvers:
         "test_mixed_sparse_args_{}".format(solver),
         TestSolveLS.get_test_mixed_sparse_args(solver),
     )
-    if solver != "gurobi":
+    if solver not in ["gurobi", "mosek"]:
         # Gurobi: model too large for size-limited license
+        # MOSEK: tracked in https://github.com/qpsolvers/qpsolvers/issues/213
         setattr(
             TestSolveLS,
             "test_medium_sparse_dense_conversion_{}".format(solver),
@@ -267,18 +268,18 @@ for solver in sparse_solvers:
                 solver, sparse_conversion=False
             ),
         )
-        if solver != "cvxopt":
-            # CVXOPT: sparse conversion breaks rank assumption
-            setattr(
-                TestSolveLS,
-                "test_medium_sparse_sparse_conversion_{}".format(solver),
-                TestSolveLS.get_test_medium_sparse(
-                    solver, sparse_conversion=True
-                ),
-            )
-    if solver not in ["gurobi", "highs"]:
+    if solver not in ["cvxopt", "gurobi"]:
+        # CVXOPT: sparse conversion breaks rank assumption
+        # Gurobi: model too large for size-limited license
+        setattr(
+            TestSolveLS,
+            "test_medium_sparse_sparse_conversion_{}".format(solver),
+            TestSolveLS.get_test_medium_sparse(solver, sparse_conversion=True),
+        )
+    if solver not in ["gurobi", "highs", "mosek"]:
         # Gurobi: model too large for size-limited license
         # HiGHS: model too large https://github.com/ERGO-Code/HiGHS/issues/992
+        # MOSEK: tracked in https://github.com/qpsolvers/qpsolvers/issues/213
         kwargs = {}
         if solver == "scs":
             kwargs["eps_infeas"] = 1e-12
