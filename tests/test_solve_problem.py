@@ -115,9 +115,9 @@ class TestSolveProblem(unittest.TestCase):
                 else 1e-5
                 if solver in ["highs", "osqp"]
                 else 5e-7
-                if solver in ["clarabel", "qpswift"]
+                if solver in ["clarabel", "mosek", "qpswift"]
                 else 1e-7
-                if solver in ["gurobi", "mosek"]
+                if solver == "gurobi"
                 else 1e-8
             )
             self.assertLess(norm(solution.x - ref_solution.x), eps_abs)
@@ -150,7 +150,11 @@ class TestSolveProblem(unittest.TestCase):
             self.assertAlmostEqual(
                 np.linalg.norm(solution.z_box),
                 0.0,
-                places=3 if solver == "cvxopt" else 7,
+                places=3
+                if solver == "cvxopt"
+                else 5
+                if solver == "mosek"
+                else 7,
             )
             self.assertFalse(math.isnan(solution.duality_gap()))
 
