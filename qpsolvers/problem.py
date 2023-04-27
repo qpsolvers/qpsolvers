@@ -174,6 +174,22 @@ class Problem:
             or isinstance(self.A, sparse_types)
         )
 
+    @property
+    def is_unconstrained(self) -> bool:
+        """Check whether the problem has any constraint.
+
+        Returns
+        -------
+        :
+            True if the problem has at least one constraint.
+        """
+        return (
+            self.G is not None
+            or self.A is not None
+            or self.lb is not None
+            or self.ub is not None
+        )
+
     def unpack(
         self,
     ) -> Tuple[
