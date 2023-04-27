@@ -215,7 +215,7 @@ class TestSolveLS(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_large_sparse(solver: str, sparse_conversion: bool):
+    def get_test_large_sparse(solver: str, sparse_conversion: bool, **kwargs):
         """Get test function for a large sparse problem with a given solver.
 
         Parameters
@@ -240,6 +240,7 @@ class TestSolveLS(unittest.TestCase):
                 b,
                 solver=solver,
                 sparse_conversion=sparse_conversion,
+                **kwargs,
             )
             self.assertIsNotNone(x)
 
@@ -275,14 +276,18 @@ for solver in sparse_solvers:
                     solver, sparse_conversion=True
                 ),
             )
-    if solver not in ["gurobi", "highs", "scs"]:
+    if solver not in ["gurobi", "highs"]:
         # Gurobi: model too large for size-limited license
         # HiGHS: model too large https://github.com/ERGO-Code/HiGHS/issues/992
-        # SCS: issue reported in https://github.com/cvxgrp/scs/issues/234
+        kwargs = {}
+        if solver == "scs":
+            kwargs["eps_infeas"] = 1e-12
         setattr(
             TestSolveLS,
             "test_large_sparse_problem_dense_conversion_{}".format(solver),
-            TestSolveLS.get_test_large_sparse(solver, sparse_conversion=False),
+            TestSolveLS.get_test_large_sparse(
+                solver, sparse_conversion=False, **kwargs
+            ),
         )
         if solver != "cvxopt":
             # CVXOPT: sparse conversion breaks rank assumption
@@ -292,6 +297,6 @@ for solver in sparse_solvers:
                     solver
                 ),
                 TestSolveLS.get_test_large_sparse(
-                    solver, sparse_conversion=True
+                    solver, sparse_conversion=True, **kwargs
                 ),
             )
