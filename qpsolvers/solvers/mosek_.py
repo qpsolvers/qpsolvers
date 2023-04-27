@@ -34,6 +34,7 @@ import scipy.sparse as spa
 
 from ..problem import Problem
 from ..solution import Solution
+from ..solve_unconstrained import solve_unconstrained
 from ..solvers.cvxopt_ import cvxopt_solve_problem
 
 
@@ -73,6 +74,8 @@ def mosek_solve_problem(
     :
         Solution to the QP, if found, otherwise ``None``.
     """
+    if problem.is_unconstrained:
+        return solve_unconstrained(problem)
     kwargs["mosek"] = {mosek.iparam.log: 1 if verbose else 0}
     solution = cvxopt_solve_problem(problem, "mosek", initvals, **kwargs)
     return solution
