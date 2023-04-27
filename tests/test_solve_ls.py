@@ -257,8 +257,9 @@ for solver in sparse_solvers:
         "test_mixed_sparse_args_{}".format(solver),
         TestSolveLS.get_test_mixed_sparse_args(solver),
     )
-    if solver != "gurobi":
+    if solver not in ["gurobi", "mosek"]:
         # Gurobi: model too large for size-limited license
+        # MOSEK: model too large for size-limited license
         setattr(
             TestSolveLS,
             "test_medium_sparse_dense_conversion_{}".format(solver),
@@ -275,8 +276,9 @@ for solver in sparse_solvers:
                     solver, sparse_conversion=True
                 ),
             )
-    if solver not in ["gurobi", "highs", "scs"]:
+    if solver not in ["gurobi", "highs", "mosek", "scs"]:
         # Gurobi: model too large for size-limited license
+        # MOSEK: model too large for size-limited license
         # HiGHS: model too large https://github.com/ERGO-Code/HiGHS/issues/992
         # SCS: issue reported in https://github.com/cvxgrp/scs/issues/234
         setattr(
