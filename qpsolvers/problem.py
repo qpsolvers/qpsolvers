@@ -184,10 +184,10 @@ class Problem:
             True if the problem has at least one constraint.
         """
         return (
-            self.G is not None
-            or self.A is not None
-            or self.lb is not None
-            or self.ub is not None
+            self.G is None
+            and self.A is None
+            and self.lb is None
+            and self.ub is None
         )
 
     def unpack(
