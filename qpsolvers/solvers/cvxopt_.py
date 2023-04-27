@@ -28,12 +28,12 @@ using CVXOPT in some academic work, consider citing the corresponding report
 [Vandenberghe2010]_.
 """
 
+import warnings
 from typing import Dict, Optional, Union
 
 import cvxopt
 import numpy as np
 import scipy.sparse as spa
-import warnings
 from cvxopt.solvers import qp
 
 from ..conversions import linear_from_box_inequalities, split_dual_linear_box
@@ -192,7 +192,7 @@ def cvxopt_solve_problem(
     solution = Solution(problem)
     solution.extras = res
     solution.found = "optimal" in res["status"]
-    mosek_no_solution = res["x"] is None or res["x"].size == 1
+    mosek_no_solution = res["x"] is None or res["x"].size != q.size
     if not mosek_no_solution:
         solution.x = np.array(res["x"]).reshape((q.shape[0],))
         solution.y = (

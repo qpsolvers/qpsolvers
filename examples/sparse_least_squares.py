@@ -26,47 +26,14 @@ See also: https://stackoverflow.com/a/74415546/3721564
 import random
 from time import perf_counter
 
-import numpy as np
-import scipy.sparse as spa
-
 import qpsolvers
 from qpsolvers import solve_ls
-
-n = 150_000
-
-# minimize 1/2 || x - s ||^2
-R = spa.eye(n, format="csc")
-s = np.array(range(n), dtype=float)
-
-# such that G * x <= h
-G = spa.diags(
-    diagonals=[
-        [1.0 if i % 2 == 0 else 0.0 for i in range(n)],
-        [1.0 if i % 3 == 0 else 0.0 for i in range(n - 1)],
-        [1.0 if i % 5 == 0 else 0.0 for i in range(n - 1)],
-    ],
-    offsets=[0, 1, -1],
-    format="csc",
-)
-a_dozen_rows = np.linspace(0, n - 1, 12, dtype=int)
-G = G[a_dozen_rows]
-h = np.ones(12)
-
-# such that sum(x) == 42
-A = spa.csc_matrix(np.ones((1, n)))
-b = np.array([42.0]).reshape((1,))
-
-# such that x >= 0
-lb = np.zeros(n)
-
+from qpsolvers.problems import get_sparse_least_squares
 
 if __name__ == "__main__":
-    solver = (
-        "osqp"
-        if "osqp" in qpsolvers.sparse_solvers
-        else random.choice(qpsolvers.sparse_solvers)
-    )
+    solver = random.choice(qpsolvers.sparse_solvers)
 
+    R, s, G, h, A, b, lb, ub = get_sparse_least_squares(n=150_000)
     start_time = perf_counter()
     x = solve_ls(
         R,
@@ -76,6 +43,7 @@ if __name__ == "__main__":
         A,
         b,
         lb,
+        ub,
         solver=solver,
         verbose=False,
         sparse_conversion=True,
