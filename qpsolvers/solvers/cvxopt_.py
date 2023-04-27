@@ -192,22 +192,23 @@ def cvxopt_solve_problem(
     solution = Solution(problem)
     solution.extras = res
     solution.found = "optimal" in res["status"]
-    mosek_no_solution = res["x"] is None or res["x"].size != q.size
-    if not mosek_no_solution:
+    if res["x"] is not None and res["x"].size == q.size:
         solution.x = np.array(res["x"]).reshape((q.shape[0],))
+    if res["y"] is not None and res["y"].size == b.size:
         solution.y = (
             np.array(res["y"]).reshape((b.shape[0],))
             if b is not None
             else np.empty((0,))
         )
-        if h is not None:
+    if h is not None:
+        if res["z"] is not None and res["z"].size == h.size:
             z_cvx = np.array(res["z"]).reshape((h.shape[0],))
             z, z_box = split_dual_linear_box(z_cvx, lb, ub)
             solution.z = z
             solution.z_box = z_box
-        else:  # h is None
-            solution.z = np.empty((0,))
-            solution.z_box = np.empty((0,))
+    else:  # h is None
+        solution.z = np.empty((0,))
+        solution.z_box = np.empty((0,))
     solution.obj = res["primal objective"]
     return solution
 
