@@ -230,7 +230,7 @@ class TestSolveLS(unittest.TestCase):
         """
 
         def test(self):
-            R, s, G, h, A, b, lb, ub = get_sparse_least_squares(n=15_000)
+            R, s, G, h, A, b, _, _ = get_sparse_least_squares(n=15_000)
             x = solve_ls(
                 R,
                 s,
