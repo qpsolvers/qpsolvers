@@ -257,9 +257,8 @@ for solver in sparse_solvers:
         "test_mixed_sparse_args_{}".format(solver),
         TestSolveLS.get_test_mixed_sparse_args(solver),
     )
-    if solver not in ["gurobi", "mosek"]:
+    if solver != "gurobi":
         # Gurobi: model too large for size-limited license
-        # MOSEK: model too large for size-limited license
         setattr(
             TestSolveLS,
             "test_medium_sparse_dense_conversion_{}".format(solver),
