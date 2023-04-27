@@ -189,7 +189,7 @@ def cvxopt_solve_problem(
     solution = Solution(problem)
     solution.extras = res
     solution.found = "optimal" in res["status"]
-    mosek_no_solution = res["x"].size == 1
+    mosek_no_solution = res["x"] is None or res["x"].size == 1
     if not mosek_no_solution:
         solution.x = np.array(res["x"]).reshape((q.shape[0],))
         solution.y = (
