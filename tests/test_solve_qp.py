@@ -226,7 +226,7 @@ class TestSolveQP(unittest.TestCase):
                 for (lb_case, ub_case) in box_variants
             ]
 
-            for (i, test_case) in enumerate(cases):
+            for i, test_case in enumerate(cases):
                 no_inequality = "G" not in test_case or test_case["G"] is None
                 if no_inequality and solver == "qpswift":
                     # QPs without inequality constraints not handled by qpSWIFT
@@ -503,7 +503,7 @@ class TestSolveQP(unittest.TestCase):
                 else 1e-3
                 if solver == "gurobi"
                 else 5e-4
-                if solver == "clarabel"
+                if solver in ["clarabel", "mosek"]
                 else 1e-4
                 if solver == "scs"
                 else 2e-5
@@ -557,7 +557,7 @@ class TestSolveQP(unittest.TestCase):
                 else 1e-3
                 if solver == "osqp"
                 else 5e-6
-                if solver == "proxqp"
+                if solver in ["mosek", "proxqp"]
                 else 1e-7
                 if solver in ["cvxopt", "scs"]
                 else 1e-8
@@ -742,7 +742,7 @@ class TestSolveQP(unittest.TestCase):
                 else 2e-5
                 if solver == "proxqp"
                 else 1e-6
-                if solver in ["cvxopt", "qpswift"]
+                if solver in ["cvxopt", "mosek", "qpswift"]
                 else 1e-8
             )
             self.assertIsNotNone(x)
