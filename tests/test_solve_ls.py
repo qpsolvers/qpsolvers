@@ -276,9 +276,8 @@ for solver in sparse_solvers:
                     solver, sparse_conversion=True
                 ),
             )
-    if solver not in ["gurobi", "highs", "mosek", "scs"]:
+    if solver not in ["gurobi", "highs", "scs"]:
         # Gurobi: model too large for size-limited license
-        # MOSEK: model too large for size-limited license
         # HiGHS: model too large https://github.com/ERGO-Code/HiGHS/issues/992
         # SCS: issue reported in https://github.com/cvxgrp/scs/issues/234
         setattr(
