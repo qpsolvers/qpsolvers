@@ -33,6 +33,7 @@ from typing import Dict, Optional, Union
 import cvxopt
 import numpy as np
 import scipy.sparse as spa
+import warnings
 from cvxopt.solvers import qp
 
 from ..conversions import linear_from_box_inequalities, split_dual_linear_box
@@ -169,6 +170,8 @@ def cvxopt_solve_problem(
         constraints["b"] = __to_cvxopt(b)
     initvals_dict: Optional[Dict[str, cvxopt.matrix]] = None
     if initvals is not None:
+        if "mosek" in kwargs:
+            warnings.warn("MOSEK: warm-start values are ignored")
         initvals_dict = {"x": __to_cvxopt(initvals)}
     kwargs["show_progress"] = verbose
 
