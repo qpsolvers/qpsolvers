@@ -192,18 +192,14 @@ def cvxopt_solve_problem(
     solution = Solution(problem)
     solution.extras = res
     solution.found = "optimal" in res["status"]
-    if res["x"] is not None and res["x"].size == q.size:
-        solution.x = np.array(res["x"]).reshape((q.shape[0],))
-    if res["y"] is not None and res["y"].size == b.size:
-        solution.y = (
-            np.array(res["y"]).reshape((b.shape[0],))
-            if b is not None
-            else np.empty((0,))
-        )
+    solution.x = np.array(res["x"]).flatten()
+    solution.y = (
+        np.array(res["y"]).flatten() if b is not None else np.empty((0,))
+    )
     if h is not None:
-        if res["z"] is not None and res["z"].size == h.size:
-            z_cvx = np.array(res["z"]).reshape((h.shape[0],))
-            z, z_box = split_dual_linear_box(z_cvx, lb, ub)
+        z_cvxopt = np.array(res["z"]).flatten()
+        if z_cvxopt.size == h.size:
+            z, z_box = split_dual_linear_box(z_cvxopt, lb, ub)
             solution.z = z
             solution.z_box = z_box
     else:  # h is None
