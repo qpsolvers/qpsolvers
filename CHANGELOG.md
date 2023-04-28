@@ -7,12 +7,9 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - Converted THANKS file to [CFF](https://citation-file-format.github.io/)
-- MOSEK is now a supported solver (thanks to @uricohen and @aszekMosek)
-- ECOS: raise a ProblemError if the cost matrix is not positive definite
-
-### Changed
-
 - ECOS: raise a ProblemError if inequality vectors contain infinite values
+- ECOS: raise a ProblemError if the cost matrix is not positive definite
+- MOSEK is now a supported solver (thanks to @uricohen and @aszekMosek)
 
 ### Fixed
 
