@@ -53,7 +53,7 @@ from .solvers import (
 from .unsupported import nppro_solve_qp
 from .utils import print_matrix_vector
 
-__version__ = "3.3.1"
+__version__ = "3.4.0"
 
 __all__ = [
     "NoSolverSelected",
