@@ -216,13 +216,23 @@ class TestSolveLS(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_large_sparse(solver: str, sparse_conversion: bool, **kwargs):
+    def get_test_large_sparse(
+        solver: str,
+        sparse_conversion: bool,
+        obj_scaling: float = 1.0,
+        **kwargs,
+    ):
         """Get test function for a large sparse problem with a given solver.
 
         Parameters
         ----------
         solver :
             Name of the solver to test.
+        sparse_conversion :
+            Whether to perform sparse or dense LS-to-QP conversion.
+        obj_scaling:
+            Scale objective matrices by this factor. Suitable values can help
+            solvers that don't compute a preconditioner internally.
 
         Returns
         -------
@@ -233,8 +243,8 @@ class TestSolveLS(unittest.TestCase):
         def test(self):
             R, s, G, h, A, b, _, _ = get_sparse_least_squares(n=15_000)
             x = solve_ls(
-                R,
-                s,
+                obj_scaling * R,
+                obj_scaling * s,
                 G,
                 h,
                 A,
@@ -299,7 +309,10 @@ for solver in sparse_solvers:
             TestSolveLS,
             "test_large_sparse_problem_dense_conversion_{}".format(solver),
             TestSolveLS.get_test_large_sparse(
-                solver, sparse_conversion=False, **kwargs
+                solver,
+                sparse_conversion=False,
+                obj_scaling=1e-3 if solver == "mosek" else 1.0,
+                **kwargs,
             ),
         )
         if solver != "cvxopt":
