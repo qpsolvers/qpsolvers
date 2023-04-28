@@ -182,7 +182,7 @@ class TestSolveLS(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_medium_sparse(solver: str, sparse_conversion: bool):
+    def get_test_medium_sparse(solver: str, sparse_conversion: bool, **kwargs):
         """Get test function for a large sparse problem with a given solver.
 
         Parameters
@@ -209,6 +209,7 @@ class TestSolveLS(unittest.TestCase):
                 b,
                 solver=solver,
                 sparse_conversion=sparse_conversion,
+                **kwargs,
             )
             self.assertIsNotNone(x)
 
@@ -258,14 +259,21 @@ for solver in sparse_solvers:
         "test_mixed_sparse_args_{}".format(solver),
         TestSolveLS.get_test_mixed_sparse_args(solver),
     )
-    if solver not in ["gurobi", "mosek"]:
+    if solver != "gurobi":
         # Gurobi: model too large for size-limited license
-        # MOSEK: tracked in https://github.com/qpsolvers/qpsolvers/issues/213
+        kwargs = {}
+        if solver == "mosek":
+            try:
+                import mosek
+
+                kwargs["mosek"] = {mosek.dparam.intpnt_qo_tol_rel_gap: 1e-7}
+            except ImportError:
+                pass
         setattr(
             TestSolveLS,
             "test_medium_sparse_dense_conversion_{}".format(solver),
             TestSolveLS.get_test_medium_sparse(
-                solver, sparse_conversion=False
+                solver, sparse_conversion=False, **kwargs
             ),
         )
     if solver not in ["cvxopt", "gurobi"]:
@@ -276,13 +284,17 @@ for solver in sparse_solvers:
             "test_medium_sparse_sparse_conversion_{}".format(solver),
             TestSolveLS.get_test_medium_sparse(solver, sparse_conversion=True),
         )
-    if solver not in ["gurobi", "highs", "mosek"]:
+    if solver not in ["gurobi", "highs"]:
         # Gurobi: model too large for size-limited license
         # HiGHS: model too large https://github.com/ERGO-Code/HiGHS/issues/992
-        # MOSEK: tracked in https://github.com/qpsolvers/qpsolvers/issues/213
-        kwargs = {}
-        if solver == "scs":
-            kwargs["eps_infeas"] = 1e-12
+        kwargs = {"eps_infeas": 1e-12} if solver == "scs" else {}
+        if solver == "mosek":
+            try:
+                import mosek
+
+                kwargs["mosek"] = {mosek.dparam.intpnt_qo_tol_rel_gap: 1e-7}
+            except ImportError:
+                pass
         setattr(
             TestSolveLS,
             "test_large_sparse_problem_dense_conversion_{}".format(solver),
