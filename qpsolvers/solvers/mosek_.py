@@ -76,7 +76,9 @@ def mosek_solve_problem(
     """
     if problem.is_unconstrained:
         return solve_unconstrained(problem)
-    kwargs["mosek"] = {mosek.iparam.log: 1 if verbose else 0}
+    if "mosek" not in kwargs:
+        kwargs["mosek"] = {}
+    kwargs["mosek"][mosek.iparam.log] = 1 if verbose else 0
     solution = cvxopt_solve_problem(problem, "mosek", initvals, **kwargs)
     return solution
 
