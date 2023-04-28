@@ -266,7 +266,7 @@ for solver in sparse_solvers:
             try:
                 import mosek
 
-                kwargs["mosek"] = {mosek.dparam.intpnt_qo_tol_rel_gap: 1e-7}
+                kwargs["mosek"] = {mosek.dparam.intpnt_qo_tol_rel_gap: 1e-6}
             except ImportError:
                 pass
         setattr(
