@@ -3,27 +3,28 @@
 [![Build](https://img.shields.io/github/actions/workflow/status/qpsolvers/qpsolvers/test.yml?branch=master)](https://github.com/qpsolvers/qpsolvers/actions)
 [![Coverage](https://coveralls.io/repos/github/qpsolvers/qpsolvers/badge.svg?branch=master)](https://coveralls.io/github/qpsolvers/qpsolvers?branch=master)
 [![Documentation](https://img.shields.io/github/actions/workflow/status/qpsolvers/qpsolvers/docs.yml?branch=master&label=docs)](https://qpsolvers.github.io/qpsolvers/)
-[![Downloads/month](https://pepy.tech/badge/qpsolvers/month)](https://pepy.tech/project/qpsolvers)
-[![Conda version](https://img.shields.io/conda/vn/conda-forge/qpsolvers.svg)](https://anaconda.org/conda-forge/qpsolvers)
-[![PyPI version](https://img.shields.io/pypi/v/qpsolvers)](https://pypi.org/project/qpsolvers/)
 
 Unified interface to convex Quadratic Programming (QP) solvers available in Python.
 
 ## Installation
 
-### Using PyPI
+### PyPI
+
+[![PyPI version](https://img.shields.io/pypi/v/qpsolvers)](https://pypi.org/project/qpsolvers/)
+[![PyPI downloads](https://pepy.tech/badge/qpsolvers/month)](https://pepy.tech/project/qpsolvers)
 
 ```console
-pip install qpsolvers
+$ pip install qpsolvers
 ```
 
-### Using <img src="https://s3.amazonaws.com/conda-dev/conda_logo.svg" height="18">
+### Conda
+
+[![Conda version](https://img.shields.io/conda/vn/conda-forge/qpsolvers.svg)](https://anaconda.org/conda-forge/qpsolvers)
+[![Conda downloads](https://anaconda.org/conda-forge/qpsolvers/badges/downloads.svg)](https://anaconda.org/conda-forge/qpsolvers)
 
 ```console
-conda install qpsolvers -c conda-forge
+$ conda install -c conda-forge qpsolvers
 ```
-
-Check out the documentation for [Windows](https://qpsolvers.github.io/qpsolvers/installation.html#windows) instructions.
 
 ## Usage
 
