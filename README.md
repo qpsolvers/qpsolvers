@@ -4,11 +4,7 @@
 [![Coverage](https://coveralls.io/repos/github/qpsolvers/qpsolvers/badge.svg?branch=master)](https://coveralls.io/github/qpsolvers/qpsolvers?branch=master)
 [![Documentation](https://img.shields.io/github/actions/workflow/status/qpsolvers/qpsolvers/docs.yml?branch=master&label=docs)](https://qpsolvers.github.io/qpsolvers/)
 
-Unified interface to convex Quadratic Programming (QP) solvers available in Python.
-
-## Usage
-
-The library provides a one-stop shop [`solve_qp`](https://qpsolvers.github.io/qpsolvers/quadratic-programming.html#qpsolvers.solve_qp) function with a ``solver`` keyword argument to select the backend solver. It solves convex quadratic programs in standard form:
+This library provides a one-stop shop [`solve_qp`](https://qpsolvers.github.io/qpsolvers/quadratic-programming.html#qpsolvers.solve_qp) function to solve convex quadratic programs:
 
 $$
 \begin{split}
@@ -23,13 +19,13 @@ $$
 \end{split}
 $$
 
-Vector inequalities apply coordinate by coordinate. The function returns the solution $x^\*$ found by the solver, or ``None`` in case of failure/unfeasible problem. All solvers require the problem to be convex, meaning the matrix $P$ should be [positive semi-definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix). Some solvers further require the problem to be strictly convex, meaning $P$ should be positive definite.
+Vector inequalities apply coordinate by coordinate. The function returns the primal solution $x^\*$ found by the backend QP solver, or ``None`` in case of failure/unfeasible problem. All solvers require the problem to be convex, meaning the matrix $P$ should be [positive semi-definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix). Some solvers further require the problem to be strictly convex, meaning $P$ should be positive definite.
 
-**Dual multipliers:** alternatively, the [`solve_problem`](https://qpsolvers.github.io/qpsolvers/quadratic-programming.html#qpsolvers.solve_problem) function returns a more complete solution object containing both the primal solution and its corresponding dual multipliers.
+**Dual multipliers:** there is also a [`solve_problem`](https://qpsolvers.github.io/qpsolvers/quadratic-programming.html#qpsolvers.solve_problem) function that returns not only the primal solution, but also its dual multipliers and all other relevant quantities computed by the backend solver.
 
 ## Example
 
-To solve a quadratic program, build the matrices that define it and call the ``solve_qp`` function:
+To solve a quadratic program, build the matrices that define it and call ``solve_qp``, selecting the backend QP solver via the ``solver`` keyword argument:
 
 ```python
 import numpy as np
