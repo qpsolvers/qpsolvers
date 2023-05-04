@@ -58,7 +58,7 @@ $ pip install qpsolvers
 
 ### Conda
 
-[![Conda version](https://img.shields.io/conda/vn/conda-forge/qpsolvers.svg)](https://anaconda.org/conda-forge/qpsolvers)
+[![Conda version](https://anaconda.org/conda-forge/qpsolvers/badges/version.svg)](https://anaconda.org/conda-forge/qpsolvers)
 [![Conda downloads](https://anaconda.org/conda-forge/qpsolvers/badges/downloads.svg)](https://anaconda.org/conda-forge/qpsolvers)
 
 ```console
