@@ -6,26 +6,6 @@
 
 Unified interface to convex Quadratic Programming (QP) solvers available in Python.
 
-## Installation
-
-### PyPI
-
-[![PyPI version](https://img.shields.io/pypi/v/qpsolvers)](https://pypi.org/project/qpsolvers/)
-[![PyPI downloads](https://pepy.tech/badge/qpsolvers/month)](https://pepy.tech/project/qpsolvers)
-
-```console
-$ pip install qpsolvers
-```
-
-### Conda
-
-[![Conda version](https://img.shields.io/conda/vn/conda-forge/qpsolvers.svg)](https://anaconda.org/conda-forge/qpsolvers)
-[![Conda downloads](https://anaconda.org/conda-forge/qpsolvers/badges/downloads.svg)](https://anaconda.org/conda-forge/qpsolvers)
-
-```console
-$ conda install -c conda-forge qpsolvers
-```
-
 ## Usage
 
 The library provides a one-stop shop [`solve_qp`](https://qpsolvers.github.io/qpsolvers/quadratic-programming.html#qpsolvers.solve_qp) function with a ``solver`` keyword argument to select the backend solver. It solves convex quadratic programs in standard form:
@@ -68,6 +48,26 @@ print(f"QP solution: x = {x}")
 ```
 
 This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``. It is also possible to get dual multipliers at the solution, as shown in [this example](https://qpsolvers.github.io/qpsolvers/quadratic-programming.html#dual-multipliers).
+
+## Installation
+
+### PyPI
+
+[![PyPI version](https://img.shields.io/pypi/v/qpsolvers)](https://pypi.org/project/qpsolvers/)
+[![PyPI downloads](https://pepy.tech/badge/qpsolvers/month)](https://pepy.tech/project/qpsolvers)
+
+```console
+$ pip install qpsolvers
+```
+
+### Conda
+
+[![Conda version](https://img.shields.io/conda/vn/conda-forge/qpsolvers.svg)](https://anaconda.org/conda-forge/qpsolvers)
+[![Conda downloads](https://anaconda.org/conda-forge/qpsolvers/badges/downloads.svg)](https://anaconda.org/conda-forge/qpsolvers)
+
+```console
+$ conda install -c conda-forge qpsolvers
+```
 
 ## Solvers
 
