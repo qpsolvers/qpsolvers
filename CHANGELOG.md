@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Changed
+
+- Moved CVXOPT to default solvers as it now provides arm64 wheels
+
 ## [3.5.0] - 2023/08/16
 
 ### Added
