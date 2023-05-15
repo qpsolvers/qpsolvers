@@ -20,6 +20,7 @@
 
 """Model for a quadratic program."""
 
+import warnings
 from typing import Optional, Tuple, TypeVar, Union
 
 import numpy as np
@@ -240,8 +241,8 @@ class Problem:
     def cond(self):
         r"""Condition number of the problem matrix.
 
-        Compute the condition number of the symmetric matrix representing the
-        problem data:
+        Compute the condition number of the full symmetric matrix representing
+        the problem data:
 
         .. math::
 
@@ -251,6 +252,13 @@ class Problem:
                 G & 0   & 0   \\
                 A & 0   & 0
             \end{bmatrix}
+
+        Note
+        ----
+        This function is deprecated (it will be removed in qpsolvers v4) as it
+        is not a meaningful indicated: conditionning should be tied to a set of
+        active constraints, as discussed in more detail in `this issue
+        <https://github.com/qpsolvers/qpsolvers/issues/220>`__.
 
         Returns
         -------
@@ -269,6 +277,11 @@ class Problem:
         This is the motivation for preconditioning, as detailed for instance in
         Section 5 of [Stellato2020]_.
         """
+        warnings.warn(
+            "This function is deprecated and will be removed in qpsolvers v4, "
+            "see https://github.com/qpsolvers/qpsolvers/issues/220",
+            DeprecationWarning,
+        )
         if self.has_sparse:
             raise ProblemError("This function is for dense problems only")
         P, A = self.P, self.A

@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Changed
+
+- Deprecate ``Problem.cond``
+
 ## [3.4.0] - 2023/04/28
 
 ### Changed
