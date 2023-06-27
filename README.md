@@ -52,9 +52,19 @@ This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``. It
 [![PyPI version](https://img.shields.io/pypi/v/qpsolvers)](https://pypi.org/project/qpsolvers/)
 [![PyPI downloads](https://pepy.tech/badge/qpsolvers/month)](https://pepy.tech/project/qpsolvers)
 
+To install the library with open source QP solvers:
+
 ```console
-$ pip install qpsolvers
+pip install qpsolvers[open_source_solvers]
 ```
+
+To install only the library itself:
+
+```console
+pip install qpsolvers
+```
+
+When imported, qpsolvers loads all the solvers it can find and lists them in ``qpsolvers.available_solvers``.
 
 ### Conda
 
@@ -62,7 +72,7 @@ $ pip install qpsolvers
 [![Conda downloads](https://anaconda.org/conda-forge/qpsolvers/badges/downloads.svg)](https://anaconda.org/conda-forge/qpsolvers)
 
 ```console
-$ conda install -c conda-forge qpsolvers
+conda install -c conda-forge qpsolvers
 ```
 
 ## Solvers
