@@ -154,9 +154,7 @@ Check out the [full report](https://github.com/qpsolvers/qpsolvers_benchmark/blo
 
 ## Contributing
 
-We welcome contributions, see [Contributing](https://github.com/qpsolvers/qpsolvers/blob/master/CONTRIBUTING.md) for details.
-
-We are also looking forward to hearing about your use cases! Please share them in [Show and tell](https://github.com/qpsolvers/qpsolvers/discussions/categories/show-and-tell).
+We welcome contributions, see the [contribution guidelines](https://github.com/qpsolvers/qpsolvers/blob/master/CONTRIBUTING.md) for details. We are also looking forward to hearing about your use cases! Please share them in [Show and tell](https://github.com/qpsolvers/qpsolvers/discussions/categories/show-and-tell).
 
 ## Citing qpsolvers
 
