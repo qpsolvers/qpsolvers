@@ -158,4 +158,4 @@ We welcome contributions, see the [contribution guidelines](https://github.com/q
 
 ## Citing qpsolvers
 
-If you find this project useful, please consider giving it a :star: or citing it :books: as detailed in the ``Cite this repository`` button on GitHub.
+If you find this project useful, please consider giving it a :star: or citing it :books: A citation template is available via the ``Cite this repository`` button on GitHub.
