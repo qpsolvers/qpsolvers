@@ -61,6 +61,7 @@ The process to add AwesomeQP to *qpsolvers* goes as follows:
 10. Assuming AwesomeQP is distributed on `PyPI <https://pypi.org/>`__, add it to the ``testenv`` and ``testenv:coverage`` environments in ``tox.ini`` for unit testing
 11. Assuming AwesomeQP is distributed on `PyPI <https://pypi.org/>`__, add it to the ``pip install`` line in the documentation workflow ``.github/workflows/docs.yml``
 12. Log the new solver as an addition in the changelog
+13. If you are a new contributor, feel free to add your name to ``CITATION.cff`` at the root of the repository.
 
 Problem conversions
 ===================
