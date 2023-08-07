@@ -121,7 +121,9 @@ In the following tables, solvers are called with their default settings and comp
 
 ### Maros-Meszaros (hard problems)
 
-|          |   [Success rate](#success-rate) (%) |   [Runtime](#computation-time) (shm) |   [Primal residual](#primal-residual) (shm) |   [Dual residual](#dual-residual) (shm) |   [Duality gap](#duality-gap) (shm) |   [Cost error](#cost-error) (shm) |
+Check out the [full report](https://github.com/qpsolvers/qpsolvers_benchmark/blob/7da937e0380ade8c109340bac4b4fe81f02e6806/maros_meszaros/results/maros_meszaros.md) for high- and low-accuracy solver settings.
+
+|          |                    Success rate (%) |                        Runtime (shm) |                       Primal residual (shm) |                            Dual residual (shm) |                   Duality gap (shm) |                  Cost error (shm) |
 |:---------|------------------------------------:|-------------------------------------:|--------------------------------------------:|----------------------------------------:|------------------------------------:|----------------------------------:|
 | clarabel |                                89.9 |                                  1.0 |                                         1.0 |                                     1.9 |                                 1.0 |                               1.0 |
 | cvxopt   |                                53.6 |                                 13.8 |                                         5.3 |                                     2.6 |                                22.9 |                               6.6 |
@@ -131,9 +133,11 @@ In the following tables, solvers are called with their default settings and comp
 | proxqp   |                                77.5 |                                  4.6 |                                         2.0 |                                     1.0 |                                11.5 |                               2.2 |
 | scs      |                                60.1 |                                  2.1 |                                        37.5 |                                     3.4 |                               133.1 |                               8.4 |
 
-### Maros-Meszaros (subset of dense problems)
+### Maros-Meszaros dense (subset of dense problems)
 
-|          |   [Success rate](#success-rate) (%) |   [Runtime](#computation-time) (shm) |   [Primal residual](#primal-residual) (shm) |   [Dual residual](#dual-residual) (shm) |   [Duality gap](#duality-gap) (shm) |   [Cost error](#cost-error) (shm) |
+Check out the [full report](https://github.com/qpsolvers/qpsolvers_benchmark/blob/7da937e0380ade8c109340bac4b4fe81f02e6806/maros_meszaros/results/maros_meszaros_dense.md) for high- and low-accuracy solver settings.
+
+|          |                    Success rate (%) |                        Runtime (shm) |                       Primal residual (shm) |                            Dual residual (shm) |                   Duality gap (shm) |                  Cost error (shm) |
 |:---------|------------------------------------:|-------------------------------------:|--------------------------------------------:|----------------------------------------:|------------------------------------:|----------------------------------:|
 | clarabel |                               100.0 |                                  1.0 |                                         1.0 |                                    78.4 |                                 1.0 |                               1.0 |
 | cvxopt   |                                66.1 |                               1267.4 |                                 292269757.0 |                                268292.6 |                               269.1 |                              72.5 |
