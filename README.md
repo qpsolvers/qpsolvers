@@ -115,58 +115,45 @@ Matrix arguments are NumPy arrays for dense solvers and SciPy Compressed Sparse 
 
 ## Benchmark
 
-On a [dense problem](examples/benchmark_dense_problem.py), the performance of all solvers (as measured by IPython's ``%timeit`` on an Intel(R) Core(TM) i7-6700K CPU @ 4.00GHz) is:
+The results below come from [`qpsolvers_benchmark`](https://github.com/qpsolvers/qpsolvers_benchmark), a benchmark for QP solvers in Python. You can run the benchmark on your machine via a command-line tool (``pip install qpsolvers_benchmark``). Check out the benchmark repository for details.
 
-| Solver   | Type   | Time (ms) |
-| -------- | ------ | --------- |
-| qpswift  | Dense  | 0.008     |
-| quadprog | Dense  | 0.01      |
-| qpoases  | Dense  | 0.02      |
-| osqp     | Sparse | 0.03      |
-| scs      | Sparse | 0.03      |
-| ecos     | Sparse | 0.27      |
-| cvxopt   | Dense  | 0.44      |
-| gurobi   | Sparse | 1.74      |
-| mosek    | Sparse | 7.17      |
+In the following tables, solvers are called with their default settings and compared over whole test sets by [shifted geometric mean](https://github.com/qpsolvers/qpsolvers_benchmark#shifted-geometric-mean) (lower is better). We don't report the [GitHub free-for-all test set](https://github.com/qpsolvers/qpsolvers_benchmark/blob/main/github_ffa/results/github_ffa.md) yet as it is still too small to be representative.
 
-On a [sparse problem](examples/benchmark_sparse_problem.py) with *n = 500* optimization variables, these performances become:
+### Maros-Meszaros (hard problems)
 
-| Solver   | Type   | Time (ms) |
-| -------- | ------ | --------- |
-| osqp     | Sparse |    1      |
-| qpswift  | Dense  |    2      |
-| scs      | Sparse |    4      |
-| mosek    | Sparse |   17      |
-| ecos     | Sparse |   33      |
-| cvxopt   | Dense  |   51      |
-| gurobi   | Sparse |  221      |
-| quadprog | Dense  |  427      |
-| qpoases  | Dense  | 1560      |
+|          |   [Success rate](#success-rate) (%) |   [Runtime](#computation-time) (shm) |   [Primal residual](#primal-residual) (shm) |   [Dual residual](#dual-residual) (shm) |   [Duality gap](#duality-gap) (shm) |   [Cost error](#cost-error) (shm) |
+|:---------|------------------------------------:|-------------------------------------:|--------------------------------------------:|----------------------------------------:|------------------------------------:|----------------------------------:|
+| clarabel |                                89.9 |                                  1.0 |                                         1.0 |                                     1.9 |                                 1.0 |                               1.0 |
+| cvxopt   |                                53.6 |                                 13.8 |                                         5.3 |                                     2.6 |                                22.9 |                               6.6 |
+| gurobi   |                                16.7 |                                 57.8 |                                        10.5 |                                    37.5 |                                94.0 |                              34.9 |
+| highs    |                                53.6 |                                 11.3 |                                         5.3 |                                     2.6 |                                21.2 |                               6.1 |
+| osqp     |                                41.3 |                                  1.8 |                                        58.7 |                                    22.6 |                              1950.7 |                              42.4 |
+| proxqp   |                                77.5 |                                  4.6 |                                         2.0 |                                     1.0 |                                11.5 |                               2.2 |
+| scs      |                                60.1 |                                  2.1 |                                        37.5 |                                     3.4 |                               133.1 |                               8.4 |
 
-On a [model predictive control](examples/model_predictive_control.py) problem for robot locomotion, we get:
+### Maros-Meszaros (subset of dense problems)
 
-| Solver   | Type   | Time (ms) |
-| -------- | ------ | --------- |
-| quadprog | Dense  | 0.03      |
-| qpswift  | Dense  | 0.08      |
-| qpoases  | Dense  | 0.36      |
-| osqp     | Sparse | 0.48      |
-| ecos     | Sparse | 0.69      |
-| scs      | Sparse | 0.76      |
-| cvxopt   | Dense  | 2.75      |
+|          |   [Success rate](#success-rate) (%) |   [Runtime](#computation-time) (shm) |   [Primal residual](#primal-residual) (shm) |   [Dual residual](#dual-residual) (shm) |   [Duality gap](#duality-gap) (shm) |   [Cost error](#cost-error) (shm) |
+|:---------|------------------------------------:|-------------------------------------:|--------------------------------------------:|----------------------------------------:|------------------------------------:|----------------------------------:|
+| clarabel |                               100.0 |                                  1.0 |                                         1.0 |                                    78.4 |                                 1.0 |                               1.0 |
+| cvxopt   |                                66.1 |                               1267.4 |                                 292269757.0 |                                268292.6 |                               269.1 |                              72.5 |
+| daqp     |                                50.0 |                               4163.4 |                                1056090169.5 |                                491187.7 |                               351.8 |                             280.0 |
+| ecos     |                                12.9 |                              27499.0 |                                 996322577.2 |                                938191.8 |                               197.6 |                            1493.3 |
+| gurobi   |                                37.1 |                               3511.4 |                                 497416073.4 |                              13585671.6 |                              4964.0 |                             190.6 |
+| highs    |                                64.5 |                               1008.4 |                                 255341695.6 |                                235041.8 |                               396.2 |                              54.5 |
+| osqp     |                                51.6 |                                371.7 |                                5481100037.5 |                               3631889.3 |                             24185.1 |                             618.4 |
+| proxqp   |                                91.9 |                                 14.1 |                                      1184.3 |                                     1.0 |                                71.8 |                               7.2 |
+| qpoases  |                                24.2 |                               3916.0 |                                8020840724.2 |                              23288184.8 |                               102.2 |                             778.7 |
+| qpswift  |                                25.8 |                              16109.1 |                                 860033995.1 |                                789471.9 |                               170.4 |                             875.0 |
+| quadprog |                                62.9 |                               1430.6 |                                 315885538.2 |                               4734021.7 |                              2200.0 |                             192.3 |
+| scs      |                                72.6 |                                 95.6 |                                2817718628.1 |                                369300.9 |                              3303.2 |                             152.5 |
 
-Finally, here is a small benchmark of [random dense problems](examples/benchmark_random_problems.py) (each data point corresponds to an average over 10 runs):
-
-<img src="https://scaron.info/images/qp-benchmark-2022.png">
-
-Note that performances of QP solvers largely depend on the problem solved. For instance, MOSEK performs an [automatic conversion to Second-Order Cone Programming (SOCP)](https://docs.mosek.com/8.1/pythonapi/prob-def-quadratic.html) which the documentation advises bypassing for better performance. Similarly, ECOS reformulates [from QP to SOCP](qpsolvers/solvers/conversions/socp_from_qp.py) and [works best on small problems](https://web.stanford.edu/%7Eboyd/papers/ecos.html).
-
-# Contributing
+## Contributing
 
 We welcome contributions, see [Contributing](https://github.com/qpsolvers/qpsolvers/blob/master/CONTRIBUTING.md) for details.
 
 We are also looking forward to hearing about your use cases! Please share them in [Show and tell](https://github.com/qpsolvers/qpsolvers/discussions/categories/show-and-tell).
 
-# Citing qpsolvers
+## Citing qpsolvers
 
-If you find this project useful, please consider giving it a :star: and a citation :books: (check out the ``Cite this repository`` button on GitHub).
+If you find this project useful, please consider giving it a :star: or citing it :books: as detailed in the ``Cite this repository`` button on GitHub.
