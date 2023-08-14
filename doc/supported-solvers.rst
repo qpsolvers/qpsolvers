@@ -38,6 +38,12 @@ HiGHS
 .. automodule:: qpsolvers.solvers.highs_
     :members:
 
+HPIPM
+=====
+
+.. automodule:: qpsolvers.solvers.hpipm_
+    :members:
+
 MOSEK
 =====
 
