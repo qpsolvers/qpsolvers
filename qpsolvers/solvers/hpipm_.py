@@ -87,6 +87,8 @@ def hpipm_solve_problem(
          - Stationarity condition tolerance.
     """
     P, q, G, h, A, b, lb, ub = problem.unpack()
+    if verbose:
+        warnings.warn("verbose keyword argument is ignored by HPIPM")
 
     # setup the problem dimensions
     nv = q.shape[0]
@@ -112,7 +114,7 @@ def hpipm_solve_problem(
         qp.set("C", G)
         qp.set("ug", h)
         # mask out the lower bound
-        qp.set("lg_mask", np.zeros_like(h))
+        qp.set("lg_mask", np.zeros_like(h, dtype=bool))
 
     if ne > 0:
         qp.set("A", A)
@@ -127,32 +129,30 @@ def hpipm_solve_problem(
         # zero), since HPIPM doesn't like infinities
         if nlb > 0:
             lb_mask = np.isinf(lb)
-            lb[lb_mask] = 0
+            lb[lb_mask] = 0.0
             qp.set("lb", lb)
             qp.set("lb_mask", ~lb_mask)
         else:
-            qp.set("lb_mask", np.zeros(nb))
+            qp.set("lb_mask", np.zeros(nb, dtype=bool))
 
         if nub > 0:
             ub_mask = np.isinf(ub)
-            ub[ub_mask] = 0
+            ub[ub_mask] = 0.0
             qp.set("ub", ub)
             qp.set("ub_mask", ~ub_mask)
         else:
-            qp.set("ub_mask", np.zeros(nb))
+            qp.set("ub_mask", np.zeros(nb, dtype=bool))
 
-    # solver arguments
-    arg = hpipm.hpipm_dense_qp_solver_arg(dim, mode)
+    solver_args = hpipm.hpipm_dense_qp_solver_arg(dim, mode)
     for key, val in kwargs.items():
-        arg.set(key, val)
+        solver_args.set(key, val)
 
     sol = hpipm.hpipm_dense_qp_sol(dim)
     if initvals is not None:
-        arg.set("warm_start", 1)
+        solver_args.set("warm_start", 1)
         sol.set("v", initvals)
 
-    # solve the QP
-    solver = hpipm.hpipm_dense_qp_solver(dim, arg)
+    solver = hpipm.hpipm_dense_qp_solver(dim, solver_args)
     solver.solve(qp, sol)
 
     status = solver.get("status")

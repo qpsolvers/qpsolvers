@@ -328,9 +328,7 @@ try:
     solve_function["hpipm"] = hpipm_solve_problem
     available_solvers.append("hpipm")
     dense_solvers.append("hpipm")
-except ImportError as e:
-    print("Failed to import hpipm!")
-    print(e)
+except ImportError:
     pass
 
 
