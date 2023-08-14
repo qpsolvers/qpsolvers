@@ -777,7 +777,7 @@ for solver in available_solvers:
         TestSolveQP.get_test_bounds(solver),
     )
     if solver != "qpswift":
-        # QPs without inequality constraints are not handled by qpSWIFT
+        # qpSWIFT: https://github.com/qpSWIFT/qpSWIFT/issues/2
         setattr(
             TestSolveQP,
             f"test_no_cons_{solver}",
@@ -789,7 +789,7 @@ for solver in available_solvers:
         TestSolveQP.get_test_no_eq(solver),
     )
     if solver != "qpswift":
-        # QPs without inequality constraints are not handled by qpSWIFT
+        # qpSWIFT: https://github.com/qpSWIFT/qpSWIFT/issues/2
         setattr(
             TestSolveQP,
             f"test_no_ineq_{solver}",
