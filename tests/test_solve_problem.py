@@ -146,8 +146,10 @@ class TestSolveProblem(unittest.TestCase):
         def test(self):
             problem, ref_solution = get_qpsut03()
             solution = solve_problem(problem, solver=solver)
+            self.assertEqual(solution.x.shape, (4,))
             self.assertEqual(solution.y.shape, (0,))
             self.assertEqual(solution.z.shape, (0,))
+            self.assertEqual(solution.z_box.shape, (4,))
             self.assertAlmostEqual(
                 np.linalg.norm(solution.z_box),
                 0.0,
@@ -157,8 +159,6 @@ class TestSolveProblem(unittest.TestCase):
                 if solver == "mosek"
                 else 7,
             )
-            print("{solution.x=}")
-            print("{solution.z_box=}")
             self.assertTrue(np.isfinite(solution.duality_gap()))
 
         return test
