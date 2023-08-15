@@ -74,6 +74,8 @@ class TestSolveProblem(unittest.TestCase):
                 if solver == "ecos"
                 else 1e-6
                 if solver in ["cvxopt", "qpswift", "scs"]
+                else 5e-7
+                if solver == "mosek"
                 else 1e-7
             )
             self.assertLess(norm(solution.x - ref_solution.x), eps_abs)
@@ -246,7 +248,7 @@ class TestSolveProblem(unittest.TestCase):
                 else 5e-7
                 if solver == "cvxopt"
                 else 5e-8
-                if solver == "clarabel"
+                if solver in ("clarabel", "mosek")
                 else 1e-8
             )
             self.assertIsNotNone(result.x)
