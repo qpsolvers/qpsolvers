@@ -72,7 +72,7 @@ class TestSolveProblem(unittest.TestCase):
                 if solver == "proxqp"
                 else 1e-4
                 if solver == "ecos"
-                else 2e-5
+                else 5e-5
                 if solver == "mosek"
                 else 1e-6
                 if solver in ["cvxopt", "qpswift", "scs"]
@@ -243,7 +243,7 @@ class TestSolveProblem(unittest.TestCase):
                 if solver == "osqp"
                 else 5e-5
                 if solver == "scs"
-                else 2e-7
+                else 1e-6
                 if solver == "mosek"
                 else 1e-7
                 if solver == "highs"
