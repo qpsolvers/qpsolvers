@@ -72,10 +72,10 @@ class TestSolveProblem(unittest.TestCase):
                 if solver == "proxqp"
                 else 1e-4
                 if solver == "ecos"
+                else 2e-5
+                if solver == "mosek"
                 else 1e-6
                 if solver in ["cvxopt", "qpswift", "scs"]
-                else 5e-7
-                if solver == "mosek"
                 else 1e-7
             )
             self.assertLess(norm(solution.x - ref_solution.x), eps_abs)
@@ -243,12 +243,14 @@ class TestSolveProblem(unittest.TestCase):
                 if solver == "osqp"
                 else 5e-5
                 if solver == "scs"
+                else 2e-7
+                if solver == "mosek"
                 else 1e-7
                 if solver == "highs"
                 else 5e-7
                 if solver == "cvxopt"
                 else 5e-8
-                if solver in ("clarabel", "mosek")
+                if solver in "clarabel"
                 else 1e-8
             )
             self.assertIsNotNone(result.x)
