@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Added
+
+- New solver: [HPIPM](https://github.com/giaf/hpipm) (thanks to @adamheins)
+
+### Changed
+
+- MOSEK: Relax test tolerances as latest version is less accurate with defaults
+
 ## [3.4.0] - 2023/04/28
 
 ### Changed
