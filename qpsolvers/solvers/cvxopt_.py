@@ -202,6 +202,10 @@ def cvxopt_solve_problem(
             z, z_box = split_dual_linear_box(z_cvxopt, lb, ub)
             solution.z = z
             solution.z_box = z_box
+        else:
+            print(f"{z_cvxopt.size=}")
+            print(f"{h.size=}")
+            print(f"{z_cvxopt=}")
     else:  # h is None
         solution.z = np.empty((0,))
         solution.z_box = np.empty((0,))
