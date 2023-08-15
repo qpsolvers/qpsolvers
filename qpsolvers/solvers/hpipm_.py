@@ -127,7 +127,7 @@ def hpipm_solve_problem(
         # need to mask out lb or ub if the box constraints are only one-sided
         # we also mask out infinities (and set the now-irrelevant value to
         # zero), since HPIPM doesn't like infinities
-        if nlb > 0:
+        if nlb > 0 and lb is not None:  # help mypy
             lb_mask = np.isinf(lb)
             lb[lb_mask] = 0.0
             qp.set("lb", lb)
@@ -135,7 +135,7 @@ def hpipm_solve_problem(
         else:
             qp.set("lb_mask", np.zeros(nb, dtype=bool))
 
-        if nub > 0:
+        if nub > 0 and ub is not None:  # help mypy
             ub_mask = np.isinf(ub)
             ub[ub_mask] = 0.0
             qp.set("ub", ub)
