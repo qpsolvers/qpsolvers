@@ -231,6 +231,18 @@ class TestSolveQP(unittest.TestCase):
                 if no_inequality and solver == "qpswift":
                     # QPs without inequality constraints not handled by qpSWIFT
                     continue
+                has_one_equality = (
+                    "A" in test_case
+                    and test_case["A"] is not None
+                    and test_case["A"].ndim == 1
+                )
+                has_lower_box = (
+                    "lb" in test_case and test_case["lb"] is not None
+                )
+                if has_one_equality and has_lower_box and solver == "hpipm":
+                    # Skipping this test for HPIPM for now
+                    # See https://github.com/giaf/hpipm/issues/136
+                    continue
                 test_comp = {
                     k: v.shape if v is not None else "None"
                     for k, v in test_case.items()

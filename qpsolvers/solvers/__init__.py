@@ -288,6 +288,50 @@ except ImportError:
     pass
 
 
+# HPIPM
+# =====
+
+hpipm_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[ndarray],
+            str,
+            bool,
+        ],
+        Solution,
+    ]
+] = None
+
+hpipm_solve_qp: Optional[
+    Callable[
+        [
+            Union[ndarray, csc_matrix],
+            ndarray,
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            str,
+            bool,
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
+try:
+    from .hpipm_ import hpipm_solve_problem, hpipm_solve_qp
+
+    solve_function["hpipm"] = hpipm_solve_problem
+    available_solvers.append("hpipm")
+    dense_solvers.append("hpipm")
+except ImportError:
+    pass
+
+
 # MOSEK
 # =====
 
@@ -605,6 +649,7 @@ __all__ = [
     "ecos_solve_qp",
     "gurobi_solve_qp",
     "highs_solve_qp",
+    "hpipm_solve_qp",
     "mosek_solve_qp",
     "osqp_solve_qp",
     "proxqp_solve_qp",
