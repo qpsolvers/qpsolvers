@@ -250,7 +250,7 @@ class TestSolveProblem(unittest.TestCase):
                 else 5e-7
                 if solver == "cvxopt"
                 else 5e-8
-                if solver in "clarabel"
+                if solver == "clarabel"
                 else 1e-8
             )
             self.assertIsNotNone(result.x)
