@@ -206,6 +206,7 @@ def cvxopt_solve_problem(
             print(f"{z_cvxopt.size=}")
             print(f"{h.size=}")
             print(f"{z_cvxopt=}")
+            print(f"{res['z']=}")
     else:  # h is None
         solution.z = np.empty((0,))
         solution.z_box = np.empty((0,))
