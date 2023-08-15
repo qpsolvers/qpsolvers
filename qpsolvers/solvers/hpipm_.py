@@ -30,8 +30,8 @@ HPIPM in some academic work, consider citing the corresponding paper
 import warnings
 from typing import Optional
 
-import numpy as np
 import hpipm_python.common as hpipm
+import numpy as np
 
 from ..problem import Problem
 from ..solution import Solution
