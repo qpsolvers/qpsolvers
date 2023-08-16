@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## [3.5.0] - 2023/08/16
 
 ### Added
 
@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- MOSEK: Disable CI test on QPSUT03 due to regression with 10.1.8
 - MOSEK: Relax test tolerances as latest version is less accurate with defaults
 
 ## [3.4.0] - 2023/04/28
