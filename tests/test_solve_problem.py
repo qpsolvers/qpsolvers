@@ -328,8 +328,9 @@ for solver in available_solvers:
         f"test_qpsut02_{solver}",
         TestSolveProblem.get_test_qpsut02(solver),
     )
-    if solver not in ["ecos", "qpswift"]:
+    if solver not in ["ecos", "mosek", "qpswift"]:
         # ECOS: https://github.com/embotech/ecos-python/issues/49
+        # MOSEK: https://github.com/qpsolvers/qpsolvers/issues/229
         # qpSWIFT: https://github.com/qpsolvers/qpsolvers/issues/159
         setattr(
             TestSolveProblem,
