@@ -20,8 +20,8 @@
 
 """Quadratic programming solvers in Python with a unified API."""
 
-from .active_set import ActiveSet
 from ._internals import available_solvers
+from .active_set import ActiveSet
 from .exceptions import (
     NoSolverSelected,
     ParamError,
