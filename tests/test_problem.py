@@ -24,8 +24,7 @@ import unittest
 
 import numpy as np
 import scipy.sparse as spa
-
-from qpsolvers import Problem, ProblemError
+from qpsolvers import ActiveSet, Problem, ProblemError
 
 from .problems import get_sd3310_problem
 
@@ -64,7 +63,12 @@ class TestProblem(unittest.TestCase):
             Problem(P, q, G, h, None, b).check_constraints()
 
     def test_cond(self):
-        self.assertGreater(self.problem.cond(), 200.0)
+        active_set = ActiveSet(
+            G_indices=range(self.problem.G.shape[0]),
+            lb_indices=[],
+            ub_indices=[],
+        )
+        self.assertGreater(self.problem.cond(active_set), 200.0)
 
     def test_cond_unconstrained(self):
         unconstrained = Problem(self.problem.P, self.problem.q)
