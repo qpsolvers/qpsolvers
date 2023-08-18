@@ -20,6 +20,7 @@
 
 """Quadratic programming solvers in Python with a unified API."""
 
+from .active_set import ActiveSet
 from ._internals import available_solvers
 from .exceptions import (
     NoSolverSelected,
@@ -57,6 +58,7 @@ from .utils import print_matrix_vector
 __version__ = "3.5.0"
 
 __all__ = [
+    "ActiveSet",
     "NoSolverSelected",
     "ParamError",
     "Problem",
