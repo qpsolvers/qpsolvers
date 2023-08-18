@@ -286,12 +286,6 @@ class Problem:
         if active_set.ub_indices and self.ub is None:
             raise ProblemError("Upper bound in active set but not in problem")
 
-        # Active equality constraints
-        A_active = None
-        if self.A is not None:
-            A_active = self.A[active_set.A_indices]
-
-        # Active inequality constraints
         G_active = None
         G_full, _ = linear_from_box_inequalities(
             self.G, self.h, self.lb, self.ub, use_sparse=False
@@ -304,11 +298,10 @@ class Problem:
             ]
             G_active = G_full[active_set.G_indices + lb_indices + ub_indices]
 
-        # Active problem matrix
-        P = self.P
-        if G_active is None and A_active is None:
+        P, A = self.P, self.A
+        if G_active is None and A is None:
             M = P
-        elif A_active is None:  # G_active is not None
+        elif A is None:  # G_active is not None
             n_G = G_active.shape[0]
             M = np.vstack(
                 [
@@ -316,12 +309,12 @@ class Problem:
                     np.hstack([G_active, np.zeros((n_G, n_G))]),
                 ]
             )
-        else:  # G_active is not None and A_active is not None
+        else:  # G_active is not None and A is not None
             n_G = G_active.shape[0]
-            n_A = A_active.shape[0]
+            n_A = A.shape[0]
             M = np.vstack(
                 [
-                    np.hstack([P, G_active.T, A_active.T]),
+                    np.hstack([P, G_active.T, A.T]),
                     np.hstack(
                         [
                             G_active,
@@ -331,7 +324,7 @@ class Problem:
                     ),
                     np.hstack(
                         [
-                            A_active,
+                            A,
                             np.zeros((n_A, n_G)),
                             np.zeros((n_A, n_A)),
                         ]

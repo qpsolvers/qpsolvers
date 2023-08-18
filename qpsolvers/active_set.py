@@ -18,16 +18,16 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
+"""Active set, that is, active constraints at the optimum of a problem."""
+
 from dataclasses import dataclass
 from typing import Sequence
 
 
 @dataclass
 class ActiveSet:
-
     """Indices of active constraints for each problem matrix."""
 
     G_indices: Sequence[int]
-    A_indices: Sequence[int]
     lb_indices: Sequence[int]
     ub_indices: Sequence[int]
