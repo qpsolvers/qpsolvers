@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""Active set, that is, active constraints at the optimum of a problem."""
+"""Active set: indices of inequality constraints saturated at the optimum."""
 
 from dataclasses import dataclass
 from typing import Sequence
@@ -26,7 +26,17 @@ from typing import Sequence
 
 @dataclass
 class ActiveSet:
-    """Indices of active constraints for each problem matrix."""
+    """Indices of active inequality constraints.
+
+    Attributes
+    ----------
+    G_indices :
+        Indices of active linear inequality constraints.
+    lb_indices :
+        Indices of active lower-bound inequality constraints.
+    ub_indices :
+        Indices of active upper-bound inequality constraints.
+    """
 
     G_indices: Sequence[int]
     lb_indices: Sequence[int]
