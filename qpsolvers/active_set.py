@@ -21,7 +21,7 @@
 """Active set: indices of inequality constraints saturated at the optimum."""
 
 from dataclasses import dataclass
-from typing import Sequence
+from typing import Tuple
 
 
 @dataclass
@@ -38,6 +38,6 @@ class ActiveSet:
         Indices of active upper-bound inequality constraints.
     """
 
-    G_indices: Sequence[int]
-    lb_indices: Sequence[int]
-    ub_indices: Sequence[int]
+    G_indices: Tuple[int, ...] = ()
+    lb_indices: Tuple[int, ...] = ()
+    ub_indices: Tuple[int, ...] = ()
