@@ -25,6 +25,7 @@ from typing import Optional, Tuple, TypeVar, Union
 import numpy as np
 import scipy.sparse as spa
 
+from .active_set import ActiveSet
 from .conversions import linear_from_box_inequalities
 from .exceptions import ProblemError
 
