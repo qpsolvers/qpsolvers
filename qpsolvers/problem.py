@@ -248,10 +248,19 @@ class Problem:
 
             M =
             \begin{bmatrix}
-                P & G^T & A^T \\
-                G & 0   & 0   \\
-                A & 0   & 0
+                P & G_{act}^T & A_{act}^T \\
+                G_{act} & 0 & 0 \\
+                A_{act} & 0 & 0
             \end{bmatrix}
+
+        where :math:`G_{act}` and :math:`A_{act}` denote the active inequality
+        and equality constraints at the optimum of the problem.
+
+        Parameters
+        ----------
+        active_set :
+            Active set to evaluate the condition number with. It should contain
+            the set of active constraints at the optimum of the problem.
 
         Returns
         -------
