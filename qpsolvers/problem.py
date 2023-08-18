@@ -291,12 +291,12 @@ class Problem:
             self.G, self.h, self.lb, self.ub, use_sparse=False
         )
         if G_full is not None:
-            n_h = self.h.size
-            lb_indices = [i + n_h for i in active_set.lb_indices]
-            ub_indices = [
-                i + n_h + self.lb.size for i in active_set.ub_indices
-            ]
-            G_active = G_full[active_set.G_indices + lb_indices + ub_indices]
+            m = self.h.size
+            G_indices = active_set.G_indices
+            lb_indices = [i + m for i in active_set.lb_indices]
+            ub_indices = [i + m + self.lb.size for i in active_set.ub_indices]
+            indices = G_indices + lb_indices + ub_indices
+            G_active = G_full[indices]
 
         P, A = self.P, self.A
         if G_active is None and A is None:
