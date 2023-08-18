@@ -238,7 +238,7 @@ class Problem:
         if self.A is not None and self.b is None:
             raise ProblemError("incomplete equality constraint (missing A)")
 
-    def cond(self):
+    def cond(self, active_set: ActiveSet) -> float:
         r"""Condition number of the problem matrix.
 
         Compute the condition number of the symmetric matrix representing the
@@ -272,35 +272,59 @@ class Problem:
         """
         if self.has_sparse:
             raise ProblemError("This function is for dense problems only")
-        P, A = self.P, self.A
-        G, _ = linear_from_box_inequalities(
+        if active_set.lb_indices and self.lb is None:
+            raise ProblemError("Lower bound in active set but not in problem")
+        if active_set.ub_indices and self.ub is None:
+            raise ProblemError("Upper bound in active set but not in problem")
+
+        # Active equality constraints
+        A_active = None
+        if self.A is not None:
+            A_active = self.A[active_set.A_indices]
+
+        # Active inequality constraints
+        G_active = None
+        G_full, _ = linear_from_box_inequalities(
             self.G, self.h, self.lb, self.ub, use_sparse=False
         )
-        if G is None and A is None:
+        if G_full is not None:
+            n_h = self.h.size
+            lb_indices = [i + n_h for i in active_set.lb_indices]
+            ub_indices = [
+                i + n_h + self.lb.size for i in active_set.ub_indices
+            ]
+            G_active = G_full[active_set.G_indices + lb_indices + ub_indices]
+
+        # Active problem matrix
+        P = self.P
+        if G_active is None and A_active is None:
             M = P
-        elif A is None:  # G is not None
+        elif A_active is None:  # G_active is not None
+            n_G = G_active.shape[0]
             M = np.vstack(
                 [
-                    np.hstack([P, G.T]),
-                    np.hstack([G, np.zeros((G.shape[0], G.shape[0]))]),
+                    np.hstack([P, G_active.T]),
+                    np.hstack([G_active, np.zeros((n_G, n_G))]),
                 ]
             )
-        else:  # G is not None and A is not None
+        else:  # G_active is not None and A_active is not None
+            n_G = G_active.shape[0]
+            n_A = A_active.shape[0]
             M = np.vstack(
                 [
-                    np.hstack([P, G.T, A.T]),
+                    np.hstack([P, G_active.T, A_active.T]),
                     np.hstack(
                         [
-                            G,
-                            np.zeros((G.shape[0], G.shape[0])),
-                            np.zeros((G.shape[0], A.shape[0])),
+                            G_active,
+                            np.zeros((n_G, n_G)),
+                            np.zeros((n_G, n_A)),
                         ]
                     ),
                     np.hstack(
                         [
-                            A,
-                            np.zeros((A.shape[0], G.shape[0])),
-                            np.zeros((A.shape[0], A.shape[0])),
+                            A_active,
+                            np.zeros((n_A, n_G)),
+                            np.zeros((n_A, n_A)),
                         ]
                     ),
                 ]
