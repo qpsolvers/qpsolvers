@@ -252,5 +252,7 @@ def piqp_solve_qp(
         Primal solution to the QP, if found, otherwise ``None``.
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)
-    solution = piqp_solve_problem(problem, initvals, verbose, backend, **kwargs)
+    solution = piqp_solve_problem(
+        problem, initvals, verbose, backend, **kwargs
+    )
     return solution.x if solution.found else None
