@@ -219,10 +219,10 @@ def piqp_solve_problem(
     solution.found = status == success_status
     solution.x = solver.result.x
     if A is None:
-        solution.y = solver.result.y
-    else:
         solution.y = np.empty((0,))
-    if G is not None:
+    else:
+        solution.y = solver.result.y
+    if G is None:
         solution.z = np.empty((0,))
         solution.z_box = np.empty((0,))
     else:
