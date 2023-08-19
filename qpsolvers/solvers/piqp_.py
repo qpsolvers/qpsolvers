@@ -21,17 +21,23 @@
 """Solver interface for `PIQP`_.
 
 .. _PIQP: https://github.com/PREDICT-EPFL/piqp
+
+PIQP is a Proximal Interior Point Quadratic Programming solver, which can
+solve dense and sparse quadratic programs. Combining an infeasible interior
+point method with the proximal method of multipliers, the algorithm can
+handle ill-conditioned convex QP problems without the need for linear
+independence of the constraints.
 """
 
+import warnings
 from typing import Optional, Union
 
 import numpy as np
 import piqp
 import scipy.sparse as spa
-import warnings
 
 from ..conversions import ensure_sparse_matrices
-from ..exceptions import ParamError
+from ..exceptions import ParamError, ProblemError
 from ..problem import Problem
 from ..solution import Solution
 
@@ -165,16 +171,38 @@ def piqp_solve_problem(
     P, q, G, h, A, b, lb, ub = problem.unpack()
 
     if initvals is not None and verbose:
-        warnings.warn("warm-start values are ignored by DAQP")
+        warnings.warn("warm-start values are ignored by PIQP")
 
+    if use_csc is True:
+        P, G, A = ensure_sparse_matrices(P, G, A)
+
+    if G is None and h is not None:
+        raise ProblemError(
+            "Inconsistent inequalities: G is not set but h is set"
+        )
+    elif G is not None and h is None:
+        raise ProblemError(
+            "Inconsistent inequalities: G is set but h is None"
+        )
+    if A is None and b is not None:
+        raise ProblemError(
+            "Inconsistent inequalities: A is not set but b is set"
+        )
+    elif A is not None and b is None:
+        raise ProblemError(
+            "Inconsistent inequalities: A is set but b is None"
+        )
     n: int = q.shape[0]
     use_csc: bool = (
         not isinstance(P, np.ndarray)
         or (G is not None and not isinstance(G, np.ndarray))
         or (A is not None and not isinstance(A, np.ndarray))
     )
-    if use_csc is True:
-        P, G, A = ensure_sparse_matrices(P, G, A)
+    # PIQP does not accept A, b, G, and H as None.
+    G_piqp = np.zeros((1, n)) if G is None else G
+    h_piqp = np.zeros((1,)) if h is None else h
+    A_piqp = np.zeros((1, n)) if A is None else A
+    b_piqp = np.zeros((1,)) if b is None else b
 
     solver = __select_backend(backend, use_csc)
     solver.settings.verbose = verbose
@@ -187,7 +215,7 @@ def piqp_solve_problem(
                     f"Received an undefined solver setting {key}\
                     with value {value}"
                 )
-    solver.setup(P, q, A, b, G, h, lb, ub)
+    solver.setup(P, q, A_piqp, b_piqp, G_piqp, h_piqp, lb, ub)
     status = solver.solve()
     success_status = piqp.PIQP_SOLVED
 
