@@ -26,11 +26,11 @@
 from typing import Optional, Union
 
 import numpy as np
-import scipy.sparse as spa
 import piqp
+import scipy.sparse as spa
 
 from ..conversions import ensure_sparse_matrices
-from ..exceptions import ParamError, ProblemError
+from ..exceptions import ParamError
 from ..problem import Problem
 from ..solution import Solution
 
@@ -125,9 +125,11 @@ def piqp_solve_problem(
        * - ``reg_finetune_lower_limit``
          - Fine tune lower limit regularization.
        * - ``reg_finetune_primal_update_threshold``
-         - Threshold of number of no primal updates to transition to fine tune mode.
+         - Threshold of number of no primal updates to transition to fine
+           tune mode.
        * - ``reg_finetune_dual_update_threshold``
-         - Threshold of number of no dual updates to transition to fine tune mode.
+         - Threshold of number of no dual updates to transition to fine
+           tune mode.
        * - ``max_iter``
          - Maximum number of iterations.
        * - ``max_factor_retires``
@@ -139,7 +141,8 @@ def piqp_solve_problem(
        * - ``tau``
          - Maximum interior point step length.
        * - ``iterative_refinement_always_enabled``
-         - Always run iterative refinement and not only on factorization failure.
+         - Always run iterative refinement and not only on factorization
+           failure.
        * - ``iterative_refinement_eps_abs``
          - Iterative refinement absolute tolerance.
        * - ``iterative_refinement_eps_rel``
@@ -151,7 +154,8 @@ def piqp_solve_problem(
        * - ``iterative_refinement_static_regularization_eps``
          - Static regularization for KKT system for iterative refinement.
        * - ``iterative_refinement_static_regularization_rel``
-         - Static regularization w.r.t. the maximum abs diagonal term of KKT system.
+         - Static regularization w.r.t. the maximum abs diagonal term of
+           KKT system.
        * - ``verbose``
          - Verbose printing.
        * - ``compute_timings``
@@ -167,7 +171,7 @@ def piqp_solve_problem(
         or (G is not None and not isinstance(G, np.ndarray))
         or (A is not None and not isinstance(A, np.ndarray))
     )
-    if use_csc == True:
+    if use_csc is True:
         P, G, A = ensure_sparse_matrices(P, G, A)
 
     solver = __select_backend(backend, use_csc)
