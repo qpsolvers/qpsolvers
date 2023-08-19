@@ -416,6 +416,51 @@ except ImportError:
     pass
 
 
+# PIQP
+# =======
+
+piqp_solve_qp: Optional[
+    Callable[
+        [
+            Union[ndarray, csc_matrix],
+            Union[ndarray, csc_matrix],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            bool,
+            Optional[str],
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
+piqp_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[Union[ndarray, csc_matrix]],
+            bool,
+            Optional[str],
+        ],
+        Solution,
+    ]
+] = None
+
+try:
+    from .piqp_ import piqp_solve_problem, piqp_solve_qp
+
+    solve_function["piqp"] = piqp_solve_problem
+    available_solvers.append("piqp")
+    dense_solvers.append("piqp")
+    sparse_solvers.append("piqp")
+except ImportError:
+    pass
+
+
 # ProxQP
 # =======
 
@@ -652,6 +697,7 @@ __all__ = [
     "hpipm_solve_qp",
     "mosek_solve_qp",
     "osqp_solve_qp",
+    "piqp_solve_qp",
     "proxqp_solve_qp",
     "qpoases_solve_qp",
     "qpswift_solve_qp",
