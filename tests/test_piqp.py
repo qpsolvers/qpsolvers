@@ -75,5 +75,49 @@ try:
                     backend="invalid",
                 )
 
+        def test_invalid_problems(self):
+            """Exception raised when asking for an invalid backend."""
+            problem = get_sd3310_problem()
+            with self.assertRaises(ProblemError):
+                piqp_solve_qp(
+                    problem.P,
+                    problem.q,
+                    None,
+                    problem.h,
+                    problem.A,
+                    problem.b,
+                    backend="sparse",
+                )
+            with self.assertRaises(ProblemError):
+                piqp_solve_qp(
+                    problem.P,
+                    problem.q,
+                    problem.G,
+                    None,
+                    problem.A,
+                    problem.b,
+                    backend="sparse",
+                )
+            with self.assertRaises(ProblemError):
+                piqp_solve_qp(
+                    problem.P,
+                    problem.q,
+                    problem.G,
+                    problem.h,
+                    None,
+                    problem.b,
+                    backend="sparse",
+                )
+            with self.assertRaises(ProblemError):
+                piqp_solve_qp(
+                    problem.P,
+                    problem.q,
+                    problem.G,
+                    problem.h,
+                    problem.A,
+                    None,
+                    backend="sparse",
+                )
+
 except ImportError:  # solver not installed
     warnings.warn("Skipping PIQP tests as the solver is not installed")
