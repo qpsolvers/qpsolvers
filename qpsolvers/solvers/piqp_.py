@@ -28,6 +28,7 @@ from typing import Optional, Union
 import numpy as np
 import piqp
 import scipy.sparse as spa
+import warnings
 
 from ..conversions import ensure_sparse_matrices
 from ..exceptions import ParamError
@@ -67,6 +68,7 @@ def __select_backend(backend: Optional[str], use_csc: bool):
 
 def piqp_solve_problem(
     problem: Problem,
+    initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
     backend: Optional[str] = None,
     **kwargs,
@@ -77,6 +79,8 @@ def piqp_solve_problem(
     ----------
     problem :
         Quadratic program to solve.
+    initvals :
+        Warm-start guess vector (not used).
     backend :
         PIQP backend to use in ``[None, "dense", "sparse"]``. If ``None``
         (default), the backend is selected based on the type of ``P``.
@@ -159,6 +163,10 @@ def piqp_solve_problem(
     <https://predict-epfl.github.io/piqp/interfaces/settings>`__ for details.
     """
     P, q, G, h, A, b, lb, ub = problem.unpack()
+
+    if initvals is not None and verbose:
+        warnings.warn("warm-start values are ignored by DAQP")
+
     n: int = q.shape[0]
     use_csc: bool = (
         not isinstance(P, np.ndarray)
@@ -174,10 +182,11 @@ def piqp_solve_problem(
         try:
             setattr(solver.settings, key, value)
         except AttributeError:
-            raise ParamError(
-                f"Received an undefined solver setting {key}\
-                  with value {value}"
-            )
+            if verbose:
+                warnings.warn(
+                    f"Received an undefined solver setting {key}\
+                    with value {value}"
+                )
     solver.setup(P, q, A, b, G, h, lb, ub)
     status = solver.solve()
     success_status = piqp.PIQP_SOLVED
@@ -259,5 +268,7 @@ def piqp_solve_qp(
         Primal solution to the QP, if found, otherwise ``None``.
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)
-    solution = piqp_solve_problem(problem, verbose, backend, **kwargs)
+    solution = piqp_solve_problem(
+        problem, initvals, verbose, backend, **kwargs
+    )
     return solution.x if solution.found else None
