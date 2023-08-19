@@ -178,13 +178,13 @@ def piqp_solve_problem(
         raise ProblemError(
             "Inconsistent inequalities: G is not set but h is set"
         )
-    elif G is not None and h is None:
+    if G is not None and h is None:
         raise ProblemError("Inconsistent inequalities: G is set but h is None")
     if A is None and b is not None:
         raise ProblemError(
             "Inconsistent inequalities: A is not set but b is set"
         )
-    elif A is not None and b is None:
+    if A is not None and b is None:
         raise ProblemError("Inconsistent inequalities: A is set but b is None")
     use_csc: bool = (
         not isinstance(P, np.ndarray)
