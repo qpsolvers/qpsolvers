@@ -88,12 +88,6 @@ def piqp_solve_problem(
     :
         Solution to the QP returned by the solver.
 
-    Raises
-    ------
-    ParamError
-        If a warm-start value is given both in `initvals` and the `x` keyword
-        argument.
-
     Notes
     -----
     All other keyword arguments are forwarded as options to PIQP. For
@@ -201,7 +195,6 @@ def piqp_solve_qp(
     b: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
     lb: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
     ub: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
-    initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
     backend: Optional[str] = None,
     **kwargs,
@@ -242,8 +235,6 @@ def piqp_solve_qp(
         Lower bound constraint vector.
     ub :
         Upper bound constraint vector.
-    initvals :
-        Warm-start guess vector.
     backend :
         PIQP backend to use in ``[None, "dense", "sparse"]``. If ``None``
         (default), the backend is selected based on the type of ``P``.

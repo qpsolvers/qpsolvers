@@ -430,7 +430,6 @@ piqp_solve_qp: Optional[
             Optional[Union[ndarray, csc_matrix]],
             Optional[Union[ndarray, csc_matrix]],
             Optional[Union[ndarray, csc_matrix]],
-            Optional[Union[ndarray, csc_matrix]],
             bool,
             Optional[str],
         ],
