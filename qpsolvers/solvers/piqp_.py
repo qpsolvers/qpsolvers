@@ -171,7 +171,13 @@ def piqp_solve_problem(
     solver = __select_backend(backend, use_csc)
     solver.settings.verbose = verbose
     for key, value in kwargs.items():
-        setattr(solver.settings, key, value)
+        try:
+            setattr(solver.settings, key, value)
+        except AttributeError:
+            raise ParamError(
+                f"Received an undefined solver setting {key}\
+                  with value {value}"
+            )
     solver.setup(P, q, A, b, G, h, lb, ub)
     status = solver.solve()
     success_status = piqp.PIQP_SOLVED
@@ -198,6 +204,7 @@ def piqp_solve_qp(
     b: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
     lb: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
     ub: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
     backend: Optional[str] = None,
     **kwargs,
@@ -243,6 +250,8 @@ def piqp_solve_qp(
         (default), the backend is selected based on the type of ``P``.
     verbose :
         Set to `True` to print out extra information.
+    initvals :
+        Warm-start guess vector. Not used.
 
     Returns
     -------
