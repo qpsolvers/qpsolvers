@@ -513,7 +513,7 @@ class TestSolveQP(unittest.TestCase):
                 else 2e-3
                 if solver == "osqp"
                 else 1e-3
-                if solver == "gurobi"
+                if solver in ["gurobi", "piqp"]
                 else 5e-4
                 if solver in ["clarabel", "mosek"]
                 else 1e-4
@@ -754,7 +754,7 @@ class TestSolveQP(unittest.TestCase):
                 else 2e-5
                 if solver == "proxqp"
                 else 1e-6
-                if solver in ["cvxopt", "mosek", "qpswift"]
+                if solver in ["cvxopt", "mosek", "qpswift", "piqp"]
                 else 1e-8
             )
             self.assertIsNotNone(x)
