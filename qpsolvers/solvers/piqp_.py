@@ -26,7 +26,7 @@ PIQP is a Proximal Interior Point Quadratic Programming solver, which can
 solve dense and sparse quadratic programs. Combining an infeasible interior
 point method with the proximal method of multipliers, the algorithm can
 handle ill-conditioned convex QP problems without the need for linear
-independence of the constraints.
+independence of the constraints. [schwan2023piqp]_
 """
 
 import warnings

@@ -25,3 +25,5 @@ References
 .. [Goldfarb1983] *A numerically stable dual method for solving strictly convex quadratic programs*. D. Goldfarb and A. Idnani. Mathematical Programming, vol. 27, p. 1-33.
 
 .. [Arnstrom2022] `A dual active-set solver for embedded quadratic programming using recursive LDL updates <https://doi.org/10.1109/TAC.2022.3176430>`_, D. Arnström, A. Bemporad and D. Axehill. IEEE Transactions on Automatic Control, 2022, 67, no. 8 p. 4362-4369.
+
+.. [schwan2023piqp] `PIQP: A Proximal Interior-Point Quadratic Programming Solver <https://arxiv.org/abs/2304.00290>`_, R. Schwan, Y. Jiang, D. Kuhn, C.N. Jones. ArXiv, 2023.
