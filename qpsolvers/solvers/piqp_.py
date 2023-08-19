@@ -217,13 +217,12 @@ def piqp_solve_problem(
     solution = Solution(problem)
     solution.extras = {"info": solver.result.info}
     solution.found = status == success_status
-    solution.x = solver.result.x.squeeze()
-    solution.y = solver.result.y.squeeze()
+    solution.x = solver.result.x
+    n_eq = A.shape[0] if A is not None else 0
+    solution.y = solver.result.y if n_eq > 0 else np.empty((0,))
     if lb is not None or ub is not None:
-        solution.z = solver.result.z.squeeze()
-        solution.z_box = (
-            solver.result.z_ub.squeeze() - solver.result.z_lb.squeeze()
-        )
+        solution.z = solver.result.z
+        solution.z_box = solver.result.z_ub - solver.result.z_lb
     else:  # lb is None and ub is None
         solution.z = solver.result.z
     return solution
