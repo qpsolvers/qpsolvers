@@ -193,7 +193,7 @@ def piqp_solve_problem(
     )
     if use_csc is True:
         P, G, A = ensure_sparse_matrices(P, G, A)
-    # PIQP does not accept A, b, G, and H as None.
+    # PIQP does not support A, b, G, and h to be None.
     G_piqp = np.zeros((1, n)) if G is None else G
     h_piqp = np.zeros((1,)) if h is None else h
     A_piqp = np.zeros((1, n)) if A is None else A
