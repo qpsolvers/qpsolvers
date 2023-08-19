@@ -441,7 +441,6 @@ piqp_solve_problem: Optional[
     Callable[
         [
             Problem,
-            Optional[Union[ndarray, csc_matrix]],
             bool,
             Optional[str],
         ],
