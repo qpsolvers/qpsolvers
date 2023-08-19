@@ -169,12 +169,10 @@ def piqp_solve_problem(
     <https://predict-epfl.github.io/piqp/interfaces/settings>`__ for details.
     """
     P, q, G, h, A, b, lb, ub = problem.unpack()
+    n: int = q.shape[0]
 
     if initvals is not None and verbose:
         warnings.warn("warm-start values are ignored by PIQP")
-
-    if use_csc is True:
-        P, G, A = ensure_sparse_matrices(P, G, A)
 
     if G is None and h is not None:
         raise ProblemError(
@@ -192,12 +190,13 @@ def piqp_solve_problem(
         raise ProblemError(
             "Inconsistent inequalities: A is set but b is None"
         )
-    n: int = q.shape[0]
     use_csc: bool = (
         not isinstance(P, np.ndarray)
         or (G is not None and not isinstance(G, np.ndarray))
         or (A is not None and not isinstance(A, np.ndarray))
     )
+    if use_csc is True:
+        P, G, A = ensure_sparse_matrices(P, G, A)
     # PIQP does not accept A, b, G, and H as None.
     G_piqp = np.zeros((1, n)) if G is None else G
     h_piqp = np.zeros((1,)) if h is None else h
