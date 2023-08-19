@@ -169,7 +169,10 @@ def piqp_solve_problem(
         P, G, A = ensure_sparse_matrices(P, G, A)
 
     solver = __select_backend(backend, use_csc)
-    solver.setup(P, q, A, b, G, h, lb, ub, verbose=verbose, **kwargs)
+    solver.settings.verbose = verbose
+    for key, value in kwargs.items():
+        setattr(solver.settings, key, value)
+    solver.setup(P, q, A, b, G, h, lb, ub)
     status = solver.solve()
     success_status = piqp.PIQP_SOLVED
 

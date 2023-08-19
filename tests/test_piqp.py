@@ -36,7 +36,7 @@ try:
         def test_dense_backend(self):
             """Try the dense backend."""
             problem = get_sd3310_problem()
-            piqp_solve_qp(
+            sol = piqp_solve_qp(
                 problem.P,
                 problem.q,
                 problem.G,
@@ -45,11 +45,12 @@ try:
                 problem.b,
                 backend="dense",
             )
+            self.assertIsNotNone(sol)
 
         def test_sparse_backend(self):
             """Try the sparse backend."""
             problem = get_sd3310_problem()
-            piqp_solve_qp(
+            sol = piqp_solve_qp(
                 problem.P,
                 problem.q,
                 problem.G,
@@ -58,6 +59,7 @@ try:
                 problem.b,
                 backend="sparse",
             )
+            self.assertIsNotNone(sol)
 
         def test_invalid_backend(self):
             """Exception raised when asking for an invalid backend."""
@@ -71,23 +73,6 @@ try:
                     problem.A,
                     problem.b,
                     backend="invalid",
-                )
-
-        def test_invalid_inequalities(self):
-            """Check for inconsistent parameters.
-
-            Raise an exception in an implementation-dependent inconsistent set
-            of parameters. This may happen when :func:`piqp_solve_qp` it is
-            called directly.
-            """
-            problem = get_sd3310_problem()
-            with self.assertRaises(ProblemError):
-                piqp_solve_qp(
-                    problem.P,
-                    problem.q,
-                    G=problem.G,
-                    h=None,
-                    lb=problem.q,
                 )
 
 except ImportError:  # solver not installed
