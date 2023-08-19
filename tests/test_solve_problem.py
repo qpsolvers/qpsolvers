@@ -116,7 +116,7 @@ class TestSolveProblem(unittest.TestCase):
                 else 1e-5
                 if solver in ["highs", "osqp"]
                 else 5e-7
-                if solver in ["clarabel", "mosek", "qpswift"]
+                if solver in ["clarabel", "mosek", "qpswift", "piqp"]
                 else 1e-7
                 if solver == "gurobi"
                 else 1e-8
