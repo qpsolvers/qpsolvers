@@ -224,10 +224,12 @@ def piqp_solve_problem(
         solution.y = solver.result.y
     if G is None:
         solution.z = np.empty((0,))
-        solution.z_box = np.empty((0,))
     else:
         solution.z = solver.result.z
+    if lb is not None or ub is not None:
         solution.z_box = solver.result.z_ub - solver.result.z_lb
+    else:
+        solution.z_box = np.empty((0,))
     return solution
 
 
