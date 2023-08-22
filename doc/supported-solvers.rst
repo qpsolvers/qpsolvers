@@ -56,6 +56,12 @@ OSQP
 .. automodule:: qpsolvers.solvers.osqp_
     :members:
 
+PIQP
+======
+
+.. automodule:: qpsolvers.solvers.piqp_
+    :members:
+
 ProxQP
 ======
 

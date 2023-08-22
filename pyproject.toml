@@ -44,6 +44,7 @@ open_source_solvers = [
     "ecos >=2.0.8",
     "highspy >=1.1.2.dev3",
     "osqp >=0.6.2",
+    "piqp >=0.2.2",
     "proxsuite >=0.2.9",
     "quadprog >=0.1.11",
     "scs >=3.2.0",
