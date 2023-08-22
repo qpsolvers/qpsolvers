@@ -63,7 +63,7 @@ jobs:
                   PLATFORM: ubuntu-latest
 
     licensed:
-        name: "Test MOSEK on ${{ matrix.os }} with python-${{ matrix.python-version }}"
+        name: "Test licensed solvers on ${{ matrix.os }} with python-${{ matrix.python-version }}"
         runs-on: ${{ matrix.os }}
 
         strategy:
