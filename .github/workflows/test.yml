@@ -9,6 +9,7 @@ on:
 
 jobs:
     check-secrets:
+        name: "Check availability of GitHub secrets"
         runs-on: ubuntu-latest
         outputs:
             has-secrets: ${{ steps.secret-check.outputs.available }}
