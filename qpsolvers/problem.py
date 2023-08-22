@@ -20,7 +20,7 @@
 
 """Model for a quadratic program."""
 
-from typing import Optional, Tuple, TypeVar, Union
+from typing import List, Optional, Tuple, TypeVar, Union
 
 import numpy as np
 import scipy.sparse as spa
@@ -291,11 +291,16 @@ class Problem:
             self.G, self.h, self.lb, self.ub, use_sparse=False
         )
         if G_full is not None:
-            m = self.h.size
-            G_indices = active_set.G_indices
-            lb_indices = [i + m for i in active_set.lb_indices]
-            ub_indices = [i + m + self.lb.size for i in active_set.ub_indices]
-            indices = G_indices + lb_indices + ub_indices
+            indices: List[int] = []
+            offset: int = 0
+            if self.h is not None:
+                indices.extend(active_set.G_indices)
+                offset += self.h.size
+            if self.lb is not None:
+                indices.extend(offset + i for i in active_set.lb_indices)
+                offset += self.lb.size
+            if self.ub is not None:
+                indices.extend(offset + i for i in active_set.ub_indices)
             G_active = G_full[indices]
 
         P, A = self.P, self.A
