@@ -62,7 +62,7 @@ jobs:
               env:
                   PLATFORM: ubuntu-latest
 
-    mosek:
+    licensed:
         name: "Test MOSEK on ${{ matrix.os }} with python-${{ matrix.python-version }}"
         runs-on: ${{ matrix.os }}
 
@@ -89,7 +89,7 @@ jobs:
               env:
                   PLATFORM: ${{ matrix.os }}
               run: |
-                  tox -e mosek
+                  tox -e licensed
 
     test:
         name: "Test ${{ matrix.os }} with python-${{ matrix.python-version }}"
