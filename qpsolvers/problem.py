@@ -304,19 +304,9 @@ class Problem:
             G_active = G_full[indices]
 
         P, A = self.P, self.A
-        if G_active is None and A is None:
-            M = P
-        elif A is None:  # G_active is not None
-            n_G = G_active.shape[0]
-            M = np.vstack(
-                [
-                    np.hstack([P, G_active.T]),
-                    np.hstack([G_active, np.zeros((n_G, n_G))]),
-                ]
-            )
-        else:  # G_active is not None and A is not None
-            n_G = G_active.shape[0]
-            n_A = A.shape[0]
+        n_G = G_active.shape[0] if G_active is not None else 0
+        n_A = A.shape[0] if A is not None else 0
+        if G_active is not None and A is not None:
             M = np.vstack(
                 [
                     np.hstack([P, G_active.T, A.T]),
@@ -336,4 +326,20 @@ class Problem:
                     ),
                 ]
             )
+        elif G_active is not None:
+            M = np.vstack(
+                [
+                    np.hstack([P, G_active.T]),
+                    np.hstack([G_active, np.zeros((n_G, n_G))]),
+                ]
+            )
+        elif A is not None:
+            M = np.vstack(
+                [
+                    np.hstack([P, A.T]),
+                    np.hstack([A, np.zeros((n_A, n_A))]),
+                ]
+            )
+        else:  # G_active is None and A is None
+            M = P
         return np.linalg.cond(M)
