@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- New solver: [PIQP](https://github.com/PREDICT-EPFL/piqp) (thanks to @shaoanlu)
 - Type for active set of equality and inequality constraints
 
 ### Changed
