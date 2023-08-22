@@ -14,11 +14,11 @@ jobs:
         outputs:
             has-secrets: ${{ steps.secret-check.outputs.available }}
         steps:
-          - name: Check whether GitHub secrets are available
+          - name: Check whether MOSEK license is defined
             id: secret-check
             shell: bash
             run: |
-                if [ "${{ secrets.MSK_LICENSE }}" != '' ]; then
+                if [ ${{ secrets.MSK_LICENSE }} != '' ]; then
                     echo "available=true" >> ${GITHUB_OUTPUT};
                 else
                     echo "available=false" >> ${GITHUB_OUTPUT};
