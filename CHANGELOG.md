@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Added
+
+- Type for active set of equality and inequality constraints
+
+### Changed
+
+- Condition number of a problem now depends on an active set
+
 ## [3.5.0] - 2023/08/16
 
 ### Added
