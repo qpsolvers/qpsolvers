@@ -24,10 +24,8 @@ from os.path import basename
 
 from IPython import get_ipython
 from numpy import array, dot
-from numpy.linalg import norm
-from scipy.sparse import csc_matrix
-
 from qpsolvers import dense_solvers, solve_qp, sparse_solvers
+from scipy.sparse import csc_matrix
 
 M = array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
 P = dot(M.T, M)
@@ -55,7 +53,9 @@ if __name__ == "__main__":
         for solver in sparse_solvers
     }
 
-    print("\nTesting all QP solvers on a dense quadratic program...")
+    benchmark = "https://github.com/qpsolvers/qpsolvers_benchmark"
+    print("\nTesting all QP solvers on one given dense quadratic program")
+    print(f"For a proper benchmark, check out {benchmark}")
 
     sol0 = solve_qp(P, q, G, h, solver=dense_solvers[0])
     abstol = 2e-4  # tolerance on absolute solution error

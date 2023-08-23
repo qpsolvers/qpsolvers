@@ -67,6 +67,7 @@ def plot_results(perfs):
         print("Cannot plot results, try installing python3-matplotlib")
         print("Results are stored in the global `perfs` dictionary")
         return
+
     cmap = get_cmap("tab10")
     colors = cmap(linspace(0, 1, len(available_solvers)))
     solver_color = {
