@@ -1,17 +1,15 @@
 # Quadratic programming examples
 
-Examples are roughly sorted from simple to complex.
+Examples are roughly sorted from simple to complex. The basic ones are:
 
-## Basics
+- [Quadratic program](quadratic_program.py)
+- [Linear least squares](least_squares.py)
+- [Box inequalities](box_inequalities.py)
+- [Sparse linear least squares](sparse_least_squares.py)
 
-1. [Quadratic program](quadratic_program.py)
-2. [Linear least squares](least_squares.py)
-3. [Box inequalities](box_inequalities.py)
-4. [Sparse linear least squares](sparse_least_squares.py)
+For more advance use cases, check out:
 
-## Advanced
-
-5. [Dual multipliers](dual_multipliers.py)
+- [Dual multipliers](dual_multipliers.py)
 
 ## Applications
 
