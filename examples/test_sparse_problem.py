@@ -66,7 +66,7 @@ def time_dense_solvers():
     print("\nDense solvers\n-------------")
     for solver, instr in instructions.items():
         print(f"{solver}: ", end="")
-        get_ipython().magic(f"timeit {instr}")
+        get_ipython().run_line_magic("timeit", instr)
 
 
 def time_sparse_solvers():
@@ -77,7 +77,7 @@ def time_sparse_solvers():
     print("\nSparse solvers\n--------------")
     for solver, instr in instructions.items():
         print(f"{solver}: ", end="")
-        get_ipython().magic(f"timeit {instr}")
+        get_ipython().run_line_magic("timeit", instr)
 
 
 if __name__ == "__main__":

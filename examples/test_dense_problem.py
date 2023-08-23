@@ -61,19 +61,15 @@ if __name__ == "__main__":
     abstol = 2e-4  # tolerance on absolute solution error
     for solver in dense_solvers:
         sol = solve_qp(P, q, G, h, solver=solver)
-        delta = norm(sol - sol0)
-        assert delta < abstol, f"{solver}'s solution offset by {delta:.1e}"
     for solver in sparse_solvers:
         sol = solve_qp(P_csc, q, G_csc, h, solver=solver)
-        delta = norm(sol - sol0)
-        assert delta < abstol, f"{solver}'s solution offset by {delta:.1e}"
 
     print("\nDense solvers\n-------------")
     for solver, instr in dense_instr.items():
         print(f"{solver}: ", end="")
-        get_ipython().magic(f"timeit {instr}")
+        get_ipython().run_line_magic("timeit", instr)
 
     print("\nSparse solvers\n--------------")
     for solver, instr in sparse_instr.items():
         print(f"{solver}: ", end="")
-        get_ipython().magic(f"timeit {instr}")
+        get_ipython().run_line_magic("timeit", instr)

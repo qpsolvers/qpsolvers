@@ -51,14 +51,16 @@ if __name__ == "__main__":
         for solver in sparse_solvers
     }
 
-    print("\nTesting all QP solvers on a model predictive control problem...")
+    benchmark = "https://github.com/qpsolvers/qpsolvers_benchmark"
+    print("\nTesting QP solvers on one given model predictive control problem")
+    print(f"For a proper benchmark, check out {benchmark}")
 
     print("\nDense solvers\n-------------")
     for solver, instr in dense_instr.items():
         print(f"{solver}: ", end="")
-        get_ipython().magic(f"timeit {instr}")
+        get_ipython().run_line_magic("timeit", instr)
 
     print("\nSparse solvers\n--------------")
     for solver, instr in sparse_instr.items():
         print(f"{solver}: ", end="")
-        get_ipython().magic(f"timeit {instr}")
+        get_ipython().run_line_magic("timeit", instr)

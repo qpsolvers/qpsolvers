@@ -95,7 +95,11 @@ if __name__ == "__main__":
         )
         exit()
     perfs = {}
-    print("\nTesting all QP solvers on random quadratic programs...\n")
+
+    benchmark = "https://github.com/qpsolvers/qpsolvers_benchmark"
+    print("\nTesting all solvers on a given set of random QPs")
+    print(f"For a proper benchmark, check out {benchmark}")
+
     for solver in available_solvers:
         try:
             perfs[solver] = []
