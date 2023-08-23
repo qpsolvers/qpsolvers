@@ -23,12 +23,12 @@
 from os.path import basename
 
 from IPython import get_ipython
+from qpsolvers import dense_solvers, sparse_solvers
+
 from model_predictive_control import (
     HumanoidModelPredictiveControl,
     HumanoidSteppingProblem,
 )
-
-from qpsolvers import dense_solvers, sparse_solvers
 
 problem = HumanoidSteppingProblem()
 mpc = HumanoidModelPredictiveControl(problem)
@@ -37,7 +37,7 @@ mpc = HumanoidModelPredictiveControl(problem)
 if __name__ == "__main__":
     if get_ipython() is None:
         print(
-            "Run the benchmark with IPython:\n\n"
+            "This example should be run with IPython:\n\n"
             f"\tipython -i {basename(__file__)}\n"
         )
         exit()

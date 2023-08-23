@@ -84,7 +84,7 @@ def time_sparse_solvers():
 if __name__ == "__main__":
     if get_ipython() is None:
         print(
-            "Run the benchmark with IPython:\n\n"
+            "This example should be run with IPython:\n\n"
             f"\tipython -i {basename(__file__)}\n"
         )
         exit()
