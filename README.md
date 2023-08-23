@@ -50,7 +50,7 @@ This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``. It
 ### PyPI
 
 [![PyPI version](https://img.shields.io/pypi/v/qpsolvers)](https://pypi.org/project/qpsolvers/)
-[![PyPI downloads](https://pepy.tech/badge/qpsolvers/month)](https://pepy.tech/project/qpsolvers)
+[![PyPI downloads](https://static.pepy.tech/badge/qpsolvers/month)](https://pepy.tech/project/qpsolvers)
 
 To install the library with open source QP solvers:
 
