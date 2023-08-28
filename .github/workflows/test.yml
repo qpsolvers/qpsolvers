@@ -144,6 +144,6 @@ jobs:
     all_tests_ok:
         name: "All tests OK"
         runs-on: ubuntu-latest
-        needs: test
+        needs: [coverage, licensed, lint, test]
         steps:
             - run: echo "All tests OK"
