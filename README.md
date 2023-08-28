@@ -69,7 +69,7 @@ When imported, qpsolvers loads all the solvers it can find and lists them in ``q
 ### Conda
 
 [![Conda version](https://anaconda.org/conda-forge/qpsolvers/badges/version.svg)](https://anaconda.org/conda-forge/qpsolvers)
-[![Conda downloads](https://anaconda.org/conda-forge/qpsolvers/badges/downloads.svg)](https://anaconda.org/conda-forge/qpsolvers)
+![Conda downloads](https://anaconda.org/conda-forge/qpsolvers/badges/downloads.svg)
 
 ```console
 conda install -c conda-forge qpsolvers
