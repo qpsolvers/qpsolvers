@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## [4.0.0] - 2023/08/30
 
 ### Added
 
@@ -11,7 +11,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- Condition number of a problem now depends on an active set
+- **Breaking:** condition number of a problem now requires an active set
 
 ## [3.5.0] - 2023/08/16
 
