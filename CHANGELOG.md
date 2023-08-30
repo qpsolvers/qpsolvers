@@ -11,7 +11,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- **Breaking:** condition number of a problem now requires an active set
+- **Breaking:** condition number requires an active set (thanks to @aescande)
 
 ## [3.5.0] - 2023/08/16
 
