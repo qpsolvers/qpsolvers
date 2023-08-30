@@ -40,3 +40,10 @@ jobs:
 
             - name: "Test module import"
               run: python -c "import qpsolvers"
+
+    pypi_success:
+        name: "PyPI success"
+        runs-on: ubuntu-latest
+        needs: [pypi, testpypi]
+        steps:
+            - run: echo "PyPI workflow completed successfully"

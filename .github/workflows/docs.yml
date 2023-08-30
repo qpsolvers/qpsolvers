@@ -13,6 +13,7 @@ defaults:
 
 jobs:
     docs:
+        name: "GitHub Pages"
         runs-on: ubuntu-latest
         permissions:
             contents: write
