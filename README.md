@@ -58,6 +58,12 @@ To install the library with open source QP solvers:
 pip install qpsolvers[open_source_solvers]
 ```
 
+To install a subset of QP solvers:
+
+```console
+pip install qpsolvers[clarabel,daqp,proxqp,scs]
+```
+
 To install only the library itself:
 
 ```console
