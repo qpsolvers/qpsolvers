@@ -13,7 +13,7 @@ All notable changes to this project will be documented in this file.
 
 - **Breaking:** condition number requires an active set (thanks to @aescande)
 
-## [3.5.0] - 2023/08/16
+## [3.5.0] - 2023-08-16
 
 ### Added
 
@@ -24,7 +24,7 @@ All notable changes to this project will be documented in this file.
 - MOSEK: Disable CI test on QPSUT03 due to regression with 10.1.8
 - MOSEK: Relax test tolerances as latest version is less accurate with defaults
 
-## [3.4.0] - 2023/04/28
+## [3.4.0] - 2023-04-28
 
 ### Changed
 
@@ -38,13 +38,13 @@ All notable changes to this project will be documented in this file.
 - Residual and duality gap computations when solution is not found
 - Update OSQP version to 0.6.2.post9 for testing
 
-## [3.3.1] - 2023/04/12
+## [3.3.1] - 2023-04-12
 
 ### Fixed
 
 - DAQP: Update to 0.5.1 to fix installation of arm64 wheels
 
-## [3.3.0] - 2023/04/11
+## [3.3.0] - 2023-04-11
 
 ### Added
 
@@ -61,7 +61,7 @@ All notable changes to this project will be documented in this file.
 
 - Unit test on actual solution to QPSUT03 problem
 
-## [3.2.0] - 2023/03/29
+## [3.2.0] - 2023-03-29
 
 ### Added
 
@@ -73,7 +73,7 @@ All notable changes to this project will be documented in this file.
 - Clarabel: upstream handling of infinite values in inequalities
 - CVXOPT: option passing
 
-## [3.1.0] - 2023/03/07
+## [3.1.0] - 2023-03-07
 
 ### Added
 
@@ -87,7 +87,7 @@ All notable changes to this project will be documented in this file.
 - Remove CVXOPT from dependencies as it doesn't have arm64 wheels
 - Remove quadprog from dependencies as it doesn't have arm64 wheels
 
-## [3.0.0] - 2023/02/28
+## [3.0.0] - 2023-02-28
 
 ### Added
 
@@ -103,7 +103,7 @@ All notable changes to this project will be documented in this file.
 - Remove ``solve_safer_qp``
 - Remove ``sym_proj`` parameter
 
-## [2.8.1] - 2023/02/28
+## [2.8.1] - 2023-02-28
 
 ### Changed
 
@@ -114,7 +114,7 @@ All notable changes to this project will be documented in this file.
 - Clarabel: handle unconstrained problems
 - README: correct and improve FAQ on non-convex problems (thanks to @nrontsis)
 
-## [2.8.0] - 2023/02/27
+## [2.8.0] - 2023-02-27
 
 ### Added
 
@@ -125,13 +125,13 @@ All notable changes to this project will be documented in this file.
 - Move documentation to [GitHub Pages](https://qpsolvers.github.io/qpsolvers/)
 - Remove Python 2 installation instructions
 
-## [2.7.4] - 2023/01/31
+## [2.7.4] - 2023-01-31
 
 ### Fixed
 
 - Check vector shapes in problem constructor
 
-## [2.7.3] - 2023/01/16
+## [2.7.3] - 2023-01-16
 
 ### Added
 
@@ -144,7 +144,7 @@ All notable changes to this project will be documented in this file.
 - qpOASES: handle infinite bounds
 - qpOASES: segmentation fault with conda feedstock
 
-## [2.7.2] - 2023/01/02
+## [2.7.2] - 2023-01-02
 
 ### Added
 
@@ -161,7 +161,7 @@ All notable changes to this project will be documented in this file.
 - Add `use_sparse` argument to internal linear-from-box conversion
 - Restrict condition number calculation to dense problems for now
 
-## [2.7.1] - 2022/12/23
+## [2.7.1] - 2022-12-23
 
 ### Added
 
@@ -177,7 +177,7 @@ All notable changes to this project will be documented in this file.
 - SCS: require at least version 3.2
 - Solution: duality gap computation under infinite box bounds
 
-## [2.7.0] - 2022/12/15
+## [2.7.0] - 2022-12-15
 
 ### Added
 
@@ -209,7 +209,7 @@ All notable changes to this project will be documented in this file.
 
 - qpOASES: eliminate redundant equality constraints
 
-## [2.6.0] - 2022/11/14
+## [2.6.0] - 2022-11-14
 
 ### Added
 
@@ -242,7 +242,7 @@ All notable changes to this project will be documented in this file.
 - qpOASES: non-persistent solver options between calls
 - qpOASES: return failure on ``RET_INIT_FAILED*`` return codes
 
-## [2.5.0] - 2022/11/04
+## [2.5.0] - 2022-11-04
 
 ### Added
 
@@ -277,13 +277,13 @@ All notable changes to this project will be documented in this file.
 - OSQP: dense arrays for vectors in type annotations
 - SCS: fix handling of problems with only box inequalities
 
-## [2.4.1] - 2022/10/21
+## [2.4.1] - 2022-10-21
 
 ### Changed
 
 - Update ProxQP to version 0.2.2
 
-## [2.4.0] - 2022/09/29
+## [2.4.0] - 2022-09-29
 
 ### Added
 
@@ -300,7 +300,7 @@ All notable changes to this project will be documented in this file.
 
 - Correct documentation of ``R`` argument to ``solve_ls``
 
-## [2.3.0] - 2022/09/06
+## [2.3.0] - 2022-09-06
 
 ### Added
 
@@ -317,7 +317,7 @@ All notable changes to this project will be documented in this file.
 - Enforce `USING_COVERAGE` in GitHub workflow configuration
 - Remove redundant solver loop from ``test_all_shapes``
 
-## [2.2.0] - 2022/08/15
+## [2.2.0] - 2022-08-15
 
 ### Added
 
@@ -331,7 +331,7 @@ All notable changes to this project will be documented in this file.
 - Renamed ``concatenate_bounds`` to ``linear_from_box_inequalities``
 - Renamed internal ``convert_to_socp`` function to ``socp_from_qp``
 
-## [2.1.0] - 2022/07/25
+## [2.1.0] - 2022-07-25
 
 ### Added
 
@@ -343,7 +343,7 @@ All notable changes to this project will be documented in this file.
 
 - SCS: use the box cone API when lower/upper bounds are set
 
-## [2.0.0] - 2022/07/05
+## [2.0.0] - 2022-07-05
 
 ### Added
 
@@ -357,19 +357,19 @@ All notable changes to this project will be documented in this file.
 - **Breaking:** ``solver`` keyword argument is now mandatory for `solve_qp`
 - Quadratic programming example now randomly selects an available solver
 
-## [1.10.0] - 2022/06/25
+## [1.10.0] - 2022-06-25
 
 ### Changed
 
 - qpSWIFT: forward solver options as keywords arguments as with other solvers
 
-## [1.9.1] - 2022/05/02
+## [1.9.1] - 2022-05-02
 
 ### Fixed
 
 - OSQP: pass extra keyword arguments properly (thanks to @urob)
 
-## [1.9.0] - 2022/04/03
+## [1.9.0] - 2022-04-03
 
 ### Added
 
@@ -385,7 +385,7 @@ All notable changes to this project will be documented in this file.
 
 - Bounds concatenation for CVXOPT sparse matrices
 
-## [1.8.1] - 2022/03/05
+## [1.8.1] - 2022-03-05
 
 ### Added
 
@@ -402,7 +402,7 @@ All notable changes to this project will be documented in this file.
 - Disable Pylint false positives that are covered by mypy
 - ECOS: raise a ValueError when the cost matrix is not positive definite
 
-## [1.8.0] - 2022/01/13
+## [1.8.0] - 2022-01-13
 
 ### Added
 
@@ -422,7 +422,7 @@ All notable changes to this project will be documented in this file.
 - Run unit tests in GitHub Actions
 - Typing error in bound concatenation
 
-## [1.7.2] - 2021/11/24
+## [1.7.2] - 2021-11-24
 
 ### Added
 
@@ -434,13 +434,13 @@ All notable changes to this project will be documented in this file.
 - Removed deprecated ``requirements.txt`` installation file
 - Renamed ``solvers`` optional dependencies to ``all_pypi_solvers``
 
-## [1.7.1] - 2021/10/02
+## [1.7.1] - 2021-10-02
 
 ### Fixed
 
 - Make CVXOPT optional again (thanks to @adamoppenheimer)
 
-## [1.7.0] - 2021/09/19
+## [1.7.0] - 2021-09-19
 
 ### Added
 
@@ -466,13 +466,13 @@ All notable changes to this project will be documented in this file.
 - OSQP: forward keyword arguments to solver properly
 - quadprog: forward keyword arguments to solver properly
 
-## [1.6.1] - 2021/04/09
+## [1.6.1] - 2021-04-09
 
 ### Fixed
 
 - Add quadprog dependency properly in `pyproject.toml`
 
-## [1.6] - 2021/04/09
+## [1.6.0] - 2021-04-09
 
 ### Added
 
@@ -500,7 +500,7 @@ All notable changes to this project will be documented in this file.
 - Remove Python 2 compatibility line from examples
 - quadprog: properly return `None` on unfeasible problems (thanks to @DKenefake)
 
-## [1.5] - 2020/12/05
+## [1.5.0] - 2020-12-05
 
 ### Added
 
@@ -511,7 +511,7 @@ All notable changes to this project will be documented in this file.
 
 - Deprecation warning in CVXPY
 
-## [1.4.1] - 2020/11/29
+## [1.4.1] - 2020-11-29
 
 ### Added
 
@@ -522,7 +522,7 @@ All notable changes to this project will be documented in this file.
 - Call to ``print`` in PyPI description
 - Handling of quadprog ValueError exceptions
 
-## [1.4] - 2020/07/04
+## [1.4.0] - 2020-07-04
 
 ### Added
 
@@ -534,13 +534,13 @@ All notable changes to this project will be documented in this file.
 - Made ``verbose`` an explicit keyword argument of all internal functions
 - OSQP settings now match precision of other solvers (thanks to @Neotriple)
 
-## [1.3.1] - 2020/06/13
+## [1.3.1] - 2020-06-13
 
 ### Fixed
 
 - Equation of quadratic program on [PyPI page](https://pypi.org/project/qpsolvers/)
 
-## [1.3] - 2020/05/16
+## [1.3.0] - 2020-05-16
 
 ### Added
 
@@ -551,7 +551,7 @@ All notable changes to this project will be documented in this file.
 - Check that equality/inequality matrices/vectors are provided consistently
 - Relaxed offset check in [test\_solvers.py](examples/test_solvers.py)
 
-## [1.2.1] - 2020/05/16
+## [1.2.1] - 2020-05-16
 
 ### Added
 
@@ -564,7 +564,7 @@ All notable changes to this project will be documented in this file.
 
 - Ignore verbosity argument when solver is not available
 
-## [1.2] - 2020/05/16
+## [1.2.0] - 2020-05-16
 
 ### Added
 
@@ -572,20 +572,20 @@ All notable changes to this project will be documented in this file.
 - mosek: verbose keyword argument
 - qpoases: verbose keyword argument
 
-## [1.1.2] - 2020/05/15
+## [1.1.2] - 2020-05-15
 
 ### Fixed
 
 - osqp: handle both old and more recent versions
 
-## [1.1.1] - 2020/05/15
+## [1.1.1] - 2020-05-15
 
 ### Fixed
 
 - Avoid variable name clash in OSQP
 - Handle quadprog exception to avoid confusion on cost matrix notation
 
-## [1.1] - 2020/03/07
+## [1.1.0] - 2020-03-07
 
 ### Added
 
@@ -648,3 +648,51 @@ release!
 ### Added
 
 - Let's take this change log from there.
+
+[unreleased]: https://github.com/tasts-robots/upkie/compare/v4.0.1...HEAD
+[4.0.1]: https://github.com/tasts-robots/upkie/compare/v4.0.0...v4.0.1
+[4.0.0]: https://github.com/tasts-robots/upkie/compare/v3.5.0...v4.0.0
+[3.5.0]: https://github.com/tasts-robots/upkie/compare/v3.4.0...v3.5.0
+[3.4.0]: https://github.com/tasts-robots/upkie/compare/v3.3.1...v3.4.0
+[3.3.1]: https://github.com/tasts-robots/upkie/compare/v3.3.0...v3.3.1
+[3.3.0]: https://github.com/tasts-robots/upkie/compare/v3.2.0...v3.3.0
+[3.2.0]: https://github.com/tasts-robots/upkie/compare/v3.1.0...v3.2.0
+[3.1.0]: https://github.com/tasts-robots/upkie/compare/v3.0.0...v3.1.0
+[3.0.0]: https://github.com/tasts-robots/upkie/compare/v2.8.1...v3.0.0
+[2.8.1]: https://github.com/tasts-robots/upkie/compare/v2.8.0...v2.8.1
+[2.8.0]: https://github.com/tasts-robots/upkie/compare/v2.7.3...v2.8.0
+[2.7.3]: https://github.com/tasts-robots/upkie/compare/v2.7.2...v2.7.3
+[2.7.2]: https://github.com/tasts-robots/upkie/compare/v2.7.1...v2.7.2
+[2.7.1]: https://github.com/tasts-robots/upkie/compare/v2.7.0...v2.7.1
+[2.7.0]: https://github.com/tasts-robots/upkie/compare/v2.6.0...v2.7.0
+[2.6.0]: https://github.com/tasts-robots/upkie/compare/v2.5.0...v2.6.0
+[2.5.0]: https://github.com/tasts-robots/upkie/compare/v2.4.0...v2.5.0
+[2.4.0]: https://github.com/tasts-robots/upkie/compare/v2.3.0...v2.4.0
+[2.3.0]: https://github.com/tasts-robots/upkie/compare/v2.2.0...v2.3.0
+[2.2.0]: https://github.com/tasts-robots/upkie/compare/v2.1.0...v2.2.0
+[2.1.0]: https://github.com/tasts-robots/upkie/compare/v2.0.0...v2.1.0
+[2.0.0]: https://github.com/tasts-robots/upkie/compare/v1.10.0...v2.0.0
+[1.10.0]: https://github.com/tasts-robots/upkie/compare/v1.9.1...v1.10.0
+[1.9.1]: https://github.com/tasts-robots/upkie/compare/v1.9.0...v1.9.1
+[1.9.0]: https://github.com/tasts-robots/upkie/compare/v1.8.1...v1.9.0
+[1.8.1]: https://github.com/tasts-robots/upkie/compare/v1.8.0...v1.8.1
+[1.8.0]: https://github.com/tasts-robots/upkie/compare/v1.7.2...v1.8.0
+[1.7.2]: https://github.com/tasts-robots/upkie/compare/v1.7.1...v1.7.2
+[1.7.1]: https://github.com/tasts-robots/upkie/compare/v1.7.0...v1.7.1
+[1.7.0]: https://github.com/tasts-robots/upkie/compare/v1.6.1...v1.7.0
+[1.6.1]: https://github.com/tasts-robots/upkie/compare/v1.6.0...v1.6.1
+[1.6.0]: https://github.com/tasts-robots/upkie/compare/v1.5.0...v1.6.0
+[1.5.0]: https://github.com/tasts-robots/upkie/compare/v1.4.1...v1.5.0
+[1.4.1]: https://github.com/tasts-robots/upkie/compare/v1.4.0...v1.4.1
+[1.4.0]: https://github.com/tasts-robots/upkie/compare/v1.3.1...v1.4.0
+[1.3.1]: https://github.com/tasts-robots/upkie/compare/v1.3.0...v1.3.1
+[1.3.0]: https://github.com/tasts-robots/upkie/compare/v1.2.1...v1.3.0
+[1.2.1]: https://github.com/tasts-robots/upkie/compare/v1.2.0...v1.2.1
+[1.2.0]: https://github.com/tasts-robots/upkie/compare/v1.1.2...v1.2.0
+[1.1.2]: https://github.com/tasts-robots/upkie/compare/v1.1.1...v1.1.2
+[1.1.1]: https://github.com/tasts-robots/upkie/compare/v1.1.0...v1.1.1
+[1.1.0]: https://github.com/tasts-robots/upkie/compare/v1.0.7...v1.1.0
+[1.0.7]: https://github.com/tasts-robots/upkie/compare/v1.0.6...v1.0.7
+[1.0.6]: https://github.com/tasts-robots/upkie/compare/v1.0.5...v1.0.6
+[1.0.5]: https://github.com/tasts-robots/upkie/compare/v1.0.4...v1.0.5
+[1.0.4]: https://github.com/tasts-robots/upkie/releases/tag/v1.0.4
