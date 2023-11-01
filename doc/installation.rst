@@ -85,7 +85,11 @@ Package Index <https://pypi.org/>`_, run the ``pip`` command as follows:
 
     pip install "qpsolvers[open_source_solvers]"
 
-This may take a while.
+You can also install a subset of QP solvers of your liking, for instance:
+
+.. code:: bash
+
+    pip install qpsolvers[clarabel,daqp,proxqp,scs]
 
 .. _gurobi-install:
 
