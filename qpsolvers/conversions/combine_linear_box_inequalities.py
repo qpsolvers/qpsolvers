@@ -34,8 +34,8 @@ def combine_linear_box_inequalities(G, h, lb, ub, n: int, use_csc: bool):
     .. math::
 
         \begin{split}\begin{array}{ll}
-                G x & \leq h \\
-                lb & \leq x \leq ub
+            G x & \leq h \\
+            lb & \leq x \leq ub
         \end{array}\end{split}
 
     Output format:
