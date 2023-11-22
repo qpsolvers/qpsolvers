@@ -30,8 +30,13 @@ academic work, consider citing the corresponding paper [Hermans2022]_.
 from typing import Optional, Union
 
 import numpy as np
+import qpalm
 import scipy.sparse as spa
 
+from ..conversions import (
+    combine_linear_box_inequalities,
+    ensure_sparse_matrices,
+)
 from ..exceptions import ParamError, ProblemError
 from ..problem import Problem
 from ..solution import Solution
@@ -71,28 +76,35 @@ def qpalm_solve_problem(
                 "Warm-start value specified in both `initvals` and `x` kwargs"
             )
         kwargs["x"] = initvals
+
     P, q, G, h, A, b, lb, ub = problem.unpack()
+    P, G, A = ensure_sparse_matrices(P, G, A)
     n: int = q.shape[0]
-    use_csc: bool = (
-        not isinstance(P, np.ndarray)
-        or (G is not None and not isinstance(G, np.ndarray))
-        or (A is not None and not isinstance(A, np.ndarray))
-    )
-    C_prox, u_prox, l_prox = __combine_inequalities(G, h, lb, ub, n, use_csc)
-    result = solve(
-        P,
-        q,
-        A,
-        b,
-        C_prox,
-        l_prox,
-        u_prox,
-        verbose=verbose,
-        **kwargs,
-    )
+
+    Cx, ux, lx = combine_linear_box_inequalities(G, h, lb, ub, n, use_csc=True)
+    if A is not None and b is not None:
+        Cx = spa.vstack((Cx, A), format="csc")
+        lx = np.hstack((lx, b))
+        ux = np.hstack((ux, b))
+    m: int = Cx.shape[0]
+
+    data = qpalm.Data(n, m)
+    data.A = Cx
+    data.Q = P
+    data.bmax = ux
+    data.bmin = lx
+    data.q = q
+
+    settings = qpalm.Settings()
+    assert False, "TODO(scaron): pass kwargs"
+
+    solver = qpalm.Solver(data, settings)
+    solver.solve()
+
     solution = Solution(problem)
-    solution.extras = {"info": result.info}
-    solution.x = result.x
+    solution.extras = {"info": solver.info}
+    solution.x = solver.x
+    assert False, "TODO(scaron): convert multipliers"
     solution.y = result.y
     if lb is not None or ub is not None:
         solution.z = result.z[:-n]
