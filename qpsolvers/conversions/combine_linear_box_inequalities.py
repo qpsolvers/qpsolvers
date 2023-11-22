@@ -1,0 +1,92 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2016-2023 Stéphane Caron and the qpsolvers contributors.
+#
+# This file is part of qpsolvers.
+#
+# qpsolvers is free software: you can redistribute it and/or modify it under
+# the terms of the GNU Lesser General Public License as published by the Free
+# Software Foundation, either version 3 of the License, or (at your option) any
+# later version.
+#
+# qpsolvers is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
+# details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
+
+import numpy as np
+import scipy.sparse as spa
+
+from ..exceptions import ProblemError
+
+
+def combine_linear_box_inequalities(G, h, lb, ub, n: int, use_csc: bool):
+    r"""Combine linear and box inequalities into double-sided linear form.
+
+    Input format:
+
+    .. math::
+
+        \begin{split}\begin{array}{ll}
+                G x & \leq h \\
+                lb & \leq x \leq ub
+        \end{array}\end{split}
+
+    Output format:
+
+    .. math::
+
+        l \leq C \leq u
+
+    Parameters
+    ----------
+    G :
+        Linear inequality constraint matrix.
+    h :
+        Linear inequality constraint vector.
+    lb :
+        Lower bound constraint vector.
+    ub :
+        Upper bound constraint vector.
+    n :
+        Number of optimization variables.
+    use_csc :
+        If ``True``, use sparse rather than dense matrices.
+
+    Returns
+    -------
+    :
+        Linear inequality matrices :math:`C`, :math:`u` and :math:`l`.
+
+    Raises
+    ------
+    ProblemError
+        If the inequality matrix and vector are not consistent.
+    """
+    if lb is None and ub is None:
+        C_out = G
+        u_out = h
+        l_out = np.full(h.shape, -np.infty) if h is not None else None
+    elif G is None:
+        # lb is not None or ub is not None:
+        C_out = spa.eye(n, format="csc") if use_csc else np.eye(n)
+        u_out = ub
+        l_out = lb
+    elif h is not None:
+        # G is not None and h is not None and not (lb is None and ub is None)
+        C_out = (
+            spa.vstack((G, spa.eye(n)), format="csc")
+            if use_csc
+            else np.vstack((G, np.eye(n)))
+        )
+        ub = ub if ub is not None else np.full(G.shape[1], +np.infty)
+        lb = lb if lb is not None else np.full(G.shape[1], -np.infty)
+        l_out = np.hstack((np.full(h.shape, -np.infty), lb))
+        u_out = np.hstack((h, ub))
+    else:  # G is not None and h is None
+        raise ProblemError("Inconsistent inequalities: G is set but h is None")
+    return C_out, u_out, l_out
