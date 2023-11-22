@@ -160,16 +160,16 @@ def proxqp_solve_problem(
         or (G is not None and not isinstance(G, np.ndarray))
         or (A is not None and not isinstance(A, np.ndarray))
     )
-    C, u, l = combine_linear_box_inequalities(G, h, lb, ub, n, use_csc)
+    Cx, ux, lx = combine_linear_box_inequalities(G, h, lb, ub, n, use_csc)
     solve = __select_backend(backend, use_csc)
     result = solve(
         P,
         q,
         A,
         b,
-        C,
-        l,
-        u,
+        Cx,
+        lx,
+        ux,
         verbose=verbose,
         **kwargs,
     )
