@@ -33,62 +33,10 @@ import numpy as np
 import scipy.sparse as spa
 from proxsuite import proxqp
 
-from ..exceptions import ParamError, ProblemError
+from ..conversions import combine_linear_box_inequalities
+from ..exceptions import ParamError
 from ..problem import Problem
 from ..solution import Solution
-
-
-def __combine_inequalities(G, h, lb, ub, n: int, use_csc: bool):
-    """Combine linear and box inequalities for ProxQP.
-
-    Parameters
-    ----------
-    G :
-        Linear inequality constraint matrix.
-    h :
-        Linear inequality constraint vector.
-    lb :
-        Lower bound constraint vector.
-    ub :
-        Upper bound constraint vector.
-    n :
-        Number of optimization variables.
-    use_csc :
-        If ``True``, use sparse rather than dense matrices.
-
-    Returns
-    -------
-    :
-        Linear inequality matrices :math:`C`, :math:`l` and :math:`u`.
-
-    Raises
-    ------
-    ProblemError
-        If the inequality matrix and vector are not consistent.
-    """
-    if lb is None and ub is None:
-        C_prox = G
-        u_prox = h
-        l_prox = np.full(h.shape, -np.infty) if h is not None else None
-    elif G is None:
-        # lb is not None or ub is not None:
-        C_prox = spa.eye(n, format="csc") if use_csc else np.eye(n)
-        u_prox = ub
-        l_prox = lb
-    elif h is not None:
-        # G is not None and h is not None and not (lb is None and ub is None)
-        C_prox = (
-            spa.vstack((G, spa.eye(n)), format="csc")
-            if use_csc
-            else np.vstack((G, np.eye(n)))
-        )
-        ub = ub if ub is not None else np.full(G.shape[1], +np.infty)
-        lb = lb if lb is not None else np.full(G.shape[1], -np.infty)
-        l_prox = np.hstack((np.full(h.shape, -np.infty), lb))
-        u_prox = np.hstack((h, ub))
-    else:  # G is not None and h is None
-        raise ProblemError("Inconsistent inequalities: G is set but h is None")
-    return C_prox, u_prox, l_prox
 
 
 def __select_backend(backend: Optional[str], use_csc: bool):
@@ -212,16 +160,16 @@ def proxqp_solve_problem(
         or (G is not None and not isinstance(G, np.ndarray))
         or (A is not None and not isinstance(A, np.ndarray))
     )
-    C_prox, u_prox, l_prox = __combine_inequalities(G, h, lb, ub, n, use_csc)
+    C, u, l = combine_linear_box_inequalities(G, h, lb, ub, n, use_csc)
     solve = __select_backend(backend, use_csc)
     result = solve(
         P,
         q,
         A,
         b,
-        C_prox,
-        l_prox,
-        u_prox,
+        C,
+        l,
+        u,
         verbose=verbose,
         **kwargs,
     )
