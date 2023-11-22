@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with qpsolvers. If not, see <http://www.gnu.org/licenses/>.
 
-"""Model for a quadratic program."""
+"""Make sure problem matrices are sparse."""
 
 import warnings
 from typing import Optional, Tuple, Union
