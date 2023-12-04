@@ -27,6 +27,7 @@ C implementation of QPALM, a proximal augmented Lagrangian based solver for
 academic work, consider citing the corresponding paper [Hermans2022]_.
 """
 
+import warnings
 from typing import Optional, Union
 
 import numpy as np
@@ -37,7 +38,7 @@ from ..conversions import (
     combine_linear_box_inequalities,
     ensure_sparse_matrices,
 )
-from ..exceptions import ParamError, ProblemError
+from ..exceptions import ParamError
 from ..problem import Problem
 from ..solution import Solution
 
@@ -69,6 +70,16 @@ def qpalm_solve_problem(
     ParamError
         If a warm-start value is given both in `initvals` and the `x` keyword
         argument.
+
+    Note
+    ----
+    QPALM internally only uses the upper-triangular part of the cost matrix
+    :math:`P`.
+
+    Notes
+    -----
+    Keyword arguments are forwarded as "settings" to QPALM. For instance, we
+    can call ``qpalm_solve_qp(P, q, G, h, u, eps_abs=1e-4, eps_rel=1e-4)``.
     """
     if initvals is not None:
         if "x" in kwargs:
@@ -87,6 +98,7 @@ def qpalm_solve_problem(
         lx = np.hstack((lx, b))
         ux = np.hstack((ux, b))
     m: int = Cx.shape[0]
+    n_eq: int = A.shape[0] if A is not None else 0
 
     data = qpalm.Data(n, m)
     data.A = Cx
@@ -96,21 +108,30 @@ def qpalm_solve_problem(
     data.q = q
 
     settings = qpalm.Settings()
-    assert False, "TODO(scaron): pass kwargs"
+    settings.verbose = verbose
+    for key, value in kwargs.items():
+        try:
+            setattr(settings, key, value)
+        except AttributeError:
+            if verbose:
+                warnings.warn(
+                    f"Received an undefined solver setting {key}\
+                    with value {value}"
+                )
 
     solver = qpalm.Solver(data, settings)
     solver.solve()
 
     solution = Solution(problem)
     solution.extras = {"info": solver.info}
-    solution.x = solver.x
-    assert False, "TODO(scaron): convert multipliers"
-    solution.y = result.y
+    solution.found = solver.info.status == "solved"
+    solution.x = solver.solution.x
+    solution.y = np.empty((0,)) if A is None else solver.solution.y[-n_eq:]
     if lb is not None or ub is not None:
-        solution.z = result.z[:-n]
-        solution.z_box = result.z[-n:]
+        solution.z = solver.solution.y[0 : G.shape[0]]
+        solution.z_box = solver.solution.y[G.shape[0] :]
     else:  # lb is None and ub is None
-        solution.z = result.z
+        solution.z = solver.solution.y
     return solution
 
 
