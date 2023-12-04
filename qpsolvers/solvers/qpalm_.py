@@ -94,11 +94,10 @@ def qpalm_solve_problem(
 
     Cx, ux, lx = combine_linear_box_inequalities(G, h, lb, ub, n, use_csc=True)
     if A is not None and b is not None:
-        Cx = spa.vstack((Cx, A), format="csc")
-        lx = np.hstack((lx, b))
-        ux = np.hstack((ux, b))
+        Cx = spa.vstack((A, Cx), format="csc") if Cx is not None else A
+        lx = np.hstack((b, lx)) if lx is not None else b
+        ux = np.hstack((b, ux)) if ux is not None else b
     m: int = Cx.shape[0]
-    n_eq: int = A.shape[0] if A is not None else 0
 
     data = qpalm.Data(n, m)
     data.A = Cx
@@ -126,12 +125,11 @@ def qpalm_solve_problem(
     solution.extras = {"info": solver.info}
     solution.found = solver.info.status == "solved"
     solution.x = solver.solution.x
-    solution.y = np.empty((0,)) if A is None else solver.solution.y[-n_eq:]
-    if lb is not None or ub is not None:
-        solution.z = solver.solution.y[0 : G.shape[0]]
-        solution.z_box = solver.solution.y[G.shape[0] :]
-    else:  # lb is None and ub is None
-        solution.z = solver.solution.y
+    m_eq: int = A.shape[0] if A is not None else 0
+    m_leq: int = G.shape[0] if G is not None else 0
+    solution.y = solver.solution.y[0:m_eq]
+    solution.z = solver.solution.y[m_eq : m_eq + m_leq]
+    solution.z_box = solver.solution.y[m_eq + m_leq :]
     return solution
 
 
