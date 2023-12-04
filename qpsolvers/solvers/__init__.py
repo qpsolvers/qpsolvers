@@ -522,7 +522,6 @@ qpalm_solve_qp: Optional[
             Optional[Union[ndarray, csc_matrix]],
             Optional[Union[ndarray, csc_matrix]],
             bool,
-            Optional[str],
         ],
         Optional[ndarray],
     ]
@@ -534,7 +533,6 @@ qpalm_solve_problem: Optional[
             Problem,
             Optional[Union[ndarray, csc_matrix]],
             bool,
-            Optional[str],
         ],
         Solution,
     ]
