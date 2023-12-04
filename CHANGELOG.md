@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fix combination of box inequalities with empty linear inequalities
+- Gurobi: Account for a slight regression in QPSUT01 performance
 
 ## [4.0.1] - 2023-11-01
 
