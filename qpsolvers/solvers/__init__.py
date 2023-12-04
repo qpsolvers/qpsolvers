@@ -506,6 +506,51 @@ except ImportError:
     pass
 
 
+# QPALM
+# =====
+
+qpalm_solve_qp: Optional[
+    Callable[
+        [
+            Union[ndarray, csc_matrix],
+            Union[ndarray, csc_matrix],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[Union[ndarray, csc_matrix]],
+            bool,
+            Optional[str],
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
+qpalm_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[Union[ndarray, csc_matrix]],
+            bool,
+            Optional[str],
+        ],
+        Solution,
+    ]
+] = None
+
+try:
+    from .qpalm_ import qpalm_solve_problem, qpalm_solve_qp
+
+    solve_function["qpalm"] = qpalm_solve_problem
+    available_solvers.append("qpalm")
+    dense_solvers.append("qpalm")
+    sparse_solvers.append("qpalm")
+except ImportError:
+    pass
+
+
 # qpOASES
 # =======
 
@@ -699,6 +744,7 @@ __all__ = [
     "osqp_solve_qp",
     "piqp_solve_qp",
     "proxqp_solve_qp",
+    "qpalm_solve_qp",
     "qpoases_solve_qp",
     "qpswift_solve_qp",
     "quadprog_solve_qp",
