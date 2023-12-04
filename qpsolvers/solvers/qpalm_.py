@@ -97,13 +97,14 @@ def qpalm_solve_problem(
         Cx = spa.vstack((A, Cx), format="csc") if Cx is not None else A
         lx = np.hstack((b, lx)) if lx is not None else b
         ux = np.hstack((b, ux)) if ux is not None else b
-    m: int = Cx.shape[0]
+    m: int = Cx.shape[0] if Cx is not None else 0
 
     data = qpalm.Data(n, m)
-    data.A = Cx
+    if Cx is not None:
+        data.A = Cx
+        data.bmax = ux
+        data.bmin = lx
     data.Q = P
-    data.bmax = ux
-    data.bmin = lx
     data.q = q
 
     settings = qpalm.Settings()
