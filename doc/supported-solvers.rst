@@ -68,6 +68,12 @@ ProxQP
 .. automodule:: qpsolvers.solvers.proxqp_
     :members:
 
+QPALM
+=====
+
+.. automodule:: qpsolvers.solvers.qpalm_
+    :members:
+
 qpOASES
 =======
 
