@@ -123,8 +123,9 @@ def cvxopt_solve_problem(
 
     Notes
     -----
-    CVXOPT only considers the lower entries of `P`, therefore it will use a
-    different cost than the one intended if a non-symmetric matrix is provided.
+    CVXOPT only considers the lower entries of :math:`P`, therefore it will use
+    a different cost than the one intended if a non-symmetric matrix is
+    provided.
 
     Keyword arguments are forwarded as options to CVXOPT. For instance, we can
     call ``cvxopt_solve_qp(P, q, G, h, u, abstol=1e-4, reltol=1e-4)``. CVXOPT
