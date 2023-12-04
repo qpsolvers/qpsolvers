@@ -69,7 +69,7 @@ class TestSolveProblem(unittest.TestCase):
                 5e-1
                 if solver == "osqp"
                 else 5e-3
-                if solver == "proxqp"
+                if solver in ["proxqp", "qpalm"]
                 else 1e-4
                 if solver == "ecos"
                 else 5e-5
@@ -108,7 +108,7 @@ class TestSolveProblem(unittest.TestCase):
             solution = solve_problem(problem, solver=solver)
             eps_abs = (
                 5e-2
-                if solver == "ecos"
+                if solver in ["ecos", "qpalm"]
                 else 5e-4
                 if solver in ["proxqp", "scs"]
                 else 1e-4
@@ -182,7 +182,7 @@ class TestSolveProblem(unittest.TestCase):
         def test(self):
             problem, ref_solution = get_qpsut04()
             solution = solve_problem(problem, solver=solver)
-            eps_abs = 2e-4 if solver == "osqp" else 1e-6
+            eps_abs = 2e-4 if solver in ["osqp", "qpalm"] else 1e-6
             self.assertLess(norm(solution.x - ref_solution.x), eps_abs)
             self.assertLess(norm(solution.z - ref_solution.z), eps_abs)
             self.assertTrue(np.isfinite(solution.duality_gap()))
@@ -244,7 +244,7 @@ class TestSolveProblem(unittest.TestCase):
                 else 2e-3
                 if solver == "osqp"
                 else 5e-5
-                if solver == "scs"
+                if solver in ["qpalm", "scs"]
                 else 1e-6
                 if solver == "mosek"
                 else 1e-7
