@@ -8,9 +8,10 @@ dependencies:
     - pip >=21.3.1
     - pip:
         - daqp
-        - furo >= 2023.8.17
+        - furo >=2023.8.17
         - highspy
-        - piqp >= 0.2.2
-        - sphinx >= 7.2.2
+        - piqp >=0.2.2
+        - qpalm >=1.2.1
+        - sphinx >=7.2.2
         - sphinx-autodoc-typehints
         - sphinx-mathjax-offline

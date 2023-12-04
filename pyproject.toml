@@ -45,9 +45,10 @@ highs = ["highspy >=1.1.2.dev3"]
 osqp = ["osqp >=0.6.2"]
 piqp = ["piqp >=0.2.2"]
 proxqp = ["proxsuite >=0.2.9"]
+qpalm = ["qpalm >=1.2.1"]
 quadprog = ["quadprog >=0.1.11"]
 scs = ["scs >=3.2.0"]
-open_source_solvers = ["qpsolvers[clarabel,cvxopt,daqp,ecos,highs,osqp,piqp,proxqp,quadprog,scs]"]
+open_source_solvers = ["qpsolvers[clarabel,cvxopt,daqp,ecos,highs,osqp,piqp,proxqp,qpalm,quadprog,scs]"]
 
 [project.urls]
 Documentation = "https://qpsolvers.github.io/qpsolvers/"
