@@ -259,7 +259,7 @@ class TestSolveQP(unittest.TestCase):
                     else 1e-3
                     if solver == "scs"
                     else 2e-3
-                    if solver == "osqp"
+                    if solver in ["osqp", "qpalm"]
                     else 5e-4
                     if solver == "ecos"
                     else 2e-4

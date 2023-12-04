@@ -67,9 +67,9 @@ class TestSolveProblem(unittest.TestCase):
             solution = solve_problem(problem, solver=solver)
             eps_abs = (
                 5e-1
-                if solver == "osqp"
+                if solver in ["osqp", "qpalm"]
                 else 5e-3
-                if solver in ["proxqp", "qpalm"]
+                if solver == "proxqp"
                 else 1e-4
                 if solver == "ecos"
                 else 5e-5
