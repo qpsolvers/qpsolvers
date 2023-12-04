@@ -67,6 +67,8 @@ def combine_linear_box_inequalities(
     -------
     :
         Linear inequality matrix :math:`C` and vectors :math:`u`, :math:`l`.
+        The two vector will contain :math:`\pm\infty` values on coordinates
+        where there is no corresponding constraint.
 
     Raises
     ------
@@ -80,8 +82,8 @@ def combine_linear_box_inequalities(
     elif G is None:
         # lb is not None or ub is not None:
         C_out = spa.eye(n, format="csc") if use_csc else np.eye(n)
-        u_out = ub
-        l_out = lb
+        u_out = ub if ub is not None else np.full(n, +np.infty)
+        l_out = lb if lb is not None else np.full(n, -np.infty)
     elif h is not None:
         # G is not None and h is not None and not (lb is None and ub is None)
         C_out = (

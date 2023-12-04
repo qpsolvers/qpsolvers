@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Internal: refactor linear-box inequality combination function
 - Renamed main branch of the repository from `master` to `main`
 
+### Fixed
+
+- Fix combination of box inequalities with empty linear inequalities
+
 ## [4.0.1] - 2023-11-01
 
 ### Added
