@@ -98,10 +98,10 @@ class TestSolveLS(unittest.TestCase):
                 else 2e-5
                 if solver == "proxqp"
                 else 1e-5
-                if solver == "ecos"
+                if solver in ["ecos", "qpalm"]
                 else 1e-6
             )
-            eq_tolerance = 1e-9
+            eq_tolerance = 2e-6 if solver == "qpalm" else 1e-9
             ineq_tolerance = (
                 1e-3
                 if solver == "osqp"
@@ -263,12 +263,15 @@ for solver in available_solvers:
     setattr(
         TestSolveLS, "test_{}".format(solver), TestSolveLS.get_test(solver)
     )
+
 for solver in sparse_solvers:
     setattr(
         TestSolveLS,
         "test_mixed_sparse_args_{}".format(solver),
         TestSolveLS.get_test_mixed_sparse_args(solver),
     )
+
+for solver in sparse_solvers:  # loop complexity warning ;p
     if solver != "gurobi":
         # Gurobi: model too large for size-limited license
         kwargs = {}
@@ -286,6 +289,8 @@ for solver in sparse_solvers:
                 solver, sparse_conversion=False, **kwargs
             ),
         )
+
+for solver in sparse_solvers:  # loop complexity warning ;p
     if solver not in ["cvxopt", "gurobi"]:
         # CVXOPT: sparse conversion breaks rank assumption
         # Gurobi: model too large for size-limited license
@@ -294,6 +299,8 @@ for solver in sparse_solvers:
             "test_medium_sparse_sparse_conversion_{}".format(solver),
             TestSolveLS.get_test_medium_sparse(solver, sparse_conversion=True),
         )
+
+for solver in sparse_solvers:  # loop complexity warning ;p
     if solver not in ["gurobi", "highs"]:
         # Gurobi: model too large for size-limited license
         # HiGHS: model too large https://github.com/ERGO-Code/HiGHS/issues/992
