@@ -20,17 +20,13 @@
 
 """Combine linear and box inequalities into double-sided linear format."""
 
-from typing import Tuple
-
 import numpy as np
 import scipy.sparse as spa
 
 from ..exceptions import ProblemError
 
 
-def combine_linear_box_inequalities(
-    G, h, lb, ub, n: int, use_csc: bool
-) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+def combine_linear_box_inequalities(G, h, lb, ub, n: int, use_csc: bool):
     r"""Combine linear and box inequalities into double-sided linear format.
 
     Input format:
