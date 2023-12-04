@@ -156,10 +156,24 @@ Check out the [full report](https://github.com/qpsolvers/qpsolvers_benchmark/blo
 | quadprog |                                62.9 |                               1430.6 |                                 315885538.2 |                               4734021.7 |                              2200.0 |                             192.3 |
 | scs      |                                72.6 |                                 95.6 |                                2817718628.1 |                                369300.9 |                              3303.2 |                             152.5 |
 
+## Citing qpsolvers
+
+If you find this project useful, please consider giving it a :star: or citing it if your work is scientific:
+
+```bibtex
+@software{qpsolvers_2023,
+  author = {Caron, Stéphane and Arnström, Daniel and Bonagiri, Suraj and Dechaume, Antoine and Flowers, Nikolai and Heins, Adam and Ishikawa, Takuma and Kenefake, Dustin and Mazzamuto, Giacomo and Meoli, Donato and O'Donoghue, Brendan and Oppenheimer, Adam A. and Pandala, Abhishek and Quiroz Omaña, Juan José and Rontsis, Nikitas and Shah, Paarth and St-Jean, Samuel and Vitucci, Nicola and Wolfers, Soeren and @bdelhaisse and @MeindertHH and @rimaddo and @urob and @shaoanlu},
+  license = {LGPL-3.0},
+  month = dec,
+  title = {{qpsolvers: Quadratic Programming Solvers in Python}},
+  url = {https://github.com/qpsolvers/qpsolvers},
+  version = {4.1.0},
+  year = {2023}
+}
+```
+
+A citation template is also available via the ``Cite this repository`` button on GitHub.
+
 ## Contributing
 
 We welcome contributions, see the [contribution guidelines](https://github.com/qpsolvers/qpsolvers/blob/master/CONTRIBUTING.md) for details. We are also looking forward to hearing about your use cases! Please share them in [Show and tell](https://github.com/qpsolvers/qpsolvers/discussions/categories/show-and-tell).
-
-## Citing qpsolvers
-
-If you find this project useful, please consider giving it a :star: or citing it :books: A citation template is available via the ``Cite this repository`` button on GitHub.
