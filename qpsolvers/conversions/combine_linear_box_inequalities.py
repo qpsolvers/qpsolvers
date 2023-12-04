@@ -20,13 +20,17 @@
 
 """Combine linear and box inequalities into double-sided linear format."""
 
+from typing import Tuple
+
 import numpy as np
 import scipy.sparse as spa
 
 from ..exceptions import ProblemError
 
 
-def combine_linear_box_inequalities(G, h, lb, ub, n: int, use_csc: bool):
+def combine_linear_box_inequalities(
+    G, h, lb, ub, n: int, use_csc: bool
+) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
     r"""Combine linear and box inequalities into double-sided linear format.
 
     Input format:
@@ -47,7 +51,7 @@ def combine_linear_box_inequalities(G, h, lb, ub, n: int, use_csc: bool):
     Parameters
     ----------
     G :
-        Linear inequality constraint matrix.
+        Linear inequality constraint matrix. Must be two-dimensional.
     h :
         Linear inequality constraint vector.
     lb :
@@ -62,7 +66,7 @@ def combine_linear_box_inequalities(G, h, lb, ub, n: int, use_csc: bool):
     Returns
     -------
     :
-        Linear inequality matrices :math:`C`, :math:`u` and :math:`l`.
+        Linear inequality matrix :math:`C` and vectors :math:`u`, :math:`l`.
 
     Raises
     ------
