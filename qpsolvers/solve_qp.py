@@ -77,9 +77,9 @@ def solve_qp(
     b :
         Linear equality vector.
     lb :
-        Lower bound constraint vector.
+        Lower bound constraint vector. Can contain ``-np.inf``.
     ub :
-        Upper bound constraint vector.
+        Upper bound constraint vector. Can contain ``+np.inf``.
     solver :
         Name of the QP solver, to choose in
         :data:`qpsolvers.available_solvers`. This argument is mandatory.

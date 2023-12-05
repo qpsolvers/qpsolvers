@@ -20,8 +20,9 @@ A quadratic program is defined in standard form as:
             & lb \leq x \leq ub
     \end{array}\end{split}
 
-To solve such a problem, build the matrices that define it and call the
-:func:`.solve_qp` function:
+The vectors :math:`lb` and :math:`ub` can contain :math:`\pm \infty` values to
+disable bounds on some coordinates. To solve such a problem, build the matrices
+that define it and call the :func:`.solve_qp` function:
 
 .. code:: python
 

@@ -67,9 +67,9 @@ class Problem:
     b :
         Linear equality vector.
     lb :
-        Lower bound constraint vector.
+        Lower bound constraint vector. Can contain ``-np.inf``.
     ub :
-        Upper bound constraint vector.
+        Upper bound constraint vector. Can contain ``+np.inf``.
     """
 
     P: Union[np.ndarray, spa.csc_matrix]
