@@ -168,7 +168,7 @@ If you find this project useful, please consider giving it a :star: or citing it
   month = dec,
   title = {{qpsolvers: Quadratic Programming Solvers in Python}},
   url = {https://github.com/qpsolvers/qpsolvers},
-  version = {4.1.0},
+  version = {4.1.1},
   year = {2023}
 }
 ```

@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.1.1] - 2023-12-05
+
+### Changed
+
+- Mark QPALM as a sparse solver only
+
 ## [4.1.0] - 2023-12-04
 
 ### Added
@@ -677,7 +683,8 @@ release!
 
 - Let's take this change log from there.
 
-[unreleased]: https://github.com/qpsolvers/qpsolvers/compare/v4.1.0...HEAD
+[unreleased]: https://github.com/qpsolvers/qpsolvers/compare/v4.1.1...HEAD
+[4.1.1]: https://github.com/qpsolvers/qpsolvers/compare/v4.1.0...v4.1.1
 [4.1.0]: https://github.com/qpsolvers/qpsolvers/compare/v4.0.1...v4.1.0
 [4.0.1]: https://github.com/qpsolvers/qpsolvers/compare/v4.0.0...v4.0.1
 [4.0.0]: https://github.com/qpsolvers/qpsolvers/compare/v3.5.0...v4.0.0
