@@ -543,7 +543,6 @@ try:
 
     solve_function["qpalm"] = qpalm_solve_problem
     available_solvers.append("qpalm")
-    dense_solvers.append("qpalm")
     sparse_solvers.append("qpalm")
 except ImportError:
     pass
