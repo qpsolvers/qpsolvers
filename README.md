@@ -3,6 +3,8 @@
 [![Build](https://img.shields.io/github/actions/workflow/status/qpsolvers/qpsolvers/test.yml?branch=master)](https://github.com/qpsolvers/qpsolvers/actions)
 [![Documentation](https://img.shields.io/github/actions/workflow/status/qpsolvers/qpsolvers/docs.yml?branch=master&label=docs)](https://qpsolvers.github.io/qpsolvers/)
 [![Coverage](https://coveralls.io/repos/github/qpsolvers/qpsolvers/badge.svg?branch=master)](https://coveralls.io/github/qpsolvers/qpsolvers?branch=master)
+[![PyPI version](https://img.shields.io/pypi/v/qpsolvers)](https://pypi.org/project/qpsolvers/)
+[![PyPI downloads](https://static.pepy.tech/badge/qpsolvers/month)](https://pepy.tech/project/qpsolvers)
 
 This library provides a one-stop shop [`solve_qp`](https://qpsolvers.github.io/qpsolvers/quadratic-programming.html#qpsolvers.solve_qp) function to solve convex quadratic programs:
 
@@ -48,9 +50,6 @@ This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``. It
 ## Installation
 
 ### PyPI
-
-[![PyPI version](https://img.shields.io/pypi/v/qpsolvers)](https://pypi.org/project/qpsolvers/)
-[![PyPI downloads](https://static.pepy.tech/badge/qpsolvers/month)](https://pepy.tech/project/qpsolvers)
 
 To install the library with open source QP solvers:
 
