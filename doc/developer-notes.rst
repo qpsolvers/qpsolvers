@@ -55,13 +55,12 @@ The process to add AwesomeQP to *qpsolvers* goes as follows:
 
 5. Append the solver identifier to ``dense_solvers`` or ``sparse_solvers``, if applicable
 6. Import ``awesomeqp_solve_qp`` from ``qpsolvers/__init__.py`` and add it to ``__all__``
-7. Import ``awesomeqp_solve_qp`` from the convenience ``__init__.py`` at the root of the repository, and add it to ``__all__``
-8. Add the solver to ``doc/src/supported-solvers.rst``
-9. Add the solver to the *Solvers* section of the README
-10. Assuming AwesomeQP is distributed on `PyPI <https://pypi.org/>`__, add it to the ``testenv`` and ``testenv:coverage`` environments in ``tox.ini`` for unit testing
-11. Assuming AwesomeQP is distributed on `PyPI <https://pypi.org/>`__, add it to the ``pip install`` line in the documentation workflow ``.github/workflows/docs.yml``
-12. Log the new solver as an addition in the changelog
-13. If you are a new contributor, feel free to add your name to ``CITATION.cff`` at the root of the repository.
+7. Add the solver to ``doc/src/supported-solvers.rst``
+8. Add the solver to the *Solvers* section of the README
+9. Assuming AwesomeQP is distributed on `PyPI <https://pypi.org/>`__, add it to the ``[testenv]`` and ``[testenv:coverage]`` environments of ``tox.ini`` for unit testing
+10. Assuming AwesomeQP is distributed on Conda or PyPI, add it to the list of dependencies in ``doc/environment.yml``
+11. Log the new solver as an addition in the changelog
+12. If you are a new contributor, feel free to add your name to ``CITATION.cff`` at the root of the repository.
 
 Problem conversions
 ===================
