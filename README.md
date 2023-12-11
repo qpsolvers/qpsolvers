@@ -119,13 +119,13 @@ Matrix arguments are NumPy arrays for dense solvers and SciPy Compressed Sparse 
 
 ## Benchmark
 
-The results below come from [`qpsolvers_benchmark`](https://github.com/qpsolvers/qpsolvers_benchmark), a benchmark for QP solvers in Python.
+The results below come from [`qpbenchmark`](https://github.com/qpsolvers/qpbenchmark), a benchmark for QP solvers in Python.
 
-You can run the benchmark on your machine via a command-line tool (``pip install qpsolvers_benchmark``). Check out the benchmark repository for details. In the following tables, solvers are called with their default settings and compared over whole test sets by [shifted geometric mean](https://github.com/qpsolvers/qpsolvers_benchmark#shifted-geometric-mean) ("shm" for short; lower is better and 1.0 is the best).
+You can run the benchmark on your machine via a command-line tool (``pip install qpbenchmark``). Check out the benchmark repository for details. In the following tables, solvers are called with their default settings and compared over whole test sets by [shifted geometric mean](https://github.com/qpsolvers/qpbenchmark#shifted-geometric-mean) ("shm" for short; lower is better and 1.0 is the best).
 
 ### Maros-Meszaros (hard problems)
 
-Check out the [full report](https://github.com/qpsolvers/qpsolvers_benchmark/blob/7da937e0380ade8c109340bac4b4fe81f02e6806/maros_meszaros/results/maros_meszaros.md) for high- and low-accuracy solver settings.
+Check out the [full report](https://github.com/qpsolvers/qpbenchmark/blob/7da937e0380ade8c109340bac4b4fe81f02e6806/maros_meszaros/results/maros_meszaros.md) for high- and low-accuracy solver settings.
 
 |          |                    Success rate (%) |                        Runtime (shm) |                       Primal residual (shm) |                            Dual residual (shm) |                   Duality gap (shm) |                  Cost error (shm) |
 |:---------|------------------------------------:|-------------------------------------:|--------------------------------------------:|----------------------------------------:|------------------------------------:|----------------------------------:|
@@ -139,7 +139,7 @@ Check out the [full report](https://github.com/qpsolvers/qpsolvers_benchmark/blo
 
 ### Maros-Meszaros dense (subset of dense problems)
 
-Check out the [full report](https://github.com/qpsolvers/qpsolvers_benchmark/blob/7da937e0380ade8c109340bac4b4fe81f02e6806/maros_meszaros/results/maros_meszaros_dense.md) for high- and low-accuracy solver settings.
+Check out the [full report](https://github.com/qpsolvers/qpbenchmark/blob/7da937e0380ade8c109340bac4b4fe81f02e6806/maros_meszaros/results/maros_meszaros_dense.md) for high- and low-accuracy solver settings.
 
 |          |                    Success rate (%) |                        Runtime (shm) |                       Primal residual (shm) |                            Dual residual (shm) |                   Duality gap (shm) |                  Cost error (shm) |
 |:---------|------------------------------------:|-------------------------------------:|--------------------------------------------:|----------------------------------------:|------------------------------------:|----------------------------------:|

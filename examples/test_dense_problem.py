@@ -53,7 +53,7 @@ if __name__ == "__main__":
         for solver in sparse_solvers
     }
 
-    benchmark = "https://github.com/qpsolvers/qpsolvers_benchmark"
+    benchmark = "https://github.com/qpsolvers/qpbenchmark"
     print("\nTesting all QP solvers on one given dense quadratic program")
     print(f"For a proper benchmark, check out {benchmark}")
 

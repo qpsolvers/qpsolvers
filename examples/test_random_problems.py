@@ -96,7 +96,7 @@ if __name__ == "__main__":
         exit()
     perfs = {}
 
-    benchmark = "https://github.com/qpsolvers/qpsolvers_benchmark"
+    benchmark = "https://github.com/qpsolvers/qpbenchmark"
     print("\nTesting all solvers on a given set of random QPs")
     print(f"For a proper benchmark, check out {benchmark}")
 

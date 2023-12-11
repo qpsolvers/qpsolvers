@@ -51,7 +51,7 @@ if __name__ == "__main__":
         for solver in sparse_solvers
     }
 
-    benchmark = "https://github.com/qpsolvers/qpsolvers_benchmark"
+    benchmark = "https://github.com/qpsolvers/qpbenchmark"
     print("\nTesting QP solvers on one given model predictive control problem")
     print(f"For a proper benchmark, check out {benchmark}")
 

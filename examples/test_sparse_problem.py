@@ -26,8 +26,9 @@ import numpy as np
 import scipy.sparse
 from IPython import get_ipython
 from numpy.linalg import norm
-from qpsolvers import dense_solvers, solve_qp, sparse_solvers
 from scipy.sparse import csc_matrix
+
+from qpsolvers import dense_solvers, solve_qp, sparse_solvers
 
 n = 500
 M = scipy.sparse.lil_matrix(scipy.sparse.eye(n))
@@ -88,7 +89,7 @@ if __name__ == "__main__":
         )
         exit()
 
-    benchmark = "https://github.com/qpsolvers/qpsolvers_benchmark"
+    benchmark = "https://github.com/qpsolvers/qpbenchmark"
     print("\nTesting all QP solvers on one given sparse quadratic program")
     print(f"For a proper benchmark, check out {benchmark}")
 
