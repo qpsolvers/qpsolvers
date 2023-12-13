@@ -385,8 +385,8 @@ class Problem:
             ub=np.array(self.ub),
         )
 
-    @classmethod
-    def load(self, file: str):
+    @staticmethod
+    def load(file: str):
         """Load problem from file.
 
         Parameters
