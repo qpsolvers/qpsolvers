@@ -359,3 +359,57 @@ class Problem:
         else:  # G_active is None and A is None
             M = P
         return np.linalg.cond(M)
+
+    def save(self, file: str) -> None:
+        """Save problem to file.
+
+        Parameters
+        ----------
+        file : str or file
+            Either the filename (string) or an open file (file-like object)
+            where the data will be saved. If file is a string or a Path, the
+            ``.npz`` extension will be appended to the filename if it is not
+            already there.
+        """
+        np.savez(
+            file,
+            P=self.P,
+            q=self.q,
+            G=self.G,
+            h=self.h,
+            A=self.A,
+            b=self.b,
+            lb=self.lb,
+            ub=self.ub,
+        )
+
+    @classmethod
+    def load(self, file: str):
+        """Load problem from file.
+
+        Parameters
+        ----------
+        file : file-like object, string, or pathlib.Path
+            The file to read. File-like objects must support the
+            ``seek()`` and ``read()`` methods and must always
+            be opened in binary mode.  Pickled files require that the
+            file-like object support the ``readline()`` method as well.
+        """
+        problem_data = np.load(file, allow_pickle=False)
+
+        def load_optional(key):
+            try:
+                return problem_data[key]
+            except ValueError:
+                return None
+
+        return Problem(
+            P=load_optional("P"),
+            q=load_optional("q"),
+            G=load_optional("G"),
+            h=load_optional("h"),
+            A=load_optional("A"),
+            b=load_optional("b"),
+            lb=load_optional("lb"),
+            ub=load_optional("ub"),
+        )
