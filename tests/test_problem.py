@@ -20,6 +20,7 @@
 
 """Unit tests for Problem class."""
 
+import tempfile
 import unittest
 
 import numpy as np
@@ -105,3 +106,17 @@ class TestProblem(unittest.TestCase):
             Problem(np.eye(3), np.ones(shape=(3, 1, 1)))
         with self.assertRaises(ProblemError):
             Problem(np.eye(3), np.ones(shape=(1, 3, 1)))
+
+    def test_save_load(self):
+        problem = Problem(np.eye(3), np.ones(shape=(3, 1)))
+        save_path = tempfile.mktemp() + ".npz"
+        problem.save(save_path)
+        reloaded = Problem.load(save_path)
+        self.assertTrue(np.allclose(reloaded.P, problem.P))
+        self.assertTrue(np.allclose(reloaded.q, problem.q))
+        self.assertIsNone(reloaded.G)
+        self.assertIsNone(reloaded.h)
+        self.assertIsNone(reloaded.A)
+        self.assertIsNone(reloaded.b)
+        self.assertIsNone(reloaded.lb)
+        self.assertIsNone(reloaded.ub)
