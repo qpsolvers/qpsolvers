@@ -238,7 +238,9 @@ class Problem:
         if self.A is not None and self.b is None:
             raise ProblemError("incomplete equality constraint (missing A)")
 
-    def __get_active_inequalities(self, active_set: ActiveSet) -> np.ndarray:
+    def __get_active_inequalities(
+        self, active_set: ActiveSet
+    ) -> Optional[np.ndarray]:
         r"""Combine active linear and box inequalities into a single matrix.
 
         Parameters
@@ -375,12 +377,12 @@ class Problem:
             file,
             P=self.P,
             q=self.q,
-            G=self.G,
-            h=self.h,
-            A=self.A,
-            b=self.b,
-            lb=self.lb,
-            ub=self.ub,
+            G=np.array(self.G),
+            h=np.array(self.h),
+            A=np.array(self.A),
+            b=np.array(self.b),
+            lb=np.array(self.lb),
+            ub=np.array(self.ub),
         )
 
     @classmethod
