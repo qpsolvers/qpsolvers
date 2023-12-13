@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `Problem.load` function
+- `Problem.save` function
+
 ## [4.1.1] - 2023-12-05
 
 ### Changed
