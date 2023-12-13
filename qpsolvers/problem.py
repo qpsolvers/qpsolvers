@@ -238,6 +238,38 @@ class Problem:
         if self.A is not None and self.b is None:
             raise ProblemError("incomplete equality constraint (missing A)")
 
+    def __get_active_inequalities(self, active_set: ActiveSet) -> np.ndarray:
+        r"""Combine active linear and box inequalities into a single matrix.
+
+        Parameters
+        ----------
+        active_set :
+            Active set to evaluate the condition number with. It should contain
+            the set of active constraints at the optimum of the problem.
+
+        Returns
+        -------
+        :
+            Combined matrix of active inequalities.
+        """
+        G_full, _ = linear_from_box_inequalities(
+            self.G, self.h, self.lb, self.ub, use_sparse=False
+        )
+        if G_full is None:
+            return None
+        indices: List[int] = []
+        offset: int = 0
+        if self.h is not None:
+            indices.extend(active_set.G_indices)
+            offset += self.h.size
+        if self.lb is not None:
+            indices.extend(offset + i for i in active_set.lb_indices)
+            offset += self.lb.size
+        if self.ub is not None:
+            indices.extend(offset + i for i in active_set.ub_indices)
+        G_active = G_full[indices]
+        return G_active
+
     def cond(self, active_set: ActiveSet) -> float:
         r"""Condition number of the problem matrix.
 
@@ -286,24 +318,8 @@ class Problem:
         if active_set.ub_indices and self.ub is None:
             raise ProblemError("Upper bound in active set but not in problem")
 
-        G_active = None
-        G_full, _ = linear_from_box_inequalities(
-            self.G, self.h, self.lb, self.ub, use_sparse=False
-        )
-        if G_full is not None:
-            indices: List[int] = []
-            offset: int = 0
-            if self.h is not None:
-                indices.extend(active_set.G_indices)
-                offset += self.h.size
-            if self.lb is not None:
-                indices.extend(offset + i for i in active_set.lb_indices)
-                offset += self.lb.size
-            if self.ub is not None:
-                indices.extend(offset + i for i in active_set.ub_indices)
-            G_active = G_full[indices]
-
         P, A = self.P, self.A
+        G_active = self.__get_active_inequalities(active_set)
         n_G = G_active.shape[0] if G_active is not None else 0
         n_A = A.shape[0] if A is not None else 0
         if G_active is not None and A is not None:
