@@ -111,11 +111,7 @@ Matrix arguments are NumPy arrays for dense solvers and SciPy Compressed Sparse 
 - [I have a squared norm in my cost function, how can I apply a QP solver to my problem?](https://github.com/qpsolvers/qpsolvers/discussions/224)
 - [I have a non-convex quadratic program, is there a solver I can use?](https://github.com/qpsolvers/qpsolvers/discussions/240)
 - [I have quadratic equality constraints, is there a solver I can use?](https://github.com/qpsolvers/qpsolvers/discussions/241)
-- *I get the following [build error on Windows](https://github.com/qpsolvers/qpsolvers/issues/28) when running `pip install qpsolvers`.*
-  - You will need to install the [Visual C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) to build all package dependencies.
-- *Can I help?*
-  - Absolutely! The first step is to install the library and use it. Report any bug in the [issue tracker](https://github.com/qpsolvers/qpsolvers/issues).
-  - If you're a developer looking to hack on open source, check out the [contribution guidelines](https://github.com/qpsolvers/qpsolvers/blob/master/CONTRIBUTING.md) for suggestions.
+- [Error: Mircrosoft Visual C++ 14.0 or greater is required on Windows](https://github.com/qpsolvers/qpsolvers/discussions/257)
 
 ## Benchmark
 
@@ -176,4 +172,6 @@ A citation template is also available via the ``Cite this repository`` button on
 
 ## Contributing
 
-We welcome contributions, see the [contribution guidelines](https://github.com/qpsolvers/qpsolvers/blob/master/CONTRIBUTING.md) for details. We are also looking forward to hearing about your use cases! Please share them in [Show and tell](https://github.com/qpsolvers/qpsolvers/discussions/categories/show-and-tell).
+We welcome contributions! The first step is to install the library and use it. Report any bug in the [issue tracker](https://github.com/qpsolvers/qpsolvers/issues). If you're a developer looking to hack on open source, check out the [contribution guidelines](https://github.com/qpsolvers/qpsolvers/blob/master/CONTRIBUTING.md) for suggestions.
+
+We are also looking forward to hearing about your use cases! Please share them in [Show and tell](https://github.com/qpsolvers/qpsolvers/discussions/categories/show-and-tell).
