@@ -115,9 +115,7 @@ Matrix arguments are NumPy arrays for dense solvers and SciPy Compressed Sparse 
 
 ## Benchmark
 
-The results below come from [`qpbenchmark`](https://github.com/qpsolvers/qpbenchmark), a benchmark for QP solvers in Python.
-
-You can run the benchmark on your machine via a command-line tool (``pip install qpbenchmark``). Check out the benchmark repository for details. In the following tables, solvers are called with their default settings and compared over whole test sets by [shifted geometric mean](https://github.com/qpsolvers/qpbenchmark#shifted-geometric-mean) ("shm" for short; lower is better and 1.0 is the best).
+The results below come from [`qpbenchmark`](https://github.com/qpsolvers/qpbenchmark), a benchmark for QP solvers in Python. In the following tables, solvers are called with their default settings and compared over whole test sets by [shifted geometric mean](https://github.com/qpsolvers/qpbenchmark#shifted-geometric-mean) ("shm" for short). Lower is better and 1.0 corresponds to the best solver.
 
 ### Maros-Meszaros (hard problems)
 
