@@ -56,6 +56,12 @@ OSQP
 .. automodule:: qpsolvers.solvers.osqp_
     :members:
 
+PDLP
+====
+
+.. automodule:: qpsolvers.solvers.pdlp_
+    :members:
+
 PIQP
 ======
 
