@@ -91,27 +91,31 @@ def pdlp_solve_problem(
     """
     P, q, G, h, A, b, lb, ub = problem.unpack()
     P, G, A = ensure_sparse_matrices(P, G, A)
+    n = P.shape[0]
 
     A_pdlp = None
-    l_pdlp = None
-    u_pdlp = None
+    lc_pdlp = None
+    uc_pdlp = None
     if G is not None and h is not None:
         A_pdlp = G
-        l_pdlp = np.full(h.shape, -np.infty)
-        u_pdlp = h
+        lc_pdlp = np.full(h.shape, -np.infty)
+        uc_pdlp = h
     if A is not None and b is not None:
         A_pdlp = A if A_pdlp is None else spa.vstack([A_pdlp, A], format="csc")
-        l_pdlp = b if l_pdlp is None else np.hstack([l_pdlp, b])
-        u_pdlp = b if u_pdlp is None else np.hstack([u_pdlp, b])
+        lc_pdlp = b if lc_pdlp is None else np.hstack([lc_pdlp, b])
+        uc_pdlp = b if uc_pdlp is None else np.hstack([uc_pdlp, b])
+    lv_pdlp = lb if lb is not None else np.full((n,), -np.inf)
+    uv_pdlp = ub if ub is not None else np.full((n,), +np.inf)
 
     qp = pdlp.QuadraticProgram()
     qp.objective_matrix = P
     qp.objective_vector = q
-    qp.constraint_matrix = A_pdlp
-    qp.constraint_lower_bounds = l_pdlp
-    qp.constraint_upper_bounds = u_pdlp
-    qp.variable_lower_bounds = lb
-    qp.variable_upper_bounds = ub
+    if A_pdlp is not None:
+        qp.constraint_matrix = A_pdlp
+        qp.constraint_lower_bounds = lc_pdlp
+        qp.constraint_upper_bounds = uc_pdlp
+    qp.variable_lower_bounds = lv_pdlp
+    qp.variable_upper_bounds = uv_pdlp
 
     params = solvers_pb2.PrimalDualHybridGradientParams()
     optimality = params.termination_criteria.simple_optimality_criteria
