@@ -121,10 +121,10 @@ def pdlp_solve_problem(
         optimality.eps_optimal_relative = eps_optimal_relative
     if time_sec_limits is not None:
         params.termination_criteria.time_sec_limits = time_sec_limits
-    if verbosity_level is not None:
-        params.verbosity_level = verbosity_level
-    else:  #
+    if verbose and "verbosity_level" not in kwargs:
         params.verbosity_level = 1 if verbose else 0
+    for param, value in kwargs.items():
+        setattr(params, param, value)
 
     result = pdlp.primal_dual_hybrid_gradient(qp, params)
     solve_log = result.solve_log
