@@ -160,6 +160,9 @@ def pdlp_solve_qp(
     ub: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
+    eps_optimal_absolute: Optional[float] = None,
+    eps_optimal_relative: Optional[float] = None,
+    time_sec_limits: Optional[float] = None,
     **kwargs,
 ) -> Optional[np.ndarray]:
     r"""Solve a quadratic program using PDLP.

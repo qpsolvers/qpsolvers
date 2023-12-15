@@ -401,6 +401,53 @@ try:
 except ImportError:
     pass
 
+# PDLP
+# ====
+
+pdlp_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[ndarray],
+            bool,
+            Optional[float],
+            Optional[float],
+            Optional[float],
+        ],
+        Solution,
+    ]
+] = None
+
+pdlp_solve_qp: Optional[
+    Callable[
+        [
+            Union[ndarray, csc_matrix],
+            ndarray,
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            bool,
+            Optional[float],
+            Optional[float],
+            Optional[float],
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
+try:
+    from .pdlp_ import pdlp_solve_problem, pdlp_solve_qp
+
+    solve_function["pdlp"] = pdlp_solve_problem
+    available_solvers.append("pdlp")
+    sparse_solvers.append("pdlp")
+except ImportError:
+    pass
+
 
 # PIQP
 # =======
@@ -725,6 +772,7 @@ __all__ = [
     "hpipm_solve_qp",
     "mosek_solve_qp",
     "osqp_solve_qp",
+    "pdlp_solve_qp",
     "piqp_solve_qp",
     "proxqp_solve_qp",
     "qpalm_solve_qp",
