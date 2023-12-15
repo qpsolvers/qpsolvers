@@ -32,7 +32,6 @@ def pdlp_solve_problem(
     eps_optimal_absolute: Optional[float] = None,
     eps_optimal_relative: Optional[float] = None,
     time_sec_limits: Optional[float] = None,
-    verbosity_level: Optional[int] = None,
     **kwargs,
 ) -> Solution:
     """Solve a quadratic program using PDLP.
@@ -46,25 +45,49 @@ def pdlp_solve_problem(
     verbose :
         Set to `True` to print out extra information.
     eps_optimal_absolute :
-        Absolute tolerance on the primal-dual residuals and duality gap.
+        Absolute tolerance on the primal-dual residuals and duality gap. See
+        *e.g.* [tolerances]_ for an overview of solver tolerances.
     eps_optimal_relative :
-        Relative tolerance on the primal-dual residuals and duality gap.
+        Relative tolerance on the primal-dual residuals and duality gap. See
+        *e.g.* [tolerances]_ for an overview of solver tolerances.
     time_sec_limits :
         Maximum computation time the solver is allowed, in seconds.
-    verbosity_level :
-        Verbosity level: 0 for no logging, 1 for summary statistics, 2 for
-        per-iteration statistics, 3 for even more details and 4 for maximum
-        details.
 
     Returns
     -------
     :
         Solution to the QP returned by the solver.
 
-    Note
-    ----
-    See also the `Mathematical background for PDLP
-    <https://developers.google.com/optimization/lp/pdlp_math>`__ for details.
+    Notes
+    -----
+    All other keyword arguments are forwarded as parameters to PDLP. For
+    instance, you can call ``pdlp_solve_qp(P, q, G, h, num_threads=3,
+    verbosity_level=2)``. For a quick overview, the solver accepts the
+    following settings:
+
+    .. list-table::
+       :widths: 30 70
+       :header-rows: 1
+
+       * - Name
+         - Effect
+       * - ``num_threads``
+         - Number of threads to use (positive).
+       * - ``verbosity_level``
+         - Verbosity level from 0 (no logging) to 4 (extensive logging).
+       * - ``initial_primal_weight``
+         - Initial value of the primal weight (ratio of primal over  dual step
+           sizes).
+       * - ``l_inf_ruiz_iterations``
+         - Number of L-infinity Ruiz rescaling iterations applied to the
+           constraint matrix.
+       * - ``l2_norm_rescaling``
+         - If set to ``True``, applies L2-norm rescaling after Ruiz rescaling.
+
+    This list is not exhaustive. Check out the solver's `Protocol Bufffers file
+    <https://github.com/google/or-tools/blob/8768ed7a43f8899848effb71295a790f3ecbe2f2/ortools/pdlp/solvers.proto>`__
+    for more. See also the `Mathematical background for PDLP
+    <https://developers.google.com/optimization/lp/pdlp_math>`__.
     """
     P, q, G, h, A, b, lb, ub = problem.unpack()
     P, G, A = ensure_sparse_matrices(P, G, A)
