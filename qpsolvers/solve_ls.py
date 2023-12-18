@@ -172,7 +172,8 @@ def solve_ls(
     sparse_conversion :
         Set to `True` to use a sparse conversion strategy and to `False` to use
         a dense strategy. By default, the conversion strategy to follow is
-        determine by the sparsity of :math:`R`. See Notes below.
+        determined by the sparsity of :math:`R` (sparse if CSC matrix, dense
+        otherwise). See Notes below.
 
     Returns
     -------
@@ -192,9 +193,11 @@ def solve_ls(
 
     Notes
     -----
-    This function implements two conversion strategies: one for dense problems
-    and one for sparse problems. The conversion strategy to follow can be
-    selected via the ``sparse_conversion`` argument. The sparse strategy will
+    This function implements two strategies to convert the least-squares cost
+    :math:`(R, s)` to a quadratic-programming cost :math:`(P, q)`: one that
+    assumes :math:`R` is dense, and one that assumes :math:`R` is sparse. The
+    conversion strategy can be selected via the ``sparse_conversion`` argument.
+    The sparse strategy introduces extra variables :math;`y = R x` and will
     likely perform better on sparse problems, although this may not always be
     the case (for instance, it may perform worse if :math:`R` has many more
     rows than columns).
