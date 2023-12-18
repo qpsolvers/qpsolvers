@@ -98,8 +98,8 @@ conda install -c conda-forge qpsolvers
 | [ProxQP](https://github.com/Simple-Robotics/proxsuite) | ``proxqp`` | Augmented Lagrangian | Dense & Sparse | BSD-2-Clause | ✔️ |
 | [QPALM](https://github.com/kul-optec/QPALM) | ``qpalm`` | Augmented Lagrangian | Sparse | LGPL-3.0 | ✔️ |
 | [qpOASES](https://github.com/coin-or/qpOASES) | ``qpoases`` | Active set | Dense | LGPL-2.1 | ➖ |
-| [qpSWIFT](https://qpswift.github.io/) | ``qpswift`` | Interior point | Sparse | GPL-3.0 | ✖️ |
-| [quadprog](https://pypi.python.org/pypi/quadprog/) | ``quadprog`` | Active set | Dense | GPL-2.0 | ✖️ |
+| [qpSWIFT](https://github.com/qpSWIFT/qpSWIFT) | ``qpswift`` | Interior point | Sparse | GPL-3.0 | ✖️ |
+| [quadprog](https://github.com/quadprog/quadprog) | ``quadprog`` | Active set | Dense | GPL-2.0 | ✖️ |
 | [SCS](https://www.cvxgrp.org/scs/) | ``scs`` | Augmented Lagrangian | Sparse | MIT | ✔️ |
 
 Matrix arguments are NumPy arrays for dense solvers and SciPy Compressed Sparse Column (CSC) matrices for sparse ones.
