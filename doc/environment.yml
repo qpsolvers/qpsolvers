@@ -10,6 +10,7 @@ dependencies:
         - daqp
         - furo >= 2023.8.17
         - highspy
+        - ortools >= 9.8.3296
         - piqp >= 0.2.2
         - qpalm >= 1.2.1
         - sphinx >= 7.2.2
