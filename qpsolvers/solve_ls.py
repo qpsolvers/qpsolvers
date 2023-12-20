@@ -195,8 +195,9 @@ def solve_ls(
     -----
     This function implements two strategies to convert the least-squares cost
     :math:`(R, s)` to a quadratic-programming cost :math:`(P, q)`: one that
-    assumes :math:`R` is dense, and one that assumes :math:`R` is sparse. The
-    conversion strategy can be selected via the ``sparse_conversion`` argument.
+    assumes :math:`R` is dense, and one that assumes :math:`R` is sparse. These
+    two strategies are detailed in `this note
+    <https://scaron.info/blog/conversion-from-least-squares-to-quadratic-programming.html>`__.
     The sparse strategy introduces extra variables :math;`y = R x` and will
     likely perform better on sparse problems, although this may not always be
     the case (for instance, it may perform worse if :math:`R` has many more
