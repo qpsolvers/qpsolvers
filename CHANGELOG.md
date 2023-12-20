@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Example: [lasso regularization](https://scaron.info/blog/lasso-regularization-in-quadratic-programming.html)
 - `Problem.load` function
 - `Problem.save` function
 
