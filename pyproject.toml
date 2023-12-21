@@ -54,7 +54,7 @@ open_source_solvers = ["qpsolvers[clarabel,cvxopt,daqp,ecos,highs,osqp,piqp,prox
 Documentation = "https://qpsolvers.github.io/qpsolvers/"
 Source = "https://github.com/qpsolvers/qpsolvers"
 Tracker = "https://github.com/qpsolvers/qpsolvers/issues"
-Changelog = "https://github.com/qpsolvers/qpsolvers/blob/master/CHANGELOG.md"
+Changelog = "https://github.com/qpsolvers/qpsolvers/blob/main/CHANGELOG.md"
 
 [tool.black]
 line-length = 79
