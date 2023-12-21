@@ -1,8 +1,8 @@
 # Quadratic Programming Solvers in Python
 
-[![Build](https://img.shields.io/github/actions/workflow/status/qpsolvers/qpsolvers/test.yml?branch=master)](https://github.com/qpsolvers/qpsolvers/actions)
-[![Documentation](https://img.shields.io/github/actions/workflow/status/qpsolvers/qpsolvers/docs.yml?branch=master&label=docs)](https://qpsolvers.github.io/qpsolvers/)
-[![Coverage](https://coveralls.io/repos/github/qpsolvers/qpsolvers/badge.svg?branch=master)](https://coveralls.io/github/qpsolvers/qpsolvers?branch=master)
+[![Build](https://img.shields.io/github/actions/workflow/status/qpsolvers/qpsolvers/test.yml?branch=main)](https://github.com/qpsolvers/qpsolvers/actions)
+[![Documentation](https://img.shields.io/github/actions/workflow/status/qpsolvers/qpsolvers/docs.yml?branch=main&label=docs)](https://qpsolvers.github.io/qpsolvers/)
+[![Coverage](https://coveralls.io/repos/github/qpsolvers/qpsolvers/badge.svg?branch=main)](https://coveralls.io/github/qpsolvers/qpsolvers?branch=main)
 [![PyPI version](https://img.shields.io/pypi/v/qpsolvers)](https://pypi.org/project/qpsolvers/)
 [![PyPI downloads](https://static.pepy.tech/badge/qpsolvers/month)](https://pepy.tech/project/qpsolvers)
 
@@ -170,6 +170,6 @@ A citation template is also available via the ``Cite this repository`` button on
 
 ## Contributing
 
-We welcome contributions! The first step is to install the library and use it. Report any bug in the [issue tracker](https://github.com/qpsolvers/qpsolvers/issues). If you're a developer looking to hack on open source, check out the [contribution guidelines](https://github.com/qpsolvers/qpsolvers/blob/master/CONTRIBUTING.md) for suggestions.
+We welcome contributions! The first step is to install the library and use it. Report any bug in the [issue tracker](https://github.com/qpsolvers/qpsolvers/issues). If you're a developer looking to hack on open source, check out the [contribution guidelines](https://github.com/qpsolvers/qpsolvers/blob/main/CONTRIBUTING.md) for suggestions.
 
 We are also looking forward to hearing about your use cases! Please share them in [Show and tell](https://github.com/qpsolvers/qpsolvers/discussions/categories/show-and-tell) 🙌
