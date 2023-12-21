@@ -42,7 +42,7 @@ A = np.array([1.0, 1.0, 1.0])
 b = np.array([1.0])
 
 x = solve_qp(P, q, G, h, A, b, solver="proxqp")
-print(f"QP solution: x = {x}")
+print(f"QP solution: {x = }")
 ```
 
 This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``. It is also possible to get dual multipliers at the solution, as shown in [this example](https://qpsolvers.github.io/qpsolvers/quadratic-programming.html#dual-multipliers).
