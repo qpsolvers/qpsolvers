@@ -112,6 +112,7 @@ Matrix arguments are NumPy arrays for dense solvers and SciPy Compressed Sparse 
 - [I have a non-convex quadratic program, is there a solver I can use?](https://github.com/qpsolvers/qpsolvers/discussions/240)
 - [I have quadratic equality constraints, is there a solver I can use?](https://github.com/qpsolvers/qpsolvers/discussions/241)
 - [Error: Mircrosoft Visual C++ 14.0 or greater is required on Windows](https://github.com/qpsolvers/qpsolvers/discussions/257)
+- [Can I add penalty terms as in ridge regression or LASSO?](https://github.com/qpsolvers/qpsolvers/discussions/223#discussioncomment-7873692)
 
 ## Benchmark
 
