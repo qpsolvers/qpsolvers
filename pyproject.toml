@@ -27,12 +27,8 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Mathematics",
 ]
 dependencies = [
-    "daqp >=0.5.1",
-    "ecos >=2.0.8",
     "numpy >=1.15.4",
-    "osqp >=0.6.2",
     "scipy >=1.2.0",
-    "scs >=3.2.0",
 ]
 keywords = ["quadratic programming", "solver", "numerical optimization"]
 
