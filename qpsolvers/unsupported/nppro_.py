@@ -123,8 +123,9 @@ def nppro_solve_problem(
     x, fval, exitflag, iter_ = solver.solve(P, q, A_, l_, u_, lb_, ub_, x0)
 
     # Store solution
+    exitflag_success = 1
     solution = Solution(problem)
-    solution.found = exitflag == 0 and not np.isnan(x).any()
+    solution.found = exitflag == exitflag_success and not np.isnan(x).any()
     if not solution.found:
         # The second condition typically handle positive semi-definite cases
         # that are not catched by the solver yet
