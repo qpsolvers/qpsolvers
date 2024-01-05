@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- NPPro: update exit flag value to match new solver API (thanks to @ottapav)
+
 ## [4.2.0] - 2023-12-21
 
 ### Added
