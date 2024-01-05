@@ -81,6 +81,8 @@ def solve_problem(
         return solve_function[solver](problem, **kwargs)
     except KeyError as e:
         raise SolverNotFound(
-            f"solver '{solver}' is not in the list "
-            f"{available_solvers} of available solvers"
+            f"found solvers {available_solvers} "
+            f"but '{solver}' is not one of them; if '{solver}' is "
+            f"listed in https://github.com/qpsolvers/qpsolvers#solvers "
+            f"you can run ``pip install qpsolvers[{solver}]``"
         ) from e
