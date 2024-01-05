@@ -7,8 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Optional dependencies for all solvers in the list available on PyPI
+
 ### Changed
 
+- **Breaking:** no default QP solver installed along with the library
 - NPPro: update exit flag value to match new solver API (thanks to @ottapav)
 
 ## [4.2.0] - 2023-12-21
