@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # SPDX-License-Identifier: LGPL-3.0-or-later
-# Copyright (C) 2016-2023 Stéphane Caron and the qpsolvers contributors.
+# Copyright 2016-2023 Stéphane Caron and the qpsolvers contributors
 
 """Solver interface for NPPro.
 

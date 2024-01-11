@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # SPDX-License-Identifier: LGPL-3.0-or-later
-# Copyright (C) 2016-2022 Stéphane Caron and the qpsolvers contributors.
+# Copyright 2016-2022 Stéphane Caron and the qpsolvers contributors
 
 """Test an available QP solvers on a small problem with box inequalities."""
 

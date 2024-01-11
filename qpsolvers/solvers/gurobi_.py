@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 #
 # SPDX-License-Identifier: LGPL-3.0-or-later
-# Copyright (C) 2016-2022 Stéphane Caron and the qpsolvers contributors.
-# Copyright (C) 2021 Dustin Kenefake
+# Copyright 2016-2022 Stéphane Caron and the qpsolvers contributors
+# Copyright 2021 Dustin Kenefake
 
 """Solver interface for `Gurobi <https://www.gurobi.com/>`__.
 

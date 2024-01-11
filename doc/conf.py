@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # SPDX-License-Identifier: LGPL-3.0-or-later
-# Copyright (C) 2016-2022 Stéphane Caron and the qpsolvers contributors.
+# Copyright 2016-2022 Stéphane Caron and the qpsolvers contributors
 
 import re
 import sys
@@ -47,7 +47,7 @@ master_doc = "index"
 
 # General information about the project.
 project = "qpsolvers"
-copyright = "2016-2022 Stéphane Caron and the qpsolvers contributors."
+copyright = "2016-2022 Stéphane Caron and the qpsolvers contributors"
 author = "Stéphane Caron"
 
 # The version info for the project you're documenting, acts as replacement for
