@@ -23,8 +23,14 @@ class TestSolution(unittest.TestCase):
         self.assertFalse(solution.found)
 
     def test_residuals(self):
+        """Test residuals at the solution of the SD3310 problem.
+
+        Note
+        ----
+        This function relies on Clarabel to find a solution.
+        """
         problem = get_sd3310_problem()
-        solution = solve_problem(problem, solver="quadprog")
+        solution = solve_problem(problem, solver="clarabel")
         eps_abs = 1e-10
         self.assertLess(solution.primal_residual(), eps_abs)
         self.assertLess(solution.dual_residual(), eps_abs)

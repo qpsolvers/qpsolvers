@@ -145,7 +145,7 @@ optimality of the solution returned by a solver with:
     ub = +0.7 * np.ones(3)
 
     problem = Problem(P, q, G, h, A, b, lb, ub)
-    solution = solve_problem(problem, solver="quadprog")
+    solution = solve_problem(problem, solver="qpalm")
 
     print(f"- Solution is{'' if solution.is_optimal(1e-8) else ' NOT'} optimal")
     print(f"- Primal residual: {solution.primal_residual():.1e}")
