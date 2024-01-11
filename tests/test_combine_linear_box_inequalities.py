@@ -49,7 +49,7 @@ class TestCombineLinearBoxInequalities(unittest.TestCase):
         return P, q, G, h, A, b
 
     @staticmethod
-    def get_test_all_shapes(solver):
+    def get_test_all_shapes(solver: str):
         """Get test function for a given solver.
 
         This variant tries all possible shapes for matrix and vector
@@ -57,17 +57,13 @@ class TestCombineLinearBoxInequalities(unittest.TestCase):
 
         Parameters
         ----------
-        solver : string
+        solver :
             Name of the solver to test.
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
-
-        Note
-        ----
-        This function relies on "quadprog" to find groundtruth solutions.
         """
 
         def test(self):
