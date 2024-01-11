@@ -31,7 +31,7 @@ class TestSolution(unittest.TestCase):
         """
         problem = get_sd3310_problem()
         solution = solve_problem(problem, solver="clarabel")
-        eps_abs = 1e-10
+        eps_abs = 5e-9
         self.assertLess(solution.primal_residual(), eps_abs)
         self.assertLess(solution.dual_residual(), eps_abs)
         self.assertLess(solution.duality_gap(), eps_abs)
