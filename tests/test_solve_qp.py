@@ -183,7 +183,7 @@ class TestSolveQP(unittest.TestCase):
 
         Note
         ----
-        This function relies on Clarabel to find groundtruth solutions.
+        This function uses DAQP to find groundtruth solutions.
         """
 
         def test(self):
@@ -233,9 +233,9 @@ class TestSolveQP(unittest.TestCase):
                     k: v.shape if v is not None else "None"
                     for k, v in test_case.items()
                 }
-                clarabel_solution = solve_qp(solver="clarabel", **test_case)
+                daqp_solution = solve_qp(solver="daqp", **test_case)
                 self.assertIsNotNone(
-                    clarabel_solution,
+                    daqp_solution,
                     f"Baseline failed on parameters: {test_comp}",
                 )
                 solver_solution = solve_qp(solver=solver, **test_case)
@@ -251,7 +251,7 @@ class TestSolveQP(unittest.TestCase):
                     else 2e-4
                 )
                 self.assertLess(
-                    norm(solver_solution - clarabel_solution),
+                    norm(solver_solution - daqp_solution),
                     sol_tolerance,
                     f"Solver failed on parameters: {test_comp}",
                 )
