@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright 2023 Inria
 # SPDX-License-Identifier: LGPL-3.0-or-later
+# Copyright 2023 Inria
 
 """Unit tests for the `solve_problem` function."""
 
