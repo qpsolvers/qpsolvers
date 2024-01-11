@@ -165,7 +165,7 @@ class TestSolveQP(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_all_shapes(solver):
+    def get_test_all_shapes(solver: str):
         """Get test function for a given solver.
 
         This variant tries all possible shapes for matrix and vector
@@ -173,17 +173,17 @@ class TestSolveQP(unittest.TestCase):
 
         Parameters
         ----------
-        solver : string
+        solver :
             Name of the solver to test.
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
 
         Note
         ----
-        This function relies on "quadprog" to find groundtruth solutions.
+        This function relies on Clarabel to find groundtruth solutions.
         """
 
         def test(self):
@@ -233,9 +233,9 @@ class TestSolveQP(unittest.TestCase):
                     k: v.shape if v is not None else "None"
                     for k, v in test_case.items()
                 }
-                quadprog_solution = solve_qp(solver="quadprog", **test_case)
+                clarabel_solution = solve_qp(solver="clarabel", **test_case)
                 self.assertIsNotNone(
-                    quadprog_solution,
+                    clarabel_solution,
                     f"Baseline failed on parameters: {test_comp}",
                 )
                 solver_solution = solve_qp(solver=solver, **test_case)
@@ -251,7 +251,7 @@ class TestSolveQP(unittest.TestCase):
                     else 2e-4
                 )
                 self.assertLess(
-                    norm(solver_solution - quadprog_solution),
+                    norm(solver_solution - clarabel_solution),
                     sol_tolerance,
                     f"Solver failed on parameters: {test_comp}",
                 )
