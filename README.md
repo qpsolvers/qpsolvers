@@ -51,30 +51,27 @@ This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``. It
 
 ### PyPI
 
+[![PyPI version](https://img.shields.io/pypi/v/qpsolvers)](https://pypi.org/project/qpsolvers/)
+
 To install the library with open source QP solvers:
 
 ```console
 pip install qpsolvers[open_source_solvers]
 ```
 
-To install a subset of QP solvers:
+To install selected QP solvers, list them between brackets:
 
 ```console
 pip install qpsolvers[clarabel,daqp,proxqp,scs]
 ```
 
-To install only the library itself:
-
-```console
-pip install qpsolvers
-```
+And to install only the library itself: ``pip install qpsolvers``.
 
 When imported, qpsolvers loads all the solvers it can find and lists them in ``qpsolvers.available_solvers``.
 
 ### Conda
 
 [![Conda version](https://anaconda.org/conda-forge/qpsolvers/badges/version.svg)](https://anaconda.org/conda-forge/qpsolvers)
-![Conda downloads](https://anaconda.org/conda-forge/qpsolvers/badges/downloads.svg)
 
 ```console
 conda install -c conda-forge qpsolvers
@@ -112,7 +109,7 @@ Matrix arguments are NumPy arrays for dense solvers and SciPy Compressed Sparse 
 - [I have a non-convex quadratic program, is there a solver I can use?](https://github.com/qpsolvers/qpsolvers/discussions/240)
 - [I have quadratic equality constraints, is there a solver I can use?](https://github.com/qpsolvers/qpsolvers/discussions/241)
 - [Error: Mircrosoft Visual C++ 14.0 or greater is required on Windows](https://github.com/qpsolvers/qpsolvers/discussions/257)
-- [Can I add penalty terms as in ridge regression or LASSO?](https://github.com/qpsolvers/qpsolvers/discussions/223#discussioncomment-7873692)
+- [Can I add penalty terms as in ridge regression or LASSO?](https://github.com/qpsolvers/qpsolvers/discussions/272)
 
 ## Benchmark
 
