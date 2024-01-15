@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Breaking:** no default QP solver installed along with the library
 - NPPro: update exit flag value to match new solver API (thanks to @ottapav)
 
+### Fixed
+
+- docs: Add Clarabel to the list of supported solvers
+
 ## [4.2.0] - 2023-12-21
 
 ### Added
