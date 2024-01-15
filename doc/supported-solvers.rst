@@ -8,6 +8,12 @@ Solvers that are detected as installed on your machine are listed in:
 
 .. autodata:: qpsolvers.available_solvers
 
+Clarabel
+========
+
+.. automodule:: qpsolvers.solvers.clarabel_
+    :members:
+
 CVXOPT
 ======
 
