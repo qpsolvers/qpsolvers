@@ -2,7 +2,7 @@ name: qpsolvers
 channels:
     - conda-forge
 dependencies:
-    - cmake
+    - clarabel
     - pip >= 21.3.1
     - proxsuite
     - qpsolvers
