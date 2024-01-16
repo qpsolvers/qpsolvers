@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - docs: Add Clarabel to the list of supported solvers
+- docs: Correct note in `solve_ls` documentation
 
 ## [4.2.0] - 2023-12-21
 
