@@ -19,8 +19,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- docs: Add Clarabel to the list of supported solvers
-- docs: Correct note in `solve_ls` documentation
+- docs: Add Clarabel to the list of supported solvers (thanks to @ogencoglu)
+- docs: Correct note in `solve_ls` documentation (thanks to @ogencoglu)
+- docs: Correct output of LS example (thanks to @ogencoglu)
 
 ## [4.2.0] - 2023-12-21
 
