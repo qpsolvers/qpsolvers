@@ -18,7 +18,7 @@ it and call the :func:`.solve_ls` function:
     h = array([3., 2., -2.]).reshape((3,))
 
     x_sol = solve_ls(R, s, G, h, solver="osqp")
-    print(f"LS solution: x = {x}")
+    print(f"LS solution: {x_sol = }")
 
 The backend QP solver is selected among :ref:`supported solvers <Supported
 solvers>` via the ``solver`` keyword argument. This example outputs the
