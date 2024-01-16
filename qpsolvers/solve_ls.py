@@ -182,14 +182,9 @@ def solve_ls(
 
     Note
     ----
-    In least squares, the matrix :math:`R` should be symmetric. Many
-    solvers (including CVXOPT, OSQP and quadprog) leverage this property and
-    may return unintended results when it is not the case. You can set
-    project :math:`R` on its symmetric part by:
-
-    .. code:: python
-
-        R = 0.5 * (R + R.transpose())
+    Some solvers (like quadprog) will require a full-rank matrix :math:`R`,
+    while others (like ProxQP or QPALM) can work even when :math:`R` has a
+    non-empty nullspace.
 
     Notes
     -----

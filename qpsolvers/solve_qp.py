@@ -85,6 +85,10 @@ def solve_qp(
 
         P = 0.5 * (P + P.transpose())
 
+    Some solvers (like quadprog) will further require that :math:`P` is
+    definite, while other solvers (like ProxQP or QPALM) can work with
+    semi-definite matrices.
+
     Returns
     -------
     :
