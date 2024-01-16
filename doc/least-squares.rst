@@ -22,7 +22,7 @@ it and call the :func:`.solve_ls` function:
 
 The backend QP solver is selected among :ref:`supported solvers <Supported
 solvers>` via the ``solver`` keyword argument. This example outputs the
-solution ``[-0.0530504, 0.0265252, 2.1061008]``.
+solution ``[0.12997217, -0.06498019, 1.74004125]``.
 
 .. autofunction:: qpsolvers.solve_ls
 
