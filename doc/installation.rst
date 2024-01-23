@@ -12,7 +12,7 @@ To install the library from `conda-forge <https://conda-forge.org/>`__, simply r
 
 .. code:: bash
 
-    conda install qpsolvers -c conda-forge
+    conda install -c conda-forge qpsolvers
 
 PyPI
 ----
@@ -43,7 +43,7 @@ Anaconda
 
 .. code:: bash
 
-    conda install qpsolvers -c conda-forge
+    conda install -c conda-forge qpsolvers
 
 Microsoft Visual Studio
 -----------------------
@@ -143,7 +143,7 @@ The simplest way to install qpOASES is via conda-forge:
 
 .. code:: bash
 
-    conda install qpoases -c conda-forge
+    conda install -c conda-forge qpoases
 
 You can also check out the `official qpOASES installation page
 <https://projects.coin-or.org/qpOASES/wiki/QpoasesInstallation>`_ for the
