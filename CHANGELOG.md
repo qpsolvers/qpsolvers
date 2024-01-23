@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.3.0] - 2024-01-23
+
 ### Added
 
 - Extend continuous integration to Python 3.11
@@ -707,7 +709,8 @@ release!
 
 - Let's take this change log from there.
 
-[unreleased]: https://github.com/qpsolvers/qpsolvers/compare/v4.2.0...HEAD
+[unreleased]: https://github.com/qpsolvers/qpsolvers/compare/v4.3.0...HEAD
+[4.3.0]: https://github.com/qpsolvers/qpsolvers/compare/v4.2.0...v4.3.0
 [4.2.0]: https://github.com/qpsolvers/qpsolvers/compare/v4.1.1...v4.2.0
 [4.1.1]: https://github.com/qpsolvers/qpsolvers/compare/v4.1.0...v4.1.1
 [4.1.0]: https://github.com/qpsolvers/qpsolvers/compare/v4.0.1...v4.1.0

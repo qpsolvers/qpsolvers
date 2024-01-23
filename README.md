@@ -153,14 +153,14 @@ Check out the [full report](https://github.com/qpsolvers/qpbenchmark/blob/7da937
 If you find this project useful, please consider giving it a :star: or citing it if your work is scientific:
 
 ```bibtex
-@software{qpsolvers2023,
+@software{qpsolvers2024,
   author = {Caron, Stéphane and Arnström, Daniel and Bonagiri, Suraj and Dechaume, Antoine and Flowers, Nikolai and Heins, Adam and Ishikawa, Takuma and Kenefake, Dustin and Mazzamuto, Giacomo and Meoli, Donato and O'Donoghue, Brendan and Oppenheimer, Adam A. and Pandala, Abhishek and Quiroz Omaña, Juan José and Rontsis, Nikitas and Shah, Paarth and St-Jean, Samuel and Vitucci, Nicola and Wolfers, Soeren and @bdelhaisse and @MeindertHH and @rimaddo and @urob and @shaoanlu},
   license = {LGPL-3.0},
-  month = dec,
+  month = jan,
   title = {{qpsolvers: Quadratic Programming Solvers in Python}},
   url = {https://github.com/qpsolvers/qpsolvers},
-  version = {4.2.0},
-  year = {2023}
+  version = {4.3.0},
+  year = {2024}
 }
 ```
 
