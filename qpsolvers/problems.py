@@ -236,6 +236,13 @@ def get_qptest():
 
 
 def get_qpgurdu():
+    """Get sample random problem.
+
+    Returns
+    -------
+    :
+        Problem-solution pair.
+    """
     P = np.array(
         [
             [
