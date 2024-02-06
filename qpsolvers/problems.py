@@ -524,3 +524,13 @@ def get_qpgurdu():
     solution = Solution(problem)
     solution.found = True
     return problem, solution
+
+
+def get_qpgurabs():
+    qpgurdu, _ = get_qpgurdu()
+    box = np.abs(qpgurdu.h)
+    problem = Problem(qpgurdu.P, qpgurdu.q, lb=-box, ub=+box)
+
+    solution = Solution(problem)
+    solution.found = True
+    return problem, solution
