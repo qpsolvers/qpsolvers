@@ -15,6 +15,7 @@ from qpsolvers import available_solvers, solve_problem
 from qpsolvers.problems import (
     get_qpgurabs,
     get_qpgurdu,
+    get_qpgureq,
     get_qpsut01,
     get_qpsut02,
     get_qpsut03,
@@ -360,7 +361,42 @@ class TestSolveProblem(unittest.TestCase):
             result = solve_problem(problem, solver)
             self.assertIsNotNone(result.x)
             self.assertIsNotNone(result.z)
-            eps_abs = 0.2 if solver == "osqp" else 3e-3 if solver == "proxqp" else 1e-4
+            eps_abs = (
+                0.2
+                if solver == "osqp"
+                else 3e-3
+                if solver == "proxqp"
+                else 1e-4
+            )
+            self.assertLess(result.primal_residual(), eps_abs)
+            self.assertLess(result.dual_residual(), eps_abs)
+            self.assertLess(result.duality_gap(), eps_abs)
+
+        return test
+
+    @staticmethod
+    def get_test_qpgureq(solver):
+        """Get test function for a given solver.
+
+        Parameters
+        ----------
+        solver : string
+            Name of the solver to test.
+
+        Returns
+        -------
+        test : function
+            Test function for that solver.
+        """
+
+        def test(self):
+            if solver == "ecos":
+                return
+            problem, _ = get_qpgureq()
+            result = solve_problem(problem, solver)
+            self.assertIsNotNone(result.x)
+            self.assertIsNotNone(result.z)
+            eps_abs = 0.01 if solver == "osqp" else 5e-3 if solver == "proxqp" else 1e-4
             self.assertLess(result.primal_residual(), eps_abs)
             self.assertLess(result.dual_residual(), eps_abs)
             self.assertLess(result.duality_gap(), eps_abs)
@@ -435,4 +471,9 @@ for solver in available_solvers:
         TestSolveProblem,
         f"test_qpgurabs_{solver}",
         TestSolveProblem.get_test_qpgurabs(solver),
+    )
+    setattr(
+        TestSolveProblem,
+        f"test_qpgureq_{solver}",
+        TestSolveProblem.get_test_qpgureq(solver),
     )
