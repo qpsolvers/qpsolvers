@@ -123,7 +123,7 @@ def __retrieve_dual(
     lb_constr: Optional[gurobipy.MConstr],
     ub_constr: Optional[gurobipy.MConstr],
 ) -> None:
-    solution.z = ineq_constr.Pi if ineq_constr is not None else np.empty((0,))
+    solution.z = -ineq_constr.Pi if ineq_constr is not None else np.empty((0,))
     solution.y = -eq_constr.Pi if eq_constr is not None else np.empty((0,))
     if lb_constr is not None and ub_constr is not None:
         solution.z_box = -ub_constr.Pi - lb_constr.Pi
