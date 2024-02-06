@@ -534,3 +534,14 @@ def get_qpgurabs():
     solution = Solution(problem)
     solution.found = True
     return problem, solution
+
+
+def get_qpgureq():
+    qpgurdu, _ = get_qpgurdu()
+    A = qpgurdu.G
+    b = 0.1 * qpgurdu.h
+    problem = Problem(qpgurdu.P, qpgurdu.q, A=A, b=b)
+
+    solution = Solution(problem)
+    solution.found = True
+    return problem, solution
