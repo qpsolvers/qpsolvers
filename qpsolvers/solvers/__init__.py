@@ -6,6 +6,7 @@
 
 """Import available QP solvers."""
 
+import warnings
 from typing import Any, Callable, Dict, List, Optional, Union
 
 from numpy import ndarray
@@ -707,7 +708,7 @@ except ImportError:
 
 
 if not available_solvers:
-    raise ImportError(
+    warnings.warn(
         "no QP solver found on your system, "
         "you can install solvers from PyPI by "
         "``pip install qpsolvers[open_source_solvers]``"
