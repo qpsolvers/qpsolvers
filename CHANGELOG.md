@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Gurobi: sign of inequality multipliers (thanks to @563925743)
+
 ## [4.3.0] - 2024-01-23
 
 ### Added
