@@ -236,7 +236,7 @@ def get_qptest():
 
 
 def get_qpgurdu():
-    """Get sample random problem.
+    """Get sample random problem with linear inequality constraints.
 
     Returns
     -------
@@ -527,6 +527,13 @@ def get_qpgurdu():
 
 
 def get_qpgurabs():
+    """Get sample random problem with box constraints.
+
+    Returns
+    -------
+    :
+        Problem-solution pair.
+    """
     qpgurdu, _ = get_qpgurdu()
     box = np.abs(qpgurdu.h)
     problem = Problem(qpgurdu.P, qpgurdu.q, lb=-box, ub=+box)
@@ -537,6 +544,13 @@ def get_qpgurabs():
 
 
 def get_qpgureq():
+    """Get sample random problem with equality constraints.
+
+    Returns
+    -------
+    :
+        Problem-solution pair.
+    """
     qpgurdu, _ = get_qpgurdu()
     A = qpgurdu.G
     b = 0.1 * qpgurdu.h
