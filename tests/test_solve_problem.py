@@ -13,6 +13,7 @@ from numpy.linalg import norm
 
 from qpsolvers import available_solvers, solve_problem
 from qpsolvers.problems import (
+    get_qpgurdu,
     get_qpsut01,
     get_qpsut02,
     get_qpsut03,
@@ -303,6 +304,41 @@ class TestSolveProblem(unittest.TestCase):
 
         return test
 
+    @staticmethod
+    def get_test_qpgurdu(solver):
+        """Get test function for a given solver.
+
+        Parameters
+        ----------
+        solver : string
+            Name of the solver to test.
+
+        Returns
+        -------
+        test : function
+            Test function for that solver.
+        """
+
+        def test(self):
+            problem, _ = get_qpgurdu()
+            result = solve_problem(problem, solver)
+            self.assertIsNotNone(result.x)
+            self.assertIsNotNone(result.z)
+            eps_abs = (
+                6e-3
+                if solver == "osqp"
+                else 1e-3
+                if solver == "scs"
+                else 1e-4
+                if solver in ("ecos", "highs", "proxqp")
+                else 1e-5
+            )
+            self.assertLess(result.primal_residual(), eps_abs)
+            self.assertLess(result.dual_residual(), eps_abs)
+            self.assertLess(result.duality_gap(), eps_abs)
+
+        return test
+
 
 # Generate test fixtures for each solver
 for solver in available_solvers:
@@ -362,3 +398,8 @@ for solver in available_solvers:
             f"test_infinite_linear_bounds_{solver}",
             TestSolveProblem.get_test_infinite_linear_bounds(solver),
         )
+    setattr(
+        TestSolveProblem,
+        f"test_qpgurdu_{solver}",
+        TestSolveProblem.get_test_qpgurdu(solver),
+    )
