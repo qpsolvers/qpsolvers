@@ -13,7 +13,7 @@ import scipy.sparse as spa
 
 from .active_set import ActiveSet
 from .conversions import linear_from_box_inequalities
-from .exceptions import ProblemError
+from .exceptions import ParamError, ProblemError
 
 VectorType = TypeVar("VectorType")
 
@@ -401,3 +401,36 @@ class Problem:
             lb=load_optional("lb"),
             ub=load_optional("ub"),
         )
+
+    def get_cuter_classification(self, interest: str) -> str:
+        """Get the CUTE classification string of the problem.
+
+        Args:
+            interest: either 'A', 'M' or 'R':
+                - A: the problem is academic, that is, has been constructed
+                  specifically by researchers to test one or more algorithms,
+                - M: the problem is part of a modelling exercise where the
+                  actual value of the solution is not used in a genuine
+                  practical application, and
+                - R: the problem's solution is (or has been) actually used in
+                  a real application for purposes other than testing
+                  algorithms.
+
+        Returns:
+            CUTE classification string of the problem
+
+        Notes:
+            Check out the `CUTE classification scheme
+            <https://www.cuter.rl.ac.uk//Problems/classification.shtml>`__ for
+            details.
+        """
+        if interest not in ("A", "M", "R"):
+            raise ParamError(f"interest '{interest}' not in 'A', 'M' or 'R'")
+        nb_var = self.P.shape[0]
+        nb_cons = 0
+        if self.G is not None:
+            nb_cons += self.G.shape[0]
+        if self.A is not None:
+            nb_cons += self.A.shape[0]
+        # NB: we don't cound bounds as constraints in this classification
+        return f"QLR2-{interest}N-{nb_var}-{nb_cons}"
