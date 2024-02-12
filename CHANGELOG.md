@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Extend continuous integration to Python 3.11
+- Function to get the CUTE classification string of the problem
 - Optional dependencies for all solvers in the list available on PyPI
 
 ### Changed
