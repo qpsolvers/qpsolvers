@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Set tolerance (for some solvers) in accordance with property-based unit tests
 - Warn rather than raise when there is no solver detected
 
 ## [4.3.1] - 2024-02-06
