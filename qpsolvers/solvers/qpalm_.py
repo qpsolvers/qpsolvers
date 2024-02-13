@@ -66,6 +66,35 @@ def qpalm_solve_problem(
     -----
     Keyword arguments are forwarded as "settings" to QPALM. For instance, we
     can call ``qpalm_solve_qp(P, q, G, h, u, eps_abs=1e-4, eps_rel=1e-4)``.
+
+    .. list-table::
+       :widths: 30 70
+       :header-rows: 1
+
+       * - Name
+         - Effect
+       * - ``max_iter``
+         - Maximum number of iterations.
+       * - ``eps_abs``
+         - Asbolute stopping criterion of the solver. See *e.g.* [tolerances]_
+           for an overview of solver tolerances.
+       * - ``eps_rel``
+         - Relative stopping criterion of the solver. See *e.g.* [tolerances]_
+           for an overview of solver tolerances.
+       * - ``rho``
+         - Tolerance scaling factor.
+       * - ``theta``
+         - Penalty update criterion parameter.
+       * - ``delta``
+         - Penalty update factor.
+       * - ``sigma_max``
+         - Penalty factor cap.
+       * - ``proximal``
+         - Boolean, use proximal method of multipliers or not.
+
+    This list is not exhaustive. Check out the `solver documentation
+    <https://kul-optec.github.io/QPALM/Doxygen/structqpalm_1_1Settings.html>`__
+    for details.
     """
     if initvals is not None:
         if "x" in kwargs:
