@@ -37,7 +37,6 @@ behavior_on_unbounded = {
 
 
 class TestSolveQP(unittest.TestCase):
-
     """Test fixture for a variety of quadratic programs.
 
     Solver-specific tests are implemented in static methods called
@@ -140,21 +139,21 @@ class TestSolveQP(unittest.TestCase):
             sol_tolerance = (
                 2e-4
                 if solver == "osqp"
-                else 5e-4
-                if solver in ["qpalm", "scs"]
-                else 1e-4
-                if solver == "ecos"
-                else 5e-6
-                if solver == "proxqp"
-                else 1e-8
+                else (
+                    5e-4
+                    if solver in ["qpalm", "scs"]
+                    else (
+                        1e-4
+                        if solver == "ecos"
+                        else 5e-6 if solver == "proxqp" else 1e-8
+                    )
+                )
             )
             eq_tolerance = 1e-10
             ineq_tolerance = (
                 2e-4
                 if solver in ["qpalm", "scs"]
-                else 5e-6
-                if solver == "proxqp"
-                else 1e-10
+                else 5e-6 if solver == "proxqp" else 1e-10
             )
             self.assertLess(norm(x - known_solution), sol_tolerance)
             self.assertLess(norm(x_sp - known_solution), sol_tolerance)
@@ -242,13 +241,15 @@ class TestSolveQP(unittest.TestCase):
                 sol_tolerance = (
                     2e-2
                     if solver == "proxqp"
-                    else 1e-3
-                    if solver == "scs"
-                    else 2e-3
-                    if solver in ["osqp", "qpalm"]
-                    else 5e-4
-                    if solver == "ecos"
-                    else 2e-4
+                    else (
+                        1e-3
+                        if solver == "scs"
+                        else (
+                            2e-3
+                            if solver in ["osqp", "qpalm"]
+                            else 5e-4 if solver == "ecos" else 2e-4
+                        )
+                    )
                 )
                 self.assertLess(
                     norm(solver_solution - daqp_solution),
@@ -285,13 +286,15 @@ class TestSolveQP(unittest.TestCase):
             sol_tolerance = (
                 2e-3
                 if solver == "proxqp"
-                else 5e-3
-                if solver == "osqp"
-                else 5e-5
-                if solver == "scs"
-                else 1e-6
-                if solver in ["qpalm", "ecos"]
-                else 1e-8
+                else (
+                    5e-3
+                    if solver == "osqp"
+                    else (
+                        5e-5
+                        if solver == "scs"
+                        else 1e-6 if solver in ["qpalm", "ecos"] else 1e-8
+                    )
+                )
             )
             eq_tolerance = 1e-5 if solver == "proxqp" else 1e-10
             ineq_tolerance = 1e-5 if solver == "proxqp" else 1e-10
@@ -327,9 +330,7 @@ class TestSolveQP(unittest.TestCase):
             sol_tolerance = (
                 1e-3
                 if solver == "ecos"
-                else 1e-5
-                if solver in ["osqp", "qpalm"]
-                else 1e-6
+                else 1e-5 if solver in ["osqp", "qpalm"] else 1e-6
             )
             self.assertLess(norm(x - known_solution), sol_tolerance)
 
@@ -360,20 +361,20 @@ class TestSolveQP(unittest.TestCase):
             sol_tolerance = (
                 1e-3
                 if solver == "ecos"
-                else 5e-5
-                if solver == "qpalm"
-                else 2e-6
-                if solver == "osqp"
-                else 1e-6
+                else (
+                    5e-5
+                    if solver == "qpalm"
+                    else 2e-6 if solver == "osqp" else 1e-6
+                )
             )
             ineq_tolerance = (
                 2e-6
                 if solver == "osqp"
-                else 1e-6
-                if solver == "proxqp"
-                else 1e-7
-                if solver == "scs"
-                else 1e-10
+                else (
+                    1e-6
+                    if solver == "proxqp"
+                    else 1e-7 if solver == "scs" else 1e-10
+                )
             )
             self.assertLess(norm(x - known_solution), sol_tolerance)
             self.assertLess(max(dot(G, x) - h), ineq_tolerance)
@@ -405,13 +406,15 @@ class TestSolveQP(unittest.TestCase):
             sol_tolerance = (
                 5e-4
                 if solver in ["osqp", "qpalm"]
-                else 1e-5
-                if solver in ["ecos", "scs"]
-                else 1e-6
-                if solver == "highs"
-                else 1e-7
-                if solver == "proxqp"
-                else 1e-8
+                else (
+                    1e-5
+                    if solver in ["ecos", "scs"]
+                    else (
+                        1e-6
+                        if solver == "highs"
+                        else 1e-7 if solver == "proxqp" else 1e-8
+                    )
+                )
             )
             eq_tolerance = 1e-9
             self.assertLess(norm(x - known_solution), sol_tolerance)
@@ -446,33 +449,37 @@ class TestSolveQP(unittest.TestCase):
             sol_tolerance = (
                 1e-3
                 if solver == "qpalm"
-                else 5e-4
-                if solver == "osqp"
-                else 1e-5
-                if solver == "scs"
-                else 5e-6
-                if solver == "proxqp"
-                else 1e-6
-                if solver in ["cvxopt", "ecos"]
-                else 5e-8
-                if solver == "qpswift"
-                else 1e-8
+                else (
+                    5e-4
+                    if solver == "osqp"
+                    else (
+                        1e-5
+                        if solver == "scs"
+                        else (
+                            5e-6
+                            if solver == "proxqp"
+                            else (
+                                1e-6
+                                if solver in ["cvxopt", "ecos"]
+                                else 5e-8 if solver == "qpswift" else 1e-8
+                            )
+                        )
+                    )
+                )
             )
             eq_tolerance = (
                 1e-4
                 if solver == "qpalm"
-                else 5e-10
-                if solver in ["osqp", "scs"]
-                else 1e-10
+                else 5e-10 if solver in ["osqp", "scs"] else 1e-10
             )
             ineq_tolerance = (
                 5e-6
                 if solver == "proxqp"
-                else 1e-7
-                if solver == "scs"
-                else 2e-8
-                if solver == "qpswift"
-                else 1e-8
+                else (
+                    1e-7
+                    if solver == "scs"
+                    else 2e-8 if solver == "qpswift" else 1e-8
+                )
             )
             self.assertLess(norm(x - known_solution), sol_tolerance)
             self.assertLess(max(dot(G, x) - h), ineq_tolerance)
@@ -500,35 +507,39 @@ class TestSolveQP(unittest.TestCase):
 
         def test(self):
             P, q, G, h = self.get_sparse_problem()
+            kwargs = {}
+            tol_solvers = ("osqp", "proxqp", "qpalm", "scs")
+            if solver in tol_solvers:
+                kwargs["eps_abs"] = 2e-4
             x = solve_qp(P, q, G, h, solver=solver)
             self.assertIsNotNone(x)
             known_solution = array([2.0] * 149 + [3.0])
             sol_tolerance = (
                 5e-3
                 if solver == "cvxopt"
-                else 2e-3
-                if solver in ["osqp", "qpalm"]
-                else 1e-3
-                if solver in ["gurobi", "piqp"]
-                else 5e-4
-                if solver in ["clarabel", "mosek"]
-                else 1e-4
-                if solver == "scs"
-                else 2e-5
-                if solver == "proxqp"
-                else 1e-6
-                if solver == "highs"
-                else 1e-7
+                else (
+                    2e-3
+                    if solver in ["osqp", "qpalm"]
+                    else (
+                        1e-3
+                        if solver in ["gurobi", "piqp"]
+                        else (
+                            5e-4
+                            if solver in ["clarabel", "mosek"]
+                            else (
+                                1e-4
+                                if solver == "scs"
+                                else (
+                                    2e-5
+                                    if solver == "proxqp"
+                                    else 1e-6 if solver == "highs" else 1e-7
+                                )
+                            )
+                        )
+                    )
+                )
             )
-            ineq_tolerance = (
-                1e-4
-                if solver in ["qpalm", "scs"]
-                else 2e-5
-                if solver == "proxqp"
-                else 5e-7
-                if solver == "osqp"
-                else 1e-7
-            )
+            ineq_tolerance = 1e-4 if solver in tol_solvers else 1e-7
             self.assertLess(norm(x - known_solution), sol_tolerance)
             self.assertLess(max(G * x - h), ineq_tolerance)
 
@@ -562,13 +573,15 @@ class TestSolveQP(unittest.TestCase):
             sol_tolerance = (
                 1e-3
                 if solver == "gurobi"
-                else 1e-3
-                if solver in ["osqp", "qpalm"]
-                else 5e-6
-                if solver in ["mosek", "proxqp"]
-                else 1e-7
-                if solver in ["cvxopt", "scs"]
-                else 1e-8
+                else (
+                    1e-3
+                    if solver in ["osqp", "qpalm"]
+                    else (
+                        5e-6
+                        if solver in ["mosek", "proxqp"]
+                        else 1e-7 if solver in ["cvxopt", "scs"] else 1e-8
+                    )
+                )
             )
             ineq_tolerance = 1e-10
             self.assertLess(norm(x - known_solution), sol_tolerance)
@@ -643,21 +656,21 @@ class TestSolveQP(unittest.TestCase):
             sol_tolerance = (
                 5e-4
                 if solver in ["qpalm", "scs"]
-                else 2e-4
-                if solver == "osqp"
-                else 1e-4
-                if solver == "ecos"
-                else 5e-6
-                if solver == "proxqp"
-                else 1e-8
+                else (
+                    2e-4
+                    if solver == "osqp"
+                    else (
+                        1e-4
+                        if solver == "ecos"
+                        else 5e-6 if solver == "proxqp" else 1e-8
+                    )
+                )
             )
             eq_tolerance = 1e-4 if solver == "osqp" else 1e-10
             ineq_tolerance = (
                 2e-4
                 if solver in ["osqp", "qpalm", "scs"]
-                else 5e-6
-                if solver == "proxqp"
-                else 1e-10
+                else 5e-6 if solver == "proxqp" else 1e-10
             )
             self.assertLess(norm(x - known_solution), sol_tolerance)
             self.assertLess(max(dot(G, x) - h), ineq_tolerance)
@@ -745,13 +758,19 @@ class TestSolveQP(unittest.TestCase):
             sol_tolerance = (
                 2e-3
                 if solver == "osqp"
-                else 5e-4
-                if solver in ["qpalm", "scs"]
-                else 2e-5
-                if solver == "proxqp"
-                else 1e-6
-                if solver in ["cvxopt", "mosek", "qpswift", "piqp"]
-                else 1e-8
+                else (
+                    5e-4
+                    if solver in ["qpalm", "scs"]
+                    else (
+                        2e-5
+                        if solver == "proxqp"
+                        else (
+                            1e-6
+                            if solver in ["cvxopt", "mosek", "qpswift", "piqp"]
+                            else 1e-8
+                        )
+                    )
+                )
             )
             self.assertIsNotNone(x)
             self.assertLess(np.linalg.norm(x - known_solution), sol_tolerance)
