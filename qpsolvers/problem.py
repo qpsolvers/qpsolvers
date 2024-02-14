@@ -405,22 +405,27 @@ class Problem:
     def get_cute_classification(self, interest: str) -> str:
         """Get the CUTE classification string of the problem.
 
-        Args:
-            interest: either 'A', 'M' or 'R': 'A' if the problem is academic,
-                that is, has been constructed specifically by researchers to
-                test one or more algorithms; 'M' if the problem is part of a
-                modelling exercise where the actual value of the solution is
-                not used in a genuine practical application; and 'R' if the
-                problem's solution is (or has been) actually used in a real
-                application for purposes other than testing algorithms.
+        Parameters
+        ----------
+        interest:
+            Either 'A', 'M' or 'R': 'A' if the problem is academic, that is,
+            has been constructed specifically by researchers to test one or
+            more algorithms; 'M' if the problem is part of a modelling exercise
+            where the actual value of the solution is not used in a genuine
+            practical application; and 'R' if the problem's solution is (or has
+            been) actually used in a real application for purposes other than
+            testing algorithms.
 
-        Returns:
+        Returns
+        -------
+        :
             CUTE classification string of the problem
 
-        Notes:
-            Check out the `CUTE classification scheme
-            <https://www.cuter.rl.ac.uk//Problems/classification.shtml>`__ for
-            details.
+        Notes
+        -----
+        Check out the `CUTE classification scheme
+        <https://www.cuter.rl.ac.uk//Problems/classification.shtml>`__ for
+        details.
         """
         if interest not in ("A", "M", "R"):
             raise ParamError(f"interest '{interest}' not in 'A', 'M' or 'R'")
