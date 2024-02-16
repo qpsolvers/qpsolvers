@@ -59,13 +59,11 @@ To install the library with open source QP solvers:
 pip install qpsolvers[open_source_solvers]
 ```
 
-To install selected QP solvers, list them between brackets:
+This one-size-fits-all installation may not work immediately on all systems (for instance if [a solver tries to compile from source](https://github.com/quadprog/quadprog/issues/42)). If you run into any issue, check out the following variants:
 
-```console
-pip install qpsolvers[clarabel,daqp,proxqp,scs]
-```
-
-And to install only the library itself: ``pip install qpsolvers``.
+- ``pip install qpsolvers[wheels_only]`` will only install solvers with pre-compiled binaries,
+- ``pip install qpsolvers[clarabel,daqp,proxqp,scs]`` (for instance) will install the listed set of QP solvers,
+- ``pip install qpsolvers`` will only install the library itself.
 
 When imported, qpsolvers loads all the solvers it can find and lists them in ``qpsolvers.available_solvers``.
 
