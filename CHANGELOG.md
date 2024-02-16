@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Optional dependency: ``wheels_only`` for solvers with pre-compiled binaries
+
 ### Changed
 
 - Set tolerance (for some solvers) in accordance with property-based unit tests
