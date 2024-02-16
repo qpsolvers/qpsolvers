@@ -47,6 +47,7 @@ qpalm = ["qpalm >=1.2.1"]
 quadprog = ["quadprog >=0.1.11"]
 scs = ["scs >=3.2.0"]
 open_source_solvers = ["qpsolvers[clarabel,cvxopt,daqp,ecos,highs,osqp,piqp,proxqp,qpalm,quadprog,scs]"]
+wheels_only = ["qpsolvers[clarabel,cvxopt,daqp,ecos,highs,osqp,piqp,proxqp,qpalm,scs]"]
 
 [project.urls]
 Documentation = "https://qpsolvers.github.io/qpsolvers/"
