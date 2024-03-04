@@ -25,7 +25,6 @@ jobs:
               uses: mamba-org/setup-micromamba@v1
               with:
                   cache-downloads: true
-                  cache-env: true
                   environment-file: doc/environment.yml
                   environment-name: qpsolvers
 
