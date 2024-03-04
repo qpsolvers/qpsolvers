@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update developer notes in the documentation
 - Warn rather than raise when there is no solver detected
 
+### Fixed
+
+- CICD: Update micromamba setup action
+
 ## [4.3.1] - 2024-02-06
 
 ### Fixed
