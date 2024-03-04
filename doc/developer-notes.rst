@@ -10,8 +10,24 @@ Let's imagine we want to add a new solver called *AwesomeQP*. The solver keyword
 The process to add AwesomeQP to *qpsolvers* goes as follows:
 
 1. Create a new file ``qpsolvers/solvers/awesomeqp_.py`` (named after the solver keyword, with a trailing underscore)
-2. Define in this file a function ``awesomeqp_solve_qp``
-3. Define the function prototype for ``awesomeqp_solve_qp`` in ``qpsolvers/solvers/__init__.py``:
+2. Implement in this file a function ``awesomeqp_solve_problem`` that returns a :class:`.Solution`
+3. Implement in the same file a function ``awesomeqp_solve_qp`` to connect it to the historical API, typically as follows:
+
+.. code:: python
+
+    def awesomeqp_solve_qp(P, q, G, h, A, b, lb, ub, initvals=None, verbose=False, **kwargs):
+    ) -> Optional[np.ndarray]:
+        r"""Solve a quadratic program using AwesomeQP.
+
+        [document parameters and return values here]
+        """
+        problem = Problem(P, q, G, h, A, b, lb, ub)
+        solution = awesomeqp_solve_problem(
+            problem, initvals, verbose, backend, **kwargs
+        )
+        return solution.x if solution.found else None
+
+4. Define the two function prototypes for ``awesomeqp_solve_problem`` and ``awesomeqp_solve_qp`` in ``qpsolvers/solvers/__init__.py``:
 
 .. code:: python
 
@@ -39,7 +55,7 @@ The process to add AwesomeQP to *qpsolvers* goes as follows:
 
     The prototype needs to match the actual function. You can check its correctness by running ``tox -e py`` in the repository.
 
-4. Below the prototype, import the function into the ``solve_function`` dictionary:
+5. Below the prototype, import the function into the ``solve_function`` dictionary:
 
 .. code:: python
 
@@ -53,14 +69,14 @@ The process to add AwesomeQP to *qpsolvers* goes as follows:
     except ImportError:
         pass
 
-5. Append the solver identifier to ``dense_solvers`` or ``sparse_solvers``, if applicable
-6. Import ``awesomeqp_solve_qp`` from ``qpsolvers/__init__.py`` and add it to ``__all__``
-7. Add the solver to ``doc/src/supported-solvers.rst``
-8. Add the solver to the *Solvers* section of the README
-9. Assuming AwesomeQP is distributed on `PyPI <https://pypi.org/>`__, add it to the ``[testenv]`` and ``[testenv:coverage]`` environments of ``tox.ini`` for unit testing
-10. Assuming AwesomeQP is distributed on Conda or PyPI, add it to the list of dependencies in ``doc/environment.yml``
-11. Log the new solver as an addition in the changelog
-12. If you are a new contributor, feel free to add your name to ``CITATION.cff`` at the root of the repository.
+6. Append the solver identifier to ``dense_solvers`` or ``sparse_solvers``, if applicable
+7. Import ``awesomeqp_solve_qp`` from ``qpsolvers/__init__.py`` and add it to ``__all__``
+8. Add the solver to ``doc/src/supported-solvers.rst``
+9. Add the solver to the *Solvers* section of the README
+10. Assuming AwesomeQP is distributed on `PyPI <https://pypi.org/>`__, add it to the ``[testenv]`` and ``[testenv:coverage]`` environments of ``tox.ini`` for unit testing
+11. Assuming AwesomeQP is distributed on Conda or PyPI, add it to the list of dependencies in ``doc/environment.yml``
+12. Log the new solver as an addition in the changelog
+13. If you are a new contributor, feel free to add your name to ``CITATION.cff``.
 
 Problem conversions
 ===================
