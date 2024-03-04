@@ -6,6 +6,7 @@ dependencies:
     - daqp
     - pip >=21.3.1
     - proxsuite
+    - python=3.10
     - qpsolvers
     - pip:
         - furo >=2023.8.17
