@@ -47,7 +47,13 @@ qpalm = ["qpalm >=1.2.1"]
 quadprog = ["quadprog >=0.1.11"]
 scs = ["scs >=3.2.0"]
 open_source_solvers = ["qpsolvers[clarabel,cvxopt,daqp,ecos,highs,osqp,piqp,proxqp,qpalm,quadprog,scs]"]
-wheels_only = ["qpsolvers[clarabel,cvxopt,daqp,ecos,highs,osqp,piqp,proxqp,qpalm,scs]"]
+
+# Wheels-only solvers should distribute wheels that work on:
+# - macOS (aarch64)
+# - macOS (x86)
+# - Linux (x86)
+# - Windows (x86)
+wheels_only = ["qpsolvers[cvxopt,daqp,ecos,highs,piqp,proxqp,qpalm]"]
 
 [project.urls]
 Documentation = "https://qpsolvers.github.io/qpsolvers/"
