@@ -730,7 +730,8 @@ release!
 
 - Let's take this change log from there.
 
-[unreleased]: https://github.com/qpsolvers/qpsolvers/compare/v4.3.1...HEAD
+[unreleased]: https://github.com/qpsolvers/qpsolvers/compare/v4.3.2...HEAD
+[4.3.2]: https://github.com/qpsolvers/qpsolvers/compare/v4.3.1...v4.3.2
 [4.3.1]: https://github.com/qpsolvers/qpsolvers/compare/v4.3.0...v4.3.1
 [4.3.0]: https://github.com/qpsolvers/qpsolvers/compare/v4.2.0...v4.3.0
 [4.2.0]: https://github.com/qpsolvers/qpsolvers/compare/v4.1.1...v4.2.0
