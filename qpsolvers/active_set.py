@@ -7,7 +7,7 @@
 """Active set: indices of inequality constraints saturated at the optimum."""
 
 from dataclasses import dataclass
-from typing import Sequence
+from typing import Sequence, Optional
 
 
 @dataclass
@@ -30,10 +30,10 @@ class ActiveSet:
 
     def __init__(
         self,
-        G_indices: Sequence[int] = [],
-        lb_indices: Sequence[int] = [],
-        ub_indices: Sequence[int] = [],
+        G_indices: Optional[Sequence[int]] = None,
+        lb_indices: Optional[Sequence[int]] = None,
+        ub_indices: Optional[Sequence[int]] = None,
     ) -> None:
-        self.G_indices = list(G_indices)
-        self.lb_indices = list(lb_indices)
-        self.ub_indices = list(ub_indices)
+        self.G_indices = list(G_indices) if G_indices is not None else []
+        self.lb_indices = list(lb_indices) if lb_indices is not None else []
+        self.ub_indices = list(ub_indices) if ub_indices is not None else []

@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - CICD: Update ruff to 0.4.3
 
+### Fixed
+
+- Default arguments to active set dataclass to ``None`` rather than empty list
+
 ## [4.3.2] - 2024-03-25
 
 ### Added
