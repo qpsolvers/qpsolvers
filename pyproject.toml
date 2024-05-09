@@ -68,7 +68,7 @@ line-length = 79
 report.include = ["qpsolvers/*"]
 report.omit = ["qpsolvers/unsupported/*"]
 
-[tool.ruff]
+[tool.lint]
 line-length = 79
 
 [tool.lint]
