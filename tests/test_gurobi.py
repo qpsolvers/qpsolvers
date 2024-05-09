@@ -29,6 +29,5 @@ try:
             )
             self.assertIsNotNone(x)
 
-
-except ImportError:  # solver not installed
-    warnings.warn("Skipping Gurobi tests as the solver is not installed")
+except ImportError as exn:  # solver not installed
+    warnings.warn(f"Skipping Gurobi tests: {exn}")

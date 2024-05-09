@@ -22,6 +22,5 @@ try:
             P, q, G, h, A, b, lb, ub = problem.unpack()
             self.assertIsNotNone(mosek_solve_qp(P, q, G, h, A, b, lb, ub))
 
-
-except ImportError:  # solver not installed
-    warnings.warn("Skipping MOSEK tests as the solver is not installed")
+except ImportError as exn:  # solver not installed
+    warnings.warn(f"Skipping MOSEK tests: {exn}")

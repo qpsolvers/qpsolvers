@@ -15,8 +15,9 @@ import scipy.sparse as spa
 from numpy import array, ones
 from numpy.linalg import norm
 
-from .problems import get_sd3310_problem
 from qpsolvers.problems import get_qpsut01
+
+from .problems import get_sd3310_problem
 
 try:
     import cvxopt
@@ -100,6 +101,5 @@ try:
             x = cvxopt_solve_problem(problem)
             self.assertIsNotNone(x)
 
-
-except ImportError:  # solver not installed
-    warnings.warn("Skipping CVXOPT tests as the solver is not installed")
+except ImportError as exn:  # in case the solver is not installed
+    warnings.warn(f"Skipping CVXOPT tests: {exn}")

@@ -84,6 +84,5 @@ try:
                     problem.h,
                 )
 
-
-except ImportError:  # solver not installed
-    warnings.warn("Skipping qpOASES tests as the solver is not installed")
+except ImportError as exn:  # solver not installed
+    warnings.warn(f"Skipping qpOASES tests: {exn}")
