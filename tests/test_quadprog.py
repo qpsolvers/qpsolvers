@@ -47,5 +47,5 @@ try:
             with self.assertRaises(ProblemError):
                 quadprog_solve_qp(P, q, G, h, A, b)
 
-except ImportError:  # solver not installed
-    warnings.warn("Skipping quadprog tests as the solver is not installed")
+except ImportError as exn:  # solver not installed
+    warnings.warn(f"Skipping quadprog tests: {exn}")

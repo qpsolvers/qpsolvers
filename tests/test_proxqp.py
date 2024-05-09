@@ -91,6 +91,5 @@ try:
                     lb=problem.q,
                 )
 
-
-except ImportError:  # solver not installed
-    warnings.warn("Skipping ProxQP tests as the solver is not installed")
+except ImportError as exn:  # solver not installed
+    warnings.warn(f"Skipping ProxQP tests: {exn}")

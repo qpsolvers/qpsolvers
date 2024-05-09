@@ -40,5 +40,5 @@ try:
             check_2 = status != clarabel.SolverStatus.Solved
             self.assertEqual(check_1, check_2)
 
-except ImportError:  # solver not installed
-    warnings.warn("Skipping Clarabel.rs tests as the solver is not installed")
+except ImportError as exn:  # in case the solver is not installed
+    warnings.warn(f"Skipping Clarabel.rs tests: {exn}")

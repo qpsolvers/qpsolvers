@@ -33,6 +33,5 @@ try:
             with self.assertRaises(ProblemError):
                 qpswift_solve_qp(P, q, G, h, A, b, lb, ub)
 
-
-except ImportError:  # solver not installed
-    warnings.warn("Skipping qpSWIFT tests as the solver is not installed")
+except ImportError as exn:  # solver not installed
+    warnings.warn(f"Skipping qpSWIFT tests: {exn}")

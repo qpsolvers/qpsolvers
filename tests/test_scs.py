@@ -33,6 +33,5 @@ try:
             with self.assertRaises(ProblemError):
                 scs_solve_qp(P, q)
 
-
-except ImportError:  # solver not installed
-    warnings.warn("Skipping SCS tests as the solver is not installed")
+except ImportError as exn:  # solver not installed
+    warnings.warn(f"Skipping SCS tests: {exn}")

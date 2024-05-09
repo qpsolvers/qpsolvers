@@ -1,6 +1,6 @@
 # Quadratic Programming Solvers in Python
 
-[![Build](https://img.shields.io/github/actions/workflow/status/qpsolvers/qpsolvers/test.yml?branch=main)](https://github.com/qpsolvers/qpsolvers/actions)
+[![CI](https://img.shields.io/github/actions/workflow/status/qpsolvers/qpsolvers/ci.yml?branch=main)](https://github.com/qpsolvers/qpsolvers/actions)
 [![Documentation](https://img.shields.io/github/actions/workflow/status/qpsolvers/qpsolvers/docs.yml?branch=main&label=docs)](https://qpsolvers.github.io/qpsolvers/)
 [![Coverage](https://coveralls.io/repos/github/qpsolvers/qpsolvers/badge.svg?branch=main)](https://coveralls.io/github/qpsolvers/qpsolvers?branch=main)
 [![PyPI version](https://img.shields.io/pypi/v/qpsolvers)](https://pypi.org/project/qpsolvers/)

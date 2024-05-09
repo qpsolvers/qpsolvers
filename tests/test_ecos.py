@@ -34,6 +34,5 @@ try:
             with self.assertRaises(ProblemError):
                 ecos_solve_qp(P, q, G, h, lb=lb, ub=ub)
 
-
-except ImportError:  # solver not installed
-    warnings.warn("Skipping ECOS tests as the solver is not installed")
+except ImportError as exn:  # solver not installed
+    warnings.warn(f"Skipping ECOS tests: {exn}")
