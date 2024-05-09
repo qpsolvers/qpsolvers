@@ -9,8 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- CICD: Update ruff to 0.4.3
+- CICD: Remove Gurobi from macOS continuous integration
 - CICD: Remove Python 3.7 from continuous integration
+- CICD: Update ruff to 0.4.3
 
 ### Fixed
 
