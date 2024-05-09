@@ -56,30 +56,6 @@ jobs:
               run: |
                   coveralls --service=github --rcfile=pyproject.toml
 
-    lint:
-        name: "Code style"
-        runs-on: ubuntu-latest
-
-        steps:
-            - name: "Checkout sources"
-              uses: actions/checkout@v3
-
-            - name: "Set up Python 3.11"
-              uses: actions/setup-python@v4
-              with:
-                  python-version: "3.11"
-
-            - name: "Install dependencies"
-              run: |
-                  python -m pip install --upgrade pip
-                  python -m pip install tox
-
-            - name: "Lint qpsolvers"
-              run: |
-                  tox -e lint
-              env:
-                  PLATFORM: ubuntu-latest
-
     licensed:
         name: "Test licensed solvers on ${{ matrix.os }} with python-${{ matrix.python-version }}"
         runs-on: ${{ matrix.os }}
@@ -111,6 +87,30 @@ jobs:
                   PLATFORM: ${{ matrix.os }}
               run: |
                   tox -e licensed
+
+    lint:
+        name: "Code style"
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: "Checkout sources"
+              uses: actions/checkout@v3
+
+            - name: "Set up Python 3.11"
+              uses: actions/setup-python@v4
+              with:
+                  python-version: "3.11"
+
+            - name: "Install dependencies"
+              run: |
+                  python -m pip install --upgrade pip
+                  python -m pip install tox
+
+            - name: "Lint qpsolvers"
+              run: |
+                  tox -e lint
+              env:
+                  PLATFORM: ubuntu-latest
 
     test:
         name: "Test ${{ matrix.os }} with python-${{ matrix.python-version }}"
