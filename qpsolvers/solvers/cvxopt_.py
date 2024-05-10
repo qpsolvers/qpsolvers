@@ -31,7 +31,7 @@ cvxopt.solvers.options["show_progress"] = False  # disable default verbosity
 
 
 def __to_cvxopt(
-    M: Union[np.ndarray, spa.csc_matrix]
+    M: Union[np.ndarray, spa.csc_matrix],
 ) -> Union[cvxopt.matrix, cvxopt.spmatrix]:
     """Convert matrix to CVXOPT format.
 

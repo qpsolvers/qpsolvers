@@ -741,7 +741,7 @@ release!
 
 ### Added
 
-- Let's take this change log from there.
+- A changelog :)
 
 [unreleased]: https://github.com/qpsolvers/qpsolvers/compare/v4.3.2...HEAD
 [4.3.2]: https://github.com/qpsolvers/qpsolvers/compare/v4.3.1...v4.3.2
