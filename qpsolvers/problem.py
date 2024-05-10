@@ -69,7 +69,7 @@ class Problem:
 
     @staticmethod
     def __check_matrix(
-        M: Optional[Union[np.ndarray, spa.csc_matrix]]
+        M: Optional[Union[np.ndarray, spa.csc_matrix]],
     ) -> Optional[Union[np.ndarray, spa.csc_matrix]]:
         """
         Ensure a problem matrix has proper shape.
