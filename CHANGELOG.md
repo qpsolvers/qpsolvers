@@ -681,7 +681,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Remove ned for IPython in solver test
 - Update notes on P matrix
 
-## [1.0.7] - 2019/10/26
+## [1.0.7] - 2019-10-26
 
 ### Changed
 
@@ -694,7 +694,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - osqp: handle case where both G and A are one-line matrices
 - qpoases: handle case where G and h are None but not A and b
 
-## [1.0.6] - 2019/10/26
+## [1.0.6] - 2019-10-26
 
 Thanks to Brian Delhaisse and Soeren Wolfers who contributed fixes to this
 release!
@@ -705,7 +705,7 @@ release!
 - quadprog: handle cas where A.ndim == 1
 - Make examples compatible with both Python 2 and Python 3
 
-## [1.0.5] - 2019/04/10
+## [1.0.5] - 2019-04-10
 
 ### Added
 
