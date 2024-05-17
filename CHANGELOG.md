@@ -726,7 +726,7 @@ release!
 - CVXOPT version is now 1.1.8 due to [this issue](https://github.com/urinieto/msaf-gpl/issues/2)
 - Examples now in a [separate folder](examples)
 
-## [1.0.4] - 2018/07/05
+## [1.0.4] - 2018-07-05
 
 ### Added
 
