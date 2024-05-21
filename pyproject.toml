@@ -69,6 +69,12 @@ report.omit = ["qpsolvers/unsupported/*"]
 
 [tool.ruff]
 line-length = 79
+
+[tool.lint]
+ignore = [
+    "D401",  # good for methods but not for class docstrings
+    "D405",  # British-style section names are also "proper"!
+]
 select = [
     # pyflakes
     "F",
@@ -80,10 +86,6 @@ select = [
     # pydocstyle
     "D"
 ]
-ignore = [
-    "D401",  # good for methods but not for class docstrings
-    "D405",  # British-style section names are also "proper"!
-]
 
-[tool.ruff.pydocstyle]
+[tool.lint.pydocstyle]
 convention = "numpy"
