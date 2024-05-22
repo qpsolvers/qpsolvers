@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- CICD: Fix coverage and licensed-solver workflows
 - CICD: Install missing dependency in licensed solver test environment
 - Default arguments to active set dataclass to ``None`` rather than empty list
 
