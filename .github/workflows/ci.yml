@@ -44,9 +44,15 @@ jobs:
                   python -m pip install --upgrade pip
                   python -m pip install coveralls tox
 
+            - name: "Prepare license files"
+              env:
+                  MSK_LICENSE: ${{ secrets.MSK_LICENSE }}
+              run: |
+                  echo "${MSK_LICENSE}" > ${{ github.workspace }}/mosek.lic
+
             - name: "Check code coverage"
               env:
-                  MOSEKLM_LICENSE_FILE: ${{ secrets.MSK_LICENSE }}
+                  MOSEKLM_LICENSE_FILE: ${{ github.workspace }}/mosek.lic
               run: |
                   tox -e coverage
 
@@ -81,9 +87,15 @@ jobs:
                   python -m pip install --upgrade pip
                   python -m pip install tox tox-gh-actions
 
+            - name: "Prepare license files"
+              env:
+                  MSK_LICENSE: ${{ secrets.MSK_LICENSE }}
+              run: |
+                  echo "${MSK_LICENSE}" > ${{ github.workspace }}/mosek.lic
+
             - name: "Test with tox for ${{ matrix.os }}"
               env:
-                  MOSEKLM_LICENSE_FILE: ${{ secrets.MSK_LICENSE }}
+                  MOSEKLM_LICENSE_FILE: ${{ github.workspace }}/mosek.lic
                   PLATFORM: ${{ matrix.os }}
               run: |
                   tox -e licensed
