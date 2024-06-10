@@ -3,6 +3,7 @@
 [![CI](https://img.shields.io/github/actions/workflow/status/qpsolvers/qpsolvers/ci.yml?branch=main)](https://github.com/qpsolvers/qpsolvers/actions)
 [![Documentation](https://img.shields.io/github/actions/workflow/status/qpsolvers/qpsolvers/docs.yml?branch=main&label=docs)](https://qpsolvers.github.io/qpsolvers/)
 [![Coverage](https://coveralls.io/repos/github/qpsolvers/qpsolvers/badge.svg?branch=main)](https://coveralls.io/github/qpsolvers/qpsolvers?branch=main)
+[![Conda version](https://img.shields.io/conda/vn/conda-forge/qpsolvers.svg)](https://anaconda.org/conda-forge/qpsolvers)
 [![PyPI version](https://img.shields.io/pypi/v/qpsolvers)](https://pypi.org/project/qpsolvers/)
 [![PyPI downloads](https://static.pepy.tech/badge/qpsolvers/month)](https://pepy.tech/project/qpsolvers)
 
@@ -49,9 +50,13 @@ This example outputs the solution ``[0.30769231, -0.69230769,  1.38461538]``. It
 
 ## Installation
 
-### PyPI
+### From conda-forge
 
-[![PyPI version](https://img.shields.io/pypi/v/qpsolvers)](https://pypi.org/project/qpsolvers/)
+```console
+conda install -c conda-forge qpsolvers
+```
+
+### From PyPI
 
 To install the library with open source QP solvers:
 
@@ -66,14 +71,6 @@ This one-size-fits-all installation may not work immediately on all systems (for
 - ``pip install qpsolvers`` will only install the library itself.
 
 When imported, qpsolvers loads all the solvers it can find and lists them in ``qpsolvers.available_solvers``.
-
-### Conda
-
-[![Conda version](https://anaconda.org/conda-forge/qpsolvers/badges/version.svg)](https://anaconda.org/conda-forge/qpsolvers)
-
-```console
-conda install -c conda-forge qpsolvers
-```
 
 ## Solvers
 
