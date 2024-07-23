@@ -17,7 +17,7 @@ from dataclasses import dataclass
 from typing import Optional
 
 import numpy as np
-import pylab
+import matplotlib.pyplot as plt
 from scipy.sparse import csc_matrix
 
 import qpsolvers
@@ -207,14 +207,14 @@ def plot_mpc_solution(problem, mpc):
     zmp_max = [-x[1] if abs(x[1]) < 10 else None for x in mpc.e]
     zmp_min.append(zmp_min[-1])
     zmp_max.append(zmp_max[-1])
-    pylab.ion()
-    pylab.clf()
-    pylab.plot(t, pos)
-    pylab.plot(t, zmp, "r-")
-    pylab.plot(t, zmp_min, "g:")
-    pylab.plot(t, zmp_max, "b:")
-    pylab.grid(True)
-    pylab.show(block=True)
+    plt.ion()
+    plt.clf()
+    plt.plot(t, pos)
+    plt.plot(t, zmp, "r-")
+    plt.plot(t, zmp_min, "g:")
+    plt.plot(t, zmp_max, "b:")
+    plt.grid(True)
+    plt.show(block=True)
 
 
 if __name__ == "__main__":
