@@ -173,16 +173,24 @@ def piqp_solve_problem(
     if A is not None and b is None:
         raise ProblemError("Inconsistent inequalities: A is set but b is None")
     # PIQP does not support A, b, G, and h to be None.
-    G_piqp = np.zeros((0, n)) if G is None else G
-    h_piqp = np.zeros((0,)) if h is None else h
-    A_piqp = np.zeros((0, n)) if A is None else A
-    b_piqp = np.zeros((0,)) if b is None else b
     use_csc: bool = (
         not isinstance(P, np.ndarray)
         or (G is not None and not isinstance(G, np.ndarray))
         or (A is not None and not isinstance(A, np.ndarray))
     )
-    if use_csc is True:
+    G_piqp = (
+        G
+        if G is not None
+        else spa.csc_matrix(np.zeros((0, n))) if use_csc else np.zeros((0, n))
+    )
+    A_piqp = (
+        A
+        if A is not None
+        else spa.csc_matrix(np.zeros((0, n))) if use_csc else np.zeros((0, n))
+    )
+    h_piqp = np.zeros((0,)) if h is None else h
+    b_piqp = np.zeros((0,)) if b is None else b
+    if use_csc:
         P, G_piqp, A_piqp = ensure_sparse_matrices(P, G_piqp, A_piqp)
 
     solver = __select_backend(backend, use_csc)

@@ -113,15 +113,15 @@ def osqp_solve_problem(
     u_osqp = None
     if G is not None and h is not None:
         A_osqp = G
-        l_osqp = np.full(h.shape, -np.infty)
+        l_osqp = np.full(h.shape, -np.inf)
         u_osqp = h
     if A is not None and b is not None:
         A_osqp = A if A_osqp is None else spa.vstack([A_osqp, A], format="csc")
         l_osqp = b if l_osqp is None else np.hstack([l_osqp, b])
         u_osqp = b if u_osqp is None else np.hstack([u_osqp, b])
     if lb is not None or ub is not None:
-        lb = lb if lb is not None else np.full(q.shape, -np.infty)
-        ub = ub if ub is not None else np.full(q.shape, +np.infty)
+        lb = lb if lb is not None else np.full(q.shape, -np.inf)
+        ub = ub if ub is not None else np.full(q.shape, +np.inf)
         E = spa.eye(q.shape[0])
         A_osqp = E if A_osqp is None else spa.vstack([A_osqp, E], format="csc")
         l_osqp = lb if l_osqp is None else np.hstack([l_osqp, lb])
