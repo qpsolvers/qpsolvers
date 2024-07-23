@@ -178,18 +178,19 @@ def piqp_solve_problem(
         or (G is not None and not isinstance(G, np.ndarray))
         or (A is not None and not isinstance(A, np.ndarray))
     )
-    G_piqp = np.zeros((0, n)) if G is None else G
-    h_piqp = np.zeros((0,)) if h is None else h
-    if A is None:
-        if use_csc is True:
-            A_piqp = spa.csc_matrix(np.zeros((0, n)))
-        else:
-            A_piqp = np.zeros((0, n))
-    else:
+    G_piqp = (
+        G
+        if G is not None
+        else spa.csc_matrix(np.zeros((0, n))) if use_csc else np.zeros((0, n))
+    )
+    A_piqp = (
         A
+        if A is not None
+        else spa.csc_matrix(np.zeros((0, n))) if use_csc else np.zeros((0, n))
+    )
+    h_piqp = np.zeros((0,)) if h is None else h
     b_piqp = np.zeros((0,)) if b is None else b
-
-    if use_csc is True:
+    if use_csc:
         P, G_piqp, A_piqp = ensure_sparse_matrices(P, G_piqp, A_piqp)
 
     solver = __select_backend(backend, use_csc)
