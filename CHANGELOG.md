@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CICD: Fix coverage and licensed-solver workflows
 - CICD: Install missing dependency in licensed solver test environment
 - Default arguments to active set dataclass to ``None`` rather than empty list
+- PIQP: Warning message about CSC matrix conversion when G or A is None
 
 ## [4.3.2] - 2024-03-25
 
