@@ -73,11 +73,11 @@ def nppro_solve_problem(
     A_ = None
     l_ = None
     u_ = None
-    lb_ = np.full(q.shape, -np.infty)
-    ub_ = np.full(q.shape, +np.infty)
+    lb_ = np.full(q.shape, -np.inf)
+    ub_ = np.full(q.shape, +np.inf)
     if G is not None and h is not None:
         A_ = G
-        l_ = np.full(h.shape, -np.infty)
+        l_ = np.full(h.shape, -np.inf)
         u_ = h
     if A is not None and b is not None:
         A_ = A if A_ is None else np.vstack([A_, A])
