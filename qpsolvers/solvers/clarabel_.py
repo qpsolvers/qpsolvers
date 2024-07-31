@@ -27,6 +27,7 @@ from ..conversions import (
     linear_from_box_inequalities,
     split_dual_linear_box,
 )
+from ..exceptions import ProblemError
 from ..problem import Problem
 from ..solution import Solution
 from ..solve_unconstrained import solve_unconstrained
@@ -113,7 +114,15 @@ def clarabel_solve_problem(
 
     A_stack = spa.vstack(A_list, format="csc")
     b_stack = np.concatenate(b_list)
-    solver = clarabel.DefaultSolver(P, q, A_stack, b_stack, cones, settings)
+    try:
+        solver = clarabel.DefaultSolver(
+            P, q, A_stack, b_stack, cones, settings
+        )
+    except BaseException as exn:
+        # The one we want to catch is a pyo3_runtime.PanicException
+        # But see https://github.com/PyO3/pyo3/issues/2880
+        raise ProblemError("Solver failed to build problem") from exn
+
     result = solver.solve()
 
     solution = Solution(problem)
