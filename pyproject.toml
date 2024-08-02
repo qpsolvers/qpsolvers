@@ -56,6 +56,7 @@ open_source_solvers = ["qpsolvers[clarabel,cvxopt,daqp,ecos,highs,osqp,piqp,prox
 wheels_only = ["qpsolvers[cvxopt,daqp,ecos,highs,piqp,proxqp,qpalm]"]
 
 [project.urls]
+Homepage = "https://github.com/qpsolvers/qpsolvers"
 Documentation = "https://qpsolvers.github.io/qpsolvers/"
 Source = "https://github.com/qpsolvers/qpsolvers"
 Tracker = "https://github.com/qpsolvers/qpsolvers/issues"
