@@ -3,9 +3,9 @@
 [![CI](https://img.shields.io/github/actions/workflow/status/qpsolvers/qpsolvers/ci.yml?branch=main)](https://github.com/qpsolvers/qpsolvers/actions)
 [![Documentation](https://img.shields.io/github/actions/workflow/status/qpsolvers/qpsolvers/docs.yml?branch=main&label=docs)](https://qpsolvers.github.io/qpsolvers/)
 [![Coverage](https://coveralls.io/repos/github/qpsolvers/qpsolvers/badge.svg?branch=main)](https://coveralls.io/github/qpsolvers/qpsolvers?branch=main)
-[![Conda version](https://img.shields.io/conda/vn/conda-forge/qpsolvers.svg)](https://anaconda.org/conda-forge/qpsolvers)
-[![PyPI version](https://img.shields.io/pypi/v/qpsolvers)](https://pypi.org/project/qpsolvers/)
-[![PyPI downloads](https://img.shields.io/pypi/dm/qpsolvers)](https://pypistats.org/packages/qpsolvers)
+[![Conda version](https://img.shields.io/conda/vn/conda-forge/qpsolvers.svg?color=blue)](https://anaconda.org/conda-forge/qpsolvers)
+[![PyPI version](https://img.shields.io/pypi/v/qpsolvers?color=blue)](https://pypi.org/project/qpsolvers/)
+[![PyPI downloads](https://img.shields.io/pypi/dm/qpsolvers?color=blue)](https://pypistats.org/packages/qpsolvers)
 
 This library provides a one-stop shop [`solve_qp`](https://qpsolvers.github.io/qpsolvers/quadratic-programming.html#qpsolvers.solve_qp) function to solve convex quadratic programs:
 
