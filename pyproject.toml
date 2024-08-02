@@ -5,11 +5,9 @@ build-backend = "flit_core.buildapi"
 [project]
 name = "qpsolvers"
 readme = "README.md"
-authors = [
-    {name = "Stéphane Caron", email = "stephane.caron@normalesup.org"},
-]
+authors = [{ name = "Stéphane Caron", email = "stephane.caron@normalesup.org" }]
 maintainers = [
-    {name = "Stéphane Caron", email = "stephane.caron@normalesup.org"},
+    { name = "Stéphane Caron", email = "stephane.caron@normalesup.org" },
 ]
 dynamic = ['version', 'description']
 requires-python = ">=3.7"
@@ -26,10 +24,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Topic :: Scientific/Engineering :: Mathematics",
 ]
-dependencies = [
-    "numpy >=1.15.4",
-    "scipy >=1.2.0",
-]
+dependencies = ["numpy >=1.15.4", "scipy >=1.2.0"]
 keywords = ["quadratic programming", "solver", "numerical optimization"]
 
 [project.optional-dependencies]
@@ -46,7 +41,12 @@ proxqp = ["proxsuite >=0.2.9"]
 qpalm = ["qpalm >=1.2.1"]
 quadprog = ["quadprog >=0.1.11"]
 scs = ["scs >=3.2.0"]
-open_source_solvers = ["qpsolvers[clarabel,cvxopt,daqp,ecos,highs,osqp,piqp,proxqp,qpalm,quadprog,scs]"]
+qpax = [
+    "git+https://github.com/kevin-tracy/qpax",
+] # TODO: will be released on PyPI after https://github.com/kevin-tracy/qpax/pull/2
+open_source_solvers = [
+    "qpsolvers[clarabel,cvxopt,daqp,ecos,highs,osqp,piqp,proxqp,qpalm,quadprog,scs,qpax]",
+]
 
 # Wheels-only solvers should distribute wheels that work on:
 # - macOS (aarch64)
