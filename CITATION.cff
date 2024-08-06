@@ -1,8 +1,8 @@
 cff-version: 1.2.0
 message: "If you find this code helpful, please cite it as below."
 title: "qpsolvers: Quadratic Programming Solvers in Python"
-version: 4.3.2
-date-released: 2024-03-25
+version: 4.3.3
+date-released: 2024-08-06
 url: "https://github.com/qpsolvers/qpsolvers"
 license: "LGPL-3.0"
 authors:
@@ -54,3 +54,5 @@ authors:
 - family-names: "@shaoanlu"
 - family-names: "Kozlov"
   given-names: "Lev"
+- family-names: "Khalil"
+  given-names: "Ahmed"
