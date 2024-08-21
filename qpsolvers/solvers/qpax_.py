@@ -1,3 +1,15 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# Copyright 2024 Lev Kozlov
+"""Solver interface for `qpax <https://github.com/kevin-tracy/qpax>`__.
+qpax is an open source QP solver that can be combined with JAX's jit and vmap
+functionality, as well as differentiated with reverse-mode differentiation. It
+is based on a primal-dual interior point algorithm. If you are using qpax in
+some academic work, consider citing the corresponding paper [Tracy2024]_.
+"""
+
 from typing import Optional
 
 import numpy as np

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # SPDX-License-Identifier: LGPL-3.0-or-later
-# Copyright 2016-2024
+# Copyright 2024 Lev Kozlov
 
 """Unit tests for qpax."""
 
