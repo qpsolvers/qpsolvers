@@ -746,7 +746,7 @@ try:
     dense_solvers.append("qpax")
     sparse_solvers.append("qpax")
 except ImportError as e:
-    raise e
+    pass
 
 
 if not available_solvers:
