@@ -8,7 +8,7 @@ on:
 
 defaults:
     run:
-        # See https://github.com/mamba-org/provision-with-micromamba#important
+        # See https://github.com/mamba-org/setup-micromamba#about-login-shells
         shell: bash -l {0}
 
 jobs:
