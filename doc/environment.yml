@@ -4,15 +4,15 @@ channels:
 dependencies:
     - clarabel
     - daqp
-    - pip >=21.3.1
+    - pip >= 21.3.1
     - proxsuite
     - python=3.10
     - qpsolvers
     - pip:
-        - furo >=2023.8.17
-        - highspy >=1.5.3
-        - piqp >=0.2.2
-        - qpalm >=1.2.1
-        - sphinx >=7.2.2
+        - furo >= 2023.8.17
+        - highspy >= 1.5.3
+        - piqp >= 0.2.2
+        - qpalm >= 1.2.1
+        - sphinx >= 7.2.2
         - sphinx-autodoc-typehints
         - sphinx-mathjax-offline
