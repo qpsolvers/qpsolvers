@@ -40,7 +40,9 @@ def hpipm_solve_problem(
         Warm-start guess vector.
     mode :
         Solver mode, which provides a set of default solver arguments. Pick one
-        of ["speed_abs", "speed", "balance", "robust"]. Default is "balance".
+        of ["speed_abs", "speed", "balance", "robust"]. These modes are
+        documented in section 4.2 *IPM implementation choices* of the reference
+        paper [Frison2020]_. The default one is "balance".
     verbose :
         Set to `True` to print out extra information.
 
