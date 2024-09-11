@@ -62,7 +62,7 @@ class TestSolveProblem(unittest.TestCase):
                 else 1e-4
                 if solver == "ecos"
                 else 5e-5
-                if solver == "mosek"
+                if solver in ("mosek", "qpax")
                 else 1e-6
                 if solver in ["cvxopt", "qpswift", "scs"]
                 else 5e-7
@@ -103,7 +103,7 @@ class TestSolveProblem(unittest.TestCase):
                 else 5e-4
                 if solver in ["proxqp", "scs"]
                 else 1e-4
-                if solver == "cvxopt"
+                if solver in ["cvxopt", "qpax"]
                 else 1e-5
                 if solver in ["highs", "osqp"]
                 else 5e-7
@@ -330,7 +330,7 @@ class TestSolveProblem(unittest.TestCase):
                 6e-3
                 if solver == "osqp"
                 else 1e-3
-                if solver == "scs"
+                if solver in ("scs", "qpax")
                 else 1e-4
                 if solver in ("ecos", "highs", "proxqp")
                 else 1e-5
@@ -396,7 +396,13 @@ class TestSolveProblem(unittest.TestCase):
             result = solve_problem(problem, solver)
             self.assertIsNotNone(result.x)
             self.assertIsNotNone(result.z)
-            eps_abs = 0.01 if solver == "osqp" else 5e-3 if solver == "proxqp" else 1e-4
+            eps_abs = (
+                0.01
+                if solver == "osqp"
+                else 5e-3
+                if solver == "proxqp"
+                else 1e-4
+            )
             self.assertLess(result.primal_residual(), eps_abs)
             self.assertLess(result.dual_residual(), eps_abs)
             self.assertLess(result.duality_gap(), eps_abs)
