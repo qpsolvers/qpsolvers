@@ -73,7 +73,7 @@ report.omit = ["qpsolvers/unsupported/*"]
 [tool.ruff]
 line-length = 79
 
-[tool.lint]
+[tool.ruff.lint]
 ignore = [
     "D401",  # good for methods but not for class docstrings
     "D405",  # British-style section names are also "proper"!
@@ -90,5 +90,5 @@ select = [
     "D"
 ]
 
-[tool.lint.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "numpy"

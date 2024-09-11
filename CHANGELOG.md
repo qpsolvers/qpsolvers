@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- HPIPM: Link to reference paper for details on solver modes
+
 ## [4.3.3] - 2024-08-06
 
 ### Changed

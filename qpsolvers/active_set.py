@@ -7,7 +7,7 @@
 """Active set: indices of inequality constraints saturated at the optimum."""
 
 from dataclasses import dataclass
-from typing import Sequence, Optional
+from typing import Optional, Sequence
 
 
 @dataclass
