@@ -109,40 +109,11 @@ Matrix arguments are NumPy arrays for dense solvers and SciPy Compressed Sparse 
 
 ## Benchmark
 
-The results below come from [`qpbenchmark`](https://github.com/qpsolvers/qpbenchmark), a benchmark for QP solvers in Python. In the following tables, solvers are called with their default settings and compared over whole test sets by [shifted geometric mean](https://github.com/qpsolvers/qpbenchmark#shifted-geometric-mean) ("shm" for short). Lower is better and 1.0 corresponds to the best solver.
+QP solvers come with their strengths and weaknesses depending on the algorithmic choices they make. To help you find the ones most suited to your problems, you can check out the results from [`qpbenchmark`](https://github.com/qpsolvers/qpbenchmark), a benchmark for QP solvers in Python. The benchmark is divided into test sets, each test set representing a different distribution of quadratic programs with specific dimensions and structure (large sparse problems, optimal control problems, ...):
 
-### Maros-Meszaros (hard problems)
-
-Check out the [full report](https://github.com/qpsolvers/qpbenchmark/blob/7da937e0380ade8c109340bac4b4fe81f02e6806/maros_meszaros/results/maros_meszaros.md) for high- and low-accuracy solver settings.
-
-|          |                    Success rate (%) |                        Runtime (shm) |                       Primal residual (shm) |                            Dual residual (shm) |                   Duality gap (shm) |                  Cost error (shm) |
-|:---------|------------------------------------:|-------------------------------------:|--------------------------------------------:|----------------------------------------:|------------------------------------:|----------------------------------:|
-| clarabel |                                89.9 |                                  1.0 |                                         1.0 |                                     1.9 |                                 1.0 |                               1.0 |
-| cvxopt   |                                53.6 |                                 13.8 |                                         5.3 |                                     2.6 |                                22.9 |                               6.6 |
-| gurobi   |                                16.7 |                                 57.8 |                                        10.5 |                                    37.5 |                                94.0 |                              34.9 |
-| highs    |                                53.6 |                                 11.3 |                                         5.3 |                                     2.6 |                                21.2 |                               6.1 |
-| osqp     |                                41.3 |                                  1.8 |                                        58.7 |                                    22.6 |                              1950.7 |                              42.4 |
-| proxqp   |                                77.5 |                                  4.6 |                                         2.0 |                                     1.0 |                                11.5 |                               2.2 |
-| scs      |                                60.1 |                                  2.1 |                                        37.5 |                                     3.4 |                               133.1 |                               8.4 |
-
-### Maros-Meszaros dense (subset of dense problems)
-
-Check out the [full report](https://github.com/qpsolvers/qpbenchmark/blob/7da937e0380ade8c109340bac4b4fe81f02e6806/maros_meszaros/results/maros_meszaros_dense.md) for high- and low-accuracy solver settings.
-
-|          |                    Success rate (%) |                        Runtime (shm) |                       Primal residual (shm) |                            Dual residual (shm) |                   Duality gap (shm) |                  Cost error (shm) |
-|:---------|------------------------------------:|-------------------------------------:|--------------------------------------------:|----------------------------------------:|------------------------------------:|----------------------------------:|
-| clarabel |                               100.0 |                                  1.0 |                                         1.0 |                                    78.4 |                                 1.0 |                               1.0 |
-| cvxopt   |                                66.1 |                               1267.4 |                                 292269757.0 |                                268292.6 |                               269.1 |                              72.5 |
-| daqp     |                                50.0 |                               4163.4 |                                1056090169.5 |                                491187.7 |                               351.8 |                             280.0 |
-| ecos     |                                12.9 |                              27499.0 |                                 996322577.2 |                                938191.8 |                               197.6 |                            1493.3 |
-| gurobi   |                                37.1 |                               3511.4 |                                 497416073.4 |                              13585671.6 |                              4964.0 |                             190.6 |
-| highs    |                                64.5 |                               1008.4 |                                 255341695.6 |                                235041.8 |                               396.2 |                              54.5 |
-| osqp     |                                51.6 |                                371.7 |                                5481100037.5 |                               3631889.3 |                             24185.1 |                             618.4 |
-| proxqp   |                                91.9 |                                 14.1 |                                      1184.3 |                                     1.0 |                                71.8 |                               7.2 |
-| qpoases  |                                24.2 |                               3916.0 |                                8020840724.2 |                              23288184.8 |                               102.2 |                             778.7 |
-| qpswift  |                                25.8 |                              16109.1 |                                 860033995.1 |                                789471.9 |                               170.4 |                             875.0 |
-| quadprog |                                62.9 |                               1430.6 |                                 315885538.2 |                               4734021.7 |                              2200.0 |                             192.3 |
-| scs      |                                72.6 |                                 95.6 |                                2817718628.1 |                                369300.9 |                              3303.2 |                             152.5 |
+- 📈 [Free-for-all test set](https://github.com/qpsolvers/free_for_all_qpbenchmark): open to all problems submitted by the community.
+- 📈 [Maros-Meszaros test set](https://github.com/qpsolvers/maros_meszaros_qpbenchmark): hard problems curated by the numerical optimization community.
+- 📈 [MPC test set](https://github.com/qpsolvers/mpc_qpbenchmark): convex model predictive control problems arising in robotics.
 
 ## Citing qpsolvers
 
