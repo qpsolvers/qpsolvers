@@ -217,8 +217,12 @@ class TestSolveQP(unittest.TestCase):
 
             for i, test_case in enumerate(cases):
                 no_inequality = "G" not in test_case or test_case["G"] is None
-                if no_inequality and solver == "qpswift":
-                    # QPs without inequality constraints not handled by qpSWIFT
+                if no_inequality and solver in ["qpswift", "qpax"]:
+                    # QPs without inequality constraints not handled by qpSWIFT and qpax
+                    continue
+                no_equality = "A" not in test_case or test_case["A"] is None
+                if no_equality and solver in ["qpax"]:
+                    # QPs without equality constraints not handled by qpax
                     continue
                 has_one_equality = (
                     "A" in test_case
@@ -466,7 +470,7 @@ class TestSolveQP(unittest.TestCase):
                             if solver == "proxqp"
                             else (
                                 1e-6
-                                if solver in ["cvxopt", "ecos"]
+                                if solver in ["cvxopt", "ecos", "qpax"]
                                 else 5e-8
                                 if solver == "qpswift" else 1e-8
                             )
@@ -803,8 +807,9 @@ for solver in available_solvers:
         f"test_bounds_{solver}",
         TestSolveQP.get_test_bounds(solver),
     )
-    if solver != "qpswift":
+    if solver not in ["qpswift", "qpax"]:
         # qpSWIFT: https://github.com/qpSWIFT/qpSWIFT/issues/2
+        # qpax: https://github.com/kevin-tracy/qpax/issues/8
         setattr(
             TestSolveQP,
             f"test_no_cons_{solver}",
@@ -815,8 +820,9 @@ for solver in available_solvers:
         f"test_no_eq_{solver}",
         TestSolveQP.get_test_no_eq(solver),
     )
-    if solver != "qpswift":
+    if solver not in ["qpswift", "qpax"]:
         # qpSWIFT: https://github.com/qpSWIFT/qpSWIFT/issues/2
+        # qpax: https://github.com/kevin-tracy/qpax/issues/7
         setattr(
             TestSolveQP,
             f"test_no_ineq_{solver}",

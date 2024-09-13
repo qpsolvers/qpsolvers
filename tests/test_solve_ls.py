@@ -246,9 +246,11 @@ class TestSolveLS(unittest.TestCase):
 
 # Generate test fixtures for each solver
 for solver in available_solvers:
-    setattr(
-        TestSolveLS, "test_{}".format(solver), TestSolveLS.get_test(solver)
-    )
+    if solver not in ["qpax"]:
+        # qpax: https://github.com/kevin-tracy/qpax/issues/6
+        setattr(
+            TestSolveLS, "test_{}".format(solver), TestSolveLS.get_test(solver)
+        )
 
 for solver in sparse_solvers:
     setattr(

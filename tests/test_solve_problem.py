@@ -101,7 +101,7 @@ class TestSolveProblem(unittest.TestCase):
                 5e-2
                 if solver in ["ecos", "qpalm"]
                 else 5e-4
-                if solver in ["proxqp", "scs"]
+                if solver in ["proxqp", "scs", "qpax"]
                 else 1e-4
                 if solver in ["cvxopt", "qpax"]
                 else 1e-5
@@ -328,9 +328,9 @@ class TestSolveProblem(unittest.TestCase):
             self.assertIsNotNone(result.z)
             eps_abs = (
                 6e-3
-                if solver == "osqp"
+                if solver in ("osqp", "qpax")
                 else 1e-3
-                if solver in ("scs", "qpax")
+                if solver in ("scs",)
                 else 1e-4
                 if solver in ("ecos", "highs", "proxqp")
                 else 1e-5
@@ -422,10 +422,11 @@ for solver in available_solvers:
         f"test_qpsut02_{solver}",
         TestSolveProblem.get_test_qpsut02(solver),
     )
-    if solver not in ["ecos", "mosek", "qpswift"]:
+    if solver not in ["ecos", "mosek", "qpswift", "qpax"]:
         # ECOS: https://github.com/embotech/ecos-python/issues/49
         # MOSEK: https://github.com/qpsolvers/qpsolvers/issues/229
         # qpSWIFT: https://github.com/qpsolvers/qpsolvers/issues/159
+        # qpax: https://github.com/kevin-tracy/qpax/issues/5
         setattr(
             TestSolveProblem,
             f"test_qpsut03_{solver}",
@@ -436,16 +437,18 @@ for solver in available_solvers:
         f"test_qpsut04_{solver}",
         TestSolveProblem.get_test_qpsut04(solver),
     )
-    if solver not in ["osqp", "qpswift"]:
+    if solver not in ["osqp", "qpswift", "qpax"]:
         # OSQP: see https://github.com/osqp/osqp-python/issues/104
+        # qpax: https://github.com/kevin-tracy/qpax/issues/8
         setattr(
             TestSolveProblem,
             f"test_qpsut05_{solver}",
             TestSolveProblem.get_test_qpsut05(solver),
         )
-    if solver not in ["ecos", "qpswift"]:
+    if solver not in ["ecos", "qpswift", "qpax"]:
         # ECOS: https://github.com/qpsolvers/qpsolvers/issues/160
         # qpSWIFT: https://github.com/qpsolvers/qpsolvers/issues/159
+        # qpax: https://github.com/kevin-tracy/qpax/issues/4
         setattr(
             TestSolveProblem,
             f"test_qptest_{solver}",
@@ -478,8 +481,10 @@ for solver in available_solvers:
         f"test_qpgurabs_{solver}",
         TestSolveProblem.get_test_qpgurabs(solver),
     )
-    setattr(
-        TestSolveProblem,
-        f"test_qpgureq_{solver}",
-        TestSolveProblem.get_test_qpgureq(solver),
-    )
+    if solver not in ["qpax"]:
+        # qpax: https://github.com/kevin-tracy/qpax/issues/7 (no inequalities)
+        setattr(
+            TestSolveProblem,
+            f"test_qpgureq_{solver}",
+            TestSolveProblem.get_test_qpgureq(solver),
+        )
