@@ -66,7 +66,7 @@ def qpax_solve_problem(
     n: int = q.shape[0]
 
     if initvals is not None and verbose:
-        warnings.warn("warm-start values are ignored by PIQP")
+        warnings.warn("warm-start values are ignored by qpax")
 
     if G is None and h is not None:
         raise ProblemError(
