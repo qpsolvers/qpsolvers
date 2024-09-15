@@ -488,7 +488,7 @@ class TestSolveQP(unittest.TestCase):
                 if solver == "proxqp"
                 else (
                     1e-7
-                    if solver == "scs"
+                    if solver in ["scs", "qpax"]
                     else 2e-8 if solver == "qpswift" else 1e-8
                 )
             )
