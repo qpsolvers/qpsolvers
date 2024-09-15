@@ -744,7 +744,6 @@ try:
     solve_function["qpax"] = qpax_solve_problem
     available_solvers.append("qpax")
     dense_solvers.append("qpax")
-    # sparse_solvers.append("qpax") # TODO: qpax does not support sparse matrices
 except ImportError:
     pass
 

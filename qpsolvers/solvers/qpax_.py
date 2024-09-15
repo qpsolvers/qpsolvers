@@ -3,7 +3,9 @@
 #
 # SPDX-License-Identifier: LGPL-3.0-or-later
 # Copyright 2024 Lev Kozlov
-"""Solver interface for `qpax <https://github.com/kevin-tracy/qpax>`__.
+"""
+Solver interface for `qpax <https://github.com/kevin-tracy/qpax>`__.
+
 qpax is an open source QP solver that can be combined with JAX's jit and vmap
 functionality, as well as differentiated with reverse-mode differentiation. It
 is based on a primal-dual interior point algorithm. If you are using qpax in
@@ -14,23 +16,52 @@ import warnings
 from typing import Optional
 
 import numpy as np
-
 import qpax
+import scipy.sparse as spa
 
-
+from ..conversions import linear_from_box_inequalities, split_dual_linear_box
+from ..exceptions import ProblemError
 from ..problem import Problem
 from ..solution import Solution
-from ..conversions import linear_from_box_inequalities, split_dual_linear_box
-from ..exceptions import ParamError, ProblemError
 
 
 def qpax_solve_problem(
     problem: Problem,
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
-    backend: Optional[str] = None,
     **kwargs,
 ) -> Solution:
+    """Solve a quadratic program using qpax.
+
+    Parameters
+    ----------
+    problem :
+        Quadratic program to solve.
+    initvals :
+        Warm-start guess vector (not used).
+    verbose :
+        Set to `True` to print out extra information.
+
+    Returns
+    -------
+    :
+        Solution to the QP returned by the solver.
+
+    Notes
+    -----
+    All other keyword arguments are forwarded as options to qpax. For
+    instance, you can call ``qpax_solve_qp(P, q, G, h, solver_tol=1e-5)``.
+    For a quick overview, the solver accepts the following settings:
+
+    .. list-table::
+       :widths: 30 70
+       :header-rows: 1
+
+       * - Name
+         - Effect
+       * - ``solver_tol``
+         - Tolerance for the solver.
+    """
     P, q, G, h, A, b, lb, ub = problem.unpack()
     n: int = q.shape[0]
 
@@ -60,39 +91,50 @@ def qpax_solve_problem(
     A_qpax = np.zeros((0, n)) if A is None else A
     b_qpax = np.zeros((0)) if b is None else b
 
-    # qpax does not support sparse matrices, so we need to convert them to dense
-    P = P.toarray() if hasattr(P, "toarray") else P
-    A_qpax = A_qpax.toarray() if hasattr(A_qpax, "toarray") else A_qpax
-    G = G.toarray() if hasattr(G, "toarray") else G
+    # qpax does not support sparse matrices,
+    # so we need to convert them to dense
+    if isinstance(P, spa.csc_matrix):
+        P = P.toarray()
+    if isinstance(A_qpax, spa.csc_matrix):
+        A_qpax = A_qpax.toarray()
+    if isinstance(G, spa.csc_matrix):
+        G = G.toarray()
 
-    try:
-        x, s, z, y, converged, iters1 = qpax.solve_qp(
-            P,
-            q,
-            A_qpax,
-            b_qpax,
-            G,
-            h,
-            solver_tol=1e-5,
-        )
-    except Exception as e:
-        raise ProblemError(f"qpax failed with error: {e}")
-
-    if not converged:
-        print("Something had happened")
+    x, s, z, y, converged, iters1 = qpax.solve_qp(
+        P,
+        q,
+        A_qpax,
+        b_qpax,
+        G,
+        h,
+        **kwargs,
+    )
 
     solution = Solution(problem)
     solution.x = x
     solution.found = converged
     solution.y = y
 
-    # split the dual variables into the box constraints and the linear constraints
+    # split the dual variables into
+    # the box constraints and the linear constraints
     solution.z, solution.z_box = split_dual_linear_box(
         z, problem.lb, problem.ub
     )
 
-    # TODO: fill external solver info
-    solution.extras
+    # store information about the solution
+    # and the resulted raw variables in the extras
+    solution.extras = {
+        "info": {
+            "iterations": iters1,
+            "converged": converged,
+        },
+        "variables": {
+            "x": x,
+            "y": y,
+            "z": z,
+            "s": s,
+        },
+    }
 
     return solution
 
@@ -112,9 +154,50 @@ def qpax_solve_qp(
 ) -> Optional[np.ndarray]:
     r"""Solve a quadratic program using qpax.
 
-    Paper: https://arxiv.org/pdf/2406.11749
+    The quadratic program is defined as:
 
-    # TODO: copy from paper
+    .. math::
+
+        \begin{split}\begin{array}{ll}
+        \underset{\mbox{minimize}}{x} &
+            \frac{1}{2} x^T P x + q^T x \\
+        \mbox{subject to}
+            & G x \leq h                \\
+            & A x = b                   \\
+            & lb \leq x \leq ub
+        \end{array}\end{split}
+
+    It is solved using `qpax
+    <https://github.com/kevin-tracy/qpax>`__.
+    `Paper: <https://arxiv.org/pdf/2406.11749>`__.
+
+    Parameters
+    ----------
+    P :
+        Positive semidefinite cost matrix.
+    q :
+        Cost vector.
+    G :
+        Linear inequality constraint matrix.
+    h :
+        Linear inequality constraint vector.
+    A :
+        Linear equality constraint matrix.
+    b :
+        Linear equality constraint vector.
+    lb :
+        Lower bound constraint vector.
+    ub :
+        Upper bound constraint vector.
+    verbose :
+        Set to `True` to print out extra information.
+    initvals :
+        Warm-start guess vector. Not used.
+
+    Returns
+    -------
+    :
+        Primal solution to the QP, if found, otherwise ``None``.
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = qpax_solve_problem(problem, initvals, verbose, **kwargs)
