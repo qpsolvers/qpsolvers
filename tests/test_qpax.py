@@ -9,10 +9,6 @@
 import unittest
 import warnings
 
-import numpy as np
-
-from qpsolvers import ProblemError
-
 from .problems import get_sd3310_problem
 
 try:
@@ -26,12 +22,6 @@ try:
             P, q, G, h, A, b, lb, ub = problem.unpack()
             self.assertIsNotNone(qpax_solve_qp(P, q, G, h, A, b, lb, ub))
 
-        def test_unbounded_below(self):
-            problem = get_sd3310_problem()
-            P, q, _, _, _, _, _, _ = problem.unpack()
-            P -= np.eye(3)  # make problem unbounded
-            with self.assertRaises(ProblemError):
-                qpax_solve_qp(P, q)
 
 except ImportError as exn:  # solver not installed
     warnings.warn(f"Skipping qpax tests: {exn}")

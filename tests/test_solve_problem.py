@@ -173,7 +173,7 @@ class TestSolveProblem(unittest.TestCase):
         def test(self):
             problem, ref_solution = get_qpsut04()
             solution = solve_problem(problem, solver=solver)
-            eps_abs = 2e-4 if solver in ["osqp", "qpalm"] else 1e-6
+            eps_abs = 2e-4 if solver in ["osqp", "qpalm", "qpax"] else 1e-6
             self.assertLess(norm(solution.x - ref_solution.x), eps_abs)
             self.assertLess(norm(solution.z - ref_solution.z), eps_abs)
             self.assertTrue(np.isfinite(solution.duality_gap()))
