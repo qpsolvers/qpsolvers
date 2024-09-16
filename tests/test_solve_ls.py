@@ -84,7 +84,7 @@ class TestSolveLS(unittest.TestCase):
                 else 2e-5
                 if solver == "proxqp"
                 else 1e-5
-                if solver in ["ecos", "qpalm"]
+                if solver in ["ecos", "qpalm", "qpax"]
                 else 1e-6
             )
             eq_tolerance = 2e-6 if solver == "qpalm" else 1e-9
@@ -94,7 +94,7 @@ class TestSolveLS(unittest.TestCase):
                 else 1e-5
                 if solver == "proxqp"
                 else 2e-7
-                if solver == "scs"
+                if solver in ["scs", "qpax"]
                 else 1e-9
             )
             self.assertLess(norm(x - solution), sol_tolerance)
@@ -246,11 +246,9 @@ class TestSolveLS(unittest.TestCase):
 
 # Generate test fixtures for each solver
 for solver in available_solvers:
-    if solver not in ["qpax"]:
-        # qpax: https://github.com/kevin-tracy/qpax/issues/6
-        setattr(
-            TestSolveLS, "test_{}".format(solver), TestSolveLS.get_test(solver)
-        )
+    setattr(
+        TestSolveLS, "test_{}".format(solver), TestSolveLS.get_test(solver)
+    )
 
 for solver in sparse_solvers:
     setattr(

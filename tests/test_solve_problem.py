@@ -235,7 +235,7 @@ class TestSolveProblem(unittest.TestCase):
                 else 2e-3
                 if solver == "osqp"
                 else 5e-5
-                if solver in ["qpalm", "scs"]
+                if solver in ["qpalm", "scs", "qpax"]
                 else 1e-6
                 if solver == "mosek"
                 else 1e-7
@@ -398,7 +398,7 @@ class TestSolveProblem(unittest.TestCase):
             self.assertIsNotNone(result.z)
             eps_abs = (
                 0.01
-                if solver == "osqp"
+                if solver in ["osqp", "qpax"]
                 else 5e-3
                 if solver == "proxqp"
                 else 1e-4
@@ -422,7 +422,7 @@ for solver in available_solvers:
         f"test_qpsut02_{solver}",
         TestSolveProblem.get_test_qpsut02(solver),
     )
-    if solver not in ["ecos", "mosek", "qpswift", "qpax"]:
+    if solver not in ["ecos", "mosek", "qpswift"]:
         # ECOS: https://github.com/embotech/ecos-python/issues/49
         # MOSEK: https://github.com/qpsolvers/qpsolvers/issues/229
         # qpSWIFT: https://github.com/qpsolvers/qpsolvers/issues/159
@@ -437,15 +437,14 @@ for solver in available_solvers:
         f"test_qpsut04_{solver}",
         TestSolveProblem.get_test_qpsut04(solver),
     )
-    if solver not in ["osqp", "qpswift", "qpax"]:
+    if solver not in ["osqp", "qpswift"]:
         # OSQP: see https://github.com/osqp/osqp-python/issues/104
-        # qpax: https://github.com/kevin-tracy/qpax/issues/8
         setattr(
             TestSolveProblem,
             f"test_qpsut05_{solver}",
             TestSolveProblem.get_test_qpsut05(solver),
         )
-    if solver not in ["ecos", "qpswift", "qpax"]:
+    if solver not in ["ecos", "qpswift"]:
         # ECOS: https://github.com/qpsolvers/qpsolvers/issues/160
         # qpSWIFT: https://github.com/qpsolvers/qpsolvers/issues/159
         # qpax: https://github.com/kevin-tracy/qpax/issues/4
@@ -481,10 +480,8 @@ for solver in available_solvers:
         f"test_qpgurabs_{solver}",
         TestSolveProblem.get_test_qpgurabs(solver),
     )
-    if solver not in ["qpax"]:
-        # qpax: https://github.com/kevin-tracy/qpax/issues/7 (no inequalities)
-        setattr(
-            TestSolveProblem,
-            f"test_qpgureq_{solver}",
-            TestSolveProblem.get_test_qpgureq(solver),
-        )
+    setattr(
+        TestSolveProblem,
+        f"test_qpgureq_{solver}",
+        TestSolveProblem.get_test_qpgureq(solver),
+    )
