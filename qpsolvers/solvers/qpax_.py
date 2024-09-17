@@ -61,6 +61,14 @@ def qpax_solve_problem(
          - Effect
        * - ``solver_tol``
          - Tolerance for the solver.
+
+    Note that `jax` by default uses 32-bit floating point numbers, which can
+    lead to numerical instability. If you encounter numerical issues, consider
+    using 64-bit floating point numbers by setting
+    ```python
+    import jax
+    jax.config.update("jax_enable_x64", True)
+    ```
     """
     P, q, G, h, A, b, lb, ub = problem.unpack()
     n: int = q.shape[0]
