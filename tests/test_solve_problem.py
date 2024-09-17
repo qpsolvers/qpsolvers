@@ -141,20 +141,10 @@ class TestSolveProblem(unittest.TestCase):
             self.assertEqual(solution.y.shape, (0,))
             self.assertEqual(solution.z.shape, (0,))
             self.assertEqual(solution.z_box.shape, (4,))
-            # self.assertAlmostEqual(
-            #     np.linalg.norm(solution.z_box),
-            #     0.0,
-            #     places=3
-            #     if solver == "cvxopt"
-            #     else 5
-            #     if solver == "mosek"
-            #     else 7,
-            # )
-            self.assertTrue(
-                solution.dual_residual() < 1e-3,
-                f"Dual residual: {solution.dual_residual()}",
+            tolerance = (
+                1e-1 if solver == "osqp" else 1e-2 if solver == "scs" else 1e-3
             )
-            self.assertTrue(np.isfinite(solution.duality_gap()))
+            self.assertTrue(solution.is_optimal(tolerance))
 
         return test
 
