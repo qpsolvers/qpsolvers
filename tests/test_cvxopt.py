@@ -14,14 +14,12 @@ import numpy as np
 import scipy.sparse as spa
 from numpy import array, ones
 from numpy.linalg import norm
-
 from qpsolvers.problems import get_qpsut01
 
 from .problems import get_sd3310_problem
 
 try:
     import cvxopt
-
     from qpsolvers.solvers.cvxopt_ import cvxopt_solve_problem, cvxopt_solve_qp
 
     class TestCVXOPT(unittest.TestCase):
@@ -62,11 +60,13 @@ try:
             """Test CVXOPT on a sparse problem."""
             P, q, G, h = self.get_sparse_problem()
             x = cvxopt_solve_qp(P, q, G, h)
-            self.assertIsNotNone(x)
+            self.assertIsNotNone(x, 'solver="cvxopt"')
             known_solution = array([2.0] * 149 + [3.0])
             sol_tolerance = 1e-2  # aouch, not great!
-            self.assertLess(norm(x - known_solution), sol_tolerance)
-            self.assertLess(max(G.dot(x) - h), 1e-10)
+            self.assertLess(
+                norm(x - known_solution), sol_tolerance, 'solver="cvxopt"'
+            )
+            self.assertLess(max(G.dot(x) - h), 1e-10, 'solver="cvxopt"')
 
         def test_extra_kwargs(self):
             """Call CVXOPT with various solver-specific settings."""
@@ -84,14 +84,14 @@ try:
                 feastol=1e-2,
                 refinement=3,
             )
-            self.assertIsNotNone(x)
+            self.assertIsNotNone(x, 'solver="cvxopt"')
 
         def test_infinite_linear_bounds(self):
             """CVXOPT does not yield a domain error on infinite bounds."""
             problem, _ = get_qpsut01()
             problem.h[1] = +np.inf
             x = cvxopt_solve_problem(problem)
-            self.assertIsNotNone(x)
+            self.assertIsNotNone(x, 'solver="cvxopt"')
 
         def test_infinite_box_bounds(self):
             """CVXOPT does not yield a domain error infinite box bounds."""
@@ -99,7 +99,7 @@ try:
             problem.lb[1] = -np.inf
             problem.ub[1] = +np.inf
             x = cvxopt_solve_problem(problem)
-            self.assertIsNotNone(x)
+            self.assertIsNotNone(x, 'solver="cvxopt"')
 
 except ImportError as exn:  # in case the solver is not installed
     warnings.warn(f"Skipping CVXOPT tests: {exn}")
