@@ -103,3 +103,9 @@ SCS
 
 .. automodule:: qpsolvers.solvers.scs_
     :members:
+
+qpax
+===
+
+.. automodule:: qpsolvers.solvers.qpax_
+    :members:

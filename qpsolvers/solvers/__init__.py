@@ -706,6 +706,47 @@ try:
 except ImportError:
     pass
 
+# qpax
+# ========
+
+qpax_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[ndarray],
+            bool,
+        ],
+        Solution,
+    ]
+] = None
+
+qpax_solve_qp: Optional[
+    Callable[
+        [
+            Union[ndarray, csc_matrix],
+            ndarray,
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            bool,
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
+try:
+    from .qpax_ import qpax_solve_problem, qpax_solve_qp
+
+    solve_function["qpax"] = qpax_solve_problem
+    available_solvers.append("qpax")
+    dense_solvers.append("qpax")
+except ImportError:
+    pass
+
 
 if not available_solvers:
     warnings.warn(
@@ -730,6 +771,7 @@ __all__ = [
     "piqp_solve_qp",
     "proxqp_solve_qp",
     "qpalm_solve_qp",
+    "qpax_solve_qp",
     "qpoases_solve_qp",
     "qpswift_solve_qp",
     "quadprog_solve_qp",
