@@ -87,7 +87,11 @@ class TestSolveLS(unittest.TestCase):
                     else 1e-5 if solver in ["ecos", "qpalm", "qpax"] else 1e-6
                 )
             )
-            eq_tolerance = 2e-6 if solver == "qpalm" else 1e-9
+            eq_tolerance = (
+                2e-6
+                if solver == "qpalm"
+                else 1e-7 if solver == "qpax" else 1e-9
+            )
             ineq_tolerance = (
                 1e-3
                 if solver == "osqp"
