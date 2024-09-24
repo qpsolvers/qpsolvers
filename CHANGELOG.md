@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - HPIPM: Link to reference paper for details on solver modes
+- New solver: [qpax](https://github.com/kevin-tracy/qpax) (thanks to @lvjonok)
 
 ## [4.3.3] - 2024-08-06
 
@@ -18,7 +19,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CICD: Remove Gurobi from macOS continuous integration
 - CICD: Remove Python 3.7 from continuous integration
 - CICD: Update ruff to 0.4.3
-- New solver: [qpax](https://github.com/kevin-tracy/qpax) (thanks to @lvjonok)
 
 ### Fixed
 
