@@ -10,7 +10,6 @@ import unittest
 
 import numpy as np
 from numpy.linalg import norm
-
 from qpsolvers import available_solvers, solve_problem
 from qpsolvers.problems import (
     get_qpgurabs,
@@ -47,7 +46,7 @@ class TestSolveProblem(unittest.TestCase):
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
         """
 
@@ -57,17 +56,23 @@ class TestSolveProblem(unittest.TestCase):
             eps_abs = (
                 5e-1
                 if solver in ["osqp", "qpalm"]
-                else 5e-3
-                if solver == "proxqp"
-                else 1e-4
-                if solver == "ecos"
-                else 5e-5
-                if solver in ("mosek", "qpax")
-                else 1e-6
-                if solver in ["cvxopt", "qpswift", "scs"]
-                else 5e-7
-                if solver == "gurobi"
-                else 1e-7
+                else (
+                    5e-3
+                    if solver == "proxqp"
+                    else (
+                        1e-4
+                        if solver == "ecos"
+                        else (
+                            5e-5
+                            if solver in ("mosek", "qpax")
+                            else (
+                                1e-6
+                                if solver in ["cvxopt", "qpswift", "scs"]
+                                else 5e-7 if solver == "gurobi" else 1e-7
+                            )
+                        )
+                    )
+                )
             )
             self.assertLess(norm(solution.x - ref_solution.x), eps_abs)
             # NB: in general the dual solution is not unique (that's why the
@@ -90,7 +95,7 @@ class TestSolveProblem(unittest.TestCase):
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
         """
 
@@ -100,17 +105,24 @@ class TestSolveProblem(unittest.TestCase):
             eps_abs = (
                 5e-2
                 if solver in ["ecos", "qpalm"]
-                else 5e-4
-                if solver in ["proxqp", "scs", "qpax"]
-                else 1e-4
-                if solver in ["cvxopt", "qpax"]
-                else 1e-5
-                if solver in ["highs", "osqp"]
-                else 5e-7
-                if solver in ["clarabel", "mosek", "qpswift", "piqp"]
-                else 1e-7
-                if solver == "gurobi"
-                else 1e-8
+                else (
+                    5e-4
+                    if solver in ["proxqp", "scs", "qpax"]
+                    else (
+                        1e-4
+                        if solver in ["cvxopt", "qpax"]
+                        else (
+                            1e-5
+                            if solver in ["highs", "osqp"]
+                            else (
+                                5e-7
+                                if solver
+                                in ["clarabel", "mosek", "qpswift", "piqp"]
+                                else 1e-7 if solver == "gurobi" else 1e-8
+                            )
+                        )
+                    )
+                )
             )
             self.assertLess(norm(solution.x - ref_solution.x), eps_abs)
             self.assertLess(solution.primal_residual(), eps_abs)
@@ -130,7 +142,7 @@ class TestSolveProblem(unittest.TestCase):
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
         """
 
@@ -160,7 +172,7 @@ class TestSolveProblem(unittest.TestCase):
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
         """
 
@@ -186,7 +198,7 @@ class TestSolveProblem(unittest.TestCase):
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
         """
 
@@ -200,17 +212,17 @@ class TestSolveProblem(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_qptest(solver):
+    def get_test_qptest(solver: str):
         """Get test function for the QPTEST problem.
 
         Parameters
         ----------
-        solver : string
+        solver :
             Name of the solver to test.
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
 
         Note
@@ -224,21 +236,35 @@ class TestSolveProblem(unittest.TestCase):
             tolerance = (
                 1e1
                 if solver == "gurobi"
-                else 1.0
-                if solver == "proxqp"
-                else 2e-3
-                if solver == "osqp"
-                else 5e-5
-                if solver in ["qpalm", "scs", "qpax"]
-                else 1e-6
-                if solver == "mosek"
-                else 1e-7
-                if solver == "highs"
-                else 5e-7
-                if solver == "cvxopt"
-                else 5e-8
-                if solver == "clarabel"
-                else 1e-8
+                else (
+                    1.0
+                    if solver == "proxqp"
+                    else (
+                        2e-3
+                        if solver == "osqp"
+                        else (
+                            5e-5
+                            if solver in ["qpalm", "scs", "qpax"]
+                            else (
+                                1e-6
+                                if solver == "mosek"
+                                else (
+                                    1e-7
+                                    if solver == "highs"
+                                    else (
+                                        5e-7
+                                        if solver == "cvxopt"
+                                        else (
+                                            5e-8
+                                            if solver == "clarabel"
+                                            else 1e-8
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
             )
             self.assertIsNotNone(result.x)
             self.assertIsNotNone(result.z)
@@ -248,17 +274,17 @@ class TestSolveProblem(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_infinite_box_bounds(solver):
+    def get_test_infinite_box_bounds(solver: str):
         """Problem with some infinite box bounds.
 
         Parameters
         ----------
-        solver : string
+        solver :
             Name of the solver to test.
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
         """
 
@@ -274,17 +300,17 @@ class TestSolveProblem(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_infinite_linear_bounds(solver):
+    def get_test_infinite_linear_bounds(solver: str):
         """Problem with some infinite linear bounds.
 
         Parameters
         ----------
-        solver : string
+        solver :
             Name of the solver to test.
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
         """
 
@@ -299,17 +325,17 @@ class TestSolveProblem(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_qpgurdu(solver):
+    def get_test_qpgurdu(solver: str):
         """Get test function for a given solver.
 
         Parameters
         ----------
-        solver : string
+        solver :
             Name of the solver to test.
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
         """
 
@@ -321,11 +347,13 @@ class TestSolveProblem(unittest.TestCase):
             eps_abs = (
                 6e-3
                 if solver in ("osqp", "qpax")
-                else 1e-3
-                if solver in ("scs",)
-                else 1e-4
-                if solver in ("ecos", "highs", "proxqp")
-                else 1e-5
+                else (
+                    1e-3
+                    if solver in ("scs",)
+                    else (
+                        1e-4 if solver in ("ecos", "highs", "proxqp") else 1e-5
+                    )
+                )
             )
             self.assertLess(result.primal_residual(), eps_abs)
             self.assertLess(result.dual_residual(), eps_abs)
@@ -334,17 +362,17 @@ class TestSolveProblem(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_qpgurabs(solver):
+    def get_test_qpgurabs(solver: str):
         """Get test function for a given solver.
 
         Parameters
         ----------
-        solver : string
+        solver :
             Name of the solver to test.
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
         """
 
@@ -356,9 +384,7 @@ class TestSolveProblem(unittest.TestCase):
             eps_abs = (
                 0.2
                 if solver == "osqp"
-                else 3e-3
-                if solver == "proxqp"
-                else 1e-4
+                else 3e-3 if solver == "proxqp" else 1e-4
             )
             self.assertLess(result.primal_residual(), eps_abs)
             self.assertLess(result.dual_residual(), eps_abs)
@@ -367,17 +393,17 @@ class TestSolveProblem(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_qpgureq(solver):
+    def get_test_qpgureq(solver: str):
         """Get test function for a given solver.
 
         Parameters
         ----------
-        solver : string
+        solver :
             Name of the solver to test.
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
         """
 
@@ -391,9 +417,7 @@ class TestSolveProblem(unittest.TestCase):
             eps_abs = (
                 0.01
                 if solver in ["osqp", "qpax"]
-                else 5e-3
-                if solver == "proxqp"
-                else 1e-4
+                else 5e-3 if solver == "proxqp" else 1e-4
             )
             self.assertLess(result.primal_residual(), eps_abs)
             self.assertLess(result.dual_residual(), eps_abs)
