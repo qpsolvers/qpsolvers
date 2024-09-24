@@ -76,32 +76,32 @@ class TestSolveLS(unittest.TestCase):
             x_sp = solve_ls(
                 R, s, G, h, A, b, solver=solver, sparse_conversion=False
             )
-            self.assertIsNotNone(x)
-            self.assertIsNotNone(x_sp)
+            self.assertIsNotNone(x, f"{solver=}")
+            self.assertIsNotNone(x_sp, f"{solver=}")
             sol_tolerance = (
                 5e-3
                 if solver == "osqp"
-                else 2e-5
-                if solver == "proxqp"
-                else 1e-5
-                if solver in ["ecos", "qpalm", "qpax"]
-                else 1e-6
+                else (
+                    2e-5
+                    if solver == "proxqp"
+                    else 1e-5 if solver in ["ecos", "qpalm", "qpax"] else 1e-6
+                )
             )
             eq_tolerance = 2e-6 if solver == "qpalm" else 1e-9
             ineq_tolerance = (
                 1e-3
                 if solver == "osqp"
-                else 1e-5
-                if solver == "proxqp"
-                else 2e-7
-                if solver in ["scs", "qpax"]
-                else 1e-9
+                else (
+                    1e-5
+                    if solver == "proxqp"
+                    else 2e-7 if solver in ["scs", "qpax"] else 1e-9
+                )
             )
-            self.assertLess(norm(x - solution), sol_tolerance)
-            self.assertLess(norm(x_sp - solution), sol_tolerance)
-            self.assertLess(max(G.dot(x) - h), ineq_tolerance)
-            self.assertLess(max(A.dot(x) - b), eq_tolerance)
-            self.assertLess(min(A.dot(x) - b), eq_tolerance)
+            self.assertLess(norm(x - solution), sol_tolerance, f"{solver=}")
+            self.assertLess(norm(x_sp - solution), sol_tolerance, f"{solver=}")
+            self.assertLess(max(G.dot(x) - h), ineq_tolerance, f"{solver=}")
+            self.assertLess(max(A.dot(x) - b), eq_tolerance, f"{solver=}")
+            self.assertLess(min(A.dot(x) - b), eq_tolerance, f"{solver=}")
 
         return test
 
@@ -140,13 +140,13 @@ class TestSolveLS(unittest.TestCase):
             x_csc = solve_ls(
                 R_csc, s, G, h, A, b, solver=solver, sparse_conversion=False
             )
-            self.assertIsNotNone(x_csc)
+            self.assertIsNotNone(x_csc, f"{solver=}")
 
             R_dia = spa.eye(n)
             x_dia = solve_ls(
                 R_dia, s, G, h, A, b, solver=solver, sparse_conversion=False
             )
-            self.assertIsNotNone(x_dia)
+            self.assertIsNotNone(x_dia, f"{solver=}")
 
             x_np_dia = solve_ls(
                 R_dia,
@@ -159,11 +159,13 @@ class TestSolveLS(unittest.TestCase):
                 solver=solver,
                 sparse_conversion=False,
             )
-            self.assertIsNotNone(x_np_dia)
+            self.assertIsNotNone(x_np_dia, f"{solver=}")
 
             sol_tolerance = 1e-8
-            self.assertLess(norm(x_csc - x_dia), sol_tolerance)
-            self.assertLess(norm(x_csc - x_np_dia), sol_tolerance)
+            self.assertLess(norm(x_csc - x_dia), sol_tolerance, f"{solver=}")
+            self.assertLess(
+                norm(x_csc - x_np_dia), sol_tolerance, f"{solver=}"
+            )
 
         return test
 
@@ -197,7 +199,7 @@ class TestSolveLS(unittest.TestCase):
                 sparse_conversion=sparse_conversion,
                 **kwargs,
             )
-            self.assertIsNotNone(x)
+            self.assertIsNotNone(x, f"{solver=}")
 
         return test
 
@@ -239,7 +241,7 @@ class TestSolveLS(unittest.TestCase):
                 sparse_conversion=sparse_conversion,
                 **kwargs,
             )
-            self.assertIsNotNone(x)
+            self.assertIsNotNone(x, f"{solver=}")
 
         return test
 
