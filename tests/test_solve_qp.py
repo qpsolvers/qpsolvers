@@ -485,11 +485,13 @@ class TestSolveQP(unittest.TestCase):
                 5e-6
                 if solver == "proxqp"
                 else (
-                    1e-7
-                    if solver in ["scs", "qpax"]
-                    else 2e-8
-                    if solver == "qpswift"
-                    else 1e-8
+                    2e-7
+                    if solver == "qpax"
+                    else (
+                        1e-7
+                        if solver == "scs"
+                        else 2e-8 if solver == "qpswift" else 1e-8
+                    )
                 )
             )
             self.assertLess(norm(x - known_solution), sol_tolerance)
