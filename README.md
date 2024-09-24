@@ -86,9 +86,10 @@ When imported, qpsolvers loads all the solvers it can find and lists them in ``q
 | [MOSEK](https://mosek.com/) | ``mosek`` | Interior point | Sparse | Commercial | ✔️ |
 | NPPro | ``nppro`` | Active set | Dense | Commercial | ✔️ |
 | [OSQP](https://osqp.org/) | ``osqp`` | Augmented Lagrangian | Sparse | Apache-2.0 | ✔️ |
-| [PIQP](https://github.com/PREDICT-EPFL/piqp) | ``piqp`` | Proximal Interior Point | Dense & Sparse | BSD-2-Clause | ✖️ |
+| [PIQP](https://github.com/PREDICT-EPFL/piqp) | ``piqp`` | Proximal interior point | Dense & Sparse | BSD-2-Clause | ✖️ |
 | [ProxQP](https://github.com/Simple-Robotics/proxsuite) | ``proxqp`` | Augmented Lagrangian | Dense & Sparse | BSD-2-Clause | ✔️ |
 | [QPALM](https://github.com/kul-optec/QPALM) | ``qpalm`` | Augmented Lagrangian | Sparse | LGPL-3.0 | ✔️ |
+| [qpax](https://github.com/kevin-tracy/qpax/) | ``qpax`` | Interior point | Dense | MIT | ✖️ |
 | [qpOASES](https://github.com/coin-or/qpOASES) | ``qpoases`` | Active set | Dense | LGPL-2.1 | ➖ |
 | [qpSWIFT](https://github.com/qpSWIFT/qpSWIFT) | ``qpswift`` | Interior point | Sparse | GPL-3.0 | ✖️ |
 | [quadprog](https://github.com/quadprog/quadprog) | ``quadprog`` | Active set | Dense | GPL-2.0 | ✖️ |
@@ -150,10 +151,10 @@ If you find this project useful, please consider giving it a :star: or citing it
 ```bibtex
 @software{qpsolvers2024,
   title = {{qpsolvers: Quadratic Programming Solvers in Python}},
-  author = {Caron, Stéphane and Arnström, Daniel and Bonagiri, Suraj and Dechaume, Antoine and Flowers, Nikolai and Heins, Adam and Ishikawa, Takuma and Kenefake, Dustin and Mazzamuto, Giacomo and Meoli, Donato and O'Donoghue, Brendan and Oppenheimer, Adam A. and Pandala, Abhishek and Quiroz Omaña, Juan José and Rontsis, Nikitas and Shah, Paarth and St-Jean, Samuel and Vitucci, Nicola and Wolfers, Soeren and Yang, Fengyu and @bdelhaisse and @MeindertHH and @rimaddo and @urob and @shaoanlu and Khalil, Ahmed},
+  author = {Caron, Stéphane and Arnström, Daniel and Bonagiri, Suraj and Dechaume, Antoine and Flowers, Nikolai and Heins, Adam and Ishikawa, Takuma and Kenefake, Dustin and Mazzamuto, Giacomo and Meoli, Donato and O'Donoghue, Brendan and Oppenheimer, Adam A. and Pandala, Abhishek and Quiroz Omaña, Juan José and Rontsis, Nikitas and Shah, Paarth and St-Jean, Samuel and Vitucci, Nicola and Wolfers, Soeren and Yang, Fengyu and @bdelhaisse and @MeindertHH and @rimaddo and @urob and @shaoanlu and Khalil, Ahmed and Kozlov, Lev},
   license = {LGPL-3.0},
   url = {https://github.com/qpsolvers/qpsolvers},
-  version = {4.3.3},
+  version = {4.4.0},
   year = {2024}
 }
 ```
