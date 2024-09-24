@@ -13,8 +13,6 @@ import numpy as np
 import scipy
 from numpy import array, dot, ones, random
 from numpy.linalg import norm
-from scipy.sparse import csc_matrix
-
 from qpsolvers import (
     NoSolverSelected,
     ProblemError,
@@ -23,6 +21,7 @@ from qpsolvers import (
     solve_qp,
     sparse_solvers,
 )
+from scipy.sparse import csc_matrix
 
 from .problems import get_qpmad_demo_problem
 
@@ -115,17 +114,17 @@ class TestSolveQP(unittest.TestCase):
             solve_qp(P, q, G, h, A, b, solver="ideal")
 
     @staticmethod
-    def get_test(solver):
+    def get_test(solver: str):
         """Get test function for a given solver.
 
         Parameters
         ----------
-        solver : string
+        solver :
             Name of the solver to test.
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
         """
 
@@ -133,8 +132,8 @@ class TestSolveQP(unittest.TestCase):
             P, q, G, h, A, b = self.get_dense_problem()
             x = solve_qp(P, q, G, h, A, b, solver=solver)
             x_sp = solve_qp(P, q, G, h, A, b, solver=solver)
-            self.assertIsNotNone(x)
-            self.assertIsNotNone(x_sp)
+            self.assertIsNotNone(x, f"{solver=}")
+            self.assertIsNotNone(x_sp, f"{solver=}")
             known_solution = array([0.30769231, -0.69230769, 1.38461538])
             sol_tolerance = (
                 2e-4
@@ -155,11 +154,15 @@ class TestSolveQP(unittest.TestCase):
                 if solver in ["qpalm", "scs"]
                 else 5e-6 if solver in ["proxqp", "qpax"] else 1e-10
             )
-            self.assertLess(norm(x - known_solution), sol_tolerance)
-            self.assertLess(norm(x_sp - known_solution), sol_tolerance)
-            self.assertLess(max(dot(G, x) - h), ineq_tolerance)
-            self.assertLess(max(dot(A, x) - b), eq_tolerance)
-            self.assertLess(min(dot(A, x) - b), eq_tolerance)
+            self.assertLess(
+                norm(x - known_solution), sol_tolerance, f"{solver=}"
+            )
+            self.assertLess(
+                norm(x_sp - known_solution), sol_tolerance, f"{solver=}"
+            )
+            self.assertLess(max(dot(G, x) - h), ineq_tolerance, f"{solver=}")
+            self.assertLess(max(dot(A, x) - b), eq_tolerance, f"{solver=}")
+            self.assertLess(min(dot(A, x) - b), eq_tolerance, f"{solver=}")
 
         return test
 
@@ -265,19 +268,19 @@ class TestSolveQP(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_bounds(solver):
+    def get_test_bounds(solver: str):
         """Get test function for a given solver.
 
         This variant adds vector bounds.
 
         Parameters
         ----------
-        solver : string
+        solver :
             Name of the solver to test.
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
         """
 
@@ -315,19 +318,19 @@ class TestSolveQP(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_no_cons(solver):
+    def get_test_no_cons(solver: str):
         """Get test function for a given solver.
 
         In this variant, there is no equality nor inequality constraint.
 
         Parameters
         ----------
-        solver : string
+        solver :
             Name of the solver to test.
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
         """
 
@@ -346,19 +349,19 @@ class TestSolveQP(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_no_eq(solver):
+    def get_test_no_eq(solver: str):
         """Get test function for a given solver.
 
         In this variant, there is no equality constraint.
 
         Parameters
         ----------
-        solver : string
+        solver :
             Name of the solver to test.
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
         """
 
@@ -391,19 +394,19 @@ class TestSolveQP(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_no_ineq(solver):
+    def get_test_no_ineq(solver: str):
         """Get test function for a given solver.
 
         In this variant, there is no inequality constraint.
 
         Parameters
         ----------
-        solver : string
+        solver :
             Name of the solver to test.
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
         """
 
@@ -433,19 +436,19 @@ class TestSolveQP(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_one_ineq(solver):
+    def get_test_one_ineq(solver: str):
         """Get test function for a given solver.
 
         In this variant, there is only one inequality constraint.
 
         Parameters
         ----------
-        solver : string
+        solver :
             Name of the solver to test.
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
         """
 
@@ -502,19 +505,19 @@ class TestSolveQP(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_sparse(solver):
+    def get_test_sparse(solver: str):
         """Get test function for a given solver.
 
         This variant tests a sparse problem.
 
         Parameters
         ----------
-        solver : string
+        solver :
             Name of the solver to test.
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
         """
 
@@ -559,7 +562,7 @@ class TestSolveQP(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_sparse_bounds(solver):
+    def get_test_sparse_bounds(solver: str):
         """Get test function for a given solver.
 
         This variant tests a sparse problem with additional vector lower and
@@ -567,12 +570,12 @@ class TestSolveQP(unittest.TestCase):
 
         Parameters
         ----------
-        solver : string
+        solver :
             Name of the solver to test.
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
         """
 
@@ -603,7 +606,7 @@ class TestSolveQP(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_sparse_unfeasible(solver):
+    def get_test_sparse_unfeasible(solver: str):
         """Get test function for a given solver.
 
         This variant tests an unfeasible sparse problem with additional vector
@@ -611,12 +614,12 @@ class TestSolveQP(unittest.TestCase):
 
         Parameters
         ----------
-        solver : string
+        solver :
             Name of the solver to test.
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
         """
 
@@ -634,19 +637,19 @@ class TestSolveQP(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_warmstart(solver):
+    def get_test_warmstart(solver: str):
         """Get test function for a given solver.
 
         This variant warm starts.
 
         Parameters
         ----------
-        solver : string
+        solver :
             Name of the solver to test.
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
         """
 
@@ -693,17 +696,17 @@ class TestSolveQP(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_raise_on_unbounded_below(solver):
+    def get_test_raise_on_unbounded_below(solver: str):
         """ValueError is raised when the problem is unbounded below.
 
         Parameters
         ----------
-        solver : string
+        solver :
             Name of the solver to test.
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
 
         Notes
@@ -726,17 +729,17 @@ class TestSolveQP(unittest.TestCase):
         return test
 
     @staticmethod
-    def get_test_qpmad_demo(solver):
+    def get_test_qpmad_demo(solver: str):
         """Get test function for a given solver.
 
         Parameters
         ----------
-        solver : string
+        solver :
             Name of the solver to test.
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
         """
 

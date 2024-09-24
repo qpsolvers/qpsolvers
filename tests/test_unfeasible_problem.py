@@ -10,12 +10,10 @@ import unittest
 import warnings
 
 from numpy import array, dot
-
 from qpsolvers import available_solvers, solve_qp
 
 
 class UnfeasibleProblem(unittest.TestCase):
-
     """
     Test fixture for an unfeasible quadratic program (inequality and equality
     constraints are inconsistent).
@@ -56,18 +54,18 @@ class UnfeasibleProblem(unittest.TestCase):
         return P, q, G, h, A, b
 
     @staticmethod
-    def get_test(solver):
+    def get_test(solver: str):
         """
         Closure of test function for a given solver.
 
         Parameters
         ----------
-        solver : string
+        solver :
             Name of the solver to test.
 
         Returns
         -------
-        test : function
+        :
             Test function for that solver.
         """
 
