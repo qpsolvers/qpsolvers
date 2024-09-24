@@ -74,13 +74,23 @@ class TestSolveProblem(unittest.TestCase):
                     )
                 )
             )
-            self.assertLess(norm(solution.x - ref_solution.x), eps_abs)
+            self.assertLess(
+                norm(solution.x - ref_solution.x), eps_abs, "f{solver=}"
+            )
             # NB: in general the dual solution is not unique (that's why the
             # other tests check residuals). This test only works because the
             # dual solution is unique in this particular problem.
-            self.assertLess(norm(solution.y - ref_solution.y), eps_abs)
-            self.assertLess(norm(solution.z - ref_solution.z), eps_abs)
-            self.assertLess(norm(solution.z_box - ref_solution.z_box), eps_abs)
+            self.assertLess(
+                norm(solution.y - ref_solution.y), eps_abs, "f{solver=}"
+            )
+            self.assertLess(
+                norm(solution.z - ref_solution.z), eps_abs, "f{solver=}"
+            )
+            self.assertLess(
+                norm(solution.z_box - ref_solution.z_box),
+                eps_abs,
+                "f{solver=}",
+            )
 
         return test
 
@@ -124,10 +134,12 @@ class TestSolveProblem(unittest.TestCase):
                     )
                 )
             )
-            self.assertLess(norm(solution.x - ref_solution.x), eps_abs)
-            self.assertLess(solution.primal_residual(), eps_abs)
-            self.assertLess(solution.dual_residual(), eps_abs)
-            self.assertLess(solution.duality_gap(), eps_abs)
+            self.assertLess(
+                norm(solution.x - ref_solution.x), eps_abs, "f{solver=}"
+            )
+            self.assertLess(solution.primal_residual(), eps_abs, "f{solver=}")
+            self.assertLess(solution.dual_residual(), eps_abs, "f{solver=}")
+            self.assertLess(solution.duality_gap(), eps_abs, "f{solver=}")
 
         return test
 
@@ -149,14 +161,14 @@ class TestSolveProblem(unittest.TestCase):
         def test(self):
             problem, ref_solution = get_qpsut03()
             solution = solve_problem(problem, solver=solver)
-            self.assertEqual(solution.x.shape, (4,))
-            self.assertEqual(solution.y.shape, (0,))
-            self.assertEqual(solution.z.shape, (0,))
-            self.assertEqual(solution.z_box.shape, (4,))
+            self.assertEqual(solution.x.shape, (4,), "f{solver=}")
+            self.assertEqual(solution.y.shape, (0,), "f{solver=}")
+            self.assertEqual(solution.z.shape, (0,), "f{solver=}")
+            self.assertEqual(solution.z_box.shape, (4,), "f{solver=}")
             tolerance = (
                 1e-1 if solver == "osqp" else 1e-2 if solver == "scs" else 1e-3
             )
-            self.assertTrue(solution.is_optimal(tolerance))
+            self.assertTrue(solution.is_optimal(tolerance), "f{solver=}")
 
         return test
 
@@ -180,9 +192,9 @@ class TestSolveProblem(unittest.TestCase):
             problem, ref_solution = get_qpsut04()
             solution = solve_problem(problem, solver=solver)
             eps_abs = 2e-4 if solver in ["osqp", "qpalm", "qpax"] else 1e-6
-            self.assertLess(norm(solution.x - ref_solution.x), eps_abs)
-            self.assertLess(norm(solution.z - ref_solution.z), eps_abs)
-            self.assertTrue(np.isfinite(solution.duality_gap()))
+            self.assertLess(norm(solution.x - ref_solution.x), eps_abs, f"{solver=}")
+            self.assertLess(norm(solution.z - ref_solution.z), eps_abs, f"{solver=}")
+            self.assertTrue(np.isfinite(solution.duality_gap()), f"{solver=}")
 
         return test
 
@@ -206,8 +218,10 @@ class TestSolveProblem(unittest.TestCase):
             problem, ref_solution = get_qpsut05()
             solution = solve_problem(problem, solver=solver)
             eps_abs = 2e-5 if solver == "ecos" else 1e-6
-            self.assertLess(norm(solution.x - ref_solution.x), eps_abs)
-            self.assertTrue(np.isfinite(solution.duality_gap()))
+            self.assertLess(
+                norm(solution.x - ref_solution.x), eps_abs, "f{solver=}"
+            )
+            self.assertTrue(np.isfinite(solution.duality_gap()), "f{solver=}")
 
         return test
 
@@ -266,10 +280,10 @@ class TestSolveProblem(unittest.TestCase):
                     )
                 )
             )
-            self.assertIsNotNone(result.x)
-            self.assertIsNotNone(result.z)
-            self.assertIsNotNone(result.z_box)
-            self.assertTrue(solution.is_optimal(tolerance))
+            self.assertIsNotNone(result.x, "f{solver=}")
+            self.assertIsNotNone(result.z, "f{solver=}")
+            self.assertIsNotNone(result.z_box, "f{solver=}")
+            self.assertTrue(solution.is_optimal(tolerance), "f{solver=}")
 
         return test
 
@@ -293,9 +307,9 @@ class TestSolveProblem(unittest.TestCase):
             problem.lb[1] = -np.inf
             problem.ub[1] = +np.inf
             result = solve_problem(problem, solver=solver)
-            self.assertIsNotNone(result.x)
-            self.assertIsNotNone(result.z)
-            self.assertIsNotNone(result.z_box)
+            self.assertIsNotNone(result.x, "f{solver=}")
+            self.assertIsNotNone(result.z, "f{solver=}")
+            self.assertIsNotNone(result.z_box, "f{solver=}")
 
         return test
 
@@ -318,9 +332,9 @@ class TestSolveProblem(unittest.TestCase):
             problem, _ = get_qpsut01()
             problem.h[0] = +np.inf
             result = solve_problem(problem, solver=solver)
-            self.assertIsNotNone(result.x)
-            self.assertIsNotNone(result.z)
-            self.assertIsNotNone(result.z_box)
+            self.assertIsNotNone(result.x, "f{solver=}")
+            self.assertIsNotNone(result.z, "f{solver=}")
+            self.assertIsNotNone(result.z_box, "f{solver=}")
 
         return test
 
@@ -342,8 +356,8 @@ class TestSolveProblem(unittest.TestCase):
         def test(self):
             problem, _ = get_qpgurdu()
             result = solve_problem(problem, solver)
-            self.assertIsNotNone(result.x)
-            self.assertIsNotNone(result.z)
+            self.assertIsNotNone(result.x, "f{solver=}")
+            self.assertIsNotNone(result.z, "f{solver=}")
             eps_abs = (
                 6e-3
                 if solver in ("osqp", "qpax")
@@ -355,9 +369,9 @@ class TestSolveProblem(unittest.TestCase):
                     )
                 )
             )
-            self.assertLess(result.primal_residual(), eps_abs)
-            self.assertLess(result.dual_residual(), eps_abs)
-            self.assertLess(result.duality_gap(), eps_abs)
+            self.assertLess(result.primal_residual(), eps_abs, "f{solver=}")
+            self.assertLess(result.dual_residual(), eps_abs, "f{solver=}")
+            self.assertLess(result.duality_gap(), eps_abs, "f{solver=}")
 
         return test
 
@@ -379,16 +393,16 @@ class TestSolveProblem(unittest.TestCase):
         def test(self):
             problem, _ = get_qpgurabs()
             result = solve_problem(problem, solver)
-            self.assertIsNotNone(result.x)
-            self.assertIsNotNone(result.z)
+            self.assertIsNotNone(result.x, "f{solver=}")
+            self.assertIsNotNone(result.z, "f{solver=}")
             eps_abs = (
                 0.2
                 if solver == "osqp"
                 else 3e-3 if solver == "proxqp" else 1e-4
             )
-            self.assertLess(result.primal_residual(), eps_abs)
-            self.assertLess(result.dual_residual(), eps_abs)
-            self.assertLess(result.duality_gap(), eps_abs)
+            self.assertLess(result.primal_residual(), eps_abs, "f{solver=}")
+            self.assertLess(result.dual_residual(), eps_abs, "f{solver=}")
+            self.assertLess(result.duality_gap(), eps_abs, "f{solver=}")
 
         return test
 
@@ -412,16 +426,16 @@ class TestSolveProblem(unittest.TestCase):
                 return
             problem, _ = get_qpgureq()
             result = solve_problem(problem, solver)
-            self.assertIsNotNone(result.x)
-            self.assertIsNotNone(result.z)
+            self.assertIsNotNone(result.x, "f{solver=}")
+            self.assertIsNotNone(result.z, "f{solver=}")
             eps_abs = (
                 0.01
                 if solver in ["osqp", "qpax"]
                 else 5e-3 if solver == "proxqp" else 1e-4
             )
-            self.assertLess(result.primal_residual(), eps_abs)
-            self.assertLess(result.dual_residual(), eps_abs)
-            self.assertLess(result.duality_gap(), eps_abs)
+            self.assertLess(result.primal_residual(), eps_abs, "f{solver=}")
+            self.assertLess(result.dual_residual(), eps_abs, "f{solver=}")
+            self.assertLess(result.duality_gap(), eps_abs, "f{solver=}")
 
         return test
 
