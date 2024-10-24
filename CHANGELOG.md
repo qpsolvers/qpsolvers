@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Bump minimum Python version to 3.8
 
+### Fixed
+
+- Fix mypy error in `Solution.primal_residual`
+
 ## [4.4.0] - 2024-09-24
 
 ### Added
@@ -35,15 +39,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CICD: Fix coverage and licensed-solver workflows
 - CICD: Install missing dependency in licensed solver test environment
 - Clarabel: Catch pyO3 panics that can happen when building a problem
-- Default arguments to active set dataclass to ``None`` rather than empty list
+- Default arguments to active set dataclass to `None` rather than empty list
 - PIQP: Warning message about CSC matrix conversions (thanks to @itsahmedkhalil)
-- Update all instances of ``np.infty`` to ``np.inf``
+- Update all instances of `np.infty` to `np.inf`
 
 ## [4.3.2] - 2024-03-25
 
 ### Added
 
-- Optional dependency: ``wheels_only`` for solvers with pre-compiled binaries
+- Optional dependency: `wheels_only` for solvers with pre-compiled binaries
 
 ### Changed
 
@@ -163,14 +167,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- New sample problems in ``qpsolvers.problems``
+- New sample problems in `qpsolvers.problems`
 - New solver: [DAQP](https://darnstrom.github.io/daqp/) (thanks to @darnstrom)
 
 ### Changed
 
 - Dual multipliers are empty arrays rather than None when no constraint
 - Store solver results even when solution is not found
-- Switch to ``Solution.found`` as solver success status (thanks to @rxian)
+- Switch to `Solution.found` as solver success status (thanks to @rxian)
 
 ### Fixed
 
@@ -181,7 +185,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Sparse strategy to convert LS problems to QP (thanks to @bodono)
-- Start ``problems`` submodule to collect sample test problems
+- Start `problems` submodule to collect sample test problems
 
 ### Fixed
 
@@ -206,23 +210,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Exception ``ParamError`` for incorrect solver parameters
-- Exception ``SolverError`` for solver failures
+- Exception `ParamError` for incorrect solver parameters
+- Exception `SolverError` for solver failures
 
 ### Changed
 
 - All functions throw only qpsolvers-owned exceptions
-- CVXOPT: rethrow ``ValueError`` as either ``ProblemError`` or ``SolverError``
-- Checking ``Solution.is_empty`` becomes ``not Solution.found``
+- CVXOPT: rethrow `ValueError` as either `ProblemError` or `SolverError`
+- Checking `Solution.is_empty` becomes `not Solution.found`
 - Install open source solvers with wheels by default
-- Remove ``solve_safer_qp``
-- Remove ``sym_proj`` parameter
+- Remove `solve_safer_qp`
+- Remove `sym_proj` parameter
 
 ## [2.8.1] - 2023-02-28
 
 ### Changed
 
-- Expose ``solve_unconstrained`` function from main module
+- Expose `solve_unconstrained` function from main module
 
 ### Fixed
 
@@ -264,8 +268,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - ECOS: handle two more exit flags
-- Exception ``ProblemError`` for problem formulation errors
-- Exception ``QPError`` as a base class for exceptions
+- Exception `ProblemError` for problem formulation errors
+- Exception `QPError` as a base class for exceptions
 - Property to check if a Problem has sparse matrices
 - qpOASES: raise a ProblemError when matrices are not dense
 - qpSWIFT: raise a ProblemError when matrices are not dense
@@ -285,7 +289,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- quadprog: use internal ``split_dual_linear_box`` conversion function
+- quadprog: use internal `split_dual_linear_box` conversion function
 
 ### Fixed
 
@@ -316,7 +320,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Code: move ``solve_safer_qp`` to a separate source file
+- Code: move `solve_safer_qp` to a separate source file
 - Code: refactor location of internal conversions submodule
 - ProxQP: bump minimum supported version to 0.2.9
 
@@ -347,15 +351,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - qpOASES: forward all keyword arguments as solver options
 - qpOASES: forward box inequalities directly
 - Remove CVXPY which is not a solver
-- SCS: ``SOLVED_INACCURATE`` is now considered a failure
+- SCS: `SOLVED_INACCURATE` is now considered a failure
 
 ### Fixed
 
-- Dot product bug in ``solve_ls`` with sparse matrices
+- Dot product bug in `solve_ls` with sparse matrices
 - MOSEK: restore CVXOPT options after calling MOSEK
 - ProxQP: fix box inequality shapes when combining bounds
 - qpOASES: non-persistent solver options between calls
-- qpOASES: return failure on ``RET_INIT_FAILED*`` return codes
+- qpOASES: return failure on `RET_INIT_FAILED*` return codes
 
 ## [2.5.0] - 2022-11-04
 
@@ -409,11 +413,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Make sure plot is shown in MPC example
 - Print expected solutions in QP, LS and box-inequality examples
-- Renamed starter solvers optional deps to ``open_source_solvers``
+- Renamed starter solvers optional deps to `open_source_solvers`
 
 ### Fixed
 
-- Correct documentation of ``R`` argument to ``solve_ls``
+- Correct documentation of `R` argument to `solve_ls`
 
 ## [2.3.0] - 2022-09-06
 
@@ -430,21 +434,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Configuration of `tox-gh-actions` for Python 3.7
 - Enforce `USING_COVERAGE` in GitHub workflow configuration
-- Remove redundant solver loop from ``test_all_shapes``
+- Remove redundant solver loop from `test_all_shapes`
 
 ## [2.2.0] - 2022-08-15
 
 ### Added
 
 - Add `lb` and `ub` arguments to all `<solver>_solve_qp` functions
-- Internal ``conversions`` submodule
+- Internal `conversions` submodule
 
 ### Changed
 
-- Moved ``concatenate_bounds`` to internal ``conversions`` submodule
-- Moved ``convert_to_socp`` to internal ``conversions`` submodule
-- Renamed ``concatenate_bounds`` to ``linear_from_box_inequalities``
-- Renamed internal ``convert_to_socp`` function to ``socp_from_qp``
+- Moved `concatenate_bounds` to internal `conversions` submodule
+- Moved `convert_to_socp` to internal `conversions` submodule
+- Renamed `concatenate_bounds` to `linear_from_box_inequalities`
+- Renamed internal `convert_to_socp` function to `socp_from_qp`
 
 ## [2.1.0] - 2022-07-25
 
@@ -462,14 +466,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Exception ``NoSolverSelected`` raised when the solver kwarg is missing
+- Exception `NoSolverSelected` raised when the solver kwarg is missing
 - Starter set of QP solvers as optional dependencies
 - Test exceptions raised by `solve_ls` and `solve_qp`
 
 ### Changed
 
-- **Breaking:** ``solver`` keyword argument is now mandatory for `solve_ls`
-- **Breaking:** ``solver`` keyword argument is now mandatory for `solve_qp`
+- **Breaking:** `solver` keyword argument is now mandatory for `solve_ls`
+- **Breaking:** `solver` keyword argument is now mandatory for `solve_qp`
 - Quadratic programming example now randomly selects an available solver
 
 ## [1.10.0] - 2022-06-25
@@ -527,13 +531,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Moved SCS to sparse solvers
 - Re-run solver benchmark reported to the README
-- Removed ``requirements2.txt`` and update Python 2 installation instructions
+- Removed `requirements2.txt` and update Python 2 installation instructions
 - Updated SCS to new 3.0 version
 
 ### Fixed
 
-- Handle sparse matrices in ``print_matrix_vector``
-- Match ``__all__`` in model and top-level ``__init__.py``
+- Handle sparse matrices in `print_matrix_vector`
+- Match `__all__` in model and top-level `__init__.py`
 - Run unit tests in GitHub Actions
 - Typing error in bound concatenation
 
@@ -546,8 +550,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Move old tests from the examples folder to the unit test suite
-- Removed deprecated ``requirements.txt`` installation file
-- Renamed ``solvers`` optional dependencies to ``all_pypi_solvers``
+- Removed deprecated `requirements.txt` installation file
+- Renamed `solvers` optional dependencies to `all_pypi_solvers`
 
 ## [1.7.1] - 2021-10-02
 
@@ -630,23 +634,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- New ``solve_ls`` function to solve linear Least Squares problems
+- New `solve_ls` function to solve linear Least Squares problems
 
 ### Fixed
 
-- Call to ``print`` in PyPI description
+- Call to `print` in PyPI description
 - Handling of quadprog ValueError exceptions
 
 ## [1.4.0] - 2020-07-04
 
 ### Added
 
-- Solver settings can now by passed to ``solve_qp`` as keyword arguments
+- Solver settings can now by passed to `solve_qp` as keyword arguments
 - Started an [API documentation](https://scaron.info/doc/qpsolvers/)
 
 ### Changed
 
-- Made ``verbose`` an explicit keyword argument of all internal functions
+- Made `verbose` an explicit keyword argument of all internal functions
 - OSQP settings now match precision of other solvers (thanks to @Neotriple)
 
 ## [1.3.1] - 2020-06-13
@@ -659,7 +663,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Lower and upper bound keyword arguments ``lb`` and ``ub``
+- Lower and upper bound keyword arguments `lb` and `ub`
 
 ### Fixed
 
@@ -742,7 +746,7 @@ release!
 ### Added
 
 - Equality constraint shown in the README example
-- Installation file ``requirements.txt``
+- Installation file `requirements.txt`
 - Installation instructions for qpOASES
 - OSQP: automatic CSC matrix conversions (with performance warnings)
 - This change log
