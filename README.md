@@ -134,4 +134,7 @@ If you find this project useful, please consider giving it a :star: or citing it
 
 We welcome contributions! The first step is to install the library and use it. Report any bug in the [issue tracker](https://github.com/qpsolvers/qpsolvers/issues). If you're a developer looking to hack on open source, check out the [contribution guidelines](https://github.com/qpsolvers/qpsolvers/blob/main/CONTRIBUTING.md) for suggestions.
 
-We are also looking forward to hearing about your use cases! Please share them in [Show and tell](https://github.com/qpsolvers/qpsolvers/discussions/categories/show-and-tell) 🙌
+## See also
+
+- [qpbenchmark](https://github.com/qpsolvers/qpbenchmark/): Benchmark for quadratic programming solvers available in Python.
+- [qpsolvers-eigen](https://github.com/ami-iit/qpsolvers-eigen): C++ abstraction layer for quadratic programming solvers using Eigen.
