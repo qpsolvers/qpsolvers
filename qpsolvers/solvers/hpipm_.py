@@ -71,6 +71,8 @@ def hpipm_solve_problem(
          - Inequality constraint tolerance.
        * - ``tol_comp``
          - Complementarity condition tolerance.
+       * - ``tol_dual_gap``
+         - Duality gap tolerance.
        * - ``tol_stat``
          - Stationarity condition tolerance.
     """
@@ -253,6 +255,8 @@ def hpipm_solve_qp(
          - Inequality constraint tolerance.
        * - ``tol_comp``
          - Complementarity condition tolerance.
+       * - ``tol_dual_gap``
+         - Duality gap tolerance.
        * - ``tol_stat``
          - Stationarity condition tolerance.
     """
