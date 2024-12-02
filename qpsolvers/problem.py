@@ -349,7 +349,7 @@ class Problem:
         return np.linalg.cond(M)
 
     def save(self, file: str) -> None:
-        """Save problem to file.
+        """Save problem to a compressed NumPy file.
 
         Parameters
         ----------
@@ -373,7 +373,7 @@ class Problem:
 
     @staticmethod
     def load(file: str):
-        """Load problem from file.
+        """Load problem from a NumPy file.
 
         Parameters
         ----------
