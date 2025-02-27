@@ -326,7 +326,6 @@ jaxopt_osqp_solve_problem: Optional[
         [
             Problem,
             Optional[ndarray],
-            str,
             bool,
         ],
         Solution,
@@ -345,7 +344,6 @@ jaxopt_osqp_solve_qp: Optional[
             Optional[ndarray],
             Optional[ndarray],
             Optional[ndarray],
-            str,
             bool,
         ],
         Optional[ndarray],
