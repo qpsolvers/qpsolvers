@@ -77,20 +77,20 @@ def jaxopt_osqp_solve_problem(
     )
 
     solution = Solution(problem)
-    solution.x = result.params.primal
-    solution.found = True
-    solution.y = result.params.dual_eq
+    solution.x = np.array(result.params.primal)
+    solution.found = result.state.status == jaxopt.BoxOSQP.SOLVED
+    solution.y = np.array(result.params.dual_eq)
 
     # split the dual variables into
     # the box constraints and the linear constraints
     solution.z, solution.z_box = split_dual_linear_box(
-        result.params.dual_ineq, problem.lb, problem.ub
+        np.array(result.params.dual_ineq), problem.lb, problem.ub
     )
 
     solution.extras = {
-        "iter_num": result.state.iter_num,
-        "error": result.state.error,
-        "status": result.state.status,
+        "iter_num": int(result.state.iter_num),
+        "error": float(result.state.error),
+        "status": int(result.state.status),
     }
 
     return solution
