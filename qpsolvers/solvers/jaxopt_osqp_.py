@@ -58,22 +58,16 @@ def jaxopt_osqp_solve_problem(
     64-bit floating point numbers by setting its `jax_enable_x64`
     configuration.
     """
-    P, q, G, h, A, b, lb, ub = problem.unpack()
-    n: int = q.shape[0]
-
+    P, q, G_0, h_0, A, b, lb, ub = problem.unpack()
+    G, h = linear_from_box_inequalities(G_0, h_0, lb, ub, use_sparse=False)
     if initvals is not None and verbose:
         warnings.warn("warm-start values are ignored by this wrapper")
-
-    G, h = linear_from_box_inequalities(G, h, lb, ub, use_sparse=False)
-    if G is None:
-        G = np.zeros((0, n))
-        h = np.zeros((0,))
 
     osqp = jaxopt.OSQP(**kwargs)
     result = osqp.run(
         params_obj=(jnp.array(P), jnp.array(q)),
-        params_eq=(jnp.array(A), jnp.array(b)),
-        params_ineq=(jnp.array(G), jnp.array(h)),
+        params_eq=(jnp.array(A), jnp.array(b)) if A is not None else None,
+        params_ineq=(jnp.array(G), jnp.array(h)) if G is not None else None,
     )
 
     solution = Solution(problem)
