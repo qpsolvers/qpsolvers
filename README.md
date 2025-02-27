@@ -83,6 +83,7 @@ When imported, qpsolvers loads all the solvers it can find and lists them in ``q
 | [Gurobi](https://www.gurobi.com/) | ``gurobi`` | Interior point | Sparse | Commercial |
 | [HiGHS](https://highs.dev/) | ``highs`` | Active set | Sparse | MIT |
 | [HPIPM](https://github.com/giaf/hpipm) | ``hpipm`` | Interior point | Dense | BSD-2-Clause |
+| [jaxopt.OSQP](https://jaxopt.github.io/stable/_autosummary/jaxopt.OSQP.html) | ``jaxopt_osqp`` | Augmented Lagrangian | Dense | Apache-2.0 |
 | [MOSEK](https://mosek.com/) | ``mosek`` | Interior point | Sparse | Commercial |
 | NPPro | ``nppro`` | Active set | Dense | Commercial |
 | [OSQP](https://osqp.org/) | ``osqp`` | Augmented Lagrangian | Sparse | Apache-2.0 |
