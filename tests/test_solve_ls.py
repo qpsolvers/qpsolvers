@@ -80,7 +80,7 @@ class TestSolveLS(unittest.TestCase):
             self.assertIsNotNone(x_sp, f"{solver=}")
             sol_tolerance = (
                 5e-3
-                if solver == "osqp"
+                if solver in ["jaxopt_osqp", "osqp"]
                 else (
                     2e-5
                     if solver == "proxqp"
@@ -88,6 +88,7 @@ class TestSolveLS(unittest.TestCase):
                 )
             )
             eq_tolerance = (
+                1e-4 if solver == "jaxopt_osqp" else
                 2e-6
                 if solver == "qpalm"
                 else 1e-7 if solver == "qpax" else 1e-9

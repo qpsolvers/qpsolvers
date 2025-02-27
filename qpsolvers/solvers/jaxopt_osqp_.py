@@ -58,39 +58,33 @@ def jaxopt_osqp_solve_problem(
     64-bit floating point numbers by setting its `jax_enable_x64`
     configuration.
     """
-    P, q, G, h, A, b, lb, ub = problem.unpack()
-    n: int = q.shape[0]
-
+    P, q, G_0, h_0, A, b, lb, ub = problem.unpack()
+    G, h = linear_from_box_inequalities(G_0, h_0, lb, ub, use_sparse=False)
     if initvals is not None and verbose:
         warnings.warn("warm-start values are ignored by this wrapper")
-
-    G, h = linear_from_box_inequalities(G, h, lb, ub, use_sparse=False)
-    if G is None:
-        G = np.zeros((0, n))
-        h = np.zeros((0,))
 
     osqp = jaxopt.OSQP(**kwargs)
     result = osqp.run(
         params_obj=(jnp.array(P), jnp.array(q)),
-        params_eq=(jnp.array(A), jnp.array(b)),
-        params_ineq=(jnp.array(G), jnp.array(h)),
+        params_eq=(jnp.array(A), jnp.array(b)) if A is not None else None,
+        params_ineq=(jnp.array(G), jnp.array(h)) if G is not None else None,
     )
 
     solution = Solution(problem)
-    solution.x = result.params.primal
-    solution.found = True
-    solution.y = result.params.dual_eq
+    solution.x = np.array(result.params.primal)
+    solution.found = result.state.status == jaxopt.BoxOSQP.SOLVED
+    solution.y = np.array(result.params.dual_eq)
 
     # split the dual variables into
     # the box constraints and the linear constraints
     solution.z, solution.z_box = split_dual_linear_box(
-        result.params.dual_ineq, problem.lb, problem.ub
+        np.array(result.params.dual_ineq), problem.lb, problem.ub
     )
 
     solution.extras = {
-        "iter_num": result.state.iter_num,
-        "error": result.state.error,
-        "status": result.state.status,
+        "iter_num": int(result.state.iter_num),
+        "error": float(result.state.error),
+        "status": int(result.state.status),
     }
 
     return solution

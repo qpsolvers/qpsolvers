@@ -38,6 +38,7 @@ daqp = ["daqp >=0.5.1"]
 ecos = ["ecos >=2.0.8"]
 gurobi = ["gurobipy >=9.5.2"]
 highs = ["highspy >=1.1.2.dev3"]
+jaxopt = ["jaxopt >=0.8.3"]
 mosek = ["cvxopt >=1.2.6", "mosek >=10.0.40"]
 osqp = ["osqp >=0.6.2"]
 piqp = ["piqp >=0.2.2"]
@@ -46,7 +47,7 @@ qpalm = ["qpalm >=1.2.1"]
 quadprog = ["quadprog >=0.1.11"]
 scs = ["scs >=3.2.0"]
 qpax = ["qpax>=0.0.9"]
-open_source_solvers = ["qpsolvers[clarabel,cvxopt,daqp,ecos,highs,osqp,piqp,proxqp,qpalm,quadprog,scs,qpax]"]
+open_source_solvers = ["qpsolvers[clarabel,cvxopt,daqp,ecos,highs,jaxopt,osqp,piqp,proxqp,qpalm,quadprog,scs,qpax]"]
 
 # Wheels-only solvers should distribute wheels that work on:
 # - macOS (aarch64)

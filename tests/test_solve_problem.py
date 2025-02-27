@@ -10,6 +10,7 @@ import unittest
 
 import numpy as np
 from numpy.linalg import norm
+
 from qpsolvers import available_solvers, solve_problem
 from qpsolvers.problems import (
     get_qpgurabs,
@@ -192,8 +193,12 @@ class TestSolveProblem(unittest.TestCase):
             problem, ref_solution = get_qpsut04()
             solution = solve_problem(problem, solver=solver)
             eps_abs = 2e-4 if solver in ["osqp", "qpalm", "qpax"] else 1e-6
-            self.assertLess(norm(solution.x - ref_solution.x), eps_abs, f"{solver=}")
-            self.assertLess(norm(solution.z - ref_solution.z), eps_abs, f"{solver=}")
+            self.assertLess(
+                norm(solution.x - ref_solution.x), eps_abs, f"{solver=}"
+            )
+            self.assertLess(
+                norm(solution.z - ref_solution.z), eps_abs, f"{solver=}"
+            )
             self.assertTrue(np.isfinite(solution.duality_gap()), f"{solver=}")
 
         return test
@@ -363,7 +368,7 @@ class TestSolveProblem(unittest.TestCase):
                 if solver in ("osqp", "qpax")
                 else (
                     1e-3
-                    if solver in ("scs",)
+                    if solver in ("jaxopt_osqp", "scs")
                     else (
                         1e-4 if solver in ("ecos", "highs", "proxqp") else 1e-5
                     )
@@ -398,7 +403,7 @@ class TestSolveProblem(unittest.TestCase):
             eps_abs = (
                 0.2
                 if solver == "osqp"
-                else 3e-3 if solver == "proxqp" else 1e-4
+                    else 3e-3 if solver in ["jaxopt_osqp", "proxqp"] else 1e-4
             )
             self.assertLess(result.primal_residual(), eps_abs, "f{solver=}")
             self.assertLess(result.dual_residual(), eps_abs, "f{solver=}")

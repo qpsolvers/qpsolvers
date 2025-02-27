@@ -677,7 +677,7 @@ class TestSolveQP(unittest.TestCase):
                     if solver == "osqp"
                     else (
                         1e-4
-                        if solver == "ecos"
+                        if solver in ["ecos", "jaxopt_osqp"]
                         else 5e-6 if solver in ["proxqp", "qpax"] else 1e-8
                     )
                 )
