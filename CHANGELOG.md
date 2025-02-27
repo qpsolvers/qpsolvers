@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Bump minimum Python version to 3.8
+- Fix output datatypes when splitting linear-box dual multipliers
 
 ### Fixed
 

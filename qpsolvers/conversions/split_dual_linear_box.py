@@ -36,8 +36,8 @@ def split_dual_linear_box(
         Pair :code:`z, z_box` of linear and box multipliers. Both can be empty
         arrays if there is no corresponding constraint.
     """
-    z = np.empty((0,))
-    z_box = np.empty((0,))
+    z = np.empty((0,), dtype=z_stacked.dtype)
+    z_box = np.empty((0,), dtype=z_stacked.dtype)
     if lb is not None and ub is not None:
         n_lb = lb.shape[0]
         n_ub = ub.shape[0]
