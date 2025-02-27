@@ -318,6 +318,48 @@ try:
 except ImportError:
     pass
 
+# jaxopt.OSQP
+# ==========
+
+jaxopt_osqp_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[ndarray],
+            str,
+            bool,
+        ],
+        Solution,
+    ]
+] = None
+
+jaxopt_osqp_solve_qp: Optional[
+    Callable[
+        [
+            Union[ndarray, csc_matrix],
+            ndarray,
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            str,
+            bool,
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
+try:
+    from .jaxopt_osqp_ import jaxopt_osqp_solve_problem, jaxopt_osqp_solve_qp
+
+    solve_function["jaxopt_osqp"] = jaxopt_osqp_solve_problem
+    available_solvers.append("jaxopt_osqp")
+    dense_solvers.append("jaxopt_osqp")
+except ImportError:
+    pass
 
 # MOSEK
 # =====
@@ -534,6 +576,47 @@ try:
 except ImportError:
     pass
 
+# qpax
+# ========
+
+qpax_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[ndarray],
+            bool,
+        ],
+        Solution,
+    ]
+] = None
+
+qpax_solve_qp: Optional[
+    Callable[
+        [
+            Union[ndarray, csc_matrix],
+            ndarray,
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            bool,
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
+try:
+    from .qpax_ import qpax_solve_problem, qpax_solve_qp
+
+    solve_function["qpax"] = qpax_solve_problem
+    available_solvers.append("qpax")
+    dense_solvers.append("qpax")
+except ImportError:
+    pass
+
 
 # qpOASES
 # =======
@@ -706,47 +789,6 @@ try:
 except ImportError:
     pass
 
-# qpax
-# ========
-
-qpax_solve_problem: Optional[
-    Callable[
-        [
-            Problem,
-            Optional[ndarray],
-            bool,
-        ],
-        Solution,
-    ]
-] = None
-
-qpax_solve_qp: Optional[
-    Callable[
-        [
-            Union[ndarray, csc_matrix],
-            ndarray,
-            Optional[Union[ndarray, csc_matrix]],
-            Optional[ndarray],
-            Optional[Union[ndarray, csc_matrix]],
-            Optional[ndarray],
-            Optional[ndarray],
-            Optional[ndarray],
-            Optional[ndarray],
-            bool,
-        ],
-        Optional[ndarray],
-    ]
-] = None
-
-try:
-    from .qpax_ import qpax_solve_problem, qpax_solve_qp
-
-    solve_function["qpax"] = qpax_solve_problem
-    available_solvers.append("qpax")
-    dense_solvers.append("qpax")
-except ImportError:
-    pass
-
 
 if not available_solvers:
     warnings.warn(
@@ -766,6 +808,7 @@ __all__ = [
     "gurobi_solve_qp",
     "highs_solve_qp",
     "hpipm_solve_qp",
+    "jaxopt_osqp_solve_qp",
     "mosek_solve_qp",
     "osqp_solve_qp",
     "piqp_solve_qp",
