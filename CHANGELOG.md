@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - HPIPM: Document new `tol_dual_gap` parameter
+- New solver: [jaxopt.OSQP](https://jaxopt.github.io/stable/_autosummary/jaxopt.OSQP.html)
 - Support Python 3.12
 
 ### Changed
