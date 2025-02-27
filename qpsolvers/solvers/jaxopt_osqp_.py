@@ -5,8 +5,7 @@
 # Copyright 2024 Lev Kozlov
 
 """
-Solver interface for `jaxopt's OSQP
-<https://jaxopt.github.io/stable/quadratic_programming.html#osqpx>`__.
+Solver interface for jaxopt's implementation of the OSQP algorithm.
 
 JAXopt is a library of hardware-accelerated, batchable and differentiable
 optimizers implemented with JAX. JAX itself is a library for array-oriented
