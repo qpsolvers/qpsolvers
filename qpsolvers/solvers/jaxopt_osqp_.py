@@ -50,26 +50,14 @@ def jaxopt_osqp_solve_problem(
 
     Notes
     -----
-    All other keyword arguments are forwarded as options to qpax. For
-    instance, you can call ``qpax_solve_qp(P, q, G, h, solver_tol=1e-5)``.
-    For a quick overview, the solver accepts the following settings:
+    All other keyword arguments are forwarded as keyword arguments to
+    `jaxopt.OSQP`. For instance, you can call `jaxopt_osqp_solve_qp(P, q, G, h,
+    sigma=1e-5, momentum=0.9)`.
 
-    .. list-table::
-       :widths: 30 70
-       :header-rows: 1
-
-       * - Name
-         - Effect
-       * - ``solver_tol``
-         - Tolerance for the solver.
-
-    Note that `jax` by default uses 32-bit floating point numbers, which can
-    lead to numerical instability. If you encounter numerical issues, consider
-    using 64-bit floating point numbers by setting
-    ```python
-    import jax
-    jax.config.update("jax_enable_x64", True)
-    ```
+    Note that JAX by default uses 32-bit floating point numbers, which can lead
+    to numerical instability. If you encounter numerical issues, consider using
+    64-bit floating point numbers by setting its `jax_enable_x64`
+    configuration.
     """
     P, q, G, h, A, b, lb, ub = problem.unpack()
     n: int = q.shape[0]
@@ -77,43 +65,39 @@ def jaxopt_osqp_solve_problem(
     if initvals is not None and verbose:
         warnings.warn("warm-start values are ignored by this wrapper")
 
-    # construct the qpax problem
     G, h = linear_from_box_inequalities(G, h, lb, ub, use_sparse=False)
     if G is None:
         G = np.zeros((0, n))
         h = np.zeros((0,))
 
-    osqp = jaxopt.OSQP()
-    sol = osqp.run(
+    osqp = jaxopt.OSQP(**kwargs)
+    result = osqp.run(
         params_obj=(jnp.array(P), jnp.array(q)),
         params_eq=(jnp.array(A), jnp.array(b)),
         params_ineq=(jnp.array(G), jnp.array(h)),
-    ).params
+    )
 
-    print(sol.primal)
-    print(sol.dual_eq)
-    print(sol.dual_ineq)
     solution = Solution(problem)
-    solution.x = sol.primal
-    solution.found = solution.state.status
-    solution.y = sol.dual_eq
+    solution.x = result.params.primal
+    solution.found = True
+    solution.y = result.params.dual_eq
 
     # split the dual variables into
     # the box constraints and the linear constraints
     solution.z, solution.z_box = split_dual_linear_box(
-        sol.dual_ineq, problem.lb, problem.ub
+        result.params.dual_ineq, problem.lb, problem.ub
     )
 
     solution.extras = {
-        "iter_num": solution.state.iter_num,
-        "error": solution.state.error,
-        "status": solution.state.status,
+        "iter_num": result.state.iter_num,
+        "error": result.state.error,
+        "status": result.state.status,
     }
 
     return solution
 
 
-def qpax_solve_qp(
+def jaxopt_osqp_solve_qp(
     P: np.ndarray,
     q: np.ndarray,
     G: Optional[np.ndarray] = None,
@@ -126,7 +110,7 @@ def qpax_solve_qp(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    r"""Solve a quadratic program using qpax.
+    r"""Solve a QP with the OSQP algorithm implemented in jaxopt.
 
     The quadratic program is defined as:
 
@@ -141,9 +125,8 @@ def qpax_solve_qp(
             & lb \leq x \leq ub
         \end{array}\end{split}
 
-    It is solved using `qpax
-    <https://github.com/kevin-tracy/qpax>`__.
-    `Paper: <https://arxiv.org/pdf/2406.11749>`__.
+    It is solved using `jaxopt.OSQP
+    <https://jaxopt.github.io/stable/_autosummary/jaxopt.OSQP.html>`__.
 
     Parameters
     ----------
