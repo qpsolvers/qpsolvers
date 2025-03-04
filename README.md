@@ -7,7 +7,7 @@
 [![PyPI version](https://img.shields.io/pypi/v/qpsolvers?color=blue)](https://pypi.org/project/qpsolvers/)
 [![PyPI downloads](https://img.shields.io/pypi/dm/qpsolvers?color=blue)](https://pypistats.org/packages/qpsolvers)
 
-This library provides a one-stop shop [`solve_qp`](https://qpsolvers.github.io/qpsolvers/quadratic-programming.html#qpsolvers.solve_qp) function to solve convex quadratic programs:
+This library provides a [`solve_qp`](https://qpsolvers.github.io/qpsolvers/quadratic-programming.html#qpsolvers.solve_qp) function to solve convex quadratic programs:
 
 $$
 \begin{split}
