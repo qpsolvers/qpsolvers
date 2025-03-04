@@ -59,6 +59,13 @@ def jaxopt_osqp_solve_problem(
     64-bit floating point numbers by setting its `jax_enable_x64`
     configuration.
     """
+    if problem.is_unconstrained:
+        warnings.warn(
+            "QP is unconstrained: "
+            "solving with SciPy's LSQR rather than jaxopt's OSQP"
+        )
+        return solve_unconstrained(problem)
+
     P, q, G_0, h_0, A, b, lb, ub = problem.unpack()
     G, h = linear_from_box_inequalities(G_0, h_0, lb, ub, use_sparse=False)
     if initvals is not None and verbose:
