@@ -12,12 +12,12 @@ optimization problems. Its interior-point method is geared towards large scale
 sparse problems, in particular for linear or conic quadratic programs.
 """
 
+import warnings
 from typing import Optional, Union
 
 import mosek
 import numpy as np
 import scipy.sparse as spa
-import warnings
 
 from ..problem import Problem
 from ..solution import Solution
