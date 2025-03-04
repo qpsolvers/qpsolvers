@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.5.0] - 2025-03-04
+
 ### Added
 
 - HPIPM: Document new `tol_dual_gap` parameter
@@ -773,7 +775,8 @@ release!
 
 - A changelog :)
 
-[unreleased]: https://github.com/qpsolvers/qpsolvers/compare/v4.4.0...HEAD
+[unreleased]: https://github.com/qpsolvers/qpsolvers/compare/v4.5.0...HEAD
+[4.5.0]: https://github.com/qpsolvers/qpsolvers/compare/v4.4.0...v4.5.0
 [4.4.0]: https://github.com/qpsolvers/qpsolvers/compare/v4.3.3...v4.4.0
 [4.3.3]: https://github.com/qpsolvers/qpsolvers/compare/v4.3.2...v4.3.3
 [4.3.2]: https://github.com/qpsolvers/qpsolvers/compare/v4.3.1...v4.3.2
