@@ -165,6 +165,9 @@ def scs_solve_problem(
         data["b"] = h
         cone["l"] = h.shape[0]  # positive cone
     elif lb is None and ub is None:  # no constraint
+        warnings.warn(
+            "QP is unconstrained: solving with SciPy's LSQR rather than SCS"
+        )
         return solve_unconstrained(problem)
     if lb is not None or ub is not None:
         __add_box_cone(n, lb, ub, cone, data)
