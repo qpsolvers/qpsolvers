@@ -17,6 +17,7 @@ from typing import Optional, Union
 import mosek
 import numpy as np
 import scipy.sparse as spa
+import warnings
 
 from ..problem import Problem
 from ..solution import Solution
@@ -61,6 +62,9 @@ def mosek_solve_problem(
         Solution to the QP, if found, otherwise ``None``.
     """
     if problem.is_unconstrained:
+        warnings.warn(
+            "QP is unconstrained: solving with SciPy's LSQR rather than MOSEK"
+        )
         return solve_unconstrained(problem)
     if "mosek" not in kwargs:
         kwargs["mosek"] = {}

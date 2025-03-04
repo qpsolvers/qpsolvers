@@ -15,7 +15,7 @@ from .solution import Solution
 
 
 def solve_unconstrained(problem: Problem) -> Solution:
-    """Solve an unconstrained quadratic program.
+    """Solve an unconstrained quadratic program with SciPy's LSQR.
 
     Parameters
     ----------

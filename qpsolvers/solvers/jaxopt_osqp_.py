@@ -23,6 +23,7 @@ import numpy as np
 from ..conversions import linear_from_box_inequalities, split_dual_linear_box
 from ..problem import Problem
 from ..solution import Solution
+from ..solve_unconstrained import solve_unconstrained
 
 
 def jaxopt_osqp_solve_problem(
