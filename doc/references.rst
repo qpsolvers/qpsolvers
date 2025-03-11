@@ -2,9 +2,11 @@
 References
 **********
 
-.. [tolerances] `Optimality conditions and numerical tolerances in QP solvers <https://scaron.info/blog/optimality-conditions-and-numerical-tolerances-in-qp-solvers.html>`_, S. Caron, 2022.
+.. [Tracy2024] `On the Differentiability of the Primal-Dual Interior-Point Method <https://arxiv.org/abs/2406.11749>`_, K. Tracy and Z. Manchester. ArXiv, 2024.
 
-.. [Hermans2022] `QPALM: A Newton-type Proximal Augmented Lagrangian Method for Quadratic Programs <https://arxiv.org/pdf/2010.02653.pdf>`_, B. Hermans, A. Themelis and P. Patrinos. Mathematical Programming Computation, 2022, vol. 14, no 3, p. 497-541.
+.. [Schwan2023] `PIQP: A Proximal Interior-Point Quadratic Programming Solver <https://arxiv.org/abs/2304.00290>`_, R. Schwan, Y. Jiang, D. Kuhn, C.N. Jones. ArXiv, 2023.
+
+.. [Arnstrom2022] `A dual active-set solver for embedded quadratic programming using recursive LDL updates <https://doi.org/10.1109/TAC.2022.3176430>`_, D. Arnström, A. Bemporad and D. Axehill. IEEE Transactions on Automatic Control, 2022, 67, no. 8 p. 4362-4369.
 
 .. [Bambade2022] `PROX-QP: Yet another Quadratic Programming Solver for Robotics and beyond <https://hal.inria.fr/hal-03683733/file/Yet_another_QP_solver_for_robotics_and_beyond.pdf/>`__, A. Bambade, S. El-Kazdadi, A. Taylor and J. Carpentier. Robotics: Science and Systems. 2022.
 
@@ -29,9 +31,3 @@ References
 .. [Vandenberghe2010] `The CVXOPT linear and quadratic cone program solvers <https://www.seas.ucla.edu/~vandenbe/publications/coneprog.pdf>`_, L. Vandenberghe. 2010.
 
 .. [Goldfarb1983] *A numerically stable dual method for solving strictly convex quadratic programs*. D. Goldfarb and A. Idnani. Mathematical Programming, vol. 27, p. 1-33.
-
-.. [Arnstrom2022] `A dual active-set solver for embedded quadratic programming using recursive LDL updates <https://doi.org/10.1109/TAC.2022.3176430>`_, D. Arnström, A. Bemporad and D. Axehill. IEEE Transactions on Automatic Control, 2022, 67, no. 8 p. 4362-4369.
-
-.. [schwan2023piqp] `PIQP: A Proximal Interior-Point Quadratic Programming Solver <https://arxiv.org/abs/2304.00290>`_, R. Schwan, Y. Jiang, D. Kuhn, C.N. Jones. ArXiv, 2023.
-
-.. [Tracy2024] `On the Differentiability of the Primal-Dual Interior-Point Method <https://arxiv.org/abs/2406.11749>`_, K. Tracy and Z. Manchester. ArXiv, 2024.
