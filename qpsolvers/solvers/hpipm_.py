@@ -9,7 +9,7 @@
 HPIPM is a high-performance interior point method for solving convex quadratic
 programs. It is designed to be efficient for small to medium-size problems
 arising in model predictive control and embedded optmization. If you are using
-HPIPM in some academic work, consider citing the corresponding paper
+HPIPM in a scientific work, consider citing the corresponding paper
 [Frison2020]_.
 """
 

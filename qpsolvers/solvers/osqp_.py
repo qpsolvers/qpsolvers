@@ -11,7 +11,7 @@ quadratic programming. It is designed for both dense and sparse problems, and
 convexity is the only assumption it makes on problem data (for instance, it
 does not make any rank assumption contrary to :ref:`CVXOPT <CVXOPT rank
 assumptions>` or :ref:`qpSWIFT <qpSWIFT rank assumptions>`). If you are using
-OSQP in some academic work, consider citing the corresponding paper
+OSQP in a scientific work, consider citing the corresponding paper
 [Stellato2020]_.
 """
 

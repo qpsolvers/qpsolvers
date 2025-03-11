@@ -8,11 +8,12 @@
 
 .. _PIQP: https://github.com/PREDICT-EPFL/piqp
 
-PIQP is a Proximal Interior Point Quadratic Programming solver, which can
-solve dense and sparse quadratic programs. Combining an infeasible interior
-point method with the proximal method of multipliers, the algorithm can
-handle ill-conditioned convex QP problems without the need for linear
-independence of the constraints. [schwan2023piqp]_
+PIQP is a proximal interior-point quadratic programming solver for dense and
+sparse problems. Its algorithm combines an infeasible interior-point method
+with the proximal method of multipliers, and is designed to handle
+ill-conditioned convex problems without the need for linear independence of
+constraints. If you are using PIQP in a scientific work, consider citing the
+corresponding paper [Schwan2023]_.
 """
 
 import warnings

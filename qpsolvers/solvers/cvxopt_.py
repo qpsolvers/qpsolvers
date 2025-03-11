@@ -10,7 +10,7 @@ CVXOPT is a free software package for convex optimization in Python. Its main
 purpose is to make the development of software for convex optimization
 applications straightforward by building on Python’s extensive standard library
 and on the strengths of Python as a high-level programming language. If you are
-using CVXOPT in some academic work, consider citing the corresponding report
+using CVXOPT in a scientific work, consider citing the corresponding report
 [Vandenberghe2010]_.
 """
 

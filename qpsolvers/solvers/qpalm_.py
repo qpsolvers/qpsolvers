@@ -8,9 +8,9 @@
 
 .. _QPALM: https://github.com/kul-optec/QPALM
 
-C implementation of QPALM, a proximal augmented Lagrangian based solver for
-(possibly nonconvex) quadratic programs. If you use QPALM in some
-academic work, consider citing the corresponding paper [Hermans2022]_.
+QPALM is a proximal augmented-Lagrangian solver for (possibly nonconvex)
+quadratic programs, implemented in the C programming language. If you use QPALM
+in a scientific work, consider citing the corresponding paper [Hermans2022]_.
 """
 
 import warnings

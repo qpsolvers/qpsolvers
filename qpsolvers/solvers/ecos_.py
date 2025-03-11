@@ -11,7 +11,7 @@ designed specifically for embedded applications. ECOS is written in low
 footprint, single-threaded, library-free ANSI-C and so runs on most embedded
 platforms. For small problems, ECOS is faster than most existing SOCP solvers;
 it is still competitive for medium-sized problems up to tens of thousands of
-variables. If you are using ECOS in some academic work, consider citing the
+variables. If you are using ECOS in a scientific work, consider citing the
 corresponding paper [Domahidi2013]_.
 """
 

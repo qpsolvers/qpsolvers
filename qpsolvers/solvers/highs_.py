@@ -10,8 +10,8 @@ HiGHS is an open source, serial and parallel solver for large scale sparse
 linear programming (LP), mixed-integer programming (MIP), and quadratic
 programming (QP). It is written mostly in C++11 and available under the MIT
 licence. HiGHS's QP solver implements a Nullspace Active Set method. It works
-best on moderately-sized dense problems. If you are using HiGHS in some
-academic work, consider citing the corresponding paper [Huangfu2018]_.
+best on moderately-sized dense problems. If you are using HiGHS in a scientific
+work, consider citing the corresponding paper [Huangfu2018]_.
 """
 
 import warnings

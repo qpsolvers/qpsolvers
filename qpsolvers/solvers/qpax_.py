@@ -6,10 +6,10 @@
 """
 Solver interface for `qpax <https://github.com/kevin-tracy/qpax>`__.
 
-qpax is an open source QP solver that can be combined with JAX's jit and vmap
+qpax is an open-source QP solver that can be combined with JAX's jit and vmap
 functionality, as well as differentiated with reverse-mode differentiation. It
 is based on a primal-dual interior point algorithm. If you are using qpax in
-some academic work, consider citing the corresponding paper [Tracy2024]_.
+a scientific work, consider citing the corresponding paper [Tracy2024]_.
 """
 
 import warnings

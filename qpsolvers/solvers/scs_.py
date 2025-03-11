@@ -8,7 +8,7 @@
 
 SCS (Splitting Conic Solver) is a numerical optimization package for solving
 large-scale convex quadratic cone problems, which is a general class of
-problems that includes quadratic programming. If you use SCS in some academic
+problems that includes quadratic programming. If you use SCS in a scientific
 work, consider citing the corresponding paper [ODonoghue2021]_.
 """
 

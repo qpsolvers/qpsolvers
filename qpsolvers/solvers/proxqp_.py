@@ -8,9 +8,11 @@
 
 .. _ProxQP: https://github.com/Simple-Robotics/proxsuite#proxqp
 
-ProxQP is the QP solver from ProxSuite, a collection of open-source solvers
-rooted in revisited primal-dual proximal algorithms. If you use ProxQP in some
-academic work, consider citing the corresponding paper [Bambade2022]_.
+ProxQP is a primal-dual augmented Lagrangian method with proximal heuristics.
+It converges to the solution of feasible problems, or to the solution to the
+closest feasible one if the input problem is unfeasible. ProxQP is part of the
+ProxSuite collection of open-source solvers. If you use ProxQP in a scientific
+work, consider citing the corresponding paper [Bambade2022]_.
 """
 
 from typing import Optional, Union

@@ -11,8 +11,8 @@ which was inspired by observations from the field of parametric quadratic
 programming. It has theoretical features that make it suitable to model
 predictive control. Further numerical modifications have made qpOASES a
 reliable QP solver, even when tackling semi-definite, ill-posed or degenerated
-QP problems. If you are using qpOASES in some academic work, consider citing
-the corresponding paper [Ferreau2014]_.
+QP problems. If you are using qpOASES in a scientific work, consider citing the
+corresponding paper [Ferreau2014]_.
 
 See the :ref:`installation page <qpoases-install>` for additional instructions
 on installing this solver.
