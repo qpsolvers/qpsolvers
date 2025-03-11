@@ -76,10 +76,10 @@ def qpalm_solve_problem(
        * - ``max_iter``
          - Maximum number of iterations.
        * - ``eps_abs``
-         - Asbolute stopping criterion of the solver. See *e.g.* [tolerances]_
+         - Asbolute stopping criterion of the solver. See *e.g.* [Caron2022]_
            for an overview of solver tolerances.
        * - ``eps_rel``
-         - Relative stopping criterion of the solver. See *e.g.* [tolerances]_
+         - Relative stopping criterion of the solver. See *e.g.* [Caron2022]_
            for an overview of solver tolerances.
        * - ``rho``
          - Tolerance scaling factor.

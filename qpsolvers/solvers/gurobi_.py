@@ -76,7 +76,7 @@ def gurobi_solve_problem(
     documentation for all available Gurobi parameters.
 
     Lower values for primal or dual tolerances yield more precise solutions at
-    the cost of computation time. See *e.g.* [tolerances]_ for a primer of
+    the cost of computation time. See *e.g.* [Caron2022]_ for a primer of
     solver tolerances.
     """
     if initvals is not None:
@@ -219,7 +219,7 @@ def gurobi_solve_qp(
     documentation for all available Gurobi parameters.
 
     Lower values for primal or dual tolerances yield more precise solutions at
-    the cost of computation time. See *e.g.* [tolerances]_ for a primer of
+    the cost of computation time. See *e.g.* [Caron2022]_ for a primer of
     solver tolerances.
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)

@@ -83,8 +83,8 @@ def clarabel_solve_problem(
     for details.
 
     Lower values for absolute or relative tolerances yield more precise
-    solutions at the cost of computation time. See *e.g.* [tolerances]_ for an
-    overview of solver tolerances.
+    solutions at the cost of computation time. See *e.g.* [Caron2022]_ for a
+    primer on solver tolerances and residuals.
     """
     if initvals is not None and verbose:
         warnings.warn("Clarabel: warm-start values are ignored")

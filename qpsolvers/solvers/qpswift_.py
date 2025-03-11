@@ -94,7 +94,7 @@ def qpswift_solve_problem(
        * - ``MAXITER``
          - Maximum number of iterations needed.
        * - ``ABSTOL``
-         - Absolute tolerance on the duality gap. See *e.g.* [tolerances]_ for
+         - Absolute tolerance on the duality gap. See *e.g.* [Caron2022]_ for
            a primer on the duality gap and solver tolerances.
        * - ``RELTOL``
          - Relative tolerance on the residuals :math:`r_x = P x + G^T z + q`
@@ -269,7 +269,7 @@ def qpswift_solve_qp(
        * - MAXITER
          - Maximum number of iterations needed.
        * - ABSTOL
-         - Absolute tolerance on the duality gap. See *e.g.* [tolerances]_ for
+         - Absolute tolerance on the duality gap. See *e.g.* [Caron2022]_ for
            a primer on the duality gap and solver tolerances.
        * - RELTOL
          - Relative tolerance on the residuals :math:`r_x = P x + G^T z + q`

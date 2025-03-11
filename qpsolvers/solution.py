@@ -89,7 +89,7 @@ class Solution:
 
         Notes
         -----
-        See for instance [tolerances]_ for an overview of optimality conditions
+        See for instance [Caron2022]_ for an overview of optimality conditions
         in quadratic programming.
         """
         return (
@@ -117,7 +117,7 @@ class Solution:
 
         Notes
         -----
-        See for instance [tolerances]_ for an overview of optimality conditions
+        See for instance [Caron2022]_ for an overview of optimality conditions
         and why this residual will be zero at the optimum.
         """
         _, _, G, h, A, b, lb, ub = self.problem.unpack()
@@ -150,7 +150,7 @@ class Solution:
 
         Notes
         -----
-        See for instance [tolerances]_ for an overview of optimality conditions
+        See for instance [Caron2022]_ for an overview of optimality conditions
         and why this residual will be zero at the optimum.
         """
         P, q, G, _, A, _, lb, ub = self.problem.unpack()
@@ -199,7 +199,7 @@ class Solution:
 
         Notes
         -----
-        See for instance [tolerances]_ for an overview of optimality conditions
+        See for instance [Caron2022]_ for an overview of optimality conditions
         and why this gap will be zero at the optimum.
         """
         P, q, _, h, _, b, lb, ub = self.problem.unpack()

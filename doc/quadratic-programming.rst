@@ -161,8 +161,8 @@ This example prints:
     - Dual residual: 1.4e-14
     - Duality gap: 0.0e+00
 
-You can check out [tolerances]_ for an overview of optimality conditions and
-why a solution is optimal if and only if these three residuals are zero.
+You can check out [Caron2022]_ for an overview of optimality conditions and why
+a solution is optimal if and only if these three residuals are zero.
 
 .. autoclass:: qpsolvers.solution.Solution
    :members:

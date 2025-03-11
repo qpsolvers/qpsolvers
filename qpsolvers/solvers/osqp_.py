@@ -102,7 +102,7 @@ def osqp_solve_problem(
     all available settings.
 
     Lower values for absolute or relative tolerances yield more precise
-    solutions at the cost of computation time. See *e.g.* [tolerances]_ for an
+    solutions at the cost of computation time. See *e.g.* [Caron2022]_ for an
     overview of solver tolerances.
     """
     P, q, G, h, A, b, lb, ub = problem.unpack()
@@ -267,7 +267,7 @@ def osqp_solve_qp(
     all available settings.
 
     Lower values for absolute or relative tolerances yield more precise
-    solutions at the cost of computation time. See *e.g.* [tolerances]_ for an
+    solutions at the cost of computation time. See *e.g.* [Caron2022]_ for an
     overview of solver tolerances.
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)

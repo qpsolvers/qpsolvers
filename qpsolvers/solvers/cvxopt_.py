@@ -138,7 +138,7 @@ def cvxopt_solve_problem(
     Check out `Algorithm Parameters
     <https://cvxopt.org/userguide/coneprog.html#algorithm-parameters>`_ section
     of the solver documentation for details and default values of all solver
-    parameters. See also [tolerances]_ for a primer on the duality gap, primal
+    parameters. See also [Caron2022]_ for a primer on the duality gap, primal
     and dual residuals.
     """
     P, q, G, h, A, b, lb, ub = problem.unpack()

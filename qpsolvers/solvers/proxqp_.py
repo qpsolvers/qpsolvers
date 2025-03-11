@@ -110,9 +110,9 @@ def proxqp_solve_problem(
        * - ``eps_abs``
          - Asbolute stopping criterion of the solver (default: 1e-3, note that
            this is a laxer default than other solvers). See *e.g.*
-           [tolerances]_ for an overview of solver tolerances.
+           [Caron2022]_ for an overview of solver tolerances.
        * - ``eps_rel``
-         - Relative stopping criterion of the solver. See *e.g.* [tolerances]_
+         - Relative stopping criterion of the solver. See *e.g.* [Caron2022]_
            for an overview of solver tolerances.
        * - ``mu_eq``
          - Proximal step size wrt equality constraints multiplier.
