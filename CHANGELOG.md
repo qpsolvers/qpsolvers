@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bump minimum Python version to 3.8
 - CICD: Remove Python 3.8 from continuous integration
 - Fix output datatypes when splitting linear-box dual multipliers
+- OSQP: version-pin to < 1.0.0 pending an interface update
 - Warn when solving unconstrained problem by SciPy's LSQR rather than QP solver
 
 ### Fixed
