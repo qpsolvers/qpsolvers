@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- CICD: Update checkout action to v4
+
 ## [4.5.0] - 2025-03-04
 
 ### Added
