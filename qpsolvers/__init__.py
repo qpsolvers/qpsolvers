@@ -43,7 +43,7 @@ from .solvers import (
 from .unsupported import nppro_solve_qp
 from .utils import print_matrix_vector
 
-__version__ = "4.5.0"
+__version__ = "4.5.1"
 
 __all__ = [
     "ActiveSet",
