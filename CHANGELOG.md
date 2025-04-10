@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+- OSQP: Remove pre-1.0 version pin
 - Warning that was issued every time an unsupported solver is available
 
 ## [4.6.0] - 2025-04-17
