@@ -30,7 +30,7 @@ from .problems import get_qpmad_demo_problem
 # achieved by some solvers. Here are the behaviors observed as of March 2022.
 # Unit tests only cover solvers that raise successfully:
 behavior_on_unbounded = {
-    "raise": ["cvxopt", "ecos", "quadprog", "scs"],
+    "raise": ["cvxopt", "kvxopt", "ecos", "quadprog", "scs"],
     "return_crazy_solution": ["qpoases"],
     "return_none": ["osqp"],
 }
@@ -485,7 +485,7 @@ class TestSolveQP(unittest.TestCase):
                             if solver == "proxqp"
                             else (
                                 1e-6
-                                if solver in ["cvxopt", "ecos", "qpax"]
+                                if solver in ["cvxopt", "kvxopt", "ecos", "qpax"]
                                 else 5e-8 if solver == "qpswift" else 1e-8
                             )
                         )
@@ -547,7 +547,7 @@ class TestSolveQP(unittest.TestCase):
             known_solution = array([2.0] * 149 + [3.0])
             sol_tolerance = (
                 5e-3
-                if solver == "cvxopt"
+                if solver == "cvxopt" or solver == "kvxopt"
                 else (
                     2e-3
                     if solver in ["osqp", "qpalm", "qpax"]
@@ -612,7 +612,7 @@ class TestSolveQP(unittest.TestCase):
                     else (
                         5e-6
                         if solver in ["mosek", "proxqp"]
-                        else 1e-7 if solver in ["cvxopt", "scs"] else 1e-8
+                        else 1e-7 if solver in ["cvxopt", "kvxopt", "scs"] else 1e-8
                     )
                 )
             )
@@ -646,8 +646,8 @@ class TestSolveQP(unittest.TestCase):
             P, q, G, h = self.get_sparse_problem()
             lb = +0.5 * ones(q.shape)
             ub = +1.5 * ones(q.shape)
-            if solver == "cvxopt":
-                # Skipping this test for CVXOPT for now
+            if solver == "cvxopt" or solver == "kvxopt":
+                # Skipping this test for CVXOPT and KVXOPT for now
                 # See https://github.com/cvxopt/cvxopt/issues/229
                 return
             x = solve_qp(P, q, G, h, lb=lb, ub=ub, solver=solver)
@@ -803,7 +803,7 @@ class TestSolveQP(unittest.TestCase):
                         if solver == "proxqp"
                         else (
                             1e-6
-                            if solver in ["cvxopt", "mosek", "qpswift", "piqp"]
+                            if solver in ["cvxopt", "kvxopt", "mosek", "qpswift", "piqp"]
                             else 1e-8
                         )
                     )

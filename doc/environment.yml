@@ -8,6 +8,7 @@ dependencies:
     - proxsuite
     - python=3.10
     - qpsolvers
+    - kvxopt
     - pip:
         - furo >= 2023.8.17
         - highspy >= 1.5.3

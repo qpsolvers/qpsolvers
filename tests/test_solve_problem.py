@@ -68,7 +68,7 @@ class TestSolveProblem(unittest.TestCase):
                             if solver in ["mosek", "qpax"]
                             else (
                                 1e-6
-                                if solver in ["cvxopt", "qpswift", "scs"]
+                                if solver in ["cvxopt", "kvxopt", "qpswift", "scs"]
                                 else 5e-7 if solver == "gurobi" else 1e-7
                             )
                         )
@@ -121,7 +121,7 @@ class TestSolveProblem(unittest.TestCase):
                     if solver in ["proxqp", "scs", "qpax"]
                     else (
                         1e-4
-                        if solver in ["cvxopt", "qpax"]
+                        if solver in ["cvxopt", "kvxopt", "qpax"]
                         else (
                             1e-5
                             if solver in ["highs", "osqp"]
@@ -272,7 +272,7 @@ class TestSolveProblem(unittest.TestCase):
                                     if solver == "highs"
                                     else (
                                         5e-7
-                                        if solver == "cvxopt"
+                                        if solver == "cvxopt" or solver == "kvxopt"
                                         else (
                                             5e-8
                                             if solver == "clarabel"

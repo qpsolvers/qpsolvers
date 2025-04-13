@@ -284,8 +284,8 @@ for solver in sparse_solvers:  # loop complexity warning ;p
         )
 
 for solver in sparse_solvers:  # loop complexity warning ;p
-    if solver not in ["cvxopt", "gurobi"]:
-        # CVXOPT: sparse conversion breaks rank assumption
+    if solver not in ["cvxopt", "kvxopt", "gurobi"]:
+        # CVXOPT and KVXOPT: sparse conversion breaks rank assumption
         # Gurobi: model too large for size-limited license
         setattr(
             TestSolveLS,
@@ -315,8 +315,8 @@ for solver in sparse_solvers:  # loop complexity warning ;p
                 **kwargs,
             ),
         )
-        if solver != "cvxopt":
-            # CVXOPT: sparse conversion breaks rank assumption
+        if solver != "cvxopt" and solver != "kvxopt":
+            # CVXOPT and KVXOPT: sparse conversion breaks rank assumption
             setattr(
                 TestSolveLS,
                 "test_large_sparse_problem_sparse_conversion_{}".format(
