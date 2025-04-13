@@ -359,6 +359,50 @@ try:
 except ImportError:
     pass
 
+# KVXOPT
+# ======
+
+kvxopt_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[str],
+            Optional[ndarray],
+            bool,
+        ],
+        Solution,
+    ]
+] = None
+
+kvxopt_solve_qp: Optional[
+    Callable[
+        [
+            Union[ndarray, csc_matrix],
+            ndarray,
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[str],
+            Optional[ndarray],
+            bool,
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
+try:
+    from .kvxopt_ import kvxopt_solve_problem, kvxopt_solve_qp
+
+    solve_function["kvxopt"] = kvxopt_solve_problem
+    available_solvers.append("kvxopt")
+    dense_solvers.append("kvxopt")
+    sparse_solvers.append("kvxopt")
+except ImportError:
+    pass
+
 # MOSEK
 # =====
 
