@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- New solver: [KVXOPT](https://github.com/sanurielf/kvxopt/)
+- New solver: [KVXOPT](https://github.com/sanurielf/kvxopt/) (thanks to @agroudiev)
 
 ## [4.5.1] - 2025-04-10
 
