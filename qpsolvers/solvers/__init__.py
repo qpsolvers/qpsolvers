@@ -851,6 +851,7 @@ __all__ = [
     "highs_solve_qp",
     "hpipm_solve_qp",
     "jaxopt_osqp_solve_qp",
+    "kvxopt_solve_qp",
     "mosek_solve_qp",
     "osqp_solve_qp",
     "piqp_solve_qp",
