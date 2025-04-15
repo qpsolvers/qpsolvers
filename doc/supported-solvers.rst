@@ -50,6 +50,12 @@ HPIPM
 .. automodule:: qpsolvers.solvers.hpipm_
     :members:
 
+KVXOPT
+======
+
+.. automodule:: qpsolvers.solvers.kvxopt_
+    :members:
+
 MOSEK
 =====
 
