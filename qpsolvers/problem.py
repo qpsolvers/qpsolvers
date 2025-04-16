@@ -86,7 +86,7 @@ class Problem:
         :
             Same matrix with proper shape.
         """
-        if isinstance(M, np.ndarray) and M.ndim == 1:
+        if hasattr(M, "ndim") and M.ndim == 1:
             M = M.reshape((1, M.shape[0]))
         return M
 
