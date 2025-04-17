@@ -86,8 +86,8 @@ class Problem:
         :
             Same matrix with proper shape.
         """
-        if hasattr(M, "ndim") and M.ndim == 1:
-            M = M.reshape((1, M.shape[0]))
+        if hasattr(M, "ndim") and M.ndim == 1:  # type: ignore
+            M = M.reshape((1, M.shape[0]))  # type: ignore
         return M
 
     @staticmethod
