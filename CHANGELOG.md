@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New solver: [KVXOPT](https://github.com/sanurielf/kvxopt/) (thanks to @agroudiev)
 - jaxopt.OSQP: Support JAX array inputs when jaxopt.OSQP is the selected solver
 
+### Removed
+
+- OSQP: Remove pre-1.0 version pin
+
 ## [4.5.1] - 2025-04-10
 
 ### Changed
