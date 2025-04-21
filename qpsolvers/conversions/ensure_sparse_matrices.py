@@ -14,6 +14,7 @@ import scipy.sparse as spa
 
 from ..warnings import SparseConversionWarning
 
+
 def __warn_about_sparse_conversion(matrix_name: str, solver_name: str) -> None:
     """Warn about conversion from dense to sparse matrix.
 

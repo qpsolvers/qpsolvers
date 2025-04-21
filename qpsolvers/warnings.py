@@ -4,9 +4,7 @@
 # SPDX-License-Identifier: LGPL-3.0-or-later
 # Copyright 2025 Inria
 
-"""
-Warnings from qpsolvers.
-"""
+"""Warnings from qpsolvers."""
 
 
 class QPWarning(UserWarning):
