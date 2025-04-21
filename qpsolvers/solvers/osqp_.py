@@ -6,13 +6,13 @@
 
 """Solver interface for `OSQP <https://osqp.org/>`__.
 
-The OSQP solver implements an Operator-Splitting method for large-scale convex
-quadratic programming. It is designed for both dense and sparse problems, and
-convexity is the only assumption it makes on problem data (for instance, it
-does not make any rank assumption contrary to :ref:`CVXOPT <CVXOPT rank
-assumptions>` or :ref:`qpSWIFT <qpSWIFT rank assumptions>`). If you are using
-OSQP in a scientific work, consider citing the corresponding paper
-[Stellato2020]_.
+The OSQP solver implements an operator-splitting method, more precisely an
+alternating direction method of multipliers (ADMM). It is designed for both
+dense and sparse problems, and convexity is the only assumption it makes on
+problem data (for instance, it does not make any rank assumption, contrary to
+solvers such as :ref:`CVXOPT <CVXOPT rank assumptions>` or :ref:`qpSWIFT
+<qpSWIFT rank assumptions>`). If you are using OSQP in a scientific work,
+consider citing the corresponding paper [Stellato2020]_.
 """
 
 import warnings
