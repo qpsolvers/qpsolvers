@@ -132,6 +132,8 @@ If you find this project useful, please consider giving it a :star: or citing it
 }
 ```
 
+Don't forget to add yourself to the BibTeX above and to `CITATION.cff` if you contribute to this repository.
+
 ## Contributing
 
 We welcome contributions! The first step is to install the library and use it. Report any bug in the [issue tracker](https://github.com/qpsolvers/qpsolvers/issues). If you're a developer looking to hack on open source, check out the [contribution guidelines](https://github.com/qpsolvers/qpsolvers/blob/main/CONTRIBUTING.md) for suggestions.

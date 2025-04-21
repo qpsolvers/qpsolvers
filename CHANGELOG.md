@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- warnings: Add `SparseConversionWarning` to filter the corresponding warning
+- warnings: Base class `QPWarning` for all qpsolvers-related warnings
+- warnings: Recall solver name when issuing conversion warnings
+
+### Changed
+
+- Add solver name argument to internal `ensure_sparse_matrices` function
+
 ## [4.6.0] - 2025-04-17
 
 ### Added
