@@ -116,6 +116,9 @@ def proxqp_solve_problem(
        * - ``eps_rel``
          - Relative stopping criterion of the solver. See *e.g.* [Caron2022]_
            for an overview of solver tolerances.
+       * - ``check_duality_gap``
+         - If set to true (false by default), ProxQP will include the duality
+           gap in absolute and relative stopping criteria.
        * - ``mu_eq``
          - Proximal step size wrt equality constraints multiplier.
        * - ``mu_in``
