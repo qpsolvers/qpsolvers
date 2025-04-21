@@ -365,10 +365,10 @@ class TestSolveProblem(unittest.TestCase):
             self.assertIsNotNone(result.z, f"{solver=}")
             eps_abs = (
                 6e-3
-                if solver in ("osqp", "qpax")
+                if solver in ("jaxopt_osqp", "osqp", "qpax")
                 else (
                     1e-3
-                    if solver in ("jaxopt_osqp", "scs")
+                    if solver in ("scs")
                     else (
                         1e-4 if solver in ("ecos", "highs", "proxqp") else 1e-5
                     )
