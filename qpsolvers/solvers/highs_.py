@@ -169,7 +169,7 @@ def highs_solve_problem(
     for more information on the solver.
     """
     P, q, G, h, A, b, lb, ub = problem.unpack()
-    P, G, A = ensure_sparse_matrices(P, G, A)
+    P, G, A = ensure_sparse_matrices("highs", P, G, A)
     if initvals is not None:
         warnings.warn(
             "HiGHS: warm-start values are not available for this solver, "

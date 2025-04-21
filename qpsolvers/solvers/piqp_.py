@@ -192,7 +192,7 @@ def piqp_solve_problem(
     h_piqp = np.zeros((0,)) if h is None else h
     b_piqp = np.zeros((0,)) if b is None else b
     if use_csc:
-        P, G_piqp, A_piqp = ensure_sparse_matrices(P, G_piqp, A_piqp)
+        P, G_piqp, A_piqp = ensure_sparse_matrices("piqp", P, G_piqp, A_piqp)
 
     solver = __select_backend(backend, use_csc)
     solver.settings.verbose = verbose

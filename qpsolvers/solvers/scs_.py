@@ -143,7 +143,7 @@ def scs_solve_problem(
     all available settings.
     """
     P, q, G, h, A, b, lb, ub = problem.unpack()
-    P, G, A = ensure_sparse_matrices(P, G, A)
+    P, G, A = ensure_sparse_matrices("scs", P, G, A)
     n = P.shape[0]
 
     data: Dict[str, Any] = {"P": P, "c": q}

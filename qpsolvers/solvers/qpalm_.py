@@ -104,7 +104,7 @@ def qpalm_solve_problem(
         kwargs["x"] = initvals
 
     P, q, G, h, A, b, lb, ub = problem.unpack()
-    P, G, A = ensure_sparse_matrices(P, G, A)
+    P, G, A = ensure_sparse_matrices("qpalm", P, G, A)
     n: int = q.shape[0]
 
     Cx, ux, lx = combine_linear_box_inequalities(G, h, lb, ub, n, use_csc=True)

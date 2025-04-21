@@ -106,7 +106,7 @@ def osqp_solve_problem(
     overview of solver tolerances.
     """
     P, q, G, h, A, b, lb, ub = problem.unpack()
-    P, G, A = ensure_sparse_matrices(P, G, A)
+    P, G, A = ensure_sparse_matrices("osqp", P, G, A)
 
     A_osqp = None
     l_osqp = None

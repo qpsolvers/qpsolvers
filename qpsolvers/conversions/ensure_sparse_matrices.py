@@ -33,6 +33,7 @@ def __warn_about_sparse_conversion(matrix_name: str, solver_name: str) -> None:
 
 
 def ensure_sparse_matrices(
+    solver_name: str,
     P: Union[np.ndarray, spa.csc_matrix],
     G: Optional[Union[np.ndarray, spa.csc_matrix]],
     A: Optional[Union[np.ndarray, spa.csc_matrix]],
@@ -42,6 +43,8 @@ def ensure_sparse_matrices(
 
     Parameters
     ----------
+    solver_name :
+        Name of the QP solver matrices will be passed to.
     P :
         Cost matrix.
     G :
