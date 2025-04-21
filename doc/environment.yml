@@ -1,14 +1,16 @@
-name: qpsolvers
+name: qpsolvers_doc
 channels:
     - conda-forge
 dependencies:
     - clarabel
+    - cvxopt
     - daqp
+    - kvxopt
     - pip >= 21.3.1
     - proxsuite
     - python=3.10
     - qpsolvers
-    - kvxopt
+    - quadprog
     - pip:
         - furo >= 2023.8.17
         - highspy >= 1.5.3
