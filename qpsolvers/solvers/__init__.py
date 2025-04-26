@@ -832,6 +832,50 @@ except ImportError:
     pass
 
 
+# SIP
+# ========
+
+sip_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[ndarray],
+            bool,
+            bool,
+        ],
+        Solution,
+    ]
+] = None
+
+sip_solve_qp: Optional[
+    Callable[
+        [
+            Union[ndarray, csc_matrix],
+            ndarray,
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            bool,
+            bool,
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
+try:
+    from .sip_ import sip_solve_problem, sip_solve_qp
+
+    solve_function["sip"] = sip_solve_problem
+    available_solvers.append("sip")
+    sparse_solvers.append("sip")
+except ImportError:
+    pass
+
+
 if not available_solvers:
     warnings.warn(
         "no QP solver found on your system, "
@@ -862,6 +906,7 @@ __all__ = [
     "qpswift_solve_qp",
     "quadprog_solve_qp",
     "scs_solve_qp",
+    "sip_solve_qp",
     "solve_function",
     "sparse_solvers",
 ]

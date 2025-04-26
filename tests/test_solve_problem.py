@@ -65,11 +65,11 @@ class TestSolveProblem(unittest.TestCase):
                         if solver == "ecos"
                         else (
                             5e-5
-                            if solver in ["mosek", "qpax"]
+                            if solver in ["mosek", "qpax", "sip"]
                             else (
                                 1e-6
                                 if solver in ["cvxopt", "kvxopt", "qpswift", "scs"]
-                                else 5e-7 if solver == "gurobi" else 1e-7
+                                else 5e-7 if solver in ["gurobi"] else 1e-7
                             )
                         )
                     )
@@ -128,8 +128,8 @@ class TestSolveProblem(unittest.TestCase):
                             else (
                                 5e-7
                                 if solver
-                                in ["clarabel", "mosek", "qpswift", "piqp"]
-                                else 1e-7 if solver == "gurobi" else 1e-8
+                                in ["clarabel", "mosek", "qpswift", "piqp", "sip"]
+                                else 1e-7 if solver in ["gurobi"] else 1e-8
                             )
                         )
                     )
@@ -192,7 +192,7 @@ class TestSolveProblem(unittest.TestCase):
         def test(self):
             problem, ref_solution = get_qpsut04()
             solution = solve_problem(problem, solver=solver)
-            eps_abs = 2e-4 if solver in ["jaxopt_osqp", "osqp", "qpalm", "qpax"] else 1e-6
+            eps_abs = 2e-4 if solver in ["jaxopt_osqp", "osqp", "qpalm", "qpax", "sip"] else 1e-6
             self.assertLess(
                 norm(solution.x - ref_solution.x), eps_abs, f"{solver=}"
             )
@@ -368,7 +368,7 @@ class TestSolveProblem(unittest.TestCase):
                 if solver in ("jaxopt_osqp", "osqp", "qpax")
                 else (
                     1e-3
-                    if solver in ("scs")
+                    if solver in ("scs", "sip")
                     else (
                         1e-4 if solver in ("ecos", "highs", "proxqp") else 1e-5
                     )
