@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add solver name argument to internal `ensure_sparse_matrices` function
 
+### Fixed
+
+- docs: Add jaxopt.OSQP to the list of supported solvers
+
 ### Removed
 
 - Warning that was issued every time an unsupported solver is available
