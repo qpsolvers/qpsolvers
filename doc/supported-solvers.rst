@@ -50,6 +50,12 @@ HPIPM
 .. automodule:: qpsolvers.solvers.hpipm_
     :members:
 
+jaxopt.OSQP
+===========
+
+.. automodule:: qpsolvers.solvers.jaxopt_osqp_
+    :members:
+
 KVXOPT
 ======
 

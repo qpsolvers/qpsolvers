@@ -5,6 +5,7 @@ dependencies:
     - clarabel
     - cvxopt
     - daqp
+    - jaxopt
     - kvxopt
     - pip >= 21.3.1
     - proxsuite
