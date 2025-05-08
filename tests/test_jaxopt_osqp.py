@@ -22,7 +22,7 @@ try:
             warnings.simplefilter("ignore", category=UserWarning)
 
         def test_jax_array_input(self):
-            """We can call `solve_qp` with jax.Array matrices."""
+            """We can call ``solve_qp`` with jax.Array matrices."""
             M = jnp.array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
             P = M.T @ M  # this is a positive definite matrix
             q = jnp.array([3.0, 2.0, 3.0]) @ M

@@ -51,8 +51,8 @@ def jaxopt_osqp_solve_problem(
     Notes
     -----
     All other keyword arguments are forwarded as keyword arguments to
-    `jaxopt.OSQP`. For instance, you can call `jaxopt_osqp_solve_qp(P, q, G, h,
-    sigma=1e-5, momentum=0.9)`.
+    jaxopt.OSQP. For instance, you can call ``jaxopt_osqp_solve_qp(P, q, G,
+    h, sigma=1e-5, momentum=0.9)``.
 
     Note that JAX by default uses 32-bit floating point numbers, which can lead
     to numerical instability. If you encounter numerical issues, consider using
