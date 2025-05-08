@@ -215,7 +215,7 @@ def ecos_solve_qp(
     Notes
     -----
     All other keyword arguments are forwarded as options to the ECOS solver.
-    For instance, you can call ``qpswift_solve_qp(P, q, G, h, abstol=1e-5)``.
+    For instance, you can call ``ecos_solve_qp(P, q, G, h, abstol=1e-5)``.
 
     For a quick overview, the solver accepts the following settings:
 
