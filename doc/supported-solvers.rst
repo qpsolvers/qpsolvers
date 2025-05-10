@@ -104,6 +104,12 @@ qpSWIFT
 .. automodule:: qpsolvers.solvers.qpswift_
     :members:
 
+qpax
+===
+
+.. automodule:: qpsolvers.solvers.qpax_
+    :members:
+
 quadprog
 ========
 
@@ -116,8 +122,8 @@ SCS
 .. automodule:: qpsolvers.solvers.scs_
     :members:
 
-qpax
+SIP
 ===
 
-.. automodule:: qpsolvers.solvers.qpax_
+.. automodule:: qpsolvers.solvers.sip_
     :members:
