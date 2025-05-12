@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Add solver name argument to internal `ensure_sparse_matrices` function
+- CICD: Update Python version to 3.10 in coverage job
 
 ### Fixed
 
