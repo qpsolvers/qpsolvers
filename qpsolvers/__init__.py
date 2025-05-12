@@ -39,6 +39,7 @@ from .solvers import (
     qpswift_solve_qp,
     quadprog_solve_qp,
     scs_solve_qp,
+    sip_solve_qp,
     sparse_solvers,
 )
 from .unsupported import nppro_solve_qp
@@ -77,6 +78,7 @@ __all__ = [
     "qpswift_solve_qp",
     "quadprog_solve_qp",
     "scs_solve_qp",
+    "sip_solve_qp",
     "solve_ls",
     "solve_problem",
     "solve_qp",

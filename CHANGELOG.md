@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- New solver: [SIP](https://github.com/joaospinto/sip_python) (thanks to @joaospinto)
+
+### Added
+
 - warnings: Add `SparseConversionWarning` to filter the corresponding warning
 - warnings: Base class `QPWarning` for all qpsolvers-related warnings
 - warnings: Recall solver name when issuing conversion warnings

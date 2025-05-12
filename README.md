@@ -96,6 +96,7 @@ When imported, qpsolvers loads all the solvers it can find and lists them in ``q
 | [qpSWIFT](https://github.com/qpSWIFT/qpSWIFT) | ``qpswift`` | Interior point | Sparse | GPL-3.0 |
 | [quadprog](https://github.com/quadprog/quadprog) | ``quadprog`` | Active set | Dense | GPL-2.0 |
 | [SCS](https://www.cvxgrp.org/scs/) | ``scs`` | Augmented Lagrangian | Sparse | MIT |
+| [SIP](https://github.com/joaospinto/sip_python) | ``sip`` | Barrier Augmented Lagrangian | Sparse | MIT |
 
 Matrix arguments are NumPy arrays for dense solvers and SciPy Compressed Sparse Column (CSC) matrices for sparse ones.
 
