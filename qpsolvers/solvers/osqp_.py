@@ -152,13 +152,11 @@ def osqp_solve_problem(
     success_status = osqp.constant("OSQP_SOLVED")
 
     solution = Solution(problem)
-    solution.extras = {"info": res.info}
-
-    # Temporary, see https://github.com/osqp/osqp-python/issues/174
-    if hasattr(res, "dual_inf_cert"):
-        solution.extras["dual_inf_cert"] = res.dual_inf_cert
-    if hasattr(res, "prim_inf_cert"):
-        solution.extras["prim_inf_cert"] = res.prim_inf_cert
+    solution.extras = {
+        "info": res.info,
+        "dual_inf_cert": res.dual_inf_cert,
+        "prim_inf_cert": res.prim_inf_cert,
+    }
 
     solution.found = res.info.status_val == success_status
     if not solution.found:
