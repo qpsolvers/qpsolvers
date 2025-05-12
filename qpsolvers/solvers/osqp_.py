@@ -127,21 +127,6 @@ def osqp_solve_problem(
         l_osqp = lb if l_osqp is None else np.hstack([l_osqp, lb])
         u_osqp = ub if u_osqp is None else np.hstack([u_osqp, ub])
 
-    if A_osqp is None:
-        # This should not be needed here. It is a temporary fix around
-        # https://github.com/osqp/osqp-python/issues/177 awaiting resolution by
-        # the upstream project.
-        A_osqp = spa.csc_matrix(
-            (
-                np.zeros((0,), dtype=np.float64),
-                np.zeros((0,), dtype=np.int64),
-                np.zeros((P.shape[0] + 1,), dtype=np.int64),
-            ),
-            shape=(0, P.shape[0]),
-        )
-        l_osqp = np.zeros(0)
-        u_osqp = np.zeros(0)
-
     kwargs["verbose"] = verbose
     solver = OSQP()
     solver.setup(P=P, q=q, A=A_osqp, l=l_osqp, u=u_osqp, **kwargs)
