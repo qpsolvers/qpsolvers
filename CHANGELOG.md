@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.7.0] - 2025-05-13
+
 ### Added
 
 - New solver: [SIP](https://github.com/joaospinto/sip_python) (thanks to @joaospinto)
@@ -815,7 +817,8 @@ release!
 
 - A changelog :)
 
-[unreleased]: https://github.com/qpsolvers/qpsolvers/compare/v4.6.0...HEAD
+[unreleased]: https://github.com/qpsolvers/qpsolvers/compare/v4.7.0...HEAD
+[4.7.0]: https://github.com/qpsolvers/qpsolvers/compare/v4.6.0...v4.7.0
 [4.6.0]: https://github.com/qpsolvers/qpsolvers/compare/v4.5.1...v4.6.0
 [4.5.1]: https://github.com/qpsolvers/qpsolvers/compare/v4.5.0...v4.5.1
 [4.5.0]: https://github.com/qpsolvers/qpsolvers/compare/v4.4.0...v4.5.0
