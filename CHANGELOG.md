@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `py.typed` file to indicate tools like `mypy` to use type annotations.
+- `py.typed` file to indicate tools like `mypy` to use type annotations (thanks to @ValerianRey)
 
 ## [4.7.0] - 2025-05-13
 
