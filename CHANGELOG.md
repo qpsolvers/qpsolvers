@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- CICD: Enable macOS tests for KVXOPT (thanks to @sanurielf)
+
 ## [4.7.1] - 2025-06-03
 
 ### Added
