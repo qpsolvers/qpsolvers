@@ -7,10 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.8.0] - 2025-07-02
+
 ### Added
 
 - PIQP: Add support for new API in v0.6.0 (thanks to @RSchwan)
-- PIQP: Add new solver options in documentation
+- PIQP: Add new solver options to the documentation (thanks to @RSchwan)
 
 ### Fixed
 
@@ -832,7 +834,8 @@ release!
 
 - A changelog :)
 
-[unreleased]: https://github.com/qpsolvers/qpsolvers/compare/v4.7.1...HEAD
+[unreleased]: https://github.com/qpsolvers/qpsolvers/compare/v4.8.0...HEAD
+[4.8.0]: https://github.com/qpsolvers/qpsolvers/compare/v4.7.1...v4.8.0
 [4.7.1]: https://github.com/qpsolvers/qpsolvers/compare/v4.7.0...v4.7.1
 [4.7.0]: https://github.com/qpsolvers/qpsolvers/compare/v4.6.0...v4.7.0
 [4.6.0]: https://github.com/qpsolvers/qpsolvers/compare/v4.5.1...v4.6.0
