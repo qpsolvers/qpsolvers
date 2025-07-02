@@ -211,8 +211,10 @@ def piqp_solve_problem(
                     f"Received an undefined solver setting {key}\
                     with value {value}"
                 )
-    old_interface = float(piqp.__version__.split('.')[0]) == 0 \
-                    and float(piqp.__version__.split('.')[1]) <= 5
+    old_interface = (
+        float(piqp.__version__.split(".")[0]) == 0
+        and float(piqp.__version__.split(".")[1]) <= 5
+    )
     if old_interface:
         solver.setup(P, q, A_piqp, b_piqp, G_piqp, h_piqp, lb, ub)
     else:
