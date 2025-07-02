@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- PIQP: Add support for new API in v0.6.0
+- PIQP: Add new solver options in documentation
+
 ### Fixed
 
 - CICD: Enable macOS tests for KVXOPT (thanks to @sanurielf)
