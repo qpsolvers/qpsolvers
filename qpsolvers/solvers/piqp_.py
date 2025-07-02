@@ -110,6 +110,8 @@ def piqp_solve_problem(
        * - ``eps_duality_gap_abs``
          - Absolute tolerance on duality gap.
        * - ``eps_duality_gap_rel``
+         - Threshold value for infeasibility detection.
+       * - ``infeasibility_threshold``
          - Relative tolerance on duality gap.
        * - ``reg_lower_limit``
          - Lower limit for regularization.
@@ -127,10 +129,14 @@ def piqp_solve_problem(
          - Maximum number of factorization retires before failure.
        * - ``preconditioner_scale_cost``
          - 	Scale cost in Ruiz preconditioner.
+       * - ``preconditioner_reuse_on_update``
+         - 	Reuse the preconditioner from previous setup/update.
        * - ``preconditioner_iter``
          - Maximum of preconditioner iterations.
        * - ``tau``
          - Maximum interior point step length.
+       * - ``kkt_solver``
+         - KKT solver backend.
        * - ``iterative_refinement_always_enabled``
          - Always run iterative refinement and not only on factorization
            failure.
@@ -205,7 +211,14 @@ def piqp_solve_problem(
                     f"Received an undefined solver setting {key}\
                     with value {value}"
                 )
-    solver.setup(P, q, A_piqp, b_piqp, G_piqp, h_piqp, lb, ub)
+    old_interface = (
+        float(piqp.__version__.split(".")[0]) == 0
+        and float(piqp.__version__.split(".")[1]) <= 5
+    )
+    if old_interface:
+        solver.setup(P, q, A_piqp, b_piqp, G_piqp, h_piqp, lb, ub)
+    else:
+        solver.setup(P, q, A_piqp, b_piqp, G_piqp, None, h_piqp, lb, ub)
     status = solver.solve()
     success_status = piqp.PIQP_SOLVED
 
@@ -220,9 +233,15 @@ def piqp_solve_problem(
     if G is None:
         solution.z = np.empty((0,))
     else:
-        solution.z = solver.result.z
+        if old_interface:
+            solution.z = solver.result.z
+        else:
+            solution.z = solver.result.z_u
     if lb is not None or ub is not None:
-        solution.z_box = solver.result.z_ub - solver.result.z_lb
+        if old_interface:
+            solution.z_box = solver.result.z_ub - solver.result.z_lb
+        else:
+            solution.z_box = solver.result.z_bu - solver.result.z_bl
     else:
         solution.z_box = np.empty((0,))
     return solution
