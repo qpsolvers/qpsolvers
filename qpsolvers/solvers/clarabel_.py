@@ -105,6 +105,9 @@ def clarabel_solve_problem(
         b_list.append(h)
         cones.append(clarabel.NonnegativeConeT(h.shape[0]))
     if not A_list:
+        warnings.warn(
+            "QP is unconstrained: solving with SciPy's LSQR rather than clarabel"
+        )
         return solve_unconstrained(problem)
 
     settings = clarabel.DefaultSettings()
