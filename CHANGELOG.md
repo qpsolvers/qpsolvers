@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PIQP: Add support for new API in v0.6.0 (thanks to @RSchwan)
 - PIQP: Add new solver options to the documentation (thanks to @RSchwan)
 
+### Changed
+
+- Clarabel: Warn when problem is unconstrained and solved by `lsqr` (thanks to @proyan)
+
 ### Fixed
 
 - CICD: Enable macOS tests for KVXOPT (thanks to @sanurielf)
