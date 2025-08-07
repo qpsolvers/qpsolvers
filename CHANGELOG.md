@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.8.1] - 2025-08-07
+
 ### Changed
 
 - Clarabel: Warn when problem is unconstrained and solved by `lsqr` (thanks to @proyan)
@@ -838,7 +840,8 @@ release!
 
 - A changelog :)
 
-[unreleased]: https://github.com/qpsolvers/qpsolvers/compare/v4.8.0...HEAD
+[unreleased]: https://github.com/qpsolvers/qpsolvers/compare/v4.8.1...HEAD
+[4.8.1]: https://github.com/qpsolvers/qpsolvers/compare/v4.8.0...v4.8.1
 [4.8.0]: https://github.com/qpsolvers/qpsolvers/compare/v4.7.1...v4.8.0
 [4.7.1]: https://github.com/qpsolvers/qpsolvers/compare/v4.7.0...v4.7.1
 [4.7.0]: https://github.com/qpsolvers/qpsolvers/compare/v4.6.0...v4.7.0
