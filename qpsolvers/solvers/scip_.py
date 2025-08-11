@@ -221,7 +221,7 @@ def scip_solve_qp(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    r"""Solve a quadratic program using HiGHS.
+    r"""Solve a quadratic program using SCIP.
 
     The quadratic program is defined as:
 
@@ -236,7 +236,7 @@ def scip_solve_qp(
                 & lb \leq x \leq ub
         \end{array}\end{split}
 
-    It is solved using `HiGHS <https://github.com/ERGO-Code/HiGHS>`__.
+    It is solved using `SCIP <https://scipopt.org/>`__.
 
     Parameters
     ----------
@@ -268,9 +268,9 @@ def scip_solve_qp(
 
     Notes
     -----
-    Keyword arguments are forwarded to HiGHS as options. For instance, we
-    can call ``highs_solve_qp(P, q, G, h, u, primal_feasibility_tolerance=1e-8,
-    dual_feasibility_tolerance=1e-8)``. HiGHS settings include the following:
+    Keyword arguments are forwarded to SCIP as options. For instance, we
+    can call ``scip_solve_qp(P, q, G, h, u, primal_feasibility_tolerance=1e-8,
+    dual_feasibility_tolerance=1e-8)``. SCIP settings include the following:
 
     .. list-table::
        :widths: 30 70
@@ -285,7 +285,7 @@ def scip_solve_qp(
        * - ``time_limit``
          - Run time limit in seconds.
 
-    Check out the `HiGHS documentation <https://ergo-code.github.io/HiGHS/>`_
+    Check out the `SCIP documentation <https://www.scipopt.org/doc-9.2.2/html/>`_
     for more information on the solver.
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)
