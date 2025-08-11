@@ -17,104 +17,6 @@ from ..problem import Problem
 from ..solution import Solution
 
 
-def __set_hessian(model: pyscipopt.Model, P: spa.csc_matrix) -> None:
-    """Set Hessian :math:`Q` of the cost :math:`(1/2) x^T Q x + c^T x`.
-
-    Parameters
-    ----------
-    model :
-        HiGHS model.
-    P :
-        Positive semidefinite cost matrix.
-    """
-    model.hessian_.dim_ = P.shape[0]
-    model.hessian_.start_ = P.indptr
-    model.hessian_.index_ = P.indices
-    model.hessian_.value_ = P.data
-
-
-def __set_columns(
-    model: pyscipopt.Model,
-    q: np.ndarray,
-    lb: Optional[np.ndarray] = None,
-    ub: Optional[np.ndarray] = None,
-) -> None:
-    r"""Set columns of the model.
-
-    Columns consist of:
-
-    - Linear part :math:`c` of the cost :math:`(1/2) x^T Q x + c^T x`
-    - Box inequalities :math:`l \leq x \leq u``
-
-    Parameters
-    ----------
-    model :
-        PySCIPOpt model.
-    q :
-        Cost vector.
-    lb :
-        Lower bound constraint vector.
-    ub :
-        Upper bound constraint vector.
-    """
-    n = q.shape[0]
-    lp = model.lp_
-    lp.num_col_ = n
-    lp.col_cost_ = q
-    lp.col_lower_ = lb if lb is not None else np.full((n,), -model.infinity())
-    lp.col_upper_ = ub if ub is not None else np.full((n,), model.infinity())
-
-
-def __set_rows(
-    model: pyscipopt.Model,
-    G: Optional[spa.csc_matrix] = None,
-    h: Optional[np.ndarray] = None,
-    A: Optional[spa.csc_matrix] = None,
-    b: Optional[np.ndarray] = None,
-) -> None:
-    r"""Set rows :math:`L \leq A x \leq U`` of the model.
-
-    Parameters
-    ----------
-    model :
-        HiGHS model.
-    G :
-        Linear inequality constraint matrix.
-    h :
-        Linear inequality constraint vector.
-    A :
-        Linear equality constraint matrix.
-    b :
-        Linear equality constraint vector.
-    """
-    lp = model.lp_
-    lp.num_row_ = 0
-    row_list: list = []
-    row_lower: list = []
-    row_upper: list = []
-    if G is not None:
-        lp.num_row_ += G.shape[0]
-        row_list.append(G)
-        row_lower.append(np.full((G.shape[0],), -model.infinity()))
-        row_upper.append(h)
-    if A is not None:
-        lp.num_row_ += A.shape[0]
-        row_list.append(A)
-        row_lower.append(b)
-        row_upper.append(b)
-    if not row_list:
-        return
-    row_matrix = spa.vstack(row_list, format="csc")
-    lp.a_matrix_.format_ = highspy.MatrixFormat.kColwise
-    lp.a_matrix_.start_ = row_matrix.indptr
-    lp.a_matrix_.index_ = row_matrix.indices
-    lp.a_matrix_.value_ = row_matrix.data
-    lp.a_matrix_.num_row_ = row_matrix.shape[0]
-    lp.a_matrix_.num_col_ = row_matrix.shape[1]
-    lp.row_lower_ = np.hstack(row_lower)
-    lp.row_upper_ = np.hstack(row_upper)
-
-
 def scip_solve_problem(
     problem: Problem,
     initvals: Optional[np.ndarray] = None,
@@ -139,9 +41,9 @@ def scip_solve_problem(
 
     Notes
     -----
-    Keyword arguments are forwarded to HiGHS as options. For instance, we
-    can call ``highs_solve_qp(P, q, G, h, u, primal_feasibility_tolerance=1e-8,
-    dual_feasibility_tolerance=1e-8)``. HiGHS settings include the following:
+    Keyword arguments are forwarded to SCIP as options. For instance, we
+    can call ``scip_solve_qp(P, q, G, h, u, primal_feasibility_tolerance=1e-8,
+    dual_feasibility_tolerance=1e-8)``. SCIP settings include the following:
 
     .. list-table::
        :widths: 30 70
@@ -156,21 +58,33 @@ def scip_solve_problem(
        * - ``time_limit``
          - Run time limit in seconds.
 
-    Check out the `HiGHS documentation <https://ergo-code.github.io/HiGHS/>`_
+    Check out the `SCIP documentation <https://scipopt.org/>`_
     for more information on the solver.
     """
-    P, q, G, h, A, b, lb, ub = problem.unpack()
-    P, G, A = ensure_sparse_matrices("highs", P, G, A)
-    if initvals is not None:
-        warnings.warn(
-            "HiGHS: warm-start values are not available for this solver, "
-            "see: https://github.com/qpsolvers/qpsolvers/issues/94"
-        )
-
     model = pyscipopt.Model()
-    __set_hessian(model, P)
-    __set_columns(model, q, lb, ub)
-    __set_rows(model, G, h, A, b)
+
+    P, q, G, h, A, b, lb, ub = problem.unpack()
+
+    P, G, A = ensure_sparse_matrices("scip", P, G, A)
+    num_vars = P.shape[0]
+    x = model.addMatrixVar(
+        num_vars, ub=model.infinity(), vtype="C"
+    )
+    ineq_constr, eq_constr, lb_constr, ub_constr = None, None, None, None
+    if G is not None:
+        ineq_constr = model.addMatrixCons(G@x <= h)
+    if A is not None:
+        eq_constr = model.addMatrixCons(A@x == b)
+    if lb is not None:
+        lb_constr = model.addMatrixCons(x >= lb)
+    if ub is not None:
+        ub_constr = model.addMatrixCons(x <= ub)
+
+    if initvals:
+        init_sol = model.createSol()
+        for i, val in enumerate(initvals):
+            model.setSolVal(init_sol, model.getVar(i), val)
+        model.addSol(init_sol, "warm-start", True)
 
     if verbose:
         model.hideOutput(False)
@@ -178,35 +92,42 @@ def scip_solve_problem(
         model.hideOutput()
 
     for option, value in kwargs.items():
-        solver.setOptionValue(option, value)
-    solver.passModel(model)
-    solver.run()
+        model.setOptionValue(option, value)
+    
+    objective = 0.5 * (x @ P @ x) + q @ x
+    model.setObjective(objective, "minimize")
+    model.optimize()
 
-    result = solver.getSolution()
-    model_status = solver.getModelStatus()
-
+    if model.getNSols() > 0:
+        solution = model.getBestSol()
+    
     solution = Solution(problem)
-    solution.found = model_status == highspy.HighsModelStatus.kOptimal
-    solution.x = np.array(result.col_value)
-    if G is not None:
-        solution.z = -np.array(result.row_dual[: G.shape[0]])
-        solution.y = (
-            -np.array(result.row_dual[G.shape[0] :])
-            if A is not None
-            else np.empty((0,))
-        )
-    else:  # G is None
-        solution.z = np.empty((0,))
-        solution.y = (
-            -np.array(result.row_dual) if A is not None else np.empty((0,))
-        )
-    solution.z_box = (
-        -np.array(result.col_dual)
-        if lb is not None or ub is not None
-        else np.empty((0,))
-    )
+    solution.extras["status"] = model.getStatus()
+    solution.found = model.getNSols() > 0
+    solution.x = np.array(model.getBestSol())
+
+    if solution.found:
+        __retrieve_dual(solution, ineq_constr, eq_constr, lb_constr, ub_constr)
+
     return solution
 
+def __retrieve_dual(
+    solution: Solution,
+    ineq_constr: Optional[pyscipopt.MatrixConstraint],
+    eq_constr: Optional[pyscipopt.MatrixConstraint],
+    lb_constr: Optional[pyscipopt.MatrixConstraint],
+    ub_constr: Optional[pyscipopt.MatrixConstraint],
+) -> None:
+    solution.z = -ineq_constr.getDualsolVal() if ineq_constr is not None else np.empty((0,))
+    solution.y = -eq_constr.getDualsolVal() if eq_constr is not None else np.empty((0,))
+    if lb_constr is not None and ub_constr is not None:
+        solution.z_box = -ub_constr.getDualsolVal() - lb_constr.getDualsolVal()
+    elif ub_constr is not None:  # lb_constr is None
+        solution.z_box = -ub_constr.getDualsolVal()
+    elif lb_constr is not None:  # ub_constr is None
+        solution.z_box = -lb_constr.getDualsolVal()
+    else:  # lb_constr is None and ub_constr is None
+        solution.z_box = np.empty((0,))
 
 def scip_solve_qp(
     P: Union[np.ndarray, spa.csc_matrix],
