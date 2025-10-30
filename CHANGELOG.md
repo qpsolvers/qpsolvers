@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- docs: Document warm-starting for all solver interfaces
+
 ## [4.8.1] - 2025-08-07
 
 ### Changed
