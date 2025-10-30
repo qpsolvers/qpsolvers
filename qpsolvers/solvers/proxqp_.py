@@ -13,6 +13,8 @@ It converges to the solution of feasible problems, or to the solution to the
 closest feasible one if the input problem is unfeasible. ProxQP is part of the
 ProxSuite collection of open-source solvers. If you use ProxQP in a scientific
 work, consider citing the corresponding paper [Bambade2022]_.
+
+**Warm-start:** this solver interface supports warm starting 🔥
 """
 
 from typing import Optional, Union
@@ -71,7 +73,7 @@ def proxqp_solve_problem(
     problem :
         Quadratic program to solve.
     initvals :
-        Warm-start guess vector.
+        Warm-start guess vector for the primal solution.
     backend :
         ProxQP backend to use in ``[None, "dense", "sparse"]``. If ``None``
         (default), the backend is selected based on the type of ``P``.
@@ -228,7 +230,7 @@ def proxqp_solve_qp(
     ub :
         Upper bound constraint vector.
     initvals :
-        Warm-start guess vector.
+        Warm-start guess vector for the primal solution.
     backend :
         ProxQP backend to use in ``[None, "dense", "sparse"]``. If ``None``
         (default), the backend is selected based on the type of ``P``.

@@ -13,6 +13,8 @@ problem data (for instance, it does not make any rank assumption, contrary to
 solvers such as :ref:`CVXOPT <CVXOPT rank assumptions>` or :ref:`qpSWIFT
 <qpSWIFT rank assumptions>`). If you are using OSQP in a scientific work,
 consider citing the corresponding paper [Stellato2020]_.
+
+**Warm-start:** this solver interface supports warm starting 🔥
 """
 
 import warnings
@@ -42,7 +44,7 @@ def osqp_solve_problem(
     problem :
         Quadratic program to solve.
     initvals :
-        Warm-start guess vector.
+        Warm-start guess vector for the primal solution.
     verbose :
         Set to `True` to print out extra information.
 
@@ -208,7 +210,7 @@ def osqp_solve_qp(
     ub :
         Upper bound constraint vector.
     initvals :
-        Warm-start guess vector.
+        Warm-start guess vector for the primal solution.
     verbose :
         Set to `True` to print out extra information.
 

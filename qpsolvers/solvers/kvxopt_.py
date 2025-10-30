@@ -9,6 +9,8 @@
 KVXOPT is a fork from CVXOPT including more SuiteSparse functions
 and KLU sparse matrix solver. As CVXOPT, it is a free, open-source
 interior-point solver.
+
+**Warm-start:** this solver interface supports warm starting 🔥
 """
 
 import warnings
@@ -68,7 +70,7 @@ def kvxopt_solve_problem(
     solver :
         Set to 'mosek' to run MOSEK rather than KVXOPT.
     initvals :
-        Warm-start guess vector.
+        Warm-start guess vector for the primal solution.
     verbose :
         Set to `True` to print out extra information.
 
@@ -252,7 +254,7 @@ def kvxopt_solve_qp(
     solver :
         Set to 'mosek' to run MOSEK rather than KVXOPT.
     initvals :
-        Warm-start guess vector.
+        Warm-start guess vector for the primal solution.
     verbose :
         Set to `True` to print out extra information.
 

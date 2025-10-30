@@ -10,6 +10,8 @@ SCS (Splitting Conic Solver) is a numerical optimization package for solving
 large-scale convex quadratic cone problems, which is a general class of
 problems that includes quadratic programming. If you use SCS in a scientific
 work, consider citing the corresponding paper [ODonoghue2021]_.
+
+**Warm-start:** this solver interface supports warm starting 🔥
 """
 
 import warnings
@@ -93,7 +95,7 @@ def scs_solve_problem(
     problem :
         Quadratic program to solve.
     initvals :
-        Warm-start guess vector (not used).
+        Warm-start guess vector for the primal solution.
     verbose :
         Set to `True` to print out extra information.
 
@@ -247,7 +249,7 @@ def scs_solve_qp(
     ub :
         Upper bound constraint vector.
     initvals :
-        Warm-start guess vector (not used).
+        Warm-start guess vector for the primal solution.
     verbose :
         Set to `True` to print out extra information.
 

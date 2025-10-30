@@ -3,6 +3,7 @@
 #
 # SPDX-License-Identifier: LGPL-3.0-or-later
 # Copyright 2024 Lev Kozlov
+
 """
 Solver interface for `qpax <https://github.com/kevin-tracy/qpax>`__.
 
@@ -10,6 +11,8 @@ qpax is an open-source QP solver that can be combined with JAX's jit and vmap
 functionality, as well as differentiated with reverse-mode differentiation. It
 is based on a primal-dual interior point algorithm. If you are using qpax in
 a scientific work, consider citing the corresponding paper [Tracy2024]_.
+
+**Warm-start:** this solver interface does not support warm starting ❄️
 """
 
 import warnings
@@ -38,7 +41,7 @@ def qpax_solve_problem(
     problem :
         Quadratic program to solve.
     initvals :
-        Warm-start guess vector (not used).
+        This argument is not used by qpax.
     verbose :
         Set to `True` to print out extra information.
 
@@ -200,7 +203,7 @@ def qpax_solve_qp(
     verbose :
         Set to `True` to print out extra information.
     initvals :
-        Warm-start guess vector. Not used.
+        This argument is not used by qpax.
 
     Returns
     -------

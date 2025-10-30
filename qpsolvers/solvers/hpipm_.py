@@ -11,6 +11,8 @@ programs. It is designed to be efficient for small to medium-size problems
 arising in model predictive control and embedded optmization. If you are using
 HPIPM in a scientific work, consider citing the corresponding paper
 [Frison2020]_.
+
+**Warm-start:** this solver interface supports warm starting 🔥
 """
 
 import warnings
@@ -37,7 +39,7 @@ def hpipm_solve_problem(
     problem :
         Quadratic program to solve.
     initvals :
-        Warm-start guess vector.
+        Warm-start guess vector for the primal solution.
     mode :
         Solver mode, which provides a set of default solver arguments. Pick one
         of ["speed_abs", "speed", "balance", "robust"]. These modes are
@@ -223,7 +225,7 @@ def hpipm_solve_qp(
     ub :
         Upper bound constraint vector.
     initvals :
-        Warm-start guess vector.
+        Warm-start guess vector for the primal solution.
     mode :
         Solver mode, which provides a set of default solver arguments. Pick one
         of ["speed_abs", "speed", "balance", "robust"]. Default is "balance".

@@ -14,6 +14,8 @@ with the proximal method of multipliers, and is designed to handle
 ill-conditioned convex problems without the need for linear independence of
 constraints. If you are using PIQP in a scientific work, consider citing the
 corresponding paper [Schwan2023]_.
+
+**Warm-start:** this solver interface does not support warm starting ❄️
 """
 
 import warnings
@@ -73,7 +75,7 @@ def piqp_solve_problem(
     problem :
         Quadratic program to solve.
     initvals :
-        Warm-start guess vector (not used).
+        This argument is not used by PIQP.
     backend :
         PIQP backend to use in ``[None, "dense", "sparse"]``. If ``None``
         (default), the backend is selected based on the type of ``P``.
@@ -303,7 +305,7 @@ def piqp_solve_qp(
     verbose :
         Set to `True` to print out extra information.
     initvals :
-        Warm-start guess vector. Not used.
+        This argument is not used by PIQP.
 
     Returns
     -------

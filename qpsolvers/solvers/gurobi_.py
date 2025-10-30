@@ -14,6 +14,8 @@ architectures and multi-core processors,
 
 See the :ref:`installation page <gurobi-install>` for additional instructions
 on installing this solver.
+
+**Warm-start:** this solver interface does not support warm starting ❄️
 """
 
 import warnings
@@ -41,7 +43,7 @@ def gurobi_solve_problem(
     problem :
         Quadratic program to solve.
     initvals :
-        Warm-start guess vector (not used).
+        This argument is not used by Gurobi.
     verbose :
         Set to `True` to print out extra information.
 
@@ -184,7 +186,7 @@ def gurobi_solve_qp(
     ub :
         Upper bound constraint vector.
     initvals :
-        Warm-start guess vector (not used).
+        This argument is not used by Gurobi.
     verbose :
         Set to `True` to print out extra information.
 

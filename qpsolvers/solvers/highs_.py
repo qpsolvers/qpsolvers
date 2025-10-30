@@ -12,6 +12,8 @@ programming (QP). It is written mostly in C++11 and available under the MIT
 licence. HiGHS's QP solver implements a Nullspace Active Set method. It works
 best on moderately-sized dense problems. If you are using HiGHS in a scientific
 work, consider citing the corresponding paper [Huangfu2018]_.
+
+**Warm-start:** this solver interface supports warm starting 🔥
 """
 
 import warnings

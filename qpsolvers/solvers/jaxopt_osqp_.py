@@ -11,6 +11,8 @@ JAXopt is a library of hardware-accelerated, batchable and differentiable
 optimizers implemented with JAX. JAX itself is a library for array-oriented
 numerical computation that provides automatic differentiation and just-in-time
 compilation.
+
+**Warm-start:** this solver interface does not support warm starting ❄️
 """
 
 import warnings
@@ -39,7 +41,7 @@ def jaxopt_osqp_solve_problem(
     problem :
         Quadratic program to solve.
     initvals :
-        Warm-start guess vector (not used).
+        This argument is not used by jaxopt.OSQP.
     verbose :
         Set to `True` to print out extra information.
 
@@ -154,7 +156,7 @@ def jaxopt_osqp_solve_qp(
     verbose :
         Set to `True` to print out extra information.
     initvals :
-        Warm-start guess vector. Not used.
+        This argument is not used by jaxopt.OSQP.
 
     Returns
     -------

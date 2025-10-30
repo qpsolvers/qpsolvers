@@ -13,6 +13,8 @@ platforms. For small problems, ECOS is faster than most existing SOCP solvers;
 it is still competitive for medium-sized problems up to tens of thousands of
 variables. If you are using ECOS in a scientific work, consider citing the
 corresponding paper [Domahidi2013]_.
+
+**Warm-start:** this solver interface does not support warm starting ❄️
 """
 
 import warnings
@@ -69,7 +71,7 @@ def ecos_solve_problem(
     b :
         Linear equality constraint vector.
     initvals :
-        Warm-start guess vector (not used).
+        This argument is not used by ECOS.
     verbose :
         Set to `True` to print out extra information.
 
@@ -203,7 +205,7 @@ def ecos_solve_qp(
     b :
         Linear equality constraint vector.
     initvals :
-        Warm-start guess vector (not used).
+        This argument is not used by ECOS.
     verbose :
         Set to `True` to print out extra information.
 

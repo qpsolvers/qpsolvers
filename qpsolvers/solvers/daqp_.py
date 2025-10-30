@@ -8,6 +8,8 @@
 
 DAQP is a dual active-set algorithm implemented in C [Arnstrom2022]_.
 It has been developed to solve small/medium scale dense problems.
+
+**Warm-start:** this solver interface does not support warm starting ❄️
 """
 
 import warnings
@@ -35,7 +37,7 @@ def daqp_solve_problem(
     problem :
         Quadratic program to solve.
     initvals :
-        Warm-start guess vector (not used).
+        This argument is not used by DAQP.
     verbose :
         Set to `True` to print out extra information.
 
@@ -180,7 +182,7 @@ def daqp_solve_qp(
     ub :
         Upper bound constraint vector.
     initvals :
-        Warm-start guess vector (not used).
+        This argument is not used by DAQP.
     verbose :
         Set to `True` to print out extra information.
 

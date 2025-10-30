@@ -12,6 +12,8 @@ SIP is a general NLP solver based. It is based on the barrier augmented
 Lagrangian method, which combines the interior point and augmented Lagrangian
 methods. If you are using SIP in a scientific work, consider citing the
 corresponding GitHub repository (or paper, if one has been released).
+
+**Warm-start:** this solver interface supports warm starting 🔥
 """
 
 import warnings
@@ -47,7 +49,7 @@ def sip_solve_problem(
     problem :
         Quadratic program to solve.
     initvals :
-        Warm-start guess vector.
+        Warm-start guess vector for the primal solution.
     verbose :
         Set to `True` to print out extra information.
 
@@ -362,7 +364,7 @@ def sip_solve_qp(
     verbose :
         Set to `True` to print out extra information.
     initvals :
-        Warm-start guess vector. Not used.
+        Warm-start guess vector for the primal solution.
 
     Returns
     -------

@@ -16,6 +16,8 @@ corresponding paper [Ferreau2014]_.
 
 See the :ref:`installation page <qpoases-install>` for additional instructions
 on installing this solver.
+
+**Warm-start:** this solver interface supports warm starting 🔥
 """
 
 import warnings
@@ -172,7 +174,7 @@ def qpoases_solve_problem(
     problem :
         Quadratic program to solve.
     initvals :
-        Warm-start guess vector.
+        Warm-start guess vector for the primal solution.
     verbose :
         Set to `True` to print out extra information.
     max_wsr :
@@ -343,7 +345,7 @@ def qpoases_solve_qp(
     ub :
         Upper bound constraint vector.
     initvals :
-        Warm-start guess vector.
+        Warm-start guess vector for the primal solution.
     verbose :
         Set to `True` to print out extra information.
     max_wsr :

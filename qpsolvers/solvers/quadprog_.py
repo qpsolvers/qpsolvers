@@ -8,6 +8,8 @@
 
 quadprog is a C implementation of the Goldfarb-Idnani dual algorithm
 [Goldfarb1983]_. It works best on well-conditioned dense problems.
+
+**Warm-start:** this solver interface does not support warm starting ❄️
 """
 
 import warnings
@@ -36,7 +38,7 @@ def quadprog_solve_problem(
     problem :
         Quadratic program to solve.
     initvals :
-        Warm-start guess vector (not used).
+        This argument is not used by quadprog.
     verbose :
         Set to `True` to print out extra information.
 
@@ -169,7 +171,7 @@ def quadprog_solve_qp(
     ub :
         Upper bound constraint vector.
     initvals :
-        Warm-start guess vector (not used).
+        This argument is not used by quadprog.
     verbose :
         Set to `True` to print out extra information.
 

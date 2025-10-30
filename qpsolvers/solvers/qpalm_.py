@@ -11,6 +11,8 @@
 QPALM is a proximal augmented-Lagrangian solver for (possibly nonconvex)
 quadratic programs, implemented in the C programming language. If you use QPALM
 in a scientific work, consider citing the corresponding paper [Hermans2022]_.
+
+**Warm-start:** this solver interface supports warm starting 🔥
 """
 
 import warnings
@@ -42,7 +44,7 @@ def qpalm_solve_problem(
     problem :
         Quadratic program to solve.
     initvals :
-        Warm-start guess vector.
+        Warm-start guess vector for the primal solution.
     verbose :
         Set to `True` to print out extra information.
 
@@ -198,7 +200,7 @@ def qpalm_solve_qp(
     ub :
         Upper bound constraint vector.
     initvals :
-        Warm-start guess vector.
+        Warm-start guess vector for the primal solution.
     verbose :
         Set to `True` to print out extra information.
 

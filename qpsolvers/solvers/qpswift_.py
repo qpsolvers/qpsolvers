@@ -13,6 +13,8 @@ the linear system of equations, sparse LDL' factorization is used along with
 approximate minimum degree heuristic to minimize fill-in of the factorizations.
 If you use qpSWIFT in your research, consider citing the corresponding paper
 [Pandala2019]_.
+
+**Warm-start:** this solver interface supports warm starting 🔥
 """
 
 import warnings
@@ -44,7 +46,7 @@ def qpswift_solve_problem(
     problem :
         Quadratic program to solve.
     initvals :
-        Warm-start guess vector.
+        Warm-start guess vector for the primal solution.
     verbose :
         Set to `True` to print out extra information.
 
@@ -217,7 +219,7 @@ def qpswift_solve_qp(
     ub :
         Upper bound constraint vector.
     initvals :
-        Warm-start guess vector.
+        Warm-start guess vector for the primal solution.
     verbose :
         Set to `True` to print out extra information.
 

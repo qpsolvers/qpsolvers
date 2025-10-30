@@ -10,6 +10,8 @@ MOSEK is a solver for linear, mixed-integer linear, quadratic, mixed-integer
 quadratic, quadratically constraint, conic and convex nonlinear mathematical
 optimization problems. Its interior-point method is geared towards large scale
 sparse problems, in particular for linear or conic quadratic programs.
+
+**Warm-start:** this solver interface supports warm starting 🔥
 """
 
 import warnings
@@ -52,7 +54,7 @@ def mosek_solve_problem(
     ub :
         Upper bound constraint vector.
     initvals :
-        Warm-start guess vector.
+        Warm-start guess vector for the primal solution.
     verbose :
         Set to `True` to print out extra information.
 
@@ -123,7 +125,7 @@ def mosek_solve_qp(
     ub :
         Upper bound constraint vector.
     initvals :
-        Warm-start guess vector.
+        Warm-start guess vector for the primal solution.
     verbose :
         Set to `True` to print out extra information.
 

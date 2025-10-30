@@ -13,6 +13,8 @@ convex optimization problems using a novel homogeneous embedding. A paper
 describing the Clarabel solver algorithm and implementation will be forthcoming
 soon (retrieved: 2023-02-06). Until then, the authors ask that you cite its
 documentation if you have found Clarabel.rs useful in your work.
+
+**Warm-start:** this solver interface does not support warm starting ❄️
 """
 
 import warnings
@@ -46,7 +48,7 @@ def clarabel_solve_problem(
     problem :
         Quadratic program to solve.
     initvals :
-        Warm-start guess vector.
+        This argument is not used by Clarabel.
     verbose :
         Set to `True` to print out extra information.
 
@@ -203,7 +205,7 @@ def clarabel_solve_qp(
     ub :
         Upper bound constraint vector.
     initvals :
-        Warm-start guess vector.
+        This argument is not used by Clarabel.
     verbose :
         Set to `True` to print out extra information.
 

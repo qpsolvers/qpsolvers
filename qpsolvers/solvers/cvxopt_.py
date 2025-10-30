@@ -12,6 +12,8 @@ applications straightforward by building on Python’s extensive standard librar
 and on the strengths of Python as a high-level programming language. If you are
 using CVXOPT in a scientific work, consider citing the corresponding report
 [Vandenberghe2010]_.
+
+**Warm-start:** this solver interface supports warm starting 🔥
 """
 
 import warnings
