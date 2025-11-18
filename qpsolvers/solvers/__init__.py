@@ -790,6 +790,49 @@ except ImportError:
     pass
 
 
+# SCIP
+# ========
+
+scip_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[ndarray],
+            bool,
+            bool,
+        ],
+        Solution,
+    ]
+] = None
+
+scip_solve_qp: Optional[
+    Callable[
+        [
+            Union[ndarray, csc_matrix],
+            ndarray,
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            bool,
+            bool,
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
+try:
+    from .scip_ import scip_solve_problem, scip_solve_qp
+
+    solve_function["scip"] = scip_solve_problem
+    available_solvers.append("scip")
+    sparse_solvers.append("scip")
+except ImportError:
+    pass
+
 # SCS
 # ========
 
@@ -906,6 +949,7 @@ __all__ = [
     "qpswift_solve_qp",
     "quadprog_solve_qp",
     "scs_solve_qp",
+    "scip_solve_qp",
     "sip_solve_qp",
     "solve_function",
     "sparse_solvers",

@@ -16,6 +16,7 @@ dependencies:
         - furo >= 2023.8.17
         - highspy >= 1.5.3
         - piqp >= 0.2.2
+        - pyscipopt >= 5.5.0
         - qpalm >= 1.2.1
         - qpax >= 0.0.6
         - sip-python >= 0.0.2

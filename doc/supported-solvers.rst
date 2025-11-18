@@ -116,6 +116,12 @@ quadprog
 .. automodule:: qpsolvers.solvers.quadprog_
     :members:
 
+SCIP
+=======
+
+.. automodule:: qpsolvers.solvers.scip_
+    :members:
+
 SCS
 ===
 
