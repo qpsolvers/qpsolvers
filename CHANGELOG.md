@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.8.2] - 2025-11-25
+
 ### Added
 
 - docs: Document warm-starting for all solver interfaces
@@ -850,7 +852,8 @@ release!
 
 - A changelog :)
 
-[unreleased]: https://github.com/qpsolvers/qpsolvers/compare/v4.8.1...HEAD
+[unreleased]: https://github.com/qpsolvers/qpsolvers/compare/v4.8.2...HEAD
+[4.8.2]: https://github.com/qpsolvers/qpsolvers/compare/v4.8.1...v4.8.2
 [4.8.1]: https://github.com/qpsolvers/qpsolvers/compare/v4.8.0...v4.8.1
 [4.8.0]: https://github.com/qpsolvers/qpsolvers/compare/v4.7.1...v4.8.0
 [4.7.1]: https://github.com/qpsolvers/qpsolvers/compare/v4.7.0...v4.7.1
