@@ -21,7 +21,6 @@ import warnings
 from typing import Optional, Union
 
 import numpy as np
-import osqp
 import scipy.sparse as spa
 from osqp import OSQP, SolverStatus
 from scipy.sparse import csc_matrix
