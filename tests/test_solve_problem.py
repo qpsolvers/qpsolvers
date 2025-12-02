@@ -67,9 +67,13 @@ class TestSolveProblem(unittest.TestCase):
                             5e-5
                             if solver in ["mosek", "qpax", "sip"]
                             else (
-                                1e-6
-                                if solver in ["cvxopt", "kvxopt", "qpswift", "scs"]
-                                else 5e-7 if solver in ["gurobi"] else 1e-7
+                                5e-6
+                                if solver == "qtqp"
+                                else (
+                                    1e-6
+                                    if solver in ["cvxopt", "kvxopt", "qpswift", "scs"]
+                                    else 5e-7 if solver in ["gurobi"] else 1e-7
+                                )
                             )
                         )
                     )
@@ -121,7 +125,7 @@ class TestSolveProblem(unittest.TestCase):
                     if solver in ["proxqp", "scs", "qpax"]
                     else (
                         1e-4
-                        if solver in ["cvxopt", "kvxopt", "qpax"]
+                        if solver in ["cvxopt", "kvxopt", "qpax", "qtqp"]
                         else (
                             1e-5
                             if solver in ["highs", "osqp"]
@@ -167,7 +171,7 @@ class TestSolveProblem(unittest.TestCase):
             self.assertEqual(solution.z.shape, (0,), f"{solver=}")
             self.assertEqual(solution.z_box.shape, (4,), f"{solver=}")
             tolerance = (
-                1e-1 if solver == "osqp" else 1e-2 if solver == "scs" else 1e-3
+                1e-1 if solver == "osqp" else 1e-2 if solver in ["qtqp", "scs"] else 1e-3
             )
             self.assertTrue(solution.is_optimal(tolerance), f"{solver=}")
 
