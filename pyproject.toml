@@ -117,7 +117,6 @@ highspy = ">=1.1.2.dev3"
 jaxopt = ">=0.8.3"
 qpalm = ">=1.2.1"
 qpax = ">=0.0.9"
-sip-python = ">=0.0.2"
 
 [tool.pixi.feature.coverage.dependencies]
 coverage = ">=5.5"
@@ -155,11 +154,20 @@ python = "3.9.*"
 [tool.pixi.feature.py310.dependencies]
 python = "3.10.*"
 
+[tool.pixi.feature.py310.pypi-dependencies]
+sip-python = ">=0.0.2"
+
 [tool.pixi.feature.py311.dependencies]
 python = "3.11.*"
 
+[tool.pixi.feature.py311.pypi-dependencies]
+sip-python = ">=0.0.2"
+
 [tool.pixi.feature.py312.dependencies]
 python = "3.12.*"
+
+[tool.pixi.feature.py312.pypi-dependencies]
+sip-python = ">=0.0.2"
 
 [tool.pixi.feature.test.dependencies]
 
@@ -182,9 +190,10 @@ lint = { depends-on = ["mypy", "pylint", "ruff"] }
 docs-build = "sphinx-build doc _build -W"
 
 [tool.pixi.environments]
-test-py39-linux = { features = ["py39", "test", "test-linux"], solve-group = "py39" }
-test-py39-macos = { features = ["py39", "test", "test-macos"], solve-group = "py39" }
-test-py39-windows = { features = ["py39", "test", "test-windows"], solve-group = "py39" }
+coverage = { features = ["py39", "coverage", "licensed", "test-linux"], solve-group = "py39" }
+docs = { features = ["py310", "docs"], solve-group = "py310" }
+licensed = { features = ["py39", "licensed"], solve-group = "py39" }
+lint = { features = ["py312", "lint"], solve-group = "py312" }
 test-py310-linux = { features = ["py310", "test", "test-linux"], solve-group = "py310" }
 test-py310-macos = { features = ["py310", "test", "test-macos"], solve-group = "py310" }
 test-py310-windows = { features = ["py310", "test", "test-windows"], solve-group = "py310" }
@@ -194,7 +203,6 @@ test-py311-windows = { features = ["py311", "test", "test-windows"], solve-group
 test-py312-linux = { features = ["py312", "test", "test-linux"], solve-group = "py312" }
 test-py312-macos = { features = ["py312", "test", "test-macos"], solve-group = "py312" }
 test-py312-windows = { features = ["py312", "test", "test-windows"], solve-group = "py312" }
-coverage = { features = ["coverage", "licensed", "test-linux"], solve-group = "py39" }
-lint = { features = ["py312", "lint"], solve-group = "py312" }
-licensed = { features = ["licensed"], solve-group = "py39" }
-docs = { features = ["py310", "docs"], solve-group = "py310" }
+test-py39-linux = { features = ["py39", "test", "test-linux"], solve-group = "py39" }
+test-py39-macos = { features = ["py39", "test", "test-macos"], solve-group = "py39" }
+test-py39-windows = { features = ["py39", "test", "test-windows"], solve-group = "py39" }
