@@ -210,6 +210,36 @@ class Problem:
             self.ub,
         )
 
+    def unpack_as_dense(
+        self,
+    ) -> Tuple[
+        np.ndarray,
+        np.ndarray,
+        Optional[np.ndarray],
+        Optional[np.ndarray],
+        Optional[np.ndarray],
+        Optional[np.ndarray],
+        Optional[np.ndarray],
+        Optional[np.ndarray],
+    ]:
+        """Get problem matrices as a tuple of dense matrices and vectors.
+
+        Returns
+        -------
+        :
+            Tuple ``(P, q, G, h, A, b, lb, ub)`` of problem matrices.
+        """
+        return (
+            self.P.toarray() if isinstance(self.P, spa.csc_matrix) else self.P,
+            self.q,
+            self.G.toarray() if isinstance(self.G, spa.csc_matrix) else self.G,
+            self.h,
+            self.A.toarray() if isinstance(self.A, spa.csc_matrix) else self.A,
+            self.b,
+            self.lb,
+            self.ub,
+        )
+
     def check_constraints(self):
         """Check that problem constraints are properly specified.
 

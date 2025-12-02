@@ -96,7 +96,7 @@ def clarabel_solve_problem(
         G, h = linear_from_box_inequalities(G, h, lb, ub, use_sparse=True)
 
     cones = []
-    A_list = []
+    A_list: list = []
     b_list = []
     if A is not None and b is not None:
         A_list.append(A)
