@@ -6,7 +6,7 @@
 
 """Convert quadratic programs to second-order cone programs."""
 
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Dict, Optional, Tuple, Union
 
 from numpy import hstack, ndarray, sqrt, vstack, zeros
 from numpy.linalg import LinAlgError, cholesky
@@ -17,7 +17,7 @@ from ..exceptions import ProblemError
 
 def socp_from_qp(
     P: ndarray, q: ndarray, G: Optional[ndarray], h: Optional[ndarray]
-) -> Tuple[ndarray, ndarray, ndarray, Dict[str, Any]]:
+) -> Tuple[ndarray, Union[ndarray, csc_matrix], ndarray, Dict[str, Any]]:
     r"""Convert a quadratic program to a second-order cone program.
 
     The quadratic program is defined by:
