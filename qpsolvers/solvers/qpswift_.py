@@ -117,6 +117,7 @@ def qpswift_solve_problem(
     """
     if initvals is not None:
         warnings.warn("qpSWIFT: warm-start values are ignored")
+
     P, q, G, h, A, b, lb, ub = problem.unpack()
     if lb is not None or ub is not None:
         G, h = linear_from_box_inequalities(G, h, lb, ub, use_sparse=False)

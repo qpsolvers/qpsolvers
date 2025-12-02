@@ -170,14 +170,14 @@ def highs_solve_problem(
     Check out the `HiGHS documentation <https://ergo-code.github.io/HiGHS/>`_
     for more information on the solver.
     """
-    P, q, G, h, A, b, lb, ub = problem.unpack()
-    P, G, A = ensure_sparse_matrices("highs", P, G, A)
     if initvals is not None:
         warnings.warn(
             "HiGHS: warm-start values are not available for this solver, "
             "see: https://github.com/qpsolvers/qpsolvers/issues/94"
         )
 
+    P, q, G, h, A, b, lb, ub = problem.unpack()
+    P, G, A = ensure_sparse_matrices("highs", P, G, A)
     model = highspy.HighsModel()
     __set_hessian(model, P)
     __set_columns(model, q, lb, ub)

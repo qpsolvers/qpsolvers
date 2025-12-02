@@ -73,12 +73,11 @@ def qpax_solve_problem(
     jax.config.update("jax_enable_x64", True)
     ```
     """
-    P, q, G, h, A, b, lb, ub = problem.unpack()
-    n: int = q.shape[0]
-
     if initvals is not None and verbose:
         warnings.warn("warm-start values are ignored by qpax")
 
+    P, q, G, h, A, b, lb, ub = problem.unpack()
+    n: int = q.shape[0]
     if G is None and h is not None:
         raise ProblemError(
             "Inconsistent inequalities: G is not set but h is set"

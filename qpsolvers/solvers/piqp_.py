@@ -163,12 +163,11 @@ def piqp_solve_problem(
     This list is not exhaustive. Check out the `solver documentation
     <https://predict-epfl.github.io/piqp/interfaces/settings>`__ for details.
     """
-    P, q, G, h, A, b, lb, ub = problem.unpack()
-    n: int = q.shape[0]
-
     if initvals is not None and verbose:
         warnings.warn("warm-start values are ignored by PIQP")
 
+    P, q, G, h, A, b, lb, ub = problem.unpack()
+    n: int = q.shape[0]
     if G is None and h is not None:
         raise ProblemError(
             "Inconsistent inequalities: G is not set but h is set"

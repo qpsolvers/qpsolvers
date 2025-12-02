@@ -67,11 +67,11 @@ def jaxopt_osqp_solve_problem(
             "solving with SciPy's LSQR rather than jaxopt's OSQP"
         )
         return solve_unconstrained(problem)
+    if initvals is not None and verbose:
+        warnings.warn("warm-start values are ignored by this wrapper")
 
     P, q, G_0, h_0, A, b, lb, ub = problem.unpack()
     G, h = linear_from_box_inequalities(G_0, h_0, lb, ub, use_sparse=False)
-    if initvals is not None and verbose:
-        warnings.warn("warm-start values are ignored by this wrapper")
 
     osqp = jaxopt.OSQP(**kwargs)
     result = osqp.run(

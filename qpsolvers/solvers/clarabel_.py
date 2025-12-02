@@ -90,6 +90,7 @@ def clarabel_solve_problem(
     """
     if initvals is not None and verbose:
         warnings.warn("Clarabel: warm-start values are ignored")
+
     P, q, G, h, A, b, lb, ub = problem.unpack()
     P, G, A = ensure_sparse_matrices("clarabel", P, G, A)
     if lb is not None or ub is not None:
