@@ -69,8 +69,7 @@ def daqp_solve_problem(
     <https://darnstrom.github.io/daqp/parameters>`_ documentation for
     all available settings.
     """
-    H, f, G, h, A, b, lb, ub = problem.unpack()
-
+    H, f, G, h, A, b, lb, ub = problem.unpack_as_dense()
     if initvals is not None and verbose:
         warnings.warn("warm-start values are ignored by DAQP")
 

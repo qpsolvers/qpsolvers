@@ -233,9 +233,9 @@ def qpoases_solve_problem(
     <https://www.coin-or.org/qpOASES/doc/3.1/manual.pdf>`_. for all available
     options.
     """
+    P, q, G, h, A, b, lb, ub = problem.unpack_as_dense()
     if initvals is not None:
         warnings.warn("qpOASES: warm-start values are ignored")
-    P, q, G, h, A, b, lb, ub = problem.unpack()
 
     n = P.shape[0]
     lb = np.full((n,), -np.inf) if lb is None else lb

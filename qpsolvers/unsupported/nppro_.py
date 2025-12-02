@@ -63,7 +63,7 @@ def nppro_solve_problem(
        * - ``HessianUpdates``
          - Enable Hessian updates or not.
     """
-    P, q, G, h, A, b, lb, ub = problem.unpack()
+    P, q, G, h, A, b, lb, ub = problem.unpack_as_dense()
 
     n = P.shape[0]
     m_iq = G.shape[0] if G is not None else 0
