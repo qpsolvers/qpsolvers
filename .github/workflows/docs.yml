@@ -32,11 +32,11 @@ jobs:
             - name: "Install qpSWIFT"
               run: |
                   cd qpSWIFT/python
-                  pixi run python setup.py install
+                  pixi run -e docs python setup.py install
 
             - name: "Build documentation"
               run: |
-                  pixi run docs-build
+                  pixi run -e docs docs-build
 
             - name: "Deploy to GitHub Pages"
               uses: peaceiris/actions-gh-pages@v3
