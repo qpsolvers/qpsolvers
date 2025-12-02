@@ -84,14 +84,21 @@ class TestSolveLS(unittest.TestCase):
                 else (
                     2e-5
                     if solver == "proxqp"
-                    else 1e-5 if solver in ["ecos", "qpalm", "qpax", "sip"] else 1e-6
+                    else (
+                        1e-5
+                        if solver in ["ecos", "qpalm", "qpax", "sip"]
+                        else 1e-6
+                    )
                 )
             )
             eq_tolerance = (
-                1e-4 if solver == "jaxopt_osqp" else
-                2e-6
-                if solver in ["qpalm", "qpax"]
-                else 1e-7 if solver in ["osqp", "sip"] else 1e-9
+                1e-4
+                if solver == "jaxopt_osqp"
+                else (
+                    2e-6
+                    if solver in ["qpalm", "qpax"]
+                    else 1e-7 if solver in ["osqp", "qtqp", "sip"] else 1e-9
+                )
             )
             ineq_tolerance = (
                 1e-3
@@ -99,7 +106,11 @@ class TestSolveLS(unittest.TestCase):
                 else (
                     1e-5
                     if solver == "proxqp"
-                    else 2e-7 if solver in ["scs", "qpax"] else 1e-9
+                    else (
+                        2e-7
+                        if solver in ["scs", "qpax"]
+                        else 1e-8 if solver == "qtqp" else 1e-9
+                    )
                 )
             )
             self.assertLess(norm(x - solution), sol_tolerance, f"{solver=}")
@@ -265,8 +276,9 @@ for solver in sparse_solvers:
     )
 
 for solver in sparse_solvers:  # loop complexity warning ;p
-    if solver != "gurobi":
+    if solver not in ["gurobi", "qtqp"]:
         # Gurobi: model too large for size-limited license
+        # QTQP: slow convergence on medium/large problems (pure Python)
         kwargs = {}
         if solver == "mosek":
             try:
@@ -284,9 +296,10 @@ for solver in sparse_solvers:  # loop complexity warning ;p
         )
 
 for solver in sparse_solvers:  # loop complexity warning ;p
-    if solver not in ["cvxopt", "kvxopt", "gurobi"]:
+    if solver not in ["cvxopt", "kvxopt", "gurobi", "qtqp"]:
         # CVXOPT and KVXOPT: sparse conversion breaks rank assumption
         # Gurobi: model too large for size-limited license
+        # QTQP: slow convergence on medium/large problems (pure Python)
         setattr(
             TestSolveLS,
             "test_medium_sparse_sparse_conversion_{}".format(solver),
@@ -294,9 +307,10 @@ for solver in sparse_solvers:  # loop complexity warning ;p
         )
 
 for solver in sparse_solvers:  # loop complexity warning ;p
-    if solver not in ["gurobi", "highs"]:
+    if solver not in ["gurobi", "highs", "qtqp"]:
         # Gurobi: model too large for size-limited license
         # HiGHS: model too large https://github.com/ERGO-Code/HiGHS/issues/992
+        # QTQP: slow convergence on large problems (pure Python implementation)
         kwargs = {"eps_infeas": 1e-12} if solver == "scs" else {}
         if solver == "mosek":
             try:
