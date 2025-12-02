@@ -89,7 +89,7 @@ jobs:
               env:
                   MOSEKLM_LICENSE_FILE: ${{ github.workspace }}/mosek.lic
               run: |
-                  pixi run licensed
+                  pixi run -e licensed licensed
 
     lint:
         name: "Code style"
@@ -119,6 +119,9 @@ jobs:
                 os: [ubuntu-latest, macos-latest, windows-latest]
                 pyenv: [py39, py310, py311, py312]
 
+        env:
+            PIXI_ENV: test-${{ matrix.pyenv }}-${{ matrix.os == 'ubuntu-latest' && 'linux' || matrix.os == 'macos-latest' && 'macos' || 'windows' }}
+
         steps:
             - name: "Checkout sources"
               uses: actions/checkout@v4
@@ -127,12 +130,12 @@ jobs:
               uses: prefix-dev/setup-pixi@v0.8.8
               with:
                   pixi-version: v0.59.0
-                  environments: test-${{ matrix.pyenv }}-${{ matrix.os == 'ubuntu-latest' && 'linux' || matrix.os == 'macos-latest' && 'macos' || 'windows' }}
+                  environments: ${{ env.PIXI_ENV }}
                   cache: true
 
             - name: "Run unit tests"
               run: |
-                  pixi run test
+                  pixi run --environment ${{ env.PIXI_ENV }} test
 
     ci_success:
         name: "CI success"
