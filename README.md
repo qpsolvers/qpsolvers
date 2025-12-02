@@ -126,7 +126,7 @@ If you find this project useful, please consider giving it a :star: or citing it
 ```bibtex
 @software{qpsolvers,
   title = {{qpsolvers: Quadratic Programming Solvers in Python}},
-  author = {Caron, Stéphane and Arnström, Daniel and Bonagiri, Suraj and Dechaume, Antoine and Flowers, Nikolai and Heins, Adam and Ishikawa, Takuma and Kenefake, Dustin and Mazzamuto, Giacomo and Meoli, Donato and O'Donoghue, Brendan and Oppenheimer, Adam A. and Pandala, Abhishek and Quiroz Omaña, Juan José and Rontsis, Nikitas and Shah, Paarth and St-Jean, Samuel and Vitucci, Nicola and Wolfers, Soeren and Yang, Fengyu and GitHub user, bdelhaisse and MeindertHH and rimaddo and urob and shaoanlu and Khalil, Ahmed and Kozlov, Lev and Groudiev, Antoine and Sousa Pinto, João and Schwan, Roland and Budhiraja, Rohan and jkeust},
+  author = {Caron, Stéphane and Arnström, Daniel and Bonagiri, Suraj and Dechaume, Antoine and Flowers, Nikolai and Heins, Adam and Ishikawa, Takuma and Kenefake, Dustin and Mazzamuto, Giacomo and Meoli, Donato and O'Donoghue, Brendan and Oppenheimer, Adam A. and Otta, Pavel and Pandala, Abhishek and Quiroz Omaña, Juan José and Rontsis, Nikitas and Shah, Paarth and St-Jean, Samuel and Vitucci, Nicola and Wolfers, Soeren and Yang, Fengyu and Delhaisse, Brian and MeindertHH and rimaddo and urob and shaoanlu and Sandoval, Uriel and Khalil, Ahmed and Kozlov, Lev and Groudiev, Antoine and Sousa Pinto, João and Schwan, Roland and Budhiraja, Rohan and Keustermans, Johannes},
   license = {LGPL-3.0},
   url = {https://github.com/qpsolvers/qpsolvers},
   version = {4.8.2},
