@@ -20,8 +20,8 @@ corresponding paper [Domahidi2013]_.
 import warnings
 from typing import Optional, Union
 
+import ecos
 import numpy as np
-from ecos import solve
 from scipy import sparse as spa
 
 from ..conversions import (
@@ -126,18 +126,28 @@ def ecos_solve_problem(
     """
     if initvals is not None:
         warnings.warn("warm-start values are ignored by this wrapper")
-    P, q, G, h, A, b, lb, ub = problem.unpack()
+
+    P_, q, G_, h, A, b, lb, ub = problem.unpack()
+    # P and G should be dense for socp_from_qp, but A should be sparse
+    P: np.ndarray = P_.toarray() if isinstance(P_, spa.csc_matrix) else P_
+    G: np.ndarray = G_.toarray() if isinstance(G_, spa.csc_matrix) else G_
+
     if lb is not None or ub is not None:
-        G, h = linear_from_box_inequalities(
-            G, h, lb, ub, use_sparse=problem.has_sparse
-        )
+        G, h = linear_from_box_inequalities(G, h, lb, ub, use_sparse=False)
+        G = G.toarray() if isinstance(G, spa.csc_matrix) else G  # for mypy
     kwargs.update({"verbose": verbose})
+
     c_socp, G_socp, h_socp, dims = socp_from_qp(P, q, G, h)
     if A is not None:
-        A_socp = spa.hstack([A, spa.csc_matrix((A.shape[0], 1))], format="csc")
-        result = solve(c_socp, G_socp, h_socp, dims, A_socp, b, **kwargs)
+        A_sparse = (
+            spa.csc_matrix(A) if not isinstance(A, spa.csc_matrix) else A
+        )
+        A_socp = spa.hstack(
+            [A_sparse, spa.csc_matrix((A.shape[0], 1))], format="csc"
+        )
+        result = ecos.solve(c_socp, G_socp, h_socp, dims, A_socp, b, **kwargs)
     else:
-        result = solve(c_socp, G_socp, h_socp, dims, **kwargs)
+        result = ecos.solve(c_socp, G_socp, h_socp, dims, **kwargs)
     flag = result["info"]["exitFlag"]
     solution = Solution(problem)
     solution.extras = result["info"]
