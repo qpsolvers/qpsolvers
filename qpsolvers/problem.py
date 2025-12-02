@@ -67,8 +67,8 @@ class Problem:
 
     @staticmethod
     def __check_matrix(
-        M: Optional[Union[np.ndarray, spa.csc_matrix]],
-    ) -> Optional[Union[np.ndarray, spa.csc_matrix]]:
+        M: Union[np.ndarray, spa.csc_matrix],
+    ) -> Union[np.ndarray, spa.csc_matrix]:
         """
         Ensure a problem matrix has proper shape.
 
@@ -89,7 +89,9 @@ class Problem:
         return M
 
     @staticmethod
-    def __check_vector(v: np.ndarray, name: str) -> np.ndarray:
+    def __check_vector(
+        v: Optional[np.ndarray], name: str
+    ) -> Optional[np.ndarray]:
         """
         Ensure a problem vector has proper shape.
 
@@ -127,9 +129,9 @@ class Problem:
     ) -> None:
         P = Problem.__check_matrix(P)
         q = Problem.__check_vector(q, "q")
-        G = Problem.__check_matrix(G)
+        G = Problem.__check_matrix(G) if G is not None else None
         h = Problem.__check_vector(h, "h")
-        A = Problem.__check_matrix(A)
+        A = Problem.__check_matrix(A) if A is not None else None
         b = Problem.__check_vector(b, "b")
         lb = Problem.__check_vector(lb, "lb")
         ub = Problem.__check_vector(ub, "ub")
