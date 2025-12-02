@@ -461,11 +461,12 @@ for solver in available_solvers:
         f"test_qpsut02_{solver}",
         TestSolveProblem.get_test_qpsut02(solver),
     )
-    if solver not in ["ecos", "mosek", "qpswift"]:
+    if solver not in ["ecos", "mosek", "qpswift", "qtqp"]:
         # ECOS: https://github.com/embotech/ecos-python/issues/49
         # MOSEK: https://github.com/qpsolvers/qpsolvers/issues/229
         # qpSWIFT: https://github.com/qpsolvers/qpsolvers/issues/159
         # qpax: https://github.com/kevin-tracy/qpax/issues/5
+        # qtqp: does not handle problems without inequalities
         setattr(
             TestSolveProblem,
             f"test_qpsut03_{solver}",
@@ -519,8 +520,9 @@ for solver in available_solvers:
         f"test_qpgurabs_{solver}",
         TestSolveProblem.get_test_qpgurabs(solver),
     )
-    setattr(
-        TestSolveProblem,
-        f"test_qpgureq_{solver}",
-        TestSolveProblem.get_test_qpgureq(solver),
-    )
+    if solver != "qtqp":  # QTQP requires at least one inequality constraint
+        setattr(
+            TestSolveProblem,
+            f"test_qpgureq_{solver}",
+            TestSolveProblem.get_test_qpgureq(solver),
+        )
