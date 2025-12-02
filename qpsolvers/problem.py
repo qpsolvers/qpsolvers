@@ -369,7 +369,11 @@ class Problem:
         """
         np.savez(
             file,
-            P=self.P,
+            P=(
+                self.P.toarray()
+                if isinstance(self.P, spa.csc_matrix)
+                else self.P
+            ),
             q=self.q,
             G=np.array(self.G),
             h=np.array(self.h),
