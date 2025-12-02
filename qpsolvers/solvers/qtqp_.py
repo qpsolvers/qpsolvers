@@ -138,6 +138,16 @@ def qtqp_solve_problem(
         constraint_matrices.append(G)
         constraint_vectors.append(h)
 
+    # QTQP requires at least one inequality constraint (z < m)
+    if G is None and A is not None:
+        warnings.warn(
+            "QTQP cannot solve problems with only equality constraints; "
+            "at least one inequality constraint is required"
+        )
+        solution = Solution(problem)
+        solution.found = False
+        return solution
+
     # Stack all constraints
     a_qtqp = spa.vstack(constraint_matrices, format="csc")
     b_qtqp = np.concatenate(constraint_vectors)
