@@ -293,7 +293,7 @@ hpipm_solve_problem: Optional[
 hpipm_solve_qp: Optional[
     Callable[
         [
-            Union[ndarray, csc_matrix],
+            ndarray,
             ndarray,
             Optional[ndarray],
             Optional[ndarray],
@@ -335,7 +335,7 @@ jaxopt_osqp_solve_problem: Optional[
 jaxopt_osqp_solve_qp: Optional[
     Callable[
         [
-            Union[ndarray, csc_matrix],
+            ndarray,
             ndarray,
             Optional[ndarray],
             Optional[ndarray],
@@ -494,14 +494,14 @@ piqp_solve_qp: Optional[
     Callable[
         [
             Union[ndarray, csc_matrix],
-            Union[ndarray, csc_matrix],
+            ndarray,
             Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
             Optional[Union[ndarray, csc_matrix]],
-            Optional[Union[ndarray, csc_matrix]],
-            Optional[Union[ndarray, csc_matrix]],
-            Optional[Union[ndarray, csc_matrix]],
-            Optional[Union[ndarray, csc_matrix]],
-            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
             bool,
             Optional[str],
         ],
@@ -513,7 +513,7 @@ piqp_solve_problem: Optional[
     Callable[
         [
             Problem,
-            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
             bool,
             Optional[str],
         ],
@@ -539,14 +539,14 @@ proxqp_solve_qp: Optional[
     Callable[
         [
             Union[ndarray, csc_matrix],
-            Union[ndarray, csc_matrix],
+            ndarray,
             Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
             Optional[Union[ndarray, csc_matrix]],
-            Optional[Union[ndarray, csc_matrix]],
-            Optional[Union[ndarray, csc_matrix]],
-            Optional[Union[ndarray, csc_matrix]],
-            Optional[Union[ndarray, csc_matrix]],
-            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
             bool,
             Optional[str],
         ],
@@ -558,7 +558,7 @@ proxqp_solve_problem: Optional[
     Callable[
         [
             Problem,
-            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
             bool,
             Optional[str],
         ],
@@ -584,14 +584,14 @@ qpalm_solve_qp: Optional[
     Callable[
         [
             Union[ndarray, csc_matrix],
-            Union[ndarray, csc_matrix],
+            ndarray,
             Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
             Optional[Union[ndarray, csc_matrix]],
-            Optional[Union[ndarray, csc_matrix]],
-            Optional[Union[ndarray, csc_matrix]],
-            Optional[Union[ndarray, csc_matrix]],
-            Optional[Union[ndarray, csc_matrix]],
-            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
             bool,
         ],
         Optional[ndarray],
@@ -602,7 +602,7 @@ qpalm_solve_problem: Optional[
     Callable[
         [
             Problem,
-            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
             bool,
         ],
         Solution,
@@ -635,11 +635,11 @@ qpax_solve_problem: Optional[
 qpax_solve_qp: Optional[
     Callable[
         [
-            Union[ndarray, csc_matrix],
             ndarray,
-            Optional[Union[ndarray, csc_matrix]],
+            ndarray,
             Optional[ndarray],
-            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[ndarray],
             Optional[ndarray],
             Optional[ndarray],
             Optional[ndarray],

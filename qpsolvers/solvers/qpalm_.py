@@ -153,13 +153,13 @@ def qpalm_solve_problem(
 
 def qpalm_solve_qp(
     P: Union[np.ndarray, spa.csc_matrix],
-    q: Union[np.ndarray, spa.csc_matrix],
+    q: np.ndarray,
     G: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
-    h: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    h: Optional[np.ndarray] = None,
     A: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
-    b: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
-    lb: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
-    ub: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    b: Optional[np.ndarray] = None,
+    lb: Optional[np.ndarray] = None,
+    ub: Optional[np.ndarray] = None,
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
     **kwargs,
