@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- New solver: [QTQP](https://github.com/google-deepmind/qtqp)
+
 ## [4.8.2] - 2025-11-25
 
 ### Added
