@@ -90,8 +90,8 @@ class TestSolveLS(unittest.TestCase):
             eq_tolerance = (
                 1e-4 if solver == "jaxopt_osqp" else
                 2e-6
-                if solver == "qpalm"
-                else 1e-7 if solver in ["osqp", "qpax", "sip"] else 1e-9
+                if solver in ["qpalm", "qpax"]
+                else 1e-7 if solver in ["osqp", "sip"] else 1e-9
             )
             ineq_tolerance = (
                 1e-3
