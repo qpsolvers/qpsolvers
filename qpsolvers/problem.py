@@ -6,7 +6,7 @@
 
 """Model for a quadratic program."""
 
-from typing import List, Optional, Tuple, TypeVar, Union
+from typing import List, Optional, Tuple, Union
 
 import numpy as np
 import scipy.sparse as spa
@@ -14,8 +14,6 @@ import scipy.sparse as spa
 from .active_set import ActiveSet
 from .conversions import linear_from_box_inequalities
 from .exceptions import ParamError, ProblemError
-
-VectorType = TypeVar("VectorType")
 
 
 class Problem:
@@ -91,7 +89,7 @@ class Problem:
         return M
 
     @staticmethod
-    def __check_vector(v: VectorType, name: str) -> VectorType:
+    def __check_vector(v: np.ndarray, name: str) -> np.ndarray:
         """
         Ensure a problem vector has proper shape.
 
@@ -226,7 +224,7 @@ class Problem:
 
     def __get_active_inequalities(
         self, active_set: ActiveSet
-    ) -> Optional[np.ndarray]:
+    ) -> Optional[Union[np.ndarray, spa.csc_matrix]]:
         r"""Combine active linear and box inequalities into a single matrix.
 
         Parameters
