@@ -69,28 +69,8 @@ Changelog = "https://github.com/qpsolvers/qpsolvers/blob/main/CHANGELOG.md"
 report.include = ["qpsolvers/*"]
 report.omit = ["qpsolvers/unsupported/*"]
 
-[tool.ruff]
-line-length = 79
-
-[tool.ruff.lint]
-ignore = [
-    "D401",  # good for methods but not for class docstrings
-    "D405",  # British-style section names are also "proper"!
-]
-select = [
-    # pyflakes
-    "F",
-    # pycodestyle
-    "E",
-    "W",
-    # isort
-    "I001",
-    # pydocstyle
-    "D"
-]
-
-[tool.ruff.lint.pydocstyle]
-convention = "numpy"
+[tool.mypy]
+ignore_missing_imports = true
 
 [tool.pixi.workspace]
 channels = ["conda-forge"]
@@ -207,3 +187,26 @@ test-py312-windows = { features = ["py312", "test", "test-windows"], solve-group
 test-py39-linux = { features = ["py39", "test", "test-linux"], solve-group = "py39" }
 test-py39-macos = { features = ["py39", "test", "test-macos"], solve-group = "py39" }
 test-py39-windows = { features = ["py39", "test", "test-windows"], solve-group = "py39" }
+
+[tool.ruff]
+line-length = 79
+
+[tool.ruff.lint]
+ignore = [
+    "D401",  # good for methods but not for class docstrings
+    "D405",  # British-style section names are also "proper"!
+]
+select = [
+    # pyflakes
+    "F",
+    # pycodestyle
+    "E",
+    "W",
+    # isort
+    "I001",
+    # pydocstyle
+    "D"
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
