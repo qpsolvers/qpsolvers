@@ -89,9 +89,7 @@ class Problem:
         return M
 
     @staticmethod
-    def __check_vector(
-        v: Optional[np.ndarray], name: str
-    ) -> Optional[np.ndarray]:
+    def __check_vector(v: np.ndarray, name: str) -> np.ndarray:
         """
         Ensure a problem vector has proper shape.
 
@@ -106,8 +104,13 @@ class Problem:
         -------
         :
             Same matrix with proper shape.
+
+        Raises
+        ------
+        ProblemError
+            If the vector cannot be flattened.
         """
-        if v is None or v.ndim <= 1:
+        if v.ndim <= 1:
             return v
         if v.shape[0] != 1 and v.shape[1] != 1 or v.ndim > 2:
             raise ProblemError(
@@ -130,11 +133,11 @@ class Problem:
         P = Problem.__check_matrix(P)
         q = Problem.__check_vector(q, "q")
         G = Problem.__check_matrix(G) if G is not None else None
-        h = Problem.__check_vector(h, "h")
+        h = Problem.__check_vector(h, "h") if h is not None else None
         A = Problem.__check_matrix(A) if A is not None else None
-        b = Problem.__check_vector(b, "b")
-        lb = Problem.__check_vector(lb, "lb")
-        ub = Problem.__check_vector(ub, "ub")
+        b = Problem.__check_vector(b, "b") if b is not None else None
+        lb = Problem.__check_vector(lb, "lb") if lb is not None else None
+        ub = Problem.__check_vector(ub, "ub") if ub is not None else None
         self.P = P
         self.q = q
         self.G = G
