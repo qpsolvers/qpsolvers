@@ -101,31 +101,48 @@ python = ">=3.9"
 numpy = ">=1.15.4"
 scipy = ">=1.2.0"
 
-[tool.pixi.feature.test.dependencies]
+[tool.pixi.feature.coverage.dependencies]
+coverage = ">=5.5"
+coveralls = "*"
+
+[tool.pixi.feature.coverage.tasks]
+coverage-erase = { cmd = "coverage erase" }
+coverage-run = { cmd = "coverage run -m unittest discover --failfast", depends-on = ["coverage-erase"] }
+coverage = { cmd = "coverage report --include=\"qpsolvers/*\" --omit=\"qpsolvers/unsupported/*\"", depends-on = ["coverage-run"] }
+coveralls = { cmd = "coveralls --service=github" }
+
+[tool.pixi.feature.docs.dependencies]
 clarabel = ">=0.4.1"
+cvxopt = ">=1.2.6"
 daqp = ">=0.5.1"
-ecos = ">=2.0.8"
-jaxopt = ">=0.8.3"
+highspy = ">=1.5.3"
 kvxopt = ">=1.3.2"
-osqp = ">=0.6.2"
 piqp = ">=0.2.2"
-scs = ">=3.2.0"
+proxsuite = ">=0.2.9"
+quadprog = ">=0.1.11"
+sphinx = ">=7.2.2"
+sphinx-autodoc-typehints = "*"
 
-[tool.pixi.feature.test.pypi-dependencies]
+[tool.pixi.feature.docs.pypi-dependencies]
+furo = ">=2023.8.17"
+jaxopt = ">=0.8.3"
 qpalm = ">=1.2.1"
+qpax = ">=0.0.6"
 qtqp = ">=0.0.3"
+sip-python = ">=0.0.2"
+sphinx-mathjax-offline = "*"
 
-[tool.pixi.feature.test-linux.dependencies]
-highspy = ">=1.1.2.dev3"
-qpax = ">=0.0.9"
-proxsuite = ">=0.2.9"
+[tool.pixi.feature.licensed.pypi-dependencies]
+mosek = ">=10.0.40"
 
-[tool.pixi.feature.test-macos.dependencies]
-highspy = ">=1.1.2.dev3"
-qpax = ">=0.0.9"
+[tool.pixi.feature.licensed.tasks]
+licensed = "python -m unittest discover --failfast"
 
-[tool.pixi.feature.test-windows.dependencies]
-proxsuite = ">=0.2.9"
+[tool.pixi.feature.lint.dependencies]
+mypy = ">=0.812"
+pylint = ">=2.8.2"
+ruff = ">=0.5.4"
+scipy-stubs = "*"
 
 [tool.pixi.feature.py39.dependencies]
 python = "3.9.*"
@@ -139,49 +156,32 @@ python = "3.11.*"
 [tool.pixi.feature.py312.dependencies]
 python = "3.12.*"
 
-[tool.pixi.feature.licensed.dependencies]
-cvxopt = ">=1.2.6"
-mosek = ">=10.0.40"
-
-[tool.pixi.feature.coverage.dependencies]
-coverage = ">=5.5"
-coveralls = "*"
-
-[tool.pixi.feature.lint.dependencies]
-mypy = ">=0.812"
-pylint = ">=2.8.2"
-ruff = ">=0.5.4"
-scipy-stubs = "*"
-
-[tool.pixi.feature.docs.dependencies]
+[tool.pixi.feature.test.dependencies]
 clarabel = ">=0.4.1"
 cvxopt = ">=1.2.6"
 daqp = ">=0.5.1"
-furo = ">=2023.8.17"
-highspy = ">=1.5.3"
-jaxopt = ">=0.8.3"
+ecos = ">=2.0.8"
 kvxopt = ">=1.3.2"
+osqp = ">=0.6.2"
 piqp = ">=0.2.2"
 proxsuite = ">=0.2.9"
-qpalm = ">=1.2.1"
-qpax = ">=0.0.6"
-qtqp = ">=0.0.3"
-quadprog = ">=0.1.11"
-sphinx = ">=7.2.2"
-sphinx-autodoc-typehints = "*"
+scs = ">=3.2.0"
 
-[tool.pixi.feature.docs.pypi-dependencies]
-sphinx-mathjax-offline = "*"
-sip-python = ">=0.0.2"
+[tool.pixi.feature.test.pypi-dependencies]
+highspy = ">=1.1.2.dev3"
+jaxopt = ">=0.8.3"
+qpalm = ">=1.2.1"
+qpax = ">=0.0.9"
+qtqp = ">=0.0.3"
+
+[tool.pixi.feature.test-linux.dependencies]
+
+[tool.pixi.feature.test-macos.dependencies]
+
+[tool.pixi.feature.test-windows.dependencies]
 
 [tool.pixi.feature.test.tasks]
 test = "python -m unittest discover --failfast"
-
-[tool.pixi.feature.coverage.tasks]
-coverage-erase = { cmd = "coverage erase" }
-coverage-run = { cmd = "coverage run -m unittest discover --failfast", depends-on = ["coverage-erase"] }
-coverage = { cmd = "coverage report --include=\"qpsolvers/*\" --omit=\"qpsolvers/unsupported/*\"", depends-on = ["coverage-run"] }
-coveralls = { cmd = "coveralls --service=github" }
 
 [tool.pixi.feature.lint.tasks]
 mypy = "mypy qpsolvers --config-file=pyproject.toml"
@@ -192,13 +192,7 @@ lint = { depends-on = ["mypy", "pylint", "ruff"] }
 [tool.pixi.feature.docs.tasks]
 docs-build = "sphinx-build doc _build -W"
 
-[tool.pixi.feature.licensed.tasks]
-licensed = "python -m unittest discover --failfast"
-
 [tool.pixi.environments]
-test-py38-linux = { features = ["py38", "test", "test-linux"], solve-group = "py38" }
-test-py38-macos = { features = ["py38", "test", "test-macos"], solve-group = "py38" }
-test-py38-windows = { features = ["py38", "test", "test-windows"], solve-group = "py38" }
 test-py39-linux = { features = ["py39", "test", "test-linux"], solve-group = "py39" }
 test-py39-macos = { features = ["py39", "test", "test-macos"], solve-group = "py39" }
 test-py39-windows = { features = ["py39", "test", "test-windows"], solve-group = "py39" }
@@ -211,7 +205,7 @@ test-py311-windows = { features = ["py311", "test", "test-windows"], solve-group
 test-py312-linux = { features = ["py312", "test", "test-linux"], solve-group = "py312" }
 test-py312-macos = { features = ["py312", "test", "test-macos"], solve-group = "py312" }
 test-py312-windows = { features = ["py312", "test", "test-windows"], solve-group = "py312" }
-coverage = { features = ["py312", "coverage", "test-linux", "licensed"], solve-group = "py312" }
+coverage = { features = ["coverage", "licensed", "test-linux"], solve-group = "py39" }
 lint = { features = ["py312", "lint"], solve-group = "py312" }
-licensed = { features = ["py312", "licensed"], solve-group = "py312" }
+licensed = { features = ["licensed"], solve-group = "py39" }
 docs = { features = ["py310", "docs"], solve-group = "py310" }
