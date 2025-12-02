@@ -8,7 +8,8 @@
 
 from typing import Any, Dict, Optional, Tuple, Union
 
-from numpy import hstack, ndarray, sqrt, vstack, zeros
+import numpy as np
+from numpy import ndarray, sqrt
 from numpy.linalg import LinAlgError, cholesky
 from scipy.sparse import csc_matrix
 
@@ -17,7 +18,7 @@ from ..exceptions import ProblemError
 
 def socp_from_qp(
     P: ndarray, q: ndarray, G: Optional[ndarray], h: Optional[ndarray]
-) -> Tuple[ndarray, Union[ndarray, csc_matrix], ndarray, Dict[str, Any]]:
+) -> Tuple[ndarray, csc_matrix, ndarray, Dict[str, Any]]:
     r"""Convert a quadratic program to a second-order cone program.
 
     The quadratic program is defined by:
@@ -75,7 +76,7 @@ def socp_from_qp(
         If the cost matrix is not positive definite.
     """
     n = P.shape[1]  # dimension of QP variable
-    c_socp = hstack([zeros(n), 1])  # new SOCP variable stacked as [x, t]
+    c_socp = np.hstack([np.zeros(n), 1])  # new SOCP variable stacked as [x, t]
     try:
         L = cholesky(P)
     except LinAlgError as e:
@@ -85,20 +86,20 @@ def socp_from_qp(
         raise e  # other linear algebraic error
 
     scale = 1.0 / sqrt(2)
-    G_quad = vstack(
+    G_quad = np.vstack(
         [
-            scale * hstack([q, -1.0]),
-            hstack([-L.T, zeros((L.shape[0], 1))]),
-            scale * hstack([-q, +1.0]),
+            scale * np.hstack([q, -1.0]),
+            np.hstack([-L.T, np.zeros((L.shape[0], 1))]),
+            scale * np.hstack([-q, +1.0]),
         ]
     )
-    h_quad = hstack([scale, zeros(L.shape[0]), scale])
+    h_quad = np.hstack([scale, np.zeros(L.shape[0]), scale])
 
     dims: Dict[str, Any] = {"q": [L.shape[0] + 2]}
     G_socp: Union[ndarray, csc_matrix]
     if G is not None and h is not None:
-        G_socp = vstack([hstack([G, zeros((G.shape[0], 1))]), G_quad])
-        h_socp = hstack([h, h_quad])
+        G_socp = np.vstack([np.hstack([G, np.zeros((G.shape[0], 1))]), G_quad])
+        h_socp = np.hstack([h, h_quad])
         dims["l"] = G.shape[0]
     else:  # no linear inequality constraint
         G_socp = G_quad

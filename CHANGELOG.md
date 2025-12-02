@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Correct type annotation of SOCP conversion function
 - Correct type annotation of solver function prototypes
 - ECOS: Revise type annotations in solver interface
 - Unpack problems as NumPy arrays for dense solver APIs
