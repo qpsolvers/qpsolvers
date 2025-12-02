@@ -54,8 +54,8 @@ def qtqp_solve_problem(
     Notes
     -----
     Keyword arguments are forwarded as options to QTQP. For instance, we
-    can call ``qtqp_solve_qp(P, q, G, h, atol=1e-8)``. QTQP options include
-    the following:
+    can call ``qtqp_solve_qp(P, q, G, h, atol=1e-8, max_iter=200)``. QTQP
+    options include the following:
 
     .. list-table::
        :widths: 30 70
@@ -64,13 +64,29 @@ def qtqp_solve_problem(
        * - Name
          - Description
        * - ``atol``
-         - Absolute tolerance for convergence criteria (default: 1e-7).
+         - Absolute tolerance for optimality convergence (default: 1e-7).
        * - ``rtol``
-         - Relative tolerance for convergence criteria (default: 1e-8).
+         - Relative tolerance for optimality convergence (default: 1e-8).
+       * - ``atol_infeas``
+         - Absolute tolerance for infeasibility detection (default: 1e-8).
+       * - ``rtol_infeas``
+         - Relative tolerance for infeasibility detection (default: 1e-9).
        * - ``max_iter``
          - Maximum number of iterations (default: 100).
+       * - ``step_size_scale``
+         - Scale factor in (0,1) for line search step size (default: 0.99).
+       * - ``min_static_regularization``
+         - Diagonal regularization on KKT for robustness (default: 1e-7).
+       * - ``max_iterative_refinement_steps``
+         - Maximum steps for iterative refinement (default: 50).
+       * - ``linear_solver_atol``
+         - Absolute tolerance for iterative refinement (default: 1e-12).
+       * - ``linear_solver_rtol``
+         - Relative tolerance for iterative refinement (default: 1e-12).
        * - ``linear_solver``
-         - Linear solver to use (default: qtqp.LinearSolver.SCIPY).
+         - KKT solver backend (default: qtqp.LinearSolver.SCIPY).
+       * - ``equilibrate``
+         - Scale/equilibrate data for numerical stability (default: True).
 
     Check out the `QTQP repository
     <https://github.com/google-deepmind/qtqp>`_ for details.
