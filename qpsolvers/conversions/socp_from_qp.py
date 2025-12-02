@@ -95,6 +95,7 @@ def socp_from_qp(
     h_quad = hstack([scale, zeros(L.shape[0]), scale])
 
     dims: Dict[str, Any] = {"q": [L.shape[0] + 2]}
+    G_socp: Union[ndarray, csc_matrix]
     if G is not None and h is not None:
         G_socp = vstack([hstack([G, zeros((G.shape[0], 1))]), G_quad])
         h_socp = hstack([h, h_quad])
