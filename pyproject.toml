@@ -131,6 +131,7 @@ coveralls = { cmd = "coveralls --service=github" }
 [tool.pixi.feature.docs.dependencies]
 sphinx = ">=7.2.2"
 sphinx-autodoc-typehints = "*"
+setuptools = ">=60.0"
 
 [tool.pixi.feature.docs.pypi-dependencies]
 furo = ">=2023.8.17"
