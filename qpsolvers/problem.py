@@ -304,8 +304,18 @@ class Problem:
         if active_set.ub_indices and self.ub is None:
             raise ProblemError("Upper bound in active set but not in problem")
 
-        P, A = self.P, self.A
-        G_active = self.__get_active_inequalities(active_set)
+        P: np.ndarray = (
+            self.P.toarray() if isinstance(self.P, spa.csc_matrix) else self.P
+        )
+        G_active_full = self.__get_active_inequalities(active_set)
+        G_active: Optional[np.ndarray] = (
+            G_active_full.toarray()
+            if isinstance(G_active_full, spa.csc_matrix)
+            else G_active_full
+        )
+        A: Optional[np.ndarray] = (
+            self.A.toarray() if isinstance(self.A, spa.csc_matrix) else self.A
+        )
         n_G = G_active.shape[0] if G_active is not None else 0
         n_A = A.shape[0] if A is not None else 0
         if G_active is not None and A is not None:
