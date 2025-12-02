@@ -59,7 +59,7 @@ jobs:
                   pixi run coveralls
 
     licensed:
-        name: "Test licensed solvers on ${{ matrix.os }} with Python ${{ matrix.python-version }}"
+        name: "Test licensed solvers on ${{ matrix.os }}"
         runs-on: ${{ matrix.os }}
         needs: [check-secrets]
         if: needs.check-secrets.outputs.has-secrets == 'true'
@@ -67,7 +67,6 @@ jobs:
         strategy:
             matrix:
                 os: [ubuntu-latest, macos-latest]
-                python-version: ["3.9", "3.10", "3.11", "3.12"]
 
         steps:
             - name: "Checkout sources"
@@ -112,13 +111,13 @@ jobs:
                   pixi run lint
 
     test:
-        name: "Test ${{ matrix.os }} with Python ${{ matrix.python-version }}"
+        name: "Test ${{ matrix.os }} with ${{ matrix.pyenv }}"
         runs-on: ${{ matrix.os }}
 
         strategy:
             matrix:
                 os: [ubuntu-latest, macos-latest, windows-latest]
-                python-version: ["3.9", "3.10", "3.11", "3.12"]
+                pyenv: [py39, py310, py311, py312]
 
         steps:
             - name: "Checkout sources"
@@ -128,7 +127,7 @@ jobs:
               uses: prefix-dev/setup-pixi@v0.8.8
               with:
                   pixi-version: v0.59.0
-                  environments: test-${{ matrix.python-version }}-${{ matrix.os == 'ubuntu-latest' && 'linux' || matrix.os == 'macos-latest' && 'macos' || 'windows' }}
+                  environments: test-${{ matrix.pyenv }}-${{ matrix.os == 'ubuntu-latest' && 'linux' || matrix.os == 'macos-latest' && 'macos' || 'windows' }}
                   cache: true
 
             - name: "Run unit tests"
