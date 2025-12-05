@@ -130,11 +130,13 @@ def ecos_solve_problem(
     P_, q, G_, h, A, b, lb, ub = problem.unpack()
     # P and G should be dense for socp_from_qp, but A should be sparse
     P: np.ndarray = P_.toarray() if isinstance(P_, spa.csc_matrix) else P_
-    G: np.ndarray = G_.toarray() if isinstance(G_, spa.csc_matrix) else G_
+    G: Optional[np.ndarray] = (
+        G_.toarray() if isinstance(G_, spa.csc_matrix) else G_
+    )
 
     if lb is not None or ub is not None:
-        G, h = linear_from_box_inequalities(G, h, lb, ub, use_sparse=False)
-        G = G.toarray() if isinstance(G, spa.csc_matrix) else G  # for mypy
+        G2, h = linear_from_box_inequalities(G, h, lb, ub, use_sparse=False)
+        G = G2.toarray() if isinstance(G2, spa.csc_matrix) else G2  # for mypy
     kwargs.update({"verbose": verbose})
 
     c_socp, G_socp, h_socp, dims = socp_from_qp(P, q, G, h)
