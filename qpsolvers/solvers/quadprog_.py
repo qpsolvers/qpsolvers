@@ -72,8 +72,8 @@ def quadprog_solve_problem(
 
     P, q, G, h, A, b, lb, ub = problem.unpack_as_dense()
     if lb is not None or ub is not None:
-        G, h = linear_from_box_inequalities(G, h, lb, ub, use_sparse=False)
-        G = G.toarray() if isinstance(G, spa.csc_matrix) else G  # for mypy
+        G_, h_ = linear_from_box_inequalities(G, h, lb, ub, use_sparse=False)
+        G = G_.toarray() if isinstance(G_, spa.csc_matrix) else G_  # for mypy
     qp_G = P
     qp_a = -q
     qp_C: Optional[np.ndarray] = None

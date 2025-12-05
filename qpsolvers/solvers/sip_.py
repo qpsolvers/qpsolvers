@@ -141,16 +141,20 @@ def sip_solve_problem(
     Check the `Settings` struct in the `solver code
     <https://github.com/joaospinto/sip/blob/main/sip/types.hpp>`__ for details.
     """
-    P, q, G, h, A, b, lb, ub = problem.unpack()
+    P, q, G_, h, A_, b, lb, ub = problem.unpack()
     if lb is not None or ub is not None:
-        G, h = linear_from_box_inequalities(
-            G, h, lb, ub, use_sparse=problem.has_sparse
+        G_, h = linear_from_box_inequalities(
+            G_, h, lb, ub, use_sparse=problem.has_sparse
         )
     n: int = q.shape[0]
 
     # SIP does not support A, b, G, and h to be None.
-    G = G if G is not None else spa.csr_matrix(np.zeros((0, n)))
-    A = A if A is not None else spa.csr_matrix(np.zeros((0, n)))
+    G: Union[np.ndarray, spa.csc_matrix, spa.csr_matrix] = (
+        G_ if G_ is not None else spa.csr_matrix(np.zeros((0, n)))
+    )
+    A: Union[np.ndarray, spa.csc_matrix, spa.csr_matrix] = (
+        A_ if A_ is not None else spa.csr_matrix(np.zeros((0, n)))
+    )
     h = np.zeros((0,)) if h is None else h
     b = np.zeros((0,)) if b is None else b
 
