@@ -190,14 +190,15 @@ test-py39-windows = { features = ["py39", "test", "test-windows"], solve-group =
 
 [tool.pylint.'MESSAGES CONTROL']
 disable = [
-    "C0103",         # Argument name doesn't conform to snake_case (we use uppercase matrices)
-    "E0611",         # No name 'solve_qp' in module 'quadprog' (false positive)
-    "E1130",         # Bad operand type for unary - (false positive, covered by mypy)
-    "R0801",         # Similar lines in many files (functions share the same prototype)
-    "R0902",         # Too many instance attributes (our QP class has 8 > 7)
-    "R0913",         # Too many arguments (functions have > 5 args)
-    "R0914",         # Too many local variables (functions often > 15 locals)
-    "import-error",  # Suppress import‑error when optional back‑ends are missing
+    "C0103",                          # Argument name doesn't conform to snake_case (we use uppercase matrices)
+    "E0611",                          # No name 'solve_qp' in module 'quadprog' (false positive)
+    "E1130",                          # Bad operand type for unary - (false positive, covered by mypy)
+    "R0801",                          # Similar lines in many files (functions share the same prototype)
+    "R0902",                          # Too many instance attributes (our QP class has 8 > 7)
+    "R0913",                          # Too many arguments (functions have > 5 args)
+    "R0914",                          # Too many local variables (functions often > 15 locals)
+    "import-error",                   # Suppress import‑error when optional back‑ends are missing
+    "too-many-positional-arguments",  # Well, yes :)
 ]
 
 [tool.pylint.'TYPECHECK']
@@ -210,11 +211,21 @@ generated-members = [
     "daqp.solve",
     "gurobipy.MConstr",
     "gurobipy.Model",
+    "piqp.DenseSolver",
+    "piqp.PIQP_SOLVED",
+    "piqp.SparseSolver",
+    "piqp.__version__",
     "proxsuite.proxqp",
     "qpSWIFT.run",
     "qpalm.Data",
     "qpalm.Settings",
     "qpalm.Solver",
+    "sip.ModelCallbackInput",
+    "sip.ModelCallbackOutput",
+    "sip.ProblemDimensions",
+    "sip.QDLDLSettings",
+    "sip.Settings",
+    "sip.Variables",
 ]
 
 [tool.ruff]
