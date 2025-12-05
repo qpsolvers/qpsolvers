@@ -189,12 +189,16 @@ def piqp_solve_problem(
     G_piqp: Union[np.ndarray, spa.csc_matrix] = (
         G
         if G is not None
-        else spa.csc_matrix(np.zeros((0, n))) if use_csc else np.zeros((0, n))
+        else spa.csc_matrix(np.zeros((0, n)))
+        if use_csc
+        else np.zeros((0, n))
     )
     A_piqp: Union[np.ndarray, spa.csc_matrix] = (
         A
         if A is not None
-        else spa.csc_matrix(np.zeros((0, n))) if use_csc else np.zeros((0, n))
+        else spa.csc_matrix(np.zeros((0, n)))
+        if use_csc
+        else np.zeros((0, n))
     )
     h_piqp = np.zeros((0,)) if h is None else h
     b_piqp = np.zeros((0,)) if b is None else b

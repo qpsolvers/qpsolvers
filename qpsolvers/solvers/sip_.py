@@ -299,7 +299,8 @@ def sip_solve_problem(
     solution.extras = {"sip_output": output, "sip_vars": vars_}
     solution.found = output.exit_status == sip.Status.SOLVED
     solution.obj = 0.5 * np.dot(
-        P.T @ vars_.x, vars_.x  # type: ignore[operator]
+        P.T @ vars_.x,  # type: ignore[operator]
+        vars_.x,
     ) + np.dot(q, vars_.x)
     solution.x = np.array(vars_.x)
     solution.y = np.array(vars_.y)
