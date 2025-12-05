@@ -73,18 +73,34 @@ def __solve_sparse_ls(
 ) -> Optional[np.ndarray]:
     m, n = R.shape
     eye_m = spa.eye(m, format="csc")
-    P = spa.block_diag(
-        [spa.csc_matrix((n, n)), eye_m if W is None else W], format="csc"
-    )
     q = np.zeros(n + m)
-    P, q, G, h, A, b, lb, ub = Problem(P, q, G, h, A, b, lb, ub).unpack()
+
+    # We know the RHS of this assignment is CSC from the format kwarg
+    P_: spa.csc_matrix = spa.block_diag(  # type: ignore[assignment]
+        [spa.csc_matrix((n, n)), eye_m if W is None else W],
+        format="csc",
+    )
+
+    P, q, G, h, A, b, lb, ub = Problem(P_, q, G, h, A, b, lb, ub).unpack()
     if G is not None:
-        G = spa.hstack([G, spa.csc_matrix((G.shape[0], m))], format="csc")
+        G = spa.hstack(  # type: ignore[call-overload]
+            [G, spa.csc_matrix((G.shape[0], m))],
+            format="csc",
+        )
     if A is not None:
-        A = spa.hstack([A, spa.csc_matrix((A.shape[0], m))], format="csc")
-    Rx_minus_y = spa.hstack([R, -eye_m], format="csc")
+        A = spa.hstack(  # type: ignore[call-overload]
+            [A, spa.csc_matrix((A.shape[0], m))],
+            format="csc",
+        )
+    Rx_minus_y = spa.hstack(  # type: ignore[call-overload]
+        [R, -eye_m],
+        format="csc",
+    )
     if A is not None and b is not None:  # help mypy
-        A = spa.vstack([A, Rx_minus_y], format="csc")
+        A = spa.vstack(  # type: ignore[call-overload]
+            [A, Rx_minus_y],
+            format="csc",
+        )
         b = np.hstack([b, s])
     else:  # no input equality constraint
         A = Rx_minus_y
@@ -93,6 +109,7 @@ def __solve_sparse_ls(
         lb = np.hstack([lb, np.full((m,), -np.inf)])
     if ub is not None:
         ub = np.hstack([ub, np.full((m,), np.inf)])
+
     xy = solve_qp(
         P,
         q,
@@ -107,6 +124,7 @@ def __solve_sparse_ls(
         verbose=verbose,
         **kwargs,
     )
+
     return xy[:n] if xy is not None else None
 
 
