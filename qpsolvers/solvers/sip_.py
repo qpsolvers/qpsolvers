@@ -246,14 +246,14 @@ def sip_solve_problem(
     vars = sip.Variables(pd)
 
     if initvals is not None:
-        vars.x[:] = initvals  # type: ignore
+        vars.x[:] = initvals  # type: ignore[index]
     else:
-        vars.x[:] = 0.0  # type: ignore
+        vars.x[:] = 0.0  # type: ignore[index]
 
-    vars.s[:] = 1.0  # type: ignore
-    vars.y[:] = 0.0  # type: ignore
-    vars.e[:] = 0.0  # type: ignore
-    vars.z[:] = 1.0  # type: ignore
+    vars.s[:] = 1.0  # type: ignore[index]
+    vars.y[:] = 0.0  # type: ignore[index]
+    vars.e[:] = 0.0  # type: ignore[index]
+    vars.z[:] = 1.0  # type: ignore[index]
 
     ss = sip.Settings()
     ss.max_iterations = 100
@@ -284,11 +284,11 @@ def sip_solve_problem(
     def mc(mci: sip.ModelCallbackInput) -> sip.ModelCallbackOutput:
         mco = sip.ModelCallbackOutput()
 
-        Px = P.T @ mci.x
+        Px = P.T @ mci.x  # type: ignore[operator]
 
         mco.f = 0.5 * np.dot(Px, mci.x) + np.dot(q, mci.x)
-        mco.c = A @ mci.x - b
-        mco.g = G @ mci.x - h
+        mco.c = A @ mci.x - b  # type: ignore[operator]
+        mco.g = G @ mci.x - h  # type: ignore[operator]
 
         mco.gradient_f = Px + q
         mco.jacobian_c = A
