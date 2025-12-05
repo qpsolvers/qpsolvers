@@ -198,7 +198,9 @@ disable = [
     "R0913",                          # Too many arguments (functions have > 5 args)
     "R0914",                          # Too many local variables (functions often > 15 locals)
     "import-error",                   # Suppress import‑error when optional back‑ends are missing
-    "too-many-positional-arguments",  # Well, yes :)
+    "too-many-branches",              # We accept the blame
+    "too-many-positional-arguments",  # We accept the blame
+    "too-many-statements",            # We accept the blame
 ]
 
 [tool.pylint.'TYPECHECK']
