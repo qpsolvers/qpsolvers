@@ -164,7 +164,7 @@ test = "python -m unittest discover --failfast"
 [tool.pixi.feature.lint.tasks]
 mypy = "mypy qpsolvers --config-file=pyproject.toml"
 pylint = "pylint qpsolvers --exit-zero --rcfile=pyproject.toml"
-ruff = "ruff check qpsolvers && ruff format --check pink"
+ruff = "ruff check qpsolvers && ruff format --check qpsolvers"
 lint = { depends-on = ["mypy", "pylint", "ruff"] }
 
 [tool.pixi.feature.docs.tasks]
