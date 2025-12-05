@@ -243,17 +243,17 @@ def sip_solve_problem(
     pd.is_jacobian_c_transposed = True
     pd.is_jacobian_g_transposed = True
 
-    vars = sip.Variables(pd)
+    vars_ = sip.Variables(pd)
 
     if initvals is not None:
-        vars.x[:] = initvals  # type: ignore[index]
+        vars_.x[:] = initvals  # type: ignore[index]
     else:
-        vars.x[:] = 0.0  # type: ignore[index]
+        vars_.x[:] = 0.0  # type: ignore[index]
 
-    vars.s[:] = 1.0  # type: ignore[index]
-    vars.y[:] = 0.0  # type: ignore[index]
-    vars.e[:] = 0.0  # type: ignore[index]
-    vars.z[:] = 1.0  # type: ignore[index]
+    vars_.s[:] = 1.0  # type: ignore[index]
+    vars_.y[:] = 0.0  # type: ignore[index]
+    vars_.e[:] = 0.0  # type: ignore[index]
+    vars_.z[:] = 1.0  # type: ignore[index]
 
     ss = sip.Settings()
     ss.max_iterations = 100
@@ -299,18 +299,18 @@ def sip_solve_problem(
 
     solver = sip.Solver(ss, qs, pd, mc)
 
-    output = solver.solve(vars)
+    output = solver.solve(vars_)
 
     solution = Solution(problem)
-    solution.extras = {"sip_output": output, "sip_vars": vars}
+    solution.extras = {"sip_output": output, "sip_vars": vars_}
     solution.found = output.exit_status == sip.Status.SOLVED
     solution.obj = 0.5 * np.dot(
-        P.T @ vars.x, vars.x  # type: ignore[operator]
-    ) + np.dot(q, vars.x)
-    solution.x = np.array(vars.x)
-    solution.y = np.array(vars.y)
-    if h is not None and vars.z is not None:
-        z_sip = np.array(vars.z)
+        P.T @ vars_.x, vars_.x  # type: ignore[operator]
+    ) + np.dot(q, vars_.x)
+    solution.x = np.array(vars_.x)
+    solution.y = np.array(vars_.y)
+    if h is not None and vars_.z is not None:
+        z_sip = np.array(vars_.z)
         z, z_box = split_dual_linear_box(z_sip, lb, ub)
         solution.z = z
         solution.z_box = z_box

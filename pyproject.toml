@@ -225,6 +225,8 @@ generated-members = [
     "sip.ProblemDimensions",
     "sip.QDLDLSettings",
     "sip.Settings",
+    "sip.Solver",
+    "sip.Status",
     "sip.Variables",
 ]
 
