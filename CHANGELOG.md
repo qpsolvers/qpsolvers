@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - CICD: Switch from tox to pixi
 - SIP: Ensure returned primal and dual vectors are NumPy arrays
+- SIP: Remove unused CVXOPT-related code from solver interface
 
 ### Fixed
 

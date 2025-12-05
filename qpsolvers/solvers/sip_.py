@@ -28,12 +28,6 @@ from ..exceptions import ProblemError
 from ..problem import Problem
 from ..solution import Solution
 
-_cvxopt_available = True
-try:
-    from cvxopt import amd, spmatrix  # noqa: F401
-except ImportError:
-    _cvxopt_available = False
-
 
 def sip_solve_problem(
     problem: Problem,
