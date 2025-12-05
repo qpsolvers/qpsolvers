@@ -188,6 +188,35 @@ test-py39-linux = { features = ["py39", "test", "test-linux"], solve-group = "py
 test-py39-macos = { features = ["py39", "test", "test-macos"], solve-group = "py39" }
 test-py39-windows = { features = ["py39", "test", "test-windows"], solve-group = "py39" }
 
+[tool.pylint.'MESSAGES CONTROL']
+disable = [
+    "C0103",         # Argument name doesn't conform to snake_case (we use uppercase matrices)
+    "E0611",         # No name 'solve_qp' in module 'quadprog' (false positive)
+    "E1130",         # Bad operand type for unary - (false positive, covered by mypy)
+    "R0801",         # Similar lines in many files (functions share the same prototype)
+    "R0902",         # Too many instance attributes (our QP class has 8 > 7)
+    "R0913",         # Too many arguments (functions have > 5 args)
+    "R0914",         # Too many local variables (functions often > 15 locals)
+    "import-error",  # Suppress import‑error when optional back‑ends are missing
+]
+
+[tool.pylint.'TYPECHECK']
+generated-members = [
+    "clarabel.DefaultSettings",
+    "clarabel.DefaultSolver",
+    "clarabel.NonnegativeConeT",
+    "clarabel.SolverStatus",
+    "clarabel.ZeroConeT",
+    "daqp.solve",
+    "gurobipy.MConstr",
+    "gurobipy.Model",
+    "proxsuite.proxqp",
+    "qpSWIFT.run",
+    "qpalm.Data",
+    "qpalm.Settings",
+    "qpalm.Solver",
+]
+
 [tool.ruff]
 line-length = 79
 
