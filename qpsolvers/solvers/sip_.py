@@ -246,14 +246,14 @@ def sip_solve_problem(
     vars = sip.Variables(pd)
 
     if initvals is not None:
-        vars.x[:] = initvals
+        vars.x[:] = initvals  # type: ignore
     else:
-        vars.x[:] = 0.0
+        vars.x[:] = 0.0  # type: ignore
 
-    vars.s[:] = 1.0
-    vars.y[:] = 0.0
-    vars.e[:] = 0.0
-    vars.z[:] = 1.0
+    vars.s[:] = 1.0  # type: ignore
+    vars.y[:] = 0.0  # type: ignore
+    vars.e[:] = 0.0  # type: ignore
+    vars.z[:] = 1.0  # type: ignore
 
     ss = sip.Settings()
     ss.max_iterations = 100
