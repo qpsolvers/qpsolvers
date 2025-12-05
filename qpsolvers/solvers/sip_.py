@@ -378,5 +378,11 @@ def sip_solve_qp(
         Primal solution to the QP, if found, otherwise ``None``.
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)
-    solution = sip_solve_problem(problem, initvals, verbose, **kwargs)
+    solution = sip_solve_problem(
+        problem,
+        initvals,
+        verbose,
+        allow_non_psd_P,
+        **kwargs,
+    )
     return solution.x if solution.found else None

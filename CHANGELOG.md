@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ECOS: Revise type annotations in solver interface
 - Fix type annotations in internal `__solve_dense_ls` function
 - Fix variable name re-use errors raised by newer versions of mypy
+- SIP: Forward allow-non-PSD argument in `solve_qp` variant of the interface
 - Unpack problems as NumPy arrays for dense solver APIs
 
 ## [4.8.2] - 2025-11-25
