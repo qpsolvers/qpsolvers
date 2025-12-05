@@ -70,6 +70,8 @@ def quadprog_solve_problem(
     if initvals is not None and verbose:
         warnings.warn("warm-start values are ignored by quadprog")
 
+    if problem.has_sparse:
+        raise ProblemError("problem has sparse matrices")
     P, q, G, h, A, b, lb, ub = problem.unpack_as_dense()
     if lb is not None or ub is not None:
         G_, h = linear_from_box_inequalities(G, h, lb, ub, use_sparse=False)
@@ -111,8 +113,6 @@ def quadprog_solve_problem(
             "iterations": iterations,
             "xu": xu,
         }
-    except TypeError as error:
-        raise ProblemError("problem has sparse matrices") from error
     except ValueError as error:
         solution.found = False
         error_message = str(error)
