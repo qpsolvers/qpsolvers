@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - CICD: Switch from tox to pixi
+- SIP: Ensure returned primal and dual vectors are NumPy arrays
 
 ### Fixed
 

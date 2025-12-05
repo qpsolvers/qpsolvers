@@ -304,9 +304,11 @@ def sip_solve_problem(
     solution = Solution(problem)
     solution.extras = {"sip_output": output, "sip_vars": vars}
     solution.found = output.exit_status == sip.Status.SOLVED
-    solution.obj = 0.5 * np.dot(P.T @ vars.x, vars.x) + np.dot(q, vars.x)
-    solution.x = vars.x
-    solution.y = vars.y
+    solution.obj = 0.5 * np.dot(
+        P.T @ vars.x, vars.x  # type: ignore[operator]
+    ) + np.dot(q, vars.x)
+    solution.x = np.array(vars.x)
+    solution.y = np.array(vars.y)
     if h is not None and vars.z is not None:
         z_sip = np.array(vars.z)
         z, z_box = split_dual_linear_box(z_sip, lb, ub)
