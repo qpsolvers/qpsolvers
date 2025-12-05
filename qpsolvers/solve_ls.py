@@ -30,11 +30,16 @@ def __solve_dense_ls(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    WR: Union[np.ndarray, spa.csc_matrix] = R if W is None else W @ R
-    P = R.T @ WR
+    WR: Union[np.ndarray, spa.csc_matrix] = (
+        R if W is None else W @ R  # type: ignore[assignment]
+    )
+    P_: Union[np.ndarray, spa.csc_matrix] = (
+        R.T @ WR  # type: ignore[assignment]
+    )
+    P: Union[np.ndarray, spa.csc_matrix] = (
+        P_ if isinstance(P_, np.ndarray) else P_.tocsc()
+    )
     q = -(s.T @ WR)
-    if not isinstance(P, np.ndarray):
-        P = P.tocsc()
     return solve_qp(
         P,
         q,
