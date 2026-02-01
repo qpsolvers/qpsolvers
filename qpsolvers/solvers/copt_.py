@@ -17,7 +17,7 @@ on installing this solver.
 """
 
 import warnings
-from typing import Optional, Union
+from typing import Optional, Union, Sequence
 
 import coptpy
 import numpy as np
@@ -29,10 +29,10 @@ from ..solution import Solution
 
 
 def copt_solve_problem(
-    problem: Problem,
-    initvals: Optional[np.ndarray] = None,
-    verbose: bool = False,
-    **kwargs,
+        problem: Problem,
+        initvals: Optional[np.ndarray] = None,
+        verbose: bool = False,
+        **kwargs,
 ) -> Solution:
     """Solve a quadratic program using COPT.
 
@@ -119,45 +119,52 @@ def copt_solve_problem(
         #  from `numpy` to its own implementation.
         #  `coptpy.NdArray` does not support operators such as ">=",
         #  so convert to `np.ndarray`
-        if hasattr(x.X, "tonumpy"):
-            solution.x = x.X.tonumpy()
-        else:
-            solution.x = x.X
+        solution.x = __to_numpy(x.X)
         __retrieve_dual(solution, ineq_constr, eq_constr, lb_constr, ub_constr)
     return solution
 
 
 def __retrieve_dual(
-    solution: Solution,
-    ineq_constr: Optional[coptpy.MConstr],
-    eq_constr: Optional[coptpy.MConstr],
-    lb_constr: Optional[coptpy.MConstr],
-    ub_constr: Optional[coptpy.MConstr],
+        solution: Solution,
+        ineq_constr: Optional[coptpy.MConstr],
+        eq_constr: Optional[coptpy.MConstr],
+        lb_constr: Optional[coptpy.MConstr],
+        ub_constr: Optional[coptpy.MConstr],
 ) -> None:
-    solution.z = -ineq_constr.Pi if ineq_constr is not None else np.empty((0,))
-    solution.y = -eq_constr.Pi if eq_constr is not None else np.empty((0,))
+    solution.z = __to_numpy(
+        -ineq_constr.Pi if ineq_constr is not None else np.empty((0,))
+    )
+    solution.y = __to_numpy(
+        -eq_constr.Pi if eq_constr is not None else np.empty((0,))
+    )
     if lb_constr is not None and ub_constr is not None:
-        solution.z_box = -ub_constr.Pi - lb_constr.Pi
+        solution.z_box = __to_numpy(
+            -ub_constr.Pi - lb_constr.Pi
+        )
     elif ub_constr is not None:  # lb_constr is None
-        solution.z_box = -ub_constr.Pi
+        solution.z_box = __to_numpy(
+            -ub_constr.Pi
+        )
     elif lb_constr is not None:  # ub_constr is None
-        solution.z_box = -lb_constr.Pi
+        solution.z_box = __to_numpy(
+            -lb_constr.Pi
+        )
     else:  # lb_constr is None and ub_constr is None
         solution.z_box = np.empty((0,))
 
 
 def copt_solve_qp(
-    P: Union[np.ndarray, spa.csc_matrix],
-    q: np.ndarray,
-    G: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
-    h: Optional[np.ndarray] = None,
-    A: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
-    b: Optional[np.ndarray] = None,
-    lb: Optional[np.ndarray] = None,
-    ub: Optional[np.ndarray] = None,
-    initvals: Optional[np.ndarray] = None,
-    verbose: bool = False,
-    **kwargs,
+        P: Union[np.ndarray, spa.csc_matrix],
+        q: np.ndarray,
+        G: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+        h: Optional[np.ndarray] = None,
+        A: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+        b: Optional[np.ndarray] = None,
+        lb: Optional[np.ndarray] = None,
+        ub: Optional[np.ndarray] = None,
+        initvals: Optional[np.ndarray] = None,
+        verbose: bool = False,
+        **kwargs,
 ) -> Optional[np.ndarray]:
     r"""Solve a quadratic program using COPT.
 
@@ -234,3 +241,93 @@ def copt_solve_qp(
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = copt_solve_problem(problem, initvals, verbose, **kwargs)
     return solution.x if solution.found else None
+
+
+def __to_numpy(
+        array_like: Union[
+            coptpy.NdArray,
+            np.ndarray,
+            float,
+            int,
+            Sequence[Union[float, int]]
+        ]
+) -> np.ndarray:
+    """Convert COPT NdArray or array-like objects to numpy ndarray.
+
+    This function ensures compatibility with COPT v8+, which changed the default
+    Python matrix modeling API from numpy to its own implementation (``coptpy.NdArray``).
+
+    Parameters
+    ----------
+    array_like : Union[coptpy.NdArray, np.ndarray, float, int, Sequence[Union[float, int]]]
+        Input array to convert. Supported types:
+        - ``coptpy.NdArray`` from COPT v8+ (converted via ``tonumpy()``)
+        - ``np.ndarray`` (returned as-is to avoid redundant copy)
+        - Scalar values (float, int) → converted to 1-element 1D numpy array
+        - Sequence types (list, tuple) of floats/ints → converted to 1D numpy array
+
+    Returns
+    -------
+    np.ndarray
+        Numpy array representation of the input (1D for scalars/sequences, same shape for COPT/numpy arrays).
+
+    Raises
+    ------
+    TypeError
+        If the input type is not supported (e.g., dict, None, non-numeric sequence).
+    RuntimeError
+        If conversion from coptpy.NdArray to numpy fails (e.g., invalid COPT array).
+
+    Notes
+    -----
+    COPT v8.0.0+ uses ``coptpy.NdArray`` by default, which does not support
+    operators such as ``>=``. This function converts such arrays to ``np.ndarray``
+    for further processing.
+    Numpy arrays are returned as-is to avoid unnecessary memory copies.
+
+    Examples
+    --------
+    >>> # Convert COPT NdArray to numpy (when coptpy is available)
+    >>> # copt_array = coptpy.NdArray([1.0, 2.0, 3.0])  # doctest: +SKIP
+    >>> # np_array = __to_numpy(copt_array)  # doctest: +SKIP
+    >>> # isinstance(np_array, np.ndarray)  # doctest: +SKIP
+    >>> # True  # doctest: +SKIP
+
+    >>> # Convert scalar to 1D numpy array
+    >>> __to_numpy(5.0).shape
+    (1,)
+
+    >>> # Convert list to numpy array
+    >>> __to_numpy([1, 2, 3]).shape
+    (3,)
+    """
+    if array_like is None:
+        raise TypeError(
+            "Input 'array_like' cannot be None. Supported types: coptpy.NdArray, np.ndarray, float, int, list/tuple of numbers."
+        )
+
+    if isinstance(array_like, np.ndarray):
+        return array_like
+
+    if isinstance(array_like, coptpy.NdArray):
+        try:
+            return array_like.tonumpy()
+        except Exception as e:
+            raise RuntimeError(
+                f"Failed to convert coptpy.NdArray to numpy array: {str(e)}"
+            ) from e
+
+    try:
+        if isinstance(array_like, (int, float)):
+            return np.asarray([array_like])
+        if isinstance(array_like, (list, tuple)):
+            return np.asarray(array_like)
+    except Exception as e:
+        raise RuntimeError(
+            f"Failed to convert input to numpy array. Input type: {type(array_like).__name__}, error: {str(e)}"
+        ) from e
+
+    raise TypeError(
+        f"Unsupported type '{type(array_like).__name__}' for 'array_like'. "
+        f"Supported types: coptpy.NdArray, np.ndarray, float, int, list/tuple of numbers."
+    )
