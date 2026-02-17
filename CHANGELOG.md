@@ -10,9 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add `unpack_as_dense` function to problems
-- Add support for Python 3.13
 - Add type annotations to internal `__solve_sparse_ls` function
-- CICD: Add Python 3.13
 
 ### Changed
 
