@@ -10,10 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add `unpack_as_dense` function to problems
+- Add support for Python 3.13
 - Add type annotations to internal `__solve_sparse_ls` function
+- CICD: Add Python 3.13
 
 ### Changed
 
+- Bump minimum Python version to 3.10
 - CICD: Switch from tox to pixi
 - SIP: Ensure returned primal and dual vectors are NumPy arrays
 - SIP: Remove unused CVXOPT-related code from solver interface
@@ -28,6 +31,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix variable name re-use errors raised by newer versions of mypy
 - SIP: Forward allow-non-PSD argument in `solve_qp` variant of the interface
 - Unpack problems as NumPy arrays for dense solver APIs
+
+### Removed
+
+- Remove support for Python 3.9
+- CICD: Remove Python 3.9
 
 ## [4.8.2] - 2025-11-25
 
