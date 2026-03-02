@@ -113,8 +113,7 @@ def qtqp_solve_problem(
     # Check for unconstrained case
     if G is None and A is None:
         warnings.warn(
-            "QP is unconstrained: "
-            "solving with SciPy's LSQR rather than QTQP"
+            "QP is unconstrained: solving with SciPy's LSQR rather than QTQP"
         )
         return solve_unconstrained(problem)
 
