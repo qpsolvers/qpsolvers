@@ -96,4 +96,6 @@ def linear_from_box_inequalities(
         G, h = concatenate_bound(G, h, lb, -1.0, use_sparse)
     if ub is not None:
         G, h = concatenate_bound(G, h, ub, +1.0, use_sparse)
+    if isinstance(G, spa.dia_matrix):  # corner case with no new box bound
+        return (spa.csc_matrix(G), h)
     return (G, h)
