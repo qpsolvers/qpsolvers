@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Bump minimum Python version to 3.10
+- CICD: Configure Git attributes for the pixi.lock file
 - CICD: Switch from tox to pixi
 - KVXOPT: Update type annotations
 - SIP: Ensure returned primal and dual vectors are NumPy arrays
