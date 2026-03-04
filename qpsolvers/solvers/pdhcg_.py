@@ -22,7 +22,7 @@ References:
 """
 
 import warnings
-from typing import Optional, Union
+from typing import List, Optional, Union
 
 import numpy as np
 import scipy.sparse as spa
@@ -104,31 +104,31 @@ def pdhcg_solve_problem(
     """
     P, q, G, h, A, b, lb, ub = problem.unpack()
 
-    C_mats = []
-    l_bounds = []
-    u_bounds = []
+    C_mats: List[Union[np.ndarray, spa.csc_matrix]] = []
+    l_bounds: List[np.ndarray] = []
+    u_bounds: List[np.ndarray] = []
 
-    if G is not None:
+    if G is not None and h is not None:
         C_mats.append(G)
         l_bounds.append(np.full(h.shape, -np.inf))
         u_bounds.append(h)
 
-    if A is not None:
+    if A is not None and b is not None:
         C_mats.append(A)
         l_bounds.append(b)
         u_bounds.append(b)
 
+    constraint_matrix: Optional[Union[np.ndarray, spa.csr_matrix, spa.csc_matrix]] = None
+    constraint_lower_bound: Optional[np.ndarray] = None
+    constraint_upper_bound: Optional[np.ndarray] = None
+
     if C_mats:
         if any(spa.issparse(mat) for mat in C_mats):
-            constraint_matrix = spa.vstack(C_mats, format="csr")
+            constraint_matrix = spa.vstack(C_mats, format="csr")  # type: ignore
         else:
-            constraint_matrix = np.vstack(C_mats)
+            constraint_matrix = np.vstack(C_mats)  # type: ignore
         constraint_lower_bound = np.concatenate(l_bounds)
         constraint_upper_bound = np.concatenate(u_bounds)
-    else:
-        constraint_matrix = None
-        constraint_lower_bound = None
-        constraint_upper_bound = None
 
     model = Model(
         objective_matrix=P,
@@ -140,7 +140,8 @@ def pdhcg_solve_problem(
         variable_upper_bound=ub
     )
 
-    if verbose: model.setParam("OutputFlag", 1)
+    if verbose: 
+        model.setParam("OutputFlag", 1)
     if kwargs:
         model.setParams(**kwargs)
 
@@ -158,8 +159,9 @@ def pdhcg_solve_problem(
         solution.x = np.array(model.X)
         solution.obj = model.ObjVal
 
-    solution.runtime = model.Runtime
-    solution.iter = model.IterCount
+    solution.extras["runtime"] = model.Runtime
+    solution.extras["iter"] = model.IterCount
+    solution.extras["status"] = status_str
 
     if solution.found and model.Pi is not None and C_mats:
         pi = np.array(model.Pi)
@@ -196,7 +198,7 @@ def pdhcg_solve_qp(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
-    r"""Solve a quadratic program using HiGHS.
+    r"""Solve a quadratic program using PDHCG.
 
     The quadratic program is defined as:
 
@@ -211,7 +213,7 @@ def pdhcg_solve_qp(
                 & lb \leq x \leq ub
         \end{array}\end{split}
 
-    It is solved using `HiGHS <https://github.com/ERGO-Code/HiGHS>`__.
+    It is solved using `PDHCG <https://github.com/Lhongpei/PDHCG-II>`__.
 
     Parameters
     ----------
