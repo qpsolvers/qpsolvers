@@ -67,9 +67,14 @@ class TestSolveProblem(unittest.TestCase):
                             5e-5
                             if solver in ["mosek", "qpax", "sip"]
                             else (
-                                1e-6
-                                if solver in ["cvxopt", "kvxopt", "qpswift", "scs"]
-                                else 5e-7 if solver in ["gurobi"] else 1e-7
+                                5e-6
+                                if solver == "qtqp"
+                                else (
+                                    1e-6
+                                    if solver
+                                    in ["cvxopt", "kvxopt", "qpswift", "scs"]
+                                    else 5e-7 if solver in ["gurobi"] else 1e-7
+                                )
                             )
                         )
                     )
@@ -121,14 +126,20 @@ class TestSolveProblem(unittest.TestCase):
                     if solver in ["proxqp", "scs", "qpax"]
                     else (
                         1e-4
-                        if solver in ["cvxopt", "kvxopt", "qpax"]
+                        if solver in ["cvxopt", "kvxopt", "qpax", "qtqp"]
                         else (
                             1e-5
                             if solver in ["highs", "osqp"]
                             else (
                                 5e-7
                                 if solver
-                                in ["clarabel", "mosek", "qpswift", "piqp", "sip"]
+                                in [
+                                    "clarabel",
+                                    "mosek",
+                                    "qpswift",
+                                    "piqp",
+                                    "sip",
+                                ]
                                 else 1e-7 if solver in ["gurobi"] else 1e-8
                             )
                         )
@@ -167,7 +178,9 @@ class TestSolveProblem(unittest.TestCase):
             self.assertEqual(solution.z.shape, (0,), f"{solver=}")
             self.assertEqual(solution.z_box.shape, (4,), f"{solver=}")
             tolerance = (
-                1e-1 if solver == "osqp" else 1e-2 if solver == "scs" else 1e-3
+                1e-1
+                if solver in ["osqp", "qtqp"]
+                else 1e-2 if solver == "scs" else 1e-3
             )
             self.assertTrue(solution.is_optimal(tolerance), f"{solver=}")
 
@@ -192,7 +205,11 @@ class TestSolveProblem(unittest.TestCase):
         def test(self):
             problem, ref_solution = get_qpsut04()
             solution = solve_problem(problem, solver=solver)
-            eps_abs = 2e-4 if solver in ["jaxopt_osqp", "osqp", "qpalm", "qpax", "sip"] else 1e-6
+            eps_abs = (
+                2e-4
+                if solver in ["jaxopt_osqp", "osqp", "qpalm", "qpax", "sip"]
+                else 1e-6
+            )
             self.assertLess(
                 norm(solution.x - ref_solution.x), eps_abs, f"{solver=}"
             )
@@ -272,7 +289,8 @@ class TestSolveProblem(unittest.TestCase):
                                     if solver == "highs"
                                     else (
                                         5e-7
-                                        if solver == "cvxopt" or solver == "kvxopt"
+                                        if solver == "cvxopt"
+                                        or solver == "kvxopt"
                                         else (
                                             5e-8
                                             if solver == "clarabel"
@@ -457,11 +475,12 @@ for solver in available_solvers:
         f"test_qpsut02_{solver}",
         TestSolveProblem.get_test_qpsut02(solver),
     )
-    if solver not in ["ecos", "mosek", "qpswift"]:
+    if solver not in ["ecos", "mosek", "qpswift", "qtqp"]:
         # ECOS: https://github.com/embotech/ecos-python/issues/49
         # MOSEK: https://github.com/qpsolvers/qpsolvers/issues/229
         # qpSWIFT: https://github.com/qpsolvers/qpsolvers/issues/159
         # qpax: https://github.com/kevin-tracy/qpax/issues/5
+        # qtqp: does not handle problems without inequalities
         setattr(
             TestSolveProblem,
             f"test_qpsut03_{solver}",
@@ -515,8 +534,9 @@ for solver in available_solvers:
         f"test_qpgurabs_{solver}",
         TestSolveProblem.get_test_qpgurabs(solver),
     )
-    setattr(
-        TestSolveProblem,
-        f"test_qpgureq_{solver}",
-        TestSolveProblem.get_test_qpgureq(solver),
-    )
+    if solver != "qtqp":  # QTQP requires at least one inequality constraint
+        setattr(
+            TestSolveProblem,
+            f"test_qpgureq_{solver}",
+            TestSolveProblem.get_test_qpgureq(solver),
+        )

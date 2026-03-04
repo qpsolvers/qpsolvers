@@ -116,6 +116,12 @@ qpax
 .. automodule:: qpsolvers.solvers.qpax_
     :members:
 
+QTQP
+====
+
+.. automodule:: qpsolvers.solvers.qtqp_
+    :members:
+
 quadprog
 ========
 

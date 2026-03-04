@@ -9,14 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- New solver: PDHCG (thanks to @Lhongpei)
+
+## [4.9.0] - 2026-03-04
+
+### Added
+
 - Add `unpack_as_dense` function to problems
 - Add type annotations to internal `__solve_sparse_ls` function
-- New solver: PDHCG (thanks to @Lhongpei)
+- New solver: [QTQP](https://github.com/google-deepmind/qtqp)
 
 ### Changed
 
 - Bump minimum Python version to 3.10
+- CICD: Configure Git attributes for the pixi.lock file
 - CICD: Switch from tox to pixi
+- KVXOPT: Update type annotations
 - SIP: Ensure returned primal and dual vectors are NumPy arrays
 - SIP: Remove unused CVXOPT-related code from solver interface
 
@@ -26,6 +34,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Correct type annotation of solver function prototypes
 - ECOS: Rename internal intermediate variables to improve type checking
 - ECOS: Revise type annotations in solver interface
+- Fix sparse type annotations in `concatenate_bound`
+- Fix type annotation corner case in `linear_from_box_inequalities`
 - Fix type annotations in internal `__solve_dense_ls` function
 - Fix variable name re-use errors raised by newer versions of mypy
 - SIP: Forward allow-non-PSD argument in `solve_qp` variant of the interface
@@ -881,7 +891,8 @@ release!
 
 - A changelog :)
 
-[unreleased]: https://github.com/qpsolvers/qpsolvers/compare/v4.8.2...HEAD
+[unreleased]: https://github.com/qpsolvers/qpsolvers/compare/v4.9.0...HEAD
+[4.9.0]: https://github.com/qpsolvers/qpsolvers/compare/v4.8.2...v4.9.0
 [4.8.2]: https://github.com/qpsolvers/qpsolvers/compare/v4.8.1...v4.8.2
 [4.8.1]: https://github.com/qpsolvers/qpsolvers/compare/v4.8.0...v4.8.1
 [4.8.0]: https://github.com/qpsolvers/qpsolvers/compare/v4.7.1...v4.8.0
