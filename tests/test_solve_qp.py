@@ -516,7 +516,7 @@ class TestSolveQP(unittest.TestCase):
                 else (
                     1e-4
                     if solver in ["qpalm", "qpax", "sip"]
-                    else 1e-8 if solver in ["osqp", "scs"] else 1e-10
+                    else 1e-8 if solver in ["osqp", "qtqp", "scs"] else 1e-10
                 )
             )
             ineq_tolerance = (
@@ -568,7 +568,7 @@ class TestSolveQP(unittest.TestCase):
                 if solver == "cvxopt" or solver == "kvxopt"
                 else (
                     2e-3
-                    if solver in ["osqp", "qpalm", "qpax"]
+                    if solver in ["osqp", "qpalm", "qpax", "qtqp"]
                     else (
                         1e-3
                         if solver in ["gurobi", "piqp"]
@@ -826,8 +826,9 @@ class TestSolveQP(unittest.TestCase):
                                 "cvxopt",
                                 "kvxopt",
                                 "mosek",
-                                "qpswift",
                                 "piqp",
+                                "qpswift",
+                                "qtqp",
                                 "sip",
                             ]
                             else 1e-8
