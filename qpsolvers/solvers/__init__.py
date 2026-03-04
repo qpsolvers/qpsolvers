@@ -523,7 +523,7 @@ try:
 
     solve_function["pdhcg"] = pdhcg_solve_problem
     available_solvers.append("pdhcg")
-    dense_solvers.append("pdhcg") 
+    dense_solvers.append("pdhcg")
     sparse_solvers.append("pdhcg")
 except ImportError:
     pass

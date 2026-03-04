@@ -6,41 +6,40 @@
 
 """Solver interface for PDHCG.
 
-PDHCG (Primal-Dual Hybrid Conjugate Gradient) is a high-performance, 
-GPU-accelerated solver designed for large-scale convex Quadratic Programming (QP).
-It is particularly efficient for huge-scale problems by fully 
-leveraging NVIDIA CUDA architectures.
+PDHCG (Primal-Dual Hybrid Conjugate Gradient) is a high-performance,
+GPU-accelerated solver designed for large-scale convex Quadratic
+Programming (QP). It is particularly efficient for huge-scale problems
+by fully leveraging NVIDIA CUDA architectures.
 
 Note:
-    To use this solver, you need an NVIDIA GPU and the ``pdhcg`` package 
-    installed via ``pip install pdhcg``. For advanced installation (e.g., 
-    custom CUDA paths), please refer to the 
+    To use this solver, you need an NVIDIA GPU and the ``pdhcg`` package
+    installed via ``pip install pdhcg``. For advanced installation (e.g.,
+    custom CUDA paths), please refer to the
     `official PDHCG-II repository <https://github.com/Lhongpei/PDHCG-II>`_.
 
-References:
-    - `PDHCG-II: An Enhanced Version of PDHCG for Large-Scale Convex QP <https://arxiv.org/abs/2602.23967>`_
+References
+----------
+- `PDHCG-II <https://arxiv.org/abs/2602.23967>`_
 """
 
-import warnings
-from typing import List, Optional, Union
+from typing import Any, List, Optional, Union
 
 import numpy as np
 import scipy.sparse as spa
+from pdhcg import Model
 
 from ..problem import Problem
 from ..solution import Solution
-
-from pdhcg import Model
 
 
 def pdhcg_solve_problem(
     problem: Problem,
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
-    **kwargs,
+    **kwargs: Any,
 ) -> Solution:
     """Solve a quadratic program using PDHCG.
-    
+
     The quadratic program is defined as:
 
         minimize      1/2 x^T P x + q^T x
@@ -50,36 +49,22 @@ def pdhcg_solve_problem(
 
     Parameters
     ----------
-    P :
-        Symmetric quadratic cost matrix.
-    q :
-        Quadratic cost vector.
-    G :
-        Linear inequality constraint matrix.
-    h :
-        Linear inequality constraint vector.
-    A :
-        Linear equality constraint matrix.
-    b :
-        Linear equality constraint vector.
-    lb :
-        Lower bound constraint vector.
-    ub :
-        Upper bound constraint vector.
+    problem :
+        Quadratic program to solve.
     initvals :
-        Warm-start guess vector.
+        Warm-start guess vector for the primal solution.
     verbose :
         Set to `True` to print out extra information.
 
     Returns
     -------
     :
-        Optimal primal solution if found, otherwise `None`.
+        Solution to the QP, if found, otherwise ``None``.
 
     Notes
     -----
-    Keyword arguments are forwarded to PDHCG as solver parameters. For instance,
-    you can call ``pdhcg_solve_qp(..., TimeLimit=60, OptimalityTol=1e-5)``. 
+    Keyword arguments are forwarded to PDHCG as solver parameters.
+    For instance, you can call ``pdhcg_solve_qp(..., TimeLimit=60)``.
     Common PDHCG parameters include:
 
     .. list-table::
@@ -95,18 +80,18 @@ def pdhcg_solve_problem(
        * - ``OptimalityTol``
          - Relative tolerance for optimality gap (default: 1e-4).
        * - ``FeasibilityTol``
-         - Relative feasibility tolerance for primal/dual residuals (default: 1e-4).
+         - Relative feasibility tolerance for residuals (default: 1e-4).
        * - ``OutputFlag``
          - Enable (True) or disable (False) console logging output.
 
-    For a comprehensive list of advanced scaling and restart parameters, please refer to the
-    `PDHCG Python Interface Documentation <https://github.com/Lhongpei/PDHCG-II/tree/main/python>`_.
+    For advanced parameters, please refer to the
+    `PDHCG Documentation <https://github.com/Lhongpei/PDHCG-II>`_.
     """
     P, q, G, h, A, b, lb, ub = problem.unpack()
 
-    C_mats: List[Union[np.ndarray, spa.csc_matrix]] = []
-    l_bounds: List[np.ndarray] = []
-    u_bounds: List[np.ndarray] = []
+    C_mats: List[Any] = []
+    l_bounds: List[Any] = []
+    u_bounds: List[Any] = []
 
     if G is not None and h is not None:
         C_mats.append(G)
@@ -118,7 +103,9 @@ def pdhcg_solve_problem(
         l_bounds.append(b)
         u_bounds.append(b)
 
-    constraint_matrix: Optional[Union[np.ndarray, spa.csr_matrix, spa.csc_matrix]] = None
+    constraint_matrix: Optional[
+        Union[np.ndarray, spa.csr_matrix, spa.csc_matrix]
+    ] = None
     constraint_lower_bound: Optional[np.ndarray] = None
     constraint_upper_bound: Optional[np.ndarray] = None
 
@@ -127,8 +114,8 @@ def pdhcg_solve_problem(
             constraint_matrix = spa.vstack(C_mats, format="csr")  # type: ignore
         else:
             constraint_matrix = np.vstack(C_mats)  # type: ignore
-        constraint_lower_bound = np.concatenate(l_bounds)
-        constraint_upper_bound = np.concatenate(u_bounds)
+        constraint_lower_bound = np.concatenate(l_bounds)  # type: ignore
+        constraint_upper_bound = np.concatenate(u_bounds)  # type: ignore
 
     model = Model(
         objective_matrix=P,
@@ -140,7 +127,7 @@ def pdhcg_solve_problem(
         variable_upper_bound=ub
     )
 
-    if verbose: 
+    if verbose:
         model.setParam("OutputFlag", 1)
     if kwargs:
         model.setParams(**kwargs)
@@ -151,10 +138,10 @@ def pdhcg_solve_problem(
     model.optimize()
 
     solution = Solution(problem)
-    
+
     status_str = str(model.Status).upper() if model.Status else ""
-    solution.found = (status_str == "OPTIMAL")  
-    
+    solution.found = status_str == "OPTIMAL"
+
     if solution.found and model.X is not None:
         solution.x = np.array(model.X)
         solution.obj = model.ObjVal
@@ -196,7 +183,7 @@ def pdhcg_solve_qp(
     ub: Optional[np.ndarray] = None,
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
-    **kwargs,
+    **kwargs: Any,
 ) -> Optional[np.ndarray]:
     r"""Solve a quadratic program using PDHCG.
 
@@ -242,11 +229,11 @@ def pdhcg_solve_qp(
     -------
     :
         Solution to the QP, if found, otherwise ``None``.
-        
+
     Notes
     -----
-    Keyword arguments are forwarded to PDHCG as solver parameters. For instance,
-    you can call ``pdhcg_solve_qp(..., TimeLimit=60, OptimalityTol=1e-5)``. 
+    Keyword arguments are forwarded to PDHCG as solver parameters.
+    For instance, you can call ``pdhcg_solve_qp(..., TimeLimit=60)``.
     Common PDHCG parameters include:
 
     .. list-table::
@@ -262,12 +249,12 @@ def pdhcg_solve_qp(
        * - ``OptimalityTol``
          - Relative tolerance for optimality gap (default: 1e-4).
        * - ``FeasibilityTol``
-         - Relative feasibility tolerance for primal/dual residuals (default: 1e-4).
+         - Relative feasibility tolerance for residuals (default: 1e-4).
        * - ``OutputFlag``
          - Enable (True) or disable (False) console logging output.
 
-    For a comprehensive list of advanced scaling and restart parameters, please refer to the
-    `PDHCG Python Interface Documentation <https://github.com/Lhongpei/PDHCG-II/tree/main/python>`_.
+    For advanced parameters, please refer to the
+    `PDHCG Documentation <https://github.com/Lhongpei/PDHCG-II>`_.
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = pdhcg_solve_problem(problem, initvals, verbose, **kwargs)
