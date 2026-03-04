@@ -47,18 +47,20 @@ def concatenate_bound(
     if G is None or h is None:
         G = sign * (spa.eye(n, format="csc") if use_sparse else np.eye(n))
         h = sign * b
-    else:  # G is not None and h is not None
-        if isinstance(G, np.ndarray):
-            G = np.concatenate((G, sign * np.eye(n)), 0)
-        elif isinstance(G, (spa.csc_matrix, spa.dia_matrix)):
-            G = spa.vstack([G, sign * spa.eye(n)], format="csc")
-        else:  # G is not an instance of a type we know
-            name = type(G).__name__
-            raise ProblemError(
-                f"invalid type '{name}' for inequality matrix G"
-            )
-        h = np.concatenate((h, sign * b))
-    return (G, h)
+        return (G, h)
+
+    h = np.concatenate((h, sign * b))
+    if isinstance(G, np.ndarray):
+        dense_G: np.ndarray = np.concatenate((G, sign * np.eye(n)), 0)
+        return (dense_G, h)
+    elif isinstance(G, (spa.csc_matrix, spa.dia_matrix)):
+        sparse_G: spa.csc_matrix = spa.vstack(
+            [G, sign * spa.eye(n)], format="csc"
+        )
+        return (sparse_G, h)
+    else:  # G is not an instance of a type we know
+        name = type(G).__name__
+        raise ProblemError(f"invalid type '{name}' for inequality matrix G")
 
 
 def linear_from_box_inequalities(
