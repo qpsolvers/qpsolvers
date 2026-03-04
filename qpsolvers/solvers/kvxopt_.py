@@ -161,7 +161,8 @@ def kvxopt_solve_problem(
     if A is not None and b is not None:
         constraints["A"] = __to_cvxopt(A)
         constraints["b"] = __to_cvxopt(b)
-    initvals_dict: Optional[Dict[str, Union[KVXOPTMatrix, KVXOPTSpmatrix]]] = None
+    initvals_dict: Optional[Dict[str, Union[KVXOPTMatrix, KVXOPTSpmatrix]]]
+    initvals_dict = None
     if initvals is not None:
         if "mosek" in kwargs:
             warnings.warn("MOSEK: warm-start values are ignored")
