@@ -124,7 +124,7 @@ def pdhcg_solve_problem(
         constraint_lower_bound=constraint_lower_bound,
         constraint_upper_bound=constraint_upper_bound,
         variable_lower_bound=lb,
-        variable_upper_bound=ub
+        variable_upper_bound=ub,
     )
 
     if verbose:
