@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Correct type annotation of solver function prototypes
 - ECOS: Rename internal intermediate variables to improve type checking
 - ECOS: Revise type annotations in solver interface
+- Fix sparse type annotations in `concatenate_bound`
 - Fix type annotations in internal `__solve_dense_ls` function
 - Fix variable name re-use errors raised by newer versions of mypy
 - SIP: Forward allow-non-PSD argument in `solve_qp` variant of the interface
