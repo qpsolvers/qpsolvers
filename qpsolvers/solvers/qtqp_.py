@@ -14,14 +14,14 @@ programs (QPs), implemented in pure Python. It is developed by Google DeepMind.
 """
 
 import warnings
-from typing import Optional, Union
+from typing import List, Optional, Union
 
 import numpy as np
 import scipy.sparse as spa
 
 from ..conversions import (
     ensure_sparse_matrices,
-    linear_from_box_inequalities,
+    sparse_linear_from_box_inequalities,
     split_dual_linear_box,
 )
 from ..problem import Problem
@@ -104,7 +104,7 @@ def qtqp_solve_problem(
 
     # Convert box constraints to linear inequalities
     if lb is not None or ub is not None:
-        G, h = linear_from_box_inequalities(G, h, lb, ub, use_sparse=True)
+        G, h = sparse_linear_from_box_inequalities(G, h, lb, ub)
 
     # Convert to CSC format as required by QTQP
     if P is not None:
@@ -122,7 +122,7 @@ def qtqp_solve_problem(
     # where s[:z] == 0 (equality constraints)
     #       s[z:] >= 0 (inequality constraints)
 
-    constraint_matrices = []
+    constraint_matrices: List[spa.csc_matrix] = []
     constraint_vectors = []
 
     # Add equality constraints first (these form the zero cone)

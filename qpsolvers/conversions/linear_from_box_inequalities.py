@@ -11,53 +11,107 @@ from typing import Optional, Tuple, Union
 import numpy as np
 import scipy.sparse as spa
 
-from ..exceptions import ProblemError
 
-
-def concatenate_bound(
-    G: Optional[Union[np.ndarray, spa.csc_matrix]],
+def concatenate_bound_dense(
+    G: Optional[np.ndarray],
     h: Optional[np.ndarray],
     b: np.ndarray,
     sign: float,
-    use_sparse: bool,
-) -> Tuple[Optional[Union[np.ndarray, spa.csc_matrix]], Optional[np.ndarray]]:
-    """Append bound constraint vectors to inequality constraints.
+) -> Tuple[np.ndarray, np.ndarray]:
+    """Append bound constraint vectors to dense inequality constraints.
 
     Parameters
     ----------
     G :
-        Linear inequality matrix.
+        Dense linear inequality matrix, or None.
     h :
-        Linear inequality vector.
+        Linear inequality vector, or None.
     b :
         Bound constraint vector.
     sign :
         Sign factor: -1.0 for a lower and +1.0 for an upper bound.
-    use_sparse :
-        Use sparse matrices if true, dense matrices otherwise.
 
     Returns
     -------
-    G : numpy.ndarray, scipy.sparse.csc_matrix, or None
-        Updated linear inequality matrix.
+    G : numpy.ndarray
+        Updated dense linear inequality matrix.
+    h : numpy.ndarray
+        Updated linear inequality vector.
+    """
+    n = len(b)
+    if G is None or h is None:
+        return sign * np.eye(n), sign * b
+    return (
+        np.concatenate((G, sign * np.eye(n)), 0),
+        np.concatenate((h, sign * b)),
+    )
+
+
+def concatenate_bound_sparse(
+    G: Optional[spa.csc_matrix],
+    h: Optional[np.ndarray],
+    b: np.ndarray,
+    sign: float,
+) -> Tuple[spa.csc_matrix, np.ndarray]:
+    """Append bound constraint vectors to sparse inequality constraints.
+
+    Parameters
+    ----------
+    G :
+        Sparse linear inequality matrix, or None.
+    h :
+        Linear inequality vector, or None.
+    b :
+        Bound constraint vector.
+    sign :
+        Sign factor: -1.0 for a lower and +1.0 for an upper bound.
+
+    Returns
+    -------
+    G : scipy.sparse.csc_matrix
+        Updated sparse linear inequality matrix.
+    h : numpy.ndarray
+        Updated linear inequality vector.
+    """
+    n = len(b)
+    if G is None or h is None:
+        return sign * spa.eye(n, format="csc"), sign * b
+    return (
+        spa.vstack([G, sign * spa.eye(n)], format="csc"),
+        np.concatenate((h, sign * b)),
+    )
+
+
+def sparse_linear_from_box_inequalities(
+    G: Optional[spa.csc_matrix],
+    h: Optional[np.ndarray],
+    lb: Optional[np.ndarray],
+    ub: Optional[np.ndarray],
+) -> Tuple[Optional[spa.csc_matrix], Optional[np.ndarray]]:
+    """Append lower or upper bound vectors to sparse inequality constraints.
+
+    Parameters
+    ----------
+    G :
+        Sparse linear inequality matrix, or None.
+    h :
+        Linear inequality vector, or None.
+    lb :
+        Lower bound constraint vector.
+    ub :
+        Upper bound constraint vector.
+
+    Returns
+    -------
+    G : scipy.sparse.csc_matrix or None
+        Updated sparse linear inequality matrix.
     h : numpy.ndarray or None
         Updated linear inequality vector.
     """
-    n = len(b)  # == number of optimization variables
-    if G is None or h is None:
-        G = sign * (spa.eye(n, format="csc") if use_sparse else np.eye(n))
-        h = sign * b
-    else:  # G is not None and h is not None
-        if isinstance(G, np.ndarray):
-            G = np.concatenate((G, sign * np.eye(n)), 0)
-        elif isinstance(G, (spa.csc_matrix, spa.dia_matrix)):
-            G = spa.vstack([G, sign * spa.eye(n)], format="csc")
-        else:  # G is not an instance of a type we know
-            name = type(G).__name__
-            raise ProblemError(
-                f"invalid type '{name}' for inequality matrix G"
-            )
-        h = np.concatenate((h, sign * b))
+    if lb is not None:
+        G, h = concatenate_bound_sparse(G, h, lb, -1.0)
+    if ub is not None:
+        G, h = concatenate_bound_sparse(G, h, ub, +1.0)
     return (G, h)
 
 
@@ -90,8 +144,20 @@ def linear_from_box_inequalities(
     h : np.ndarray or None
         Updated linear inequality vector.
     """
+    if use_sparse:
+        sparse_G: Optional[spa.csc_matrix] = (
+            G if G is None or isinstance(G, spa.csc_matrix) else spa.csc_matrix(G)
+        )
+        if lb is not None:
+            sparse_G, h = concatenate_bound_sparse(sparse_G, h, lb, -1.0)
+        if ub is not None:
+            sparse_G, h = concatenate_bound_sparse(sparse_G, h, ub, +1.0)
+        return (sparse_G, h)
+    dense_G: Optional[np.ndarray] = (
+        G if G is None or isinstance(G, np.ndarray) else G.toarray()
+    )
     if lb is not None:
-        G, h = concatenate_bound(G, h, lb, -1.0, use_sparse)
+        dense_G, h = concatenate_bound_dense(dense_G, h, lb, -1.0)
     if ub is not None:
-        G, h = concatenate_bound(G, h, ub, +1.0, use_sparse)
-    return (G, h)
+        dense_G, h = concatenate_bound_dense(dense_G, h, ub, +1.0)
+    return (dense_G, h)
