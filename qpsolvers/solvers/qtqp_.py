@@ -21,7 +21,7 @@ import scipy.sparse as spa
 
 from ..conversions import (
     ensure_sparse_matrices,
-    sparse_linear_from_box_inequalities,
+    linear_from_box_inequalities,
     split_dual_linear_box,
 )
 from ..problem import Problem
@@ -100,15 +100,13 @@ def qtqp_solve_problem(
         warnings.warn("QTQP: warm-start values are ignored")
 
     P, q, G, h, A, b, lb, ub = problem.unpack()
-    P, G, A = ensure_sparse_matrices("qtqp", P, G, A)
 
     # Convert box constraints to linear inequalities
     if lb is not None or ub is not None:
-        G, h = sparse_linear_from_box_inequalities(G, h, lb, ub)
+        G, h = linear_from_box_inequalities(G, h, lb, ub, use_sparse=True)
 
     # Convert to CSC format as required by QTQP
-    if P is not None:
-        P = P.tocsc()
+    P, G, A = ensure_sparse_matrices("qtqp", P, G, A)
 
     # Check for unconstrained case
     if G is None and A is None:
