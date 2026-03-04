@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add `unpack_as_dense` function to problems
 - Add type annotations to internal `__solve_sparse_ls` function
+- New solver: PDHCG (thanks to @Lhongpei)
 
 ### Changed
 
