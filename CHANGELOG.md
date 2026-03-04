@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Bump minimum Python version to 3.10
 - CICD: Switch from tox to pixi
+- KVXOPT: Update type annotations
 - SIP: Ensure returned primal and dual vectors are NumPy arrays
 - SIP: Remove unused CVXOPT-related code from solver interface
 
