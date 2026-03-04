@@ -17,6 +17,7 @@ import warnings
 from typing import List, Optional, Union
 
 import numpy as np
+import qtqp
 import scipy.sparse as spa
 
 from ..conversions import (
@@ -94,8 +95,6 @@ def qtqp_solve_problem(
     Lower values for absolute or relative tolerances yield more precise
     solutions at the cost of computation time.
     """
-    import qtqp
-
     if initvals is not None and verbose:
         warnings.warn("QTQP: warm-start values are ignored")
 
