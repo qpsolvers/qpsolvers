@@ -221,6 +221,19 @@ class TestSolveQP(unittest.TestCase):
                 if no_equality and solver in ["qpax"]:
                     # QPs without equality constraints not handled by qpax
                     continue
+                no_box = (
+                    test_case.get("lb") is None and test_case.get("ub") is None
+                )
+                if (
+                    no_inequality
+                    and no_box
+                    and not no_equality
+                    and solver == "qtqp"
+                ):
+                    # QTQP requires at least one inequality constraint, so
+                    # equality-only problems (no G, no box bounds) are not
+                    # supported
+                    continue
                 has_one_equality = (
                     "A" in test_case
                     and test_case["A"] is not None
@@ -853,8 +866,9 @@ for solver in available_solvers:
         f"test_no_eq_{solver}",
         TestSolveQP.get_test_no_eq(solver),
     )
-    if solver not in ["qpswift"]:
+    if solver not in ["qpswift", "qtqp"]:
         # qpSWIFT: https://github.com/qpSWIFT/qpSWIFT/issues/2
+        # QTQP: requires at least one inequality constraint
         setattr(
             TestSolveQP,
             f"test_no_ineq_{solver}",
