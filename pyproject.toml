@@ -12,14 +12,13 @@ maintainers = [
     {name = "Stéphane Caron", email = "stephane.caron@normalesup.org"},
 ]
 dynamic = ['version', 'description']
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
     "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -46,11 +45,12 @@ osqp = ["osqp >=0.6.2"]
 piqp = ["piqp >=0.2.2"]
 proxqp = ["proxsuite >=0.2.9"]
 qpalm = ["qpalm >=1.2.1"]
-quadprog = ["quadprog >=0.1.11"]
 qpax = ["qpax>=0.0.9"]
+qtqp = ["qtqp >=0.0.3"]
+quadprog = ["quadprog >=0.1.11"]
 scs = ["scs >=3.2.0"]
 sip = ["sip-python >=0.0.2"]
-open_source_solvers = ["qpsolvers[clarabel,cvxopt,daqp,ecos,highs,jaxopt,osqp,piqp,proxqp,qpalm,quadprog,scs,sip,qpax]"]
+open_source_solvers = ["qpsolvers[clarabel,cvxopt,daqp,ecos,highs,jaxopt,osqp,piqp,proxqp,qpalm,qtqp,quadprog,scs,sip,qpax]"]
 
 # Wheels-only solvers should distribute wheels that work on:
 # - macOS (aarch64)
@@ -88,7 +88,7 @@ numpy = ">=1.15.4"
 osqp = ">=0.6.2"
 piqp = ">=0.2.2"
 proxsuite = ">=0.2.9"
-python = ">=3.9"
+python = ">=3.10"
 quadprog = ">=0.1.11"
 scipy = ">=1.2.0"
 scs = ">=3.2.0"
@@ -98,6 +98,8 @@ highspy = ">=1.1.2.dev3"
 jaxopt = ">=0.8.3"
 qpalm = ">=1.2.1"
 qpax = ">=0.0.9"
+qtqp = ">=0.0.3"
+sip-python = ">=0.0.2"
 
 [tool.pixi.feature.coverage.dependencies]
 coverage = ">=5.5"
@@ -131,26 +133,14 @@ pylint = ">=2.8.2"
 ruff = ">=0.5.4"
 scipy-stubs = "*"
 
-[tool.pixi.feature.py39.dependencies]
-python = "3.9.*"
-
 [tool.pixi.feature.py310.dependencies]
 python = "3.10.*"
-
-[tool.pixi.feature.py310.pypi-dependencies]
-sip-python = ">=0.0.2"
 
 [tool.pixi.feature.py311.dependencies]
 python = "3.11.*"
 
-[tool.pixi.feature.py311.pypi-dependencies]
-sip-python = ">=0.0.2"
-
 [tool.pixi.feature.py312.dependencies]
 python = "3.12.*"
-
-[tool.pixi.feature.py312.pypi-dependencies]
-sip-python = ">=0.0.2"
 
 [tool.pixi.feature.test.dependencies]
 
@@ -173,9 +163,9 @@ lint = { depends-on = ["mypy", "pylint", "ruff"] }
 docs-build = "sphinx-build doc _build -W"
 
 [tool.pixi.environments]
-coverage = { features = ["py39", "coverage", "licensed", "test-linux"], solve-group = "py39" }
+coverage = { features = ["py310", "coverage", "licensed", "test-linux"], solve-group = "py310" }
 docs = { features = ["py310", "docs"], solve-group = "py310" }
-licensed = { features = ["py39", "licensed"], solve-group = "py39" }
+licensed = { features = ["py310", "licensed"], solve-group = "py310" }
 lint = { features = ["py312", "lint"], solve-group = "py312" }
 test-py310-linux = { features = ["py310", "test", "test-linux"], solve-group = "py310" }
 test-py310-macos = { features = ["py310", "test", "test-macos"], solve-group = "py310" }
@@ -186,9 +176,6 @@ test-py311-windows = { features = ["py311", "test", "test-windows"], solve-group
 test-py312-linux = { features = ["py312", "test", "test-linux"], solve-group = "py312" }
 test-py312-macos = { features = ["py312", "test", "test-macos"], solve-group = "py312" }
 test-py312-windows = { features = ["py312", "test", "test-windows"], solve-group = "py312" }
-test-py39-linux = { features = ["py39", "test", "test-linux"], solve-group = "py39" }
-test-py39-macos = { features = ["py39", "test", "test-macos"], solve-group = "py39" }
-test-py39-windows = { features = ["py39", "test", "test-windows"], solve-group = "py39" }
 
 [tool.pylint.'MESSAGES CONTROL']
 disable = [

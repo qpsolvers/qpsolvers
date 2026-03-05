@@ -19,6 +19,8 @@ from typing import Dict, Optional, Union
 import kvxopt
 import numpy as np
 import scipy.sparse as spa
+from kvxopt.base import matrix as KVXOPTMatrix
+from kvxopt.base import spmatrix as KVXOPTSpmatrix
 from kvxopt.solvers import qp
 
 from ..conversions import linear_from_box_inequalities, split_dual_linear_box
@@ -31,7 +33,7 @@ kvxopt.solvers.options["show_progress"] = False  # disable default verbosity
 
 def __to_cvxopt(
     M: Union[np.ndarray, spa.csc_matrix],
-) -> Union[kvxopt.matrix, kvxopt.spmatrix]:
+) -> Union[KVXOPTMatrix, KVXOPTSpmatrix]:
     """Convert matrix to CVXOPT format.
 
     Parameters
@@ -47,9 +49,9 @@ def __to_cvxopt(
     if isinstance(M, np.ndarray):
         __infty__ = 1e10  # 1e20 tends to yield division-by-zero errors
         M_noinf = np.nan_to_num(M, posinf=__infty__, neginf=-__infty__)
-        return kvxopt.matrix(M_noinf)
+        return KVXOPTMatrix(M_noinf)
     coo = M.tocoo()
-    return kvxopt.spmatrix(
+    return KVXOPTSpmatrix(
         coo.data.tolist(), coo.row.tolist(), coo.col.tolist(), size=M.shape
     )
 
@@ -147,14 +149,20 @@ def kvxopt_solve_problem(
         )
 
     args = [__to_cvxopt(P), __to_cvxopt(q)]
-    constraints = {"G": None, "h": None, "A": None, "b": None}
+    constraints: Dict[str, Optional[Union[KVXOPTMatrix, KVXOPTSpmatrix]]] = {
+        "G": None,
+        "h": None,
+        "A": None,
+        "b": None,
+    }
     if G is not None and h is not None:
         constraints["G"] = __to_cvxopt(G)
         constraints["h"] = __to_cvxopt(h)
     if A is not None and b is not None:
         constraints["A"] = __to_cvxopt(A)
         constraints["b"] = __to_cvxopt(b)
-    initvals_dict: Optional[Dict[str, kvxopt.matrix]] = None
+    initvals_dict: Optional[Dict[str, Union[KVXOPTMatrix, KVXOPTSpmatrix]]]
+    initvals_dict = None
     if initvals is not None:
         if "mosek" in kwargs:
             warnings.warn("MOSEK: warm-start values are ignored")
@@ -164,10 +172,10 @@ def kvxopt_solve_problem(
     try:
         res = qp(
             *args,
-            solver=solver,
-            initvals=initvals_dict,
+            solver=solver,  # type: ignore[arg-type]
+            initvals=initvals_dict,  # type: ignore[arg-type]
             options=kwargs,
-            **constraints,
+            **constraints,  # type: ignore[arg-type]
         )
     except ValueError as exception:
         error = str(exception)
@@ -177,7 +185,7 @@ def kvxopt_solve_problem(
 
     solution = Solution(problem)
     solution.extras = res
-    solution.found = "optimal" in res["status"]
+    solution.found = "optimal" in res["status"]  # type: ignore[operator]
     solution.x = np.array(res["x"]).flatten()
     solution.y = (
         np.array(res["y"]).flatten() if b is not None else np.empty((0,))
@@ -191,7 +199,7 @@ def kvxopt_solve_problem(
     else:  # h is None
         solution.z = np.empty((0,))
         solution.z_box = np.empty((0,))
-    solution.obj = res["primal objective"]
+    solution.obj = res["primal objective"]  # type: ignore[assignment]
     return solution
 
 

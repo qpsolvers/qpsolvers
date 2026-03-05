@@ -221,6 +221,19 @@ class TestSolveQP(unittest.TestCase):
                 if no_equality and solver in ["qpax"]:
                     # QPs without equality constraints not handled by qpax
                     continue
+                no_box = (
+                    test_case.get("lb") is None and test_case.get("ub") is None
+                )
+                if (
+                    no_inequality
+                    and no_box
+                    and not no_equality
+                    and solver == "qtqp"
+                ):
+                    # QTQP requires at least one inequality constraint, so
+                    # equality-only problems (no G, no box bounds) are not
+                    # supported
+                    continue
                 has_one_equality = (
                     "A" in test_case
                     and test_case["A"] is not None
@@ -503,7 +516,7 @@ class TestSolveQP(unittest.TestCase):
                 else (
                     1e-4
                     if solver in ["qpalm", "qpax", "sip"]
-                    else 1e-8 if solver in ["osqp", "scs"] else 1e-10
+                    else 1e-8 if solver in ["osqp", "qtqp", "scs"] else 1e-10
                 )
             )
             ineq_tolerance = (
@@ -555,7 +568,7 @@ class TestSolveQP(unittest.TestCase):
                 if solver == "cvxopt" or solver == "kvxopt"
                 else (
                     2e-3
-                    if solver in ["osqp", "qpalm", "qpax"]
+                    if solver in ["osqp", "qpalm", "qpax", "qtqp"]
                     else (
                         1e-3
                         if solver in ["gurobi", "piqp"]
@@ -813,8 +826,9 @@ class TestSolveQP(unittest.TestCase):
                                 "cvxopt",
                                 "kvxopt",
                                 "mosek",
-                                "qpswift",
                                 "piqp",
+                                "qpswift",
+                                "qtqp",
                                 "sip",
                             ]
                             else 1e-8
@@ -853,8 +867,9 @@ for solver in available_solvers:
         f"test_no_eq_{solver}",
         TestSolveQP.get_test_no_eq(solver),
     )
-    if solver not in ["qpswift"]:
+    if solver not in ["qpswift", "qtqp"]:
         # qpSWIFT: https://github.com/qpSWIFT/qpSWIFT/issues/2
+        # QTQP: requires at least one inequality constraint
         setattr(
             TestSolveQP,
             f"test_no_ineq_{solver}",

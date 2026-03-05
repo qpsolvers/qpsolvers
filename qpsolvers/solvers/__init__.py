@@ -790,6 +790,48 @@ except ImportError:
     pass
 
 
+# QTQP
+# ====
+
+qtqp_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[ndarray],
+            bool,
+        ],
+        Solution,
+    ]
+] = None
+
+qtqp_solve_qp: Optional[
+    Callable[
+        [
+            Union[ndarray, csc_matrix],
+            ndarray,
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            bool,
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
+try:
+    from .qtqp_ import qtqp_solve_problem, qtqp_solve_qp
+
+    solve_function["qtqp"] = qtqp_solve_problem
+    available_solvers.append("qtqp")
+    sparse_solvers.append("qtqp")
+except ImportError:
+    pass
+
+
 # quadprog
 # ========
 
@@ -947,6 +989,7 @@ __all__ = [
     "qpax_solve_qp",
     "qpoases_solve_qp",
     "qpswift_solve_qp",
+    "qtqp_solve_qp",
     "quadprog_solve_qp",
     "scs_solve_qp",
     "sip_solve_qp",

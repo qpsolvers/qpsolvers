@@ -14,8 +14,8 @@ from .split_dual_linear_box import split_dual_linear_box
 
 __all__ = [
     "combine_linear_box_inequalities",
+    "ensure_sparse_matrices",
     "linear_from_box_inequalities",
     "socp_from_qp",
     "split_dual_linear_box",
-    "ensure_sparse_matrices",
 ]

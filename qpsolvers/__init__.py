@@ -37,6 +37,7 @@ from .solvers import (
     qpalm_solve_qp,
     qpoases_solve_qp,
     qpswift_solve_qp,
+    qtqp_solve_qp,
     quadprog_solve_qp,
     scs_solve_qp,
     sip_solve_qp,
@@ -45,7 +46,7 @@ from .solvers import (
 from .unsupported import nppro_solve_qp
 from .utils import print_matrix_vector
 
-__version__ = "4.8.2"
+__version__ = "4.9.0"
 
 __all__ = [
     "ActiveSet",
@@ -77,6 +78,7 @@ __all__ = [
     "qpoases_solve_qp",
     "qpswift_solve_qp",
     "quadprog_solve_qp",
+    "qtqp_solve_qp",
     "scs_solve_qp",
     "sip_solve_qp",
     "solve_ls",
