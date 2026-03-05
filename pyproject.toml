@@ -94,6 +94,7 @@ scipy = ">=1.2.0"
 scs = ">=3.2.0"
 
 [tool.pixi.pypi-dependencies]
+coptpy = ">=7.0.0"
 highspy = ">=1.1.2.dev3"
 jaxopt = ">=0.8.3"
 qpalm = ">=1.2.1"
@@ -121,7 +122,6 @@ furo = ">=2023.8.17"
 sphinx-mathjax-offline = "*"
 
 [tool.pixi.feature.licensed.pypi-dependencies]
-coptpy = ">=7.0.0"
 mosek = ">=10.0.40"
 
 [tool.pixi.feature.licensed.tasks]
