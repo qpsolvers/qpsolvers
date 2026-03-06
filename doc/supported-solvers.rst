@@ -92,6 +92,12 @@ ProxQP
 .. automodule:: qpsolvers.solvers.proxqp_
     :members:
 
+pyqpmad
+=======
+
+.. automodule:: qpsolvers.solvers.pyqpmad_
+    :members:
+
 QPALM
 =====
 
