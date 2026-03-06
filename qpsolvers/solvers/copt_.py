@@ -9,7 +9,7 @@
 
 The COPT Optimizer suite ships several solvers for mathematical programming,
 including problems that have linear constraints, bound constraints, integrality
-constraints, cone constraints, or quadratic constraints. 
+constraints, cone constraints, or quadratic constraints.
 It targets modern CPU/GPU architectures and multi-core processors,
 
 See the :ref:`installation page <copt-install>` for additional instructions
@@ -247,18 +247,15 @@ def copt_solve_qp(
 
 
 def __to_numpy(
-        array_like: Union[
-            coptpy.NdArray,
-            np.ndarray,
-            float,
-            int,
-            Sequence[Union[float, int]]
-        ]
+    array_like: Union[
+        coptpy.NdArray, np.ndarray, float, int, Sequence[Union[float, int]]
+    ],
 ) -> np.ndarray:
     """Convert COPT NdArray or array-like objects to numpy ndarray.
 
-    This function ensures compatibility with COPT v8+, which changed the default
-    Python matrix modeling API from numpy to its own implementation (``coptpy.NdArray``).
+    This function ensures compatibility with COPT v8+, which changed the
+    default Python matrix modeling API from numpy to its own implementation
+    (``coptpy.NdArray``).
 
     Parameters
     ----------
@@ -267,7 +264,8 @@ def __to_numpy(
         - ``coptpy.NdArray`` from COPT v8+ (converted via ``tonumpy()``)
         - ``np.ndarray`` (returned as-is to avoid redundant copy)
         - Scalar values (float, int) → converted to 1-element 1D numpy array
-        - Sequence types (list, tuple) of floats/ints → converted to 1D numpy array
+        - Sequence types (list, tuple) of floats/ints → converted to 1D numpy
+          array
 
     Returns
     -------
@@ -277,15 +275,17 @@ def __to_numpy(
     Raises
     ------
     TypeError
-        If the input type is not supported (e.g., dict, None, non-numeric sequence).
+        If the input type is not supported (e.g., dict, None, non-numeric
+        sequence).
     RuntimeError
-        If conversion from coptpy.NdArray to numpy fails (e.g., invalid COPT array).
+        If conversion from coptpy.NdArray to numpy fails (e.g., invalid COPT
+        array).
 
     Notes
     -----
     COPT v8.0.0+ uses ``coptpy.NdArray`` by default, which does not support
-    operators such as ``>=``. This function converts such arrays to ``np.ndarray``
-    for further processing.
+    operators such as ``>=``. This function converts such arrays to
+    ``np.ndarray`` for further processing.
     Numpy arrays are returned as-is to avoid unnecessary memory copies.
 
     Examples
@@ -306,7 +306,8 @@ def __to_numpy(
     """
     if array_like is None:
         raise TypeError(
-            "Input 'array_like' cannot be None. Supported types: coptpy.NdArray, np.ndarray, float, int, list/tuple of numbers."
+            "Input 'array_like' cannot be None. Supported types: "
+            "coptpy.NdArray, np.ndarray, float, int, list/tuple of numbers."
         )
 
     if isinstance(array_like, np.ndarray):
@@ -327,10 +328,12 @@ def __to_numpy(
             return np.asarray(array_like)
     except Exception as e:
         raise RuntimeError(
-            f"Failed to convert input to numpy array. Input type: {type(array_like).__name__}, error: {str(e)}"
+            "Failed to convert input to numpy array. Input type: "
+            f"{type(array_like).__name__}, error: {str(e)}"
         ) from e
 
     raise TypeError(
         f"Unsupported type '{type(array_like).__name__}' for 'array_like'. "
-        f"Supported types: coptpy.NdArray, np.ndarray, float, int, list/tuple of numbers."
+        f"Supported types: coptpy.NdArray, np.ndarray, float, int, list/tuple "
+        "of numbers."
     )
