@@ -99,15 +99,25 @@ def copt_solve_problem(
         num_vars, lb=-COPT.INFINITY, ub=COPT.INFINITY, vtype=COPT.CONTINUOUS
     )
     ineq_constr, eq_constr, lb_constr, ub_constr = None, None, None, None
-    if G is not None:
-        ineq_constr = model.addMConstr(G, x, COPT.LESS_EQUAL, h)
-    if A is not None:
-        eq_constr = model.addMConstr(A, x, COPT.EQUAL, b)
+    if G is not None and h is not None:
+        ineq_constr = model.addMConstr(
+            G,  # type: ignore[arg-type]
+            x,
+            COPT.LESS_EQUAL,
+            h,
+        )
+    if A is not None and b is not None:
+        eq_constr = model.addMConstr(
+            A,  # type: ignore[arg-type]
+            x,
+            COPT.EQUAL,
+            b,
+        )
     if lb is not None:
         lb_constr = model.addMConstr(identity, x, COPT.GREATER_EQUAL, lb)
     if ub is not None:
         ub_constr = model.addMConstr(identity, x, COPT.LESS_EQUAL, ub)
-    objective = 0.5 * (x @ P @ x) + q @ x
+    objective = 0.5 * (x @ P @ x) + q @ x  # type: ignore[operator]
     model.setObjective(objective, sense=COPT.MINIMIZE)
     model.solve()
 
