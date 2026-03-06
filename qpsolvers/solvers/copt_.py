@@ -269,7 +269,7 @@ def __to_numpy(
 
     Parameters
     ----------
-    array_like : Union[coptpy.NdArray, np.ndarray, float, int, Sequence[Union[float, int]]]
+    array_like :
         Input array to convert. Supported types:
         - ``coptpy.NdArray`` from COPT v8+ (converted via ``tonumpy()``)
         - ``np.ndarray`` (returned as-is to avoid redundant copy)
@@ -279,8 +279,9 @@ def __to_numpy(
 
     Returns
     -------
-    np.ndarray
-        Numpy array representation of the input (1D for scalars/sequences, same shape for COPT/numpy arrays).
+    :
+        Numpy array representation of the input (1D for scalars/sequences, same
+        shape for COPT/numpy arrays).
 
     Raises
     ------
