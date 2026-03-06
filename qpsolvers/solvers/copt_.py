@@ -17,7 +17,7 @@ on installing this solver.
 """
 
 import warnings
-from typing import Optional, Union, Sequence
+from typing import Optional, Sequence, Union
 
 import coptpy
 import numpy as np
@@ -29,10 +29,10 @@ from ..solution import Solution
 
 
 def copt_solve_problem(
-        problem: Problem,
-        initvals: Optional[np.ndarray] = None,
-        verbose: bool = False,
-        **kwargs,
+    problem: Problem,
+    initvals: Optional[np.ndarray] = None,
+    verbose: bool = False,
+    **kwargs,
 ) -> Solution:
     """Solve a quadratic program using COPT.
 
@@ -115,56 +115,59 @@ def copt_solve_problem(
     solution.extras["status"] = model.status
     solution.found = model.status in (COPT.OPTIMAL, COPT.IMPRECISE)
     if solution.found:
-        # COPT v8.0.0+ Changed the default Python matrix modeling API
-        #  from `numpy` to its own implementation.
-        #  `coptpy.NdArray` does not support operators such as ">=",
-        #  so convert to `np.ndarray`
-        solution.x = __to_numpy(x.X)
+        # COPT v8.0.0+ Changed the default Python matrix modeling API from
+        # `numpy` to its own implementation. `coptpy.NdArray` does not support
+        # operators such as ">=", so convert to `np.ndarray`
+        solution.x = __to_numpy(x.X)  # type: ignore[attr-defined]
         __retrieve_dual(solution, ineq_constr, eq_constr, lb_constr, ub_constr)
     return solution
 
 
 def __retrieve_dual(
-        solution: Solution,
-        ineq_constr: Optional[coptpy.MConstr],
-        eq_constr: Optional[coptpy.MConstr],
-        lb_constr: Optional[coptpy.MConstr],
-        ub_constr: Optional[coptpy.MConstr],
+    solution: Solution,
+    ineq_constr: Optional[coptpy.MConstr],
+    eq_constr: Optional[coptpy.MConstr],
+    lb_constr: Optional[coptpy.MConstr],
+    ub_constr: Optional[coptpy.MConstr],
 ) -> None:
-    solution.z = __to_numpy(
-        -ineq_constr.Pi if ineq_constr is not None else np.empty((0,))
+    solution.z = (
+        __to_numpy(-ineq_constr.Pi)  # type: ignore[attr-defined]
+        if ineq_constr is not None
+        else np.empty((0,))
     )
-    solution.y = __to_numpy(
-        -eq_constr.Pi if eq_constr is not None else np.empty((0,))
+    solution.y = (
+        __to_numpy(-eq_constr.Pi)  # type: ignore[attr-defined]
+        if eq_constr is not None
+        else np.empty((0,))
     )
     if lb_constr is not None and ub_constr is not None:
         solution.z_box = __to_numpy(
-            -ub_constr.Pi - lb_constr.Pi
+            -ub_constr.Pi - lb_constr.Pi  # type: ignore[attr-defined]
         )
     elif ub_constr is not None:  # lb_constr is None
         solution.z_box = __to_numpy(
-            -ub_constr.Pi
+            -ub_constr.Pi  # type: ignore[attr-defined]
         )
     elif lb_constr is not None:  # ub_constr is None
         solution.z_box = __to_numpy(
-            -lb_constr.Pi
+            -lb_constr.Pi  # type: ignore[attr-defined]
         )
     else:  # lb_constr is None and ub_constr is None
         solution.z_box = np.empty((0,))
 
 
 def copt_solve_qp(
-        P: Union[np.ndarray, spa.csc_matrix],
-        q: np.ndarray,
-        G: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
-        h: Optional[np.ndarray] = None,
-        A: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
-        b: Optional[np.ndarray] = None,
-        lb: Optional[np.ndarray] = None,
-        ub: Optional[np.ndarray] = None,
-        initvals: Optional[np.ndarray] = None,
-        verbose: bool = False,
-        **kwargs,
+    P: Union[np.ndarray, spa.csc_matrix],
+    q: np.ndarray,
+    G: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    h: Optional[np.ndarray] = None,
+    A: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    b: Optional[np.ndarray] = None,
+    lb: Optional[np.ndarray] = None,
+    ub: Optional[np.ndarray] = None,
+    initvals: Optional[np.ndarray] = None,
+    verbose: bool = False,
+    **kwargs,
 ) -> Optional[np.ndarray]:
     r"""Solve a quadratic program using COPT.
 
