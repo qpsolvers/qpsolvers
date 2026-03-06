@@ -29,6 +29,7 @@ autodoc_mock_imports = [
     "nppro",
     "osqp",
     "qpoases",
+    "qpSWIFT",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
