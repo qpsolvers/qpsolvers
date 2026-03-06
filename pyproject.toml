@@ -194,13 +194,16 @@ disable = [
 
 [tool.pylint.'TYPECHECK']
 generated-members = [
-    "coptpy.MConstr",
-    "coptpy.Model",
     "clarabel.DefaultSettings",
     "clarabel.DefaultSolver",
     "clarabel.NonnegativeConeT",
     "clarabel.SolverStatus",
     "clarabel.ZeroConeT",
+    "coptpy.Envr",
+    "coptpy.EnvrConfig",
+    "coptpy.MConstr",
+    "coptpy.Model",
+    "coptpy.NdArray",
     "daqp.solve",
     "gurobipy.MConstr",
     "gurobipy.Model",
