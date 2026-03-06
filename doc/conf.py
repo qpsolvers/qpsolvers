@@ -21,7 +21,7 @@ extensions = [
 
 # List of modules to be mocked up
 autodoc_mock_imports = [
-    "coptpy,"
+    "coptpy",
     "ecos",
     "gurobipy",
     "hpipm_python",
