@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - New solver: [COPT](https://guide.coap.online/copt/en-doc/index.html) (thanks to @Salancelot)
 
+### Fixed
+
+- CICD: Add Gurobi to pixi PyPI dependencies
+
 ## [4.9.0] - 2026-03-04
 
 ### Added
