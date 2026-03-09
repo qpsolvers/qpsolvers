@@ -95,6 +95,7 @@ scs = ">=3.2.0"
 
 [tool.pixi.pypi-dependencies]
 coptpy = ">=7.0.0"
+gurobipy = ">=9.5.2"
 highspy = ">=1.1.2.dev3"
 jaxopt = ">=0.8.3"
 qpalm = ">=1.2.1"
