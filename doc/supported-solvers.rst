@@ -14,6 +14,12 @@ Clarabel
 .. automodule:: qpsolvers.solvers.clarabel_
     :members:
 
+COPT
+========
+
+.. automodule:: qpsolvers.solvers.copt_
+    :members:
+
 CVXOPT
 ======
 

@@ -503,7 +503,7 @@ class TestSolveQP(unittest.TestCase):
                             else (
                                 1e-6
                                 if solver
-                                in ["cvxopt", "kvxopt", "ecos", "qpax"]
+                                in ["copt", "cvxopt", "kvxopt", "ecos", "qpax"]
                                 else 5e-8 if solver == "qpswift" else 1e-8
                             )
                         )
@@ -580,7 +580,7 @@ class TestSolveQP(unittest.TestCase):
                                 if solver in ["scs", "sip"]
                                 else (
                                     2e-5
-                                    if solver == "proxqp"
+                                    if solver in ["copt", "proxqp"]
                                     else 1e-6 if solver == "highs" else 1e-7
                                 )
                             )
@@ -623,7 +623,7 @@ class TestSolveQP(unittest.TestCase):
             known_solution = array([2.2] * 149 + [2.4])
             sol_tolerance = (
                 1e-3
-                if solver in ["gurobi", "osqp", "qpalm", "sip"]
+                if solver in ["gurobi", "copt", "osqp", "qpalm", "sip"]
                 else (
                     5e-6
                     if solver in ["mosek", "proxqp"]
