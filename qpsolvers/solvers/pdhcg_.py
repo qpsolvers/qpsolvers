@@ -128,7 +128,10 @@ def pdhcg_solve_problem(
     )
 
     if verbose:
-        model.setParam("OutputFlag", 1)
+        model.setParam("OutputFlag", 2)
+    else:
+        model.setParam("OutputFlag", 0)
+
     if kwargs:
         model.setParams(**kwargs)
 
