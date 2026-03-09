@@ -111,6 +111,28 @@ with 200 optimization variables fails with the following warning:
 
     Warning: Model too large for size-limited license; visit https://www.gurobi.com/free-trial for a full license
 
+.. _copt-install:
+
+COPT
+------
+
+COPT comes with an installation doc at  `COPT installation
+<https://guide.coap.online/copt/en-doc/install.html>`_
+where you can install by pip:
+
+.. code:: bash
+
+    python -m pip install coptpy
+
+This version comes with limitations. For instance, trying to solve a problem
+with 200 optimization variables fails with the following warning:
+
+.. code:: python
+
+    No license found. Starting COPT with size limitations for non-commercial use
+    Please apply for a license from www.shanshu.ai/copt
+
+
 .. _qpoases-install:
 
 HiGHS

@@ -74,30 +74,31 @@ When imported, qpsolvers loads all the solvers it can find and lists them in ``q
 
 ## Solvers
 
-| Solver | Keyword | Algorithm | API | License |
-| ------ | ------- | --------- | --- | ------- |
-| [Clarabel](https://github.com/oxfordcontrol/Clarabel.rs) | ``clarabel`` | Interior point | Sparse | Apache-2.0 |
-| [CVXOPT](http://cvxopt.org/) | ``cvxopt`` | Interior point | Dense | GPL-3.0 |
-| [DAQP](https://github.com/darnstrom/daqp) | ``daqp`` | Active set | Dense | MIT |
-| [ECOS](https://web.stanford.edu/~boyd/papers/ecos.html) | ``ecos`` | Interior point | Sparse | GPL-3.0 |
-| [Gurobi](https://www.gurobi.com/) | ``gurobi`` | Interior point | Sparse | Commercial |
-| [HiGHS](https://highs.dev/) | ``highs`` | Active set | Sparse | MIT |
-| [HPIPM](https://github.com/giaf/hpipm) | ``hpipm`` | Interior point | Dense | BSD-2-Clause |
+| Solver                                                                       | Keyword         | Algorithm | API | License |
+|------------------------------------------------------------------------------|-----------------| --------- | --- | ------- |
+| [Clarabel](https://github.com/oxfordcontrol/Clarabel.rs)                     | ``clarabel``    | Interior point | Sparse | Apache-2.0 |
+| [COPT](https://www.shanshu.ai/copt)                                          | ``copt``        | Interior point | Sparse | Commercial |
+| [CVXOPT](http://cvxopt.org/)                                                 | ``cvxopt``      | Interior point | Dense | GPL-3.0 |
+| [DAQP](https://github.com/darnstrom/daqp)                                    | ``daqp``        | Active set | Dense | MIT |
+| [ECOS](https://web.stanford.edu/~boyd/papers/ecos.html)                      | ``ecos``        | Interior point | Sparse | GPL-3.0 |
+| [Gurobi](https://www.gurobi.com/)                                            | ``gurobi``      | Interior point | Sparse | Commercial |
+| [HiGHS](https://highs.dev/)                                                  | ``highs``       | Active set | Sparse | MIT |
+| [HPIPM](https://github.com/giaf/hpipm)                                       | ``hpipm``       | Interior point | Dense | BSD-2-Clause |
 | [jaxopt.OSQP](https://jaxopt.github.io/stable/_autosummary/jaxopt.OSQP.html) | ``jaxopt_osqp`` | Augmented Lagrangian | Dense | Apache-2.0 |
-| [KVXOPT](https://github.com/sanurielf/kvxopt) | ``kvxopt`` | Interior point | Dense & Sparse | GPL-3.0 |
-| [MOSEK](https://mosek.com/) | ``mosek`` | Interior point | Sparse | Commercial |
-| NPPro | ``nppro`` | Active set | Dense | Commercial |
-| [OSQP](https://osqp.org/) | ``osqp`` | Augmented Lagrangian | Sparse | Apache-2.0 |
-| [PIQP](https://github.com/PREDICT-EPFL/piqp) | ``piqp`` | Proximal interior point | Dense & Sparse | BSD-2-Clause |
-| [ProxQP](https://github.com/Simple-Robotics/proxsuite) | ``proxqp`` | Augmented Lagrangian | Dense & Sparse | BSD-2-Clause |
-| [QPALM](https://github.com/kul-optec/QPALM) | ``qpalm`` | Augmented Lagrangian | Sparse | LGPL-3.0 |
-| [qpax](https://github.com/kevin-tracy/qpax/) | ``qpax`` | Interior point | Dense | MIT |
-| [qpOASES](https://github.com/coin-or/qpOASES) | ``qpoases`` | Active set | Dense | LGPL-2.1 |
-| [qpSWIFT](https://github.com/qpSWIFT/qpSWIFT) | ``qpswift`` | Interior point | Sparse | GPL-3.0 |
-| [QTQP](https://github.com/google-deepmind/qtqp) | ``qtqp`` | Interior point | Sparse | Apache-2.0 |
-| [quadprog](https://github.com/quadprog/quadprog) | ``quadprog`` | Active set | Dense | GPL-2.0 |
-| [SCS](https://www.cvxgrp.org/scs/) | ``scs`` | Augmented Lagrangian | Sparse | MIT |
-| [SIP](https://github.com/joaospinto/sip_python) | ``sip`` | Barrier Augmented Lagrangian | Sparse | MIT |
+| [KVXOPT](https://github.com/sanurielf/kvxopt)                                | ``kvxopt``      | Interior point | Dense & Sparse | GPL-3.0 |
+| [MOSEK](https://mosek.com/)                                                  | ``mosek``       | Interior point | Sparse | Commercial |
+| NPPro                                                                        | ``nppro``       | Active set | Dense | Commercial |
+| [OSQP](https://osqp.org/)                                                    | ``osqp``        | Augmented Lagrangian | Sparse | Apache-2.0 |
+| [PIQP](https://github.com/PREDICT-EPFL/piqp)                                 | ``piqp``        | Proximal interior point | Dense & Sparse | BSD-2-Clause |
+| [ProxQP](https://github.com/Simple-Robotics/proxsuite)                       | ``proxqp``      | Augmented Lagrangian | Dense & Sparse | BSD-2-Clause |
+| [QPALM](https://github.com/kul-optec/QPALM)                                  | ``qpalm``       | Augmented Lagrangian | Sparse | LGPL-3.0 |
+| [QTQP](https://github.com/google-deepmind/qtqp)                              | ``qtqp``        | Interior point | Sparse | Apache-2.0 |
+| [qpax](https://github.com/kevin-tracy/qpax/)                                 | ``qpax``        | Interior point | Dense | MIT |
+| [qpOASES](https://github.com/coin-or/qpOASES)                                | ``qpoases``     | Active set | Dense | LGPL-2.1 |
+| [qpSWIFT](https://github.com/qpSWIFT/qpSWIFT)                                | ``qpswift``     | Interior point | Sparse | GPL-3.0 |
+| [quadprog](https://github.com/quadprog/quadprog)                             | ``quadprog``    | Active set | Dense | GPL-2.0 |
+| [SCS](https://www.cvxgrp.org/scs/)                                           | ``scs``         | Augmented Lagrangian | Sparse | MIT |
+| [SIP](https://github.com/joaospinto/sip_python)                              | ``sip``         | Barrier Augmented Lagrangian | Sparse | MIT |
 
 Matrix arguments are NumPy arrays for dense solvers and SciPy Compressed Sparse Column (CSC) matrices for sparse ones.
 

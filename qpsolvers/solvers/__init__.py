@@ -233,6 +233,48 @@ except ImportError:
     pass
 
 
+# COPT
+# ======
+
+copt_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[ndarray],
+            bool,
+        ],
+        Solution,
+    ]
+] = None
+
+copt_solve_qp: Optional[
+    Callable[
+        [
+            ndarray,
+            ndarray,
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            bool,
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
+try:
+    from .copt_ import copt_solve_problem, copt_solve_qp
+
+    solve_function["copt"] = copt_solve_problem
+    available_solvers.append("copt")
+    sparse_solvers.append("copt")
+except ImportError:
+    pass
+
+
 # HiGHS
 # =====
 
@@ -929,6 +971,7 @@ if not available_solvers:
 __all__ = [
     "available_solvers",
     "clarabel_solve_qp",
+    "copt_solve_qp",
     "cvxopt_solve_qp",
     "daqp_solve_qp",
     "dense_solvers",
