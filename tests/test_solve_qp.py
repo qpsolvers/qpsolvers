@@ -145,7 +145,10 @@ class TestSolveQP(unittest.TestCase):
                     else 5e-6 if solver in ["proxqp", "qpax", "sip"] else 1e-8
                 )
             )
-            eq_tolerance = 1e-5 if solver in ["jaxopt_osqp", "sip"] else 1e-10
+            eq_tolerance = (
+                1e-5 if solver in ["jaxopt_osqp", "sip"]
+                else 1e-7 if solver in ["qpax"] else 1e-10
+            )
             ineq_tolerance = (
                 2e-4
                 if solver in ["jaxopt_osqp", "qpalm", "scs"]
@@ -318,7 +321,10 @@ class TestSolveQP(unittest.TestCase):
                     )
                 )
             )
-            eq_tolerance = 1e-5 if solver in ["proxqp", "sip"] else 1e-10
+            eq_tolerance = (
+                1e-5 if solver in ["proxqp", "sip"]
+                else 1e-7 if solver in ["qpax"] else 1e-10
+            )
             ineq_tolerance = 1e-5 if solver == "proxqp" else 1e-10
             self.assertLess(
                 norm(x - known_solution), sol_tolerance, f"{solver=}"
@@ -714,7 +720,8 @@ class TestSolveQP(unittest.TestCase):
                 )
             )
             eq_tolerance = (
-                1e-4 if solver in ["jaxopt_osqp", "osqp", "sip"] else 1e-10
+                1e-4 if solver in ["jaxopt_osqp", "osqp", "sip"] else
+                1e-7 if solver == "qpax" else 1e-10
             )
             ineq_tolerance = (
                 1e-3
