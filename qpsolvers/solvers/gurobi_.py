@@ -97,15 +97,15 @@ def gurobi_solve_problem(
         num_vars, lb=-GRB.INFINITY, ub=GRB.INFINITY, vtype=GRB.CONTINUOUS
     )
     ineq_constr, eq_constr, lb_constr, ub_constr = None, None, None, None
-    if G is not None:
-        ineq_constr = model.addMConstr(G, x, GRB.LESS_EQUAL, h)
-    if A is not None:
-        eq_constr = model.addMConstr(A, x, GRB.EQUAL, b)
+    if G is not None and h is not None:
+        ineq_constr = model.addMConstr(G, x, GRB.LESS_EQUAL, h)  # type: ignore[arg-type]
+    if A is not None and b is not None:
+        eq_constr = model.addMConstr(A, x, GRB.EQUAL, b)  # type: ignore[arg-type]
     if lb is not None:
-        lb_constr = model.addMConstr(identity, x, GRB.GREATER_EQUAL, lb)
+        lb_constr = model.addMConstr(identity, x, GRB.GREATER_EQUAL, lb)  # type: ignore[call-overload]
     if ub is not None:
-        ub_constr = model.addMConstr(identity, x, GRB.LESS_EQUAL, ub)
-    objective = 0.5 * (x @ P @ x) + q @ x
+        ub_constr = model.addMConstr(identity, x, GRB.LESS_EQUAL, ub)  # type: ignore[call-overload]
+    objective = 0.5 * (x @ P @ x) + q @ x  # type: ignore[operator]
     model.setObjective(objective, sense=GRB.MINIMIZE)
     model.optimize()
 
@@ -113,7 +113,7 @@ def gurobi_solve_problem(
     solution.extras["status"] = model.status
     solution.found = model.status in (GRB.OPTIMAL, GRB.SUBOPTIMAL)
     if solution.found:
-        solution.x = x.X
+        solution.x = x.getAttr("X")
         __retrieve_dual(solution, ineq_constr, eq_constr, lb_constr, ub_constr)
     return solution
 
@@ -125,14 +125,20 @@ def __retrieve_dual(
     lb_constr: Optional[gurobipy.MConstr],
     ub_constr: Optional[gurobipy.MConstr],
 ) -> None:
-    solution.z = -ineq_constr.Pi if ineq_constr is not None else np.empty((0,))
-    solution.y = -eq_constr.Pi if eq_constr is not None else np.empty((0,))
+    solution.z = (
+        -ineq_constr.getAttr("Pi")
+        if ineq_constr is not None
+        else np.empty((0,))
+    )
+    solution.y = (
+        -eq_constr.getAttr("Pi") if eq_constr is not None else np.empty((0,))
+    )
     if lb_constr is not None and ub_constr is not None:
-        solution.z_box = -ub_constr.Pi - lb_constr.Pi
+        solution.z_box = -ub_constr.getAttr("Pi") - lb_constr.getAttr("Pi")
     elif ub_constr is not None:  # lb_constr is None
-        solution.z_box = -ub_constr.Pi
+        solution.z_box = -ub_constr.getAttr("Pi")
     elif lb_constr is not None:  # ub_constr is None
-        solution.z_box = -lb_constr.Pi
+        solution.z_box = -lb_constr.getAttr("Pi")
     else:  # lb_constr is None and ub_constr is None
         solution.z_box = np.empty((0,))
 
