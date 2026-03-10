@@ -98,13 +98,33 @@ def gurobi_solve_problem(
     )
     ineq_constr, eq_constr, lb_constr, ub_constr = None, None, None, None
     if G is not None and h is not None:
-        ineq_constr = model.addMConstr(G, x, GRB.LESS_EQUAL, h)  # type: ignore[arg-type]
+        ineq_constr = model.addMConstr(
+            G,  # type: ignore[arg-type]
+            x,
+            GRB.LESS_EQUAL,
+            h,
+        )
     if A is not None and b is not None:
-        eq_constr = model.addMConstr(A, x, GRB.EQUAL, b)  # type: ignore[arg-type]
+        eq_constr = model.addMConstr(
+            A,  # type: ignore[arg-type]
+            x,
+            GRB.EQUAL,
+            b,
+        )
     if lb is not None:
-        lb_constr = model.addMConstr(identity, x, GRB.GREATER_EQUAL, lb)  # type: ignore[call-overload]
+        lb_constr = model.addMConstr(
+            identity,  # type: ignore[call-overload]
+            x,
+            GRB.GREATER_EQUAL,
+            lb,
+        )
     if ub is not None:
-        ub_constr = model.addMConstr(identity, x, GRB.LESS_EQUAL, ub)  # type: ignore[call-overload]
+        ub_constr = model.addMConstr(
+            identity,  # type: ignore[call-overload]
+            x,
+            GRB.LESS_EQUAL,
+            ub,
+        )
     objective = 0.5 * (x @ P @ x) + q @ x  # type: ignore[operator]
     model.setObjective(objective, sense=GRB.MINIMIZE)
     model.optimize()
