@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.10.0] - 2026-03-10
+
 ### Added
 
 - New solver: [COPT](https://guide.coap.online/copt/en-doc/index.html) (thanks to @Salancelot)
@@ -899,7 +901,8 @@ release!
 
 - A changelog :)
 
-[unreleased]: https://github.com/qpsolvers/qpsolvers/compare/v4.9.0...HEAD
+[unreleased]: https://github.com/qpsolvers/qpsolvers/compare/v4.10.0...HEAD
+[4.10.0]: https://github.com/qpsolvers/qpsolvers/compare/v4.9.0...v4.10.0
 [4.9.0]: https://github.com/qpsolvers/qpsolvers/compare/v4.8.2...v4.9.0
 [4.8.2]: https://github.com/qpsolvers/qpsolvers/compare/v4.8.1...v4.8.2
 [4.8.1]: https://github.com/qpsolvers/qpsolvers/compare/v4.8.0...v4.8.1
