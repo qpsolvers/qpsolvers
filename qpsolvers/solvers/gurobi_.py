@@ -74,7 +74,7 @@ def gurobi_solve_problem(
          - Run time limit in seconds, 0 to disable.
 
     Check out the `Parameter Descriptions
-    <https://www.gurobi.com/documentation/9.5/refman/parameter_descriptions.html>`_
+    <https://www.gurobi.com/documentation/9.5/refman/parameter_descriptions.html>`__
     documentation for all available Gurobi parameters.
 
     Lower values for primal or dual tolerances yield more precise solutions at
@@ -217,7 +217,7 @@ def gurobi_solve_qp(
          - Run time limit in seconds, 0 to disable.
 
     Check out the `Parameter Descriptions
-    <https://www.gurobi.com/documentation/9.5/refman/parameter_descriptions.html>`_
+    <https://www.gurobi.com/documentation/9.5/refman/parameter_descriptions.html>`__
     documentation for all available Gurobi parameters.
 
     Lower values for primal or dual tolerances yield more precise solutions at

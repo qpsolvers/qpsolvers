@@ -287,16 +287,19 @@ for solver in sparse_solvers:  # loop complexity warning ;p
                 kwargs["mosek"] = {mosek.dparam.intpnt_qo_tol_rel_gap: 1e-6}
             except ImportError:
                 pass
-        setattr(
-            TestSolveLS,
-            "test_medium_sparse_dense_conversion_{}".format(solver),
-            TestSolveLS.get_test_medium_sparse(
-                solver, sparse_conversion=False, **kwargs
-            ),
-        )
+        if solver != "copt":
+            # COPT: Size limitation for non-commercial use
+            setattr(
+                TestSolveLS,
+                "test_medium_sparse_dense_conversion_{}".format(solver),
+                TestSolveLS.get_test_medium_sparse(
+                    solver, sparse_conversion=False, **kwargs
+                ),
+            )
 
 for solver in sparse_solvers:  # loop complexity warning ;p
-    if solver not in ["cvxopt", "kvxopt", "gurobi", "qtqp"]:
+    if solver not in ["copt", "cvxopt", "kvxopt", "gurobi", "qtqp"]:
+        # COPT: Size limitation for non-commercial use
         # CVXOPT and KVXOPT: sparse conversion breaks rank assumption
         # Gurobi: model too large for size-limited license
         # QTQP: slow convergence on medium/large problems (pure Python)
@@ -319,17 +322,20 @@ for solver in sparse_solvers:  # loop complexity warning ;p
                 kwargs["mosek"] = {mosek.dparam.intpnt_qo_tol_rel_gap: 1e-7}
             except ImportError:
                 pass
-        setattr(
-            TestSolveLS,
-            "test_large_sparse_problem_dense_conversion_{}".format(solver),
-            TestSolveLS.get_test_large_sparse(
-                solver,
-                sparse_conversion=False,
-                obj_scaling=1e-3 if solver == "mosek" else 1.0,
-                **kwargs,
-            ),
-        )
-        if solver != "cvxopt" and solver != "kvxopt":
+        if solver != "copt":
+            # COPT: Size limitation for non-commercial use
+            setattr(
+                TestSolveLS,
+                "test_large_sparse_problem_dense_conversion_{}".format(solver),
+                TestSolveLS.get_test_large_sparse(
+                    solver,
+                    sparse_conversion=False,
+                    obj_scaling=1e-3 if solver == "mosek" else 1.0,
+                    **kwargs,
+                ),
+            )
+        if solver not in ["copt", "cvxopt", "kvxopt"]:
+            # COPT: Size limitation for non-commercial use
             # CVXOPT and KVXOPT: sparse conversion breaks rank assumption
             setattr(
                 TestSolveLS,

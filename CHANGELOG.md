@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- New solver: [COPT](https://guide.coap.online/copt/en-doc/index.html) (thanks to @Salancelot)
+
 ## [4.9.0] - 2026-03-04
 
 ### Added
