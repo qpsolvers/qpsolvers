@@ -20,12 +20,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - New solver: PDHCG (thanks to @Lhongpei)
+- Support Python 3.13
 
 ### Changed
 
+- Change params in copt test to avoid unexpected timeout fail (thanks to @Salancelot)
 - Merge unsupported solvers submodule within the main solvers submodule
-- Remove unintended copied copyright information in copt_.py
-- Change params in copt test to avoid unexpected timeout fail
+- Remove unintended copied copyright information in copt_.py (thanks to @Salancelot)
 
 ### Fixed
 
