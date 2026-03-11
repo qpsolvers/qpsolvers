@@ -22,6 +22,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Scientific/Engineering :: Mathematics",
 ]
 dependencies = [
@@ -143,6 +144,9 @@ python = "3.11.*"
 [tool.pixi.feature.py312.dependencies]
 python = "3.12.*"
 
+[tool.pixi.feature.py313.dependencies]
+python = "3.13.*"
+
 [tool.pixi.feature.test.dependencies]
 
 [tool.pixi.feature.test-linux.dependencies]
@@ -177,6 +181,9 @@ test-py311-windows = { features = ["py311", "test", "test-windows"], solve-group
 test-py312-linux = { features = ["py312", "test", "test-linux"], solve-group = "py312" }
 test-py312-macos = { features = ["py312", "test", "test-macos"], solve-group = "py312" }
 test-py312-windows = { features = ["py312", "test", "test-windows"], solve-group = "py312" }
+test-py313-linux = { features = ["py313", "test", "test-linux"], solve-group = "py313" }
+test-py313-macos = { features = ["py313", "test", "test-macos"], solve-group = "py313" }
+test-py313-windows = { features = ["py313", "test", "test-windows"], solve-group = "py313" }
 
 [tool.pylint.'MESSAGES CONTROL']
 disable = [
