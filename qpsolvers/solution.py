@@ -77,6 +77,8 @@ class Solution:
     y: Optional[np.ndarray] = None
     z: Optional[np.ndarray] = None
     z_box: Optional[np.ndarray] = None
+    build_time: Optional[float] = None
+    solve_time: Optional[float] = None
 
     def is_optimal(self, eps_abs: float) -> bool:
         """Check whether the solution is indeed optimal.
