@@ -11,6 +11,7 @@ method for strictly convex quadratic programming. Currently, it is designed for
 dense problems only.
 """
 
+import time
 import warnings
 from typing import Optional
 
@@ -63,6 +64,7 @@ def nppro_solve_problem(
        * - ``HessianUpdates``
          - Enable Hessian updates or not.
     """
+    build_start_time = time.perf_counter()
     P, q, G, h, A, b, lb, ub = problem.unpack_as_dense()
 
     n = P.shape[0]
@@ -120,7 +122,9 @@ def nppro_solve_problem(
     x0 = np.asarray(x0, order="C", dtype=np.float64)
 
     # Call solver
+    solve_start_time = time.perf_counter()
     x, fval, exitflag, iter_ = solver.solve(P, q, A_, l_, u_, lb_, ub_, x0)
+    solve_end_time = time.perf_counter()
 
     # Store solution
     exitflag_success = 1
@@ -138,6 +142,8 @@ def nppro_solve_problem(
         "cost": fval,
         "iter": iter_,
     }
+    solution.build_time = solve_start_time - build_start_time
+    solution.solve_time = solve_end_time - solve_start_time
     return solution
 
 

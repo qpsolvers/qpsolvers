@@ -16,6 +16,7 @@ See the :ref:`installation page <copt-install>` for additional instructions
 on installing this solver.
 """
 
+import time
 import warnings
 from typing import Optional, Sequence, Union
 
@@ -77,6 +78,7 @@ def copt_solve_problem(
     the cost of computation time. See *e.g.* [Caron2022]_ for a primer of
     solver tolerances.
     """
+    build_start_time = time.perf_counter()
     if initvals is not None:
         warnings.warn("warm-start values are ignored by this wrapper")
 
@@ -119,7 +121,9 @@ def copt_solve_problem(
         ub_constr = model.addMConstr(identity, x, COPT.LESS_EQUAL, ub)
     objective = 0.5 * (x @ P @ x) + q @ x  # type: ignore[operator]
     model.setObjective(objective, sense=COPT.MINIMIZE)
+    solve_start_time = time.perf_counter()
     model.solve()
+    solve_end_time = time.perf_counter()
 
     solution = Solution(problem)
     solution.extras["status"] = model.status
@@ -130,6 +134,8 @@ def copt_solve_problem(
         # operators such as ">=", so convert to `np.ndarray`
         solution.x = __to_numpy(x.X)  # type: ignore[attr-defined]
         __retrieve_dual(solution, ineq_constr, eq_constr, lb_constr, ub_constr)
+    solution.build_time = solve_start_time - build_start_time
+    solution.solve_time = solve_end_time - solve_start_time
     return solution
 
 

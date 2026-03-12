@@ -16,6 +16,7 @@ work, consider citing the corresponding paper [Huangfu2018]_.
 **Warm-start:** this solver interface supports warm starting 🔥
 """
 
+import time
 import warnings
 from typing import Optional, Union
 
@@ -170,6 +171,7 @@ def highs_solve_problem(
     Check out the `HiGHS documentation <https://ergo-code.github.io/HiGHS/>`_
     for more information on the solver.
     """
+    build_start_time = time.perf_counter()
     if initvals is not None:
         warnings.warn(
             "HiGHS: warm-start values are not available for this solver, "
@@ -195,7 +197,9 @@ def highs_solve_problem(
     for option, value in kwargs.items():
         solver.setOptionValue(option, value)
     solver.passModel(model)
+    solve_start_time = time.perf_counter()
     solver.run()
+    solve_end_time = time.perf_counter()
 
     result = solver.getSolution()
     model_status = solver.getModelStatus()
@@ -220,6 +224,8 @@ def highs_solve_problem(
         if lb is not None or ub is not None
         else np.empty((0,))
     )
+    solution.build_time = solve_start_time - build_start_time
+    solution.solve_time = solve_end_time - solve_start_time
     return solution
 
 
