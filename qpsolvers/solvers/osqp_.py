@@ -17,6 +17,7 @@ consider citing the corresponding paper [Stellato2020]_.
 **Warm-start:** this solver interface supports warm starting 🔥
 """
 
+import time
 import warnings
 from typing import Optional, Union
 
@@ -106,6 +107,7 @@ def osqp_solve_problem(
     solutions at the cost of computation time. See *e.g.* [Caron2022]_ for an
     overview of solver tolerances.
     """
+    build_start_time = time.perf_counter()
     P, q, G, h, A, b, lb, ub = problem.unpack()
     P, G, A = ensure_sparse_matrices("osqp", P, G, A)
 
@@ -134,7 +136,9 @@ def osqp_solve_problem(
     if initvals is not None:
         solver.warm_start(x=initvals)
 
+    solve_start_time = time.perf_counter()
     res = solver.solve()
+    solve_end_time = time.perf_counter()
 
     solution = Solution(problem)
     solution.extras = {
@@ -156,6 +160,8 @@ def osqp_solve_problem(
         if lb is not None or ub is not None
         else np.empty((0,))
     )
+    solution.build_time = solve_start_time - build_start_time
+    solution.solve_time = solve_end_time - solve_start_time
     return solution
 
 

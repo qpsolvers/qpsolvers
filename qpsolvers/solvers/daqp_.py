@@ -12,6 +12,7 @@ It has been developed to solve small/medium scale dense problems.
 **Warm-start:** this solver interface does not support warm starting ❄️
 """
 
+import time
 import warnings
 from ctypes import c_int
 from typing import Optional
@@ -69,6 +70,7 @@ def daqp_solve_problem(
     <https://darnstrom.github.io/daqp/parameters>`_ documentation for
     all available settings.
     """
+    build_start_time = time.perf_counter()
     if initvals is not None and verbose:
         warnings.warn("warm-start values are ignored by DAQP")
 
@@ -116,9 +118,11 @@ def daqp_solve_problem(
     sense = np.zeros(bupper.shape, dtype=c_int)
     sense[ms + mineq :] = 5
 
+    solve_start_time = time.perf_counter()
     x, obj, exitflag, info = daqp.solve(
         H, f, Atot, bupper, blower, sense, **kwargs
     )
+    solve_end_time = time.perf_counter()
 
     solution = Solution(problem)
     solution.found = exitflag > 0
@@ -129,6 +133,8 @@ def daqp_solve_problem(
         solution.z_box = info["lam"][:ms]
         solution.z = info["lam"][ms : ms + mineq]
         solution.y = info["lam"][ms + mineq :]
+    solution.build_time = solve_start_time - build_start_time
+    solution.solve_time = solve_end_time - solve_start_time
     return solution
 
 

@@ -17,6 +17,7 @@ documentation if you have found Clarabel.rs useful in your work.
 **Warm-start:** this solver interface does not support warm starting ❄️
 """
 
+import time
 import warnings
 from typing import Optional, Union
 
@@ -88,6 +89,7 @@ def clarabel_solve_problem(
     solutions at the cost of computation time. See *e.g.* [Caron2022]_ for a
     primer on solver tolerances and residuals.
     """
+    build_start_time = time.perf_counter()
     if initvals is not None and verbose:
         warnings.warn("Clarabel: warm-start values are ignored")
 
@@ -130,7 +132,9 @@ def clarabel_solve_problem(
         # But see https://github.com/PyO3/pyo3/issues/2880
         raise ProblemError("Solver failed to build problem") from exn
 
+    solve_start_time = time.perf_counter()
     result = solver.solve()
+    solve_end_time = time.perf_counter()
 
     solution = Solution(problem)
     solution.obj = result.obj_val
@@ -154,6 +158,8 @@ def clarabel_solve_problem(
     else:  # G is None
         solution.z = np.empty((0,))
         solution.z_box = np.empty((0,))
+    solution.build_time = solve_start_time - build_start_time
+    solution.solve_time = solve_end_time - solve_start_time
     return solution
 
 

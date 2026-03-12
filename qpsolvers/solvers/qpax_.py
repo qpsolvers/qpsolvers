@@ -15,6 +15,7 @@ a scientific work, consider citing the corresponding paper [Tracy2024]_.
 **Warm-start:** this solver interface does not support warm starting ❄️
 """
 
+import time
 import warnings
 from typing import Optional
 
@@ -73,6 +74,7 @@ def qpax_solve_problem(
     jax.config.update("jax_enable_x64", True)
     ```
     """
+    build_start_time = time.perf_counter()
     if initvals is not None and verbose:
         warnings.warn("warm-start values are ignored by qpax")
 
@@ -110,6 +112,7 @@ def qpax_solve_problem(
     if isinstance(G, spa.csc_matrix):
         G = G.toarray()
 
+    solve_start_time = time.perf_counter()
     x, s, z, y, converged, iters1 = qpax.solve_qp(
         P,
         q,
@@ -119,6 +122,7 @@ def qpax_solve_problem(
         h,
         **kwargs,
     )
+    solve_end_time = time.perf_counter()
 
     solution = Solution(problem)
     solution.x = x
@@ -146,6 +150,8 @@ def qpax_solve_problem(
         },
     }
 
+    solution.build_time = solve_start_time - build_start_time
+    solution.solve_time = solve_end_time - solve_start_time
     return solution
 
 
