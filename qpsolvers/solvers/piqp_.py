@@ -18,6 +18,7 @@ corresponding paper [Schwan2023]_.
 **Warm-start:** this solver interface does not support warm starting ❄️
 """
 
+import time
 import warnings
 from typing import Optional, Union
 
@@ -163,6 +164,7 @@ def piqp_solve_problem(
     This list is not exhaustive. Check out the `solver documentation
     <https://predict-epfl.github.io/piqp/interfaces/settings>`__ for details.
     """
+    build_start_time = time.perf_counter()
     if initvals is not None and verbose:
         warnings.warn("warm-start values are ignored by PIQP")
 
@@ -229,7 +231,9 @@ def piqp_solve_problem(
         solver.setup(P, q, A_piqp, b_piqp, G_piqp, h_piqp, lb, ub)
     else:
         solver.setup(P, q, A_piqp, b_piqp, G_piqp, None, h_piqp, lb, ub)
+    solve_start_time = time.perf_counter()
     status = solver.solve()
+    solve_end_time = time.perf_counter()
     success_status = piqp.PIQP_SOLVED
 
     solution = Solution(problem)
@@ -254,6 +258,8 @@ def piqp_solve_problem(
             solution.z_box = solver.result.z_bu - solver.result.z_bl
     else:
         solution.z_box = np.empty((0,))
+    solution.build_time = solve_start_time - build_start_time
+    solution.solve_time = solve_end_time - solve_start_time
     return solution
 
 

@@ -14,6 +14,7 @@ work, consider citing the corresponding paper [ODonoghue2021]_.
 **Warm-start:** this solver interface supports warm starting 🔥
 """
 
+import time
 import warnings
 from typing import Any, Dict, Optional, Union
 
@@ -144,6 +145,7 @@ def scs_solve_problem(
     <https://www.cvxgrp.org/scs/api/settings.html#settings>`_ documentation for
     all available settings.
     """
+    build_start_time = time.perf_counter()
     P, q, G, h, A, b, lb, ub = problem.unpack()
     P, G, A = ensure_sparse_matrices("scs", P, G, A)
     n = P.shape[0]
@@ -174,7 +176,9 @@ def scs_solve_problem(
     if lb is not None or ub is not None:
         __add_box_cone(n, lb, ub, cone, data)
     kwargs["verbose"] = verbose
+    solve_start_time = time.perf_counter()
     result = solve(data, cone, **kwargs)
+    solve_end_time = time.perf_counter()
 
     solution = Solution(problem)
     solution.extras = result["info"]
@@ -197,6 +201,8 @@ def scs_solve_problem(
         if lb is not None or ub is not None
         else np.empty((0,))
     )
+    solution.build_time = solve_start_time - build_start_time
+    solution.solve_time = solve_end_time - solve_start_time
     return solution
 
 

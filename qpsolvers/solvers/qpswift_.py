@@ -17,6 +17,7 @@ If you use qpSWIFT in your research, consider citing the corresponding paper
 **Warm-start:** this solver interface supports warm starting 🔥
 """
 
+import time
 import warnings
 from typing import Optional
 
@@ -115,6 +116,7 @@ def qpswift_solve_problem(
     have zero rows in your input matrices, as it can `make the solver
     numerically unstable <https://github.com/qpSWIFT/qpSWIFT/issues/3>`_.
     """
+    build_start_time = time.perf_counter()
     if initvals is not None:
         warnings.warn("qpSWIFT: warm-start values are ignored")
 
@@ -129,6 +131,7 @@ def qpswift_solve_problem(
         }
     )
 
+    solve_start_time = time.perf_counter()
     try:
         if G is not None and h is not None:
             if A is not None and b is not None:
@@ -140,6 +143,7 @@ def qpswift_solve_problem(
             raise ProblemError("problem has no inequality constraint")
     except TypeError as error:
         raise ProblemError("problem has sparse matrices") from error
+    solve_end_time = time.perf_counter()
 
     basic_info = result["basicInfo"]
     adv_info = result["advInfo"]
@@ -157,6 +161,8 @@ def qpswift_solve_problem(
     z, z_box = split_dual_linear_box(adv_info["z"], lb, ub)
     solution.z = z
     solution.z_box = z_box
+    solution.build_time = solve_start_time - build_start_time
+    solution.solve_time = solve_end_time - solve_start_time
     return solution
 
 

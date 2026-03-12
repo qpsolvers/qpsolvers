@@ -17,6 +17,7 @@ work, consider citing the corresponding paper [Bambade2022]_.
 **Warm-start:** this solver interface supports warm starting 🔥
 """
 
+import time
 from typing import Optional, Union
 
 import numpy as np
@@ -140,6 +141,7 @@ def proxqp_solve_problem(
     This list is not exhaustive. Check out the `solver documentation
     <https://simple-robotics.github.io/proxsuite/>`__ for details.
     """
+    build_start_time = time.perf_counter()
     if initvals is not None:
         if "x" in kwargs:
             raise ParamError(
@@ -155,6 +157,7 @@ def proxqp_solve_problem(
     )
     Cx, ux, lx = combine_linear_box_inequalities(G, h, lb, ub, n, use_csc)
     solve = __select_backend(backend, use_csc)
+    solve_start_time = time.perf_counter()
     result = solve(
         P,
         q,
@@ -166,6 +169,7 @@ def proxqp_solve_problem(
         verbose=verbose,
         **kwargs,
     )
+    solve_end_time = time.perf_counter()
     solution = Solution(problem)
     solution.extras = {"info": result.info}
     solution.found = result.info.status == proxqp.QPSolverOutput.PROXQP_SOLVED
@@ -176,6 +180,8 @@ def proxqp_solve_problem(
         solution.z_box = result.z[-n:]
     else:  # lb is None and ub is None
         solution.z = result.z
+    solution.build_time = solve_start_time - build_start_time
+    solution.solve_time = solve_end_time - solve_start_time
     return solution
 
 

@@ -15,6 +15,7 @@ compilation.
 **Warm-start:** this solver interface does not support warm starting ❄️
 """
 
+import time
 import warnings
 from typing import Optional
 
@@ -61,6 +62,7 @@ def jaxopt_osqp_solve_problem(
     64-bit floating point numbers by setting its `jax_enable_x64`
     configuration.
     """
+    build_start_time = time.perf_counter()
     if problem.is_unconstrained:
         warnings.warn(
             "QP is unconstrained: "
@@ -74,11 +76,13 @@ def jaxopt_osqp_solve_problem(
     G, h = linear_from_box_inequalities(G_0, h_0, lb, ub, use_sparse=False)
 
     osqp = jaxopt.OSQP(**kwargs)
+    solve_start_time = time.perf_counter()
     result = osqp.run(
         params_obj=(jnp.array(P), jnp.array(q)),
         params_eq=(jnp.array(A), jnp.array(b)) if A is not None else None,
         params_ineq=(jnp.array(G), jnp.array(h)) if G is not None else None,
     )
+    solve_end_time = time.perf_counter()
 
     solution = Solution(problem)
     solution.x = np.array(result.params.primal)
@@ -101,6 +105,8 @@ def jaxopt_osqp_solve_problem(
         "status": int(result.state.status),
     }
 
+    solution.build_time = solve_start_time - build_start_time
+    solution.solve_time = solve_end_time - solve_start_time
     return solution
 
 
