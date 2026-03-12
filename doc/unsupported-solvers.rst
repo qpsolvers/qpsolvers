@@ -7,5 +7,5 @@ Unsupported solvers will be made available if they are detected on your system, 
 NPPro
 =====
 
-.. automodule:: qpsolvers.unsupported.nppro_
+.. automodule:: qpsolvers.solvers.nppro_
     :members:
