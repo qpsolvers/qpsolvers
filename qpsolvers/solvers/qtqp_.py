@@ -13,6 +13,7 @@ programs (QPs), implemented in pure Python. It is developed by Google DeepMind.
 **Warm-start:** this solver interface does not support warm starting ❄️
 """
 
+import time
 import warnings
 from typing import List, Optional, Union
 
@@ -95,6 +96,7 @@ def qtqp_solve_problem(
     Lower values for absolute or relative tolerances yield more precise
     solutions at the cost of computation time.
     """
+    build_start_time = time.perf_counter()
     if initvals is not None and verbose:
         warnings.warn("QTQP: warm-start values are ignored")
 
@@ -164,7 +166,9 @@ def qtqp_solve_problem(
     )
 
     # Solve the problem
+    solve_start_time = time.perf_counter()
     result = solver.solve(verbose=verbose, **kwargs)
+    solve_end_time = time.perf_counter()
 
     # Build solution
     solution = Solution(problem)
@@ -209,6 +213,8 @@ def qtqp_solve_problem(
         )
         solution.obj += q @ solution.x
 
+    solution.build_time = solve_start_time - build_start_time
+    solution.solve_time = solve_end_time - solve_start_time
     return solution
 
 

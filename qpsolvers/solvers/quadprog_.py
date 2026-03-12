@@ -12,6 +12,7 @@ quadprog is a C implementation of the Goldfarb-Idnani dual algorithm
 **Warm-start:** this solver interface does not support warm starting ❄️
 """
 
+import time
 import warnings
 from typing import Optional
 
@@ -67,6 +68,7 @@ def quadprog_solve_problem(
     instance, you can call ``quadprog_solve_qp(P, q, G, h, factorized=True)``.
     See the solver documentation for details.
     """
+    build_start_time = time.perf_counter()
     if initvals is not None and verbose:
         warnings.warn("warm-start values are ignored by quadprog")
 
@@ -96,9 +98,11 @@ def quadprog_solve_problem(
 
     solution = Solution(problem)
     try:
+        solve_start_time = time.perf_counter()
         x, obj, xu, iterations, y, iact = solve_qp(
             qp_G, qp_a, qp_C, qp_b, meq, **kwargs
         )
+        solve_end_time = time.perf_counter()
         solution.found = True
         solution.x = x
         solution.obj = obj
@@ -114,6 +118,7 @@ def quadprog_solve_problem(
             "xu": xu,
         }
     except ValueError as error:
+        solve_end_time = time.perf_counter()
         solution.found = False
         error_message = str(error)
         if "matrix G is not positive definite" in error_message:
@@ -122,6 +127,8 @@ def quadprog_solve_problem(
         if "no solution" not in error_message:
             warnings.warn(f"quadprog raised a ValueError: {error_message}")
 
+    solution.build_time = solve_start_time - build_start_time
+    solution.solve_time = solve_end_time - solve_start_time
     return solution
 
 
