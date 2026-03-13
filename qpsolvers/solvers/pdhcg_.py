@@ -40,7 +40,7 @@ def pdhcg_solve_problem(
 ) -> Solution:
     """Solve a quadratic program using PDHCG.
 
-    The quadratic program is defined as:
+    The quadratic program is defined as::
 
         minimize      1/2 x^T P x + q^T x
         subject to    G x <= h
