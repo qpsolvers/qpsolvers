@@ -6,7 +6,6 @@
 
 """Quadratic programming solvers in Python with a unified API."""
 
-from ._internals import available_solvers
 from .active_set import ActiveSet
 from .exceptions import (
     NoSolverSelected,
@@ -22,6 +21,7 @@ from .solve_ls import solve_ls
 from .solve_qp import solve_problem, solve_qp
 from .solve_unconstrained import solve_unconstrained
 from .solvers import (
+    available_solvers,
     cvxopt_solve_qp,
     daqp_solve_qp,
     dense_solvers,
@@ -31,6 +31,7 @@ from .solvers import (
     hpipm_solve_qp,
     kvxopt_solve_qp,
     mosek_solve_qp,
+    nppro_solve_qp,
     osqp_solve_qp,
     pdhcg_solve_qp,
     piqp_solve_qp,
@@ -44,7 +45,6 @@ from .solvers import (
     sip_solve_qp,
     sparse_solvers,
 )
-from .unsupported import nppro_solve_qp
 from .utils import print_matrix_vector
 
 __version__ = "4.10.0"

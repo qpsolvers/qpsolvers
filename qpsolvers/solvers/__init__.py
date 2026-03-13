@@ -487,6 +487,46 @@ except ImportError:
     pass
 
 
+# NPPro
+# =====
+
+nppro_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[ndarray],
+        ],
+        Solution,
+    ]
+] = None
+
+nppro_solve_qp: Optional[
+    Callable[
+        [
+            ndarray,
+            ndarray,
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
+try:
+    from .nppro_ import nppro_solve_problem, nppro_solve_qp
+
+    solve_function["nppro"] = nppro_solve_problem
+    available_solvers.append("nppro")
+    dense_solvers.append("nppro")
+except ImportError:
+    pass
+
+
 # OSQP
 # ====
 
@@ -1023,6 +1063,7 @@ __all__ = [
     "jaxopt_osqp_solve_qp",
     "kvxopt_solve_qp",
     "mosek_solve_qp",
+    "nppro_solve_qp",
     "osqp_solve_qp",
     "pdhcg_solve_qp",
     "piqp_solve_qp",
