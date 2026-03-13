@@ -134,7 +134,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/10/b1/8938e8830b0ee2e167fc75a094dea766a1152bde46752cd9bfc57ee78a82/ml_dtypes-0.5.4-cp310-cp310-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/fd/8b/d5f54f182f3ed11f71f55857ecf8a6c2ba927fceb63b3b87ad510ca56290/mosek-11.1.9-cp39-abi3-manylinux2014_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/83/c2/3904f30760ab3ca2f22ee63677871bde0135e8a3cdb6cbdbd4590af8ef01/qpalm-1.2.6-cp310-cp310-manylinux_2_27_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -264,7 +263,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/41/79/7433f30ee04bd4faa303844048f55e1eb939131c8e5195a00a96a0939b64/ml_dtypes-0.5.4-cp310-cp310-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/19/de/14ad33a1e90d3dc364f83aca6ed57184e975bb2750ec312d093adeed114b/mosek-11.1.9-cp39-abi3-manylinux_2_27_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/af/51/13424a32cc7a3421d1c213b979150a62d4e5081dd99281971eb86824251d/qpalm-1.2.6-cp310-cp310-manylinux_2_27_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -387,7 +385,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/fe/3a/c5b855752a70267ff729c349e650263adb3c206c29d28cc8ea7ace30a1d5/ml_dtypes-0.5.4-cp310-cp310-macosx_10_9_universal2.whl
       - pypi: https://files.pythonhosted.org/packages/e7/37/c732d9d714ec876e3cd3db67bb603c33cef8956b978e7fb3ce383cf6955f/mosek-11.1.9-cp39-abi3-macosx_11_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/0f/28/61881794071a9b15798969d60f4ffdb2d922952c9ddcfc1881b7fffa4745/qpalm-1.2.6-cp310-cp310-macosx_11_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -493,7 +490,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/c7/a3/51886727bd16e2f47587997b802dd56398692ce8c6c03c2e5bb32ecafe26/ml_dtypes-0.5.4-cp310-cp310-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/58/ad/d7809164599aee31770126469081fd4738ed64f18863533212060d44dfba/mosek-11.1.9-cp39-abi3-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/bf/03/9dbb463a197873b006e4960b37dd9a39a88c2fa5125cfa6e5d281059ea21/qpalm-1.2.6-cp310-cp310-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -608,7 +604,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/3a/cb/28ce52eb94390dda42599c98ea0204d74799e4d8047a0eb559b6fd648056/ml_dtypes-0.5.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/40/90/1f00df24b3afabee016b937fdd223b52a0cf0921ed52dac95f61cb602e4e/qpalm-1.2.6-cp312-cp312-manylinux_2_27_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -714,7 +709,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/54/0f/428ef6881782e5ebb7eca459689448c0394fa0a80bea3aa9262cba5445ea/ml_dtypes-0.5.4-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/89/2b/0a70b3f145ddfb041144c217497be0327d6934977818b9a81bc88971c4d3/qpalm-1.2.6-cp312-cp312-manylinux_2_27_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -813,7 +807,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a8/b8/3c70881695e056f8a32f8b941126cf78775d9a4d7feba8abcb52cb7b04f2/ml_dtypes-0.5.4-cp312-cp312-macosx_10_13_universal2.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/02/5f/ab8b48ff41792549fdcd7ed803ed6a98b06368106aa4a1f8b23539e8d2d8/qpalm-1.2.6-cp312-cp312-macosx_11_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -892,7 +885,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/f5/f0/0cfadd537c5470378b1b32bd859cf2824972174b51b873c9d95cfd7475a5/ml_dtypes-0.5.4-cp312-cp312-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/03/9d/b2275dbe5981650d076dbeaf5c02723e6a625af80766e712c3cf4543cf18/qpalm-1.2.6-cp312-cp312-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -1039,7 +1031,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/10/b1/8938e8830b0ee2e167fc75a094dea766a1152bde46752cd9bfc57ee78a82/ml_dtypes-0.5.4-cp310-cp310-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/83/c2/3904f30760ab3ca2f22ee63677871bde0135e8a3cdb6cbdbd4590af8ef01/qpalm-1.2.6-cp310-cp310-manylinux_2_27_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -1180,7 +1171,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/41/79/7433f30ee04bd4faa303844048f55e1eb939131c8e5195a00a96a0939b64/ml_dtypes-0.5.4-cp310-cp310-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/af/51/13424a32cc7a3421d1c213b979150a62d4e5081dd99281971eb86824251d/qpalm-1.2.6-cp310-cp310-manylinux_2_27_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -1314,7 +1304,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/fe/3a/c5b855752a70267ff729c349e650263adb3c206c29d28cc8ea7ace30a1d5/ml_dtypes-0.5.4-cp310-cp310-macosx_10_9_universal2.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/0f/28/61881794071a9b15798969d60f4ffdb2d922952c9ddcfc1881b7fffa4745/qpalm-1.2.6-cp310-cp310-macosx_11_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -1430,7 +1419,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/c7/a3/51886727bd16e2f47587997b802dd56398692ce8c6c03c2e5bb32ecafe26/ml_dtypes-0.5.4-cp310-cp310-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/bf/03/9dbb463a197873b006e4960b37dd9a39a88c2fa5125cfa6e5d281059ea21/qpalm-1.2.6-cp310-cp310-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -1549,7 +1537,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/10/b1/8938e8830b0ee2e167fc75a094dea766a1152bde46752cd9bfc57ee78a82/ml_dtypes-0.5.4-cp310-cp310-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/fd/8b/d5f54f182f3ed11f71f55857ecf8a6c2ba927fceb63b3b87ad510ca56290/mosek-11.1.9-cp39-abi3-manylinux2014_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/83/c2/3904f30760ab3ca2f22ee63677871bde0135e8a3cdb6cbdbd4590af8ef01/qpalm-1.2.6-cp310-cp310-manylinux_2_27_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -1656,7 +1643,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/41/79/7433f30ee04bd4faa303844048f55e1eb939131c8e5195a00a96a0939b64/ml_dtypes-0.5.4-cp310-cp310-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/19/de/14ad33a1e90d3dc364f83aca6ed57184e975bb2750ec312d093adeed114b/mosek-11.1.9-cp39-abi3-manylinux_2_27_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/af/51/13424a32cc7a3421d1c213b979150a62d4e5081dd99281971eb86824251d/qpalm-1.2.6-cp310-cp310-manylinux_2_27_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -1756,7 +1742,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/fe/3a/c5b855752a70267ff729c349e650263adb3c206c29d28cc8ea7ace30a1d5/ml_dtypes-0.5.4-cp310-cp310-macosx_10_9_universal2.whl
       - pypi: https://files.pythonhosted.org/packages/e7/37/c732d9d714ec876e3cd3db67bb603c33cef8956b978e7fb3ce383cf6955f/mosek-11.1.9-cp39-abi3-macosx_11_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/0f/28/61881794071a9b15798969d60f4ffdb2d922952c9ddcfc1881b7fffa4745/qpalm-1.2.6-cp310-cp310-macosx_11_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -1836,7 +1821,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/c7/a3/51886727bd16e2f47587997b802dd56398692ce8c6c03c2e5bb32ecafe26/ml_dtypes-0.5.4-cp310-cp310-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/58/ad/d7809164599aee31770126469081fd4738ed64f18863533212060d44dfba/mosek-11.1.9-cp39-abi3-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/bf/03/9dbb463a197873b006e4960b37dd9a39a88c2fa5125cfa6e5d281059ea21/qpalm-1.2.6-cp310-cp310-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -1974,7 +1958,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/3a/cb/28ce52eb94390dda42599c98ea0204d74799e4d8047a0eb559b6fd648056/ml_dtypes-0.5.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/40/90/1f00df24b3afabee016b937fdd223b52a0cf0921ed52dac95f61cb602e4e/qpalm-1.2.6-cp312-cp312-manylinux_2_27_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -2103,7 +2086,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/54/0f/428ef6881782e5ebb7eca459689448c0394fa0a80bea3aa9262cba5445ea/ml_dtypes-0.5.4-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/89/2b/0a70b3f145ddfb041144c217497be0327d6934977818b9a81bc88971c4d3/qpalm-1.2.6-cp312-cp312-manylinux_2_27_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -2225,7 +2207,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a8/b8/3c70881695e056f8a32f8b941126cf78775d9a4d7feba8abcb52cb7b04f2/ml_dtypes-0.5.4-cp312-cp312-macosx_10_13_universal2.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/02/5f/ab8b48ff41792549fdcd7ed803ed6a98b06368106aa4a1f8b23539e8d2d8/qpalm-1.2.6-cp312-cp312-macosx_11_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -2327,7 +2308,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/f5/f0/0cfadd537c5470378b1b32bd859cf2824972174b51b873c9d95cfd7475a5/ml_dtypes-0.5.4-cp312-cp312-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/03/9d/b2275dbe5981650d076dbeaf5c02723e6a625af80766e712c3cf4543cf18/qpalm-1.2.6-cp312-cp312-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -2442,7 +2422,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/10/b1/8938e8830b0ee2e167fc75a094dea766a1152bde46752cd9bfc57ee78a82/ml_dtypes-0.5.4-cp310-cp310-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/83/c2/3904f30760ab3ca2f22ee63677871bde0135e8a3cdb6cbdbd4590af8ef01/qpalm-1.2.6-cp310-cp310-manylinux_2_27_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -2548,7 +2527,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/41/79/7433f30ee04bd4faa303844048f55e1eb939131c8e5195a00a96a0939b64/ml_dtypes-0.5.4-cp310-cp310-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/af/51/13424a32cc7a3421d1c213b979150a62d4e5081dd99281971eb86824251d/qpalm-1.2.6-cp310-cp310-manylinux_2_27_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -2647,7 +2625,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/fe/3a/c5b855752a70267ff729c349e650263adb3c206c29d28cc8ea7ace30a1d5/ml_dtypes-0.5.4-cp310-cp310-macosx_10_9_universal2.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/0f/28/61881794071a9b15798969d60f4ffdb2d922952c9ddcfc1881b7fffa4745/qpalm-1.2.6-cp310-cp310-macosx_11_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -2726,7 +2703,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/c7/a3/51886727bd16e2f47587997b802dd56398692ce8c6c03c2e5bb32ecafe26/ml_dtypes-0.5.4-cp310-cp310-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/bf/03/9dbb463a197873b006e4960b37dd9a39a88c2fa5125cfa6e5d281059ea21/qpalm-1.2.6-cp310-cp310-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -2841,7 +2817,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/10/b1/8938e8830b0ee2e167fc75a094dea766a1152bde46752cd9bfc57ee78a82/ml_dtypes-0.5.4-cp310-cp310-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/83/c2/3904f30760ab3ca2f22ee63677871bde0135e8a3cdb6cbdbd4590af8ef01/qpalm-1.2.6-cp310-cp310-manylinux_2_27_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -2947,7 +2922,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/41/79/7433f30ee04bd4faa303844048f55e1eb939131c8e5195a00a96a0939b64/ml_dtypes-0.5.4-cp310-cp310-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/af/51/13424a32cc7a3421d1c213b979150a62d4e5081dd99281971eb86824251d/qpalm-1.2.6-cp310-cp310-manylinux_2_27_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -3046,7 +3020,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/fe/3a/c5b855752a70267ff729c349e650263adb3c206c29d28cc8ea7ace30a1d5/ml_dtypes-0.5.4-cp310-cp310-macosx_10_9_universal2.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/0f/28/61881794071a9b15798969d60f4ffdb2d922952c9ddcfc1881b7fffa4745/qpalm-1.2.6-cp310-cp310-macosx_11_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -3125,7 +3098,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/c7/a3/51886727bd16e2f47587997b802dd56398692ce8c6c03c2e5bb32ecafe26/ml_dtypes-0.5.4-cp310-cp310-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/bf/03/9dbb463a197873b006e4960b37dd9a39a88c2fa5125cfa6e5d281059ea21/qpalm-1.2.6-cp310-cp310-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -3240,7 +3212,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/10/b1/8938e8830b0ee2e167fc75a094dea766a1152bde46752cd9bfc57ee78a82/ml_dtypes-0.5.4-cp310-cp310-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/83/c2/3904f30760ab3ca2f22ee63677871bde0135e8a3cdb6cbdbd4590af8ef01/qpalm-1.2.6-cp310-cp310-manylinux_2_27_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -3346,7 +3317,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/41/79/7433f30ee04bd4faa303844048f55e1eb939131c8e5195a00a96a0939b64/ml_dtypes-0.5.4-cp310-cp310-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/af/51/13424a32cc7a3421d1c213b979150a62d4e5081dd99281971eb86824251d/qpalm-1.2.6-cp310-cp310-manylinux_2_27_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -3445,7 +3415,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/fe/3a/c5b855752a70267ff729c349e650263adb3c206c29d28cc8ea7ace30a1d5/ml_dtypes-0.5.4-cp310-cp310-macosx_10_9_universal2.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/0f/28/61881794071a9b15798969d60f4ffdb2d922952c9ddcfc1881b7fffa4745/qpalm-1.2.6-cp310-cp310-macosx_11_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -3524,7 +3493,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/c7/a3/51886727bd16e2f47587997b802dd56398692ce8c6c03c2e5bb32ecafe26/ml_dtypes-0.5.4-cp310-cp310-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/bf/03/9dbb463a197873b006e4960b37dd9a39a88c2fa5125cfa6e5d281059ea21/qpalm-1.2.6-cp310-cp310-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -3639,7 +3607,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a9/80/19189ea605017473660e43762dc853d2797984b3c7bf30ce656099add30c/ml_dtypes-0.5.4-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/8f/07/5d1a29164dfd854e9bcb46286ab3e29f824692c72b04be56d39615497b6d/qpalm-1.2.6-cp311-cp311-manylinux_2_27_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -3745,7 +3712,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/4f/cf/912146dfd4b5c0eea956836c01dcd2fce6c9c844b2691f5152aca196ce4f/ml_dtypes-0.5.4-cp311-cp311-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/21/05/c3480c3c6f45c434bf9c67ba3f756e72f05a9e00f0be6e59c9d1f9f20ad3/qpalm-1.2.6-cp311-cp311-manylinux_2_27_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -3844,7 +3810,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/c6/5e/712092cfe7e5eb667b8ad9ca7c54442f21ed7ca8979745f1000e24cf8737/ml_dtypes-0.5.4-cp311-cp311-macosx_10_9_universal2.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/e5/7d/29086861679b71324d81638f0720bc0c926ed246efbdf8fe5a35e41317b3/qpalm-1.2.6-cp311-cp311-macosx_11_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -3923,7 +3888,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b4/24/70bd59276883fdd91600ca20040b41efd4902a923283c4d6edcb1de128d2/ml_dtypes-0.5.4-cp311-cp311-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/9e/66/21be5d20ca0be912f48f25eb240ad27a58e48bcdeaa0b2f900d44ae59754/qpalm-1.2.6-cp311-cp311-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -4038,7 +4002,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a9/80/19189ea605017473660e43762dc853d2797984b3c7bf30ce656099add30c/ml_dtypes-0.5.4-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/8f/07/5d1a29164dfd854e9bcb46286ab3e29f824692c72b04be56d39615497b6d/qpalm-1.2.6-cp311-cp311-manylinux_2_27_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -4144,7 +4107,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/4f/cf/912146dfd4b5c0eea956836c01dcd2fce6c9c844b2691f5152aca196ce4f/ml_dtypes-0.5.4-cp311-cp311-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/21/05/c3480c3c6f45c434bf9c67ba3f756e72f05a9e00f0be6e59c9d1f9f20ad3/qpalm-1.2.6-cp311-cp311-manylinux_2_27_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -4243,7 +4205,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/c6/5e/712092cfe7e5eb667b8ad9ca7c54442f21ed7ca8979745f1000e24cf8737/ml_dtypes-0.5.4-cp311-cp311-macosx_10_9_universal2.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/e5/7d/29086861679b71324d81638f0720bc0c926ed246efbdf8fe5a35e41317b3/qpalm-1.2.6-cp311-cp311-macosx_11_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -4322,7 +4283,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b4/24/70bd59276883fdd91600ca20040b41efd4902a923283c4d6edcb1de128d2/ml_dtypes-0.5.4-cp311-cp311-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/9e/66/21be5d20ca0be912f48f25eb240ad27a58e48bcdeaa0b2f900d44ae59754/qpalm-1.2.6-cp311-cp311-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -4437,7 +4397,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a9/80/19189ea605017473660e43762dc853d2797984b3c7bf30ce656099add30c/ml_dtypes-0.5.4-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/8f/07/5d1a29164dfd854e9bcb46286ab3e29f824692c72b04be56d39615497b6d/qpalm-1.2.6-cp311-cp311-manylinux_2_27_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -4543,7 +4502,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/4f/cf/912146dfd4b5c0eea956836c01dcd2fce6c9c844b2691f5152aca196ce4f/ml_dtypes-0.5.4-cp311-cp311-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/21/05/c3480c3c6f45c434bf9c67ba3f756e72f05a9e00f0be6e59c9d1f9f20ad3/qpalm-1.2.6-cp311-cp311-manylinux_2_27_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -4642,7 +4600,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/c6/5e/712092cfe7e5eb667b8ad9ca7c54442f21ed7ca8979745f1000e24cf8737/ml_dtypes-0.5.4-cp311-cp311-macosx_10_9_universal2.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/e5/7d/29086861679b71324d81638f0720bc0c926ed246efbdf8fe5a35e41317b3/qpalm-1.2.6-cp311-cp311-macosx_11_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -4721,7 +4678,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b4/24/70bd59276883fdd91600ca20040b41efd4902a923283c4d6edcb1de128d2/ml_dtypes-0.5.4-cp311-cp311-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/9e/66/21be5d20ca0be912f48f25eb240ad27a58e48bcdeaa0b2f900d44ae59754/qpalm-1.2.6-cp311-cp311-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -4836,7 +4792,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/3a/cb/28ce52eb94390dda42599c98ea0204d74799e4d8047a0eb559b6fd648056/ml_dtypes-0.5.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/40/90/1f00df24b3afabee016b937fdd223b52a0cf0921ed52dac95f61cb602e4e/qpalm-1.2.6-cp312-cp312-manylinux_2_27_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -4942,7 +4897,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/54/0f/428ef6881782e5ebb7eca459689448c0394fa0a80bea3aa9262cba5445ea/ml_dtypes-0.5.4-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/89/2b/0a70b3f145ddfb041144c217497be0327d6934977818b9a81bc88971c4d3/qpalm-1.2.6-cp312-cp312-manylinux_2_27_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -5041,7 +4995,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a8/b8/3c70881695e056f8a32f8b941126cf78775d9a4d7feba8abcb52cb7b04f2/ml_dtypes-0.5.4-cp312-cp312-macosx_10_13_universal2.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/02/5f/ab8b48ff41792549fdcd7ed803ed6a98b06368106aa4a1f8b23539e8d2d8/qpalm-1.2.6-cp312-cp312-macosx_11_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -5120,7 +5073,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/f5/f0/0cfadd537c5470378b1b32bd859cf2824972174b51b873c9d95cfd7475a5/ml_dtypes-0.5.4-cp312-cp312-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/03/9d/b2275dbe5981650d076dbeaf5c02723e6a625af80766e712c3cf4543cf18/qpalm-1.2.6-cp312-cp312-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -5235,7 +5187,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/3a/cb/28ce52eb94390dda42599c98ea0204d74799e4d8047a0eb559b6fd648056/ml_dtypes-0.5.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/40/90/1f00df24b3afabee016b937fdd223b52a0cf0921ed52dac95f61cb602e4e/qpalm-1.2.6-cp312-cp312-manylinux_2_27_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -5341,7 +5292,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/54/0f/428ef6881782e5ebb7eca459689448c0394fa0a80bea3aa9262cba5445ea/ml_dtypes-0.5.4-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/89/2b/0a70b3f145ddfb041144c217497be0327d6934977818b9a81bc88971c4d3/qpalm-1.2.6-cp312-cp312-manylinux_2_27_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -5440,7 +5390,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a8/b8/3c70881695e056f8a32f8b941126cf78775d9a4d7feba8abcb52cb7b04f2/ml_dtypes-0.5.4-cp312-cp312-macosx_10_13_universal2.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/02/5f/ab8b48ff41792549fdcd7ed803ed6a98b06368106aa4a1f8b23539e8d2d8/qpalm-1.2.6-cp312-cp312-macosx_11_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -5519,7 +5468,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/f5/f0/0cfadd537c5470378b1b32bd859cf2824972174b51b873c9d95cfd7475a5/ml_dtypes-0.5.4-cp312-cp312-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/03/9d/b2275dbe5981650d076dbeaf5c02723e6a625af80766e712c3cf4543cf18/qpalm-1.2.6-cp312-cp312-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -5634,7 +5582,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/3a/cb/28ce52eb94390dda42599c98ea0204d74799e4d8047a0eb559b6fd648056/ml_dtypes-0.5.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/40/90/1f00df24b3afabee016b937fdd223b52a0cf0921ed52dac95f61cb602e4e/qpalm-1.2.6-cp312-cp312-manylinux_2_27_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -5740,7 +5687,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/54/0f/428ef6881782e5ebb7eca459689448c0394fa0a80bea3aa9262cba5445ea/ml_dtypes-0.5.4-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/89/2b/0a70b3f145ddfb041144c217497be0327d6934977818b9a81bc88971c4d3/qpalm-1.2.6-cp312-cp312-manylinux_2_27_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -5839,7 +5785,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a8/b8/3c70881695e056f8a32f8b941126cf78775d9a4d7feba8abcb52cb7b04f2/ml_dtypes-0.5.4-cp312-cp312-macosx_10_13_universal2.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/02/5f/ab8b48ff41792549fdcd7ed803ed6a98b06368106aa4a1f8b23539e8d2d8/qpalm-1.2.6-cp312-cp312-macosx_11_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -5918,7 +5863,6 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/45/d8/55e0901103c93d57bab3b932294c216f0cbd49054187ce29f8f13808d530/jaxopt-0.8.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/f5/f0/0cfadd537c5470378b1b32bd859cf2824972174b51b873c9d95cfd7475a5/ml_dtypes-0.5.4-cp312-cp312-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/23/cd/066e86230ae37ed0be70aae89aabf03ca8d9f39c8aea0dec8029455b5540/opt_einsum-3.4.0-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/03/9d/b2275dbe5981650d076dbeaf5c02723e6a625af80766e712c3cf4543cf18/qpalm-1.2.6-cp312-cp312-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/9c/a5/1b277ca08381a977dc282d9f4eeee002e282ea25df384e2f56cc30b69785/qpax-0.0.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a1/29/fff26686eedbf083af5c967d5e934f9ba3586591d427a3f4774ba1175b71/qtqp-0.0.3-py3-none-any.whl
@@ -12536,18 +12480,6 @@ packages:
   - pkg:pypi/pathspec?source=hash-mapping
   size: 53739
   timestamp: 1769677743677
-- pypi: https://files.pythonhosted.org/packages/f8/2b/3c6a93e4cd3f22e0636e0fae14741ca1336900822a21c1b2cd01865cc7ce/pdhcg-0.1.3.tar.gz
-  name: pdhcg
-  version: 0.1.3
-  sha256: 76ec94f2c0c893c1dea69a096384d403c786bf24408b3e3e35da23ea09d72421
-  requires_dist:
-  - numpy>=1.21
-  - scipy>=1.8
-  - pytest>=8 ; extra == 'test'
-  - pytest-cov>=4 ; extra == 'test'
-  - numpy ; extra == 'test'
-  - scipy ; extra == 'test'
-  requires_python: '>=3.8'
 - conda: https://conda.anaconda.org/conda-forge/linux-64/piqp-0.6.2-py310hc8a6847_2.conda
   sha256: 9fa3990d402af79b1d860f8674356031b64a89ca5a1f59523330c78cb4aa6470
   md5: 3258910fbf96a8b37b0851e45b7abd5e
