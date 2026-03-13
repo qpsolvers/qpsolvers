@@ -147,6 +147,23 @@ The simplest way to install HiGHS is:
 If this solution doesn't work for you, follow the `Python installation
 instructions <https://github.com/ERGO-Code/HiGHS#python>`__ from the README.
 
+PDHCG
+-----
+
+You can install the GPU-accelerated PDHCG solver directly from PyPI:
+
+.. code:: bash
+
+    pip install pdhcg
+
+Note that PDHCG requires an NVIDIA GPU and CUDA 12.0+. If your system has multiple CUDA versions or the installation fails to find the compiler, you must explicitly point to your modern CUDA compiler using environment variables before installing:
+
+.. code:: bash
+
+    export CUDACXX=/your/path/to/nvcc
+    export SKBUILD_CMAKE_ARGS="-DCMAKE_CUDA_COMPILER=/your/path/to/nvcc"
+    pip install pdhcg
+
 quadprog
 --------
 

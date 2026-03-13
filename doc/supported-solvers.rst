@@ -80,6 +80,7 @@ OSQP
 .. automodule:: qpsolvers.solvers.osqp_
     :members:
 
+
 PIQP
 ======
 

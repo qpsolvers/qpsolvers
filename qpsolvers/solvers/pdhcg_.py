@@ -1,0 +1,270 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# Copyright 2016-2022 Stéphane Caron and the qpsolvers contributors
+
+"""Solver interface for PDHCG.
+
+PDHCG (Primal-Dual Hybrid Conjugate Gradient) is a high-performance,
+GPU-accelerated solver designed for large-scale convex Quadratic
+Programming (QP). It is particularly efficient for huge-scale problems
+by fully leveraging NVIDIA CUDA architectures.
+
+Note:
+    To use this solver, you need an NVIDIA GPU and the ``pdhcg`` package
+    installed via ``pip install pdhcg``. For advanced installation (e.g.,
+    custom CUDA paths), please refer to the
+    `official PDHCG-II repository <https://github.com/Lhongpei/PDHCG-II>`_.
+
+References
+----------
+- `PDHCG-II <https://arxiv.org/abs/2602.23967>`_
+"""
+
+from typing import Any, List, Optional, Union
+
+import numpy as np
+import scipy.sparse as spa
+from pdhcg import Model
+
+from ..problem import Problem
+from ..solution import Solution
+
+
+def pdhcg_solve_problem(
+    problem: Problem,
+    initvals: Optional[np.ndarray] = None,
+    verbose: bool = False,
+    **kwargs: Any,
+) -> Solution:
+    r"""Solve a quadratic program using PDHCG.
+
+    The quadratic program is defined as:
+
+    .. math::
+
+        \begin{split}\begin{array}{ll}
+            \underset{x}{\mbox{minimize}} &
+                \frac{1}{2} x^T P x + q^T x \\
+            \mbox{subject to}
+                & G x \leq h                \\
+                & A x = b                   \\
+                & lb \leq x \leq ub
+        \end{array}\end{split}
+
+    Parameters
+    ----------
+    problem :
+        Quadratic program to solve.
+    initvals :
+        Warm-start guess vector for the primal solution.
+    verbose :
+        Set to `True` to print out extra information.
+
+    Returns
+    -------
+    :
+        Solution to the QP, if found, otherwise ``None``.
+
+    Notes
+    -----
+    Keyword arguments are forwarded to PDHCG as solver parameters.
+    For instance, you can call ``pdhcg_solve_qp(..., TimeLimit=60)``.
+    Common PDHCG parameters include:
+
+    .. list-table::
+       :widths: 30 70
+       :header-rows: 1
+
+       * - Name
+         - Description
+       * - ``TimeLimit``
+         - Maximum wall-clock time in seconds (default: 3600.0).
+       * - ``IterationLimit``
+         - Maximum number of iterations.
+       * - ``OptimalityTol``
+         - Relative tolerance for optimality gap (default: 1e-4).
+       * - ``FeasibilityTol``
+         - Relative feasibility tolerance for residuals (default: 1e-4).
+       * - ``OutputFlag``
+         - Enable (True) or disable (False) console logging output.
+
+    For advanced parameters, please refer to the
+    `PDHCG Documentation <https://github.com/Lhongpei/PDHCG-II>`_.
+    """
+    P, q, G, h, A, b, lb, ub = problem.unpack()
+
+    C_mats: List[Any] = []
+    l_bounds: List[Any] = []
+    u_bounds: List[Any] = []
+
+    if G is not None and h is not None:
+        C_mats.append(G)
+        l_bounds.append(np.full(h.shape, -np.inf))
+        u_bounds.append(h)
+
+    if A is not None and b is not None:
+        C_mats.append(A)
+        l_bounds.append(b)
+        u_bounds.append(b)
+
+    constraint_matrix: Optional[
+        Union[np.ndarray, spa.csr_matrix, spa.csc_matrix]
+    ] = None
+    constraint_lower_bound: Optional[np.ndarray] = None
+    constraint_upper_bound: Optional[np.ndarray] = None
+
+    if C_mats:
+        if any(spa.issparse(mat) for mat in C_mats):
+            constraint_matrix = spa.vstack(C_mats, format="csr")  # type: ignore
+        else:
+            constraint_matrix = np.vstack(C_mats)  # type: ignore
+        constraint_lower_bound = np.concatenate(l_bounds)  # type: ignore
+        constraint_upper_bound = np.concatenate(u_bounds)  # type: ignore
+
+    model = Model(
+        objective_matrix=P,
+        objective_vector=q,
+        constraint_matrix=constraint_matrix,
+        constraint_lower_bound=constraint_lower_bound,
+        constraint_upper_bound=constraint_upper_bound,
+        variable_lower_bound=lb,
+        variable_upper_bound=ub,
+    )
+
+    if verbose:
+        model.setParam("OutputFlag", 2)
+    else:
+        model.setParam("OutputFlag", 0)
+
+    if kwargs:
+        model.setParams(**kwargs)
+
+    if initvals is not None:
+        model.setWarmStart(primal=initvals)
+
+    model.optimize()
+
+    solution = Solution(problem)
+
+    status_str = str(model.Status).upper() if model.Status else ""
+    solution.found = status_str == "OPTIMAL"
+
+    if solution.found and model.X is not None:
+        solution.x = np.array(model.X)
+        solution.obj = model.ObjVal
+
+    solution.extras["runtime"] = model.Runtime
+    solution.extras["iter"] = model.IterCount
+    solution.extras["status"] = status_str
+
+    if solution.found and model.Pi is not None and C_mats:
+        pi = np.array(model.Pi)
+        idx = 0
+        if G is not None:
+            num_g = G.shape[0]
+            solution.z = -pi[idx : idx + num_g]
+            idx += num_g
+        else:
+            solution.z = np.empty((0,))
+
+        if A is not None:
+            num_a = A.shape[0]
+            solution.y = -pi[idx : idx + num_a]
+        else:
+            solution.y = np.empty((0,))
+    else:
+        solution.z = np.empty((0,)) if G is None else np.empty(G.shape[0])
+        solution.y = np.empty((0,)) if A is None else np.empty(A.shape[0])
+
+    return solution
+
+
+def pdhcg_solve_qp(
+    P: Union[np.ndarray, spa.csc_matrix],
+    q: np.ndarray,
+    G: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    h: Optional[np.ndarray] = None,
+    A: Optional[Union[np.ndarray, spa.csc_matrix]] = None,
+    b: Optional[np.ndarray] = None,
+    lb: Optional[np.ndarray] = None,
+    ub: Optional[np.ndarray] = None,
+    initvals: Optional[np.ndarray] = None,
+    verbose: bool = False,
+    **kwargs: Any,
+) -> Optional[np.ndarray]:
+    r"""Solve a quadratic program using PDHCG.
+
+    The quadratic program is defined as:
+
+    .. math::
+
+        \begin{split}\begin{array}{ll}
+            \underset{x}{\mbox{minimize}} &
+                \frac{1}{2} x^T P x + q^T x \\
+            \mbox{subject to}
+                & G x \leq h                \\
+                & A x = b                   \\
+                & lb \leq x \leq ub
+        \end{array}\end{split}
+
+    It is solved using `PDHCG <https://github.com/Lhongpei/PDHCG-II>`__.
+
+    Parameters
+    ----------
+    P :
+        Positive semidefinite cost matrix.
+    q :
+        Cost vector.
+    G :
+        Linear inequality constraint matrix.
+    h :
+        Linear inequality constraint vector.
+    A :
+        Linear equality constraint matrix.
+    b :
+        Linear equality constraint vector.
+    lb :
+        Lower bound constraint vector.
+    ub :
+        Upper bound constraint vector.
+    initvals :
+        Warm-start guess vector for the primal solution.
+    verbose :
+        Set to `True` to print out extra information.
+
+    Returns
+    -------
+    :
+        Solution to the QP, if found, otherwise ``None``.
+
+    Notes
+    -----
+    Keyword arguments are forwarded to PDHCG as solver parameters.
+    For instance, you can call ``pdhcg_solve_qp(..., TimeLimit=60)``.
+    Common PDHCG parameters include:
+
+    .. list-table::
+       :widths: 30 70
+       :header-rows: 1
+
+       * - Name
+         - Description
+       * - ``TimeLimit``
+         - Maximum wall-clock time in seconds (default: 3600.0).
+       * - ``IterationLimit``
+         - Maximum number of iterations.
+       * - ``OptimalityTol``
+         - Relative tolerance for optimality gap (default: 1e-4).
+       * - ``FeasibilityTol``
+         - Relative feasibility tolerance for residuals (default: 1e-4).
+       * - ``OutputFlag``
+         - Enable (True) or disable (False) console logging output.
+
+    For advanced parameters, please refer to the
+    `PDHCG Documentation <https://github.com/Lhongpei/PDHCG-II>`_.
+    """
+    problem = Problem(P, q, G, h, A, b, lb, ub)
+    solution = pdhcg_solve_problem(problem, initvals, verbose, **kwargs)
+    return solution.x if solution.found else None
