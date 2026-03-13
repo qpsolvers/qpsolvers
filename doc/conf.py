@@ -28,6 +28,7 @@ autodoc_mock_imports = [
     "mosek",
     "nppro",
     "osqp",
+    "pdhcg",
     "qpoases",
     "qpSWIFT",
 ]
