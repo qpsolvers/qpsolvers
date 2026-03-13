@@ -38,14 +38,20 @@ def pdhcg_solve_problem(
     verbose: bool = False,
     **kwargs: Any,
 ) -> Solution:
-    """Solve a quadratic program using PDHCG.
+    r"""Solve a quadratic program using PDHCG.
 
-    The quadratic program is defined as::
+    The quadratic program is defined as:
 
-        minimize      1/2 x^T P x + q^T x
-        subject to    G x <= h
-                      A x = b
-                      lb <= x <= ub
+    .. math::
+
+        \begin{split}\begin{array}{ll}
+            \underset{x}{\mbox{minimize}} &
+                \frac{1}{2} x^T P x + q^T x \\
+            \mbox{subject to}
+                & G x \leq h                \\
+                & A x = b                   \\
+                & lb \leq x \leq ub
+        \end{array}\end{split}
 
     Parameters
     ----------
