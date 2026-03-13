@@ -42,7 +42,6 @@ highs = ["highspy >=1.1.2.dev3"]
 jaxopt = ["jaxopt >=0.8.3"]
 mosek = ["cvxopt >=1.2.6", "mosek >=10.0.40"]
 osqp = ["osqp >=0.6.2"]
-pdhcg = ["pdhcg >= 0.1.3"]
 piqp = ["piqp >=0.2.2"]
 proxqp = ["proxsuite >=0.2.9"]
 qpalm = ["qpalm >=1.2.1"]
@@ -51,7 +50,7 @@ qtqp = ["qtqp >=0.0.3"]
 quadprog = ["quadprog >=0.1.11"]
 scs = ["scs >=3.2.0"]
 sip = ["sip-python >=0.0.2"]
-open_source_solvers = ["qpsolvers[clarabel,cvxopt,daqp,ecos,highs,jaxopt,osqp,pdhcg,piqp,proxqp,qpalm,qtqp,quadprog,scs,sip,qpax]"]
+open_source_solvers = ["qpsolvers[clarabel,cvxopt,daqp,ecos,highs,jaxopt,osqp,piqp,proxqp,qpalm,qtqp,quadprog,scs,sip,qpax]"]
 
 # Wheels-only solvers should distribute wheels that work on:
 # - macOS (aarch64)
@@ -70,6 +69,7 @@ Changelog = "https://github.com/qpsolvers/qpsolvers/blob/main/CHANGELOG.md"
 [tool.coverage]
 report.include = ["qpsolvers/*"]
 report.omit = [
+    "qpsolvers/solvers/pdhcg_.py",
     "qpsolvers/solvers/nppro_.py",
 ]
 

@@ -80,11 +80,6 @@ OSQP
 .. automodule:: qpsolvers.solvers.osqp_
     :members:
 
-PDHCG
-=====
-
-.. automodule:: qpsolvers.solvers.pdhcg_
-    :members:
 
 PIQP
 ======
