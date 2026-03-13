@@ -92,6 +92,7 @@ When imported, qpsolvers loads all the solvers it can find and lists them in ``q
 | [PIQP](https://github.com/PREDICT-EPFL/piqp)                                 | ``piqp``        | Proximal interior point | Dense & Sparse | BSD-2-Clause |
 | [ProxQP](https://github.com/Simple-Robotics/proxsuite)                       | ``proxqp``      | Augmented Lagrangian | Dense & Sparse | BSD-2-Clause |
 | [QPALM](https://github.com/kul-optec/QPALM)                                  | ``qpalm``       | Augmented Lagrangian | Sparse | LGPL-3.0 |
+| [qpmad](https://github.com/asherikov/qpmad)                                  | ``qpmad``       | Active set | Dense | Apache-2.0 |
 | [QTQP](https://github.com/google-deepmind/qtqp)                              | ``qtqp``        | Interior point | Sparse | Apache-2.0 |
 | [qpax](https://github.com/kevin-tracy/qpax/)                                 | ``qpax``        | Interior point | Dense | MIT |
 | [qpOASES](https://github.com/coin-or/qpOASES)                                | ``qpoases``     | Active set | Dense | LGPL-2.1 |

@@ -45,12 +45,13 @@ osqp = ["osqp >=0.6.2"]
 piqp = ["piqp >=0.2.2"]
 proxqp = ["proxsuite >=0.2.9"]
 qpalm = ["qpalm >=1.2.1"]
+pyqpmad = ["pyqpmad >=1.4.0.post3"]
 qpax = ["qpax>=0.0.9"]
 qtqp = ["qtqp >=0.0.3"]
 quadprog = ["quadprog >=0.1.11"]
 scs = ["scs >=3.2.0"]
 sip = ["sip-python >=0.0.2"]
-open_source_solvers = ["qpsolvers[clarabel,cvxopt,daqp,ecos,highs,jaxopt,osqp,piqp,proxqp,qpalm,qtqp,quadprog,scs,sip,qpax]"]
+open_source_solvers = ["qpsolvers[clarabel,cvxopt,daqp,ecos,highs,jaxopt,osqp,piqp,proxqp,pyqpmad,qpalm,qtqp,quadprog,scs,sip,qpax]"]
 
 # Wheels-only solvers should distribute wheels that work on:
 # - macOS (aarch64)
@@ -104,6 +105,7 @@ qpalm = ">=1.2.1"
 qpax = ">=0.0.9"
 qtqp = ">=0.0.3"
 sip-python = ">=0.0.2"
+pyqpmad = ">=1.4.0.post3"
 
 [tool.pixi.feature.coverage.dependencies]
 coverage = ">=5.5"

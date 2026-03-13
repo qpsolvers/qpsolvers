@@ -914,6 +914,48 @@ except ImportError:
     pass
 
 
+# pyqpmad
+# =======
+
+pyqpmad_solve_qp: Optional[
+    Callable[
+        [
+            ndarray,
+            ndarray,
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            bool,
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
+pyqpmad_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[ndarray],
+            bool,
+        ],
+        Solution,
+    ]
+] = None
+
+try:
+    from .pyqpmad_ import pyqpmad_solve_problem, pyqpmad_solve_qp
+
+    solve_function["pyqpmad"] = pyqpmad_solve_problem
+    available_solvers.append("pyqpmad")
+    dense_solvers.append("pyqpmad")
+except ImportError:
+    pass
+
+
 # SCS
 # ========
 
@@ -1026,6 +1068,7 @@ __all__ = [
     "osqp_solve_qp",
     "piqp_solve_qp",
     "proxqp_solve_qp",
+    "pyqpmad_solve_qp",
     "qpalm_solve_qp",
     "qpax_solve_qp",
     "qpoases_solve_qp",
