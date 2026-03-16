@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- New solver: PDHCG (thanks to @Lhongpei)
 - New solver: [COPT](https://guide.coap.online/copt/en-doc/index.html) (thanks to @Salancelot)
 
 ### Changed

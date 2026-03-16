@@ -69,6 +69,7 @@ Changelog = "https://github.com/qpsolvers/qpsolvers/blob/main/CHANGELOG.md"
 [tool.coverage]
 report.include = ["qpsolvers/*"]
 report.omit = [
+    "qpsolvers/solvers/pdhcg_.py",
     "qpsolvers/solvers/nppro_.py",
 ]
 
