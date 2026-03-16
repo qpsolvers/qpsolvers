@@ -89,7 +89,7 @@ When imported, qpsolvers loads all the solvers it can find and lists them in ``q
 | [MOSEK](https://mosek.com/)                                                  | ``mosek``       | Interior point | Sparse | Commercial |
 | NPPro                                                                        | ``nppro``       | Active set | Dense | Commercial |
 | [OSQP](https://osqp.org/)                                                    | ``osqp``        | Augmented Lagrangian | Sparse | Apache-2.0 |
-| [PDHCG-II](https://github.com/Lhongpei/PDHCG-II)                             | ``pdhcg``       | Primal-dual hybrid gradient | Dense & Sparse | Apache-2.0 |
+| [PDHCG](https://github.com/Lhongpei/PDHCG-II)                                | ``pdhcg``       | Primal-dual hybrid gradient | Dense & Sparse | Apache-2.0 |
 | [PIQP](https://github.com/PREDICT-EPFL/piqp)                                 | ``piqp``        | Proximal interior point | Dense & Sparse | BSD-2-Clause |
 | [ProxQP](https://github.com/Simple-Robotics/proxsuite)                       | ``proxqp``      | Augmented Lagrangian | Dense & Sparse | BSD-2-Clause |
 | [QPALM](https://github.com/kul-optec/QPALM)                                  | ``qpalm``       | Augmented Lagrangian | Sparse | LGPL-3.0 |
