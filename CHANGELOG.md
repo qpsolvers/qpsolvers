@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Merge unsupported solvers submodule within the main solvers submodule
+- Remove unintended copied copyright information in copt_.py
+- Change params in copt test to avoid unexpected timeout fail
 
 ## [4.10.0] - 2026-03-10
 
