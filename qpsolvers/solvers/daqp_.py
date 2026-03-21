@@ -18,7 +18,6 @@ from typing import Optional
 
 import daqp
 import numpy as np
-from numpy import hstack, vstack
 
 from ..problem import Problem
 from ..solution import Solution
@@ -73,47 +72,48 @@ def daqp_solve_problem(
         warnings.warn("warm-start values are ignored by DAQP")
 
     H, f, G, h, A, b, lb, ub = problem.unpack_as_dense()
-    Atot: Optional[np.ndarray] = None
-    bupper: Optional[np.ndarray] = None
-    blower: Optional[np.ndarray] = None
 
-    # General constraints
-    if A is not None and b is not None:
-        if G is not None and h is not None:
-            Atot = vstack([G, A])
-            bupper = hstack([h, b])
-        else:
-            Atot = A
-            bupper = b
-        meq = A.shape[0]
-    else:  # no equality constraint
-        if G is not None and h is not None:
-            Atot = G
-            bupper = h
-        meq = 0
+    # Determine constraint counts upfront to allow single pre-allocation
+    meq = A.shape[0] if A is not None else 0
+    mineq = G.shape[0] if G is not None else 0
+    if ub is not None:
+        ms = ub.size
+    elif lb is not None:
+        ms = lb.size
+    else:
+        ms = 0
+    mtot = ms + mineq + meq
 
-    if bupper is None:
-        bupper = np.zeros((0,))
+    # Build bupper/blower. When there are no box constraints and only one
+    # constraint block, reuse the existing arrays directly (zero extra copy).
+    if ms == 0 and (mineq == 0 or meq == 0):
+        bupper = h if (mineq > 0) else (b if meq > 0 else np.zeros(0))
+        blower = np.full(mineq + meq, -1e30)
+    else:
+        bupper = np.empty(mtot)
+        blower = np.full(mtot, -1e30)
+        if ms > 0:
+            bupper[:ms] = ub if ub is not None else 1e30
+            if lb is not None:
+                blower[:ms] = lb
+        if mineq > 0:
+            bupper[ms : ms + mineq] = h
+        if meq > 0:
+            bupper[ms + mineq :] = b
+
+    # Build constraint matrix; stack only when both blocks are present
+    if mineq > 0 and meq > 0:
+        Atot = np.empty((mineq + meq, f.size))
+        Atot[:mineq] = G
+        Atot[mineq:] = A
+    elif mineq > 0:
+        Atot = G
+    elif meq > 0:
+        Atot = A
+    else:
         Atot = np.zeros((0, f.size))
 
-    mineq = bupper.size - meq
-    blower = np.full(bupper.shape, -1e30)
-    # Box constraints
-    if ub is not None:
-        bupper = hstack([ub, bupper])
-        ms = ub.size
-        if lb is not None:
-            blower = hstack([lb, blower])
-        else:
-            blower = hstack([np.full(ms, -1e30), blower])
-    else:  # No upper
-        if lb is not None:
-            ms = lb.size
-            blower = hstack([lb, blower])
-            bupper = hstack([np.full(ms, 1e30), bupper])
-        else:
-            ms = 0
-    sense = np.zeros(bupper.shape, dtype=c_int)
+    sense = np.zeros(mtot, dtype=c_int)
     sense[ms + mineq :] = 5
 
     x, obj, exitflag, info = daqp.solve(
