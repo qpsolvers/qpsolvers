@@ -36,7 +36,7 @@ def daqp_solve_problem(
     problem :
         Quadratic program to solve.
     initvals :
-        This argument is not used by DAQP.
+        Warm-start guess vector for the primal solution.
     verbose :
         Set to `True` to print out extra information.
 
@@ -117,7 +117,8 @@ def daqp_solve_problem(
     sense[ms + mineq :] = 5
 
     x, obj, exitflag, info = daqp.solve(
-        H, f, Atot, bupper, blower, sense, **kwargs
+        H, f, Atot, bupper, blower, sense,
+        primal_start=initvals, **kwargs
     )
 
     solution = Solution(problem)
@@ -181,7 +182,7 @@ def daqp_solve_qp(
     ub :
         Upper bound constraint vector.
     initvals :
-        This argument is not used by DAQP.
+        Warm-start guess vector for the primal solution.
     verbose :
         Set to `True` to print out extra information.
 
@@ -208,6 +209,8 @@ def daqp_solve_qp(
          - Primal feasibility tolerance.
        * - ``dual_tol``
          - Dual feasibility tolerance.
+       * - ``time_limit``
+         - Time limit for solve run in seconds.
 
     Check out the `DAQP settings
     <https://darnstrom.github.io/daqp/parameters>`_ documentation for
