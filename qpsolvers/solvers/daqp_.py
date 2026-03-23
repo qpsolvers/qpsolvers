@@ -9,7 +9,7 @@
 DAQP is a dual active-set algorithm implemented in C [Arnstrom2022]_.
 It has been developed to solve small/medium scale dense problems.
 
-**Warm-start:** this solver interface does not support warm starting ❄️
+**Warm-start:** this solver interface supports warm starting 🔥
 """
 
 import warnings
@@ -107,9 +107,9 @@ def daqp_solve_problem(
         Atot[:mineq] = G
         Atot[mineq:] = A
     elif mineq > 0:
-        Atot = G
+        Atot = G  # type: ignore[assignment]
     elif meq > 0:
-        Atot = A
+        Atot = A  # type: ignore[assignment]
     else:
         Atot = np.zeros((0, f.size))
 
