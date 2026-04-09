@@ -487,6 +487,46 @@ except ImportError:
     pass
 
 
+# NPPro
+# =====
+
+nppro_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[ndarray],
+        ],
+        Solution,
+    ]
+] = None
+
+nppro_solve_qp: Optional[
+    Callable[
+        [
+            ndarray,
+            ndarray,
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
+try:
+    from .nppro_ import nppro_solve_problem, nppro_solve_qp
+
+    solve_function["nppro"] = nppro_solve_problem
+    available_solvers.append("nppro")
+    dense_solvers.append("nppro")
+except ImportError:
+    pass
+
+
 # OSQP
 # ====
 
@@ -528,6 +568,47 @@ try:
 except ImportError:
     pass
 
+# PDHCG
+# =====
+
+pdhcg_solve_problem: Optional[
+    Callable[
+        [
+            Problem,
+            Optional[ndarray],
+            bool,
+        ],
+        Solution,
+    ]
+] = None
+
+pdhcg_solve_qp: Optional[
+    Callable[
+        [
+            Union[ndarray, csc_matrix],
+            ndarray,
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[Union[ndarray, csc_matrix]],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            Optional[ndarray],
+            bool,
+        ],
+        Optional[ndarray],
+    ]
+] = None
+
+try:
+    from .pdhcg_ import pdhcg_solve_problem, pdhcg_solve_qp
+
+    solve_function["pdhcg"] = pdhcg_solve_problem
+    available_solvers.append("pdhcg")
+    dense_solvers.append("pdhcg")
+    sparse_solvers.append("pdhcg")
+except ImportError:
+    pass
 
 # PIQP
 # =======
@@ -1024,7 +1105,9 @@ __all__ = [
     "jaxopt_osqp_solve_qp",
     "kvxopt_solve_qp",
     "mosek_solve_qp",
+    "nppro_solve_qp",
     "osqp_solve_qp",
+    "pdhcg_solve_qp",
     "piqp_solve_qp",
     "proxqp_solve_qp",
     "pyqpmad_solve_qp",

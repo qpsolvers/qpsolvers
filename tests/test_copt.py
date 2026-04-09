@@ -24,8 +24,10 @@ try:
                 problem.q,
                 problem.G,
                 problem.h,
-                TimeLimit=0.1,
+                verbose=True,
                 FeasTol=1e-8,
+                DualTol=1e-8,
+                Presolve=0
             )
             self.assertIsNotNone(x)
 

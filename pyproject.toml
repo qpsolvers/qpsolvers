@@ -69,7 +69,10 @@ Changelog = "https://github.com/qpsolvers/qpsolvers/blob/main/CHANGELOG.md"
 
 [tool.coverage]
 report.include = ["qpsolvers/*"]
-report.omit = ["qpsolvers/unsupported/*"]
+report.omit = [
+    "qpsolvers/solvers/pdhcg_.py",
+    "qpsolvers/solvers/nppro_.py",
+]
 
 [tool.mypy]
 ignore_missing_imports = true
@@ -112,7 +115,7 @@ coveralls = "*"
 [tool.pixi.feature.coverage.tasks]
 coverage-erase = { cmd = "coverage erase" }
 coverage-run = { cmd = "coverage run -m unittest discover --failfast", depends-on = ["coverage-erase"] }
-coverage = { cmd = "coverage report --include=\"qpsolvers/*\" --omit=\"qpsolvers/unsupported/*\"", depends-on = ["coverage-run"] }
+coverage = { cmd = "coverage report", depends-on = ["coverage-run"] }
 coveralls = { cmd = "coveralls --service=github" }
 
 [tool.pixi.feature.docs.dependencies]
