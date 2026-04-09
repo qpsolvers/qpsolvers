@@ -179,9 +179,7 @@ def pyqpmad_solve_problem(
                 # (negative for lower, positive for upper)
                 solution.z_box[ci] = (  # type: ignore[index]
                     # z_box is set to np.zeros(n) above when n_simple > 0
-                    -d
-                    if ineq_dual.is_lower[i]
-                    else d
+                    -d if ineq_dual.is_lower[i] else d
                 )
             else:
                 j = ci - n_simple  # row in A_qpmad
