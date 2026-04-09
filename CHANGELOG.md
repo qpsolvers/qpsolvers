@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- New solver: qpmad (thanks to @ahoarau)
+
 ## [4.11.0] - 2026-03-16
 
 ### Added
