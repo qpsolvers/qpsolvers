@@ -121,8 +121,16 @@ def pyqpmad_solve_problem(
     lb_qpmad = None
     ub_qpmad = None
     if lb is not None or ub is not None:
-        lb_qpmad = np.asarray(lb, dtype=np.float64) if lb is not None else np.full(n, -np.inf)
-        ub_qpmad = np.asarray(ub, dtype=np.float64) if ub is not None else np.full(n, np.inf)
+        lb_qpmad = (
+            np.asarray(lb, dtype=np.float64)
+            if lb is not None
+            else np.full(n, -np.inf)
+        )
+        ub_qpmad = (
+            np.asarray(ub, dtype=np.float64)
+            if ub is not None
+            else np.full(n, np.inf)
+        )
 
     solver = pyqpmad.Solver()
     try:
@@ -138,7 +146,7 @@ def pyqpmad_solve_problem(
             params,
         )
     except Exception:
-        status = None # To make solution.found = False
+        status = None  # To make solution.found = False
 
     solution = Solution(problem)
     solution.found = status == pyqpmad.ReturnStatus.OK
@@ -150,16 +158,18 @@ def pyqpmad_solve_problem(
         n_ineq_orig = G.shape[0] if G is not None else 0
 
         # Initialise dual arrays (zeros covers inactive constraints).
-        # z is always a non-None array (possibly empty) after a successful solve.
+        # z is always a non-None array (possibly empty) after a successful
+        # solve.
         solution.y = np.zeros(n_eq_orig)
         solution.z = np.zeros(n_ineq_orig)
         if n_simple > 0:
             solution.z_box = np.zeros(n)
 
         # Reconstruct z and z_box from the active-set inequality duals.
-        # qpmad index ordering: 0..n_simple-1 are simple bounds (lb/ub),
-        # n_simple..n_simple+n_eq_orig-1 are equality rows of A_qpmad,
-        # n_simple+n_eq_orig.. are inequality rows of A_qpmad (from G).
+        # qpmad index ordering:
+        # - 0..n_simple-1 are simple bounds (lb/ub),
+        # - n_simple..n_simple+n_eq_orig-1 are equality rows of A_qpmad,
+        # - n_simple+n_eq_orig.. are inequality rows of A_qpmad (from G).
         ineq_dual = solver.get_inequality_dual()
         for i in range(len(ineq_dual.dual)):
             ci = int(ineq_dual.indices[i])
@@ -167,7 +177,10 @@ def pyqpmad_solve_problem(
             if ci < n_simple:
                 # Active box bound: sign follows qpsolvers convention
                 # (negative for lower, positive for upper)
-                solution.z_box[ci] = -d if ineq_dual.is_lower[i] else d
+                solution.z_box[ci] = (  # type: ignore[index]
+                    # z_box is set to np.zeros(n) above when n_simple > 0
+                    -d if ineq_dual.is_lower[i] else d
+                )
             else:
                 j = ci - n_simple  # row in A_qpmad
                 if j >= n_eq_orig:  # inequality row from G
@@ -175,7 +188,8 @@ def pyqpmad_solve_problem(
 
         # Compute equality duals y from KKT stationarity to avoid any
         # sign-convention ambiguity with qpmad's internal dual storage:
-        #   P x + q + A' y + G' z + z_box = 0  =>  A' y = -(P x + q + G' z + z_box)
+        #   P x + q + A' y + G' z + z_box = 0
+        #   =>  A' y = -(P x + q + G' z + z_box)
         if A is not None and n_eq_orig > 0:
             residual = P @ x + q
             if G is not None and solution.z is not None:
