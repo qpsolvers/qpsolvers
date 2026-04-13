@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Add build and solve timing info
+
 ### Added
 
 - New solver: qpmad (thanks to @ahoarau)
