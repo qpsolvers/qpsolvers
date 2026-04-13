@@ -104,7 +104,7 @@ gurobipy = ">=9.5.2"
 jaxopt = ">=0.8.3"
 qpalm = ">=1.2.1"
 qpax = ">=0.0.9"
-qtqp = ">=0.0.3"
+qtqp = ">=0.0.3,<0.0.4"
 sip-python = ">=0.0.2"
 pyqpmad = ">=1.4.0.post3"
 
