@@ -38,10 +38,11 @@ def __set_hessian(model: highspy.HighsModel, P: spa.csc_matrix) -> None:
     P :
         Positive semidefinite cost matrix.
     """
-    model.hessian_.dim_ = P.shape[0]
-    model.hessian_.start_ = P.indptr
-    model.hessian_.index_ = P.indices
-    model.hessian_.value_ = P.data
+    P_lower = spa.tril(P, format="csc")
+    model.hessian_.dim_ = P_lower.shape[0]
+    model.hessian_.start_ = P_lower.indptr
+    model.hessian_.index_ = P_lower.indices
+    model.hessian_.value_ = P_lower.data
 
 
 def __set_columns(

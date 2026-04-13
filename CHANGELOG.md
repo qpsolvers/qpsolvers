@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - New solver: qpmad (thanks to @ahoarau)
 
+### Fixed
+
+- HiGHS: update interface following code changes in HiGHS v1.14.0
+
 ## [4.11.0] - 2026-03-16
 
 ### Added
