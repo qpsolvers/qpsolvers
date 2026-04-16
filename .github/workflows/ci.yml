@@ -117,10 +117,10 @@ jobs:
         strategy:
             matrix:
                 os: [ubuntu-latest, macos-latest, windows-latest]
-                pyenv: [py310, py311, py312]
+                pyenv: [py310, py311, py312, py313]
 
         env:
-            PIXI_ENV: test-${{ matrix.pyenv }}-${{ matrix.os == 'ubuntu-latest' && 'linux' || matrix.os == 'macos-latest' && 'macos' || 'windows' }}
+            PIXI_ENV: test-${{ matrix.pyenv }}
 
         steps:
             - name: "Checkout sources"
