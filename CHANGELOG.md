@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - New solver: qpmad (thanks to @ahoarau)
+- Support Python 3.13
 
 ### Fixed
 
@@ -22,7 +23,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - New solver: PDHCG (thanks to @Lhongpei)
-- Support Python 3.13
 
 ### Changed
 
