@@ -20,6 +20,7 @@ on installing this solver.
 **Warm-start:** this solver interface supports warm starting 🔥
 """
 
+import time
 import warnings
 from typing import Any, List, Optional, Tuple
 
@@ -233,6 +234,7 @@ def qpoases_solve_problem(
     <https://www.coin-or.org/qpOASES/doc/3.1/manual.pdf>`_. for all available
     options.
     """
+    build_start_time = time.perf_counter()
     if initvals is not None:
         warnings.warn("qpOASES: warm-start values are ignored")
 
@@ -260,10 +262,12 @@ def qpoases_solve_problem(
     options = __prepare_options(verbose, predefined_options, **kwargs)
     qp.setOptions(options)
 
+    solve_start_time = time.perf_counter()
     try:
         return_value = qp.init(*args)
     except TypeError as error:
         raise ProblemError("problem has sparse matrices") from error
+    solve_end_time = time.perf_counter()
 
     solution = Solution(problem)
     solution.extras = {
@@ -290,6 +294,8 @@ def qpoases_solve_problem(
     solution.z_box = (
         -z_opt[:n] if lb is not None or ub is not None else np.empty((0,))
     )
+    solution.build_time = solve_start_time - build_start_time
+    solution.solve_time = solve_end_time - solve_start_time
     return solution
 
 

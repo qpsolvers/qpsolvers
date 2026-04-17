@@ -14,6 +14,7 @@ sparse problems, in particular for linear or conic quadratic programs.
 **Warm-start:** this solver interface supports warm starting 🔥
 """
 
+import time
 import warnings
 from typing import Optional, Union
 
@@ -63,6 +64,7 @@ def mosek_solve_problem(
     :
         Solution to the QP, if found, otherwise ``None``.
     """
+    build_start_time = time.perf_counter()
     if problem.is_unconstrained:
         warnings.warn(
             "QP is unconstrained: solving with SciPy's LSQR rather than MOSEK"
@@ -71,7 +73,11 @@ def mosek_solve_problem(
     if "mosek" not in kwargs:
         kwargs["mosek"] = {}
     kwargs["mosek"][mosek.iparam.log] = 1 if verbose else 0
+    solve_start_time = time.perf_counter()
     solution = cvxopt_solve_problem(problem, "mosek", initvals, **kwargs)
+    solve_end_time = time.perf_counter()
+    solution.build_time = solve_start_time - build_start_time
+    solution.solve_time = solve_end_time - solve_start_time
     return solution
 
 

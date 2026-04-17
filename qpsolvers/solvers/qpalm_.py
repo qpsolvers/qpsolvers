@@ -15,6 +15,7 @@ in a scientific work, consider citing the corresponding paper [Hermans2022]_.
 **Warm-start:** this solver interface supports warm starting 🔥
 """
 
+import time
 import warnings
 from typing import Optional, Union
 
@@ -98,6 +99,7 @@ def qpalm_solve_problem(
     <https://kul-optec.github.io/QPALM/Doxygen/structqpalm_1_1Settings.html>`__
     for details.
     """
+    build_start_time = time.perf_counter()
     if initvals is not None:
         if "x" in kwargs:
             raise ParamError(
@@ -137,7 +139,9 @@ def qpalm_solve_problem(
                 )
 
     solver = qpalm.Solver(data, settings)
+    solve_start_time = time.perf_counter()
     solver.solve()
+    solve_end_time = time.perf_counter()
 
     solution = Solution(problem)
     solution.extras = {"info": solver.info}
@@ -148,6 +152,8 @@ def qpalm_solve_problem(
     solution.y = solver.solution.y[0:m_eq]
     solution.z = solver.solution.y[m_eq : m_eq + m_leq]
     solution.z_box = solver.solution.y[m_eq + m_leq :]
+    solution.build_time = solve_start_time - build_start_time
+    solution.solve_time = solve_end_time - solve_start_time
     return solution
 
 

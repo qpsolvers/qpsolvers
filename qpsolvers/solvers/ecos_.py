@@ -17,6 +17,7 @@ corresponding paper [Domahidi2013]_.
 **Warm-start:** this solver interface does not support warm starting ❄️
 """
 
+import time
 import warnings
 from typing import Optional, Union
 
@@ -124,6 +125,7 @@ def ecos_solve_problem(
     more details. You can also check out [Caron2022]_ for a primer on
     primal-dual residuals or the duality gap.
     """
+    build_start_time = time.perf_counter()
     if initvals is not None:
         warnings.warn("warm-start values are ignored by this wrapper")
 
@@ -147,9 +149,13 @@ def ecos_solve_problem(
         A_socp = spa.hstack(
             [A_sparse, spa.csc_matrix((A.shape[0], 1))], format="csc"
         )
+        solve_start_time = time.perf_counter()
         result = ecos.solve(c_socp, G_socp, h_socp, dims, A_socp, b, **kwargs)
+        solve_end_time = time.perf_counter()
     else:
+        solve_start_time = time.perf_counter()
         result = ecos.solve(c_socp, G_socp, h_socp, dims, **kwargs)
+        solve_end_time = time.perf_counter()
     flag = result["info"]["exitFlag"]
     solution = Solution(problem)
     solution.extras = result["info"]
@@ -170,6 +176,8 @@ def ecos_solve_problem(
         z, z_box = split_dual_linear_box(z_ecos, lb, ub)
         solution.z = z
         solution.z_box = z_box
+    solution.build_time = solve_start_time - build_start_time
+    solution.solve_time = solve_end_time - solve_start_time
     return solution
 
 

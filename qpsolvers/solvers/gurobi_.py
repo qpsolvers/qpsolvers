@@ -18,6 +18,7 @@ on installing this solver.
 **Warm-start:** this solver interface does not support warm starting ❄️
 """
 
+import time
 import warnings
 from typing import Optional, Union
 
@@ -81,6 +82,7 @@ def gurobi_solve_problem(
     the cost of computation time. See *e.g.* [Caron2022]_ for a primer of
     solver tolerances.
     """
+    build_start_time = time.perf_counter()
     if initvals is not None:
         warnings.warn("warm-start values are ignored by this wrapper")
 
@@ -127,7 +129,9 @@ def gurobi_solve_problem(
         )
     objective = 0.5 * (x @ P @ x) + q @ x  # type: ignore[operator]
     model.setObjective(objective, sense=GRB.MINIMIZE)
+    solve_start_time = time.perf_counter()
     model.optimize()
+    solve_end_time = time.perf_counter()
 
     solution = Solution(problem)
     solution.extras["status"] = model.status
@@ -135,6 +139,8 @@ def gurobi_solve_problem(
     if solution.found:
         solution.x = x.getAttr("X")
         __retrieve_dual(solution, ineq_constr, eq_constr, lb_constr, ub_constr)
+    solution.build_time = solve_start_time - build_start_time
+    solution.solve_time = solve_end_time - solve_start_time
     return solution
 
 

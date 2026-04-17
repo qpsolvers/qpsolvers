@@ -16,6 +16,7 @@ corresponding GitHub repository (or paper, if one has been released).
 **Warm-start:** this solver interface supports warm starting 🔥
 """
 
+import time
 import warnings
 from typing import Optional, Union
 
@@ -135,6 +136,7 @@ def sip_solve_problem(
     Check the `Settings` struct in the `solver code
     <https://github.com/joaospinto/sip/blob/main/sip/types.hpp>`__ for details.
     """
+    build_start_time = time.perf_counter()
     P, q, G_, h, A_, b, lb, ub = problem.unpack()
     if lb is not None or ub is not None:
         G_, h = linear_from_box_inequalities(
@@ -293,7 +295,9 @@ def sip_solve_problem(
 
     solver = sip.Solver(ss, qs, pd, mc)
 
+    solve_start_time = time.perf_counter()
     output = solver.solve(vars_)
+    solve_end_time = time.perf_counter()
 
     solution = Solution(problem)
     solution.extras = {"sip_output": output, "sip_vars": vars_}
@@ -309,6 +313,8 @@ def sip_solve_problem(
         z, z_box = split_dual_linear_box(z_sip, lb, ub)
         solution.z = z
         solution.z_box = z_box
+    solution.build_time = solve_start_time - build_start_time
+    solution.solve_time = solve_end_time - solve_start_time
     return solution
 
 
