@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - New solver: PDHCG (thanks to @Lhongpei)
-- Warm starts and time limit are now enabled in DAQP
+- Warm starts and time limit are now enabled in DAQP (thanks to @darnstrom)
 
 ### Changed
 
