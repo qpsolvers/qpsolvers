@@ -120,8 +120,7 @@ def daqp_solve_problem(
 
     solve_start_time = time.perf_counter()
     x, obj, exitflag, info = daqp.solve(
-        H, f, Atot, bupper, blower, sense,
-        primal_start=initvals, **kwargs
+        H, f, Atot, bupper, blower, sense, primal_start=initvals, **kwargs
     )
     solve_end_time = time.perf_counter()
 
