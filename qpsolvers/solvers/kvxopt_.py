@@ -13,6 +13,7 @@ interior-point solver.
 **Warm-start:** this solver interface supports warm starting 🔥
 """
 
+import time
 import warnings
 from typing import Dict, Optional, Union
 
@@ -142,6 +143,7 @@ def kvxopt_solve_problem(
     parameters. See also [Caron2022]_ for a primer on the duality gap, primal
     and dual residuals.
     """
+    build_start_time = time.perf_counter()
     P, q, G, h, A, b, lb, ub = problem.unpack()
     if lb is not None or ub is not None:
         G, h = linear_from_box_inequalities(
@@ -170,6 +172,7 @@ def kvxopt_solve_problem(
     kwargs["show_progress"] = verbose
 
     try:
+        solve_start_time = time.perf_counter()
         res = qp(
             *args,
             solver=solver,  # type: ignore[arg-type]
@@ -177,6 +180,7 @@ def kvxopt_solve_problem(
             options=kwargs,
             **constraints,  # type: ignore[arg-type]
         )
+        solve_end_time = time.perf_counter()
     except ValueError as exception:
         error = str(exception)
         if "Rank(A)" in error:
@@ -200,6 +204,8 @@ def kvxopt_solve_problem(
         solution.z = np.empty((0,))
         solution.z_box = np.empty((0,))
     solution.obj = res["primal objective"]  # type: ignore[assignment]
+    solution.build_time = solve_start_time - build_start_time
+    solution.solve_time = solve_end_time - solve_start_time
     return solution
 
 

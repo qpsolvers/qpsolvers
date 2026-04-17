@@ -15,6 +15,7 @@ HPIPM in a scientific work, consider citing the corresponding paper
 **Warm-start:** this solver interface supports warm starting 🔥
 """
 
+import time
 import warnings
 from typing import Optional
 
@@ -78,6 +79,7 @@ def hpipm_solve_problem(
        * - ``tol_stat``
          - Stationarity condition tolerance.
     """
+    build_start_time = time.perf_counter()
     P, q, G, h, A, b, lb, ub = problem.unpack()
     if verbose:
         warnings.warn("verbose keyword argument is ignored by HPIPM")
@@ -145,7 +147,9 @@ def hpipm_solve_problem(
         sol.set("v", initvals)
 
     solver = hpipm.hpipm_dense_qp_solver(dim, solver_args)
+    solve_start_time = time.perf_counter()
     solver.solve(qp, sol)
+    solve_end_time = time.perf_counter()
 
     status = solver.get("status")
 
@@ -172,6 +176,8 @@ def hpipm_solve_problem(
         solution.z_box = (sol.get("lam_ub") - sol.get("lam_lb")).flatten()
     else:
         solution.z_box = np.empty((0,))
+    solution.build_time = solve_start_time - build_start_time
+    solution.solve_time = solve_end_time - solve_start_time
     return solution
 
 

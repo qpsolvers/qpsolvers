@@ -67,6 +67,14 @@ class Solution:
           are active and :math:`lb_i < x_i < ub_i`.
         - If :math:`z_{box,i} > 0`, then the upper bound :math:`x_i = ub_i` is
           active at the solution.
+
+    build_time :
+        Time taken, during the call to `solve_problem`, to build problem
+        matrices in the QP solver's expected format.
+
+    solve_time :
+        Time taken, during the call to `solve_problem`, to call the QP solver
+        itself.
     """
 
     problem: Problem
@@ -77,6 +85,8 @@ class Solution:
     y: Optional[np.ndarray] = None
     z: Optional[np.ndarray] = None
     z_box: Optional[np.ndarray] = None
+    build_time: Optional[float] = None
+    solve_time: Optional[float] = None
 
     def is_optimal(self, eps_abs: float) -> bool:
         """Check whether the solution is indeed optimal.
