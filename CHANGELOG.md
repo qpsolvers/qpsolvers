@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add build and solve timing info (thanks to @ahoarau)
 - DAQP: Warm starts and time limit are now enabled in DAQP (thanks to @darnstrom)
+- New solver: [SCIP](https://github.com/scipopt/PySCIPOpt) (thanks to @Joao-Dionisio)
 - New solver: qpmad (thanks to @ahoarau)
 - Support Python 3.13
 

@@ -152,7 +152,8 @@ class TestSolveQP(unittest.TestCase):
             ineq_tolerance = (
                 2e-4
                 if solver in ["jaxopt_osqp", "qpalm", "scs"]
-                else 5e-6 if solver in ["proxqp", "qpax"] else 1e-10
+                else 5e-6 if solver in ["proxqp", "qpax"]
+                else 1e-8 if solver == "scip" else 1e-10
             )
             self.assertLess(
                 norm(x - known_solution), sol_tolerance, f"{solver=}"
@@ -360,7 +361,11 @@ class TestSolveQP(unittest.TestCase):
             sol_tolerance = (
                 1e-3
                 if solver == "ecos"
-                else 1e-5 if solver in ["osqp", "qpalm"] else 1e-6
+                else (
+                    1e-4
+                    if solver == "scip"
+                    else 1e-5 if solver in ["osqp", "qpalm"] else 1e-6
+                )
             )
             self.assertLess(
                 norm(x - known_solution), sol_tolerance, f"{solver=}"
@@ -408,7 +413,8 @@ class TestSolveQP(unittest.TestCase):
                     else (
                         1e-6
                         if solver == "proxqp"
-                        else 1e-7 if solver == "scs" else 1e-10
+                        else 1e-7 if solver == "scs"
+                        else 1e-8 if solver == "scip" else 1e-10
                     )
                 )
             )
@@ -729,7 +735,7 @@ class TestSolveQP(unittest.TestCase):
                 else (
                     1e-5
                     if solver in ["jaxopt_osqp", "proxqp", "qpax"]
-                    else 1e-10
+                    else 1e-8 if solver == "scip" else 1e-10
                 )
             )
             self.assertLess(
@@ -827,18 +833,22 @@ class TestSolveQP(unittest.TestCase):
                         2e-5
                         if solver == "proxqp"
                         else (
-                            1e-6
-                            if solver
-                            in [
-                                "cvxopt",
-                                "kvxopt",
-                                "mosek",
-                                "piqp",
-                                "qpswift",
-                                "qtqp",
-                                "sip",
-                            ]
-                            else 1e-8
+                            1e-4
+                            if solver == "scip"
+                            else (
+                                1e-6
+                                if solver
+                                in [
+                                    "cvxopt",
+                                    "kvxopt",
+                                    "mosek",
+                                    "piqp",
+                                    "qpswift",
+                                    "qtqp",
+                                    "sip",
+                                ]
+                                else 1e-8
+                            )
                         )
                     )
                 )
