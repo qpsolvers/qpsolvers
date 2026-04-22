@@ -1,20 +1,35 @@
 """Solver interface for `SCIP <https://github.com/scipopt/PySCIPOpt/>`__.
 
-SCIP is currently one of the fastest academically developed solvers for mixed integer programming (MIP) and mixed integer nonlinear programming (MINLP).
-In addition, SCIP provides a highly flexible framework for constraint integer programming and branch-cut-and-price.
-It allows for total control of the solution process and the access of detailed information down to the guts of the solver.
+SCIP is currently one of the fastest academically developed solvers for
+mixed integer programming (MIP) and mixed integer nonlinear programming
+(MINLP). In addition, SCIP provides a highly flexible framework for
+constraint integer programming and branch-cut-and-price. It allows for
+total control of the solution process and the access of detailed
+information down to the guts of the solver.
 """
 
-import warnings
 from typing import Optional, Union
 
-import pyscipopt
 import numpy as np
+import pyscipopt
 import scipy.sparse as spa
+from pyscipopt.recipes.nonlinear import set_nonlinear_objective
 
-from ..conversions import ensure_sparse_matrices
 from ..problem import Problem
 from ..solution import Solution
+
+
+def _to_dense(matrix):
+    """Return a dense ndarray view of a matrix.
+
+    pyscipopt's ``MatrixVariable`` does not support scipy.sparse matmul,
+    so we densify problem matrices before building SCIP expressions.
+    """
+    if matrix is None:
+        return None
+    if spa.issparse(matrix):
+        return np.asarray(matrix.toarray())
+    return np.asarray(matrix)
 
 
 def scip_solve_problem(
@@ -41,93 +56,108 @@ def scip_solve_problem(
 
     Notes
     -----
-    Keyword arguments are forwarded to SCIP as options. For instance, we
-    can call ``scip_solve_qp(P, q, G, h, u, primal_feasibility_tolerance=1e-8,
-    dual_feasibility_tolerance=1e-8)``. SCIP settings include the following:
-
-    .. list-table::
-       :widths: 30 70
-       :header-rows: 1
-
-       * - Name
-         - Description
-       * - ``dual_feasibility_tolerance``
-         - Dual feasibility tolerance.
-       * - ``primal_feasibility_tolerance``
-         - Primal feasibility tolerance.
-       * - ``time_limit``
-         - Run time limit in seconds.
-
-    Check out the `SCIP documentation <https://scipopt.org/>`_
-    for more information on the solver.
+    Keyword arguments are forwarded to SCIP as parameters. For instance,
+    we can call ``scip_solve_qp(P, q, G, h, limits_time=10)`` to set a
+    time limit of 10 seconds. See the `SCIP parameter reference
+    <https://www.scipopt.org/doc/html/PARAMETERS.php>`_ for the list of
+    supported parameters.
     """
     model = pyscipopt.Model()
+    model.hideOutput(not verbose)
+    # Tighten SCIP's default tolerances for QP-grade accuracy.
+    # Going below 1e-9 requires SCIP to be built with GMP.
+    defaults = {
+        "numerics/feastol": 1e-9,
+        "numerics/dualfeastol": 1e-9,
+        "limits/gap": 1e-9,
+        "limits/absgap": 1e-9,
+    }
+    for option, value in defaults.items():
+        if option not in kwargs:
+            model.setParam(option, value)
+    for option, value in kwargs.items():
+        model.setParam(option, value)
 
     P, q, G, h, A, b, lb, ub = problem.unpack()
-
-    P, G, A = ensure_sparse_matrices("scip", P, G, A)
+    P = _to_dense(P)
+    G = _to_dense(G)
+    A = _to_dense(A)
     num_vars = P.shape[0]
     x = model.addMatrixVar(
-        num_vars, ub=model.infinity(), vtype="C"
+        num_vars,
+        lb=-model.infinity(),
+        ub=model.infinity(),
+        vtype="C",
     )
-    ineq_constr, eq_constr, lb_constr, ub_constr = None, None, None, None
-    if G is not None:
-        ineq_constr = model.addMatrixCons(G@x <= h)
-    if A is not None:
-        eq_constr = model.addMatrixCons(A@x == b)
-    if lb is not None:
-        lb_constr = model.addMatrixCons(x >= lb)
-    if ub is not None:
-        ub_constr = model.addMatrixCons(x <= ub)
 
-    if initvals:
+    ineq_cons = model.addMatrixCons(G @ x <= h) if G is not None else None
+    eq_cons = model.addMatrixCons(A @ x == b) if A is not None else None
+    lb_cons = model.addMatrixCons(x >= lb) if lb is not None else None
+    ub_cons = model.addMatrixCons(x <= ub) if ub is not None else None
+
+    if initvals is not None:
         init_sol = model.createSol()
         for i, val in enumerate(initvals):
-            model.setSolVal(init_sol, model.getVar(i), val)
-        model.addSol(init_sol, "warm-start", True)
+            model.setSolVal(init_sol, x[i], float(val))
+        model.addSol(init_sol, free=True)
 
-    if verbose:
-        model.hideOutput(False)
-    if not verbose:
-        model.hideOutput()
-
-    for option, value in kwargs.items():
-        model.setOptionValue(option, value)
-    
     objective = 0.5 * (x @ P @ x) + q @ x
-    model.setObjective(objective, "minimize")
+    set_nonlinear_objective(model, objective, "minimize")
     model.optimize()
 
-    if model.getNSols() > 0:
-        solution = model.getBestSol()
-    
     solution = Solution(problem)
     solution.extras["status"] = model.getStatus()
     solution.found = model.getNSols() > 0
-    solution.x = np.array(model.getBestSol())
-
     if solution.found:
-        __retrieve_dual(solution, ineq_constr, eq_constr, lb_constr, ub_constr)
-
+        solution.x = np.asarray(model.getVal(x))
+        _retrieve_dual(model, solution, ineq_cons, eq_cons, lb_cons, ub_cons)
     return solution
 
-def __retrieve_dual(
+
+def _dual_values(
+    model: pyscipopt.Model,
+    cons: Optional["pyscipopt.MatrixConstraint"],
+) -> np.ndarray:
+    """Return an array of dual values for a matrix of linear constraints."""
+    if cons is None:
+        return np.empty((0,))
+    values = np.zeros(cons.shape)
+    flat = values.reshape(-1)
+    for i, c in enumerate(cons.reshape(-1)):
+        try:
+            flat[i] = model.getDualsolLinear(c)
+        except Exception:  # pragma: no cover - SCIP raised an error
+            flat[i] = 0.0
+    return values
+
+
+def _retrieve_dual(
+    model: pyscipopt.Model,
     solution: Solution,
-    ineq_constr: Optional[pyscipopt.MatrixConstraint],
-    eq_constr: Optional[pyscipopt.MatrixConstraint],
-    lb_constr: Optional[pyscipopt.MatrixConstraint],
-    ub_constr: Optional[pyscipopt.MatrixConstraint],
+    ineq_cons: Optional["pyscipopt.MatrixConstraint"],
+    eq_cons: Optional["pyscipopt.MatrixConstraint"],
+    lb_cons: Optional["pyscipopt.MatrixConstraint"],
+    ub_cons: Optional["pyscipopt.MatrixConstraint"],
 ) -> None:
-    solution.z = -ineq_constr.getDualsolVal() if ineq_constr is not None else np.empty((0,))
-    solution.y = -eq_constr.getDualsolVal() if eq_constr is not None else np.empty((0,))
-    if lb_constr is not None and ub_constr is not None:
-        solution.z_box = -ub_constr.getDualsolVal() - lb_constr.getDualsolVal()
-    elif ub_constr is not None:  # lb_constr is None
-        solution.z_box = -ub_constr.getDualsolVal()
-    elif lb_constr is not None:  # ub_constr is None
-        solution.z_box = -lb_constr.getDualsolVal()
-    else:  # lb_constr is None and ub_constr is None
+    solution.z = -_dual_values(model, ineq_cons)
+    solution.y = -_dual_values(model, eq_cons)
+    if lb_cons is None and ub_cons is None:
         solution.z_box = np.empty((0,))
+    else:
+        assert solution.x is not None
+        num_vars = solution.x.shape[0]
+        lb_vals = (
+            _dual_values(model, lb_cons)
+            if lb_cons is not None
+            else np.zeros(num_vars)
+        )
+        ub_vals = (
+            _dual_values(model, ub_cons)
+            if ub_cons is not None
+            else np.zeros(num_vars)
+        )
+        solution.z_box = -(ub_vals - lb_vals)
+
 
 def scip_solve_qp(
     P: Union[np.ndarray, spa.csc_matrix],
@@ -189,25 +219,10 @@ def scip_solve_qp(
 
     Notes
     -----
-    Keyword arguments are forwarded to SCIP as options. For instance, we
-    can call ``scip_solve_qp(P, q, G, h, u, primal_feasibility_tolerance=1e-8,
-    dual_feasibility_tolerance=1e-8)``. SCIP settings include the following:
-
-    .. list-table::
-       :widths: 30 70
-       :header-rows: 1
-
-       * - Name
-         - Description
-       * - ``dual_feasibility_tolerance``
-         - Dual feasibility tolerance.
-       * - ``primal_feasibility_tolerance``
-         - Primal feasibility tolerance.
-       * - ``time_limit``
-         - Run time limit in seconds.
-
-    Check out the `SCIP documentation <https://www.scipopt.org/doc-9.2.2/html/>`_
-    for more information on the solver.
+    Keyword arguments are forwarded to SCIP as parameters. See the
+    `SCIP parameter reference
+    <https://www.scipopt.org/doc/html/PARAMETERS.php>`_ for the list of
+    supported parameters.
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = scip_solve_problem(problem, initvals, verbose, **kwargs)

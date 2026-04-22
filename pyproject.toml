@@ -50,9 +50,10 @@ pyqpmad = ["pyqpmad >=1.4.0.post3"]
 qpax = ["qpax>=0.0.9"]
 qtqp = ["qtqp >=0.0.3"]
 quadprog = ["quadprog >=0.1.11"]
+scip = ["pyscipopt >=5.5.0"]
 scs = ["scs >=3.2.0"]
 sip = ["sip-python >=0.0.2"]
-open_source_solvers = ["qpsolvers[clarabel,cvxopt,daqp,ecos,highs,jaxopt,osqp,piqp,proxqp,pyqpmad,qpalm,qtqp,quadprog,scs,sip,qpax]"]
+open_source_solvers = ["qpsolvers[clarabel,cvxopt,daqp,ecos,highs,jaxopt,osqp,piqp,proxqp,pyqpmad,qpalm,qtqp,quadprog,scip,scs,sip,qpax]"]
 
 # Wheels-only solvers should distribute wheels that work on:
 # - macOS (aarch64)
@@ -102,6 +103,7 @@ scs = ">=3.2.0"
 coptpy = ">=7.0.0"
 gurobipy = ">=9.5.2"
 jaxopt = ">=0.8.3"
+pyscipopt = ">=5.5.0"
 qpalm = ">=1.2.1"
 qpax = ">=0.0.9"
 qtqp = ">=0.0.3,<0.0.4"

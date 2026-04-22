@@ -1034,7 +1034,7 @@ try:
 
     solve_function["scip"] = scip_solve_problem
     available_solvers.append("scip")
-    sparse_solvers.append("scip")
+    dense_solvers.append("scip")
 except ImportError:
     pass
 
