@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.12.0] - 2026-05-05
+
 ### Added
 
 - Add build and solve timing info (thanks to @ahoarau)
@@ -928,7 +930,8 @@ release!
 
 - A changelog :)
 
-[unreleased]: https://github.com/qpsolvers/qpsolvers/compare/v4.11.0...HEAD
+[unreleased]: https://github.com/qpsolvers/qpsolvers/compare/v4.12.0...HEAD
+[4.12.0]: https://github.com/qpsolvers/qpsolvers/releases/tag/v4.12.0
 [4.11.0]: https://github.com/qpsolvers/qpsolvers/releases/tag/v4.11.0
 [4.10.0]: https://github.com/qpsolvers/qpsolvers/releases/tag/v4.10.0
 [4.9.0]: https://github.com/qpsolvers/qpsolvers/releases/tag/v4.9.0
