@@ -53,7 +53,7 @@ The process to add AwesomeQP to *qpsolvers* goes as follows:
 
 .. note::
 
-    The prototype needs to match the actual function. You can check its correctness by running ``tox -e py`` in the repository.
+    The prototype needs to match the actual function. You can check its correctness by running ``pixi run test`` in the repository.
 
 5. Below the prototype, import the function into the ``solve_function`` dictionary:
 
@@ -87,10 +87,16 @@ Problem conversions
 Testing locally
 ===============
 
-To run all CI checks locally, go to the repository folder and run
+This project uses `pixi <https://pixi.sh/latest>`_ for testing and linting locally. To check unit tests from your working copy of the repository, run:
 
 .. code:: bash
 
-    tox -e py
+    pixi run test
 
-This will run linters and unit tests.
+To check linting, run similarly:
+
+.. code:: bash
+
+   pixi run lint
+
+Pixi will take care of creating local Python environments with all the dependencies needed for linting or testing.
