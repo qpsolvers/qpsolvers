@@ -22,5 +22,15 @@ try:
             P, q, G, h, A, b, lb, ub = problem.unpack()
             self.assertIsNotNone(osqp_solve_qp(P, q, G, h, A, b, lb, ub))
 
+        def test_raise_error_kwarg(self):
+            # raise_error is a solve() param, not a setup() param; passing it
+            # must not raise ValueError from OSQP's settings validation
+            # https://github.com/qpsolvers/qpsolvers/issues/380
+            problem = get_sd3310_problem()
+            P, q, G, h, A, b, lb, ub = problem.unpack()
+            self.assertIsNotNone(
+                osqp_solve_qp(P, q, G, h, A, b, lb, ub, raise_error=True)
+            )
+
 except ImportError as exn:  # solver not installed
     warnings.warn(f"Skipping OSQP tests: {exn}")
