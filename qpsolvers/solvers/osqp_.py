@@ -131,13 +131,18 @@ def osqp_solve_problem(
         u_osqp = ub if u_osqp is None else np.hstack([u_osqp, ub])
 
     kwargs["verbose"] = verbose
+    kwargs_solve = (
+        {"raise_error": kwargs.pop("raise_error")}
+        if "raise_error" in kwargs
+        else {}
+    )
     solver = OSQP()
     solver.setup(P=P, q=q, A=A_osqp, l=l_osqp, u=u_osqp, **kwargs)
     if initvals is not None:
         solver.warm_start(x=initvals)
 
     solve_start_time = time.perf_counter()
-    res = solver.solve()
+    res = solver.solve(**kwargs_solve)
     solve_end_time = time.perf_counter()
 
     solution = Solution(problem)
