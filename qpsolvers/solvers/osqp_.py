@@ -71,9 +71,9 @@ def osqp_solve_problem(
 
     Notes
     -----
-    Keyword arguments are forwarded to OSQP. For instance, we can call
-    ``osqp_solve_qp(P, q, G, h, u, eps_abs=1e-8, eps_rel=0.0)``. OSQP settings
-    include the following:
+    Keyword arguments are forwarded to either the setup or the solve function
+    of OSQP. For instance, we can call ``osqp_solve_qp(P, q, G, h, u,
+    eps_abs=1e-8, eps_rel=0.0)``. OSQP settings include the following:
 
     .. list-table::
        :widths: 30 70
@@ -98,6 +98,10 @@ def osqp_solve_problem(
        * - ``polish``
          - Perform polishing. See `Polishing
            <https://osqp.org/docs/solver/#polishing>`_.
+       * - ``raise_error``
+         - If ``True``, raise an exception if the solver does not find a
+           solution. See `Solve
+           <https://osqp.org/docs/interfaces/python.html#solve>`_.
 
     Check out the `OSQP settings
     <https://osqp.org/docs/interfaces/solver_settings.html>`_ documentation for
