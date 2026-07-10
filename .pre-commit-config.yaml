@@ -1,0 +1,24 @@
+repos:
+  - repo: local
+    hooks:
+      - id: lint
+        name: run Python linter
+        entry: pixi run -e lint lint
+        language: system
+        types: [python]
+        pass_filenames: false
+
+      - id: pixi-lock
+        name: check pixi.lock is up-to-date
+        entry: pixi install --locked
+        language: system
+        files: (pyproject\.toml|pixi\.lock)
+        pass_filenames: false
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
