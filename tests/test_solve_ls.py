@@ -70,11 +70,12 @@ class TestSolveLS(unittest.TestCase):
 
         def test(self):
             R, s, G, h, A, b, solution = self.get_problem_and_solution()
+            kwargs = {"eps_abs": 1e-9, "eps_rel": 0.0} if solver == "sip" else {}
             x = solve_ls(
-                R, s, G, h, A, b, solver=solver, sparse_conversion=False
+                R, s, G, h, A, b, solver=solver, sparse_conversion=False, **kwargs
             )
             x_sp = solve_ls(
-                R, s, G, h, A, b, solver=solver, sparse_conversion=False
+                R, s, G, h, A, b, solver=solver, sparse_conversion=False, **kwargs
             )
             self.assertIsNotNone(x, f"{solver=}")
             self.assertIsNotNone(x_sp, f"{solver=}")
@@ -86,7 +87,7 @@ class TestSolveLS(unittest.TestCase):
                     if solver == "proxqp"
                     else (
                         1e-5
-                        if solver in ["ecos", "qpalm", "qpax", "sip"]
+                        if solver in ["ecos", "qpalm", "qpax"]
                         else 1e-6
                     )
                 )
@@ -97,7 +98,7 @@ class TestSolveLS(unittest.TestCase):
                 else (
                     2e-6
                     if solver in ["qpalm", "qpax"]
-                    else 1e-7 if solver in ["osqp", "qtqp", "sip"] else 1e-9
+                    else 1e-7 if solver in ["osqp", "qtqp"] else 1e-9
                 )
             )
             ineq_tolerance = (

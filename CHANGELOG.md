@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Pre-commit configuration for local linting (thanks to @ahoarau)
 - Update CI Actions and pixi versions to latest (thanks to @ahoarau)
 
+### Updated
+
+- SIP: Use the `sip-qp-python` v0.0.2 QP frontend
+
 ## [4.12.0] - 2026-05-05
 
 ### Added

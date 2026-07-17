@@ -51,7 +51,7 @@ qpax = ["qpax>=0.0.9"]
 qtqp = ["qtqp >=0.0.3"]
 quadprog = ["quadprog >=0.1.11"]
 scs = ["scs >=3.2.0"]
-sip = ["sip-python >=0.0.2"]
+sip = ["sip-qp-python >=0.0.2"]
 open_source_solvers = ["qpsolvers[clarabel,cvxopt,daqp,ecos,highs,jaxopt,osqp,piqp,proxqp,pyqpmad,qpalm,qtqp,quadprog,scs,sip,qpax]"]
 
 # Wheels-only solvers should distribute wheels that work on:
@@ -105,7 +105,7 @@ jaxopt = ">=0.8.3"
 qpalm = ">=1.2.1"
 qpax = ">=0.0.9"
 qtqp = ">=0.0.3,<0.0.4"
-sip-python = ">=0.0.2"
+sip-qp-python = ">=0.0.2"
 pyqpmad = ">=1.4.0.post3"
 
 [tool.pixi.feature.coverage.dependencies]
@@ -214,14 +214,10 @@ generated-members = [
     "qpalm.Data",
     "qpalm.Settings",
     "qpalm.Solver",
-    "sip.ModelCallbackInput",
-    "sip.ModelCallbackOutput",
-    "sip.ProblemDimensions",
-    "sip.QDLDLSettings",
     "sip.Settings",
+    "sip.Result",
     "sip.Solver",
     "sip.Status",
-    "sip.Variables",
 ]
 
 [tool.ruff]

@@ -6,7 +6,7 @@
 
 """Solver interface for `SIP`_.
 
-.. _SIP: https://github.com/joaospinto/sip_python
+.. _SIP: https://github.com/joaospinto/sip_qp
 
 SIP is a general NLP solver based. It is based on the barrier augmented
 Lagrangian method, which combines the interior point and augmented Lagrangian
@@ -22,12 +22,129 @@ from typing import Optional, Union
 
 import numpy as np
 import scipy.sparse as spa
-import sip_python as sip
+import sip_qp_python as sip
+from scipy.sparse.csgraph import reverse_cuthill_mckee
 
-from ..conversions import linear_from_box_inequalities, split_dual_linear_box
+try:
+    from cvxopt import amd, spmatrix
+except ImportError:
+    amd = None
+    spmatrix = None
+
 from ..exceptions import ProblemError
 from ..problem import Problem
 from ..solution import Solution
+
+
+def _set_setting(settings, key, value, verbose: bool) -> bool:
+    """Set one QP or underlying SIP setting."""
+    if hasattr(settings, key):
+        owner = settings
+    elif hasattr(settings.sip, key):
+        owner = settings.sip
+    else:
+        return False
+
+    target = getattr(owner, key)
+    if not isinstance(value, dict):
+        setattr(owner, key, value)
+        return True
+
+    for nested_key, nested_value in value.items():
+        if hasattr(target, nested_key):
+            setattr(target, nested_key, nested_value)
+        elif verbose:
+            warnings.warn(
+                f"Received an undefined SIP solver setting "
+                f"{key}.{nested_key} with value {nested_value}"
+            )
+    return True
+
+
+def _as_csc(matrix) -> spa.csc_matrix:
+    result = spa.csc_matrix(matrix, dtype=np.float64)
+    result.sum_duplicates()
+    result.eliminate_zeros()
+    result.sort_indices()
+    return result
+
+
+def _as_csr(matrix, rows: int, columns: int) -> spa.csr_matrix:
+    result = (
+        spa.csr_matrix((rows, columns), dtype=np.float64)
+        if matrix is None
+        else spa.csr_matrix(matrix, dtype=np.float64)
+    )
+    result.sum_duplicates()
+    result.eliminate_zeros()
+    result.sort_indices()
+    return result
+
+
+def _kkt_inverse_permutation(
+    P: spa.csc_matrix,
+    A: spa.csr_matrix,
+    G: spa.csr_matrix,
+    verbose: bool,
+) -> np.ndarray:
+    """Compute an AMD ordering, falling back to RCM."""
+    n = P.shape[0]
+    num_equalities = A.shape[0]
+    num_inequalities = G.shape[0]
+    hessian_pattern = P.copy()
+    hessian_pattern.data.fill(1.0)
+    hessian_pattern = hessian_pattern.maximum(hessian_pattern.T)
+    hessian_pattern.setdiag(1.0)
+    equality_inequality_zeros = spa.csr_matrix(
+        (num_equalities, num_inequalities)
+    )
+    kkt_pattern = spa.vstack(
+        (
+            spa.hstack((hessian_pattern, A.T, G.T), format="csr"),
+            spa.hstack(
+                (
+                    A,
+                    spa.eye(num_equalities, format="csr"),
+                    equality_inequality_zeros,
+                ),
+                format="csr",
+            ),
+            spa.hstack(
+                (
+                    G,
+                    equality_inequality_zeros.T,
+                    spa.eye(num_inequalities, format="csr"),
+                ),
+                format="csr",
+            ),
+        ),
+        format="csr",
+    )
+    kkt_pattern.data.fill(1.0)
+    if amd is not None and spmatrix is not None:
+        kkt_coo = kkt_pattern.tocoo()
+        cvxopt_pattern = spmatrix(
+            kkt_coo.data,
+            kkt_coo.row,
+            kkt_coo.col,
+            kkt_coo.shape,
+        )
+        permutation = np.asarray(
+            amd.order(cvxopt_pattern), dtype=np.int32
+        ).ravel()
+    else:
+        if verbose:
+            warnings.warn(
+                "cvxopt is not installed; using reverse Cuthill-McKee "
+                "instead of approximate minimum degree."
+            )
+        permutation = reverse_cuthill_mckee(kkt_pattern, symmetric_mode=True)
+    kkt_dimension = n + num_equalities + num_inequalities
+    inverse_permutation = np.empty(kkt_dimension, np.int32)
+    inverse_permutation[permutation] = np.arange(
+        permutation.size, dtype=np.int32
+    )
+    return inverse_permutation
 
 
 def sip_solve_problem(
@@ -44,20 +161,33 @@ def sip_solve_problem(
     problem :
         Quadratic program to solve.
     initvals :
-        Warm-start guess vector for the primal solution.
+        Warm-start guess for the primal solution.
     verbose :
-        Set to `True` to print out extra information.
+        Set to ``True`` to print SIP logs.
+    allow_non_psd_P :
+        This argument is not used by SIP.
 
     Returns
     -------
     :
-        Solution to the QP returned by the solver.
+        Solution to the QP returned by SIP.
 
     Notes
     -----
-    All other keyword arguments are forwarded as options to SIP. For
-    instance, you can call ``sip_solve_qp(P, q, G, h, eps_abs=1e-6)``.
-    For a quick overview, the solver accepts the following settings:
+    Additional keyword arguments configure ``sip_qp_python.Settings``.
+    Structured setting groups are passed as dictionaries. For example:
+
+    .. code-block:: python
+
+        solve_problem(
+            problem,
+            solver="sip",
+            max_iterations=500,
+            termination={"max_absolute_duality_gap": 1e-8},
+            scaling={"max_iterations": 20},
+        )
+
+    The following settings are supported:
 
     .. list-table::
        :widths: 30 70
@@ -65,254 +195,180 @@ def sip_solve_problem(
 
        * - Name
          - Effect
-       * - max_iterations
-         - The maximum number of iterations the solver can do.
-       * - max_ls_iterations
-         - The maximum cumulative number of line search iterations.
-       * - min_iterations_for_convergence
-         - The least number of iterations until we can declare convergence.
-       * - num_iterative_refinement_steps
-         - The number of iterative refinement steps.
-       * - max_kkt_violation
-         - The maximum allowed violation of the KKT system.
-       * - max_merit_slope
-         - The maximum allowed merit function slope.
-       * - initial_regularization
-         - The initial x-regularizatino to be applied on the LHS.
-       * - regularization_decay_factor
-         - The multiplicative decay of the x-regularization coefficient.
-       * - tau
-         - A parameter of the fraction-to-the-boundary rule.
-       * - start_ls_with_alpha_s_max
-         - Determines whether we start with alpha=alpha_s_max or alpha=1.
-       * - initial_mu
-         - The initial barrier function coefficient.
-       * - mu_update_factor
-         - Determines how much mu decreases per iteration.
-       * - mu_min
-         - The minimum barrier coefficient.
-       * - initial_penalty_parameter
-         - The initial penalty parameter of the Augmented Lagrangian.
-       * - min_acceptable_constraint_violation_ratio
-         - Least acceptable constraint violation ratio to not increase eta.
-       * - penalty_parameter_increase_factor
-         - By what factor to increase eta.
-       * - penalty_parameter_decrease_factor
-         - By what factor to decrease eta.
-       * - max_penalty_parameter
-         - The maximum allowed penalty parameter in the AL merit function.
-       * - armijo_factor
-         - Determines when we accept a line search step.
-       * - line_search_factor
-         - Determines how much to backtrack at each line search iteration.
-       * - line_search_min_step_size
-         - Determines when we declare a line search failure.
-       * - min_merit_slope_to_skip_line_search
-         - Min merit slope to skip the line search.
-       * - dual_armijo_factor
-         - Fraction of the primal merit decrease to allow on the dual update.
-       * - min_allowed_merit_increase
-         - The minimum allowed merit function increase in the dual update.
-       * - enable_elastics
-         - Whether to enable the usage of elastic variables.
-       * - elastic_var_cost_coeff
-         - Elastic variables cost coefficient.
-       * - enable_line_search_failures
-         - Halts the optimization process if a good step is not found.
-       * - print_logs
-         - Determines whether we should print the solver logs.
-       * - print_line_search_logs
-         - Determines whether we should print the line search logs.
-       * - print_search_direction_logs
-         - Whether we should print the search direction computation logs.
-       * - print_derivative_check_logs
-         - Whether to print derivative check logs when something looks off.
-       * - only_check_search_direction_slope
-         - Only derivative-check the search direction.
-       * - assert_checks_pass
-         - Handle checks with assert calls.
+       * - ``mode``
+         - Select regularized, primal-proximal, or primal-dual-proximal IPM.
+       * - ``max_iterations``
+         - Maximum number of SIP iterations.
+       * - ``num_iterative_refinement_steps``
+         - Number of Newton-KKT iterative-refinement steps.
+       * - ``assert_checks_pass``
+         - Handle internal consistency-check failures with assertions.
+       * - ``barrier``
+         - Dictionary containing ``initial_mu``, ``mu_update_factor``,
+           ``mu_min``, and ``mu_update_kappa``.
+       * - ``penalty``
+         - Dictionary containing penalty initialization, warm-start, update,
+           and maximum-value settings.
+       * - ``termination``
+         - Dictionary containing absolute and relative QP residual and
+           duality-gap tolerances.
+       * - ``regularization``
+         - Dictionary containing the initial, first-positive, and maximum
+           regularization values, factorization-attempt limit, and increase
+           and decrease factors.
+       * - ``line_search``
+         - Dictionary containing fraction-to-boundary, Armijo, backtracking,
+           filter, line-search failure, and line-search limit settings.
+       * - ``logging``
+         - Dictionary controlling solver, line-search, search-direction, and
+           derivative-check logs.
+       * - ``scaling``
+         - Dictionary containing ``max_iterations``, ``min_norm``,
+           ``max_norm``, and ``convergence_tolerance`` for QP equilibration.
+       * - ``eps_abs``
+         - Set the absolute QP residual and duality-gap tolerances.
+       * - ``eps_rel``
+         - Set the relative QP primal, dual, and duality-gap tolerances.
+       * - ``time_limit``
+         - Maximum solve time in seconds.
 
-    This list may not be exhaustive.
-    Check the `Settings` struct in the `solver code
-    <https://github.com/joaospinto/sip/blob/main/sip/types.hpp>`__ for details.
+    Variable bounds are passed to SIP natively rather than expanded into
+    general inequalities. Exact fixed bounds are represented as equalities
+    because SIP requires strict lower and upper bound intervals.
     """
     build_start_time = time.perf_counter()
-    P, q, G_, h, A_, b, lb, ub = problem.unpack()
-    if lb is not None or ub is not None:
-        G_, h = linear_from_box_inequalities(
-            G_, h, lb, ub, use_sparse=problem.has_sparse
+    P, q, G_input, h_input, A_input, b_input, lb, ub = problem.unpack()
+    n = q.shape[0]
+
+    if (G_input is None) != (h_input is None):
+        raise ProblemError("G and h must either both be set or both be None")
+    if (A_input is None) != (b_input is None):
+        raise ProblemError("A and b must either both be set or both be None")
+
+    P = _as_csc(P)
+    G = _as_csr(G_input, 0, n)
+    A = _as_csr(A_input, 0, n)
+    q = np.ascontiguousarray(q, dtype=np.float64)
+    h = (
+        np.zeros(0, dtype=np.float64)
+        if h_input is None
+        else np.ascontiguousarray(h_input, dtype=np.float64)
+    )
+    b = (
+        np.zeros(0, dtype=np.float64)
+        if b_input is None
+        else np.ascontiguousarray(b_input, dtype=np.float64)
+    )
+
+    if np.any(np.isnan(h)) or np.any(np.isneginf(h)):
+        raise ProblemError("SIP requires finite or positive-infinite h")
+    finite_h = np.isfinite(h)
+    if not np.all(finite_h):
+        G = G[finite_h]
+        h = np.ascontiguousarray(h[finite_h])
+
+    lower_bounds = (
+        np.full(n, -np.inf, dtype=np.float64)
+        if lb is None
+        else np.array(lb, dtype=np.float64, order="C", copy=True)
+    )
+    upper_bounds = (
+        np.full(n, np.inf, dtype=np.float64)
+        if ub is None
+        else np.array(ub, dtype=np.float64, order="C", copy=True)
+    )
+    fixed_bounds = (
+        np.isfinite(lower_bounds)
+        & np.isfinite(upper_bounds)
+        & (lower_bounds == upper_bounds)
+    )
+    num_user_equalities = A.shape[0]
+    if np.any(fixed_bounds):
+        fixed_indices = np.flatnonzero(fixed_bounds)
+        fixed_rows = spa.csr_matrix(
+            (
+                np.ones(fixed_indices.size),
+                (np.arange(fixed_indices.size), fixed_indices),
+            ),
+            shape=(fixed_indices.size, n),
         )
-    n: int = q.shape[0]
-
-    # SIP does not support A, b, G, and h to be None.
-    G: Union[np.ndarray, spa.csc_matrix, spa.csr_matrix] = (
-        G_ if G_ is not None else spa.csr_matrix(np.zeros((0, n)))
-    )
-    A: Union[np.ndarray, spa.csc_matrix, spa.csr_matrix] = (
-        A_ if A_ is not None else spa.csr_matrix(np.zeros((0, n)))
-    )
-    h = np.zeros((0,)) if h is None else h
-    b = np.zeros((0,)) if b is None else b
-
-    # Remove any infs from h.
-    G[np.isinf(h), :] = 0.0
-    h[np.isinf(h)] = 1.0
-
-    if not isinstance(P, spa.csr_matrix):
-        P = spa.csc_matrix(P)
-        if verbose:
-            warnings.warn("Converted P to a csc_matrix.")
-    if not isinstance(G, spa.csr_matrix):
-        G = spa.csr_matrix(G)
-        if verbose:
-            warnings.warn("Converted G to a csr_matrix.")
-    if not isinstance(A, spa.csr_matrix):
-        A = spa.csr_matrix(A)
-        if verbose:
-            warnings.warn("Converted A to a csr_matrix.")
-
-    P.eliminate_zeros()
-    G.eliminate_zeros()
-    A.eliminate_zeros()
-
-    P_T = spa.csc_matrix(P.T)
-    if (
-        (P.indices != P_T.indices).any()
-        or (P.indptr != P_T.indptr).any()
-        or (P.data != P_T.data).any()
-    ):
-        raise ProblemError("P should be symmetric.")
-
-    if G is None and h is not None:
-        raise ProblemError(
-            "Inconsistent inequalities: G is not set but h is set"
-        )
-    if G is not None and h is None:
-        raise ProblemError("Inconsistent inequalities: G is set but h is None")
-    if A is None and b is not None:
-        raise ProblemError(
-            "Inconsistent inequalities: A is not set but b is set"
-        )
-    if A is not None and b is None:
-        raise ProblemError("Inconsistent inequalities: A is set but b is None")
-
-    k = None
-    if allow_non_psd_P:
-        eigenvalues, _eigenvectors = spa.linalg.eigsh(P, k=1, which="SM")
-        k = -min(eigenvalues[0], 0.0) + 1e-3
-    else:
-        k = 1e-6
-
-    # hess_L = P + k * spa.eye(n);
-    # the code below avoids potential index cancellations.
-    hess_L = spa.coo_matrix(P)
-    upp_hess_L_rows = np.concatenate([hess_L.row, np.arange(n)])
-    upp_hess_L_cols = np.concatenate([hess_L.col, np.arange(n)])
-    upp_hess_L_data = np.concatenate([hess_L.data, k * np.ones(n)])
-    hess_L = spa.coo_matrix(
-        (upp_hess_L_data, (upp_hess_L_rows, upp_hess_L_cols)), shape=P.shape
-    )
-    hess_L.sum_duplicates()
-    upp_hess_L = spa.triu(hess_L.tocsc())
-
-    qs = sip.QDLDLSettings()
-    qs.permute_kkt_system = True
-    qs.kkt_pinv = sip.get_kkt_perm_inv(
-        P=hess_L,
-        A=A,
-        G=G,
+        A = spa.vstack((A, fixed_rows), format="csr")
+        b = np.concatenate((b, lower_bounds[fixed_indices]))
+        lower_bounds[fixed_indices] = -np.inf
+        upper_bounds[fixed_indices] = np.inf
+    initial_primal = (
+        np.zeros(n, dtype=np.float64)
+        if initvals is None
+        else np.ascontiguousarray(initvals, dtype=np.float64)
     )
 
-    pd = sip.ProblemDimensions()
-    pd.x_dim = n
-    pd.s_dim = h.shape[0]
-    pd.y_dim = b.shape[0]
-    pd.upper_hessian_lagrangian_nnz = upp_hess_L.nnz
-    pd.jacobian_c_nnz = A.nnz
-    pd.jacobian_g_nnz = G.nnz
-    pd.kkt_nnz, pd.kkt_L_nnz = sip.get_kkt_and_L_nnzs(
-        P=hess_L,
-        A=A,
-        G=G,
-        perm_inv=qs.kkt_pinv,
-    )
-    pd.is_jacobian_c_transposed = True
-    pd.is_jacobian_g_transposed = True
+    settings = sip.Settings()
+    settings.sip.logging.print_logs = verbose
+    settings.sip.logging.print_line_search_logs = verbose
+    settings.sip.logging.print_search_direction_logs = verbose
+    settings.sip.logging.print_derivative_check_logs = False
 
-    vars_ = sip.Variables(pd)
+    eps_abs = kwargs.pop("eps_abs", None)
+    if eps_abs is not None:
+        settings.termination.max_absolute_residual = eps_abs
+        settings.termination.max_absolute_duality_gap = eps_abs
 
-    if initvals is not None:
-        vars_.x[:] = initvals  # type: ignore[index]
-    else:
-        vars_.x[:] = 0.0  # type: ignore[index]
+    eps_rel = kwargs.pop("eps_rel", None)
+    if eps_rel is not None:
+        settings.termination.max_relative_residual = eps_rel
+        settings.termination.max_relative_duality_gap = eps_rel
 
-    vars_.s[:] = 1.0  # type: ignore[index]
-    vars_.y[:] = 0.0  # type: ignore[index]
-    vars_.e[:] = 0.0  # type: ignore[index]
-    vars_.z[:] = 1.0  # type: ignore[index]
-
-    ss = sip.Settings()
-    ss.max_iterations = 100
-    ss.max_ls_iterations = 1000
-    ss.max_kkt_violation = 1e-8
-    ss.max_merit_slope = 1e-16
-    ss.penalty_parameter_increase_factor = 2.0
-    ss.mu_update_factor = 0.5
-    ss.mu_min = 1e-16
-    ss.max_penalty_parameter = 1e16
-    ss.assert_checks_pass = True
-
-    ss.print_logs = verbose
-    ss.print_line_search_logs = verbose
-    ss.print_search_direction_logs = verbose
-    ss.print_derivative_check_logs = False
+    time_limit = kwargs.pop("time_limit", float("inf"))
+    inverse_permutation = _kkt_inverse_permutation(P, A, G, verbose)
 
     for key, value in kwargs.items():
-        try:
-            setattr(ss, key, value)
-        except AttributeError:
-            if verbose:
-                warnings.warn(
-                    f"Received an undefined solver setting {key}\
-                    with value {value}"
-                )
+        if not _set_setting(settings, key, value, verbose) and verbose:
+            warnings.warn(
+                f"Received an undefined solver setting {key} "
+                f"with value {value}"
+            )
 
-    def mc(mci: sip.ModelCallbackInput) -> sip.ModelCallbackOutput:
-        mco = sip.ModelCallbackOutput()
-
-        Px = P.T @ mci.x  # type: ignore[operator]
-
-        mco.f = 0.5 * np.dot(Px, mci.x) + np.dot(q, mci.x)
-        mco.c = A @ mci.x - b  # type: ignore[operator]
-        mco.g = G @ mci.x - h  # type: ignore[operator]
-
-        mco.gradient_f = Px + q
-        mco.jacobian_c = A
-        mco.jacobian_g = G
-        mco.upper_hessian_lagrangian = upp_hess_L
-
-        return mco
-
-    solver = sip.Solver(ss, qs, pd, mc)
+    _ = allow_non_psd_P
+    try:
+        solver = sip.Solver(
+            P,
+            q,
+            G,
+            h,
+            A,
+            b,
+            lower_bounds,
+            upper_bounds,
+            inverse_permutation,
+            settings,
+            time_limit,
+        )
+    except ValueError as error:
+        raise ProblemError(str(error)) from error
 
     solve_start_time = time.perf_counter()
-    output = solver.solve(vars_)
+    result = solver.solve(initial_primal)
     solve_end_time = time.perf_counter()
 
     solution = Solution(problem)
-    solution.extras = {"sip_output": output, "sip_vars": vars_}
-    solution.found = output.exit_status == sip.Status.SOLVED
-    solution.obj = 0.5 * np.dot(
-        P.T @ vars_.x,  # type: ignore[operator]
-        vars_.x,
-    ) + np.dot(q, vars_.x)
-    solution.x = np.array(vars_.x)
-    solution.y = np.array(vars_.y)
-    if h is not None and vars_.z is not None:
-        z_sip = np.array(vars_.z)
-        z, z_box = split_dual_linear_box(z_sip, lb, ub)
-        solution.z = z
-        solution.z_box = z_box
+    solution.extras = {"sip_result": result, "sip_output": result.info}
+    solution.found = result.info.exit_status == sip.Status.SOLVED
+    solution.x = np.array(result.x)
+    result_y = np.array(result.y)
+    solution.y = result_y[:num_user_equalities]
+    solution.obj = 0.5 * solution.x.dot(P @ solution.x) + q.dot(solution.x)
+
+    z = np.array(result.z)
+    if not np.all(finite_h):
+        full_z = np.zeros(finite_h.shape[0], dtype=z.dtype)
+        full_z[finite_h] = z
+        z = full_z
+    solution.z = z
+    if lb is not None or ub is not None:
+        solution.z_box = np.array(result.z_box)
+        solution.z_box[fixed_bounds] = result_y[num_user_equalities:]
+    else:
+        solution.z_box = np.empty(0)
     solution.build_time = solve_start_time - build_start_time
     solution.solve_time = solve_end_time - solve_start_time
     return solution
@@ -347,8 +403,7 @@ def sip_solve_qp(
             & lb \leq x \leq ub
         \end{array}\end{split}
 
-    It is solved using `SIP
-    <https://github.com/joaospinto/sip>`__.
+    It is solved using `SIP <https://github.com/joaospinto/sip_qp>`__.
 
     Parameters
     ----------
@@ -368,15 +423,21 @@ def sip_solve_qp(
         Lower bound constraint vector.
     ub :
         Upper bound constraint vector.
-    verbose :
-        Set to `True` to print out extra information.
     initvals :
-        Warm-start guess vector for the primal solution.
+        Warm-start guess for the primal solution.
+    allow_non_psd_P :
+        This argument is not used by SIP.
+    verbose :
+        Set to ``True`` to print SIP logs.
 
     Returns
     -------
     :
         Primal solution to the QP, if found, otherwise ``None``.
+
+    Notes
+    -----
+    Additional keyword arguments are forwarded to :func:`sip_solve_problem`.
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = sip_solve_problem(
