@@ -23,7 +23,7 @@ from qpsolvers import (
     sparse_solvers,
 )
 
-from .problems import get_qpmad_demo_problem
+from .problems import get_infinite_inequality_problem, get_qpmad_demo_problem
 
 # Raising a ValueError when the problem is unbounded below is desired but not
 # achieved by some solvers. Here are the behaviors observed as of March 2022.
@@ -853,6 +853,51 @@ class TestSolveQP(unittest.TestCase):
 
         return test
 
+    @staticmethod
+    def get_test_infinite_inequality(solver: str):
+        """Get test function for a given solver.
+
+        This variant has a :math:`+\\infty` entry in its inequality vector. The
+        problem is still well-posed and the solver should return its solution
+        rather than fail.
+
+        Parameters
+        ----------
+        solver :
+            Name of the solver to test.
+
+        Returns
+        -------
+        :
+            Test function for that solver.
+        """
+
+        def test(self):
+            problem = get_infinite_inequality_problem()
+            P, q, G, h, A, b, lb, ub = problem.unpack()
+            x = solve_qp(P, q, G, h, A, b, lb, ub, solver=solver)
+            self.assertIsNotNone(x, f"{solver=}")
+            known_solution = array([0.4, -0.4, 1.0])
+            sol_tolerance = (
+                5e-3
+                if solver in ["jaxopt_osqp", "osqp", "qpalm", "scs"]
+                else 5e-5 if solver in ["proxqp", "qpax"] else 1e-6
+            )
+            feas_tolerance = (
+                2e-3
+                if solver in ["jaxopt_osqp", "osqp", "qpalm", "scs"]
+                else 1e-6
+            )
+            self.assertLess(
+                norm(x - known_solution), sol_tolerance, f"{solver=}"
+            )
+            self.assertLess(dot(G[1], x) - h[1], feas_tolerance, f"{solver=}")
+            self.assertLess(
+                abs(dot(A, x) - b).max(), feas_tolerance, f"{solver=}"
+            )
+
+        return test
+
 
 # Generate test fixtures for each solver
 for solver in available_solvers:
@@ -924,3 +969,11 @@ for solver in available_solvers:
         f"test_qpmad_demo_{solver}",
         TestSolveQP.get_test_qpmad_demo(solver),
     )
+    if solver not in ["ecos"]:
+        # ECOS rejects infinite inequality vectors with a ProblemError (see
+        # ``ecos_solve_problem``) rather than returning None.
+        setattr(
+            TestSolveQP,
+            f"test_infinite_inequality_{solver}",
+            TestSolveQP.get_test_infinite_inequality(solver),
+        )
