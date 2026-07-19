@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 #
 # SPDX-License-Identifier: LGPL-3.0-or-later
-# Copyright 2023 Inria
 
 """Active set: indices of inequality constraints saturated at the optimum."""
 

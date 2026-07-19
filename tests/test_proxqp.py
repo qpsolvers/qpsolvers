@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 #
 # SPDX-License-Identifier: LGPL-3.0-or-later
-# Copyright 2016-2022 Stéphane Caron and the qpsolvers contributors
 
 """Unit tests for ProxQP."""
 
