@@ -71,6 +71,53 @@ class TestProblem(unittest.TestCase):
         active_set = ActiveSet(G_indices=range(self.problem.G.shape[0]))
         self.assertGreater(no_equality.cond(active_set), 200.0)
 
+    def test_cond_only_equalities(self):
+        """Condition number with only equality constraints."""
+        only_equalities = Problem(
+            self.problem.P, self.problem.q, A=self.problem.A, b=self.problem.b
+        )
+        active_set = ActiveSet()  # equalities are always part of the KKT matrix
+        self.assertAlmostEqual(
+            only_equalities.cond(active_set), 93.7393, places=4
+        )
+
+    def test_cond_active_inequalities(self):
+        """Condition number with active linear inequality constraints."""
+        inequalities = Problem(
+            self.problem.P, self.problem.q, self.problem.G, self.problem.h
+        )
+        active_set = ActiveSet(G_indices=range(self.problem.G.shape[0]))
+        self.assertAlmostEqual(
+            inequalities.cond(active_set), 13736.27, places=2
+        )
+
+    def test_cond_active_lower_bounds(self):
+        """Condition number with active lower bounds.
+
+        With ``lb = [1, 1, 1]`` the unconstrained optimum lies below all
+        bounds, so all three lower bounds are active at the optimum.
+        """
+        lb = np.array([1.0, 1.0, 1.0])
+        with_lb = Problem(self.problem.P, self.problem.q, lb=lb)
+        active_set = ActiveSet(lb_indices=range(lb.size))
+        self.assertAlmostEqual(
+            with_lb.cond(active_set), 5989.643, places=3
+        )
+
+    def test_cond_active_upper_bounds(self):
+        """Condition number with active upper bounds.
+
+        Box-constraint rows are (signed) identity rows, so the condition
+        number only depends on which bounds are active, not on their values.
+        It therefore matches the lower-bound case with the same active set.
+        """
+        ub = np.array([-1.0, -1.0, -1.0])
+        with_ub = Problem(self.problem.P, self.problem.q, ub=ub)
+        active_set = ActiveSet(ub_indices=range(ub.size))
+        self.assertAlmostEqual(
+            with_ub.cond(active_set), 5989.643, places=3
+        )
+
     def test_cond_sparse(self):
         sparse = Problem(spa.csc_matrix(self.problem.P), self.problem.q)
         active_set = ActiveSet()
