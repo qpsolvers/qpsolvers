@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.13.0] - 2026-07-19
+
 ### Added
 
 - OSQP: Handle optional `raise_error` keyword argument to the solve function (thanks to @vincentvaroquauxads)
@@ -940,7 +942,8 @@ release!
 
 - A changelog :)
 
-[unreleased]: https://github.com/qpsolvers/qpsolvers/compare/v4.12.0...HEAD
+[unreleased]: https://github.com/qpsolvers/qpsolvers/compare/v4.13.0...HEAD
+[4.13.0]: https://github.com/qpsolvers/qpsolvers/releases/tag/v4.13.0
 [4.12.0]: https://github.com/qpsolvers/qpsolvers/releases/tag/v4.12.0
 [4.11.0]: https://github.com/qpsolvers/qpsolvers/releases/tag/v4.11.0
 [4.10.0]: https://github.com/qpsolvers/qpsolvers/releases/tag/v4.10.0

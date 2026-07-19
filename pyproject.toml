@@ -75,6 +75,18 @@ report.omit = [
     "qpsolvers/solvers/nppro_.py",
 ]
 
+[tool.flit.sdist]
+exclude = [
+    ".git*",
+    "CITATION.cff",
+    "CONTRIBUTING.md",
+    "doc/",
+    "examples/",
+    "pixi.lock",
+    "tests/",
+    "uv.lock",
+]
+
 [tool.mypy]
 ignore_missing_imports = true
 
