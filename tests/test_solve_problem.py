@@ -53,7 +53,8 @@ class TestSolveProblem(unittest.TestCase):
 
         def test(self):
             problem, ref_solution = get_qpsut01()
-            solution = solve_problem(problem, solver=solver)
+            kwargs = {"eps_abs": 1e-9, "eps_rel": 0.0} if solver == "sip" else {}
+            solution = solve_problem(problem, solver=solver, **kwargs)
             eps_abs = (
                 5e-1
                 if solver in ["jaxopt_osqp", "osqp", "qpalm"]
@@ -65,7 +66,7 @@ class TestSolveProblem(unittest.TestCase):
                         if solver == "ecos"
                         else (
                             5e-5
-                            if solver in ["mosek", "qpax", "sip"]
+                            if solver in ["mosek", "qpax"]
                             else (
                                 5e-6
                                 if solver == "qtqp"
@@ -117,7 +118,8 @@ class TestSolveProblem(unittest.TestCase):
 
         def test(self):
             problem, ref_solution = get_qpsut02()
-            solution = solve_problem(problem, solver=solver)
+            kwargs = {"eps_rel": 0.0} if solver == "sip" else {}
+            solution = solve_problem(problem, solver=solver, **kwargs)
             eps_abs = (
                 5e-2
                 if solver in ["ecos", "jaxopt_osqp", "qpalm"]
@@ -138,7 +140,6 @@ class TestSolveProblem(unittest.TestCase):
                                     "mosek",
                                     "qpswift",
                                     "piqp",
-                                    "sip",
                                 ]
                                 else 1e-7 if solver in ["gurobi"] else 1e-8
                             )
@@ -207,7 +208,7 @@ class TestSolveProblem(unittest.TestCase):
             solution = solve_problem(problem, solver=solver)
             eps_abs = (
                 2e-4
-                if solver in ["jaxopt_osqp", "osqp", "qpalm", "qpax", "sip"]
+                if solver in ["jaxopt_osqp", "osqp", "qpalm", "qpax"]
                 else 1e-6
             )
             self.assertLess(
@@ -386,7 +387,7 @@ class TestSolveProblem(unittest.TestCase):
                 if solver in ("jaxopt_osqp", "osqp", "qpax")
                 else (
                     1e-3
-                    if solver in ("scs", "sip")
+                    if solver == "scs"
                     else (
                         1e-4 if solver in ("ecos", "highs", "proxqp") else 1e-5
                     )
