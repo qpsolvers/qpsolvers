@@ -23,6 +23,25 @@ def get_sd3310_problem() -> Problem:
     return Problem(P, q, G, h, A, b)
 
 
+def get_infinite_inequality_problem() -> Problem:
+    """
+    Get a small dense problem with an infinite value in its inequality vector.
+
+    The problem has a well-defined solution ``x = [0.4, -0.4, 1.0]``, but its
+    first linear inequality is disabled by a :math:`+\\infty` right-hand side.
+    """
+    M = np.array([[1.0, 2.0, 0.0], [-8.0, 3.0, 2.0], [0.0, 1.0, 1.0]])
+    P = np.dot(M.T, M)  # this is a positive definite matrix
+    q = np.dot(np.array([3.0, 2.0, 3.0]), M).reshape((3,))
+    G = np.array([[4.0, 2.0, 0.0], [-1.0, 2.0, -1.0]])
+    h = np.array([np.inf, -2.0])
+    A = np.array([1.0, 1.0, 1.0]).reshape((1, 3))
+    b = np.array([1.0])
+    lb = np.array([-0.5, -0.4, -0.5])
+    ub = np.array([1.0, 1.0, 1.0])
+    return Problem(P, q, G, h, A, b, lb, ub)
+
+
 def get_qpmad_demo_problem():
     """
     Problem from qpmad's `demo.cpp
