@@ -73,8 +73,8 @@ The process to add AwesomeQP to *qpsolvers* goes as follows:
 7. Import ``awesomeqp_solve_qp`` from ``qpsolvers/__init__.py`` and add it to ``__all__``
 8. Add the solver to ``doc/src/supported-solvers.rst``
 9. Add the solver to the *Solvers* section of the README
-10. Assuming AwesomeQP is distributed on `PyPI <https://pypi.org/>`__, add it to the ``[testenv]`` and ``[testenv:coverage]`` environments of ``tox.ini`` for unit testing
-11. Assuming AwesomeQP is distributed on Conda or PyPI, add it to the list of dependencies in ``doc/environment.yml``
+10. If AwesomeQP is distributed on `PyPI <https://pypi.org/>`__, add it to ``[tool.pixi.pypi-dependencies]`` in ``pyproject.toml`` (you can also add an entry for it in ``[project.optional-dependencies]``)
+11. If AwesomeQP is distributed on Conda, add it to ``[tool.pixi.dependencies]`` in ``pyproject.toml``
 12. Log the new solver as an addition in the changelog
 13. If you are a new contributor, feel free to add your name to ``CITATION.cff``.
 
