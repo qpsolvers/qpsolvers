@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 #
 # SPDX-License-Identifier: LGPL-3.0-or-later
-# Copyright 2016-2023 Stéphane Caron and the qpsolvers contributors
 
 """Combine linear and box inequalities into double-sided linear format."""
 
