@@ -9,12 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Helper functions to remove infinite inequalities from problems
 - Tests for the condition number of a problem
 
 ### Changed
 
 - docs: Update note on adding a new solver
 - Transfer copyright notices to a single NOTICE file
+
+### Fixed
+
+- SCS: handle infinite values in linear inequalities
 
 ## [4.13.0] - 2026-07-19
 
