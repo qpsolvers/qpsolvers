@@ -24,6 +24,8 @@ import scipy.sparse as spa
 from ..conversions import (
     ensure_sparse_matrices,
     linear_from_box_inequalities,
+    put_infinite_inequalities_back,
+    remove_infinite_inequalities,
     split_dual_linear_box,
 )
 from ..problem import Problem
@@ -108,6 +110,13 @@ def qtqp_solve_problem(
 
     # Convert to CSC format as required by QTQP
     P, G, A = ensure_sparse_matrices("qtqp", P, G, A)
+
+    # QTQP does not handle infinite values in its inequality vector, so we drop
+    # rows of h equal to +infinity, including those coming from disabled box
+    # bounds converted above.
+    finite_h: Optional[np.ndarray] = None
+    if G is not None and h is not None:
+        G, h, finite_h = remove_infinite_inequalities(G, h)
 
     # Check for unconstrained case
     if G is None and A is None:
@@ -196,8 +205,8 @@ def qtqp_solve_problem(
         solution.y = np.empty((0,))
 
     # Extract inequality duals
-    if G is not None:
-        z_ineq = result.y[meq:]
+    if G is not None and finite_h is not None:
+        z_ineq = put_infinite_inequalities_back(result.y[meq:], finite_h)
         # Split dual variables for linear and box inequalities
         z_linear, z_box = split_dual_linear_box(z_ineq, lb, ub)
         solution.z = z_linear
