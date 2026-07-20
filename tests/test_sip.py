@@ -61,5 +61,29 @@ try:
             self.assertEqual(solution.y.shape, (0,))
             np.testing.assert_allclose(solution.z_box, [1.0], atol=1e-5)
 
+        def test_infinite_linear_inequality_duals(self):
+            """Map inequality duals back to full length on infinite rows.
+
+            The middle inequality (index 1) is disabled by a ``+inf`` bound.
+            SIP should drop it before solving, then return a full-length ``z``
+            with a zero multiplier at that index.
+            """
+            P = np.array([[4.0, 1.0], [1.0, 2.0]])
+            q = np.array([1.0, 1.0])
+            G = np.array([[-1.0, -1.0], [1.0, 0.0], [0.0, -1.0]])
+            h = np.array([-1.0, np.inf, -0.8])
+
+            full = sip_solve_problem(Problem(P, q, G, h))
+            reference = sip_solve_problem(Problem(P, q, G[[0, 2]], h[[0, 2]]))
+
+            self.assertTrue(full.found)
+            self.assertEqual(full.z.shape, (3,))
+            np.testing.assert_allclose(full.x, reference.x, atol=1e-6)
+            self.assertAlmostEqual(full.z[1], 0.0, places=8)
+            np.testing.assert_allclose(full.z[[0, 2]], reference.z, atol=1e-6)
+            # both finite constraints are active, with distinct multipliers
+            self.assertGreater(full.z[0], 1e-3)
+            self.assertGreater(full.z[2], 1e-3)
+
 except ImportError as exn:  # solver not installed
     warnings.warn(f"Skipping SIP tests: {exn}")
