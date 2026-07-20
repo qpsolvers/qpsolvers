@@ -23,7 +23,11 @@ from numpy import ndarray
 from scipy.sparse import csc_matrix
 from scs import solve
 
-from ..conversions import ensure_sparse_matrices
+from ..conversions import (
+    ensure_sparse_matrices,
+    put_infinite_inequalities_back,
+    remove_infinite_inequalities,
+)
 from ..problem import Problem
 from ..solution import Solution
 from ..solve_unconstrained import solve_unconstrained
