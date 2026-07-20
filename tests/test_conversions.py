@@ -10,7 +10,12 @@ import unittest
 import numpy as np
 import scipy.sparse as spa
 
-from qpsolvers.conversions import linear_from_box_inequalities
+from qpsolvers import ProblemError
+from qpsolvers.conversions import (
+    linear_from_box_inequalities,
+    put_infinite_inequalities_back,
+    remove_infinite_inequalities,
+)
 
 
 class TestConversions(unittest.TestCase):
@@ -75,3 +80,55 @@ class TestConversions(unittest.TestCase):
             None, None, lb, ub, use_sparse=True
         )
         self.assertTrue(isinstance(G, spa.csc_matrix))
+
+
+class TestRemoveInfiniteInequalities(unittest.TestCase):
+    """Test fixture for removing infinite linear inequalities."""
+
+    def setUp(self):
+        self.G = np.array(
+            [[1.0, 2.0, 1.0], [2.0, 0.0, 1.0], [-1.0, 2.0, -1.0]]
+        )
+        self.h = np.array([3.0, np.inf, -2.0])
+
+    def test_removes_infinite_row(self):
+        G, h, kept = remove_infinite_inequalities(self.G, self.h)
+        self.assertTrue(np.array_equal(kept, [True, False, True]))
+        self.assertTrue(np.allclose(G, self.G[[0, 2]]))
+        self.assertTrue(np.allclose(h, self.h[[0, 2]]))
+
+    def test_keeps_finite_rows_untouched(self):
+        h = np.array([3.0, 2.0, -2.0])
+        G, h_out, kept = remove_infinite_inequalities(self.G, h)
+        self.assertTrue(kept.all())
+        self.assertIs(G, self.G)  # returned as-is, no copy
+        self.assertIs(h_out, h)
+
+    def test_removes_infinite_row_sparse(self):
+        G, h, kept = remove_infinite_inequalities(
+            spa.csc_matrix(self.G), self.h
+        )
+        self.assertTrue(np.array_equal(kept, [True, False, True]))
+        self.assertEqual(G.shape, (2, 3))
+        self.assertTrue(np.allclose(G.toarray(), self.G[[0, 2]]))
+
+    def test_negative_infinite_raises(self):
+        h = np.array([3.0, -np.inf, -2.0])
+        with self.assertRaises(ProblemError):
+            remove_infinite_inequalities(self.G, h)
+
+    def test_nan_raises(self):
+        h = np.array([3.0, np.nan, -2.0])
+        with self.assertRaises(ProblemError):
+            remove_infinite_inequalities(self.G, h)
+
+    def test_put_back_fills_out_zeros(self):
+        _, _, kept = remove_infinite_inequalities(self.G, self.h)
+        z = np.array([0.7, 0.3])  # multipliers for the two kept rows
+        z_full = put_infinite_inequalities_back(z, kept)
+        self.assertTrue(np.allclose(z_full, [0.7, 0.0, 0.3]))
+
+    def test_put_back_identity_when_all_finite(self):
+        kept = np.ones(3, dtype=bool)
+        z = np.array([1.0, 2.0, 3.0])
+        self.assertIs(put_infinite_inequalities_back(z, kept), z)
