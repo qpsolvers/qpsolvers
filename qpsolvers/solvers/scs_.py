@@ -154,7 +154,7 @@ def scs_solve_problem(
     n = P.shape[0]
 
     # SCS does not handle infinite values in its positive cone, so we drop rows
-    # where h is infinite. Box bounds can keep infinite values.
+    # of h equal to +infinity. Box bounds can keep infinite values.
     finite_h: Optional[np.ndarray] = None
     if G is not None and h is not None:
         G, h, finite_h = remove_infinite_inequalities(G, h)
