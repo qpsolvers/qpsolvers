@@ -535,10 +535,9 @@ for solver in available_solvers:
             f"test_infinite_box_bounds_{solver}",
             TestSolveProblem.get_test_infinite_box_bounds(solver),
         )
-    if solver not in ["ecos", "qpswift", "scs"]:
+    if solver not in ["ecos", "qpswift"]:
         # See https://github.com/qpsolvers/qpsolvers/issues/159
         # See https://github.com/qpsolvers/qpsolvers/issues/160
-        # See https://github.com/qpsolvers/qpsolvers/issues/161
         setattr(
             TestSolveProblem,
             f"test_infinite_linear_bounds_{solver}",
