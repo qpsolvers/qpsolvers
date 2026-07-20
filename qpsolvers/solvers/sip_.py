@@ -30,6 +30,10 @@ except ImportError:
     amd = None
     spmatrix = None
 
+from ..conversions import (
+    put_infinite_inequalities_back,
+    remove_infinite_inequalities,
+)
 from ..exceptions import ProblemError
 from ..problem import Problem
 from ..solution import Solution
@@ -259,12 +263,8 @@ def sip_solve_problem(
         else np.ascontiguousarray(b_input, dtype=np.float64)
     )
 
-    if np.any(np.isnan(h)) or np.any(np.isneginf(h)):
-        raise ProblemError("SIP requires finite or positive-infinite h")
-    finite_h = np.isfinite(h)
-    if not np.all(finite_h):
-        G = G[finite_h]
-        h = np.ascontiguousarray(h[finite_h])
+    G, h, finite_h = remove_infinite_inequalities(G, h)
+    h = np.ascontiguousarray(h)
 
     lower_bounds = (
         np.full(n, -np.inf, dtype=np.float64)
@@ -357,12 +357,7 @@ def sip_solve_problem(
     solution.y = result_y[:num_user_equalities]
     solution.obj = 0.5 * solution.x.dot(P @ solution.x) + q.dot(solution.x)
 
-    z = np.array(result.z)
-    if not np.all(finite_h):
-        full_z = np.zeros(finite_h.shape[0], dtype=z.dtype)
-        full_z[finite_h] = z
-        z = full_z
-    solution.z = z
+    solution.z = put_infinite_inequalities_back(np.array(result.z), finite_h)
     if lb is not None or ub is not None:
         solution.z_box = np.array(result.z_box)
         solution.z_box[fixed_bounds] = result_y[num_user_equalities:]
