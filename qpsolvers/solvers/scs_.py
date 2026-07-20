@@ -153,6 +153,12 @@ def scs_solve_problem(
     P, G, A = ensure_sparse_matrices("scs", P, G, A)
     n = P.shape[0]
 
+    # SCS does not handle infinite values in its positive cone, so we drop rows
+    # where h is infinite. Box bounds can keep infinite values.
+    finite_h: Optional[np.ndarray] = None
+    if G is not None and h is not None:
+        G, h, finite_h = remove_infinite_inequalities(G, h)
+
     data: Dict[str, Any] = {"P": P, "c": q}
     cone: Dict[str, Any] = {}
     if initvals is not None:
@@ -195,8 +201,10 @@ def scs_solve_problem(
     meq = A.shape[0] if A is not None else 0
     solution.y = result["y"][:meq] if A is not None else np.empty((0,))
     solution.z = (
-        result["y"][meq : meq + G.shape[0]]
-        if G is not None
+        put_infinite_inequalities_back(
+            result["y"][meq : meq + G.shape[0]], finite_h
+        )
+        if G is not None and finite_h is not None
         else np.empty((0,))
     )
     solution.z_box = (
