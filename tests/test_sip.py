@@ -10,7 +10,7 @@ import warnings
 
 import numpy as np
 
-from qpsolvers import Problem
+from qpsolvers import Problem, ProblemError
 
 from .problems import get_sd3310_problem
 
@@ -84,6 +84,24 @@ try:
             # both finite constraints are active, with distinct multipliers
             self.assertGreater(full.z[0], 1e-3)
             self.assertGreater(full.z[2], 1e-3)
+
+        def test_negative_infinite_inequality_raises(self):
+            """Reject a minus-infinity entry in the inequality vector."""
+            P = np.array([[4.0, 1.0], [1.0, 2.0]])
+            q = np.array([1.0, 1.0])
+            G = np.array([[-1.0, -1.0], [0.0, -1.0]])
+            h = np.array([-1.0, -np.inf])
+            with self.assertRaises(ProblemError):
+                sip_solve_problem(Problem(P, q, G, h))
+
+        def test_nan_inequality_raises(self):
+            """Reject a NaN entry in the inequality vector."""
+            P = np.array([[4.0, 1.0], [1.0, 2.0]])
+            q = np.array([1.0, 1.0])
+            G = np.array([[-1.0, -1.0], [0.0, -1.0]])
+            h = np.array([-1.0, np.nan])
+            with self.assertRaises(ProblemError):
+                sip_solve_problem(Problem(P, q, G, h))
 
 except ImportError as exn:  # solver not installed
     warnings.warn(f"Skipping SIP tests: {exn}")
