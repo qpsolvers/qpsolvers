@@ -329,10 +329,20 @@ class TestSolveProblem(unittest.TestCase):
             problem, _ = get_qpsut01()
             problem.lb[1] = -np.inf
             problem.ub[1] = +np.inf
+            reference = solve_problem(problem, solver="daqp")
+            self.assertIsNotNone(reference.x, f"{solver=}")
             result = solve_problem(problem, solver=solver)
-            self.assertIsNotNone(result.x, f"{solver=}")
+            self.assertTrue(result.found, f"{solver=}")
             self.assertIsNotNone(result.z, f"{solver=}")
             self.assertIsNotNone(result.z_box, f"{solver=}")
+            sol_tolerance = (
+                5e-3
+                if solver in ["jaxopt_osqp", "osqp", "qpalm", "scs"]
+                else 2e-4
+            )
+            self.assertLess(
+                norm(result.x - reference.x), sol_tolerance, f"{solver=}"
+            )
 
         return test
 
@@ -354,10 +364,20 @@ class TestSolveProblem(unittest.TestCase):
         def test(self):
             problem, _ = get_qpsut01()
             problem.h[0] = +np.inf
+            reference = solve_problem(problem, solver="daqp")
+            self.assertIsNotNone(reference.x, f"{solver=}")
             result = solve_problem(problem, solver=solver)
-            self.assertIsNotNone(result.x, f"{solver=}")
+            self.assertTrue(result.found, f"{solver=}")
             self.assertIsNotNone(result.z, f"{solver=}")
             self.assertIsNotNone(result.z_box, f"{solver=}")
+            sol_tolerance = (
+                5e-3
+                if solver in ["jaxopt_osqp", "osqp", "qpalm", "scs"]
+                else 2e-4
+            )
+            self.assertLess(
+                norm(result.x - reference.x), sol_tolerance, f"{solver=}"
+            )
 
         return test
 
