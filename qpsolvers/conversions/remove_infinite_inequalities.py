@@ -5,14 +5,13 @@
 
 """Drop linear inequalities with an infinite right-hand side."""
 
-from typing import Tuple, TypeVar
+from typing import Any, Tuple, TypeVar, cast
 
 import numpy as np
-import scipy.sparse as spa
 
 from ..exceptions import ProblemError
 
-GType = TypeVar("GType", np.ndarray, spa.csc_matrix, spa.csr_matrix)
+GType = TypeVar("GType")
 
 
 def remove_infinite_inequalities(
@@ -55,7 +54,9 @@ def remove_infinite_inequalities(
     kept: np.ndarray = np.isfinite(h)
     if kept.all():
         return G, h, kept
-    return G[kept], h[kept], kept
+    # G can be dense or sparse matrix supporting boolean row indexing
+    G_kept = cast(GType, cast(Any, G)[kept])
+    return G_kept, h[kept], kept
 
 
 def put_infinite_inequalities_back(
