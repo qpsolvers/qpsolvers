@@ -29,7 +29,7 @@ from .problems import get_infinite_inequality_problem, get_qpmad_demo_problem
 # achieved by some solvers. Here are the behaviors observed as of March 2022.
 # Unit tests only cover solvers that raise successfully:
 behavior_on_unbounded = {
-    "raise": ["cvxopt", "kvxopt", "ecos", "quadprog", "scs"],
+    "raise": ["cvxopt", "kvxopt", "ecos", "quadprog", "scip", "scs"],
     "return_crazy_solution": ["qpoases"],
     "return_none": ["osqp"],
 }
@@ -364,11 +364,7 @@ class TestSolveQP(unittest.TestCase):
             sol_tolerance = (
                 1e-3
                 if solver == "ecos"
-                else (
-                    1e-4
-                    if solver == "scip"
-                    else 1e-5 if solver in ["osqp", "qpalm"] else 1e-6
-                )
+                else 1e-5 if solver in ["osqp", "qpalm"] else 1e-6
             )
             self.assertLess(
                 norm(x - known_solution), sol_tolerance, f"{solver=}"
