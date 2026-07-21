@@ -25,7 +25,11 @@ import numpy as np
 import piqp
 import scipy.sparse as spa
 
-from ..conversions import ensure_sparse_matrices
+from ..conversions import (
+    ensure_sparse_matrices,
+    put_infinite_inequalities_back,
+    remove_infinite_inequalities,
+)
 from ..exceptions import ParamError, ProblemError
 from ..problem import Problem
 from ..solution import Solution
@@ -181,6 +185,9 @@ def piqp_solve_problem(
         )
     if A is not None and b is None:
         raise ProblemError("Inconsistent inequalities: A is set but b is None")
+    finite_h: Optional[np.ndarray] = None
+    if G is not None and h is not None:
+        G, h, finite_h = remove_infinite_inequalities(G, h)
     # PIQP does not support A, b, G, and h to be None.
     use_csc: bool = (
         not isinstance(P, np.ndarray)
@@ -243,13 +250,11 @@ def piqp_solve_problem(
         solution.y = np.empty((0,))
     else:
         solution.y = solver.result.y
-    if G is None:
+    if G is None or finite_h is None:
         solution.z = np.empty((0,))
     else:
-        if old_interface:
-            solution.z = solver.result.z
-        else:
-            solution.z = solver.result.z_u
+        z = solver.result.z if old_interface else solver.result.z_u
+        solution.z = put_infinite_inequalities_back(z, finite_h)
     if lb is not None or ub is not None:
         if old_interface:
             solution.z_box = solver.result.z_ub - solver.result.z_lb
