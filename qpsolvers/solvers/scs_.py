@@ -150,14 +150,15 @@ def scs_solve_problem(
     """
     build_start_time = time.perf_counter()
     P, q, G, h, A, b, lb, ub = problem.unpack()
-    P, G, A = ensure_sparse_matrices("scs", P, G, A)
-    n = P.shape[0]
 
     # SCS does not handle infinite values in its positive cone, so we drop rows
     # of h equal to +infinity. Box bounds can keep infinite values.
     finite_h: Optional[np.ndarray] = None
     if G is not None and h is not None:
         G, h, finite_h = remove_infinite_inequalities(G, h)
+
+    P, G, A = ensure_sparse_matrices("scs", P, G, A)
+    n = P.shape[0]
 
     data: Dict[str, Any] = {"P": P, "c": q}
     cone: Dict[str, Any] = {}
