@@ -117,26 +117,10 @@ gurobipy = ">=9.5.2"
 jaxopt = ">=0.8.3"
 qpalm = ">=1.2.1"
 qpax = ">=0.0.9"
+pyscipopt = ">=6.1.0"
 qtqp = ">=0.0.3,<0.0.4"
 sip-qp-python = ">=0.0.2"
 pyqpmad = ">=1.4.0.post3"
-
-# pyscipopt: PyPI ships an osx-arm64 wheel tagged macosx_14_0, which uv rejects
-# against the conda env's MACOSX_DEPLOYMENT_TARGET=11.0 and falls back to the
-# sdist (build fails: SCIP headers missing). Pull from conda-forge on the
-# workspace platforms where it is built; PyPI wheels work on linux-aarch64,
-# where conda-forge has no build.
-[tool.pixi.target.linux-64.dependencies]
-pyscipopt = ">=6.1.0"
-
-[tool.pixi.target.osx-arm64.dependencies]
-pyscipopt = ">=6.1.0"
-
-[tool.pixi.target.win-64.dependencies]
-pyscipopt = ">=6.1.0"
-
-[tool.pixi.target.linux-aarch64.pypi-dependencies]
-pyscipopt = ">=6.1.0"
 
 [tool.pixi.feature.coverage.dependencies]
 coverage = ">=5.5"
