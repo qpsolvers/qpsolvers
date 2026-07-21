@@ -50,7 +50,7 @@ pyqpmad = ["pyqpmad >=1.4.0.post3"]
 qpax = ["qpax>=0.0.9"]
 qtqp = ["qtqp >=0.0.3"]
 quadprog = ["quadprog >=0.1.11"]
-scip = ["pyscipopt >=5.5.0"]
+scip = ["pyscipopt >=6.1.0"]
 scs = ["scs >=3.2.0"]
 sip = ["sip-qp-python >=0.0.2"]
 open_source_solvers = ["qpsolvers[clarabel,cvxopt,daqp,ecos,highs,jaxopt,osqp,piqp,proxqp,pyqpmad,qpalm,qtqp,quadprog,scip,scs,sip,qpax]"]
@@ -115,12 +115,28 @@ scs = ">=3.2.0"
 coptpy = ">=7.0.0"
 gurobipy = ">=9.5.2"
 jaxopt = ">=0.8.3"
-pyscipopt = ">=5.5.0"
 qpalm = ">=1.2.1"
 qpax = ">=0.0.9"
 qtqp = ">=0.0.3,<0.0.4"
 sip-qp-python = ">=0.0.2"
 pyqpmad = ">=1.4.0.post3"
+
+# pyscipopt: PyPI ships an osx-arm64 wheel tagged macosx_14_0, which uv rejects
+# against the conda env's MACOSX_DEPLOYMENT_TARGET=11.0 and falls back to the
+# sdist (build fails: SCIP headers missing). Pull from conda-forge on the
+# workspace platforms where it is built; PyPI wheels work on linux-aarch64,
+# where conda-forge has no build.
+[tool.pixi.target.linux-64.dependencies]
+pyscipopt = ">=6.1.0"
+
+[tool.pixi.target.osx-arm64.dependencies]
+pyscipopt = ">=6.1.0"
+
+[tool.pixi.target.win-64.dependencies]
+pyscipopt = ">=6.1.0"
+
+[tool.pixi.target.linux-aarch64.pypi-dependencies]
+pyscipopt = ">=6.1.0"
 
 [tool.pixi.feature.coverage.dependencies]
 coverage = ">=5.5"
