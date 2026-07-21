@@ -24,7 +24,12 @@ import numpy as np
 import scipy.sparse as spa
 from cvxopt.solvers import qp
 
-from ..conversions import linear_from_box_inequalities, split_dual_linear_box
+from ..conversions import (
+    linear_from_box_inequalities,
+    put_infinite_inequalities_back,
+    remove_infinite_inequalities,
+    split_dual_linear_box,
+)
 from ..exceptions import ProblemError, SolverError
 from ..problem import Problem
 from ..solution import Solution
@@ -150,6 +155,10 @@ def cvxopt_solve_problem(
             G, h, lb, ub, use_sparse=problem.has_sparse
         )
 
+    finite_h: Optional[np.ndarray] = None
+    if G is not None and h is not None:
+        G, h, finite_h = remove_infinite_inequalities(G, h)
+
     args = [__to_cvxopt(P), __to_cvxopt(q)]
     constraints = {"G": None, "h": None, "A": None, "b": None}
     if G is not None and h is not None:
@@ -188,13 +197,15 @@ def cvxopt_solve_problem(
     solution.y = (
         np.array(res["y"]).flatten() if b is not None else np.empty((0,))
     )
-    if h is not None and res["z"] is not None:
-        z_cvxopt = np.array(res["z"]).flatten()
-        if z_cvxopt.size == h.size:
+    if h is not None and finite_h is not None and res["z"] is not None:
+        z_cvxopt = put_infinite_inequalities_back(
+            np.array(res["z"]).flatten(), finite_h
+        )
+        if z_cvxopt.size == finite_h.shape[0]:
             z, z_box = split_dual_linear_box(z_cvxopt, lb, ub)
             solution.z = z
             solution.z_box = z_box
-    else:  # h is None
+    else:  # no linear or box inequalities
         solution.z = np.empty((0,))
         solution.z_box = np.empty((0,))
     solution.obj = res["primal objective"]

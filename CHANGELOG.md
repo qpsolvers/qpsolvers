@@ -14,11 +14,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- CVXOPT: drop infinite inequalities rather than clamp them to a large value
 - docs: Update note on adding a new solver
 - Transfer copyright notices to a single NOTICE file
 
 ### Fixed
 
+- MOSEK: handle infinite values in linear inequalities
 - PIQP: handle infinite values in linear inequalities
 - SCS: handle infinite values in linear inequalities
 - qtqp: handle infinite values in linear inequalities
