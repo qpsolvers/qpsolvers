@@ -14,12 +14,8 @@ information down to the guts of the solver. If you are using SCIP in a
 scientific work, consider citing the corresponding paper
 [Achterberg2009]_.
 
-Note that SCIP solves quadratic programs by spatial branch-and-bound on
-an epigraph reformulation of the objective. Primal solutions are
-accurate, but the interface does not produce dual multipliers following
-QP conventions: the returned solution has its dual attributes left to
-``None``, so that e.g. :func:`qpsolvers.Solution.is_optimal` cannot
-certify optimality.
+SCIP solves quadratic programs by branch-and-bound and does not return
+dual multipliers: the solution's dual attributes are left to ``None``.
 
 **Warm-start:** this solver interface supports warm starting 🔥
 """
@@ -37,24 +33,8 @@ from ..problem import Problem
 from ..solution import Solution
 from ..solve_unconstrained import solve_unconstrained
 
-try:
-    __scip_version_info__: Optional[tuple] = tuple(
-        int(c) for c in pyscipopt.__version__.split(".")[:2]
-    )
-except ValueError:  # non-numeric version component
-    __scip_version_info__ = None
-if __scip_version_info__ is not None and __scip_version_info__ < (6, 1):
-    raise ImportError(
-        "the SCIP interface requires pyscipopt >= 6.1.0 "
-        f"(found {pyscipopt.__version__}); "
-        "earlier versions lack matrix-expression support"
-    )
-
-# Accuracy parameters applied by default, and overridable by keyword
-# arguments: tighten feasibility tolerances for QP-grade accuracy, and
-# let SCIP stop once the branch-and-bound gap is negligible rather than
-# prove optimality exactly (its default gap limit is zero). Tolerances
-# below 1e-9 require SCIP to be built with GMP.
+# Tighten tolerances to QP-grade accuracy (overridable by keyword
+# arguments); values below 1e-9 require SCIP to be built with GMP.
 DEFAULT_PARAMS = {
     "numerics/feastol": 1e-9,
     "numerics/dualfeastol": 1e-9,
@@ -155,11 +135,7 @@ def scip_solve_problem(
     if A is not None:
         model.addMatrixCons(A @ x == b)
 
-    # Epigraph reformulation: SCIP requires a linear objective, so we
-    # minimize a bound variable t subject to 0.5 x^T P x + q^T x <= t.
-    # (pyscipopt's set_nonlinear_objective recipe builds the same
-    # reformulation, but does not expose t, whose value the warm start
-    # below must include.)
+    # SCIP requires a linear objective: minimize t s.t. objective <= t
     t = model.addVar(lb=-model.infinity(), obj=1.0)
     model.addCons(0.5 * (x @ P @ x) + q @ x <= t)
 
@@ -173,11 +149,8 @@ def scip_solve_problem(
         init_sol = model.createSol()
         for i, val in enumerate(x_init):
             model.setSolVal(init_sol, x[i], val)
-        # The warm start must include the epigraph variable, otherwise
-        # it defaults to zero and the solution is rejected whenever its
-        # objective value is positive. Pad the objective value so that
-        # rounding differences between the evaluation here and in SCIP
-        # cannot make the epigraph constraint infeasible.
+        # The warm start must include t, padded so that rounding cannot
+        # make the epigraph constraint infeasible
         obj_init = 0.5 * x_init @ P @ x_init + q @ x_init
         model.setSolVal(init_sol, t, obj_init + 1e-8 * (1.0 + abs(obj_init)))
         model.addSol(init_sol, free=True)
@@ -196,10 +169,7 @@ def scip_solve_problem(
         "primal_bound": model.getPrimalbound(),
         "dual_bound": model.getDualbound(),
     }
-    # Limit statuses (timelimit, nodelimit, ...) are not reported as
-    # found even when an incumbent exists, consistently with the other
-    # solver interfaces; gap-limit termination is a normal success path
-    # here since this interface sets small gap limits by default.
+    # gaplimit is a success path here since DEFAULT_PARAMS sets gap limits
     solution.found = status in ("optimal", "gaplimit")
     if solution.found:
         x_opt = np.asarray(model.getVal(x), dtype=float)

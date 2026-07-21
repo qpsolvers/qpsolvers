@@ -486,12 +486,8 @@ class TestSolveProblem(unittest.TestCase):
 # Generate test fixtures for each solver
 for solver in available_solvers:
     if solver == "scip":
-        # SCIP is a mixed-integer solver driven by spatial branch-and-bound
-        # through an epigraph reformulation. Its primal solutions are
-        # accurate, but it does not produce dual multipliers following QP
-        # conventions, so its interface leaves them unset and these dual
-        # fixtures cannot pass. Solver functionality is covered in
-        # tests/test_scip.py instead.
+        # SCIP returns no dual multipliers, which these fixtures check;
+        # it is covered by test_solve_qp.py and tests/test_scip.py
         continue
     setattr(
         TestSolveProblem,
