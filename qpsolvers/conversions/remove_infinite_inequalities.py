@@ -49,7 +49,7 @@ def remove_infinite_inequalities(
     """
     if np.any(np.isnan(h)):
         raise ProblemError("inequality vector 'h' contains NaN")
-    elif np.any(np.isneginf(h)):
+    if np.any(np.isneginf(h)):
         raise ProblemError("inequality vector 'h' contains -infinity")
     kept: np.ndarray = np.isfinite(h)
     if kept.all():
