@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# SPDX-License-Identifier: LGPL-3.0-or-later
+
 """Solver interface for `SCIP <https://github.com/scipopt/PySCIPOpt/>`__.
 
 SCIP is currently one of the fastest academically developed solvers for
@@ -5,7 +10,9 @@ mixed integer programming (MIP) and mixed integer nonlinear programming
 (MINLP). In addition, SCIP provides a highly flexible framework for
 constraint integer programming and branch-cut-and-price. It allows for
 total control of the solution process and the access of detailed
-information down to the guts of the solver.
+information down to the guts of the solver. If you are using SCIP in a
+scientific work, consider citing the corresponding paper
+[Achterberg2009]_.
 
 Note that SCIP solves quadratic programs by spatial branch-and-bound on
 an epigraph reformulation of the objective. Primal solutions are
@@ -88,9 +95,28 @@ def scip_solve_problem(
     Keyword arguments are forwarded to SCIP as parameters. Parameter
     names contain slashes, so they are passed by dictionary unpacking:
     for instance, ``scip_solve_problem(problem, **{"limits/time": 10})``
-    sets a time limit of 10 seconds. See the `SCIP parameter reference
-    <https://www.scipopt.org/doc/html/PARAMETERS.php>`_ for the list of
-    supported parameters.
+    sets a time limit of 10 seconds. SCIP parameters include the
+    following:
+
+    .. list-table::
+       :widths: 30 70
+       :header-rows: 1
+
+       * - Name
+         - Description
+       * - ``limits/gap``
+         - Relative gap between primal and dual bounds at which the
+           solve stops.
+       * - ``limits/time``
+         - Run time limit in seconds.
+       * - ``numerics/dualfeastol``
+         - Dual feasibility tolerance.
+       * - ``numerics/feastol``
+         - Primal feasibility tolerance.
+
+    Check out the `SCIP parameter reference
+    <https://www.scipopt.org/doc/html/PARAMETERS.php>`_ for all
+    available SCIP parameters.
 
     By default, this interface tightens SCIP's accuracy parameters to
     ``numerics/feastol=1e-9``, ``numerics/dualfeastol=1e-9``,
@@ -98,7 +124,9 @@ def scip_solve_problem(
     keys as keyword arguments to override them; for instance,
     ``**{"numerics/feastol": 1e-6, "numerics/dualfeastol": 1e-7,
     "limits/gap": 0.0, "limits/absgap": 0.0}`` restores stock SCIP
-    behavior.
+    behavior. Lower values for primal or dual tolerances yield more
+    precise solutions at the cost of computation time. See *e.g.*
+    [Caron2022]_ for a primer of solver tolerances.
     """
     if problem.is_unconstrained:
         warnings.warn(
@@ -113,7 +141,7 @@ def scip_solve_problem(
         try:
             model.setParam(option, value)
         except KeyError as exc:
-            raise ParamError(f'unknown SCIP parameter "{option}"') from exc
+            raise ParamError(f'Unknown SCIP parameter "{option}"') from exc
 
     P, q, G, h, A, b, lb, ub = problem.unpack_as_dense()
     num_vars = P.shape[0]
@@ -248,14 +276,38 @@ def scip_solve_qp(
     Keyword arguments are forwarded to SCIP as parameters. Parameter
     names contain slashes, so they are passed by dictionary unpacking:
     for instance, ``scip_solve_qp(P, q, G, h, **{"limits/time": 10})``
-    sets a time limit of 10 seconds. See the `SCIP parameter reference
-    <https://www.scipopt.org/doc/html/PARAMETERS.php>`_ for the list of
-    supported parameters.
+    sets a time limit of 10 seconds. SCIP parameters include the
+    following:
+
+    .. list-table::
+       :widths: 30 70
+       :header-rows: 1
+
+       * - Name
+         - Description
+       * - ``limits/gap``
+         - Relative gap between primal and dual bounds at which the
+           solve stops.
+       * - ``limits/time``
+         - Run time limit in seconds.
+       * - ``numerics/dualfeastol``
+         - Dual feasibility tolerance.
+       * - ``numerics/feastol``
+         - Primal feasibility tolerance.
+
+    Check out the `SCIP parameter reference
+    <https://www.scipopt.org/doc/html/PARAMETERS.php>`_ for all
+    available SCIP parameters.
 
     By default, this interface tightens SCIP's accuracy parameters to
     ``numerics/feastol=1e-9``, ``numerics/dualfeastol=1e-9``,
     ``limits/gap=1e-9`` and ``limits/absgap=1e-9``. Pass any of these
-    keys as keyword arguments to override them.
+    keys as keyword arguments to override them; for instance,
+    ``**{"numerics/feastol": 1e-6, "numerics/dualfeastol": 1e-7,
+    "limits/gap": 0.0, "limits/absgap": 0.0}`` restores stock SCIP
+    behavior. Lower values for primal or dual tolerances yield more
+    precise solutions at the cost of computation time. See *e.g.*
+    [Caron2022]_ for a primer of solver tolerances.
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)
     solution = scip_solve_problem(problem, initvals, verbose, **kwargs)
