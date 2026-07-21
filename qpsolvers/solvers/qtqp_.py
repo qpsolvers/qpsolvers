@@ -108,15 +108,15 @@ def qtqp_solve_problem(
     if lb is not None or ub is not None:
         G, h = linear_from_box_inequalities(G, h, lb, ub, use_sparse=True)
 
-    # Convert to CSC format as required by QTQP
-    P, G, A = ensure_sparse_matrices("qtqp", P, G, A)
-
     # QTQP does not handle infinite values in its inequality vector, so we drop
     # rows of h equal to +infinity, including those coming from disabled box
     # bounds converted above.
     finite_h: Optional[np.ndarray] = None
     if G is not None and h is not None:
         G, h, finite_h = remove_infinite_inequalities(G, h)
+
+    # Convert to CSC format as required by QTQP
+    P, G, A = ensure_sparse_matrices("qtqp", P, G, A)
 
     # Check for unconstrained case
     if G is None and A is None:
