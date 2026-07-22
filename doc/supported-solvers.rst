@@ -50,12 +50,6 @@ HiGHS
 .. automodule:: qpsolvers.solvers.highs_
     :members:
 
-HPIPM
-=====
-
-.. automodule:: qpsolvers.solvers.hpipm_
-    :members:
-
 jaxopt.OSQP
 ===========
 
@@ -103,18 +97,6 @@ QPALM
 =====
 
 .. automodule:: qpsolvers.solvers.qpalm_
-    :members:
-
-qpOASES
-=======
-
-.. automodule:: qpsolvers.solvers.qpoases_
-    :members:
-
-qpSWIFT
-=======
-
-.. automodule:: qpsolvers.solvers.qpswift_
     :members:
 
 qpax
