@@ -15,8 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - CVXOPT: drop infinite inequalities rather than clamp them to a large value
-- docs: Update note on adding a new solver
 - Transfer copyright notices to a single NOTICE file
+- docs: Update list of supported and unsupported solvers
+- docs: Update note on adding a new solver
 
 ### Fixed
 
