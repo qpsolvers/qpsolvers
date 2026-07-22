@@ -11,6 +11,11 @@ The process to add AwesomeQP to *qpsolvers* goes as follows:
 
 1. Create a new file ``qpsolvers/solvers/awesomeqp_.py`` (named after the solver keyword, with a trailing underscore)
 2. Implement in this file a function ``awesomeqp_solve_problem`` that returns a :class:`.Solution`
+
+.. note::
+
+    Try not to override AwesomeQP's default parameters in your interface: qpsolvers aims to provide a minimal layer that stays as close as possible to what users would get if they called the solver directly.
+
 3. Implement in the same file a function ``awesomeqp_solve_qp`` to connect it to the historical API, typically as follows:
 
 .. code:: python
