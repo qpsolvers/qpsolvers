@@ -527,17 +527,15 @@ for solver in available_solvers:
             f"test_qptest_{solver}",
             TestSolveProblem.get_test_qptest(solver),
         )
-    if solver not in ["ecos", "qpswift"]:
-        # See https://github.com/qpsolvers/qpsolvers/issues/159
-        # See https://github.com/qpsolvers/qpsolvers/issues/160
+    # ECOS does not handle infinite values in inequality vectors:
+    # https://github.com/qpsolvers/qpsolvers/issues/160
+    if solver != "ecos":
         setattr(
             TestSolveProblem,
             f"test_infinite_box_bounds_{solver}",
             TestSolveProblem.get_test_infinite_box_bounds(solver),
         )
-    if solver not in ["ecos", "qpswift"]:
-        # See https://github.com/qpsolvers/qpsolvers/issues/159
-        # See https://github.com/qpsolvers/qpsolvers/issues/160
+    if solver != "ecos":
         setattr(
             TestSolveProblem,
             f"test_infinite_linear_bounds_{solver}",
@@ -553,7 +551,8 @@ for solver in available_solvers:
         f"test_qpgurabs_{solver}",
         TestSolveProblem.get_test_qpgurabs(solver),
     )
-    if solver != "qtqp":  # QTQP requires at least one inequality constraint
+    # QTQP and qpSWIFT require at least one inequality constraint
+    if solver not in ["qtqp", "qpswift"]:
         setattr(
             TestSolveProblem,
             f"test_qpgureq_{solver}",

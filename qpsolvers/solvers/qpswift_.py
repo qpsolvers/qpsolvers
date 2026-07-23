@@ -23,7 +23,12 @@ from typing import Optional
 import numpy as np
 import qpSWIFT
 
-from ..conversions import linear_from_box_inequalities, split_dual_linear_box
+from ..conversions import (
+    linear_from_box_inequalities,
+    put_infinite_inequalities_back,
+    remove_infinite_inequalities,
+    split_dual_linear_box,
+)
 from ..exceptions import ProblemError
 from ..problem import Problem
 from ..solution import Solution
@@ -122,6 +127,12 @@ def qpswift_solve_problem(
     P, q, G, h, A, b, lb, ub = problem.unpack()
     if lb is not None or ub is not None:
         G, h = linear_from_box_inequalities(G, h, lb, ub, use_sparse=False)
+
+    # qpSWIFT does not handle infinite values in inequality vectors,
+    # so we drop rows of h equal to +infinity
+    finite_h: Optional[np.ndarray] = None
+    if G is not None and h is not None:
+        G, h, finite_h = remove_infinite_inequalities(G, h)
     result: dict = {}
     kwargs.update(
         {
@@ -157,7 +168,10 @@ def qpswift_solve_problem(
     solution.found = exit_flag == 0
     solution.x = result["sol"]
     solution.y = adv_info["y"] if A is not None else np.empty((0,))
-    z, z_box = split_dual_linear_box(adv_info["z"], lb, ub)
+    z_ineq = adv_info["z"]
+    if finite_h is not None:
+        z_ineq = put_infinite_inequalities_back(z_ineq, finite_h)
+    z, z_box = split_dual_linear_box(z_ineq, lb, ub)
     solution.z = z
     solution.z_box = z_box
     solution.build_time = solve_start_time - build_start_time
