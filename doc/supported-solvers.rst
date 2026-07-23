@@ -4,7 +4,9 @@
 Supported solvers
 *****************
 
-Solvers that are detected as installed on your machine are listed in:
+Supported solvers will be made available when they are detected on your system. Their compatibility is verified by `continuous integration <https://github.com/qpsolvers/qpsolvers/actions>`__.
+
+The list of solvers detected on your system is available at:
 
 .. autodata:: qpsolvers.available_solvers
 
