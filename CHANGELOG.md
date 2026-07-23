@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - MOSEK: handle infinite values in linear inequalities
 - PIQP: handle infinite values in linear inequalities
 - SCS: handle infinite values in linear inequalities
+- qpSWIFT: handle infinite values in linear inequalities
 - qtqp: handle infinite values in linear inequalities
 
 ## [4.13.0] - 2026-07-19
