@@ -9,11 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- PDHCG: CPU CI tests and a `pdhcg` installation extra for version 0.4.0+
 - Helper functions to remove infinite inequalities from problems
 - Tests for the condition number of a problem
 
 ### Changed
 
+- PDHCG: support per-solve device selection and CPU thread parameters
 - CVXOPT: drop infinite inequalities rather than clamp them to a large value
 - Transfer copyright notices to a single NOTICE file
 - docs: Update list of supported and unsupported solvers
@@ -21,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- PDHCG: return bound multipliers and build/solve timings; leave failed solutions unset
 - MOSEK: handle infinite values in linear inequalities
 - PIQP: handle infinite values in linear inequalities
 - SCS: handle infinite values in linear inequalities

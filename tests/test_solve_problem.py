@@ -23,6 +23,8 @@ from qpsolvers.problems import (
     get_qptest,
 )
 
+from . import SOLVER_OPTIONS
+
 
 class TestSolveProblem(unittest.TestCase):
     """Test fixture for primal and dual solutions of a variety of problems.
@@ -53,7 +55,10 @@ class TestSolveProblem(unittest.TestCase):
         def test(self):
             problem, ref_solution = get_qpsut01()
             kwargs = {"eps_abs": 1e-9, "eps_rel": 0.0} if solver == "sip" else {}
-            solution = solve_problem(problem, solver=solver, **kwargs)
+            solution = solve_problem(
+                problem, solver=solver, **kwargs,
+                **SOLVER_OPTIONS.get(solver, {}),
+            )
             eps_abs = (
                 5e-1
                 if solver in ["jaxopt_osqp", "osqp", "qpalm"]
@@ -118,7 +123,10 @@ class TestSolveProblem(unittest.TestCase):
         def test(self):
             problem, ref_solution = get_qpsut02()
             kwargs = {"eps_rel": 0.0} if solver == "sip" else {}
-            solution = solve_problem(problem, solver=solver, **kwargs)
+            solution = solve_problem(
+                problem, solver=solver, **kwargs,
+                **SOLVER_OPTIONS.get(solver, {}),
+            )
             eps_abs = (
                 5e-2
                 if solver in ["ecos", "jaxopt_osqp", "qpalm"]
@@ -139,6 +147,7 @@ class TestSolveProblem(unittest.TestCase):
                                     "mosek",
                                     "qpswift",
                                     "piqp",
+                                    "pdhcg",
                                 ]
                                 else 1e-7 if solver in ["gurobi"] else 1e-8
                             )
@@ -172,7 +181,10 @@ class TestSolveProblem(unittest.TestCase):
 
         def test(self):
             problem, ref_solution = get_qpsut03()
-            solution = solve_problem(problem, solver=solver)
+            solution = solve_problem(
+                problem, solver=solver,
+                **SOLVER_OPTIONS.get(solver, {}),
+            )
             self.assertEqual(solution.x.shape, (4,), f"{solver=}")
             self.assertEqual(solution.y.shape, (0,), f"{solver=}")
             self.assertEqual(solution.z.shape, (0,), f"{solver=}")
@@ -204,7 +216,10 @@ class TestSolveProblem(unittest.TestCase):
 
         def test(self):
             problem, ref_solution = get_qpsut04()
-            solution = solve_problem(problem, solver=solver)
+            solution = solve_problem(
+                problem, solver=solver,
+                **SOLVER_OPTIONS.get(solver, {}),
+            )
             eps_abs = (
                 2e-4
                 if solver in ["jaxopt_osqp", "osqp", "qpalm", "qpax"]
@@ -238,7 +253,10 @@ class TestSolveProblem(unittest.TestCase):
 
         def test(self):
             problem, ref_solution = get_qpsut05()
-            solution = solve_problem(problem, solver=solver)
+            solution = solve_problem(
+                problem, solver=solver,
+                **SOLVER_OPTIONS.get(solver, {}),
+            )
             eps_abs = 2e-5 if solver == "ecos" else 1e-6
             self.assertLess(
                 norm(solution.x - ref_solution.x), eps_abs, f"{solver=}"
@@ -268,7 +286,10 @@ class TestSolveProblem(unittest.TestCase):
 
         def test(self):
             problem, solution = get_qptest()
-            result = solve_problem(problem, solver=solver)
+            result = solve_problem(
+                problem, solver=solver,
+                **SOLVER_OPTIONS.get(solver, {}),
+            )
             tolerance = (
                 1e1
                 if solver == "gurobi"
@@ -331,7 +352,10 @@ class TestSolveProblem(unittest.TestCase):
             problem.ub[1] = +np.inf
             reference = solve_problem(problem, solver="daqp")
             self.assertIsNotNone(reference.x, f"{solver=}")
-            result = solve_problem(problem, solver=solver)
+            result = solve_problem(
+                problem, solver=solver,
+                **SOLVER_OPTIONS.get(solver, {}),
+            )
             self.assertTrue(result.found, f"{solver=}")
             self.assertIsNotNone(result.z, f"{solver=}")
             self.assertIsNotNone(result.z_box, f"{solver=}")
@@ -366,7 +390,10 @@ class TestSolveProblem(unittest.TestCase):
             problem.h[0] = +np.inf
             reference = solve_problem(problem, solver="daqp")
             self.assertIsNotNone(reference.x, f"{solver=}")
-            result = solve_problem(problem, solver=solver)
+            result = solve_problem(
+                problem, solver=solver,
+                **SOLVER_OPTIONS.get(solver, {}),
+            )
             self.assertTrue(result.found, f"{solver=}")
             self.assertIsNotNone(result.z, f"{solver=}")
             self.assertIsNotNone(result.z_box, f"{solver=}")
@@ -398,7 +425,10 @@ class TestSolveProblem(unittest.TestCase):
 
         def test(self):
             problem, _ = get_qpgurdu()
-            result = solve_problem(problem, solver)
+            result = solve_problem(
+                problem, solver,
+                **SOLVER_OPTIONS.get(solver, {}),
+            )
             self.assertIsNotNone(result.x, f"{solver=}")
             self.assertIsNotNone(result.z, f"{solver=}")
             eps_abs = (
@@ -435,7 +465,10 @@ class TestSolveProblem(unittest.TestCase):
 
         def test(self):
             problem, _ = get_qpgurabs()
-            result = solve_problem(problem, solver)
+            result = solve_problem(
+                problem, solver,
+                **SOLVER_OPTIONS.get(solver, {}),
+            )
             self.assertIsNotNone(result.x, f"{solver=}")
             self.assertIsNotNone(result.z, f"{solver=}")
             eps_abs = (
@@ -468,7 +501,10 @@ class TestSolveProblem(unittest.TestCase):
             if solver == "ecos":
                 return
             problem, _ = get_qpgureq()
-            result = solve_problem(problem, solver)
+            result = solve_problem(
+                problem, solver,
+                **SOLVER_OPTIONS.get(solver, {}),
+            )
             self.assertIsNotNone(result.x, f"{solver=}")
             self.assertIsNotNone(result.z, f"{solver=}")
             eps_abs = (

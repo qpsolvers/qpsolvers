@@ -16,6 +16,8 @@ from qpsolvers import available_solvers, solve_ls, sparse_solvers
 from qpsolvers.exceptions import NoSolverSelected, SolverNotFound
 from qpsolvers.problems import get_sparse_least_squares
 
+from . import SOLVER_OPTIONS
+
 
 class TestSolveLS(unittest.TestCase):
     def setUp(self):
@@ -71,10 +73,12 @@ class TestSolveLS(unittest.TestCase):
             R, s, G, h, A, b, solution = self.get_problem_and_solution()
             kwargs = {"eps_abs": 1e-9, "eps_rel": 0.0} if solver == "sip" else {}
             x = solve_ls(
-                R, s, G, h, A, b, solver=solver, sparse_conversion=False, **kwargs
+                R, s, G, h, A, b, solver=solver, sparse_conversion=False, **kwargs,
+                **SOLVER_OPTIONS.get(solver, {}),
             )
             x_sp = solve_ls(
-                R, s, G, h, A, b, solver=solver, sparse_conversion=False, **kwargs
+                R, s, G, h, A, b, solver=solver, sparse_conversion=False, **kwargs,
+                **SOLVER_OPTIONS.get(solver, {}),
             )
             self.assertIsNotNone(x, f"{solver=}")
             self.assertIsNotNone(x_sp, f"{solver=}")
@@ -154,13 +158,15 @@ class TestSolveLS(unittest.TestCase):
 
             R_csc = spa.eye(n, format="csc")
             x_csc = solve_ls(
-                R_csc, s, G, h, A, b, solver=solver, sparse_conversion=False
+                R_csc, s, G, h, A, b, solver=solver, sparse_conversion=False,
+                **SOLVER_OPTIONS.get(solver, {}),
             )
             self.assertIsNotNone(x_csc, f"{solver=}")
 
             R_dia = spa.eye(n)
             x_dia = solve_ls(
-                R_dia, s, G, h, A, b, solver=solver, sparse_conversion=False
+                R_dia, s, G, h, A, b, solver=solver, sparse_conversion=False,
+                **SOLVER_OPTIONS.get(solver, {}),
             )
             self.assertIsNotNone(x_dia, f"{solver=}")
 
@@ -174,6 +180,7 @@ class TestSolveLS(unittest.TestCase):
                 W=np.eye(n),
                 solver=solver,
                 sparse_conversion=False,
+                **SOLVER_OPTIONS.get(solver, {}),
             )
             self.assertIsNotNone(x_np_dia, f"{solver=}")
 
@@ -214,6 +221,7 @@ class TestSolveLS(unittest.TestCase):
                 solver=solver,
                 sparse_conversion=sparse_conversion,
                 **kwargs,
+                **SOLVER_OPTIONS.get(solver, {}),
             )
             self.assertIsNotNone(x, f"{solver=}")
 
@@ -256,6 +264,7 @@ class TestSolveLS(unittest.TestCase):
                 solver=solver,
                 sparse_conversion=sparse_conversion,
                 **kwargs,
+                **SOLVER_OPTIONS.get(solver, {}),
             )
             self.assertIsNotNone(x, f"{solver=}")
 
