@@ -22,9 +22,9 @@ $$
 \end{split}
 $$
 
-Vector inequalities apply coordinate by coordinate. The function returns the primal solution $x^\*$ found by the backend QP solver, or ``None`` in case of failure/unfeasible problem. All solvers require the problem to be convex, meaning the matrix $P$ should be [positive semi-definite](https://en.wikipedia.org/wiki/Definite_symmetric_matrix). Some solvers further require the problem to be strictly convex, meaning $P$ should be positive definite.
+Vector inequalities apply coordinate by coordinate. The function returns the primal solution $x^\*$ found by the backend QP solver, or ``None`` in case of failure/unfeasible problem. All solvers require the problem to be convex, meaning the matrix $P$ should be positive semi-definite. Some solvers further require the problem to be strictly convex with $P$ positive definite.
 
-**Dual multipliers:** there is also a [`solve_problem`](https://qpsolvers.github.io/qpsolvers/quadratic-programming.html#qpsolvers.solve_problem) function that returns not only the primal solution, but also its dual multipliers and all other relevant quantities computed by the backend solver.
+The library also provides a ``solve_ls`` function to solve (possibly constrained) least-squares problems, and a ``solve_problem`` function that returns not only the primal solution, but also its dual multipliers and all other relevant quantities computed by the backend solver. Check out the [documentation](https://qpsolvers.github.io/qpsolvers/) for details.
 
 ## Example
 
