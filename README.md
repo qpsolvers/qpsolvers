@@ -99,6 +99,7 @@ When imported, qpsolvers loads all the solvers it can find and lists them in ``q
 | [qpOASES](https://github.com/coin-or/qpOASES)                                | ``qpoases``     | Active set | Dense | LGPL-2.1 |
 | [qpSWIFT](https://github.com/qpSWIFT/qpSWIFT)                                | ``qpswift``     | Interior point | Sparse | GPL-3.0 |
 | [quadprog](https://github.com/quadprog/quadprog)                             | ``quadprog``    | Active set | Dense | GPL-2.0 |
+| [SCIP](https://scipopt.org/)                                                 | ``scip``        | Branch-and-bound | Dense | Apache-2.0 |
 | [SCS](https://www.cvxgrp.org/scs/)                                           | ``scs``         | Augmented Lagrangian | Sparse | MIT |
 | [SIP](https://github.com/joaospinto/sip_qp)                                  | ``sip``         | Barrier Augmented Lagrangian | Sparse | MIT |
 
@@ -129,7 +130,7 @@ If you find this project useful, please consider giving it a :star: or citing it
 ```bibtex
 @software{qpsolvers,
   title = {{qpsolvers: Quadratic Programming Solvers in Python}},
-  author = {Caron, Stéphane and Arnström, Daniel and Bonagiri, Suraj and Dechaume, Antoine and Flowers, Nikolai and Heins, Adam and Ishikawa, Takuma and Kenefake, Dustin and Mazzamuto, Giacomo and Meoli, Donato and O'Donoghue, Brendan and Oppenheimer, Adam A. and Otta, Pavel and Pandala, Abhishek and Quiroz Omaña, Juan José and Rontsis, Nikitas and Shah, Paarth and St-Jean, Samuel and Vitucci, Nicola and Wolfers, Soeren and Yang, Fengyu and Delhaisse, Brian and MeindertHH and rimaddo and urob and shaoanlu and Sandoval, Uriel and Khalil, Ahmed and Kozlov, Lev and Groudiev, Antoine and Sousa Pinto, João and Schwan, Roland and Budhiraja, Rohan and Keustermans, Johannes and Wu, Yubin and Li, Hongpei and Hoarau, Antoine},
+  author = {Caron, Stéphane and Arnström, Daniel and Bonagiri, Suraj and Dechaume, Antoine and Flowers, Nikolai and Heins, Adam and Ishikawa, Takuma and Kenefake, Dustin and Mazzamuto, Giacomo and Meoli, Donato and O'Donoghue, Brendan and Oppenheimer, Adam A. and Otta, Pavel and Pandala, Abhishek and Quiroz Omaña, Juan José and Rontsis, Nikitas and Shah, Paarth and St-Jean, Samuel and Vitucci, Nicola and Wolfers, Soeren and Yang, Fengyu and Delhaisse, Brian and MeindertHH and rimaddo and urob and shaoanlu and Sandoval, Uriel and Khalil, Ahmed and Kozlov, Lev and Groudiev, Antoine and Sousa Pinto, João and Schwan, Roland and Budhiraja, Rohan and Keustermans, Johannes and Wu, Yubin and Li, Hongpei and Hoarau, Antoine and Dionísio, João},
   license = {LGPL-3.0},
   url = {https://github.com/qpsolvers/qpsolvers},
   version = {4.13.0},

@@ -30,4 +30,6 @@ References
 
 .. [Vandenberghe2010] `The CVXOPT linear and quadratic cone program solvers <https://www.seas.ucla.edu/~vandenbe/publications/coneprog.pdf>`_, L. Vandenberghe. 2010.
 
+.. [Achterberg2009] `SCIP: solving constraint integer programs <https://doi.org/10.1007/s12532-008-0001-1>`_, T. Achterberg. Mathematical Programming Computation, 2009, vol. 1, no 1, p. 1-41.
+
 .. [Goldfarb1983] *A numerically stable dual method for solving strictly convex quadratic programs*. D. Goldfarb and A. Idnani. Mathematical Programming, vol. 27, p. 1-33.
