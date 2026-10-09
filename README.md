@@ -145,5 +145,6 @@ We welcome contributions! The first step is to install the library and use it. R
 
 ## See also
 
+- [CVXPY](https://github.com/cvxpy/cvxpy): A Python-embedded modeling language for convex optimization problems.
 - [qpbenchmark](https://github.com/qpsolvers/qpbenchmark/): Benchmark for quadratic programming solvers available in Python.
 - [qpsolvers-eigen](https://github.com/ami-iit/qpsolvers-eigen): C++ abstraction layer for quadratic programming solvers using Eigen.
