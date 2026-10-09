@@ -25,6 +25,8 @@ from qpsolvers import (
 
 from .problems import get_infinite_inequality_problem, get_qpmad_demo_problem
 
+from . import SOLVER_OPTIONS
+
 # Raising a ValueError when the problem is unbounded below is desired but not
 # achieved by some solvers. Here are the behaviors observed as of March 2022.
 # Unit tests only cover solvers that raise successfully:
@@ -131,8 +133,14 @@ class TestSolveQP(unittest.TestCase):
         def test(self):
             P, q, G, h, A, b = self.get_dense_problem()
             kwargs = {"eps_abs": 1e-10, "eps_rel": 0.0} if solver == "sip" else {}
-            x = solve_qp(P, q, G, h, A, b, solver=solver, **kwargs)
-            x_sp = solve_qp(P, q, G, h, A, b, solver=solver, **kwargs)
+            x = solve_qp(
+                P, q, G, h, A, b, solver=solver, **kwargs,
+                **SOLVER_OPTIONS.get(solver, {}),
+            )
+            x_sp = solve_qp(
+                P, q, G, h, A, b, solver=solver, **kwargs,
+                **SOLVER_OPTIONS.get(solver, {}),
+            )
             self.assertIsNotNone(x, f"{solver=}")
             self.assertIsNotNone(x_sp, f"{solver=}")
             known_solution = array([0.30769231, -0.69230769, 1.38461538])
@@ -258,7 +266,10 @@ class TestSolveQP(unittest.TestCase):
                     daqp_solution,
                     f"Baseline failed on parameters: {test_comp}",
                 )
-                solver_solution = solve_qp(solver=solver, **test_case)
+                solver_solution = solve_qp(
+                    solver=solver, **test_case,
+                    **SOLVER_OPTIONS.get(solver, {}),
+                )
                 sol_tolerance = (
                     2e-2
                     if solver == "proxqp"
@@ -303,7 +314,8 @@ class TestSolveQP(unittest.TestCase):
             ub = array([1.0, -0.2, 1.0])
             kwargs = {"eps_abs": 1e-10, "eps_rel": 0.0} if solver == "sip" else {}
             x = solve_qp(
-                P, q, G, h, A, b, lb, ub, solver=solver, **kwargs
+                P, q, G, h, A, b, lb, ub, solver=solver, **kwargs,
+                **SOLVER_OPTIONS.get(solver, {}),
             )
             self.assertIsNotNone(x)
             known_solution = array([0.41463415, -0.41463415, 1.0])
@@ -357,7 +369,7 @@ class TestSolveQP(unittest.TestCase):
 
         def test(self):
             P, q, G, h, A, b = self.get_dense_problem()
-            x = solve_qp(P, q, solver=solver)
+            x = solve_qp(P, q, solver=solver, **SOLVER_OPTIONS.get(solver, {}))
             self.assertIsNotNone(x)
             known_solution = array([-0.64705882, -1.17647059, -1.82352941])
             sol_tolerance = (
@@ -390,7 +402,10 @@ class TestSolveQP(unittest.TestCase):
 
         def test(self):
             P, q, G, h, A, b = self.get_dense_problem()
-            x = solve_qp(P, q, G, h, solver=solver)
+            x = solve_qp(
+                P, q, G, h, solver=solver,
+                **SOLVER_OPTIONS.get(solver, {}),
+            )
             self.assertIsNotNone(x)
             known_solution = array([-0.49025721, -1.57755261, -0.66484801])
             sol_tolerance = (
@@ -441,7 +456,10 @@ class TestSolveQP(unittest.TestCase):
 
         def test(self):
             P, q, G, h, A, b = self.get_dense_problem()
-            x = solve_qp(P, q, A=A, b=b, solver=solver)
+            x = solve_qp(
+                P, q, A=A, b=b, solver=solver,
+                **SOLVER_OPTIONS.get(solver, {}),
+            )
             self.assertIsNotNone(x)
             known_solution = array([0.28026906, -1.55156951, 2.27130045])
             sol_tolerance = (
@@ -494,7 +512,10 @@ class TestSolveQP(unittest.TestCase):
         def test(self):
             P, q, G, h, A, b = self.get_dense_problem()
             G, h = G[1], h[1].reshape((1,))
-            x = solve_qp(P, q, G, h, A, b, solver=solver)
+            x = solve_qp(
+                P, q, G, h, A, b, solver=solver,
+                **SOLVER_OPTIONS.get(solver, {}),
+            )
             self.assertIsNotNone(x)
             known_solution = array([0.30769231, -0.69230769, 1.38461538])
             sol_tolerance = (
@@ -570,7 +591,10 @@ class TestSolveQP(unittest.TestCase):
             if solver == "sip":
                 kwargs["eps_abs"] = 1e-13
                 kwargs["eps_rel"] = 0.0
-            x = solve_qp(P, q, G, h, solver=solver, **kwargs)
+            x = solve_qp(
+                P, q, G, h, solver=solver, **kwargs,
+                **SOLVER_OPTIONS.get(solver, {}),
+            )
             self.assertIsNotNone(x)
             known_solution = array([2.0] * 149 + [3.0])
             sol_tolerance = (
@@ -628,7 +652,10 @@ class TestSolveQP(unittest.TestCase):
             P, q, G, h = self.get_sparse_problem()
             lb = +2.2 * ones(q.shape)
             ub = +2.4 * ones(q.shape)
-            x = solve_qp(P, q, G, h, lb=lb, ub=ub, solver=solver)
+            x = solve_qp(
+                P, q, G, h, lb=lb, ub=ub, solver=solver,
+                **SOLVER_OPTIONS.get(solver, {}),
+            )
             self.assertIsNotNone(x)
             known_solution = array([2.2] * 149 + [2.4])
             sol_tolerance = (
@@ -676,7 +703,10 @@ class TestSolveQP(unittest.TestCase):
                 # Skipping this test for CVXOPT and KVXOPT for now
                 # See https://github.com/cvxopt/cvxopt/issues/229
                 return
-            x = solve_qp(P, q, G, h, lb=lb, ub=ub, solver=solver)
+            x = solve_qp(
+                P, q, G, h, lb=lb, ub=ub, solver=solver,
+                **SOLVER_OPTIONS.get(solver, {}),
+            )
             self.assertIsNone(x)
 
         return test
@@ -714,6 +744,7 @@ class TestSolveQP(unittest.TestCase):
                 initvals=initvals,
                 verbose=True,  # increases coverage
                 **kwargs,
+                **SOLVER_OPTIONS.get(solver, {}),
             )
             self.assertIsNotNone(x)
             sol_tolerance = (
@@ -776,7 +807,7 @@ class TestSolveQP(unittest.TestCase):
             q = array([-1.0, -2, 0, 3e-4])
             # q is in the nullspace of P, so the problem is unbounded below
             with self.assertRaises(ProblemError):
-                solve_qp(P, q, solver=solver)
+                solve_qp(P, q, solver=solver, **SOLVER_OPTIONS.get(solver, {}))
 
         return test
 
@@ -798,7 +829,10 @@ class TestSolveQP(unittest.TestCase):
         def test(self):
             problem = get_qpmad_demo_problem()
             P, q, G, h, _, _, lb, ub = problem.unpack()
-            x = solve_qp(P, q, G, h, lb=lb, ub=ub, solver=solver)
+            x = solve_qp(
+                P, q, G, h, lb=lb, ub=ub, solver=solver,
+                **SOLVER_OPTIONS.get(solver, {}),
+            )
             known_solution = array(
                 [
                     1.0,
@@ -875,7 +909,10 @@ class TestSolveQP(unittest.TestCase):
         def test(self):
             problem = get_infinite_inequality_problem()
             P, q, G, h, A, b, lb, ub = problem.unpack()
-            x = solve_qp(P, q, G, h, A, b, lb, ub, solver=solver)
+            x = solve_qp(
+                P, q, G, h, A, b, lb, ub, solver=solver,
+                **SOLVER_OPTIONS.get(solver, {}),
+            )
             self.assertIsNotNone(x, f"{solver=}")
             known_solution = array([0.4, -0.4, 1.0])
             sol_tolerance = (

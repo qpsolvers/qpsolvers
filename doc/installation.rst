@@ -150,19 +150,15 @@ instructions <https://github.com/ERGO-Code/HiGHS#python>`__ from the README.
 PDHCG
 -----
 
-You can install the GPU-accelerated PDHCG solver directly from PyPI:
+PDHCG 0.4.0+ supports CPU and CUDA backends. Install it with:
 
 .. code:: bash
 
-    pip install pdhcg
+    pip install "qpsolvers[pdhcg]"
 
-Note that PDHCG requires an NVIDIA GPU and CUDA 12.0+. If your system has multiple CUDA versions or the installation fails to find the compiler, you must explicitly point to your modern CUDA compiler using environment variables before installing:
-
-.. code:: bash
-
-    export CUDACXX=/your/path/to/nvcc
-    export SKBUILD_CMAKE_ARGS="-DCMAKE_CUDA_COMPILER=/your/path/to/nvcc"
-    pip install pdhcg
+CPU source builds require C99 and C++17 compilers, CMake 3.20+, zlib, OpenMP,
+and LP64 BLAS/LAPACK. See the `PDHCG installation guide
+<https://pdhcg.github.io/PDHCG/installation/>`_ for requirements and build options.
 
 quadprog
 --------
