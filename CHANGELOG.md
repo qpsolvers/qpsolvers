@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Helper functions to remove infinite inequalities from problems
+- New solver: [SCIP](https://github.com/scipopt/PySCIPOpt) (thanks to @Joao-Dionisio)
 - Tests for the condition number of a problem
 
 ### Changed

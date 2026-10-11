@@ -485,6 +485,10 @@ class TestSolveProblem(unittest.TestCase):
 
 # Generate test fixtures for each solver
 for solver in available_solvers:
+    if solver == "scip":
+        # SCIP returns no dual multipliers, which these fixtures check;
+        # it is covered by test_solve_qp.py and tests/test_scip.py
+        continue
     setattr(
         TestSolveProblem,
         f"test_qpsut01_{solver}",
