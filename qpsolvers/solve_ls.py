@@ -108,6 +108,8 @@ def __solve_sparse_ls(
         lb = np.hstack([lb, np.full((m,), -np.inf)])
     if ub is not None:
         ub = np.hstack([ub, np.full((m,), np.inf)])
+    if initvals is not None:
+        initvals = np.hstack([initvals, R @ initvals - s])
 
     xy = solve_qp(
         P,

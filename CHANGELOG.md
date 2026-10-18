@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Compute solution duality gaps with disabled infinite inequalities
+- Lift least-squares warm starts when using sparse conversion
 - MOSEK: handle infinite values in linear inequalities
 - PIQP: handle infinite values in linear inequalities
 - SCS: handle infinite values in linear inequalities
