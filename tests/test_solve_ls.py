@@ -178,6 +178,38 @@ class TestSolveLS(unittest.TestCase):
                 )
                 np.testing.assert_array_equal(initial, original)
 
+    def test_sparse_warm_start_vector_shapes(self):
+        """Normalize vector layouts without broadcasting or caller changes."""
+        R = spa.csc_matrix(
+            [[1.0, 0.0], [0.0, 1.0], [1.0, 1.0], [1.0, -1.0]]
+        )
+        expected = np.array([0.7, 0.2])
+        solvers = [
+            s for s in ["proxqp", "osqp", "scs"] if s in available_solvers
+        ]
+        for solver, target_shape, guess_shape in product(
+            solvers, [(4,), (4, 1), (1, 4)], [(2,), (2, 1), (1, 2)]
+        ):
+            with self.subTest(
+                solver=solver, target=target_shape, guess=guess_shape
+            ):
+                target = (R @ expected).reshape(target_shape)
+                guess = np.array([0.4, 0.3]).reshape(guess_shape)
+                original_target, original_guess = target.copy(), guess.copy()
+                x = solve_ls(
+                    R,
+                    target,
+                    lb=np.zeros(2),
+                    ub=np.ones(2),
+                    initvals=guess,
+                    solver=solver,
+                    eps_abs=1e-9,
+                    eps_rel=0.0,
+                )
+                np.testing.assert_allclose(x, expected, atol=1e-8)
+                np.testing.assert_array_equal(target, original_target)
+                np.testing.assert_array_equal(guess, original_guess)
+
     @staticmethod
     def get_test_mixed_sparse_args(solver: str):
         """Get test function for mixed sparse problems with a given solver.
