@@ -221,7 +221,8 @@ class Solution:
         if h is not None:
             if self.z is None:
                 return np.inf
-            hz = h.dot(self.z)
+            keep = (h != np.inf) | (self.z != 0.0)
+            hz = h[keep].dot(self.z[keep])
 
         by = 0.0
         if b is not None:

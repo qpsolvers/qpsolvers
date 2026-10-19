@@ -8,8 +8,9 @@
 import unittest
 
 import numpy as np
+import scipy.sparse as spa
 
-from qpsolvers import Solution, solve_problem
+from qpsolvers import Problem, Solution, solve_problem
 
 from .problems import get_sd3310_problem
 
@@ -35,6 +36,53 @@ class TestSolution(unittest.TestCase):
         self.assertLess(solution.dual_residual(), eps_abs)
         self.assertLess(solution.duality_gap(), eps_abs)
         self.assertTrue(solution.is_optimal(eps_abs))
+
+    def test_infinite_inequalities(self):
+        """Disabled inequalities contribute zero to the dual objective."""
+        diagonal = np.array([2.0, 3.0])
+        target = np.array([1.0, 2.0])
+        for sparse in [False, True]:
+            for bounds in [
+                [np.inf, 1.0],
+                [0.5, np.inf],
+                [np.inf, np.inf],
+                [0.5, 1.0],
+            ]:
+                with self.subTest(sparse=sparse, bounds=bounds):
+                    P, G = np.diag(diagonal), np.eye(2)
+                    if sparse:
+                        P, G = spa.csc_matrix(P), spa.csc_matrix(G)
+                    h = np.array(bounds)
+                    x = np.minimum(target, h)
+                    problem = Problem(P, -diagonal * target, G, h)
+                    solution = Solution(
+                        problem,
+                        found=True,
+                        x=x,
+                        z=diagonal * (target - x),
+                    )
+                    with np.errstate(invalid="raise"):
+                        self.assertEqual(solution.duality_gap(), 0.0)
+                        self.assertTrue(solution.is_optimal(1e-12))
+
+    def test_infinite_inequality_nonzero_multiplier(self):
+        """Nonzero multipliers on disabled inequalities remain nonoptimal."""
+        problem = Problem(
+            np.eye(2),
+            np.array([-1.0, -1.0]),
+            np.eye(2),
+            np.array([np.inf, 2.0]),
+        )
+        solution = Solution(
+            problem,
+            found=True,
+            x=np.array([0.0, 1.0]),
+            z=np.array([1.0, 0.0]),
+        )
+        self.assertEqual(solution.primal_residual(), 0.0)
+        self.assertEqual(solution.dual_residual(), 0.0)
+        self.assertEqual(solution.duality_gap(), np.inf)
+        self.assertFalse(solution.is_optimal(1e-12))
 
     def test_undefined_optimality(self):
         solution = Solution(get_sd3310_problem())
