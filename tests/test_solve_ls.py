@@ -7,6 +7,7 @@
 
 import unittest
 import warnings
+from importlib import import_module
 from itertools import product
 from unittest.mock import patch
 
@@ -147,13 +148,12 @@ class TestSolveLS(unittest.TestCase):
         initial = np.array([0.4, 0.3])
         original = initial.copy()
         solvers = [s for s in ["proxqp", "scs"] if s in available_solvers]
+        solve_ls_module = import_module("qpsolvers.solve_ls")
         for solver, sparse, weighted in product(
             solvers, [False, True], [False, True]
         ):
             with self.subTest(solver=solver, sparse=sparse, weighted=weighted):
-                with patch(
-                    "qpsolvers.solve_ls.solve_qp", wraps=solve_qp
-                ) as qp:
+                with patch.object(solve_ls_module, "solve_qp", wraps=solve_qp) as qp:
                     x = solve_ls(
                         spa.csc_matrix(R) if sparse else R,
                         s,
