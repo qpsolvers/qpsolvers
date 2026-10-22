@@ -85,7 +85,47 @@ class TestSolution(unittest.TestCase):
         self.assertEqual(solution.duality_gap(), np.inf)
         self.assertFalse(solution.is_optimal(1e-12))
 
+    def test_infinite_box_bound_nonzero_multiplier(self):
+        """Nonzero multipliers on disabled box bounds remain nonoptimal."""
+        for case in [
+            dict(
+                side="upper",
+                q=np.array([-1.0, -1.0]),
+                lb=None,
+                ub=np.array([np.inf, 2.0]),
+                z_box=np.array([1.0, 0.0]),
+            ),
+            dict(
+                side="lower",
+                q=np.array([1.0, -1.0]),
+                lb=np.array([-np.inf, -2.0]),
+                ub=None,
+                z_box=np.array([-1.0, 0.0]),
+            ),
+        ]:
+            with self.subTest(side=case["side"]):
+                problem = Problem(
+                    np.eye(2), case["q"], lb=case["lb"], ub=case["ub"]
+                )
+                # Not a valid solution: the optimum is (1, 1) in the upper
+                # case and (-1, 1) in the lower case. The multiplier z_box
+                # makes stationarity hold exactly by claiming an active bound
+                # on x[0], but that bound is infinite. Primal and dual
+                # residuals are both zero, so only the duality gap can
+                # detect that this point is not optimal.
+                solution = Solution(
+                    problem,
+                    found=True,
+                    x=np.array([0.0, 1.0]),
+                    z_box=case["z_box"],
+                )
+                self.assertEqual(solution.primal_residual(), 0.0)
+                self.assertEqual(solution.dual_residual(), 0.0)
+                self.assertEqual(solution.duality_gap(), np.inf)
+                self.assertFalse(solution.is_optimal(1e-12))
+
     def test_undefined_optimality(self):
+        """Residuals are infinite unless solution is fully defined."""
         solution = Solution(get_sd3310_problem())
 
         # solution is fully undefined
