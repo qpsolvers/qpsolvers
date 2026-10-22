@@ -234,11 +234,11 @@ class Solution:
         ub_z_box = 0.0
         if self.z_box is not None:
             if lb is not None:
-                finite = np.asarray(lb != -np.inf).nonzero()
                 z_box_neg = np.minimum(self.z_box, 0.0)
-                lb_z_box = lb[finite].dot(z_box_neg[finite])
+                keep = (lb != -np.inf) | (z_box_neg != 0.0)
+                lb_z_box = lb[keep].dot(z_box_neg[keep])
             if ub is not None:
-                finite = np.asarray(ub != np.inf).nonzero()
                 z_box_pos = np.maximum(self.z_box, 0.0)
-                ub_z_box = ub[finite].dot(z_box_pos[finite])
+                keep = (ub != np.inf) | (z_box_pos != 0.0)
+                ub_z_box = ub[keep].dot(z_box_pos[keep])
         return abs(xPx + qx + hz + by + lb_z_box + ub_z_box)
