@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Helper functions to remove infinite inequalities from problems
+- Solution: dual feasibility check on inequality multipliers
 - Tests for the condition number of a problem
 
 ### Changed

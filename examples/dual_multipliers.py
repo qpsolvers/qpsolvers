@@ -68,7 +68,8 @@ if __name__ == "__main__":
     print("")
 
     print("=== Optimality  checks ===")
-    print(f"- Primal residual: {solution.primal_residual():.1e}")
-    print(f"- Dual residual:   {solution.dual_residual():.1e}")
-    print(f"- Duality gap:     {solution.duality_gap():.1e}")
+    print(f"- Primal residual:  {solution.primal_residual():.1e}")
+    print(f"- Dual residual:    {solution.dual_residual():.1e}")
+    print(f"- Dual feasibility: {solution.dual_feasibility():.1e}")
+    print(f"- Duality gap:      {solution.duality_gap():.1e}")
     print("")
