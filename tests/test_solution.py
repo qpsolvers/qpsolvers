@@ -19,8 +19,9 @@ class TestSolution(unittest.TestCase):
     """Test fixture for solutions."""
 
     def test_found_default(self):
+        """Found attribute is None if no solver was run."""
         solution = Solution(get_sd3310_problem())
-        self.assertFalse(solution.found)
+        self.assertIsNone(solution.found)
 
     def test_residuals(self):
         """Test residuals at the solution of the SD3310 problem.
