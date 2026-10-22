@@ -21,7 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Compute solution duality gaps with disabled infinite inequalities
+- Compute solution duality gaps with disabled infinite inequalities (thanks to @antonsoo)
+- Compute solution duality gaps with disabled box bounds
 - MOSEK: handle infinite values in linear inequalities
 - PIQP: handle infinite values in linear inequalities
 - SCS: handle infinite values in linear inequalities
