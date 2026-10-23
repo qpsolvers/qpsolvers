@@ -10,11 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Helper functions to remove infinite inequalities from problems
+- Solution: `dual_feasibility()` check on inequality multipliers
 - Tests for the condition number of a problem
 
 ### Changed
 
 - CVXOPT: drop infinite inequalities rather than clamp them to a large value
+- Solution: `is_optimal()` also checks dual feasibility
 - Transfer copyright notices to a single NOTICE file
 - docs: Update list of supported and unsupported solvers
 - docs: Update note on adding a new solver
@@ -22,7 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - SCS: retry unconstrained problems rejected by LSQR with the native solver
-- Compute solution duality gaps with disabled infinite inequalities
+- Compute solution duality gaps with disabled infinite inequalities (thanks to @antonsoo)
+- Compute solution duality gaps with disabled box bounds
 - MOSEK: handle infinite values in linear inequalities
 - PIQP: handle infinite values in linear inequalities
 - SCS: handle infinite values in linear inequalities

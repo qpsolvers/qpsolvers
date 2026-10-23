@@ -93,8 +93,8 @@ class Solution:
         Parameters
         ----------
         eps_abs :
-            Absolute tolerance for the primal residual, dual residual and
-            duality gap.
+            Absolute tolerance for the primal residual, dual residual, dual
+            feasibility and duality gap.
 
         Notes
         -----
@@ -104,6 +104,7 @@ class Solution:
         return (
             self.primal_residual() < eps_abs
             and self.dual_residual() < eps_abs
+            and self.dual_feasibility() < eps_abs
             and self.duality_gap() < eps_abs
         )
 
@@ -189,6 +190,53 @@ class Solution:
         p = np.linalg.norm(Px + q + GTz + ATy + z_box, np.inf)
         return p  # type: ignore
 
+    def dual_feasibility(self) -> float:
+        r"""Compute the dual infeasibility of the solution.
+
+        Dual feasibility requires multipliers to lie in the dual cone of the
+        constraints: :math:`z \geq 0` for linear inequalities, and zero
+        multipliers for disabled inequalities, that is, inequalities with an
+        infinite bound. The dual infeasibility is:
+
+        .. math::
+
+            r_f := \max([-z]^+, |z|_{h = +\infty}, [z_{box}^+]_{ub = +\infty},
+            [-z_{box}^-]_{lb = -\infty})
+
+        where :math:`v^- = \min(v, 0)` and :math:`v^+ = \max(v, 0)`.
+
+        Returns
+        -------
+        :
+            Dual infeasibility if it is defined, ``np.inf`` otherwise.
+
+        Notes
+        -----
+        See for instance [Caron2022]_ for an overview of optimality conditions
+        and why this quantity will be zero at the optimum.
+        """
+        _, _, G, h, _, _, lb, ub = self.problem.unpack()
+        if not self.found or self.x is None:
+            return np.inf
+
+        r = 0.0
+        if G is not None:
+            if self.z is None:
+                return np.inf
+            r = max(r, np.max(-self.z, initial=0.0))
+            r = max(r, np.max(np.abs(self.z[h == np.inf]), initial=0.0))
+
+        if lb is not None or ub is not None:
+            if self.z_box is None:
+                return np.inf
+            if ub is not None:
+                z_box_pos = np.maximum(self.z_box, 0.0)
+                r = max(r, np.max(z_box_pos[ub == np.inf], initial=0.0))
+            if lb is not None:
+                z_box_neg = np.minimum(self.z_box, 0.0)
+                r = max(r, np.max(-z_box_neg[lb == -np.inf], initial=0.0))
+        return r
+
     def duality_gap(self) -> float:
         r"""Compute the duality gap of the solution.
 
@@ -199,7 +247,10 @@ class Solution:
             r_g := | x^T P x + q^T x + b^T y + h^T z +
             lb^T z_{box}^- + ub^T z_{box}^+ |
 
-        were :math:`v^- = \min(v, 0)` and :math:`v^+ = \max(v, 0)`.
+        were :math:`v^- = \min(v, 0)` and :math:`v^+ = \max(v, 0)`. Terms of
+        disabled inequalities, that is, inequalities with an infinite bound,
+        are left out: their multipliers are checked by
+        :meth:`dual_feasibility`.
 
         Returns
         -------
@@ -221,8 +272,8 @@ class Solution:
         if h is not None:
             if self.z is None:
                 return np.inf
-            keep = (h != np.inf) | (self.z != 0.0)
-            hz = h[keep].dot(self.z[keep])
+            finite = np.asarray(h != np.inf).nonzero()
+            hz = h[finite].dot(self.z[finite])
 
         by = 0.0
         if b is not None:
