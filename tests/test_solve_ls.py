@@ -133,6 +133,21 @@ class TestSolveLS(unittest.TestCase):
         with self.assertRaises(SolverNotFound):
             solve_ls(R, s, G, h, A, b, solver="ideal")
 
+    def test_sparse_warm_start(self):
+        """Warm-start the sparse conversion with column vectors."""
+        R = spa.csc_matrix([[1.0, 0.0], [0.0, 1.0], [1.0, 1.0], [1.0, -1.0]])
+        s = np.array([[0.7], [0.2], [0.9], [0.5]])
+        initvals = np.array([[0.4], [0.3]])
+        for solver in ["proxqp", "scs"]:
+            if solver not in available_solvers:
+                continue
+            with self.subTest(solver=solver):
+                x = solve_ls(
+                    R, s, lb=np.zeros(2), initvals=initvals, solver=solver
+                )
+                self.assertIsNotNone(x)
+                self.assertLess(norm(x - np.array([0.7, 0.2])), 1e-4)
+
     @staticmethod
     def get_test_mixed_sparse_args(solver: str):
         """Get test function for mixed sparse problems with a given solver.
