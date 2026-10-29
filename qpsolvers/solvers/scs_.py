@@ -28,6 +28,7 @@ from ..conversions import (
     put_infinite_inequalities_back,
     remove_infinite_inequalities,
 )
+from ..exceptions import ProblemError
 from ..problem import Problem
 from ..solution import Solution
 from ..solve_unconstrained import solve_unconstrained
@@ -110,8 +111,8 @@ def scs_solve_problem(
 
     Raises
     ------
-    ValueError
-        If the quadratic program is not unbounded below.
+    ProblemError
+        If an unconstrained problem is unbounded below or cannot be solved.
 
     Notes
     -----
@@ -162,6 +163,7 @@ def scs_solve_problem(
 
     data: Dict[str, Any] = {"P": P, "c": q}
     cone: Dict[str, Any] = {}
+    unconstrained_error: Optional[ProblemError] = None
     if initvals is not None:
         data["x"] = initvals
     if A is not None and b is not None:
@@ -179,20 +181,41 @@ def scs_solve_problem(
         data["b"] = h
         cone["l"] = h.shape[0]  # positive cone
     elif lb is None and ub is None:  # no constraint
-        warnings.warn(
-            "QP is unconstrained: solving with SciPy's LSQR rather than SCS"
-        )
-        return solve_unconstrained(problem)
+        try:
+            solution = solve_unconstrained(problem)
+        except ProblemError as error:
+            unconstrained_error = error
+            # SCS needs at least one constraint. The equality 0*x = 0 does
+            # not change the problem and lets SCS check LSQR's rejection.
+            data["A"] = csc_matrix((1, n))
+            data["b"] = np.zeros(1)
+            cone["z"] = 1
+            warnings.warn("LSQR could not solve unconstrained QP: trying SCS")
+        else:
+            warnings.warn(
+                "QP is unconstrained: solving with SciPy's LSQR "
+                "rather than SCS"
+            )
+            return solution
     if lb is not None or ub is not None:
         __add_box_cone(n, lb, ub, cone, data)
     kwargs["verbose"] = verbose
     solve_start_time = time.perf_counter()
-    result = solve(data, cone, **kwargs)
+    try:
+        result = solve(data, cone, **kwargs)
+    except ValueError as error:
+        if unconstrained_error is not None:
+            raise ProblemError(
+                "SCS could not solve the unconstrained problem"
+            ) from error
+        raise
     solve_end_time = time.perf_counter()
 
     solution = Solution(problem)
     solution.extras = result["info"]
     status_val = result["info"]["status_val"]
+    if unconstrained_error is not None and status_val in (-1, -6):
+        raise unconstrained_error
     solution.found = status_val == 1
     if not solution.found:
         warnings.warn(
