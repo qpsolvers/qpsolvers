@@ -149,6 +149,65 @@ class TestSolveLS(unittest.TestCase):
                 self.assertLess(norm(x - np.array([0.7, 0.2])), 1e-4)
 
     @staticmethod
+    def get_test_integer_normal_equations(solver: str):
+        """Check integer products and negation before solver conversion."""
+
+        def test(self):
+            for dtype in (np.uint8, np.int8):
+                for sparse in (False, True) if solver in sparse_solvers else (False,):
+                    for weighted in (False, True):
+                        with self.subTest(
+                            dtype=dtype, sparse=sparse, weighted=weighted
+                        ):
+                            R = np.array(
+                                [[10, 0], [0, 20], [10, 0], [0, 20]], dtype=dtype
+                            )
+                            s = np.array([20, 60, 40, 100], dtype=dtype)
+                            W = (
+                                np.diag(np.array([1, 2, 3, 4], dtype=dtype))
+                                if weighted
+                                else None
+                            )
+                            if sparse:
+                                R = spa.csc_matrix(R)
+                            R_original, s_original = R.copy(), s.copy()
+                            W_original = W.copy() if W is not None else None
+                            kwargs = (
+                                {"eps_abs": 1e-8, "eps_rel": 1e-8}
+                                if solver == "osqp"
+                                else {}
+                            )
+                            if solver == "ecos":
+                                kwargs = {
+                                    "abstol": 1e-10,
+                                    "reltol": 1e-10,
+                                    "feastol": 1e-10,
+                                }
+                            x = solve_ls(
+                                R,
+                                s,
+                                lb=np.zeros(2),
+                                ub=np.full(2, 10.0),
+                                W=W,
+                                solver=solver,
+                                sparse_conversion=False,
+                                **kwargs,
+                            )
+                            # Independent weighted means for the two columns.
+                            expected = [3.5, 13 / 3] if weighted else [3.0, 4.0]
+                            self.assertIsNotNone(x)
+                            np.testing.assert_allclose(x, expected, atol=5e-3, rtol=0)
+                            if sparse:
+                                self.assertEqual((R != R_original).nnz, 0)
+                            else:
+                                np.testing.assert_array_equal(R, R_original)
+                            np.testing.assert_array_equal(s, s_original)
+                            if W is not None:
+                                np.testing.assert_array_equal(W, W_original)
+
+        return test
+
+    @staticmethod
     def get_test_mixed_sparse_args(solver: str):
         """Get test function for mixed sparse problems with a given solver.
 
@@ -281,6 +340,11 @@ class TestSolveLS(unittest.TestCase):
 for solver in available_solvers:
     setattr(
         TestSolveLS, "test_{}".format(solver), TestSolveLS.get_test(solver)
+    )
+    setattr(
+        TestSolveLS,
+        "test_integer_normal_equations_{}".format(solver),
+        TestSolveLS.get_test_integer_normal_equations(solver),
     )
 
 for solver in sparse_solvers:

@@ -29,6 +29,8 @@ def __solve_dense_ls(
     verbose: bool = False,
     **kwargs,
 ) -> Optional[np.ndarray]:
+    # Promote before normal-equation products and negation can overflow.
+    R = R.astype(np.result_type(R.dtype, np.float64), copy=False)
     WR: Union[np.ndarray, spa.csc_matrix] = (
         R if W is None else W @ R  # type: ignore[assignment]
     )
