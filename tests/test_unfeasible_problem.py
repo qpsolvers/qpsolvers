@@ -11,6 +11,8 @@ import warnings
 from numpy import array, dot
 from qpsolvers import available_solvers, solve_qp
 
+from . import SOLVER_OPTIONS
+
 
 class UnfeasibleProblem(unittest.TestCase):
     """
@@ -70,7 +72,10 @@ class UnfeasibleProblem(unittest.TestCase):
 
         def test(self):
             P, q, G, h, A, b = self.get_unfeasible_problem()
-            x = solve_qp(P, q, G, h, A, b, solver=solver)
+            x = solve_qp(
+                P, q, G, h, A, b, solver=solver,
+                **SOLVER_OPTIONS.get(solver, {}),
+            )
             self.assertIsNone(x)
 
         return test

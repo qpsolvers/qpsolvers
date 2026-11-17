@@ -5,22 +5,17 @@
 
 """Solver interface for PDHCG.
 
-PDHCG (Primal-Dual Hybrid Conjugate Gradient) is a high-performance,
-GPU-accelerated solver designed for large-scale convex Quadratic
-Programming (QP). It is particularly efficient for huge-scale problems
-by fully leveraging NVIDIA CUDA architectures.
-
-Note:
-    To use this solver, you need an NVIDIA GPU and the ``pdhcg`` package
-    installed via ``pip install pdhcg``. For advanced installation (e.g.,
-    custom CUDA paths), please refer to the
-    `official PDHCG-II repository <https://github.com/Lhongpei/PDHCG-II>`_.
+PDHCG (Primal-Dual Hybrid Conjugate Gradient) solves large-scale convex
+quadratic programs on CPU or CUDA. Install the ``pdhcg`` package with the
+backends you need; see the
+`PDHCG installation guide <https://pdhcg.github.io/PDHCG/installation/>`_.
 
 References
 ----------
 - `PDHCG-II <https://arxiv.org/abs/2602.23967>`_
 """
 
+import time
 from typing import Any, List, Optional, Union
 
 import numpy as np
@@ -35,6 +30,8 @@ def pdhcg_solve_problem(
     problem: Problem,
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
+    *,
+    device: Optional[str] = None,
     **kwargs: Any,
 ) -> Solution:
     r"""Solve a quadratic program using PDHCG.
@@ -60,16 +57,21 @@ def pdhcg_solve_problem(
         Warm-start guess vector for the primal solution.
     verbose :
         Set to `True` to print out extra information.
+    device :
+        Compiled PDHCG backend, such as ``"cpu"`` or ``"cuda"``. If omitted,
+        use the default selected when PDHCG was built.
 
     Returns
     -------
     :
-        Solution to the QP, if found, otherwise ``None``.
+        Solution with primal and dual values when an optimum is found.
 
     Notes
     -----
-    Keyword arguments are forwarded to PDHCG as solver parameters.
-    For instance, you can call ``pdhcg_solve_qp(..., TimeLimit=60)``.
+    ``device`` is passed to ``Model.optimize``; other keyword arguments are
+    forwarded as solver parameters. For example, call
+    ``pdhcg_solve_qp(..., device="cpu", Threads=4, TimeLimit=60)``.
+    Build PDHCG with the requested backend; ``Threads`` controls CPU solves.
     Common PDHCG parameters include:
 
     .. list-table::
@@ -89,9 +91,10 @@ def pdhcg_solve_problem(
        * - ``OutputFlag``
          - Enable (True) or disable (False) console logging output.
 
-    For advanced parameters, please refer to the
-    `PDHCG Documentation <https://github.com/Lhongpei/PDHCG-II>`_.
+    See the `PDHCG parameter reference
+    <https://pdhcg.github.io/PDHCG/python/parameters/>`_ for more options.
     """
+    build_start_time = time.perf_counter()
     P, q, G, h, A, b, lb, ub = problem.unpack()
 
     C_mats: List[Any] = []
@@ -143,9 +146,16 @@ def pdhcg_solve_problem(
     if initvals is not None:
         model.setWarmStart(primal=initvals)
 
-    model.optimize()
+    solve_start_time = time.perf_counter()
+    if device is None:
+        model.optimize()
+    else:
+        model.optimize(device=device)
+    solve_end_time = time.perf_counter()
 
     solution = Solution(problem)
+    solution.build_time = solve_start_time - build_start_time
+    solution.solve_time = solve_end_time - solve_start_time
 
     status_str = str(model.Status).upper() if model.Status else ""
     solution.found = status_str == "OPTIMAL"
@@ -158,24 +168,29 @@ def pdhcg_solve_problem(
     solution.extras["iter"] = model.IterCount
     solution.extras["status"] = status_str
 
-    if solution.found and model.Pi is not None and C_mats:
-        pi = np.array(model.Pi)
-        idx = 0
-        if G is not None:
-            num_g = G.shape[0]
-            solution.z = -pi[idx : idx + num_g]
-            idx += num_g
+    if solution.found and solution.x is not None:
+        num_g = G.shape[0] if G is not None else 0
+        pi = np.asarray(model.Pi)
+        solution.z = -pi[:num_g] if G is not None else np.empty(0)
+        solution.y = -pi[num_g:] if A is not None else np.empty(0)
+        if lb is not None or ub is not None:
+            # PDHCG exposes row multipliers; recover bound multipliers from
+            # stationarity: P x + q + G.T z + A.T y + z_box = 0.
+            solution.z_box = -(P @ solution.x + q)
+            if G is not None:
+                solution.z_box -= G.T @ solution.z
+            if A is not None:
+                solution.z_box -= A.T @ solution.y
+            # Missing bounds cannot carry a multiplier.
+            lower = np.isfinite(lb) if lb is not None else False
+            upper = np.isfinite(ub) if ub is not None else False
+            solution.z_box = np.where(
+                solution.z_box < 0.0,
+                np.where(lower, solution.z_box, 0.0),
+                np.where(upper, solution.z_box, 0.0),
+            )
         else:
-            solution.z = np.empty((0,))
-
-        if A is not None:
-            num_a = A.shape[0]
-            solution.y = -pi[idx : idx + num_a]
-        else:
-            solution.y = np.empty((0,))
-    else:
-        solution.z = np.empty((0,)) if G is None else np.empty(G.shape[0])
-        solution.y = np.empty((0,)) if A is None else np.empty(A.shape[0])
+            solution.z_box = np.empty(0)
 
     return solution
 
@@ -191,6 +206,8 @@ def pdhcg_solve_qp(
     ub: Optional[np.ndarray] = None,
     initvals: Optional[np.ndarray] = None,
     verbose: bool = False,
+    *,
+    device: Optional[str] = None,
     **kwargs: Any,
 ) -> Optional[np.ndarray]:
     r"""Solve a quadratic program using PDHCG.
@@ -208,7 +225,7 @@ def pdhcg_solve_qp(
                 & lb \leq x \leq ub
         \end{array}\end{split}
 
-    It is solved using `PDHCG <https://github.com/Lhongpei/PDHCG-II>`__.
+    It is solved using `PDHCG <https://github.com/pdhcg/PDHCG>`__.
 
     Parameters
     ----------
@@ -232,6 +249,9 @@ def pdhcg_solve_qp(
         Warm-start guess vector for the primal solution.
     verbose :
         Set to `True` to print out extra information.
+    device :
+        Compiled PDHCG backend, such as ``"cpu"`` or ``"cuda"``. If omitted,
+        use the default selected when PDHCG was built.
 
     Returns
     -------
@@ -240,8 +260,10 @@ def pdhcg_solve_qp(
 
     Notes
     -----
-    Keyword arguments are forwarded to PDHCG as solver parameters.
-    For instance, you can call ``pdhcg_solve_qp(..., TimeLimit=60)``.
+    ``device`` is passed to ``Model.optimize``; other keyword arguments are
+    forwarded as solver parameters. For example, call
+    ``pdhcg_solve_qp(..., device="cpu", Threads=4, TimeLimit=60)``.
+    Build PDHCG with the requested backend; ``Threads`` controls CPU solves.
     Common PDHCG parameters include:
 
     .. list-table::
@@ -261,9 +283,11 @@ def pdhcg_solve_qp(
        * - ``OutputFlag``
          - Enable (True) or disable (False) console logging output.
 
-    For advanced parameters, please refer to the
-    `PDHCG Documentation <https://github.com/Lhongpei/PDHCG-II>`_.
+    See the `PDHCG parameter reference
+    <https://pdhcg.github.io/PDHCG/python/parameters/>`_ for more options.
     """
     problem = Problem(P, q, G, h, A, b, lb, ub)
-    solution = pdhcg_solve_problem(problem, initvals, verbose, **kwargs)
+    solution = pdhcg_solve_problem(
+        problem, initvals, verbose, device=device, **kwargs
+    )
     return solution.x if solution.found else None
