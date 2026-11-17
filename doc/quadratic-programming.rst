@@ -150,6 +150,7 @@ optimality of the solution returned by a solver with:
     print(f"- Solution is{'' if solution.is_optimal(1e-8) else ' NOT'} optimal")
     print(f"- Primal residual: {solution.primal_residual():.1e}")
     print(f"- Dual residual: {solution.dual_residual():.1e}")
+    print(f"- Dual feasibility: {solution.dual_feasibility():.1e}")
     print(f"- Duality gap: {solution.duality_gap():.1e}")
 
 This example prints:
@@ -159,10 +160,11 @@ This example prints:
     - Solution is optimal
     - Primal residual: 1.1e-16
     - Dual residual: 1.4e-14
+    - Dual feasibility: 0.0e+00
     - Duality gap: 0.0e+00
 
 You can check out [Caron2022]_ for an overview of optimality conditions and why
-a solution is optimal if and only if these three residuals are zero.
+a solution is optimal if and only if these four quantities are zero.
 
 .. autoclass:: qpsolvers.solution.Solution
    :members:

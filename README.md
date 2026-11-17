@@ -116,11 +116,11 @@ Matrix arguments are NumPy arrays for dense solvers and SciPy Compressed Sparse 
 
 ## Benchmark
 
-QP solvers come with their strengths and weaknesses depending on the algorithmic choices they make. To help you find the ones most suited to your problems, you can check out the results from [`qpbenchmark`](https://github.com/qpsolvers/qpbenchmark), a benchmark for QP solvers in Python. The benchmark is divided into test sets, each test set representing a different distribution of quadratic programs with specific dimensions and structure (large sparse problems, optimal control problems, ...):
+QP solvers come with their strengths and weaknesses depending on the algorithmic choices they make. To help you find the ones most suited to your problems, you can check out the results from [qpbenchmark](https://github.com/qpsolvers/qpbenchmark), a benchmark for QP solvers in Python. The benchmark is divided into test sets, each test set representing a different distribution of quadratic programs with specific dimensions and structure (large sparse problems, optimal control problems, ...):
 
-- 📈 [Free-for-all test set](https://github.com/qpsolvers/free_for_all_qpbenchmark): open to all problems submitted by the community.
-- 📈 [Maros-Meszaros test set](https://github.com/qpsolvers/maros_meszaros_qpbenchmark): hard problems curated by the numerical optimization community.
-- 📈 [MPC test set](https://github.com/qpsolvers/mpc_qpbenchmark): convex model predictive control problems arising in robotics.
+- 📈 [Free-for-all test set](https://qpsolvers.github.io/qpbenchmark/free_for_all_qpbenchmark/): open to all problems submitted by the community.
+- 📈 [Maros-Meszaros test set](https://qpsolvers.github.io/qpbenchmark/maros_meszaros_qpbenchmark/): hard problems curated by the numerical optimization community.
+- 📈 [Model predictive control test set](https://qpsolvers.github.io/qpbenchmark/mpc_qpbenchmark/): convex model predictive control problems arising in robotics.
 
 ## Citing qpsolvers
 
@@ -129,7 +129,7 @@ If you find this project useful, please consider giving it a :star: or citing it
 ```bibtex
 @software{qpsolvers,
   title = {{qpsolvers: Quadratic Programming Solvers in Python}},
-  author = {Caron, Stéphane and Arnström, Daniel and Bonagiri, Suraj and Dechaume, Antoine and Flowers, Nikolai and Heins, Adam and Ishikawa, Takuma and Kenefake, Dustin and Mazzamuto, Giacomo and Meoli, Donato and O'Donoghue, Brendan and Oppenheimer, Adam A. and Otta, Pavel and Pandala, Abhishek and Quiroz Omaña, Juan José and Rontsis, Nikitas and Shah, Paarth and St-Jean, Samuel and Vitucci, Nicola and Wolfers, Soeren and Yang, Fengyu and Delhaisse, Brian and MeindertHH and rimaddo and urob and shaoanlu and Sandoval, Uriel and Khalil, Ahmed and Kozlov, Lev and Groudiev, Antoine and Sousa Pinto, João and Schwan, Roland and Budhiraja, Rohan and Keustermans, Johannes and Wu, Yubin and Li, Hongpei and Hoarau, Antoine},
+  author = {Caron, Stéphane and Arnström, Daniel and Bonagiri, Suraj and Dechaume, Antoine and Flowers, Nikolai and Heins, Adam and Ishikawa, Takuma and Kenefake, Dustin and Mazzamuto, Giacomo and Meoli, Donato and O'Donoghue, Brendan and Oppenheimer, Adam A. and Otta, Pavel and Pandala, Abhishek and Quiroz Omaña, Juan José and Rontsis, Nikitas and Shah, Paarth and St-Jean, Samuel and Vitucci, Nicola and Wolfers, Soeren and Yang, Fengyu and Delhaisse, Brian and MeindertHH and rimaddo and urob and shaoanlu and Sandoval, Uriel and Khalil, Ahmed and Kozlov, Lev and Groudiev, Antoine and Sousa Pinto, João and Schwan, Roland and Budhiraja, Rohan and Keustermans, Johannes and Wu, Yubin and Li, Hongpei and Hoarau, Antoine and Soloviev, Anton},
   license = {LGPL-3.0},
   url = {https://github.com/qpsolvers/qpsolvers},
   version = {4.13.0},
@@ -145,5 +145,6 @@ We welcome contributions! The first step is to install the library and use it. R
 
 ## See also
 
+- [CVXPY](https://github.com/cvxpy/cvxpy): A Python-embedded modeling language for convex optimization problems.
 - [qpbenchmark](https://github.com/qpsolvers/qpbenchmark/): Benchmark for quadratic programming solvers available in Python.
 - [qpsolvers-eigen](https://github.com/ami-iit/qpsolvers-eigen): C++ abstraction layer for quadratic programming solvers using Eigen.
