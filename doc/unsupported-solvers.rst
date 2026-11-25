@@ -16,12 +16,6 @@ NPPro
 .. automodule:: qpsolvers.solvers.nppro_
     :members:
 
-PDHCG
-=====
-
-.. automodule:: qpsolvers.solvers.pdhcg_
-    :members:
-
 qpOASES
 =======
 

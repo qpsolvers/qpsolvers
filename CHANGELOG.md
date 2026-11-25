@@ -10,12 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Helper functions to remove infinite inequalities from problems
+- PDHCG: CPU CI tests and a `pdhcg` installation extra for version 0.4.0+
 - Solution: `dual_feasibility()` check on inequality multipliers
 - Tests for the condition number of a problem
 
 ### Changed
 
+- CICD: Don't build qpSWIFT in documentation workflow
 - CVXOPT: drop infinite inequalities rather than clamp them to a large value
+- PDHCG: support per-solve device selection and CPU thread parameters
 - Solution: `is_optimal()` also checks dual feasibility
 - Transfer copyright notices to a single NOTICE file
 - docs: Update list of supported and unsupported solvers
@@ -23,13 +26,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Lift least-squares warm starts when using sparse conversion
-- SCS: retry unconstrained problems rejected by LSQR with the native solver
-- Compute solution duality gaps with disabled infinite inequalities (thanks to @antonsoo)
 - Compute solution duality gaps with disabled box bounds
+- Compute solution duality gaps with disabled infinite inequalities (thanks to @antonsoo)
+- Lift least-squares warm starts when using sparse conversion
 - MOSEK: handle infinite values in linear inequalities
+- PDHCG: return bound multipliers and build/solve timings; leave failed solutions unset
 - PIQP: handle infinite values in linear inequalities
 - SCS: handle infinite values in linear inequalities
+- SCS: retry unconstrained problems rejected by LSQR with the native solver
 - qpSWIFT: handle infinite values in linear inequalities
 - qtqp: handle infinite values in linear inequalities
 
