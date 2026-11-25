@@ -23,17 +23,6 @@ jobs:
                   environments: docs
                   cache: true
 
-            - name: "Checkout qpSWIFT"
-              uses: actions/checkout@v6
-              with:
-                  repository: qpSWIFT/qpSWIFT
-                  path: qpSWIFT
-
-            - name: "Install qpSWIFT"
-              run: |
-                  cd qpSWIFT/python
-                  pixi run -e docs python setup.py install
-
             - name: "Build documentation"
               run: |
                   pixi run -e docs docs-build
