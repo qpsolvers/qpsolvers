@@ -34,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PDHCG: return bound multipliers and build/solve timings; leave failed solutions unset
 - PIQP: handle infinite values in linear inequalities
 - SCS: handle infinite values in linear inequalities
+- SCS: retry unconstrained problems rejected by LSQR with the native solver
 - qpSWIFT: handle infinite values in linear inequalities
 - qtqp: handle infinite values in linear inequalities
 
