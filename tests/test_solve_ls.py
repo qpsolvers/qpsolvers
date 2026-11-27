@@ -196,6 +196,7 @@ class TestSolveLS(unittest.TestCase):
                                 solver=solver,
                                 sparse_conversion=False,
                                 **kwargs,
+                                **SOLVER_OPTIONS.get(solver, {}),
                             )
                             # Independent weighted means for the two columns.
                             expected = [3.5, 13 / 3] if weighted else [3.0, 4.0]
